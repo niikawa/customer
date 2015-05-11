@@ -1,5 +1,5 @@
 {
-  "name": "card-task",
+  "name": "azuru-custmoer",
   "version": "0.0.1",
   "authors": [
     "GOZARU9 <new.river0314@gmail.com>"
@@ -27,4 +27,5 @@
     "json3": "~3.3.2",
     "components-font-awesome": "~4.3.0"
   },
+  "devDependencies": {}
 }
