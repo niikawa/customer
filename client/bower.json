@@ -1,0 +1,30 @@
+{
+  "name": "card-task",
+  "version": "0.0.1",
+  "authors": [
+    "GOZARU9 <new.river0314@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.14",
+    "angular-resource": "~1.3.14",
+    "angular-animate": "~1.3.14",
+    "angular-cookies": "~1.3.14",
+    "angular-route": "~1.3.14",
+    "angular-sanitize": "~1.3.14",
+    "angular-touch": "~1.3.14"
+    "angular-bootstrap": "~0.12.1",
+    "jquery": "~2.1.3",
+    "jquery-ui": "~1.11.3",
+    "bootstrap": "~3.3.2",
+    "json3": "~3.3.2",
+    "components-font-awesome": "~4.3.0"
+  },
+}

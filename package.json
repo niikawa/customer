@@ -1,13 +1,31 @@
 {
-  "name": "chat-example",
-  "version": "0.0.0",
-  "description": "A chat example to showcase how to use `socket.io` with a static `express` server with `async` for control flow.",
+  "name": "azuru-custmoer",
+  "version": "0.0.1",
+  "description": "",
   "main": "server.js",
   "repository": "",
-  "author": "Mostafa Eweda <mo.eweda@gmail.com>",
+  "author": "gozaru <new.river0314@gmail.com>",
   "dependencies": {
     "async": "~0.2.8",
+    "connect-mongo": "^0.7.0",
     "express": "~3.2.4",
+    "install": "^0.1.8",
+    "jade": "^1.9.2",
+    "log4js": "^0.6.22",
+    "moment": "^2.9.0",
+    "mongoose": "^3.8.24",
+    "npm": "^2.6.1",
     "socket.io": "~0.9.14"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-autoprefixer": "^2.2.0",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-cssmin": "^0.12.2",
+    "grunt-contrib-imagemin": "^0.9.3",
+    "grunt-contrib-uglify": "^0.8.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "install": "^0.1.8",
+    "npm": "^2.6.0"
   }
 }
