@@ -14,7 +14,7 @@ var mssql = require('mssql');
 var config = {
   user: 'vxc-databese-master',
   password: 'VirtUaleX001',
-  server: 'oufq8kwys5.database.windows.net,1433\\SQLEXPRESS',
+  server: 'tcp:oufq8kwys5.database.windows.net,1433',
   database: 'CustomerReport',
   stream: true, // You can enable streaming globally
 
