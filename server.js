@@ -14,7 +14,7 @@ var mssql = require('mssql');
 var config = {
   user: 'vxc-databese-master',
   password: 'VirtUaleX001',
-  server: 'tcp:oufq8kwys5.database.windows.net\\SQLEXPRESS',
+  server: 'oufq8kwys5.database.windows.net,1433\\SQLEXPRESS',
   database: 'CustomerReport',
   stream: true, // You can enable streaming globally
 
@@ -41,5 +41,5 @@ router.use(express.static(path.resolve(__dirname, 'client')));
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
   var addr = server.address();
-  console.log("Chat server listening at", addr.address + ":" + addr.port);
+  console.log("server listening at", addr.address + ":" + addr.port);
 });
