@@ -6,7 +6,7 @@
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 body {
-  background-color: #489494;
+  background-color: #FFF;
   font-family:'Lucida Grande','Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
 }
 #body [ng-cloak],
@@ -80,6 +80,16 @@ ul#nav1 {
   height:100%;
   display:block;
   position: fixed;
+}
+
+.center {text-align:center;}
+
+/*-----------------------------------------------*/
+/* box erea
+/*-----------------------------------------------*/
+.gray-box-area > div {
+  background-color:#F2F2F2;
+  border: 1px solid;
 }
 
 /*-----------------------------------------------*/
