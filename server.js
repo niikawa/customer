@@ -19,7 +19,7 @@ var config = {
   stream: true, // You can enable streaming globally
 
   options: {
-    encrypt: false // Use this if you're on Windows Azure
+    encrypt: true // Use this if you're on Windows Azure
   }
 }
 
