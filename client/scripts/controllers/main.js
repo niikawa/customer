@@ -5,7 +5,7 @@
  * # MainCtrl
  * Controller of the workspaceApp
  */
-var mainCtrl = angular.module('mainCtrl',['Customer']);
+var mainCtrl = angular.module('mainCtrl',['CustomerServices']);
 mainCtrl.controller('MainCtrl',['$scope', 'Shared', 'Customer', 
 function ($scope, Shared, Customer)
 {
