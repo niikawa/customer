@@ -20,7 +20,7 @@ exports.getById = function(req, res)
 
     var request = new mssql.Request();
     request.input('id', mssql.Int, 2);
-    var sql = 'select * from ' + this.modelName + 'where id = @id';
+    var sql = 'select * from ' + tableName + 'where id = @id';
     request.query(sql);
     request.on('recordset', function(columns) {
        // レコードセットを取得するたびに呼び出される
