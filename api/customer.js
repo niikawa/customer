@@ -18,7 +18,8 @@ util.inherits(custmoer, Core);
 
 exports.getById = function(req, res)
 {
-    custmoer.getById(req.body.id, function(value)
+    console.log('custmoer getById');
+    custmoer.getById(2, function(value)
     {
         res.json({data: value});
     });
