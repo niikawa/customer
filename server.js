@@ -11,18 +11,18 @@ var express = require('express');
 
 var mssql = require('mssql');
 var config = {
-//  user: 'vxc-databese-master',
-  user: 'databese_master',
+  user: 'vxc-databese-master',
+//  user: 'databese_master',
   password: 'VirtUaleX001',
-//  server: 'oufq8kwys5.database.windows.net',
-  server: 'customerreport.c6ykdlikt0mb.ap-northeast-1.rds.amazonaws.com',
-//  database: 'CustomerReport',
-  databese: 'customerreport',
+  server: 'oufq8kwys5.database.windows.net',
+//  server: 'customerreport.c6ykdlikt0mb.ap-northeast-1.rds.amazonaws.com',
+  database: 'CustomerReport',
+//  databese: 'customerreport',
   stream: true, // You can enable streaming globally
 
   options: {
-//    encrypt: true // Use this if you're on Windows Azure
-    encrypt: false 
+    encrypt: true // Use this if you're on Windows Azure
+//    encrypt: false 
   }
 };
 
