@@ -40,8 +40,7 @@ var router = express();
 router.use(express.static(path.resolve(__dirname, 'client')));
 
 var customer = require('./api/customer.js');
-router.get('/customer/', customer.getById);
-router.get('/customer/:id/', customer.getById);
+router.get('/customer/:id', customer.getById);
 
 var server = http.createServer(router);
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
