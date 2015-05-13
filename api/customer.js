@@ -19,6 +19,7 @@ exports.getById = function(req, res)
     console.log('custmoer getById');
 
     var request = new mssql.Request();
+    request.stream = true;
 //    request.input('id', mssql.Int, 2);
 //    var sql = 'select * from ' + tableName + ' where Id = 1';
     var sql = 'select * from M_CUSTOMER';
