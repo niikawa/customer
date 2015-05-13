@@ -20,7 +20,7 @@ exports.getById = function(req, res)
 
     var ps = new mssql.PreparedStatement();
     var sql = 'select * from M_CUSTOMER where id=@id';
-    ps.input('id', sql.Int);
+    ps.input('id', mssql.Int);
     ps.prepare(sql, function(err){
         
         if (err) console.log(err);
