@@ -10,7 +10,6 @@ var async = require('async');
 var express = require('express');
 
 var mssql = require('mssql');
-
 var config = {
   user: 'vxc-databese-master',
   password: 'VirtUaleX001',
@@ -21,11 +20,14 @@ var config = {
   options: {
     encrypt: true // Use this if you're on Windows Azure
   }
-}
+};
 
 mssql.connect(config, function(err) {
-  console.log(err);
-  mssql.close();
+  if (null != err)
+  {
+    console.log('データベースコネクションエラー');
+    console.log(err);
+  }
 });
 
 //
@@ -38,6 +40,13 @@ var router = express();
 var server = http.createServer(router);
 
 router.use(express.static(path.resolve(__dirname, 'client')));
+
+var app = express();
+
+var customer = require('./api/customer');
+app.get('/customer/:id', customer.getById);
+
+
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
   var addr = server.address();

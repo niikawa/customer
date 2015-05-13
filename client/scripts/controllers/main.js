@@ -5,9 +5,9 @@
  * # MainCtrl
  * Controller of the workspaceApp
  */
-var mainCtrl = angular.module('mainCtrl',[]);
-mainCtrl.controller('MainCtrl',['$scope', 'Shared', 'Main', 
-function ($scope, Shared, Main)
+var mainCtrl = angular.module('mainCtrl',['Customer']);
+mainCtrl.controller('MainCtrl',['$scope', 'Shared', 'Customer', 
+function ($scope, Shared, Customer)
 {
     /**
      * scope初期化用
@@ -31,10 +31,13 @@ function ($scope, Shared, Main)
         setInitializeScope();
         addSocketOnEventListener();
         
-        // Project.resource.get({siteid:'niikawa' ,pid: Shared.get('id')}).$promise.then(function(response)
-        // {
-        //     $scope.$emit('getProjectComplete', response.list);
-        // });
+        alert('main controller initialize');
+        
+        Customer.resource.get({id: 1}).$promise.then(function(response)
+        {
+            alert('get response');
+            console.log(response);
+        });
     };
     
 
