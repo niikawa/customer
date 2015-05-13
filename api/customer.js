@@ -23,7 +23,7 @@ exports.getById = function(req, res)
     ps.input('id', mssql.Int);
     ps.prepare(sql, function(err){
         
-        if (err) console.log(err);
+        if (err) console.log('prepare err'); console.log(err);
         
         ps.stream = true;
         var request = ps.execute({id: 1});
@@ -41,6 +41,7 @@ exports.getById = function(req, res)
     
         request.on('error', function(err) {
            // エラーが発生するたびによばれる
+           console.log('err');
            console.log(err);
         });
     
