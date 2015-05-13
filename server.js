@@ -38,6 +38,7 @@ var router = express();
 router.use(express.static(path.resolve(__dirname, 'client')));
 
 var customer = require('./api/customer');
+router.get('/customer', customer.getAll);
 router.get('/customer/:id', customer.getById);
 
 

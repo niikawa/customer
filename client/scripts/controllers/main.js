@@ -14,6 +14,8 @@ function ($scope, Shared, Customer)
      */
     function setInitializeScope()
     {
+        $scope.customerList = [];
+        $scope.selectedCustomer = '';
     }
     
     function addSocketOnEventListener()
@@ -31,11 +33,22 @@ function ($scope, Shared, Customer)
         setInitializeScope();
         addSocketOnEventListener();
 
-        Customer.resource.get({id: 2}).$promise.then(function(response)
+        Customer.resource.get().$promise.then(function(response)
+        {
+            $scope.customerList = response.data;
+        });
+
+        Customer.resource.get({id: 1}).$promise.then(function(response)
         {
             console.log(response.data);
         });
+        
+        
     };
     
+    $scope.custmoerChangeExecute = function()
+    {
+        
+    };
 
 }]);

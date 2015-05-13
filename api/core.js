@@ -48,8 +48,8 @@ core.prototype.getAll = function(callback){
  * @param {Object} id
  * @param {Function} callback
  */
-core.prototype.getById = function(id, callback){
-    
+core.prototype.getById = function(id, callback)
+{
     var request = new this.db.Request();
     request.input('id', this.db.Int, id);
     var sql = 'select * from ' + this.modelName + 'where id = @id';

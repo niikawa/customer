@@ -2,7 +2,14 @@
             <div class="center"><h1>Customer Profile</h1></div>
             
             <div class="row col-md-12">
-                <div class="pull-left">顧客#: 9999-9999</div>
+            <div class="pull-left">顧客#:
+              <auto-complete-directive item-list="customerList" selected-item="selectedCustomer" 
+                name-propertie="name" 
+                execute="custmoerChangeExecute()">
+              </auto-complete-directive>
+            </div>
+                
+                
             </div>
             
             <div class="row">
