@@ -42,7 +42,7 @@ exports.getById = function(req, res)
         
         var request = new mssql.Request();
         request.stream = true; // You can set streaming differently for each request
-        request.query('select * from M_CUSTOMER'); // or request.execute(procedure);
+        request.query('select count(*) as count from M_CUSTOMER'); // or request.execute(procedure);
         request.on('recordset', function(columns) {
            // レコードセットを取得するたびに呼び出される
            console.log('recordset');
