@@ -33,7 +33,7 @@ function ($scope, Shared, Customer)
         
         alert('main controller initialize');
         
-        Customer.resource.get({id: 1}).$promise.then(function(response)
+        Customer.resource.get({id: 2}).$promise.then(function(response)
         {
             alert('get response');
             console.log(response);

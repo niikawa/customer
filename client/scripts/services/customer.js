@@ -4,7 +4,7 @@ customerServices.factory("Customer", ['$resource','Utility',
     {
         var customerServices = {};
         
-        customerServices.resource = $resource('customer/:id/', {id: '@id'});
+        customerServices.resource = $resource('/customer/:id/', {id: '@id'});
 
         return customerServices;
     }
