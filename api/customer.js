@@ -25,7 +25,10 @@ exports.getById = function(req, res)
         
         if (err) console.log('prepare err'); console.log(err);
         
+        console.log('ps.stream true');
         ps.stream = true;
+        
+        console.log('ps execute');
         var request = ps.execute({id: 1});
         
         request.on('recordset', function(columns) {
