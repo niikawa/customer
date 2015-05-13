@@ -2,9 +2,10 @@
             <div class="center"><h1>Customer Profile</h1></div>
             
             <div class="row col-md-12">
-            <div class="pull-left">顧客#:
+            <div class="pull-left">
               <auto-complete-directive item-list="customerList" selected-item="selectedCustomer" 
-                name-propertie="name" 
+                name-propertie="Id" 
+                append-string = "顧客#:"
                 execute="custmoerChangeExecute()">
               </auto-complete-directive>
             </div>

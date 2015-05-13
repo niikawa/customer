@@ -16,9 +16,9 @@ myApp.directive('autoCompleteDirective', function()
 {
     return {
         restrict: 'E',
-        scope: {selectedItem: '=', itemList: '=', execute: '&', namePropertie: '@'},
+        scope: {selectedItem: '=', itemList: '=', execute: '&', namePropertie: '@', appendString: '@'},
         template:   '<form class="navbar-form navbar-left"><input ng-show="!isLabel" class="form-control d-complete-input" ng-model="selectName">' +
-                    '<span ng-show="isLabel && selectName.length != 0" ng-click="changeElement()">{{selectName}}</span>' +
+                    '<span ng-show="isLabel && selectName.length != 0" ng-click="changeElement()">{{appendString}}{{selectName}}</span>' +
                     '<ul class="complete-list" ng-show="isFocus">' +
                     '<li ng-repeat="item in itemList" ng-click="click($event, item)" >' +
                     '{{item[namePropertie]}}' +
