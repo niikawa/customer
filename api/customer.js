@@ -14,23 +14,35 @@ var custmoer = function custmoer()
 var util = require('util');
 util.inherits(custmoer, Core);
 
+
+var config = {
+  user: 'vxc-databese-master',
+//  user: 'databese_master',
+  password: 'VirtUaleX001',
+  server: 'oufq8kwys5.database.windows.net',
+//  server: 'customerreport.c6ykdlikt0mb.ap-northeast-1.rds.amazonaws.com',
+  database: 'CustomerReport',
+//  databese: 'customerreport',
+  stream: true, // You can enable streaming globally
+
+  options: {
+    encrypt: true // Use this if you're on Windows Azure
+//    encrypt: false 
+  }
+};
+
 exports.getById = function(req, res)
 {
+    
     console.log('custmoer getById');
-
-    var ps = new mssql.PreparedStatement();
-    var sql = 'select * from M_CUSTOMER where id=@id';
-    ps.input('id', mssql.Int);
-    ps.prepare(sql, function(err){
+    mssql.connect(config, function(err) {
+        // ... error checks
         
-        if (err) console.log('prepare err'); console.log(err);
+        if (err) console.log(err);
         
-        console.log('ps.stream true');
-        ps.stream = true;
-        
-        console.log('ps execute');
-        var request = ps.execute({id: 1});
-        
+        var request = new mssql.Request();
+        request.stream = true; // You can set streaming differently for each request
+        request.query('select * from M_CUSTOMER'); // or request.execute(procedure);
         request.on('recordset', function(columns) {
            // レコードセットを取得するたびに呼び出される
            console.log('recordset');
@@ -52,11 +64,13 @@ exports.getById = function(req, res)
             // 常時最後によばれる
             console.log('done');
             console.log(returnValue);
-//            res.json({data: returnValue});
+            res.json({data: returnValue});
         });
-
-    });
     
+    });    
+    
+
+
 
 //    var request = new mssql.Request();
     
