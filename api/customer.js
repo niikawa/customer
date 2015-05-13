@@ -33,7 +33,7 @@ var config = {
 
 exports.getById = function(req, res)
 {
-    
+    var result = [];
     console.log('custmoer getById');
     mssql.connect(config, function(err) {
         // ... error checks
@@ -51,6 +51,7 @@ exports.getById = function(req, res)
         request.on('row', function(row) {
            // 行を取得するたびに呼ばれる
            console.log('row');
+           result.push(row);
            console.log(row);
         });
     
@@ -63,8 +64,8 @@ exports.getById = function(req, res)
         request.on('done', function(returnValue) {
             // 常時最後によばれる
             console.log('done');
-            console.log(returnValue);
-            res.json({data: returnValue});
+            console.log(result);
+            res.json({data: result});
         });
     
     });    
