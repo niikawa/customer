@@ -36,7 +36,7 @@ function ($scope, Shared, Customer)
         Customer.resource.get({id: 2}).$promise.then(function(response)
         {
             alert('get response');
-            console.log(response);
+            console.log(response.data);
         });
     };
     
