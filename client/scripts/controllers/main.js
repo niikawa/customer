@@ -30,12 +30,9 @@ function ($scope, Shared, Customer)
         $scope._construct();
         setInitializeScope();
         addSocketOnEventListener();
-        
-        alert('main controller initialize');
-        
+
         Customer.resource.get({id: 2}).$promise.then(function(response)
         {
-            alert('get response');
             console.log(response.data);
         });
     };
