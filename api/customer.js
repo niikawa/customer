@@ -21,19 +21,16 @@ exports.getById = function(req, res)
     var request = new mssql.Request();
     
     request.stream = true;
-//    request.input('id', mssql.Int, 2);
-//    var sql = 'select * from ' + tableName + ' where Id = 1';
-    var sql = 'select * from M_CUSTOMER';
+    request.input('id', mssql.Int, req.query.id);
+    var sql = 'select * from ' + tableName + ' where Id = @id';
+//    var sql = 'select * from M_CUSTOMER';
     request.query(sql);
     request.on('recordset', function(columns) {
        // レコードセットを取得するたびに呼び出される
-       console.log('recordset');
        console.log(columns);
     });
     request.on('row', function(row) {
        // 行を取得するたびに呼ばれる
-       console.log('row');
-       console.log(row);
        result.push(row);
     });
 
@@ -45,8 +42,7 @@ exports.getById = function(req, res)
     request.on('done', function(returnValue) {
         // 常時最後によばれる
         console.log('done');
-        console.log(returnValue);
-        res.json({data: returnValue, result: result});
+        res.json({data: result});
     });
 };
 
