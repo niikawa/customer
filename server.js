@@ -44,7 +44,7 @@ router.use(express.static(path.resolve(__dirname, 'client')));
 var app = express();
 
 var customer = require('./api/customer');
-app.get('/customer/:id', customer.getById);
+app.get('/customer/:id/', customer.getById);
 
 
 
