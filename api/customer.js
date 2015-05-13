@@ -18,35 +18,51 @@ exports.getById = function(req, res)
 {
     console.log('custmoer getById');
 
-    var request = new mssql.Request();
-    request.stream = true;
+    var ps = new sql.PreparedStatement();
+    var sql = 'select * from M_CUSTOMER where id=@id';
+    ps.input('id', sql.Int);
+    ps.prepare(sql, function(err){
+        
+        if (err) console.log(err);
+        
+        ps.stream = true;
+        var request = ps.execute({id: 1});
+        
+        request.on('recordset', function(columns) {
+           // レコードセットを取得するたびに呼び出される
+           console.log('recordset');
+           console.log(columns);
+        });
+        request.on('row', function(row) {
+           // 行を取得するたびに呼ばれる
+           console.log('row');
+           console.log(row);
+        });
+    
+        request.on('error', function(err) {
+           // エラーが発生するたびによばれる
+           console.log(err);
+        });
+    
+        request.on('done', function(returnValue) {
+            // 常時最後によばれる
+            console.log('done');
+            console.log(returnValue);
+//            res.json({data: returnValue});
+        });
+
+    });
+    
+
+//    var request = new mssql.Request();
+    
+    
+//    request.stream = true;
 //    request.input('id', mssql.Int, 2);
 //    var sql = 'select * from ' + tableName + ' where Id = 1';
-    var sql = 'select * from M_CUSTOMER';
-    console.log(sql);
-    request.query(sql);
-    request.on('recordset', function(columns) {
-       // レコードセットを取得するたびに呼び出される
-       console.log('recordset');
-       console.log(columns);
-    });
-    request.on('row', function(row) {
-       // 行を取得するたびに呼ばれる
-       console.log('row');
-       console.log(row);
-    });
-
-    request.on('error', function(err) {
-       // エラーが発生するたびによばれる
-       console.log(err);
-    });
-
-    request.on('done', function(returnValue) {
-        // 常時最後によばれる
-        console.log('done');
-        console.log(returnValue);
-        res.json({data: returnValue});
-    });
+//    var sql = 'select * from M_CUSTOMER';
+//    console.log(sql);
+//    request.query(sql);
 };
 
 
