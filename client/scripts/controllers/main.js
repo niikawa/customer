@@ -15,6 +15,10 @@ function ($scope, Shared, Customer)
     function setInitializeScope()
     {
         $scope.customerList = [];
+        $scope.approch = [];
+        $scope.customer = [];
+        
+        //autocomplete用
         $scope.selectedCustomer = {};
     }
     
@@ -44,6 +48,9 @@ function ($scope, Shared, Customer)
         console.log($scope.selectedCustomer);
         Customer.resource.detail({id: $scope.selectedCustomer.Id}).$promise.then(function(response)
         {
+            $scope.customer = response.customer;
+            $scope.approch = response.approch;
+            
             console.log(response);
         });
     };
