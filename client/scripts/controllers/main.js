@@ -22,11 +22,6 @@ function ($scope, Shared, Customer)
         $scope.selectedCustomer = {};
     }
     
-    function addSocketOnEventListener()
-    {
-
-    }
-    
     /**
      * 初期処理
      * @author niikawa
@@ -35,7 +30,6 @@ function ($scope, Shared, Customer)
     {
         $scope._construct();
         setInitializeScope();
-        addSocketOnEventListener();
 
         Customer.resource.get().$promise.then(function(response)
         {
@@ -45,13 +39,13 @@ function ($scope, Shared, Customer)
     
     $scope.custmoerChangeExecute = function()
     {
-        console.log($scope.selectedCustomer);
+        $scope.emit('requestStart');
         Customer.resource.detail({id: $scope.selectedCustomer.Id}).$promise.then(function(response)
         {
             $scope.customer = response.customer;
+            console.log($scope.customer);
             $scope.approch = response.approch;
-            
-            console.log(response);
+            $scope.emit('requestEnd');
         });
     };
 

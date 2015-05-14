@@ -15,7 +15,7 @@ coreCtrl.controller('CoreCtrl', ['$scope', 'Shared', function($scope, Shared)
     {
         $scope.isHeader = true;
     };
-
+    
     $scope.$on('loginComplete', function(event)
     {
         $scope.isHeader = true;
@@ -31,13 +31,14 @@ coreCtrl.controller('CoreCtrl', ['$scope', 'Shared', function($scope, Shared)
         $scope.isHeader = false;
     });
     
-    // /** アニメーションによる画面切り替え */
-    // $scope.selection = {default: true, project: false};
-    
-    // $scope.$on('changeSelection', function(event, targetSelection)
-    // {
-    //     $scope.selection.default = true;
-    //     $scope.selection.targetSelection = false;
-        
-    // });
+    $scope.$on('requestStart', function(event)
+    {
+        $scope.isSpinner = true;
+    });
+
+    $scope.$on('requestEnd', function(event)
+    {
+        $scope.isSpinner = false;
+    });
+
 }]);

@@ -21,13 +21,13 @@
     <![endif]-->
     
     <my-header ng-show="isHeader"></my-header>
-
+    
     <div class="container-fluid view-animate-container">
+      <spinner-directive is="isSpinner" src="img/728.GIF"></spinner-directive>
 
       <ng-view class="view-animate"></ng-view>
 
     </div>
-
 
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
@@ -56,6 +56,7 @@
     <script src="scripts/services/main.js"></script>
 
     <script src="scripts/directives/common/autoCompleteDirective.js"></script>
+    <script src="scripts/directives/common/spinnerDirective.js"></script>
 
   </body>
 </html>
