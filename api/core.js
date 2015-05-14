@@ -55,7 +55,7 @@ core.prototype.getById = function(id, callback)
     
     var request = new this.db.Request();
     request.input('id', this.db.Int, id);
-    var sql = 'select * from ' + this.modelName + 'where id = @id';
+    var sql = 'select * from ' + this.modelName + ' where id = @id';
     request.query(sql);
     
     request.on('recordset', function(columns) {
