@@ -20,6 +20,11 @@ core.prototype.getRequest = function()
     return new this.db.Request();
 };
 
+core.prototype.getQueryObject = function(col, table, where)
+{
+    return {col: col, table: table, where: where, request: this.getRequest()};
+};
+
 /**
  * 値をすべて取得する.
  * 
@@ -74,6 +79,11 @@ core.prototype.getById = function(id, callback)
     this.execute(sql, request, callback);
 };
 
+core.prototype.select = function(queryObject, request, callback)
+{
+    var sql = 'SELECT ' + queryObject.col + ' FROM ' + queryObject.table + ' WHERE ' + queryObject.where;
+    this.execute(sql, request, callback);
+};
 
 core.prototype.execute = function(sql, request, callback)
 {

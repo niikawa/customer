@@ -92,14 +92,18 @@ exports.getDetail = function(req, res)
                 }
                 else
                 {
-                    console.log('rank id is ' + data[0].rank_id);
-                    var sql = 'SELECT * FROM M_APPROACH T1 INNER JOIN M_RANK T2 ON T1.rank_id = T2.Id INNER JOIN M_MESSAGE T3 on T1.message_id = T3.Id';
-                    sql += ' WHERE T1.rank_id = @rank_id';
-                    var request = model.getRequest();
-                    request.input('rank_id', model.db.Int, data[0].rank_id);
-                    model.execute(sql, request, callback);
+                    var table = 'M_APPROACH T1 INNER JOIN M_RANK T2 ON T1.rank_id = T2.Id ';
+                        table += 'INNER JOIN M_MESSAGE T3 on T1.message_id = T3.Id ';
+                        table += 'INNER JOIN M_CATEGORY T4 on T3.category_id = T4.Id';
+                        
+                    var col = 'T1.Id, T2.name, T3.title, T3.situation, T3.contents, T4.name AS category_name';
+                    var where = 'T1.rank_id = @rank_id';
+                    
+                    var qObj = model.getQueryObject(col, table, where);
+                    qObj.request.input('rank_id', model.db.Int, data[0].rank_id);
+                    
+                    model.select(qObj, qObj.jrequest, callback);
                 }
-                
             },
             function(callback)
             {

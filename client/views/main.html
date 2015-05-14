@@ -61,14 +61,13 @@
                         </thead>
                         <!--  ここデータでとるところ -->
                         <tbody>
-                            <tr>
+                            
+                            <tr ng-repeat="item in approch track by $index">
                                 <td>1</td>
-                                <td>全般</td>
-                                <td>新規優良顧客化に向けて</td>
-                                <td>-</td>
-                                <td>新規優良顧客化が望める顧客です。<br>
-                                    積極的にアプローチしましょう。
-                                </td>
+                                <td>{{$index}}</td>
+                                <td>{{item.title}}</td>
+                                <td>{{item.situation}}</td>
+                                <td>{{item.contents}}</td>
                             </tr>
                         </tbody>
                     </table>
