@@ -72,7 +72,8 @@ core.prototype.getById = function(id, callback)
 
     request.on('done', function(returnValue) {
         // 常時最後によばれる
-        callback(errList, request);
+        console.log('core done');
+        callback(errList, result);
     });
 };
 
