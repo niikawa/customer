@@ -69,11 +69,11 @@ exports.getDetail = function(req, res)
     var id = req.params.id;
     if (void 0 === id)
     {
-        
+        //
     }
     model.getById(id, function(err, data)
     {
-        if (err || null === data)
+        if (err.length > 0 || null === data)
         {
             console.log(err);
             //レスポンスコード確認
@@ -108,7 +108,7 @@ exports.getDetail = function(req, res)
         {
             if (err)
             {
-                
+                console.log(err);
             }
             res.json({customer: data, approch: items[0], orders: []});
         });
