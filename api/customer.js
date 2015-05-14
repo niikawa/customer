@@ -102,7 +102,7 @@ exports.getDetail = function(req, res)
                     var qObj = model.getQueryObject(col, table, where);
                     qObj.request.input('rank_id', model.db.Int, data[0].rank_id);
                     
-                    model.select(qObj, qObj.jrequest, callback);
+                    model.select(qObj, qObj.request, callback);
                 }
             },
             function(callback)
