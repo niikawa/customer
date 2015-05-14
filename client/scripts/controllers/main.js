@@ -39,13 +39,13 @@ function ($scope, Shared, Customer)
     
     $scope.custmoerChangeExecute = function()
     {
-        $scope.emit('requestStart');
+        $scope.$emit('requestStart');
         Customer.resource.detail({id: $scope.selectedCustomer.Id}).$promise.then(function(response)
         {
             $scope.customer = response.customer;
             console.log($scope.customer);
             $scope.approch = response.approch;
-            $scope.emit('requestEnd');
+            $scope.$emit('requestEnd');
         });
     };
 
