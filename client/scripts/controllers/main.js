@@ -15,7 +15,7 @@ function ($scope, Shared, Customer)
     function setInitializeScope()
     {
         $scope.customerList = [];
-        $scope.selectedCustomer = '';
+        $scope.selectedCustomer = {};
     }
     
     function addSocketOnEventListener()

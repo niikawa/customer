@@ -158,9 +158,7 @@ myApp.directive('autoCompleteDirective', function()
                 $event.preventDefault();
                 $event.stopPropagation();
                 
-                console.log(item);
                 angular.copy(item, scope.selectedItem);
-                console.log(scope.selectedItem);
                 element.find('input').removeClass('auto-complete-item-error');
                 scope.isFocus = false;
                 if (void 0 !== scope.execute)
