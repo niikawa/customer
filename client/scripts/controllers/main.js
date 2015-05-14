@@ -37,18 +37,14 @@ function ($scope, Shared, Customer)
         {
             $scope.customerList = response.data;
         });
-
-        Customer.resource.get({id: 1}).$promise.then(function(response)
-        {
-            console.log(response.data);
-        });
-        
-        
     };
     
     $scope.custmoerChangeExecute = function()
     {
-        
+        Customer.resource.get({id: 1}).$promise.then(function(response)
+        {
+            console.log(response.data);
+        });
     };
 
 }]);

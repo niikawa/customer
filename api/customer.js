@@ -18,34 +18,37 @@ util.inherits(custmoer, Core);
 
 exports.getById = function(req, res)
 {
-    var result = [];
-    var request = new mssql.Request();
+    model.getById(req.params.id, function(err, data)
+    {
+        if (err) console.log(err);
+        res.json({data: data});
+    });
     
-    request.stream = true;
-    request.input('id', mssql.Int, req.params.id);
-    console.log(req.query.id);
-    console.log(req.params.id);
-    var sql = 'select * from ' + tableName + ' where Id = @id';
-    request.query(sql);
-    request.on('recordset', function(columns) {
-       // レコードセットを取得するたびに呼び出される
-       console.log(columns);
-    });
-    request.on('row', function(row) {
-       // 行を取得するたびに呼ばれる
-       result.push(row);
-    });
+    // var result = [];
+    // var request = new mssql.Request();
+    // request.stream = true;
+    // request.input('id', mssql.Int, req.params.id);
+    // var sql = 'select * from ' + tableName + ' where Id = @id';
+    // request.query(sql);
+    // request.on('recordset', function(columns) {
+    //   // レコードセットを取得するたびに呼び出される
+    //   console.log(columns);
+    // });
+    // request.on('row', function(row) {
+    //   // 行を取得するたびに呼ばれる
+    //   result.push(row);
+    // });
 
-    request.on('error', function(err) {
-       // エラーが発生するたびによばれる
-       console.log(err);
-    });
+    // request.on('error', function(err) {
+    //   // エラーが発生するたびによばれる
+    //   console.log(err);
+    // });
 
-    request.on('done', function(returnValue) {
-        // 常時最後によばれる
-        console.log('done');
-        res.json({data: result});
-    });
+    // request.on('done', function(returnValue) {
+    //     // 常時最後によばれる
+    //     console.log('done');
+    //     res.json({data: result});
+    // });
 };
 
 
@@ -82,5 +85,10 @@ exports.getAll = function(req, res) {
         console.log('done');
         res.json({data: result});
     });
+};
+
+exports.getDetail = function(req, res)
+{
+    res.json({data: ''});
 };
 

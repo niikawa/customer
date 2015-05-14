@@ -50,31 +50,29 @@ core.prototype.getAll = function(callback){
  */
 core.prototype.getById = function(id, callback)
 {
+    var result = [];
+    var errList = [];
+    
     var request = new this.db.Request();
     request.input('id', this.db.Int, id);
     var sql = 'select * from ' + this.modelName + 'where id = @id';
-    request.query(sql);
     request.on('recordset', function(columns) {
        // レコードセットを取得するたびに呼び出される
-       console.log('recordset');
        console.log(columns);
     });
     request.on('row', function(row) {
        // 行を取得するたびに呼ばれる
-       console.log('row');
-       console.log(row);
+       result.push(row);
     });
 
     request.on('error', function(err) {
        // エラーが発生するたびによばれる
-       console.log(err);
+       errList.push(err);
     });
 
     request.on('done', function(returnValue) {
         // 常時最後によばれる
-        console.log('done');
-        console.log(returnValue);
-        callback(returnValue);
+        callback(errList, request);
     });
 };
 
