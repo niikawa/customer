@@ -10,11 +10,11 @@ var custmoer = function custmoer()
     Core.call(this, tableName);
 };
 
-var model = new custmoer();
-
 //coreModelを継承する
 var util = require('util');
 util.inherits(custmoer, Core);
+
+var model = new custmoer();
 
 exports.getById = function(req, res)
 {
