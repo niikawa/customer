@@ -87,14 +87,16 @@ exports.getDetail = function(req, res)
             {
                 if (null === data.rank_id)
                 {
+                    console.log('rank id is null');
                     callback();
                 }
                 else
                 {
+                    console.log('rank id is ' + data.rank_id);
                     var sql = 'SELECT * FROM M_APPROACH T1 INNER JOIN M_RANK T2 ON T1.rank_id = T2.Id INNER JOIN M_MESSAGE T3 on T1.message_id = T3.Id';
                     sql += ' WHERE T1.rank_id = @rank_id';
                     var request = model.getRequest();
-                    request.input('rank?id', model.db.Int, data.rank_id);
+                    request.input('rank_id', model.db.Int, data.rank_id);
                     model.execute(sql, request, callback);
                 }
                 
@@ -106,7 +108,7 @@ exports.getDetail = function(req, res)
             }
         ],function(err, items)
         {
-            if (err)
+            if (err.length > 0)
             {
                 console.log(err);
             }

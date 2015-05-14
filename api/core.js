@@ -72,30 +72,6 @@ core.prototype.getById = function(id, callback)
     request.input('id', this.db.Int, id);
     var sql = 'select * from ' + this.modelName + ' where id = @id';
     this.execute(sql, request, callback);
-
-//   // レコードセットを取得するたびに呼び出される
-//     request.on('recordset', function(columns)
-//     {
-//       console.log(columns);
-//     });
-    
-//     // 行を取得するたびに呼ばれる
-//     request.on('row', function(row)
-//     {
-//       result.push(row);
-//     });
-
-//   // エラーが発生するたびによばれる
-//     request.on('error', function(err)
-//     {
-//       errList.push(err);
-//     });
-
-//     // 常時最後によばれる
-//     request.on('done', function(returnValue)
-//     {
-//         callback(errList, result);
-//     });
 };
 
 
