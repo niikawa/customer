@@ -5,8 +5,8 @@
  * # MainCtrl
  * Controller of the workspaceApp
  */
-var mainCtrl = angular.module('mainCtrl',['CustomerServices']);
-mainCtrl.controller('MainCtrl',['$scope', 'Shared', 'Customer', 
+var crudCtrl = angular.module('crudCtrl',['CustomerServices']);
+crudCtrl.controller('CrudCtrl',['$scope', 'Shared', 'Customer', 
 function ($scope, Shared, Customer)
 {
     /**
@@ -33,19 +33,7 @@ function ($scope, Shared, Customer)
         setInitializeScope();
         addSocketOnEventListener();
 
-        Customer.resource.get().$promise.then(function(response)
-        {
-            $scope.customerList = response.data;
-        });
     };
     
-    $scope.custmoerChangeExecute = function()
-    {
-        console.log($scope.selectedCustomer);
-        Customer.resource.detail({id: $scope.selectedCustomer.Id}).$promise.then(function(response)
-        {
-            console.log(response);
-        });
-    };
 
 }]);

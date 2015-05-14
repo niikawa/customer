@@ -1,4 +1,3 @@
-var async = require('async');
 /**
  * core collection class
  * 
@@ -7,37 +6,56 @@ var async = require('async');
  * @class core
  * @constructor
  */
-var core = function core(modelName) {
-
+var core = function core(modelName)
+{
     this.modelName = modelName;
-    this.db = require('mssql');
+};
+
+core.prototype.async = require('async');
+
+core.prototype.db = require('mssql');
+
+core.prototype.getRequest = function()
+{
+    return new this.db.Request();
 };
 
 /**
- * 単一トランザクションの処理を実行する
- */
-// core.prototype.tran = function(execute) {
-   
-//     var tran = new this.db.Transaction();
-//     tran.begin(function(err)
-//     {
-//         var request = new this.db.Request(tran);
-//         request.query(execute);
-        
-        
-//     });
-
-// };
-
-/**
- * コレクションの値をすべて取得する.
- * createdの昇順で取得.
+ * 値をすべて取得する.
  * 
  * @author niikawa
  * @method getAllSync
  * @param {Function} callback
  */
 core.prototype.getAll = function(callback){
+
+    var result = [];
+    var errList = [];
+    var request = new this.db.Request();
+
+    request.stream = true;
+    var sql = 'select * from ' + this.modelName + ' order by Id';
+    request.query(sql);
+    request.on('recordset', function(columns)
+    {
+       console.log(columns);
+    });
+    
+    request.on('row', function(row)
+    {
+       result.push(row);
+    });
+
+    request.on('error', function(err)
+    {
+        errList.push(err);
+    });
+
+    request.on('done', function(returnValue)
+    {
+        callback(errList, result);
+    });
+    
 };
 
 /**
@@ -50,35 +68,69 @@ core.prototype.getAll = function(callback){
  */
 core.prototype.getById = function(id, callback)
 {
-    var result = [];
-    var errList = [];
-    
     var request = new this.db.Request();
     request.input('id', this.db.Int, id);
     var sql = 'select * from ' + this.modelName + ' where id = @id';
+    this.execute(sql, request, callback);
+
+//   // レコードセットを取得するたびに呼び出される
+//     request.on('recordset', function(columns)
+//     {
+//       console.log(columns);
+//     });
+    
+//     // 行を取得するたびに呼ばれる
+//     request.on('row', function(row)
+//     {
+//       result.push(row);
+//     });
+
+//   // エラーが発生するたびによばれる
+//     request.on('error', function(err)
+//     {
+//       errList.push(err);
+//     });
+
+//     // 常時最後によばれる
+//     request.on('done', function(returnValue)
+//     {
+//         callback(errList, result);
+//     });
+};
+
+
+core.prototype.execute = function(sql, request, callback)
+{
+    var result = [];
+    var errList = [];
+    
+    //auery実行
     request.query(sql);
     
-    request.on('recordset', function(columns) {
-       // レコードセットを取得するたびに呼び出される
+    // レコードセットを取得するたびに呼び出される
+    request.on('recordset', function(columns)
+    {
        console.log(columns);
     });
-    request.on('row', function(row) {
-       // 行を取得するたびに呼ばれる
+    
+    // 行を取得するたびに呼ばれる
+    request.on('row', function(row)
+    {
        result.push(row);
     });
 
-    request.on('error', function(err) {
-       // エラーが発生するたびによばれる
+   // エラーが発生するたびによばれる
+    request.on('error', function(err)
+    {
        errList.push(err);
     });
 
-    request.on('done', function(returnValue) {
-        // 常時最後によばれる
-        console.log('core done');
+    // 常時最後によばれる
+    request.on('done', function(returnValue)
+    {
         callback(errList, result);
     });
 };
-
 
 //モジュール化
 module.exports = core;
