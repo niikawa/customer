@@ -58,6 +58,7 @@ request.post(options, function(error, response, body){
     console.log(body.name);
   } else {
     console.log('error: '+ response.statusCode);
+    console.log('error: '+ response);
   }
 });
 
