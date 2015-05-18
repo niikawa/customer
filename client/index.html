@@ -22,10 +22,10 @@
     
     <my-header ng-show="isHeader"></my-header>
     
-    <div class="container-fluid view-animate-container">
+    <div class="container-fluid">
       <spinner-directive is="isSpinner" src="img/728.GIF"></spinner-directive>
 
-      <ng-view class="view-animate"></ng-view>
+      <ng-view ></ng-view>
 
     </div>
 
@@ -54,6 +54,8 @@
     <script src="scripts/services/auth.js"></script>
     <script src="scripts/services/customer.js"></script>
     <script src="scripts/services/main.js"></script>
+
+    <script src="scripts/services/azure.js"></script>
 
     <script src="scripts/directives/common/autoCompleteDirective.js"></script>
     <script src="scripts/directives/common/spinnerDirective.js"></script>

@@ -5,9 +5,9 @@
  * # MainCtrl
  * Controller of the workspaceApp
  */
-var mainCtrl = angular.module('mainCtrl',['CustomerServices']);
-mainCtrl.controller('MainCtrl',['$scope', 'Shared', 'Customer', 
-function ($scope, Shared, Customer)
+var mainCtrl = angular.module('mainCtrl',['CustomerServices', 'AzureServices']);
+mainCtrl.controller('MainCtrl',['$scope', 'Shared', 'Customer', 'Azure',
+function ($scope, Shared, Customer, Azure)
 {
     /**
      * scope初期化用
@@ -34,6 +34,10 @@ function ($scope, Shared, Customer)
         Customer.resource.get().$promise.then(function(response)
         {
             $scope.customerList = response.data;
+        });
+        Azure.test(1,1,1).$promise.then(function(response)
+        {
+            
         });
     };
     
