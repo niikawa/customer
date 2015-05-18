@@ -6,7 +6,10 @@ myApp.config(
     function($httpProvider) 
     {
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;application/json;charset=utf-8';
-        
+        $httpProvider.defaults.useXDomain = true;
+        $httpProvider.defaults.withCredentials = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    
         $httpProvider.interceptors.push
         (
             function ($q, Utility)
