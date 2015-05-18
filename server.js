@@ -51,7 +51,7 @@ var options = {
       'content-type': 'application/x-www-form-urlencoded',    
       'auth': 'Bearer '+ key,
   },
-  json: true
+  json: false
 };
 
 request.post(options, function(error, response, body){
