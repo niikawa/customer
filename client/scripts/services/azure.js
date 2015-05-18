@@ -10,7 +10,6 @@ azureServices.factory("Azure", ['$resource', '$http','Shared',
             var config = {
                 headers: {
                     'Authorization': 'Bearer '+ key,
-                    'Content-Type': 'application/x-www-form-urlencoded;application/json;charset=utf-8'
                 }
             };
             var param = {
