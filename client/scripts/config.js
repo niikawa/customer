@@ -5,7 +5,7 @@ var myApp = angular.module('myApp');
 myApp.config(
     function($httpProvider) 
     {
-        $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;application/json;charset=utf-8';
+        $httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
         $httpProvider.defaults.useXDomain = true;
         $httpProvider.defaults.withCredentials = true;
         delete $httpProvider.defaults.headers.common['X-Requested-With'];

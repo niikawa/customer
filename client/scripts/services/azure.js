@@ -8,7 +8,9 @@ azureServices.factory("Azure", ['$resource', '$http','Shared',
         {
             var key = 'TwKosJWQXnOc4KZak2WKPnE0lyCjqQfmrVLgFTW20gH2UCmB9a0j66eSNU7GWH+8x4xVBEVhQi+gpJQr+AgENw==';
             var config = {
-                    'Authorization:': 'Bearer '+ key,
+                headers: {
+                    'Authorization': 'Bearer '+ key,
+                }
             };
             var param = {
                 Inputs:{
