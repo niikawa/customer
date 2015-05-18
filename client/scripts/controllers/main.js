@@ -35,7 +35,7 @@ function ($scope, Shared, Customer, Azure)
         {
             $scope.customerList = response.data;
         });
-        Azure.test(1,1,1).$promise.then(function(response)
+        Azure.test(1,1,1).then(function(response)
         {
             
         });
