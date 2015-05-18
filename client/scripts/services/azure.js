@@ -24,9 +24,13 @@ azureServices.factory("Azure", ['$resource', '$http','Shared',
                 console.log('success');
                 console.log(data);
             }
-            ).error(function(data)
+            ).error(function(data, status, headers, config)
             {
                 console.log('err');
+                console.log(data);
+                console.log(status);
+                console.log(headers);
+                console.log(config);
             });
             return promise;
         };
