@@ -6,7 +6,7 @@ azureServices.factory("Azure", ['$resource', '$http','Shared',
         
         azureServices.test = function(data1,data2,data3)
         {
-            var key = '4iPyBGgZC9sXPL9Dvk8eynKhQWsBPwZ/mJ3/eKCxIj5gZs+VIDHtQbVlEO7Ery2wuLZh/Mq4qJjCnHuPW7Xogg==';
+            var key = 'TwKosJWQXnOc4KZak2WKPnE0lyCjqQfmrVLgFTW20gH2UCmB9a0j66eSNU7GWH+8x4xVBEVhQi+gpJQr+AgENw==';
             var config = {
                 headers: {
                     'Authorization': 'Bearer '+ key,
@@ -20,7 +20,7 @@ azureServices.factory("Azure", ['$resource', '$http','Shared',
                     }
                 }
             };
-            var url = 'https://ussouthcentral.services.azureml.net/workspaces/bb07a48a7dce4617b33d3a20dd4e2604/services/c43a39e8bf454632a00268bbae4c580f/execute?api-version=2.0&details=true';
+            var url = 'https://ussouthcentral.services.azureml.net/workspaces/bb07a48a7dce4617b33d3a20dd4e2604/services/82d002728e7842f5828b114a21511835/execute?api-version=2.0&details=true';
             //url += '&callback=JSON_CALLBACK';
 
             var promise = $http.post(url, param, config).success(function(data, status, headers, config)
