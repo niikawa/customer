@@ -7,7 +7,12 @@ azureServices.factory("Azure", ['$resource', '$http','Shared',
         azureServices.test = function(data1,data2,data3)
         {
             var key = '4iPyBGgZC9sXPL9Dvk8eynKhQWsBPwZ/mJ3/eKCxIj5gZs+VIDHtQbVlEO7Ery2wuLZh/Mq4qJjCnHuPW7Xogg==';
-            var config = {headers: {Authorization: 'Bearer '+ key}};
+            var config = {
+                headers: {
+                    'Authorization': 'Bearer '+ key,
+                    'Content-Type': 'application/x-www-form-urlencoded;application/json;charset=utf-8'
+                }
+            };
             var param = {
                 Inputs:{
                     input1:{
