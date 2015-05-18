@@ -32,6 +32,38 @@ mssql.connect(config, function(err) {
     console.log('データベースコネクションエラー');
     console.log(err);
   }
+  
+    var key = 'TwKosJWQXnOc4KZak2WKPnE0lyCjqQfmrVLgFTW20gH2UCmB9a0j66eSNU7GWH+8x4xVBEVhQi+gpJQr+AgENw==';
+    var config = {
+        headers: {
+            'Authorization': 'Bearer '+ key,
+        }
+    };
+    var param = {
+        Inputs:{
+            input1:{
+                ColumnNames: [ "純広告","リスティング","CV_純広告","CV_リスティング"],
+                Values: [1,2, 3, 0]
+            }
+        }
+    };
+    var url = 'https://ussouthcentral.services.azureml.net/workspaces/bb07a48a7dce4617b33d3a20dd4e2604/services/82d002728e7842f5828b114a21511835/execute?api-version=2.0&details=true';
+    
+    http.post(url, param, function(res)
+    {
+      var body='';
+      res.setEncoding('utf8');
+      res.on('data', function(chunk){
+      		body += chunk;
+      	});
+      
+      	res.on('end', function(res){
+      		var ret = JSON.parse(body);
+      		console.log(ret);
+      	});      
+      
+    }).on('error', function(){});
+
 });
 
 var router = express();
