@@ -50,7 +50,7 @@ var options = {
   },
   headers: {
       'content-type': 'application/x-www-form-urlencoded',    
-      'auth': 'Bearer '+ key,
+      'auth': {'bearer ': key},
   },
   json: true
 };
