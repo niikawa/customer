@@ -48,8 +48,8 @@ var options = {
         }
   },
   headers: {
-      'content-type': 'application/x-www-form-urlencoded',    
-      'Authorization': 'Bearer '+ key,
+      //'content-type': 'application/x-www-form-urlencoded',    
+      'auth': 'Bearer '+ key,
   },
   json: true
 };
