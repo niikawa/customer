@@ -48,6 +48,7 @@ var options = {
         }
   },
   headers: {
+      'content-type': 'application/x-www-form-urlencoded',    
       'Authorization': 'Bearer '+ key,
   },
   json: true
@@ -58,7 +59,7 @@ request.post(options, function(error, response, body){
     console.log(body.name);
   } else {
     console.log('error: '+ response.statusCode);
-    console.log('error: '+ response);
+    console.log(response);
   }
 });
 
