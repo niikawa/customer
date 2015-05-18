@@ -49,8 +49,9 @@ var options = {
         GlobalParameters: {}
   },
   headers: {
-      'content-type': 'application/x-www-form-urlencoded',    
+      'Content-Type': 'application/json',    
       'auth': {'bearer ': key},
+      Authorization: {'bearer ': key}
   },
   json: true
 };
