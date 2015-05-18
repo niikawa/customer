@@ -56,7 +56,7 @@ var options = {
   auth: {
     'user': 'new.river0314@gmail.com',
     'pass' : 'taku@0314',
-    'bearer ': key},
+    'bearerToken ': key},
 };
 
 request.post(options, function(error, response, body){
