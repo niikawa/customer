@@ -45,13 +45,14 @@ var options = {
                 ColumnNames: [ "純広告","リスティング","CV_純広告","CV_リスティング"],
                 Values: [1,2, 3, 0]
             }
-        }
+        },
+        GlobalParameters: {}
   },
   headers: {
       'content-type': 'application/x-www-form-urlencoded',    
       'auth': 'Bearer '+ key,
   },
-  json: false
+  json: true
 };
 
 request.post(options, function(error, response, body){
