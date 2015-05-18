@@ -53,7 +53,10 @@ var options = {
       'Content-Type': 'application/json',    
       Authorization: {'bearer ': key}
   },
-  auth: {'bearer ': key},
+  auth: {
+    'user': 'new.river0314@gmail.com',
+    'pass' : 'taku@0314',
+    'bearer ': key},
 };
 
 request.post(options, function(error, response, body){
