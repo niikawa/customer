@@ -27,6 +27,7 @@ var config = {
 };
 
 mssql.connect(config, function(err) {
+  
   if (null != err)
   {
     console.log('データベースコネクションエラー');
@@ -62,7 +63,7 @@ mssql.connect(config, function(err) {
       		console.log(ret);
       	});      
       
-    }).on('error', function(){});
+    }).on('error', function(e){console.log(e)});
 
 });
 

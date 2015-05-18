@@ -35,10 +35,10 @@ function ($scope, Shared, Customer, Azure)
         {
             $scope.customerList = response.data;
         });
-        Azure.test(1,1,1).then(function(response)
-        {
+        // Azure.test(1,1,1).then(function(response)
+        // {
             
-        });
+        // });
     };
     
     $scope.custmoerChangeExecute = function()
