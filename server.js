@@ -68,6 +68,7 @@ var param = {
 var options = {
   uri: 'https://ussouthcentral.services.azureml.net/workspaces/bb07a48a7dce4617b33d3a20dd4e2604/services/82d002728e7842f5828b114a21511835/execute?api-version=2.0&details=true',
   form: JSON.stringify(param),
+  body: JSON.stringify(param),
   headers: {
       'Content-Type': 'application/json',    
       'Authorization': 'bearer ' + key
