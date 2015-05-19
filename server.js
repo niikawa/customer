@@ -51,7 +51,7 @@ var options = {
   form: JSON.stringify(param),
   headers: {
       'Content-Type': 'application/json',    
-      'Authorization': 'bearer ' + key
+//      'Authorization': 'bearer ' + key
   },
   auth: {
     'user': 'new.river0314@gmail.com',
