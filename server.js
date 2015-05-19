@@ -38,14 +38,33 @@ mssql.connect(config, function(err) {
 var request = require('request');
 var key = 'TwKosJWQXnOc4KZak2WKPnE0lyCjqQfmrVLgFTW20gH2UCmB9a0j66eSNU7GWH+8x4xVBEVhQi+gpJQr+AgENw==';
 var param = {
-        Inputs:{
-            input1:{
-                ColumnNames: [ "純広告","リスティング","CV_純広告","CV_リスティング"],
-                Values: [1,2, 3, 0]
-            }
-        },
-        GlobalParameters: {}
-};
+  "Inputs": {
+    "input1": {
+      "ColumnNames": [
+        "純広告",
+        "リスティング",
+        "CV_純広告",
+        "CV_リスティング"
+      ],
+      "Values": [
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ]
+    }
+  },
+  "GlobalParameters": {}
+}
+
 var options = {
   uri: 'https://ussouthcentral.services.azureml.net/workspaces/bb07a48a7dce4617b33d3a20dd4e2604/services/82d002728e7842f5828b114a21511835/execute?api-version=2.0&details=true',
   form: JSON.stringify(param),
