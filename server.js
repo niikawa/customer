@@ -52,13 +52,18 @@ var param = {
           "0",
           "0",
           "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "0"
         ]
       ]
     }
   },
   "GlobalParameters": {}
-};
-
+}
 var s = JSON.stringify(param);
 console.log(JSON.stringify(param));
 console.log(JSON.parse(s));
@@ -68,7 +73,7 @@ var options = {
   form: JSON.stringify(param),
   //body: param,
   headers: {
-      'content-Type': 'application/json',    
+      'Content-Type': 'application/json',    
       'Authorization': 'bearer ' + key
   },
   auth: {
