@@ -87,7 +87,7 @@ var options = {
 request.post(options, function(error, response, body){
   if (!error && response.statusCode == 200) {
     console.log('request ok!');
-    console.log(body.name);
+    console.log(body);
   } else {
     console.log('error: '+ response.statusCode);
     console.log(response);
