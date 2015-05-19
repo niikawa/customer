@@ -36,7 +36,7 @@ mssql.connect(config, function(err) {
 });
 
 var request = require('request');
-var key = 'TwKosJWQXnOc4KZak2WKPnE0lyCjqQfmrVLgFTW20gH2UCmB9a0j66eSNU7GWH+8x4xVBEVhQi+gpJQr+AgENw==';
+var key = 'L825dQ67tJJsS6sq/cHdldgZqsOYYqc+qAoh87gb8BmzjsGWcK5pNKbqyelE6nl9OeSudBdjU5jYYcx51ZYfJw==';
 var param = {
         Inputs:{
             input1:{
@@ -47,7 +47,7 @@ var param = {
         GlobalParameters: {}
 };
 var options = {
-  uri: 'https://ussouthcentral.services.azureml.net/workspaces/bb07a48a7dce4617b33d3a20dd4e2604/services/82d002728e7842f5828b114a21511835/execute?api-version=2.0&details=true',
+  uri: 'https://ussouthcentral.services.azureml.net/workspaces/bb07a48a7dce4617b33d3a20dd4e2604/services/7ab0e605f9ac4551a26255eac318a4b3/execute?api-version=2.0&details=true',
   form: JSON.stringify(param),
   headers: {
       'Content-Type': 'application/json',    
@@ -56,11 +56,13 @@ var options = {
   auth: {
     'user': 'new.river0314@gmail.com',
     'pass' : 'taku@0314',
-    'bearerToken ': key},
+    'sendImmediately': false,
+    'bearer': key},
 };
 
 request.post(options, function(error, response, body){
   if (!error && response.statusCode == 200) {
+    console.log('request ok!');
     console.log(body.name);
   } else {
     console.log('error: '+ response.statusCode);
