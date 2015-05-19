@@ -52,12 +52,13 @@ var param = {
           "0",
           "0",
           "0"
-        ]
-      ]
-    }
+        ],
+      ],
+    },
   },
   "GlobalParameters": {}
-}
+};
+
 console.log(JSON.stringify(param));
 var options = {
   uri: 'https://ussouthcentral.services.azureml.net/workspaces/bb07a48a7dce4617b33d3a20dd4e2604/services/82d002728e7842f5828b114a21511835/execute?api-version=2.0&details=true',
@@ -81,6 +82,7 @@ request.post(options, function(error, response, body){
   } else {
     console.log('error: '+ response.statusCode);
     console.log(response);
+    console.log(body);
   }
 });
 
@@ -107,3 +109,5 @@ server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
   var addr = server.address();
   console.log("server listening at", addr.address + ":" + addr.port);
 });
+
+
