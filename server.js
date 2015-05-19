@@ -65,7 +65,7 @@ var options = {
   form: param,
   //body: param,
   headers: {
-//      'Content-Type': 'application/json',    
+      'Content-Type': 'application/json',    
       'Authorization': 'bearer ' + key
   },
   auth: {
