@@ -76,11 +76,11 @@ var options = {
       'Content-Type': 'application/json',    
       'Authorization': 'bearer ' + key
   },
-  auth: {
-    'user': 'new.river0314@gmail.com',
-    'pass' : 'taku@0314',
-    'sendImmediately': false,
-    'bearer': key},
+  // auth: {
+  //   'user': 'new.river0314@gmail.com',
+  //   'pass' : 'taku@0314',
+  //   'sendImmediately': false,
+  //   'bearer': key},
 };
 
 
