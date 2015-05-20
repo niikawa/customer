@@ -72,6 +72,7 @@ var options = {
       'content-type': 'application/json',   
       'Authorization': 'bearer ' + key
   },
+  azure: true,
   // auth: {
   //   'user': '',
   //   'pass' : '',
@@ -79,7 +80,6 @@ var options = {
   //   'bearer': key},
 };
 
-request.azure = true;
 request.post(options, function(error, response, body){
   if (!error && response.statusCode == 200) {
     console.log('request ok!');
