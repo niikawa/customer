@@ -50,7 +50,7 @@ function ($scope, Shared, Customer, Azure)
         
         Customer.resource.orders({id: $scope.selectedCustomer.Id}).$promise.then(function(response)
         {
-            $scope.customer = response.orders;
+            $scope.orders = response.orders;
             $scope.$emit('requestEnd');
         });
         
