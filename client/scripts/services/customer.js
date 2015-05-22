@@ -12,6 +12,12 @@ customerServices.factory("Customer", ['$resource','Utility',
                 url: 'custmoer/detail/:id',
                 cache: true,
             },
+            orders:
+            {
+                method: 'GET',
+                url: 'custmoer/orders/:id',
+                cache: true,
+            }
         });
 
         return customerServices;

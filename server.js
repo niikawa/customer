@@ -93,6 +93,7 @@ var customer = require('./api/customer');
 router.get('/customer', customer.getAll);
 router.get('/customer/:id', customer.getById);
 router.get('/custmoer/detail/:id', customer.getDetail);
+router.get('/custmoer/orders/:id', customer.orders);
 
 //
 // ## SimpleServer `SimpleServer(obj)`

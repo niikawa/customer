@@ -122,3 +122,30 @@ exports.getDetail = function(req, res)
     });
 };
 
+/**
+ * 
+ */
+exports.orders = function(req, res)
+{
+    var id = req.params.id;
+    if (void 0 === id)
+    {
+        //
+    }
+    
+    var col = '*';
+    var table =  'T_READ_ORDERS';
+    var where = 'customer_id = @customer_id order by date';
+    
+    var qObj = model.getQueryObject(col, table, where);
+    qObj.request.input('customer_id', model.db.Int, id);
+    
+    model.select(qObj, qObj.request, function(err, data)
+    {
+        if (err)
+        {
+            //
+        }
+        res.json({orders: data});
+    });
+};

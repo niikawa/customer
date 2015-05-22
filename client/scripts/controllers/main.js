@@ -35,10 +35,6 @@ function ($scope, Shared, Customer, Azure)
         {
             $scope.customerList = response.data;
         });
-        // Azure.test(1,1,1).then(function(response)
-        // {
-            
-        // });
     };
     
     $scope.custmoerChangeExecute = function()
@@ -51,6 +47,13 @@ function ($scope, Shared, Customer, Azure)
             $scope.rank = $scope.approch[0].name; 
             $scope.$emit('requestEnd');
         });
+        
+        Customer.resource.orders({id: $scope.selectedCustomer.Id}).$promise.then(function(response)
+        {
+            $scope.customer = response.orders;
+            $scope.$emit('requestEnd');
+        });
+        
     };
 
 }]);
