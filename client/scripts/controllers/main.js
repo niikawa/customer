@@ -48,7 +48,7 @@ function ($scope, Shared, Customer, Azure)
             $scope.$emit('requestEnd');
         });
         
-        Customer.resource.orders({id: $scope.selectedCustomer.Id}).$promise.then(function(response)
+        Customer.resource.orders({id: $scope.selectedCustomer.customer_id}).$promise.then(function(response)
         {
             $scope.orders = response.orders;
             $scope.$emit('requestEnd');
