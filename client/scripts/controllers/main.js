@@ -17,7 +17,7 @@ function ($scope, Shared, Customer, Azure)
         $scope.customerList = [];
         $scope.approch = [];
         $scope.customer = [];
-        
+        $scope.rank = '';
         //autocomplete用
         $scope.selectedCustomer = {};
     }
@@ -47,8 +47,8 @@ function ($scope, Shared, Customer, Azure)
         Customer.resource.detail({id: $scope.selectedCustomer.Id}).$promise.then(function(response)
         {
             $scope.customer = response.customer;
-            console.log($scope.customer);
             $scope.approch = response.approch;
+            $scope.rank = $scope.approch[0].name; 
             $scope.$emit('requestEnd');
         });
     };
