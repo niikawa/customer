@@ -73,11 +73,6 @@ var options = {
       'Authorization': 'bearer ' + key
   },
   azure: true,
-  // auth: {
-  //   'user': '',
-  //   'pass' : '',
-  //   'sendImmediately': false,
-  //   'bearer': key},
 };
 
 request.post(options, function(error, response, body){
