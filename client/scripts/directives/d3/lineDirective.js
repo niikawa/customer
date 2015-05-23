@@ -95,7 +95,7 @@ var parseDate = d3.time.format("%Y/%m/%d").parse;
                 scope.data.forEach(function(d)
                 {
                     d.date = parseDate(d.date);
-                    d.price += d.price;
+                    d.price = +d.price;
                     console.log(d.date);
                 });
                 
