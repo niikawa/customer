@@ -24,7 +24,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             // 線の定義
             var line = d3.svg.line()
                 .x(function(d) { return x(d.date); })
-                .y(function(d) { return y(d.close); });
+                .y(function(d) { return y(d.price); });
                 
             // 初期化時に可視化領域の確保
             var svg = d3.select(element[0]).append('svg').style('width', '100%');
@@ -57,7 +57,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 x.domain(d3.extent(dataSet, function(d) { return d.date; }));
                 y.domain(d3.extent(dataSet, function(d) { return d.price; }));
 
-                
                 // (D3) enter()はCollection要素の追加に対応.
                 var createdGroup = dataSet.enter().append('g').classed('data-group', true).each(function(d)
                 {
