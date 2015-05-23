@@ -40,7 +40,7 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
             var watched = {}; 
 
             // (Angular) $parseでCollection要素へのアクセサを確保しておく.
-            var getId = $parse(scope.key || 'id');
+            var getId = $parse(scope.key || 'Id');
             var getValue = $parse(scope.valueProp || 'value');
             var getLabel = $parse(scope.label || 'name');
 
@@ -56,12 +56,12 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
 //                var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
 
 //                var dataSet = svg.selectAll('g').data(scope.data, getId);
-                x.domain(d3.extent(scope.data, function(d) { return d.date; }));
+                x.domain(d3.extent(scope.data, function(d) { return d.Id; }));
                 y.domain(d3.extent(scope.data, function(d) { return d.price; }));
                 
                 // 線の定義
                 var line = d3.svg.line()
-                    .x(function(d) { return x(d.date); })
+                    .x(function(d) { return x(d.Id); })
                     .y(function(d) { return y(d.price); });
                     
                 // データを入力ドメインとして設定
@@ -94,7 +94,7 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
                 // (D3) Collection要素変動の度に再計算する箇所.
                 scope.data.forEach(function(d)
                 {
-                    d.date = d.date;
+                    d.Id = d.Id;
                     d.price = d.price;
 //                    console.log(d.date);
                 });
