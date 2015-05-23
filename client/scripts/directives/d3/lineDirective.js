@@ -57,8 +57,8 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 
                 // データを入力ドメインとして設定
                 // 同時にextentで目盛りの単位が適切になるようにする
-                x.domain(d3.extent(dataSet, function(d) { return d.date; }));
-                y.domain(d3.extent(dataSet, function(d) { return d.price; }));
+                x.domain(d3.extent(scope.date, function(d) { return d.date; }));
+                y.domain(d3.extent(scope.data, function(d) { return d.price; }));
                 
                 svg.append("g").attr("class", "x axis").call(xAxis);
                 svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(getLabel);
