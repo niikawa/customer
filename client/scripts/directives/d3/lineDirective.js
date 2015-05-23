@@ -37,6 +37,10 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             var getValue = $parse(scope.valueProp || 'value');
             var getLabel = $parse(scope.label || 'name');
 
+                console.log(getId);
+                console.log(getValue);
+                console.log(getLabel);
+
             // (Angular) Collectionの要素変動を監視.
             scope.$watchCollection('data', function()
             {
@@ -47,7 +51,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
 
                 // (D3 , Angular) data関数にて, $scopeとd3のデータを紐付ける.
                 var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
-                console.log(dataSet);
                 
                 // データを入力ドメインとして設定
                 // 同時にextentで目盛りの単位が適切になるようにする
@@ -94,7 +97,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 {
                     d.date = d.date;
                     d.price = +d.price;
-                    console.log(d.date);
+//                    console.log(d.date);
                 });
                 
                 // path要素をsvgに表示し、折れ線グラフを設定
