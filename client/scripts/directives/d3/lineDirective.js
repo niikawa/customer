@@ -29,7 +29,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             // 初期化時に可視化領域の確保
             var svg = d3.select(element[0]).append('svg').style('width', '100%');
 
-            var colorScale = d3.scale.category20();
             // $watchリスナの登録解除関数格納用.
             var watched = {}; 
 
@@ -52,7 +51,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 // データを入力ドメインとして設定
                 // 同時にextentで目盛りの単位が適切になるようにする
                 x.domain(d3.extent(dataSet, function(d) { return d.date; }));
-                y.domain(d3.extent(dataSet, function(d) { return d.value; }));
+                y.domain(d3.extent(dataSet, function(d) { return d.price; }));
 
                 
                 // (D3) enter()はCollection要素の追加に対応.
@@ -92,9 +91,9 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 // (D3) Collection要素変動の度に再計算する箇所.
                 dataSet.each(function(d, i)
                 {
-                    console.log(d);
                     d.date = parseDate(d.date);
-                    d.value = +d.value;
+                    d.price = +d.price;
+                    console.log(d.date);
                 });
                 
                 // path要素をsvgに表示し、折れ線グラフを設定
