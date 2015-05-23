@@ -22,7 +22,7 @@ var margin = {
 
 var size = {
   width : 800,
-  height: 400
+  height: 1000
 };
 var parseDate = d3.time.format("%Y-%m-%d").parse;
             
