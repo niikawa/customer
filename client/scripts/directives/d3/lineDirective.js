@@ -97,8 +97,8 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
 //                    console.log(d.date);
                 });
                 
-                createdGroup.append("g").call(xAxis);
-                createdGroup.append("g").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(getLabel);
+                createdGroup.append("g").attr("class", "x axis").call(xAxis);
+                createdGroup.append("g").attr("class", "y axis").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(getLabel);
                 
                 // path要素をsvgに表示し、折れ線グラフを設定
                 createdGroup.append("path")
