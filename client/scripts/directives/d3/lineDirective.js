@@ -33,7 +33,7 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
             var y = d3.scale.linear().range([size.height - margin.top - margin.bottom, 0]);
 
             // 軸の定義
-            var xAxis = d3.svg.axis().scale(x).orient("bottom");
+            var xAxis = d3.svg.axis().scale(x).orient("bottom").tickFormat(d3.time.format("%y%m%d"));
             var yAxis = d3.svg.axis().scale(y).orient("left");
             
             // $watchリスナの登録解除関数格納用.
@@ -95,11 +95,11 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
                 scope.data.forEach(function(d)
                 {
                     d.date = parseDate(d.date);
-                    d.price = d.price;
-//                    console.log(d.date);
+                    d.price += d.price;
+                    console.log(d.date);
                 });
                 
-                svg.append("g").attr("class", "x axis").call(xAxis);
+                svg.append("g").attr("class", "x axis").call(xAxis).attr("transform", "translate(0, " + ( size.height - margin.top - margin.bottom ) + ")");
                 svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(getLabel);
                 
                 // path要素をsvgに表示し、折れ線グラフを設定
