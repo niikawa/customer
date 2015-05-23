@@ -36,30 +36,6 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
             var xAxis = d3.svg.axis().scale(x).orient("bottom");
             var yAxis = d3.svg.axis().scale(y).orient("left");
             
-            // 線の定義
-            var line = d3.svg.line()
-                .x(function(d) { return x(d.date); })
-                .y(function(d) { return y(d.price); });
-                
-            // 描画
-            scope.data.forEach(function(d){
-              d.date = d.date;
-              d.value = +d.value;
-            });            
-
-            x.domain(d3.extent(scope.date, function(d) { return d.date; }));
-            y.domain(d3.extent(scope.data, function(d) { return d.price; }));
-            
-            svg.append("g").attr("class", "x axis").call(xAxis);
-            svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text('price');
-
-            svg.append("path")
-                .datum(scope.data)
-                .attr("class", "line")
-                .attr("stroke", "black")    // 線の色を指定
-                .attr("fill", "none")
-                .attr("d", line);            
-
             // $watchリスナの登録解除関数格納用.
             var watched = {}; 
 
@@ -78,36 +54,41 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
 
                 // (D3 , Angular) data関数にて, $scopeとd3のデータを紐付ける.
                 var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
-
+                
+                // 線の定義
+                var line = d3.svg.line()
+                    .x(function(d) { return x(d.date); })
+                    .y(function(d) { return y(d.price); });
+                    
                 // データを入力ドメインとして設定
                 // 同時にextentで目盛りの単位が適切になるようにする
-                x.domain(d3.extent(scope.date, function(d) { return d.date; }));
-                y.domain(d3.extent(scope.data, function(d) { return d.price; }));
+                x.domain(d3.extent(dataSet, function(d) { return d.date; }));
+                y.domain(d3.extent(dataSet, function(d) { return d.price; }));
                 
                 svg.append("g").attr("class", "x axis").call(xAxis);
                 svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(getLabel);
                 
                 // (D3) enter()はCollection要素の追加に対応.
-                // var createdGroup = dataSet.enter().append('g').classed('data-group', true).each(function(d)
-                // {
-                //     // (Angular) Collection要素毎の値に対する変更は、$watchで仕込んでいく.
-                //     var self = d3.select(this);
-                //     watched[getId(d)] = scope.$watch(function()
-                //     {
-                //         return getValue(d);
-                //     },
-                //     function(v)
-                //     {
-                //         self.select('rect').attr('width', v);
-                //     });
-                // });
+                var createdGroup = dataSet.enter().append('g').classed('data-group', true).each(function(d)
+                {
+                    // (Angular) Collection要素毎の値に対する変更は、$watchで仕込んでいく.
+                    var self = d3.select(this);
+                    watched[getId(d)] = scope.$watch(function()
+                    {
+                        return getValue(d);
+                    },
+                    function(v)
+                    {
+                        self.select('rect').attr('width', v);
+                    });
+                });
                 
                 // createdGroup.append('rect').attr('x', 130).attr('height', 18).attr('fill', function(d)
                 // {
                 //     return colorScale(d.name);
                 // });
                 
-                // createdGroup.append('text').text(getLabel).attr('height', 15);
+                createdGroup.append('text').text(getLabel).attr('height', 15);
 
                 // (D3) exit()はCollection要素の削除に対応.
                 dataSet.exit().each(function(d)
@@ -119,16 +100,15 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
                 }).remove();
 
                 // (D3) Collection要素変動の度に再計算する箇所.
-                scope.data.each(function(d, i)
+                dataSet.each(function(d, i)
                 {
                     d.date = d.date;
                     d.price = +d.price;
 //                    console.log(d.date);
                 });
                 
-                
                 // path要素をsvgに表示し、折れ線グラフを設定
-                svg.append("path")
+                createdGroup.append("path")
                     .datum(scope.data)
                     .attr("class", "line")
                     .attr("stroke", "black")    // 線の色を指定
