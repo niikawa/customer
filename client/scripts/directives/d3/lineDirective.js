@@ -56,12 +56,12 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
 //                var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
 
 //                var dataSet = svg.selectAll('g').data(scope.data, getId);
-                x.domain(d3.extent(scope.data, function(d) { return d.Id; }));
+                x.domain(d3.extent(scope.data, function(d) { return d.date; }));
                 y.domain(d3.extent(scope.data, function(d) { return d.price; }));
                 
                 // 線の定義
                 var line = d3.svg.line()
-                    .x(function(d) { return x(d.Id); })
+                    .x(function(d) { return x(d.date); })
                     .y(function(d) { return y(d.price); });
                     
                 // データを入力ドメインとして設定
@@ -94,7 +94,7 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
                 // (D3) Collection要素変動の度に再計算する箇所.
                 scope.data.forEach(function(d)
                 {
-                    d.Id = d.Id;
+                    d.date = d.date;
                     d.price = d.price;
 //                    console.log(d.date);
                 });
