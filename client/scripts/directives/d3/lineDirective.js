@@ -96,9 +96,9 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
                 dataSet.exit().each(function(d)
                 {
                     // (Angular) $watchに登録されたリスナを解除して、メモリリークを防ぐ.
-                    var id = getId(d);
-                    watched[id]();
-                    delete watched[id];
+                    // var id = getId(d);
+                    // watched[id]();
+                    // delete watched[id];
                 }).remove();
 
                 // (D3) Collection要素変動の度に再計算する箇所.
