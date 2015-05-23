@@ -22,7 +22,7 @@ var margin = {
 
 var size = {
   width : 800,
-  height: 1000
+  height: 400
 };
 var parseDate = d3.time.format("%Y-%m-%d").parse;
             
@@ -56,13 +56,13 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
 //                var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
 
 //                var dataSet = svg.selectAll('g').data(scope.data, getId);
-                x.domain(d3.extent(scope.data, function(d) { return d.date; }));
-                y.domain(d3.extent(scope.data, function(d) { return d.price; }));
+                x.domain(d3.extent(scope.data, function(d) { return d.price; }));
+                y.domain(d3.extent(scope.data, function(d) { return d.date; }));
                 
                 // 線の定義
                 var line = d3.svg.line()
-                    .x(function(d) { return x(d.date); })
-                    .y(function(d) { return y(d.price); });
+                    .x(function(d) { return x(d.price); })
+                    .y(function(d) { return y(d.date); });
                     
                 // データを入力ドメインとして設定
                 // 同時にextentで目盛りの単位が適切になるようにする
