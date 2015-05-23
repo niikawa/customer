@@ -92,7 +92,7 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
                 // }).remove();
 
                 // (D3) Collection要素変動の度に再計算する箇所.
-                scope.data.each(function(d, i)
+                scope.data.forEach(function(d)
                 {
                     d.date = d.date;
                     d.price = +d.price;
