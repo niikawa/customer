@@ -56,8 +56,8 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
                 var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
 
 //                var dataSet = svg.selectAll('g').data(scope.data, getId);
-                x.domain(d3.extent(dataSet, function(d) { return d.date; }));
-                y.domain(d3.extent(dataSet, function(d) { return d.price; }));
+                x.domain(d3.extent(scope.data, function(d) { return d.date; }));
+                y.domain(d3.extent(scope.data, function(d) { return d.price; }));
                 
                 svg.append("g").attr("class", "x axis").call(xAxis);
                 svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(getLabel);
@@ -111,7 +111,7 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
                 
                 // path要素をsvgに表示し、折れ線グラフを設定
                 createdGroup.append("path")
-                    .datum(scope.data)
+                    .datum(dataSet)
                     .attr("class", "line")
                     .attr("stroke", "black")    // 線の色を指定
                     .attr("fill", "none")
