@@ -1,4 +1,5 @@
-angular.module('myapp').directive('d3Bar', ['d3Service', '$parse', function (d3Service, $parse) {
+var myApp = angular.module('myApp');
+myApp.directive('d3Bar', ['d3Service', '$parse', function (d3Service, $parse) {
   var d3 = d3Service.d3;
   return{
     restrict: 'EAC',
