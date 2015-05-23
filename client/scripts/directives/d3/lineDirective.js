@@ -56,13 +56,13 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
 //                var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
 
 //                var dataSet = svg.selectAll('g').data(scope.data, getId);
-                x.domain(d3.extent(scope.data, function(d) { return d.price; }));
-                y.domain(d3.extent(scope.data, function(d) { return d.date; }));
+                x.domain(d3.extent(scope.data, function(d) { return d.date; }));
+                y.domain(d3.extent(scope.data, function(d) { return d.price; }));
                 
                 // 線の定義
                 var line = d3.svg.line()
-                    .x(function(d) { return x(d.price); })
-                    .y(function(d) { return y(d.date); });
+                    .x(function(d) { return x(d.date); })
+                    .y(function(d) { return y(d.price); });
                     
                 // データを入力ドメインとして設定
                 // 同時にextentで目盛りの単位が適切になるようにする
@@ -95,7 +95,7 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
                 scope.data.forEach(function(d)
                 {
                     d.date = d.date;
-                    d.price = +d.price;
+                    d.price = d.price;
 //                    console.log(d.date);
                 });
                 
