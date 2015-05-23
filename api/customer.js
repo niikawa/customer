@@ -133,7 +133,7 @@ exports.orders = function(req, res)
         //
     }
     
-    var col = '*';
+    var col = 'Id, FORMAT( date, "yyyy/MM/dd" ) , price';
     var table =  'T_READ_ORDERS';
     var where = 'customer_id = @customer_id order by date';
     
