@@ -50,7 +50,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 }
 
                 // (D3 , Angular) data関数にて, $scopeとd3のデータを紐付ける.
-                var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
+                var dataSet = svg.append("g").selectAll('g.data-group').data(scope.data, getId);
                 
                 // データを入力ドメインとして設定
                 // 同時にextentで目盛りの単位が適切になるようにする
