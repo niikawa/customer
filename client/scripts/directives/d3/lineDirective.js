@@ -68,28 +68,28 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
                 // 同時にextentで目盛りの単位が適切になるようにする
                 
                 // (D3) enter()はCollection要素の追加に対応.
-                var createdGroup = scope.data.enter().append('g').each(function(d)
-                {
-                    // (Angular) Collection要素毎の値に対する変更は、$watchで仕込んでいく.
-                    var self = d3.select(this);
-                    watched[getId(d)] = scope.$watch(function()
-                    {
-                        return getValue(d);
-                    },
-                    function(v)
-                    {
-                        self.select('rect').attr('width', v);
-                    });
-                });
+                // var createdGroup = scope.data.enter().append('g').each(function(d)
+                // {
+                //     // (Angular) Collection要素毎の値に対する変更は、$watchで仕込んでいく.
+                //     var self = d3.select(this);
+                //     watched[getId(d)] = scope.$watch(function()
+                //     {
+                //         return getValue(d);
+                //     },
+                //     function(v)
+                //     {
+                //         self.select('rect').attr('width', v);
+                //     });
+                // });
                 
                 // (D3) exit()はCollection要素の削除に対応.
-                scope.data.exit().each(function(d)
-                {
-                    // (Angular) $watchに登録されたリスナを解除して、メモリリークを防ぐ.
-                    // var id = getId(d);
-                    // watched[id]();
-                    // delete watched[id];
-                }).remove();
+                // scope.data.exit().each(function(d)
+                // {
+                //     // (Angular) $watchに登録されたリスナを解除して、メモリリークを防ぐ.
+                //     // var id = getId(d);
+                //     // watched[id]();
+                //     // delete watched[id];
+                // }).remove();
 
                 // (D3) Collection要素変動の度に再計算する箇所.
                 scope.data.each(function(d, i)
