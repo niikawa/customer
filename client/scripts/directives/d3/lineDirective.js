@@ -47,6 +47,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
 
                 // (D3 , Angular) data関数にて, $scopeとd3のデータを紐付ける.
                 var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
+                console.log(dataSet);
                 
                 // データを入力ドメインとして設定
                 // 同時にextentで目盛りの単位が適切になるようにする
@@ -91,7 +92,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 // (D3) Collection要素変動の度に再計算する箇所.
                 dataSet.each(function(d, i)
                 {
-                    d.date = parseDate(d.date);
+                    d.date = d.date;
                     d.price = +d.price;
                     console.log(d.date);
                 });
