@@ -33,7 +33,7 @@ var parseDate = d3.time.format("%Y/%m/%d").parse;
             var y = d3.scale.linear().range([size.height - margin.top - margin.bottom, 0]);
 
             // 軸の定義
-            var xAxis = d3.svg.axis().scale(x).orient("bottom").tickFormat(d3.time.format("%Y%m%d"));
+            var xAxis = d3.svg.axis().scale(x).orient("bottom").tickFormat(d3.time.format("%m"));
             var yAxis = d3.svg.axis().scale(y).orient("left");
             
             // $watchリスナの登録解除関数格納用.
