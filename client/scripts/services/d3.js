@@ -1,3 +1,3 @@
-angular.module('myapp').factory('d3Service', function () {
+angular.module('myApp').factory('d3Service', function () {
   return {d3: d3};
 });
