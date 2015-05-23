@@ -24,7 +24,7 @@ var size = {
   width : 800,
   height: 400
 };
-var parseDate = d3.time.format("%Y-%m-%d").parse;
+var parseDate = d3.time.format("%Y/%m/%d").parse;
             
             // 初期化時に可視化領域の確保
             var svg = d3.select(element[0]).append('svg').style('width', '100%').attr("heigth", '100%').attr("transform", "translate(" + margin.left + "," + margin.top + ")");
