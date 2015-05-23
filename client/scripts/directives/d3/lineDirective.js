@@ -14,6 +14,9 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
         {
             var parseDate = d3.time.format("%Y-%m-%d").parse;
             
+            // 初期化時に可視化領域の確保
+            var svg = d3.select(element[0]).append('svg').style('width', '100%');
+            
             var x = d3.time.scale();
             var y = d3.scale.linear();
 
@@ -26,8 +29,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 .x(function(d) { return x(d.date); })
                 .y(function(d) { return y(d.price); });
                 
-            // 初期化時に可視化領域の確保
-            var svg = d3.select(element[0]).append('svg').style('width', '100%');
 
             // $watchリスナの登録解除関数格納用.
             var watched = {}; 
@@ -50,7 +51,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 }
 
                 // (D3 , Angular) data関数にて, $scopeとd3のデータを紐付ける.
-                var dataSet = svg.selectAll('g.data-group').data(scope.data, getId).append("g");
+                var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
                 
                 // データを入力ドメインとして設定
                 // 同時にextentで目盛りの単位が適切になるようにする
@@ -71,9 +72,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                         self.select('rect').attr('width', v);
                     });
                 });
-                
-                createdGroup.append("g").call(xAxis);
-                createdGroup.append("g").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(getLabel);
                 
                 // createdGroup.append('rect').attr('x', 130).attr('height', 18).attr('fill', function(d)
                 // {
@@ -99,8 +97,11 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
 //                    console.log(d.date);
                 });
                 
+                createdGroup.append("g").call(xAxis);
+                createdGroup.append("g").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(getLabel);
+                
                 // path要素をsvgに表示し、折れ線グラフを設定
-                svg.append("path")
+                createdGroup.append("path")
                     .datum(dataSet)
                     .attr("class", "line")
                     .attr("d", line);                
