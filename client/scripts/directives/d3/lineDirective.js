@@ -53,14 +53,11 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
                 }
 
                 // (D3 , Angular) data関数にて, $scopeとd3のデータを紐付ける.
-                var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
+//                var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
 
 //                var dataSet = svg.selectAll('g').data(scope.data, getId);
                 x.domain(d3.extent(scope.data, function(d) { return d.date; }));
                 y.domain(d3.extent(scope.data, function(d) { return d.price; }));
-                
-                svg.append("g").attr("class", "x axis").call(xAxis);
-                svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(getLabel);
                 
                 // 線の定義
                 var line = d3.svg.line()
@@ -71,7 +68,7 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
                 // 同時にextentで目盛りの単位が適切になるようにする
                 
                 // (D3) enter()はCollection要素の追加に対応.
-                var createdGroup = dataSet.enter().append('g').classed('data-group', true).each(function(d)
+                var createdGroup = scope.data.enter().append('g').each(function(d)
                 {
                     // (Angular) Collection要素毎の値に対する変更は、$watchで仕込んでいく.
                     var self = d3.select(this);
@@ -85,33 +82,29 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
                     });
                 });
                 
-                // createdGroup.append('rect').attr('x', 130).attr('height', 18).attr('fill', function(d)
-                // {
-                //     return colorScale(d.name);
-                // });
-                
-//                createdGroup.append('text').text(getLabel).attr('height', 15);
-
                 // (D3) exit()はCollection要素の削除に対応.
-                dataSet.exit().each(function(d)
+                scope.data.exit().each(function(d)
                 {
                     // (Angular) $watchに登録されたリスナを解除して、メモリリークを防ぐ.
-                    var id = getId(d);
-                    watched[id]();
+                    // var id = getId(d);
+                    // watched[id]();
                     // delete watched[id];
                 }).remove();
 
                 // (D3) Collection要素変動の度に再計算する箇所.
-                dataSet.each(function(d, i)
+                scope.data.each(function(d, i)
                 {
                     d.date = d.date;
                     d.price = +d.price;
 //                    console.log(d.date);
                 });
                 
+                svg.append("g").attr("class", "x axis").call(xAxis);
+                svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(getLabel);
+                
                 // path要素をsvgに表示し、折れ線グラフを設定
-                createdGroup.append("path")
-                    .datum(dataSet)
+                svg.append("path")
+                    .datum(scope.data)
                     .attr("class", "line")
                     .attr("stroke", "black")    // 線の色を指定
                     .attr("fill", "none")
