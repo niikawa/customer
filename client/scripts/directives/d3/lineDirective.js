@@ -30,6 +30,26 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 .y(function(d) { return y(d.price); });
                 
 
+            x.domain(d3.extent(scope.date, function(d) { return d.date; }));
+            y.domain(d3.extent(scope.data, function(d) { return d.price; }));
+            
+            svg.append("g").attr("class", "x axis").call(xAxis);
+            svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(getLabel);
+
+            scope.data.each(function(d, i)
+            {
+                d.date = d.date;
+                d.price = +d.price;
+//                    console.log(d.date);
+            });
+            
+            
+            // path要素をsvgに表示し、折れ線グラフを設定
+            svg.append("path")
+                .datum(scope.data)
+                .attr("class", "line")
+                .attr("d", line);                
+
             // $watchリスナの登録解除関数格納用.
             var watched = {}; 
 
@@ -108,7 +128,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                     .datum(scope.data)
                     .attr("class", "line")
                     .attr("d", line);                
-                    
             });
         }
     };
