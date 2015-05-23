@@ -35,6 +35,24 @@ function ($scope, Shared, Customer, Azure)
         {
             $scope.customerList = response.data;
         });
+        
+$scope.sampleData= [
+    {name:'Chrome', users: 500},
+    {name:'Internet Explorer', users: 200},
+    {name:'Safari', users: 300}
+  ];
+
+  $scope.newData = {name: '', users: 0};
+
+  $scope.add = function(){
+    $scope.sampleData.push($scope.newData);
+    $scope.newData = {name: '', users: 0};
+  };
+
+  $scope.remove = function($index){
+    $scope.sampleData.splice($index, 1);
+  };        
+        
     };
     
     $scope.custmoerChangeExecute = function()
