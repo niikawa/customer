@@ -51,7 +51,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 }
 
                 // (D3 , Angular) data関数にて, $scopeとd3のデータを紐付ける.
-                var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
+                //var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
                 
                 
                 
@@ -64,19 +64,19 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(getLabel);
                 
                 // (D3) enter()はCollection要素の追加に対応.
-                var createdGroup = dataSet.enter().append('g').classed('data-group', true).each(function(d)
-                {
-                    // (Angular) Collection要素毎の値に対する変更は、$watchで仕込んでいく.
-                    var self = d3.select(this);
-                    watched[getId(d)] = scope.$watch(function()
-                    {
-                        return getValue(d);
-                    },
-                    function(v)
-                    {
-                        self.select('rect').attr('width', v);
-                    });
-                });
+                // var createdGroup = dataSet.enter().append('g').classed('data-group', true).each(function(d)
+                // {
+                //     // (Angular) Collection要素毎の値に対する変更は、$watchで仕込んでいく.
+                //     var self = d3.select(this);
+                //     watched[getId(d)] = scope.$watch(function()
+                //     {
+                //         return getValue(d);
+                //     },
+                //     function(v)
+                //     {
+                //         self.select('rect').attr('width', v);
+                //     });
+                // });
                 
                 // createdGroup.append('rect').attr('x', 130).attr('height', 18).attr('fill', function(d)
                 // {
@@ -86,13 +86,13 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 // createdGroup.append('text').text(getLabel).attr('height', 15);
 
                 // (D3) exit()はCollection要素の削除に対応.
-                dataSet.exit().each(function(d)
-                {
-                    // (Angular) $watchに登録されたリスナを解除して、メモリリークを防ぐ.
-                    var id = getId(d);
-                    watched[id]();
-                    delete watched[id];
-                }).remove();
+                // dataSet.exit().each(function(d)
+                // {
+                //     // (Angular) $watchに登録されたリスナを解除して、メモリリークを防ぐ.
+                //     var id = getId(d);
+                //     watched[id]();
+                //     delete watched[id];
+                // }).remove();
 
                 // (D3) Collection要素変動の度に再計算する箇所.
                 scope.data.each(function(d, i)
