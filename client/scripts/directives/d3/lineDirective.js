@@ -12,13 +12,25 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
         },
         link: function(scope, element)
         {
-            var parseDate = d3.time.format("%Y-%m-%d").parse;
+            
+var margin = {
+  top   : 40,
+  right : 40,
+  bottom: 40,
+  left  : 40
+};
+
+var size = {
+  width : 800,
+  height: 400
+};
+var parseDate = d3.time.format("%Y-%m-%d").parse;
             
             // 初期化時に可視化領域の確保
-            var svg = d3.select(element[0]).append('svg').style('width', '100%');
+            var svg = d3.select(element[0]).append('svg').style('width', '100%').attr("transform", "translate(" + margin.left + "," + margin.top + ")");
             
-            var x = d3.time.scale();
-            var y = d3.scale.linear();
+            var x = d3.time.scale().range([0, size.width - margin.left - margin.right]);
+            var y = d3.scale.linear().range([size.height - margin.top - margin.bottom, 0]);
 
             // 軸の定義
             var xAxis = d3.svg.axis().scale(x).orient("bottom");
@@ -29,6 +41,24 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 .x(function(d) { return x(d.date); })
                 .y(function(d) { return y(d.price); });
                 
+            // 描画
+            scope.data.forEach(function(d){
+              d.date = d.date;
+              d.value = +d.value;
+            });            
+
+            x.domain(d3.extent(scope.date, function(d) { return d.date; }));
+            y.domain(d3.extent(scope.data, function(d) { return d.price; }));
+            
+            svg.append("g").attr("class", "x axis").call(xAxis);
+            svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text('price');
+
+            svg.append("path")
+                .datum(scope.data)
+                .attr("class", "line")
+                .attr("stroke", "black")    // 線の色を指定
+                .attr("fill", "none")
+                .attr("d", line);            
 
             // $watchリスナの登録解除関数格納用.
             var watched = {}; 
@@ -37,10 +67,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             var getId = $parse(scope.key || 'id');
             var getValue = $parse(scope.valueProp || 'value');
             var getLabel = $parse(scope.label || 'name');
-
-                console.log(getId);
-                console.log(getValue);
-                console.log(getLabel);
 
             // (Angular) Collectionの要素変動を監視.
             scope.$watchCollection('data', function()
@@ -52,9 +78,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
 
                 // (D3 , Angular) data関数にて, $scopeとd3のデータを紐付ける.
                 var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
-                
-                
-                
+
                 // データを入力ドメインとして設定
                 // 同時にextentで目盛りの単位が適切になるようにする
                 x.domain(d3.extent(scope.date, function(d) { return d.date; }));
@@ -64,19 +88,19 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(getLabel);
                 
                 // (D3) enter()はCollection要素の追加に対応.
-                var createdGroup = dataSet.enter().append('g').classed('data-group', true).each(function(d)
-                {
-                    // (Angular) Collection要素毎の値に対する変更は、$watchで仕込んでいく.
-                    var self = d3.select(this);
-                    watched[getId(d)] = scope.$watch(function()
-                    {
-                        return getValue(d);
-                    },
-                    function(v)
-                    {
-                        self.select('rect').attr('width', v);
-                    });
-                });
+                // var createdGroup = dataSet.enter().append('g').classed('data-group', true).each(function(d)
+                // {
+                //     // (Angular) Collection要素毎の値に対する変更は、$watchで仕込んでいく.
+                //     var self = d3.select(this);
+                //     watched[getId(d)] = scope.$watch(function()
+                //     {
+                //         return getValue(d);
+                //     },
+                //     function(v)
+                //     {
+                //         self.select('rect').attr('width', v);
+                //     });
+                // });
                 
                 // createdGroup.append('rect').attr('x', 130).attr('height', 18).attr('fill', function(d)
                 // {
@@ -107,8 +131,9 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 svg.append("path")
                     .datum(scope.data)
                     .attr("class", "line")
-                    .attr("d", line);                
-                    
+                    .attr("stroke", "black")    // 線の色を指定
+                    .attr("fill", "none")
+                    .attr("d", line);            
             });
         }
     };
