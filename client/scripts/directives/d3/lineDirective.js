@@ -92,6 +92,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 // (D3) Collection要素変動の度に再計算する箇所.
                 dataSet.each(function(d, i)
                 {
+                    console.log(d);
                     d.date = parseDate(d.date);
                     d.value = +d.value;
                 });
