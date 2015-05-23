@@ -53,11 +53,16 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 // (D3 , Angular) data関数にて, $scopeとd3のデータを紐付ける.
                 var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
                 
+                
+                
                 // データを入力ドメインとして設定
                 // 同時にextentで目盛りの単位が適切になるようにする
                 x.domain(d3.extent(dataSet, function(d) { return d.date; }));
                 y.domain(d3.extent(dataSet, function(d) { return d.price; }));
-
+                
+                svg.append("g").attr("class", "x axis").call(xAxis);
+                svg.append("g").attr("class", "y axis").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(getLabel);
+                
                 // (D3) enter()はCollection要素の追加に対応.
                 var createdGroup = dataSet.enter().append('g').classed('data-group', true).each(function(d)
                 {
@@ -90,19 +95,17 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 }).remove();
 
                 // (D3) Collection要素変動の度に再計算する箇所.
-                dataSet.each(function(d, i)
+                scope.data.each(function(d, i)
                 {
                     d.date = d.date;
                     d.price = +d.price;
 //                    console.log(d.date);
                 });
                 
-                createdGroup.append("g").attr("class", "x axis").call(xAxis);
-                createdGroup.append("g").attr("class", "y axis").call(yAxis).append("text").attr("y", 6).attr("dy", ".71em").style("text-anchor", "end").text(getLabel);
                 
                 // path要素をsvgに表示し、折れ線グラフを設定
-                createdGroup.append("path")
-                    .datum(dataSet)
+                svg.append("path")
+                    .datum(scope.data)
                     .attr("class", "line")
                     .attr("d", line);                
                     
