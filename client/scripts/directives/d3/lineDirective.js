@@ -54,14 +54,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             var getValue = $parse(scope.valueProp || 'value');
             var getLabel = $parse(scope.label || 'name');
 
-            //(Angular) Collectionの要素変動を監視.
-            scope.$watchCollection('data', function()
-            {
-                if(!scope.data)
-                {
-                  return;
-                }
-
                 var svg = d3.select(element[0]).append('svg').attr("width", size.width).attr("height", size.height).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
                 var x = d3.time.scale()
@@ -79,6 +71,14 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                   .scale(y)
                   .orient("left");
                 
+            //(Angular) Collectionの要素変動を監視.
+            scope.$watchCollection('data', function()
+            {
+                if(!scope.data)
+                {
+                  return;
+                }
+
     
                 var line = d3.svg.line()
                   .x(function(d){ return x(d.date); })
@@ -139,7 +139,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                     .text("値の単位");
                 
                 svg.append("path")
-                  .datum(scope.date)
+                  .datum(scope.data)
                   .attr("class", "line")
                   .attr("d", line);
                 
