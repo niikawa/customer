@@ -24,7 +24,7 @@ var size = {
   width : 800,
   height: 400
 };
-var parseDate = d3.time.format("%Y/%m/%d").parse;
+var parseDate = d3.time.format("%Y-%m-%d").parse;
             
             // 初期化時に可視化領域の確保
             var svg = d3.select(element[0]).append('svg').style('width', '100%').attr("heigth", '100%').attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -84,13 +84,13 @@ svg.append("path")
   .attr("class", "line")
   .attr("d", line);            
             
-            // $watchリスナの登録解除関数格納用.
-            var watched = {}; 
+            // // $watchリスナの登録解除関数格納用.
+            // var watched = {}; 
 
-            // (Angular) $parseでCollection要素へのアクセサを確保しておく.
-            var getId = $parse(scope.key || 'Id');
-            var getValue = $parse(scope.valueProp || 'value');
-            var getLabel = $parse(scope.label || 'name');
+            // // (Angular) $parseでCollection要素へのアクセサを確保しておく.
+            // var getId = $parse(scope.key || 'Id');
+            // var getValue = $parse(scope.valueProp || 'value');
+            // var getLabel = $parse(scope.label || 'name');
 
             // (Angular) Collectionの要素変動を監視.
 //             scope.$watchCollection('data', function()
