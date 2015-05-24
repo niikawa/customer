@@ -13,28 +13,17 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
         link: function(scope, element)
         {
             
-var margin = {
-  top   : 40,
-  right : 40,
-  bottom: 40,
-  left  : 40
-};
-
-var size = {
-  width : 800,
-  height: 400
-};
-var parseDate = d3.time.format("%Y-%m-%d").parse;
+            var margin = {
+              top   : 40,
+              right : 40,
+              bottom: 40,
+              left  : 40
+            };
             
-            // 初期化時に可視化領域の確保
-            var svg = d3.select(element[0]).append('svg').style('width', '100%').attr("heigth", '100%').attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-            
-            var x = d3.scale.linear().range([0, size.width - margin.left - margin.right]);
-            var y = d3.scale.linear().range([size.height - margin.top - margin.bottom, 0]);
-
-            // 軸の定義
-            var xAxis = d3.svg.axis().scale(x).orient("bottom").tickFormat(d3.time.format("%m"));
-            var yAxis = d3.svg.axis().scale(y).orient("left");
+            var size = {
+              width : 800,
+              height: 400
+            };
             
             var data = [
               {date: "2015-01-01", value:20},
@@ -51,6 +40,18 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
               {date: "2015-12-01", value:90}
             ];            
 
+            var parseDate = d3.time.format("%Y-%m-%d").parse;
+            
+            // 初期化時に可視化領域の確保
+            var svg = d3.select(element[0]).append('svg').append("g").style('width', '100%').attr("heigth", '100%').attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            
+            var x = d3.scale.linear().range([0, size.width - margin.left - margin.right]);
+            var y = d3.scale.linear().range([size.height - margin.top - margin.bottom, 0]);
+
+            // 軸の定義
+            var xAxis = d3.svg.axis().scale(x).orient("bottom").tickFormat(d3.time.format("%m"));
+            var yAxis = d3.svg.axis().scale(y).orient("left");
+            
             // 線の定義
             var line = d3.svg.line()
                 .x(function(d) { return x(d.date); })
