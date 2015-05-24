@@ -46,24 +46,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
 
 //            var svg = d3.select(element[0]).append('svg').style('width', '100%').append("g").attr("heigth", '100%').attr("transform", "translate(" + margin.left + "," + margin.top + ")");
             
-            var svg = d3.select(element[0]).append('svg').attr("width", size.width).attr("height", size.height).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-            var x = d3.time.scale()
-              .range([0, size.width - margin.left - margin.right]);
-            
-            var y = d3.scale.linear()
-              .range([size.height - margin.top - margin.bottom, 0]);
-            
-            var xAxis = d3.svg.axis()
-              .scale(x)
-              .orient("bottom")
-              .tickFormat(d3.time.format("%m"));
-            
-            var yAxis = d3.svg.axis()
-              .scale(y)
-              .orient("left");
-            
-
             // // $watchリスナの登録解除関数格納用.
             var watched = {}; 
 
@@ -80,6 +62,24 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                   return;
                 }
 
+                var svg = d3.select(element[0]).append('svg').attr("width", size.width).attr("height", size.height).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+                var x = d3.time.scale()
+                  .range([0, size.width - margin.left - margin.right]);
+                
+                var y = d3.scale.linear()
+                  .range([size.height - margin.top - margin.bottom, 0]);
+                
+                var xAxis = d3.svg.axis()
+                  .scale(x)
+                  .orient("bottom")
+                  .tickFormat(d3.time.format("%m"));
+                
+                var yAxis = d3.svg.axis()
+                  .scale(y)
+                  .orient("left");
+                
+    
                 var line = d3.svg.line()
                   .x(function(d){ return x(d.date); })
                   .y(function(d){ return y(d.price); });
