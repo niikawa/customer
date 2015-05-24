@@ -50,10 +50,7 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
               {date: "2015-11-01", value:32},
               {date: "2015-12-01", value:90}
             ];            
-            
-            x.domain(d3.extent(scope.data, function(d) { return d.date; }));
-            y.domain(d3.extent(scope.data, function(d) { return d.value; }));
-            
+
             // 線の定義
             var line = d3.svg.line()
                 .x(function(d) { return x(d.date); })
@@ -63,6 +60,10 @@ var parseDate = d3.time.format("%Y-%m-%d").parse;
               d.date = parseDate(d.date);
               d.value = +d.value;
             });
+            
+            x.domain(d3.extent(scope.data, function(d) { return d.date; }));
+            y.domain(d3.extent(scope.data, function(d) { return d.value; }));
+            
             
 svg.append("g")
   .attr("class", "x axis")
