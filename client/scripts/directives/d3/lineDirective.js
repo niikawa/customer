@@ -116,7 +116,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 // 描画
                 scope.data.forEach(function(d)
                 {
-                    d.date = parseDate(d.date);
+                    //d.date = parseDate(d.date);
                     d.price = +d.price;
                     console.log(d.date);
                 });
