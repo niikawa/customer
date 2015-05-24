@@ -44,29 +44,43 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             
             // 初期化時に可視化領域の確保
 
-            var svg = d3.select(element[0]).append('svg').style('width', '100%').append("g").attr("heigth", '100%').attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+//            var svg = d3.select(element[0]).append('svg').style('width', '100%').append("g").attr("heigth", '100%').attr("transform", "translate(" + margin.left + "," + margin.top + ")");
             
-            var x = d3.scale.linear().range([0, size.width - margin.left - margin.right]);
-            var y = d3.scale.linear().range([size.height - margin.top - margin.bottom, 0]);
+var svg = d3.select("#chart")
+  .attr("width", size.width)
+  .attr("height", size.height)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            // 軸の定義
-            var xAxis = d3.svg.axis().scale(x).orient("bottom").tickFormat(d3.time.format("%m"));
-            var yAxis = d3.svg.axis().scale(y).orient("left");
-            
-            // 線の定義
-            var line = d3.svg.line()
-                .x(function(d) { return x(d.date); })
-                .y(function(d) { return y(d.value); });
-            
-            data.forEach(function(d){
-              d.date = parseDate(d.date);
-              d.value = +d.value;
-            });
-            
-            x.domain(d3.extent(scope.data, function(d) { return d.date; }));
-            y.domain(d3.extent(scope.data, function(d) { return d.value; }));
-            
-            
+var x = d3.time.scale()
+  .range([0, size.width - margin.left - margin.right]);
+
+var y = d3.scale.linear()
+  .range([size.height - margin.top - margin.bottom, 0]);
+
+var xAxis = d3.svg.axis()
+  .scale(x)
+  .orient("bottom")
+  .tickFormat(d3.time.format("%m"));
+
+var yAxis = d3.svg.axis()
+  .scale(y)
+  .orient("left");
+
+var line = d3.svg.line()
+  .x(function(d){ return x(d.date); })
+  .y(function(d){ return y(d.value); });
+
+
+// 描画
+data.forEach(function(d){
+  d.date = parseDate(d.date);
+  d.value = +d.value;
+});
+
+x.domain(d3.extent(data, function(d){ return d.date; }));
+y.domain(d3.extent(data, function(d){ return d.value; }));
+
 svg.append("g")
   .attr("class", "x axis")
   .attr("transform", "translate(0, " + ( size.height - margin.top - margin.bottom ) + ")")
@@ -85,8 +99,8 @@ svg.append("g")
 svg.append("path")
   .datum(data)
   .attr("class", "line")
-  .attr("d", line);            
-            
+  .attr("d", line);
+
             // // $watchリスナの登録解除関数格納用.
             // var watched = {}; 
 
