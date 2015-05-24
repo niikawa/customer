@@ -44,7 +44,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             
             // 初期化時に可視化領域の確保
 
-            var svg = d3.select(element.append('svg')).append("g").style('width', '100%').attr("heigth", '100%').attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            var svg = d3.select(element).append('svg').append("g").style('width', '100%').attr("heigth", '100%').attr("transform", "translate(" + margin.left + "," + margin.top + ")");
             
             var x = d3.scale.linear().range([0, size.width - margin.left - margin.right]);
             var y = d3.scale.linear().range([size.height - margin.top - margin.bottom, 0]);
