@@ -139,7 +139,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                     .text("値の単位");
                 
                 svg.append("path")
-                  .datum(data)
+                  .datum(scope.date)
                   .attr("class", "line")
                   .attr("d", line);
                 
