@@ -40,7 +40,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
               {date: "2015-12-01", value:90}
             ];            
 
-            var parseDate = d3.time.format("%Y-%m-%d").parse;
+            var parseDate = d3.time.format("%Y/%m/%d").parse;
             
             // 初期化時に可視化領域の確保
 
@@ -48,34 +48,34 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             
             var svg = d3.select(element[0]).append('svg').attr("width", size.width).attr("height", size.height).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var x = d3.time.scale()
-  .range([0, size.width - margin.left - margin.right]);
+            var x = d3.time.scale()
+              .range([0, size.width - margin.left - margin.right]);
+            
+            var y = d3.scale.linear()
+              .range([size.height - margin.top - margin.bottom, 0]);
+            
+            var xAxis = d3.svg.axis()
+              .scale(x)
+              .orient("bottom")
+              .tickFormat(d3.time.format("%m"));
+            
+            var yAxis = d3.svg.axis()
+              .scale(y)
+              .orient("left");
+            
+            var line = d3.svg.line()
+              .x(function(d){ return x(d.date); })
+              .y(function(d){ return y(d.value); });
+            
 
-var y = d3.scale.linear()
-  .range([size.height - margin.top - margin.bottom, 0]);
+            // 描画
+            scope.data.forEach(function(d){
+              d.date = parseDate(d.date);
+              d.value = +d.value;
+            });
 
-var xAxis = d3.svg.axis()
-  .scale(x)
-  .orient("bottom")
-  .tickFormat(d3.time.format("%m"));
-
-var yAxis = d3.svg.axis()
-  .scale(y)
-  .orient("left");
-
-var line = d3.svg.line()
-  .x(function(d){ return x(d.date); })
-  .y(function(d){ return y(d.value); });
-
-
-// 描画
-data.forEach(function(d){
-  d.date = parseDate(d.date);
-  d.value = +d.value;
-});
-
-x.domain(d3.extent(data, function(d){ return d.date; }));
-y.domain(d3.extent(data, function(d){ return d.value; }));
+            x.domain(d3.extent(scope.data, function(d){ return d.date; }));
+            y.domain(d3.extent(scope.data, function(d){ return d.price; }));
 
 svg.append("g")
   .attr("class", "x axis")
