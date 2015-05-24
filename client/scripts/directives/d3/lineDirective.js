@@ -46,11 +46,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
 
 //            var svg = d3.select(element[0]).append('svg').style('width', '100%').append("g").attr("heigth", '100%').attr("transform", "translate(" + margin.left + "," + margin.top + ")");
             
-var svg = d3.select("#chart")
-  .attr("width", size.width)
-  .attr("height", size.height)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            var svg = d3.select(element.append('svg')).attr("width", size.width).attr("height", size.height).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var x = d3.time.scale()
   .range([0, size.width - margin.left - margin.right]);
