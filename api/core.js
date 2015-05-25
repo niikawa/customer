@@ -20,9 +20,15 @@ core.prototype.getRequest = function()
     return new this.db.Request();
 };
 
-core.prototype.getQueryObject = function(col, table, where)
+core.prototype.getQueryObject = function(col, table, where, groupby, orderby)
 {
-    return {col: col, table: table, where: where, request: this.getRequest()};
+    return {
+        col: col, 
+        table: table, 
+        where: where,
+        groupby: groupby,
+        orderby: orderby,
+        request: this.getRequest()};
 };
 
 /**
@@ -81,7 +87,23 @@ core.prototype.getById = function(id, callback)
 
 core.prototype.select = function(queryObject, request, callback)
 {
-    var sql = 'SELECT ' + queryObject.col + ' FROM ' + queryObject.table + ' WHERE ' + queryObject.where;
+    var sql = 'SELECT ' + queryObject.col + ' FROM ' + queryObject.table;
+    
+    if (void 0 !== queryObject.where && '' !== queryObject.where)
+    {
+        sql +=  ' WHERE ' + queryObject.where;
+    }
+
+    if (void 0 !== queryObject.groupby && '' !== queryObject.groupby)
+    {
+        sql +=  ' GROUP BY ' + queryObject.groupby;
+    }
+    
+    if (void 0 !== queryObject.orderby && '' !== queryObject.orderby)
+    {
+        sql +=  ' ORDER BY ' + queryObject.orderby;
+    }
+
     this.execute(sql, request, callback);
 };
 
