@@ -103,7 +103,7 @@ exports.getDetail = function(req, res)
                     var qObj = model.getQueryObject(col, table, where);
                     qObj.request.input('rank_id', model.db.Int, data[0].rank_id);
                     
-                    model.select(qObj, qObj.request, callback);
+                    model.select(qObj, qObj.request,  function(err, data){callback(err, data)});
                 }
             },
             function(callback)
@@ -118,7 +118,7 @@ exports.getDetail = function(req, res)
                 var qObj = model.getQueryObject(col, table, '', groupby, orderby);
                 qObj.request.input('customer_id', model.db.Int, data[0].customer_id);
                 
-                model.select(qObj, qObj.request, callback);
+                model.select(qObj, qObj.request,  function(err, data){callback(err, data)});
             },
             function(callback)
             {
@@ -132,7 +132,7 @@ exports.getDetail = function(req, res)
                 var qObj = model.getQueryObject(col, table, '', groupby, orderby);
                 qObj.request.input('customer_id', model.db.Int, data[0].customer_id);
                 
-                model.select(qObj, qObj.request, callback);
+                model.select(qObj, qObj.request,  function(err, data){callback(err, data)});
             }
 
         ], function complete(err, items)
@@ -201,7 +201,7 @@ exports.orders = function(req, res)
             var qObj = model.getQueryObject(col, table, '', groupby, orderby);
             qObj.request.input('customer_id', model.db.Int, id);
             
-            model.select(qObj, qObj.request, callback);
+            model.select(qObj, qObj.request, function(err, data){callback(err, data)});
         },
         function(callback)
         {
@@ -213,7 +213,7 @@ exports.orders = function(req, res)
             var qObj = model.getQueryObject(col, table, '', groupby, orderby);
             qObj.request.input('customer_id', model.db.Int, id);
             
-            model.select(qObj, qObj.request, callback);
+            model.select(qObj, qObj.request,  function(err, data){callback(err, data)});
         }
 
     ],function final(err, items)
