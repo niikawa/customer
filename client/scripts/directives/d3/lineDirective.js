@@ -70,7 +70,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 var svg = d3.select(element[0])
                                   .append('svg')
                                   .attr("width", "100%")
-                                  .attr("height", "100%")
+                                  .attr("height", size.height)
                                   .append("g")
                                   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
