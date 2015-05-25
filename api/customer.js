@@ -85,6 +85,7 @@ exports.getDetail = function(req, res)
         [
             function(callback)
             {
+                console.log('method 1');
                 if (null === data[0].rank_id)
                 {
                     console.log('rank id is null');
@@ -107,6 +108,7 @@ exports.getDetail = function(req, res)
             },
             function(callback)
             {
+                console.log('method 2');
                 var col = "customer_id, FORMAT(date, 'yyyy/MM') as date, sum(price) as price";
                 var table = 'T_READ_ORDERS';
                 var groupby = "customer_id, FORMAT(date, 'yyyy/MM') having customer_id = @customer_id";
@@ -119,6 +121,7 @@ exports.getDetail = function(req, res)
             },
             function(callback)
             {
+                console.log('method 3');
                 var col = "T2.rank_id , FORMAT(T1.date, 'yyyy/MM') as date, avg(T1.price) as price";
                 var table = 'T_READ_ORDERS T1 inner join M_CUSTOMER T2 on T1.customer_id = T2.customer_id';
                 var groupby = "T2.rank_id, FORMAT(T1.date, 'yyyy/MM') having T2.rank_id = (select rank_id from M_CUSTOMER where customer_id =  @customer_id)";
