@@ -164,7 +164,7 @@ exports.orders = function(req, res)
         //
     }
     //非同期でアプローチ方法と売り上げ推移を取得する
-    model.async.parallel(
+    model.async.series(
     [
         function(callback)
         {
