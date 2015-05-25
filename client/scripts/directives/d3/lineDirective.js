@@ -25,16 +25,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
               height: 400
             };
             
-            var data = [
-              {date: "2015/01", price:20},
-              {date: "2015/02", price:70},
-              {date: "2015/03", price:100},
-              {date: "2015/04", price:10},
-              {date: "2015/05", price:69},
-              {date: "2015/06", price:5},
-              {date: "2015/07", price:75},
-            ];            
-
             var parseDate = d3.time.format("%Y/%m").parse;
             
             // 初期化時に可視化領域の確保
@@ -65,7 +55,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
               .scale(y)
               .orient("left");
 
-
             //(Angular) Collectionの要素変動を監視.
             scope.$watchCollection('data', function()
             {
@@ -87,8 +76,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 
                 x.domain(d3.extent(scope.data, function(d){ return d.date; }));
                 y.domain(d3.extent(scope.data, function(d){ return d.price; }));
-                // x.domain(d3.extent(data, function(d){ return d.date; }));
-                // y.domain(d3.extent(data, function(d){ return d.price; }));
 
                 // データを入力ドメインとして設定
                 // 同時にextentで目盛りの単位が適切になるようにする
@@ -136,7 +123,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 
                 svg.append("path")
                   .datum(scope.data)
-                  .attr("class", "line")
+                  .attr("class", "line-main")
                   .attr("d", line);
                 
             });
