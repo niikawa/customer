@@ -68,3 +68,12 @@ spinner-directive > div > img {
   left:50%;
   z-index: 1000;
 }
+
+/**
+ * d3/lineDirective.js
+ */
+.line-main {
+  fill:none;
+  stroke:#1572F9;
+  stroke-width:1.5px;  
+}
