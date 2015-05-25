@@ -3,21 +3,20 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
 {
     var d3 = d3Service.d3;
     return {
-        restrict: 'EAC',
+        restrict: 'EA',
         scope:{
-          data: '=', // APLのController側とデータをやり取り.
+          data: '=',
           key: '@',
           valueProp: '@',
           label: '@'
         },
         link: function(scope, element)
         {
-            
             var margin = {
               top   : 40,
               right : 40,
               bottom: 40,
-              left  : 40
+              left  : 90
             };
             
             var size = {
@@ -25,21 +24,17 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
               height: 400
             };
             
+            //TODO 
             var parseDate = d3.time.format("%Y/%m").parse;
             
-            // 初期化時に可視化領域の確保
+            //描画エリアを生成
+            var svg = d3.select(element[0])
+                              .append('svg')
+                              .attr("width", "100%")
+                              .attr("height", size.height)
+                              .append("g")
+                              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-//            var svg = d3.select(element[0]).append('svg').style('width', '100%').append("g").attr("heigth", '100%').attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-            
-            // // $watchリスナの登録解除関数格納用.
-            var watched = {}; 
-
-            // (Angular) $parseでCollection要素へのアクセサを確保しておく.
-            var getId = $parse(scope.key || 'Id');
-            var getValue = $parse(scope.valueProp || 'value');
-            var getLabel = $parse(scope.label || 'name');
-
-            var svg = d3.select(element[0]).append('svg').attr("width", size.width).attr("height", size.height).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
             var x = d3.time.scale()
               .range([0, size.width - margin.left - margin.right]);
@@ -49,12 +44,21 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             
             var xAxis = d3.svg.axis()
               .scale(x)
-              .orient("bottom").tickFormat(d3.time.format("%y%m"));
+              .orient("bottom").tickFormat(d3.time.format("%Y/%m"));
 
             var yAxis = d3.svg.axis()
               .scale(y)
               .orient("left");
 
+
+            // // $watchリスナの登録解除関数格納用.
+            var watched = {}; 
+
+            // (Angular) $parseでCollection要素へのアクセサを確保しておく.
+            var getId = $parse(scope.key || 'Id');
+            var getValue = $parse(scope.valueProp || 'value');
+            var getLabel = $parse(scope.label || 'name');
+            
             //(Angular) Collectionの要素変動を監視.
             scope.$watchCollection('data', function()
             {
@@ -62,17 +66,29 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 {
                   return;
                 }
-
-                var line = d3.svg.line()
-                  .x(function(d){ return x(d.date); })
-                  .y(function(d){ return y(d.price); });
                 
-                scope.data.forEach(function(d)
-                {
-                    d.date = parseDate(d.date);
-                    d.price = +d.price;
-                    console.log(d.date);
-                });
+                //d3.svg.line()で座標値を計算する
+                var line = d3.svg.line()
+                  .x(
+                    function(d)
+                    {
+                      //
+                      return x(d.date); 
+                    }
+                  )
+                  .y(
+                    function(d)
+                    { 
+                      return y(d.price);
+                    }
+                  );
+                
+                // scope.data.forEach(function(d)
+                // {
+                //     d.date = parseDate(d.date);
+                //     d.price = +d.price;
+                //     console.log(d.date);
+                // });
                 
                 x.domain(d3.extent(scope.data, function(d){ return d.date; }));
                 y.domain(d3.extent(scope.data, function(d){ return d.price; }));
