@@ -136,8 +136,12 @@ exports.getDetail = function(req, res)
             {
                 console.log(err);
             }
-            console.log('get getDetail');
-            console.log(items);
+            console.log('get getDetail items[0]');
+            console.log(items[0]);
+            console.log('get getDetail items[1]');
+            console.log(items[1]);
+            console.log('get getDetail items[2]');
+            console.log(items[2]);
             res.json({customer: data[0], approch: items[0], orders: items[1], orders_avg: items[2]});
         });
         
