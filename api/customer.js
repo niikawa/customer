@@ -142,12 +142,6 @@ exports.getDetail = function(req, res)
             {
                 console.log(err);
             }
-            console.log('get getDetail items[0]');
-            console.log(items[0]);
-            console.log('get getDetail items[1]');
-            console.log(items[1]);
-            console.log('get getDetail items[2]');
-            console.log(items[2]);
             res.json({customer: data[0], approch: items[0], orders: items[1], orders_avg: items[2]});
         });
         
@@ -202,7 +196,7 @@ exports.orders = function(req, res)
             var qObj = model.getQueryObject(col, table, '', groupby, orderby);
             qObj.request.input('customer_id', model.db.Int, id);
             
-            model.select(qObj, qObj.request, function(err, data){console.log('custmoer orders'); callback(err, data)});
+            model.select(qObj, qObj.request, function(err, data){console.log('custmoer orders'); callback(null, data)});
         },
         function(callback)
         {
@@ -214,7 +208,7 @@ exports.orders = function(req, res)
             var qObj = model.getQueryObject(col, table, '', groupby, orderby);
             qObj.request.input('customer_id', model.db.Int, id);
             
-            model.select(qObj, qObj.request,  function(err, data){console.log('orders avg'); callback(err, data)});
+            model.select(qObj, qObj.request,  function(err, data){console.log('orders avg'); callback(null, data)});
         }
 
     ],function final(err, items)
