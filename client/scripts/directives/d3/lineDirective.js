@@ -19,8 +19,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
               'cardinal-open', 'cardinal-close', 'monotone'
               ];
               
-            var offset = 50;
-          
             var margin = {
               top   : 40,
               right : 40,
@@ -29,7 +27,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             };
             
             var size = {
-              width : 800,
+              width : 1000,
               height: 400
             };
             
@@ -83,9 +81,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                   .x(
                     function(d, i)
                     {
-                      return offset +i * margin.left;
-                      //
-//                      return x(d.date); 
+                      return x(d.date); 
                     }
                   )
                   .y(
@@ -104,7 +100,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                     d.price = +d.price;
                 });
                 
-                
+                //表X軸、Y軸のメモリを設定する
                 x.domain(d3.extent(scope.data, function(d){ return d.date; }));
                 y.domain(d3.extent(scope.data, function(d){ return d.price; }));
 
