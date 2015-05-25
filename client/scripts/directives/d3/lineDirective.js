@@ -35,9 +35,9 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                               .append("g")
                               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-
+            //Xのメモリを日付にする
             var x = d3.time.scale()
-              .range([0, size.width - margin.left - margin.right]);
+              .range([0, size.width - margin.left - margin.right]); //実際の出力のサイズ
             
             var y = d3.scale.linear()
               .range([size.height - margin.top - margin.bottom, 0]);
@@ -83,12 +83,11 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                     }
                   );
                 
-                // scope.data.forEach(function(d)
-                // {
-                //     d.date = parseDate(d.date);
-                //     d.price = +d.price;
-                //     console.log(d.date);
-                // });
+                scope.data.forEach(function(d)
+                {
+                    d.date = parseDate(d.date);
+                    d.price = +d.price;
+                });
                 
                 x.domain(d3.extent(scope.data, function(d){ return d.date; }));
                 y.domain(d3.extent(scope.data, function(d){ return d.price; }));
@@ -134,9 +133,8 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                     .attr("transform", "rotate(-90)")
                     .attr("y", 6)
                     .attr("dy", ".7em")
-                    .style("text-anchor", "end")
-                    .text("値の単位");
-                
+                    .style("text-anchor", "end");
+
                 svg.append("path")
                   .datum(scope.data)
                   .attr("class", "line-main")
