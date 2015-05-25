@@ -17,7 +17,8 @@ core.prototype.db = require('mssql');
 
 core.prototype.getRequest = function()
 {
-    return new this.db.Request();
+    var ms = require('mssql');
+    return new ms.Request();
 };
 
 core.prototype.getQueryObject = function(col, table, where, groupby, orderby)
@@ -109,32 +110,6 @@ core.prototype.select = function(queryObject, request, callback)
 
 core.prototype.execute = function(sql, request, callback)
 {
-    var config = {
-      user: 'vxc-databese-master',
-    //  user: 'databese_master',
-      password: 'VirtUaleX001',
-      server: 'oufq8kwys5.database.windows.net',
-    //  server: 'customerreport.c6ykdlikt0mb.ap-northeast-1.rds.amazonaws.com',
-      database: 'CustomerReport',
-    //  databese: 'customerreport',
-      stream: true, // You can enable streaming globally
-    
-      options: {
-        encrypt: true // Use this if you're on Windows Azure
-    //    encrypt: false 
-      }
-    };
-    
-    this.db.connect(config, function(err) {
-      
-      if (null != err)
-      {
-        console.log('データベースコネクションエラー');
-        console.log(err);
-      }
-    });
-    
-    
     var result = [];
     var errList = [];
     
@@ -167,7 +142,6 @@ core.prototype.execute = function(sql, request, callback)
         console.log(result);
         
         callback(errList, result);
-        this.db.close();
     });
 };
 
