@@ -26,16 +26,16 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             };
             
             var data = [
-              {date: "2015-01", price:20},
-              {date: "2015-02", price:70},
-              {date: "2015-03", price:100},
-              {date: "2015-04", price:10},
-              {date: "2015-05", price:69},
-              {date: "2015-06", price:5},
-              {date: "2015-07", price:75},
+              {date: "2015/01", price:20},
+              {date: "2015/02", price:70},
+              {date: "2015/03", price:100},
+              {date: "2015/04", price:10},
+              {date: "2015/05", price:69},
+              {date: "2015/06", price:5},
+              {date: "2015/07", price:75},
             ];            
 
-            var parseDate = d3.time.format("%Y-%m").parse;
+            var parseDate = d3.time.format("%Y/%m").parse;
             
             // 初期化時に可視化領域の確保
 
@@ -50,7 +50,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             var getLabel = $parse(scope.label || 'name');
 
             var svg = d3.select(element[0]).append('svg').attr("width", size.width).attr("height", size.height).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    
+
             var x = d3.time.scale()
               .range([0, size.width - margin.left - margin.right]);
             
@@ -59,23 +59,64 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             
             var xAxis = d3.svg.axis()
               .scale(x)
-              .orient("bottom")
+              .orient("bottom").tickFormat(d3.time.format("%m"));
 
             var yAxis = d3.svg.axis()
               .scale(y)
               .orient("left");
-                
+          
+            var line = d3.svg.line()
+              .x(function(d){ return x(d.date); })
+              .y(function(d){ return y(d.price); });
+
+
+// // 描画
+// data.forEach(function(d){
+//   d.date = parseDate(d.date);
+//   d.value = +d.value;
+// });
+
+// x.domain(d3.extent(data, function(d){ return d.date; }));
+// y.domain(d3.extent(data, function(d){ return d.price; }));
+
+// svg.append("g")
+//   .attr("class", "x axis")
+//   .attr("transform", "translate(0, " + ( size.height - margin.top - margin.bottom ) + ")")
+//   .call(xAxis);
+
+// svg.append("g")
+//   .attr("class", "y axis")
+//   .call(yAxis)
+//   .append("text")
+//     .attr("transform", "rotate(-90)")
+//     .attr("y", 6)
+//     .attr("dy", ".7em")
+//     .style("text-anchor", "end")
+//     .text("値の単位");
+
+// svg.append("path")
+//   .datum(data)
+//   .attr("class", "line")
+//   .attr("d", line);          
+          
             //(Angular) Collectionの要素変動を監視.
             scope.$watchCollection('data', function()
             {
                 if(!scope.data)
                 {
-                  return;
+                  //return;
                 }
 
                 var line = d3.svg.line()
                   .x(function(d){ return x(d.date); })
                   .y(function(d){ return y(d.price); });
+                
+                data.forEach(function(d)
+                {
+                    d.date = parseDate(d.date);
+                    d.price = +d.price;
+//                    console.log(d.date);
+                });
                 
                 // x.domain(d3.extent(scope.data, function(d){ return d.date; }));
                 // y.domain(d3.extent(scope.data, function(d){ return d.price; }));
@@ -111,13 +152,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
 
                 // (D3) Collection要素変動の度に再計算する箇所.
                 // 描画
-                data.forEach(function(d)
-                {
-                    d.date = parseDate(d.date);
-                    d.price = +d.price;
-                    console.log(d.date);
-                });
-                
                 svg.append("g")
                   .attr("class", "x axis")
                   .attr("transform", "translate(0, " + ( size.height - margin.top - margin.bottom ) + ")")
