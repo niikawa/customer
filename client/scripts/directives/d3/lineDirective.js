@@ -59,41 +59,13 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             
             var xAxis = d3.svg.axis()
               .scale(x)
-              .orient("bottom").tickFormat(d3.time.format("%m"));
+              .orient("bottom").tickFormat(d3.time.format("%y%m"));
 
             var yAxis = d3.svg.axis()
               .scale(y)
               .orient("left");
 
-// // 描画
-// data.forEach(function(d){
-//   d.date = parseDate(d.date);
-//   d.value = +d.value;
-// });
 
-// x.domain(d3.extent(data, function(d){ return d.date; }));
-// y.domain(d3.extent(data, function(d){ return d.price; }));
-
-// svg.append("g")
-//   .attr("class", "x axis")
-//   .attr("transform", "translate(0, " + ( size.height - margin.top - margin.bottom ) + ")")
-//   .call(xAxis);
-
-// svg.append("g")
-//   .attr("class", "y axis")
-//   .call(yAxis)
-//   .append("text")
-//     .attr("transform", "rotate(-90)")
-//     .attr("y", 6)
-//     .attr("dy", ".7em")
-//     .style("text-anchor", "end")
-//     .text("値の単位");
-
-// svg.append("path")
-//   .datum(data)
-//   .attr("class", "line")
-//   .attr("d", line);          
-          
             //(Angular) Collectionの要素変動を監視.
             scope.$watchCollection('data', function()
             {
