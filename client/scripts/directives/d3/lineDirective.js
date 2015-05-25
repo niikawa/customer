@@ -62,7 +62,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
 
                 if (element.children('svg').length > 0)
                 {
-                  d3.select(element[0]).remove();
+                  d3.select(element[0].children('svg')).remove();
                 }
                 
                 //描画エリアを生成
@@ -124,6 +124,11 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                   .attr("class", "line-main")
                   .attr("d", line);
                 
+            });
+            
+            element.in('resize', function()
+            {
+              
             });
             
             function getType(type)
