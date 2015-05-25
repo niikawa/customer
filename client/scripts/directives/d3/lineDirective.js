@@ -110,8 +110,8 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                     //表X軸、Y軸のメモリを設定する
                     if (0 === i)
                     {
-                        x.domain(d3.extent(scope.data, function(d){ return d.date; }));
-                        y.domain(d3.extent(scope.data, function(d){ return d.price; }));
+                        x.domain(d3.extent(dataset, function(d){ return d.date; }));
+                        y.domain(d3.extent(dataset, function(d){ return d.price; }));
                     }
                     
                     // 描画

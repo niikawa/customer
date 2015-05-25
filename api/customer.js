@@ -129,8 +129,7 @@ exports.getDetail = function(req, res)
                 
                 model.select(qObj, qObj.request, callback);
             }
-            
-            
+
         ],function(err, items)
         {
             if (err.length > 0)
