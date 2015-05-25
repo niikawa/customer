@@ -24,6 +24,16 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
               width : 800,
               height: 400
             };
+            
+            var data = [
+              {date: "2015/01", price:20},
+              {date: "2015/02", price:70},
+              {date: "2015/03", price:100},
+              {date: "2015/04", price:10},
+              {date: "2015/05", price:69},
+              {date: "2015/06", price:5},
+              {date: "2015/07", price:75},
+            ];            
 
             var parseDate = d3.time.format("%Y/%m").parse;
             
@@ -67,8 +77,10 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                   .x(function(d){ return x(d.date); })
                   .y(function(d){ return y(d.price); });
                 
-                x.domain(d3.extent(scope.data, function(d){ return d.date; }));
-                y.domain(d3.extent(scope.data, function(d){ return d.price; }));
+                // x.domain(d3.extent(scope.data, function(d){ return d.date; }));
+                // y.domain(d3.extent(scope.data, function(d){ return d.price; }));
+                x.domain(d3.extent(scope, function(d){ return d.date; }));
+                y.domain(d3.extent(scope, function(d){ return d.price; }));
 
                 // データを入力ドメインとして設定
                 // 同時にextentで目盛りの単位が適切になるようにする
@@ -122,7 +134,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                     .text("値の単位");
                 
                 svg.append("path")
-                  .datum(scope.data)
+                  .datum(data)
                   .attr("class", "line")
                   .attr("d", line);
                 
