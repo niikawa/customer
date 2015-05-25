@@ -34,14 +34,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             //TODO 
             var parseDate = d3.time.format("%Y/%m").parse;
             
-            //描画エリアを生成
-            var svg = d3.select(element[0])
-                              .append('svg')
-                              .attr("width", "100%")
-                              .attr("height", size.height)
-                              .append("g")
-                              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
             //Xのメモリを日付にする
             var x = d3.time.scale()
               .range([0, size.width - margin.left - margin.right]); //実際の出力のサイズ
@@ -69,10 +61,21 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             //(Angular) Collectionの要素変動を監視.
             scope.$watchCollection('data', function()
             {
+                d3.select(element[0]).remove();
                 if(!scope.data)
                 {
                   return;
                 }
+                
+                //描画エリアを生成
+                var svg = d3.select(element[0])
+                                  .append('svg')
+                                  .attr("width", "100%")
+                                  .attr("height", size.height)
+                                  .append("g")
+                                  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+                
                 
                 var lineType = getType(scope.type);
                 
@@ -92,7 +95,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                   )
                   .interpolate(lineType);
 
-                  
                 //TODO
                 scope.data.forEach(function(d)
                 {
@@ -104,34 +106,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 x.domain(d3.extent(scope.data, function(d){ return d.date; }));
                 y.domain(d3.extent(scope.data, function(d){ return d.price; }));
 
-                // データを入力ドメインとして設定
-                // 同時にextentで目盛りの単位が適切になるようにする
-                
-                // (D3) enter()はCollection要素の追加に対応.
-                // var createdGroup = scope.data.enter().append('g').each(function(d)
-                // {
-                //     // (Angular) Collection要素毎の値に対する変更は、$watchで仕込んでいく.
-                //     var self = d3.select(this);
-                //     watched[getId(d)] = scope.$watch(function()
-                //     {
-                //         return getValue(d);
-                //     },
-                //     function(v)
-                //     {
-                //         self.select('rect').attr('width', v);
-                //     });
-                // });
-                
-                // (D3) exit()はCollection要素の削除に対応.
-                // scope.data.exit().each(function(d)
-                // {
-                //     // (Angular) $watchに登録されたリスナを解除して、メモリリークを防ぐ.
-                //     // var id = getId(d);
-                //     // watched[id]();
-                //     // delete watched[id];
-                // }).remove();
-
-                // (D3) Collection要素変動の度に再計算する箇所.
                 // 描画
                 svg.append("g")
                   .attr("class", "x axis")
