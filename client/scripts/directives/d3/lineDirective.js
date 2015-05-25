@@ -62,7 +62,8 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
 
                 if (element.children('svg').length > 0)
                 {
-                  d3.select(element.children('svg')).exit().remove();
+                    element.children('svg').remove();
+//                    d3.select(element.children('svg')).exit().remove();
                 }
                 
                 //描画エリアを生成
