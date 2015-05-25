@@ -26,16 +26,16 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             };
             
             var data = [
-              {date: "2015/01", price:20},
-              {date: "2015/02", price:70},
-              {date: "2015/03", price:100},
-              {date: "2015/04", price:10},
-              {date: "2015/05", price:69},
-              {date: "2015/06", price:5},
-              {date: "2015/07", price:75},
+              {date: "2015-01", price:20},
+              {date: "2015-02", price:70},
+              {date: "2015-03", price:100},
+              {date: "2015-04", price:10},
+              {date: "2015-05", price:69},
+              {date: "2015-06", price:5},
+              {date: "2015-07", price:75},
             ];            
 
-            var parseDate = d3.time.format("%Y/%m").parse;
+            var parseDate = d3.time.format("%Y-%m").parse;
             
             // 初期化時に可視化領域の確保
 
