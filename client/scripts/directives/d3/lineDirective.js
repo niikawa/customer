@@ -79,8 +79,8 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 
                 // x.domain(d3.extent(scope.data, function(d){ return d.date; }));
                 // y.domain(d3.extent(scope.data, function(d){ return d.price; }));
-                x.domain(d3.extent(scope, function(d){ return d.date; }));
-                y.domain(d3.extent(scope, function(d){ return d.price; }));
+                x.domain(d3.extent(data, function(d){ return d.date; }));
+                y.domain(d3.extent(data, function(d){ return d.price; }));
 
                 // データを入力ドメインとして設定
                 // 同時にextentで目盛りの単位が適切になるようにする
@@ -111,7 +111,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
 
                 // (D3) Collection要素変動の度に再計算する箇所.
                 // 描画
-                scope.data.forEach(function(d)
+                data.forEach(function(d)
                 {
                     d.date = parseDate(d.date);
                     d.price = +d.price;
