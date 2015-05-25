@@ -60,7 +60,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                   return;
                 }
 
-                if (element[0].children('svg').length > 0)
+                if (element.children('svg').length > 0)
                 {
                   d3.select(element[0]).remove();
                 }
