@@ -104,7 +104,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             {
                 if(!scope.data)
                 {
-                  //return;
+                  return;
                 }
 
                 var line = d3.svg.line()

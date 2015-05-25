@@ -20,7 +20,7 @@ function ($scope, Shared, Customer, Azure)
         $scope.rank = '';
         //autocomplete用
         $scope.selectedCustomer = {};
-        $scope.orders = [{price:0, date:''}];
+//        $scope.orders = [{price:0, date:''}];
     }
     
     /**
