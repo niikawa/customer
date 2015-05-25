@@ -141,6 +141,7 @@ core.prototype.execute = function(sql, request, callback)
         console.log(result);
         
         callback(errList, result);
+        this.db.close();
     });
 };
 
