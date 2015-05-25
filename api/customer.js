@@ -133,9 +133,10 @@ exports.orders = function(req, res)
         //
     }
     
-    var col = "Id, FORMAT(date, 'yyyy/MM/dd') as date, price";
+    var col = "customer_id, FORMAT(date, 'yyyy/MM/') as date, sum(price) as price";
     var table =  'T_READ_ORDERS';
-    var where = 'customer_id = @customer_id order by date';
+    var where = "group by customer_id, FORMAT(date, 'yyyy/MM/')";
+    where += ' having customer_id = @customer_id order by date';
     
     var qObj = model.getQueryObject(col, table, where);
     qObj.request.input('customer_id', model.db.Int, id);
