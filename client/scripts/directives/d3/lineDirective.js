@@ -42,7 +42,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
               .range([0, size.width - margin.left - margin.right]); //実際の出力のサイズ
             
             var y = d3.scale.linear()
-              .range([size.height - margin.top - margin.bottom, 0]);
+              .range([100, 0]);
             
             var xAxis = d3.svg.axis()
               .scale(x)
@@ -70,18 +70,15 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 var svg = d3.select(element[0])
                                   .append('svg')
                                   .attr("width", "100%")
-                                  .attr("height", size.height)
                                   .append("g")
                                   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    
-                
-                
+
                 var lineType = getType(scope.type);
                 
                 //d3.svg.line()で座標値を計算して線の種類を設定
                 var line = d3.svg.line()
                   .x(
-                    function(d, i)
+                    function(d)
                     {
                       return x(d.date); 
                     }
