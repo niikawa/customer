@@ -6,9 +6,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
         restrict: 'EA',
         scope:{
           data: '=',
-          key: '@',
-          valueProp: '@',
-          label: '@',
           type: '@'
         },
         link: function(scope, element)
@@ -19,7 +16,17 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
               'basis', 'basis-open', 'basis-close', 'bundle', 'cardinal',
               'cardinal-open', 'cardinal-close', 'monotone'
               ];
-              
+
+            //
+            function getType(type)
+            {
+                if (-1 === lineTypeList.indexOf(type))
+                {
+                    return lineTypeList[0];
+                }
+                return type;
+            }
+
             //描画時のmargin  
             var margin = {
               top   : 40,
@@ -52,7 +59,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
               .scale(y)
               .orient("left");
 
-            //(Angular) Collectionの要素変動を監視.
+            //dataを監視して変更があったら実行する
             scope.$watchCollection('data', function()
             {
                 if(!scope.data)
@@ -63,7 +70,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 if (element.children('svg').length > 0)
                 {
                     element.children('svg').remove();
-//                    d3.select(element.children('svg')).exit().remove();
                 }
                 
                 //描画エリアを生成
@@ -92,52 +98,48 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                   )
                   .interpolate(lineType);
 
-                //TODO
-                scope.data.forEach(function(d)
+                angular.forEach(scope.data, function(dataset, i)
                 {
-                    d.date = parseDate(d.date);
-                    d.price = +d.price;
+                    //TODO
+                    dataset.forEach(function(d)
+                    {
+                        d.date = parseDate(d.date);
+                        d.price = +d.price;
+                    });
+                
+                    //表X軸、Y軸のメモリを設定する
+                    if (0 === i)
+                    {
+                        x.domain(d3.extent(scope.data, function(d){ return d.date; }));
+                        y.domain(d3.extent(scope.data, function(d){ return d.price; }));
+                    }
+                    
+                    // 描画
+                    svg.append("g")
+                      .attr("class", "x axis")
+                      .attr("transform", "translate(0, " + ( size.height - margin.top - margin.bottom ) + ")")
+                      .call(xAxis);
+                    
+                    svg.append("g")
+                      .attr("class", "y axis")
+                      .call(yAxis)
+                      .append("text")
+                        .attr("transform", "rotate(-90)")
+                        .attr("y", 6)
+                        .attr("dy", ".7em")
+                        .style("text-anchor", "end");
+    
+                    svg.append("path")
+                      .datum(dataset)
+                      .attr("class", "line-main")
+                      .attr("d", line);
                 });
-                
-                //表X軸、Y軸のメモリを設定する
-                x.domain(d3.extent(scope.data, function(d){ return d.date; }));
-                y.domain(d3.extent(scope.data, function(d){ return d.price; }));
-
-                // 描画
-                svg.append("g")
-                  .attr("class", "x axis")
-                  .attr("transform", "translate(0, " + ( size.height - margin.top - margin.bottom ) + ")")
-                  .call(xAxis);
-                
-                svg.append("g")
-                  .attr("class", "y axis")
-                  .call(yAxis)
-                  .append("text")
-                    .attr("transform", "rotate(-90)")
-                    .attr("y", 6)
-                    .attr("dy", ".7em")
-                    .style("text-anchor", "end");
-
-                svg.append("path")
-                  .datum(scope.data)
-                  .attr("class", "line-main")
-                  .attr("d", line);
-                
             });
             
             element.on('resize', function()
             {
               
             });
-            
-            function getType(type)
-            {
-                if (-1 === lineTypeList.indexOf(type))
-                {
-                    return lineTypeList[0];
-                }
-                return type;
-            }
         }
     };
 }]);

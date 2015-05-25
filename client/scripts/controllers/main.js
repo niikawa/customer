@@ -45,13 +45,8 @@ function ($scope, Shared, Customer, Azure)
         {
             $scope.customer = response.customer;
             $scope.approch = response.approch;
-            $scope.rank = $scope.approch[0].name; 
-            $scope.$emit('requestEnd');
-        });
-        
-        Customer.resource.orders({id: $scope.selectedCustomer.customer_id}).$promise.then(function(response)
-        {
-            $scope.orders = response.orders;
+            $scope.rank = $scope.approch[0].name;
+            $scope.orders = [response.orders, response.orders_avg];
             $scope.$emit('requestEnd');
         });
         

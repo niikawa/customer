@@ -77,3 +77,9 @@ spinner-directive > div > img {
   stroke:#1572F9;
   stroke-width:1.5px;  
 }
+
+.line-avg {
+  fill:none;
+  stroke:#1572F9;
+  stroke-width:1.5px;  
+}
