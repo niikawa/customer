@@ -104,41 +104,41 @@ exports.getDetail = function(req, res)
                     var qObj = model.getQueryObject(col, table, where);
                     qObj.request.input('rank_id', model.db.Int, data[0].rank_id);
                     
-                    model.select(qObj, qObj.request,  function(err, data){callback(err, data)});
+                    model.select(qObj, qObj.request,  function(err, data){callback(null, data)});
                 }
             },
-            // function(callback)
-            // {
-            //     console.log('method 2');
+            function(callback)
+            {
+                console.log('method 2');
                 
-            //     var col = "customer_id, FORMAT(date, 'yyyy/MM') as date, sum(price) as price";
-            //     var table = 'T_READ_ORDERS';
-            //     var groupby = "customer_id, FORMAT(date, 'yyyy/MM') having customer_id = @customer_id";
-            //     var orderby = 'date';
+                var col = "customer_id, FORMAT(date, 'yyyy/MM') as date, sum(price) as price";
+                var table = 'T_READ_ORDERS';
+                var groupby = "customer_id, FORMAT(date, 'yyyy/MM') having customer_id = @customer_id";
+                var orderby = 'date';
             
-            //     var qObj = model.getQueryObject(col, table, '', groupby, orderby);
-            //     qObj.request.input('customer_id', model.db.Int, data[0].customer_id);
+                var qObj = model.getQueryObject(col, table, '', groupby, orderby);
+                qObj.request.input('customer_id', model.db.Int, data[0].customer_id);
                 
-            //     model.select(qObj, qObj.request,  function(err, data){callback(err, data)});
-            // },
-            // function(callback)
-            // {
-            //     console.log('method 3');
+                model.select(qObj, qObj.request,  function(err, data){callback(null, data)});
+            },
+            function(callback)
+            {
+                console.log('method 3');
                 
-            //     var col = "T2.rank_id , FORMAT(T1.date, 'yyyy/MM') as date, avg(T1.price) as price";
-            //     var table = 'T_READ_ORDERS T1 inner join M_CUSTOMER T2 on T1.customer_id = T2.customer_id';
-            //     var groupby = "T2.rank_id, FORMAT(T1.date, 'yyyy/MM') having T2.rank_id = (select rank_id from M_CUSTOMER where customer_id =  @customer_id)";
-            //     var orderby = 'date';
+                var col = "T2.rank_id , FORMAT(T1.date, 'yyyy/MM') as date, avg(T1.price) as price";
+                var table = 'T_READ_ORDERS T1 inner join M_CUSTOMER T2 on T1.customer_id = T2.customer_id';
+                var groupby = "T2.rank_id, FORMAT(T1.date, 'yyyy/MM') having T2.rank_id = (select rank_id from M_CUSTOMER where customer_id =  @customer_id)";
+                var orderby = 'date';
             
-            //     var qObj = model.getQueryObject(col, table, '', groupby, orderby);
-            //     qObj.request.input('customer_id', model.db.Int, data[0].customer_id);
+                var qObj = model.getQueryObject(col, table, '', groupby, orderby);
+                qObj.request.input('customer_id', model.db.Int, data[0].customer_id);
                 
-            //     model.select(qObj, qObj.request,  function(err, data){callback(err, data)});
-            // }
+                model.select(qObj, qObj.request,  function(err, data){callback(null, data)});
+            }
 
         ], function complete(err, items)
         {
-            if (err.length > 0)
+            if (err > 0)
             {
                 console.log(err);
             }
@@ -158,31 +158,7 @@ exports.orders = function(req, res)
     {
         //
     }
-    // var col = "customer_id, FORMAT(date, 'yyyy/MM') as date, sum(price) as price";
-    // var table = 'T_READ_ORDERS';
-    // var groupby = "customer_id, FORMAT(date, 'yyyy/MM') having customer_id = @customer_id";
-    // var orderby = 'date';
 
-    // var qObj = model.getQueryObject(col, table, '', groupby, orderby);
-    // qObj.request.input('customer_id', model.db.Int, id);
-    
-    // model.select(qObj, qObj.request, function(err, data1)
-    // {
-        
-    //     var col = "T2.rank_id , FORMAT(T1.date, 'yyyy/MM') as date, avg(T1.price) as price";
-    //     var table = 'T_READ_ORDERS T1 inner join M_CUSTOMER T2 on T1.customer_id = T2.customer_id';
-    //     var groupby = "T2.rank_id, FORMAT(T1.date, 'yyyy/MM') having T2.rank_id = (select rank_id from M_CUSTOMER where customer_id = @customer_id)";
-    //     var orderby = 'date';
-    
-    //     var qObj = model.getQueryObject(col, table, '', groupby, orderby);
-    //     qObj.request.input('customer_id', model.db.Int, id);
-        
-    //     model.select(qObj, qObj.request, function(err, data2)
-    //     {
-    //         res.json({orders: data1, orders_avg: data2});
-    //     });
-    // });
-    
     //非同期でアプローチ方法と売り上げ推移を取得する
     async.series(
     [
