@@ -135,7 +135,7 @@ exports.orders = function(req, res)
     
     var col = "customer_id, FORMAT(date, 'yyyy/MM') as date, sum(price) as price";
     var table = 'T_READ_ORDERS';
-    var groupby = "customer_id, FORMAT(date, 'yyyy/MM/') having customer_id = @customer_id";
+    var groupby = "customer_id, FORMAT(date, 'yyyy/MM') having customer_id = @customer_id";
     var orderby = 'date';
 
     var qObj = model.getQueryObject(col, table, '', groupby, orderby);
@@ -143,8 +143,6 @@ exports.orders = function(req, res)
     
     model.select(qObj, qObj.request, function(err, data)
     {
-        
-        console.log('orders');
         if (err)
         {
             console.log(err);
