@@ -133,7 +133,7 @@ exports.orders = function(req, res)
         //
     }
     
-    var col = "customer_id, FORMAT(date, 'yyyy/MM/') as date, sum(price) as price";
+    var col = "customer_id, FORMAT(date, 'yyyy/MM') as date, sum(price) as price";
     var table =  'T_READ_ORDERS';
     var where = "group by customer_id, FORMAT(date, 'yyyy/MM/')";
     where += ' having customer_id = @customer_id order by date';
