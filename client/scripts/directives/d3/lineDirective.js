@@ -8,10 +8,19 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
           data: '=',
           key: '@',
           valueProp: '@',
-          label: '@'
+          label: '@',
+          type: '@'
         },
         link: function(scope, element)
         {
+            var lineTypeList = [
+              'linear','linear-closed', 'step', 'step-before', 'step-after',
+              'basis', 'basis-open', 'basis-close', 'bundle', 'cardinal',
+              'cardinal-open', 'cardinal-close', 'monotone'
+              ];
+              
+            var offset = 50;
+          
             var margin = {
               top   : 40,
               right : 40,
@@ -67,13 +76,16 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                   return;
                 }
                 
-                //d3.svg.line()で座標値を計算する
+                var lineType = getType(scope.type);
+                
+                //d3.svg.line()で座標値を計算して線の種類を設定
                 var line = d3.svg.line()
                   .x(
-                    function(d)
+                    function(d, i)
                     {
+                      return  offset +i * margin.left;
                       //
-                      return x(d.date); 
+//                      return x(d.date); 
                     }
                   )
                   .y(
@@ -81,13 +93,16 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                     { 
                       return y(d.price);
                     }
+                  .interpolate(lineType)
                   );
-                
+                  
+                //TODO
                 scope.data.forEach(function(d)
                 {
                     d.date = parseDate(d.date);
                     d.price = +d.price;
                 });
+                
                 
                 x.domain(d3.extent(scope.data, function(d){ return d.date; }));
                 y.domain(d3.extent(scope.data, function(d){ return d.price; }));
@@ -141,6 +156,15 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                   .attr("d", line);
                 
             });
+            
+            function getType(type)
+            {
+                if (-1 === lineTypeList.indexOf(type))
+                {
+                    return lineTypeList[0];
+                }
+                return type;
+            }
         }
     };
 }]);
