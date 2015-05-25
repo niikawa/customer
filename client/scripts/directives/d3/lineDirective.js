@@ -110,13 +110,13 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 {
                     d.date = parseDate(d.date);
                     d.price = +d.price;
-//                    console.log(d.date);
+                    console.log(d.date);
                 });
                 
-                x.domain(d3.extent(scope.data, function(d){ return d.date; }));
-                y.domain(d3.extent(scope.data, function(d){ return d.price; }));
-                // x.domain(d3.extent(data, function(d){ return d.date; }));
-                // y.domain(d3.extent(data, function(d){ return d.price; }));
+                // x.domain(d3.extent(scope.data, function(d){ return d.date; }));
+                // y.domain(d3.extent(scope.data, function(d){ return d.price; }));
+                x.domain(d3.extent(data, function(d){ return d.date; }));
+                y.domain(d3.extent(data, function(d){ return d.price; }));
 
                 // データを入力ドメインとして設定
                 // 同時にextentで目盛りの単位が適切になるようにする
@@ -163,7 +163,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                     .text("値の単位");
                 
                 svg.append("path")
-                  .datum(scope.data)
+                  .datum(data)
                   .attr("class", "line")
                   .attr("d", line);
                 
