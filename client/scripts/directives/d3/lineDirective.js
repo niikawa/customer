@@ -24,23 +24,8 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
               width : 800,
               height: 400
             };
-            
-            var data = [
-              {date: "2015-01-01", value:20},
-              {date: "2015-02-01", value:70},
-              {date: "2015-03-01", value:100},
-              {date: "2015-04-01", value:10},
-              {date: "2015-05-01", value:69},
-              {date: "2015-06-01", value:5},
-              {date: "2015-07-01", value:75},
-              {date: "2015-08-01", value:80},
-              {date: "2015-09-01", value:55},
-              {date: "2015-10-01", value:50},
-              {date: "2015-11-01", value:32},
-              {date: "2015-12-01", value:90}
-            ];            
 
-            var parseDate = d3.time.format("%Y/%m/%d").parse;
+            var parseDate = d3.time.format("%Y/%m").parse;
             
             // 初期化時に可視化領域の確保
 
@@ -116,7 +101,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 // 描画
                 scope.data.forEach(function(d)
                 {
-                    //d.date = parseDate(d.date);
+                    d.date = parseDate(d.date);
                     d.price = +d.price;
                     console.log(d.date);
                 });
