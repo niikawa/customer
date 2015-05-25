@@ -80,16 +80,14 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 
                 //d3.svg.line()で座標値を計算して線の種類を設定
                 var line = d3.svg.line()
-                  .x(
-                    function(d, i)
+                  .x(function(d, i)
                     {
-                      return  offset +i * margin.left;
+                      return offset +i * margin.left;
                       //
 //                      return x(d.date); 
                     }
                   )
-                  .y(
-                    function(d)
+                  .y(function(d, i)
                     { 
                       return y(d.price);
                     }
