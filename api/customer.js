@@ -126,15 +126,15 @@ exports.getDetail = function(req, res)
                 console.log('method 3');
                 
                 var col = "T2.rank_id , FORMAT(T1.date, 'yyyy/MM') as date,";
-                col += "avg(T1.price) / (select count(1) from M_CUSTOMER where rank_id = (select rank_id from M_CUSTOMER where customer_id = @customer_id)) as price";
+                col += "sum(T1.price) / (select count(1) from M_CUSTOMER where rank_id = @rank_id) as price";
                 
                 var table = 'T_READ_ORDERS T1 inner join M_CUSTOMER T2 on T1.customer_id = T2.customer_id';
-                var groupby = "T2.rank_id, FORMAT(T1.date, 'yyyy/MM') having T2.rank_id = (select rank_id from M_CUSTOMER where customer_id = @customer_id)";
+                var groupby = "T2.rank_id, FORMAT(T1.date, 'yyyy/MM') having T2.rank_id = @rank_id";
                 var orderby = 'date';
             
                 var qObj = model.getQueryObject(col, table, '', groupby, orderby);
-                qObj.request.input('customer_id', model.db.Int, data[0].customer_id);
-                
+                    qObj.request.input('rank_id', model.db.Int, data[0].rank_id);
+
                 model.select(qObj, qObj.request,  function(err, data){callback(null, data)});
             }
 
