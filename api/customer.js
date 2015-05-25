@@ -213,7 +213,7 @@ exports.orders = function(req, res)
 
     ],function final(err, items)
     {
-        if (err.length > 0)
+        if (err)
         {
             console.log(err);
         }
