@@ -163,49 +163,61 @@ exports.orders = function(req, res)
     {
         //
     }
-    //非同期でアプローチ方法と売り上げ推移を取得する
-    model.async.series(
-    [
-        function(callback)
-        {
-            console.log('method 2');
-            
-            var col = "customer_id, FORMAT(date, 'yyyy/MM') as date, sum(price) as price";
-            var table = 'T_READ_ORDERS';
-            var groupby = "customer_id, FORMAT(date, 'yyyy/MM') having customer_id = @customer_id";
-            var orderby = 'date';
-        
-            var qObj = model.getQueryObject(col, table, '', groupby, orderby);
-            qObj.request.input('customer_id', model.db.Int, id);
-            
-            model.select(qObj, qObj.request, callback);
-        },
-        function(callback)
-        {
-            console.log('method 3');
-            
-            var col = "T2.rank_id , FORMAT(T1.date, 'yyyy/MM') as date, avg(T1.price) as price";
-            var table = 'T_READ_ORDERS T1 inner join M_CUSTOMER T2 on T1.customer_id = T2.customer_id';
-            var groupby = "T2.rank_id, FORMAT(T1.date, 'yyyy/MM') having T2.rank_id = (select rank_id from M_CUSTOMER where customer_id =  @customer_id)";
-            var orderby = 'date';
-        
-            var qObj = model.getQueryObject(col, table, '', groupby, orderby);
-            qObj.request.input('customer_id', model.db.Int, id);
-            
-            model.select(qObj, qObj.request, callback);
-        }
+    var col = "customer_id, FORMAT(date, 'yyyy/MM') as date, sum(price) as price";
+    var table = 'T_READ_ORDERS';
+    var groupby = "customer_id, FORMAT(date, 'yyyy/MM') having customer_id = @customer_id";
+    var orderby = 'date';
 
-    ],function(err, items)
+    var qObj = model.getQueryObject(col, table, '', groupby, orderby);
+    qObj.request.input('customer_id', model.db.Int, id);
+    
+    model.select(qObj, qObj.request, function(err, data1)
     {
-        if (err.length > 0)
+        
+        var col = "T2.rank_id , FORMAT(T1.date, 'yyyy/MM') as date, avg(T1.price) as price";
+        var table = 'T_READ_ORDERS T1 inner join M_CUSTOMER T2 on T1.customer_id = T2.customer_id';
+        var groupby = "T2.rank_id, FORMAT(T1.date, 'yyyy/MM') having T2.rank_id = (select rank_id from M_CUSTOMER where customer_id =  @customer_id)";
+        var orderby = 'date';
+    
+        var qObj = model.getQueryObject(col, table, '', groupby, orderby);
+        qObj.request.input('customer_id', model.db.Int, id);
+        
+        model.select(qObj, qObj.request, function(err, data2)
         {
-            console.log(err);
-        }
-        console.log('get getDetail items[0]');
-        console.log(items[0]);
-        console.log('get getDetail items[1]');
-        console.log(items[1]);
-        res.json({orders: items[0], orders_avg: items[1]});
+            res.json({orders: data1, orders_avg: data2});
+        });
     });
+    
+    //非同期でアプローチ方法と売り上げ推移を取得する
+    // model.async.series(
+    // [
+    //     function(callback)
+    //     {
+    //     },
+    //     function(callback)
+    //     {
+    //         var col = "T2.rank_id , FORMAT(T1.date, 'yyyy/MM') as date, avg(T1.price) as price";
+    //         var table = 'T_READ_ORDERS T1 inner join M_CUSTOMER T2 on T1.customer_id = T2.customer_id';
+    //         var groupby = "T2.rank_id, FORMAT(T1.date, 'yyyy/MM') having T2.rank_id = (select rank_id from M_CUSTOMER where customer_id =  @customer_id)";
+    //         var orderby = 'date';
+        
+    //         var qObj = model.getQueryObject(col, table, '', groupby, orderby);
+    //         qObj.request.input('customer_id', model.db.Int, id);
+            
+    //         model.select(qObj, qObj.request, callback);
+    //     }
+
+    // ],function(err, items)
+    // {
+    //     if (err.length > 0)
+    //     {
+    //         console.log(err);
+    //     }
+    //     console.log('get getDetail items[0]');
+    //     console.log(items[0]);
+    //     console.log('get getDetail items[1]');
+    //     console.log(items[1]);
+    //     res.json({orders: items[0], orders_avg: items[1]});
+    // });
     
 };
