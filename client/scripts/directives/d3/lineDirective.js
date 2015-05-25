@@ -126,7 +126,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 
             });
             
-            element.in('resize', function()
+            element.on('resize', function()
             {
               
             });
