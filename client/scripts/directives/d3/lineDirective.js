@@ -13,12 +13,14 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
         },
         link: function(scope, element)
         {
+            //D3.jsで表現できる線のリスト
             var lineTypeList = [
               'linear','linear-closed', 'step', 'step-before', 'step-after',
               'basis', 'basis-open', 'basis-close', 'bundle', 'cardinal',
               'cardinal-open', 'cardinal-close', 'monotone'
               ];
               
+            //描画時のmargin  
             var margin = {
               top   : 40,
               right : 40,
@@ -26,6 +28,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
               left  : 90
             };
             
+            //描画サイズ  
             var size = {
               width : 1000,
               height: 400
@@ -49,22 +52,17 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
               .scale(y)
               .orient("left");
 
-
-            // // $watchリスナの登録解除関数格納用.
-            var watched = {}; 
-
-            // (Angular) $parseでCollection要素へのアクセサを確保しておく.
-            var getId = $parse(scope.key || 'Id');
-            var getValue = $parse(scope.valueProp || 'value');
-            var getLabel = $parse(scope.label || 'name');
-            
             //(Angular) Collectionの要素変動を監視.
             scope.$watchCollection('data', function()
             {
-                d3.select(element[0]).remove();
                 if(!scope.data)
                 {
                   return;
+                }
+
+                if (element[0].children('svg').length > 0)
+                {
+                  d3.select(element[0]).remove();
                 }
                 
                 //描画エリアを生成
