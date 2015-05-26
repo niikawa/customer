@@ -10,6 +10,10 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
         },
         link: function(scope, element)
         {
+          if(!scope.data)
+          {
+            return;
+          }
             //D3.jsで表現できる線のリスト
             var lineTypeList = [
               'linear','linear-closed', 'step', 'step-before', 'step-after',
@@ -46,7 +50,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             
             //Xのメモリを日付にする
             var x = d3.time.scale()
-              .range([0, size.width - margin.left - margin.right]); //実際の出力のサイズ
+              .range([0, size.width - margin.left - margin.right - 100]); //実際の出力のサイズ
             
             var y = d3.scale.linear()
               .range([size.height - margin.top - margin.bottom, 0]);
