@@ -132,23 +132,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                         .attr("y", 6)
                         .attr("dy", ".7em")
                         .style("text-anchor", "end");
-                        
-                    var circles = svg.selectAll('circle').data(circlesValue);
-                    circles.enter()
-                      .append('circle')
-                      .attr('cx', line.x()).attr('cy', 0).attr('r', 0);
-                    circles.exit()
-                      .transition()
-                      .duration(300)
-                      .attr('cy', 0).attr('r', 0)
-                      .remove();
-                    circles
-                      .attr('fill', 'red')
-                      .transition()
-                      .duration(300)
-                      .attr('cx', line.x())
-                      .attr('cy', line.y())
-                      .attr('r', 6);
 
                     svg.append("path")
                       .datum(dataset)
