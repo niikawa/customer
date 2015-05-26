@@ -10,10 +10,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
         },
         link: function(scope, element)
         {
-          if(!scope.data)
-          {
-            return;
-          }
             //D3.jsで表現できる線のリスト
             var lineTypeList = [
               'linear','linear-closed', 'step', 'step-before', 'step-after',
