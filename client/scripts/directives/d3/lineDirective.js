@@ -104,9 +104,9 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                     //TODO
                     dataset.forEach(function(d)
                     {
+                        circlesValue.push(d.price);
                         d.date = parseDate(d.date);
                         d.price = +d.price;
-                        circlesValue.push(d.price);
                     });
                 
                     //表X軸、Y軸のメモリを設定する
