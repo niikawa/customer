@@ -39,7 +39,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             
             //描画サイズ  
             var size = {
-              width : screen.width,
+              width : $(window).width(),
               height: 400
             };
             
@@ -140,10 +140,10 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             
             element.on('resize', function()
             {
-              
+                console.log($(window).width());
                 //描画サイズ  
                 var size = {
-                  width : screen.width,
+                  width : $(window).width(),
                   height: 400
                 };
                 
