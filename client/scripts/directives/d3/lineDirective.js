@@ -98,11 +98,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                   )
                   .interpolate(lineType);
                   
-                  var line = d3.svg.line()
-                      .x(function(d, i) { return (i + 1) * 300 / (n + 1); })
-                      .y(function(d, i) { return d * 280 + 10; })
-                      .interpolate(interpolate);
-
                 angular.forEach(scope.data, function(dataset, i)
                 {
                     var circlesValue = [];
