@@ -37,7 +37,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             
             //描画サイズ  
             var size = {
-              width : 1000,
+              width : screen.width,
               height: 400
             };
             
