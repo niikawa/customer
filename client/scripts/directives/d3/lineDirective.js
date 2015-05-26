@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp');
-myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse)
+myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Service, $parse, $window)
 {
     var d3 = d3Service.d3;
     return {
@@ -39,8 +39,8 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             
             //描画サイズ  
             var size = {
-              width : $(window).width(),
-              height: 400
+              width : $($window).width(),
+              height: $($window).height() / 3
             };
             
             //TODO 
@@ -138,9 +138,8 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                 });
             });
             
-            element.on('resize', function()
+            $window.on('resize', function()
             {
-                console.log($(window).width());
                 //描画サイズ  
                 var size = {
                   width : $(window).width(),
