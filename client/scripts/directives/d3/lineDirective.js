@@ -37,10 +37,11 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             
             var parseDate = d3.time.format("%Y/%m").parse;
             
+            var w = angular.element($window);
             //描画サイズ  
             var size = {
-              width : angular.element($window).width(),
-              height: $($window).height() / 3
+              width : w.width(),
+              height: w.height() / 2
             };
             
             //TODO 
@@ -138,11 +139,11 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 });
             });
             
-            angular.element($window).on('resize', function()
+            w.on('resize', function()
             {
                 //描画サイズ  
                 var size = {
-                  width : $(window).width(),
+                  width : w.width(),
                   height: 400
                 };
                 
@@ -161,7 +162,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 var yAxis = d3.svg.axis()
                   .scale(y)
                   .orient("left");
-              
+                console.log(scope.data);
                 if(!scope.data)
                 {
                   return;
