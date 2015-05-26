@@ -108,8 +108,10 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                     });
                 
                     //表X軸、Y軸のメモリを設定する
+                    var lineClass = 'line-avg';
                     if (0 === i)
                     {
+                        lineClass = 'line-main';
                         x.domain(d3.extent(dataset, function(d){ return d.date; }));
                         y.domain(d3.extent(dataset, function(d){ return d.price; }));
                     }
@@ -131,7 +133,8 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
     
                     svg.append("path")
                       .datum(dataset)
-                      .attr("class", "line-main")
+                      .attr("class", lineClass)
+                      .attr('stroke-width', '1')
                       .attr("d", line);
                 });
             });

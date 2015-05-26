@@ -80,6 +80,7 @@ spinner-directive > div > img {
 
 .line-avg {
   fill:none;
-  stroke:#1572F9;
-  stroke-width:1.5px;  
+  stroke:#FF8C00;
+  stroke-width:1.5px;
+  border: dashed;
 }
