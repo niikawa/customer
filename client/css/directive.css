@@ -67,8 +67,6 @@ spinner-directive > div {
 }
 spinner-directive > div > img {
   position:absolute;
-  height:50%;
-  width:50%;
   z-index: 1000;
 }
 

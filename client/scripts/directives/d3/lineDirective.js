@@ -46,7 +46,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
             
             //Xのメモリを日付にする
             var x = d3.time.scale()
-              .range([0, size.width - margin.left - margin.right - 100]); //実際の出力のサイズ
+              .range([0, size.width - margin.left - margin.right - 50]); //実際の出力のサイズ
             
             var y = d3.scale.linear()
               .range([size.height - margin.top - margin.bottom, 0]);
