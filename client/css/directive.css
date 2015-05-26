@@ -54,7 +54,7 @@ ul.complete-list > li {
  * common/spinnerDirective.js
  */
 spinner-directive {
-  position:relative;
+  position:fixed;
   background-color: #000;
   opacity: 0.8;
   top:50%;
