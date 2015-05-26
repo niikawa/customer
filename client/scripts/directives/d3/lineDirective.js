@@ -100,33 +100,13 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                   
                 angular.forEach(scope.data, function(dataset, i)
                 {
-                    var circlesValue = [];
                     //TODO
                     dataset.forEach(function(d)
                     {
-                        var circlesProp = [d.date, d.price, 10];
-                        circlesValue.push(circlesProp);
                         d.date = parseDate(d.date);
                         d.price = +d.price;
                     });
                                       
-                   var circles = svg.selectAll('circle').data(circlesValue);
-                    circles.enter()
-                      .append('circle')
-                      .attr('cx', line.x()).attr('cy', 0).attr('r', 0);
-                    circles.exit()
-                      .transition()
-                      .duration(300)
-                      .attr('cy', 0).attr('r', 0)
-                      .remove();
-                    circles
-                      .attr('fill', 'red')
-                      .transition()
-                      .duration(300)
-                      .attr('cx', line.x())
-                      .attr('cy', line.y())
-                      .attr('r', 6);                    
-                
                     //表X軸、Y軸のメモリを設定する
                     var lineClass = 'line-avg';
                     if (0 === i)
