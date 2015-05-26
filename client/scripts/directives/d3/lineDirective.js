@@ -6,10 +6,16 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
         restrict: 'EA',
         scope:{
           data: '=',
-          type: '@'
+          type: '@',
+          headerLabel: '@',
         },
         link: function(scope, element)
         {
+            if (void 0 !== scope.headerLabel && '' !== scope.headerLabel)
+            {
+                element.append('<p>'+scope.headerLabel+'</p>');
+            }
+            
             //画面
             var w = angular.element($window);
 
@@ -127,23 +133,23 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                         lineClass = 'line-main';
                         x.domain(d3.extent(dataset, function(d){ return d.date; }));
                         y.domain(d3.extent(dataset, function(d){ return d.price; }));
+                        
+                        // 描画
+                        svg.append("g")
+                          .attr("class", "x axis")
+                          .attr("transform", "translate(0, " + ( size.height - margin.top - margin.bottom ) + ")")
+                          .call(xAxis);
+                        
+                        svg.append("g")
+                          .attr("class", "y axis")
+                          .call(yAxis)
+                          .append("text")
+                            .attr("transform", "rotate(-90)")
+                            .attr("y", 6)
+                            .attr("dy", ".7em")
+                            .style("text-anchor", "end");
                     }
                     
-                    // 描画
-                    svg.append("g")
-                      .attr("class", "x axis")
-                      .attr("transform", "translate(0, " + ( size.height - margin.top - margin.bottom ) + ")")
-                      .call(xAxis);
-                    
-                    svg.append("g")
-                      .attr("class", "y axis")
-                      .call(yAxis)
-                      .append("text")
-                        .attr("transform", "rotate(-90)")
-                        .attr("y", 6)
-                        .attr("dy", ".7em")
-                        .style("text-anchor", "end");
-
                     svg.append("path")
                       .datum(dataset)
                       .attr("class", lineClass)

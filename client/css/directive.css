@@ -75,13 +75,13 @@ spinner-directive > div > img {
  */
 .line-main {
   fill:none;
-  stroke:#1572F9;
+  stroke:#FF8C00;
   stroke-width:1.5px;  
 }
 
 .line-avg {
   fill:none;
-  stroke:#FF8C00;
+  stroke:#A9A9A9;
   stroke-width:1.5px;
   stroke-dasharray: "5,5";
 }

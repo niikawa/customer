@@ -20,7 +20,8 @@ function ($scope, Shared, Customer, Azure)
         $scope.rank = '';
         //autocomplete用
         $scope.selectedCustomer = {};
-//        $scope.orders = [{price:0, date:''}];
+        
+        $scope.lineLabel = '直近1年の売上推移（月別サマリ）';
     }
     
     /**
