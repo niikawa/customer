@@ -82,5 +82,5 @@ spinner-directive > div > img {
   fill:none;
   stroke:#FF8C00;
   stroke-width:1.5px;
-  border: dashed;
+  border-style: dashed;
 }

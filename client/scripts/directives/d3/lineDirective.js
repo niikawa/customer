@@ -97,14 +97,21 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                     }
                   )
                   .interpolate(lineType);
+                  
+                  var line = d3.svg.line()
+                      .x(function(d, i) { return (i + 1) * 300 / (n + 1); })
+                      .y(function(d, i) { return d * 280 + 10; })
+                      .interpolate(interpolate);
 
                 angular.forEach(scope.data, function(dataset, i)
                 {
+                    var circlesValue = [];
                     //TODO
                     dataset.forEach(function(d)
                     {
                         d.date = parseDate(d.date);
                         d.price = +d.price;
+                        circlesValue.push(d.price);
                     });
                 
                     //表X軸、Y軸のメモリを設定する
@@ -130,12 +137,29 @@ myApp.directive('lineChart', ['d3Service', '$parse', function (d3Service, $parse
                         .attr("y", 6)
                         .attr("dy", ".7em")
                         .style("text-anchor", "end");
-    
+                        
+                    var circles = svg.selectAll('circle').data(circlesValue);
+                    circles.enter()
+                      .append('circle')
+                      .attr('cx', line.x()).attr('cy', 0).attr('r', 0);
+                    circles.exit()
+                      .transition()
+                      .duration(300)
+                      .attr('cy', 0).attr('r', 0)
+                      .remove();
+                    circles
+                      .attr('fill', 'red')
+                      .transition()
+                      .duration(300)
+                      .attr('cx', line.x())
+                      .attr('cy', line.y())
+                      .attr('r', 6);
+
                     svg.append("path")
                       .datum(dataset)
                       .attr("class", lineClass)
-                      .attr('stroke-width', '1')
                       .attr("d", line);
+                      
                 });
             });
             
