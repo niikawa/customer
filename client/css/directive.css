@@ -55,17 +55,18 @@ ul.complete-list > li {
  */
 spinner-directive {
   position:relative;
-  top: 0;
   background-color: #000;
   opacity: 0.8;
+  top:50%;
+  left:50%;
+  z-index: 1000;
+  display:block;
 }
 spinner-directive > div {
   width:100%;
 }
 spinner-directive > div > img {
   position:absolute;
-  top:50%;
-  left:50%;
   z-index: 1000;
 }
 
