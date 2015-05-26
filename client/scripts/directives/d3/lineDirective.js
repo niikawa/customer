@@ -11,9 +11,11 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
         },
         link: function(scope, element)
         {
+            console.log(scope.headerLabel);
             if (void 0 !== scope.headerLabel && '' !== scope.headerLabel)
             {
-                element.append('<p>'+scope.headerLabel+'</p>');
+                var add = '<p>'+scope.headerLabel+'</p>';
+                element.append(add);
             }
             
             //画面
@@ -64,7 +66,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             function drow(isResize)
             {
                 //描画サイズ  
-                var size = {width : w.width(), height: w.height() / 1.5};
+                var size = {width : w.width(), height: w.height() / 2};
                 
                 //Xメモリを日付にしてrangeで描画サイズを決定する
                 var x = d3.time.scale()
