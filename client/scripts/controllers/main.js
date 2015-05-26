@@ -36,8 +36,6 @@ function ($scope, Shared, Customer, Azure)
         {
             $scope.customerList = response.data;
         });
-        $scope.$emit('requestStart');
-        
     };
     
     $scope.custmoerChangeExecute = function()
