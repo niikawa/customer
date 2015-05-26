@@ -73,6 +73,10 @@ spinner-directive > div > img {
 /**
  * d3/lineDirective.js
  */
+.line-title{
+  text-align:center;
+}
+.line-label{}
 .line-main {
   fill:none;
   stroke:#FF8C00;
