@@ -88,16 +88,19 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 .attr({
                 'class': 'line-main',
                 'd': line(mainset),
+                });
                 
-                });                
+                svg.append("text").attr("X", 0).attr("Y", 0).text("test1");
 
                 svg.append('path')
                 .attr({
                 'class': 'line-avg',
                 'd': line(avgset),
                 });
-                element.append("div").append(svg);
+                svg.append("text").attr("X", 0).attr("Y", 20).text("ランク平均");
                 
+                var appendElement = "<div class=''>" + svg + "</div>";
+                element.append(appendElement);
             }
             
             //---------------------
