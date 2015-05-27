@@ -86,6 +86,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 
                 svg.selectAll('rect').data(scope.legendLabel)
                   .enter().append('rect')
+                  .attr("class", "pull-right")
                   .attr("width", 50)
                   .attr('height', 5)
                   .attr('x', 100)
@@ -95,8 +96,8 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 //ラベル生成
                 svg.selectAll('text').data(scope.legendLabel)
                   .enter().append('text')
-                  .text(function(d, i){ return d })
-                  .attr('y', function(d, i){ return i * 5});
+                  .text(function(d, i){ return d }) 
+                  .attr('y', function(d, i){ return i * 10 + 10});
             }
             
             //---------------------
