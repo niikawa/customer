@@ -21,6 +21,7 @@ function ($scope, Shared, Customer, Azure, Utility)
         //autocomplete用
         $scope.selectedCustomer = {};
         $scope.lineLabel = '';
+        $scope.addStyle="";
     }
     
     /**
@@ -46,7 +47,7 @@ function ($scope, Shared, Customer, Azure, Utility)
             $scope.customer = response.customer;
             $scope.approch = response.approch;
             $scope.rank = $scope.approch[0].name;
-            
+            $scope.addStyle = 'tow-row';
             var coefficient = Utility.diffMonth(
                                 response.customer.last_purchasing_date, response.customer.start_purchasing_date);
             
