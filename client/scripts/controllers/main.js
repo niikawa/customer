@@ -22,7 +22,7 @@ function ($scope, Shared, Customer, Azure, Utility)
         $scope.selectedCustomer = {};
         $scope.lineLabel = '';
         $scope.addStyle = "";
-        $scope.dataLabel = [];
+        $scope.legendLabel = [];
         $scope.isGetData = false;
     }
     
@@ -64,10 +64,8 @@ function ($scope, Shared, Customer, Azure, Utility)
             
             //グラフ描画
             $scope.lineLabel = '直近1年の売上推移（月別サマリ）';
-            $scope.dataLabel = [$scope.selectedCustomer.customer_id, 'ランク平均'];
+            $scope.legendLabel = [$scope.selectedCustomer.customer_id, 'ランク平均'];
 
-            console.log($scope.dataLabel);
-            
             $scope.orders = [response.orders, response.orders_avg];
             $scope.$emit('requestEnd');
             $scope.isGetData = true;

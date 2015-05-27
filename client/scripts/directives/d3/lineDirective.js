@@ -8,7 +8,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
           data: '=',
           type: '@',
           headerLabel: '=',
-          dataLabel: '=',
+          legendLabel: '=',
         },
         link: function(scope, element)
         {
@@ -71,12 +71,12 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             //---------------------
             function drowLegend(isResize)
             {
-              console.log(scope.dataLabel);
-                if (void 0 !== scope.dataLabel)
+              console.log(scope.legendLabel);
+                if (void 0 !== scope.legendLabel)
                 {
                     return;
                 }
-                var num = angular.isArray(scope.dataLabel) ? scope.dataLabel.length : 0;
+                var num = angular.isArray(scope.legendLabel) ? scope.legendLabel.length : 0;
                 if (0 === num) return;
                 var size = {width : 150, height: num * 15};
                 var svg = d3.select(element[0])
@@ -85,7 +85,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                                   .attr("height", size.height);
                 var colorScale = d3.scale.category20();
                 
-                svg.selectAll('rect').data(scope.dataLabel)
+                svg.selectAll('rect').data(scope.legendLabel)
                   .enter().append('rect')
                   .attr("width", 50)
                   .attr('height', 5)
@@ -94,7 +94,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                   .attr('fill', function(d){return colorScale(d.name);});
                 
                 //ラベル生成
-                svg.selectAll('text').data(scope.dataLabel)
+                svg.selectAll('text').data(scope.legendLabel)
                   .enter().append('text')
                   .text(function(d, i){ return d })
                   .attr('y', function(d, i){ return i * 5});
