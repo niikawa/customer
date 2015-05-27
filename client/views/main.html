@@ -16,19 +16,19 @@
             <div class="row">
 
                 <div class="col-md-3">
-                    <div class="panel panel-default center">
+                    <div class="card-gray center">
                         <div class="panel-heading">ランク</div>
                         <div class="panel-footer">{{rank}}</div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="panel panel-default center">
+                    <div class="card-gray center">
                         <div class="panel-heading">直近購買日（R）</div>
                         <div class="panel-footer">{{customer.last_purchasing_date}}</div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="panel panel-default center">
+                    <div class="card-gray center">
                         <div class="panel-heading">購買頻度（F）</div>
                         <div class="panel-footer">
                             <div ng-show="customer.frequency">
@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="panel panel-default center">
+                    <div class="card-gray center">
                         <div class="panel-heading">購買金額（M）</div>
                         <div class="panel-footer">
                             <div ng-show="customer.monetary">
@@ -53,7 +53,9 @@
             
             <!-- サマリ -->
             <div class="row">
-                <div class="col-md-12 " line-chart data="orders" header-label="lineLabel" ></div>
+                <div class="col-md-12">
+                    <div class="card-gray" line-chart data="orders" header-label="lineLabel" ></div>
+                </div>
             </div>
 
             <!-- アプローチ方法 -->
