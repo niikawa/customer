@@ -77,12 +77,12 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                                   .append('svg')
                                   .attr("width", size.width)
                                   .attr("height", size.height);
-                var dateset = [{x:80, y:140},{x:140, y:140},];
+                var dateset = [{x:80, y:140},{x:140, y:140}];
 
                 // line関数を定義 (x,y)は配列の[0],[1]とする。
                 var line = d3.svg.line()
-                .x(function(d) {return d[0];})
-                .y(function(d) {return d[1];});
+                .x(function(d) {return d.x;})
+                .y(function(d) {return d.y;});
                 
                 // path要素を作成
                 svg.append('path')
