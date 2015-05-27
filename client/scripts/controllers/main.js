@@ -20,8 +20,7 @@ function ($scope, Shared, Customer, Azure, Utility)
         $scope.rank = '';
         //autocomplete用
         $scope.selectedCustomer = {};
-        
-        $scope.lineLabel = '直近1年の売上推移（月別サマリ）';
+        $scope.lineLabel = '';
     }
     
     /**
@@ -59,6 +58,8 @@ function ($scope, Shared, Customer, Azure, Utility)
             $scope.customer.last_purchasing_date = 
                 Utility.formatString($scope.customer.last_purchasing_date, 'YYYY年MM月DD日');
             
+            //グラフ描画
+            $scope.lineLabel = '直近1年の売上推移（月別サマリ）';
             $scope.orders = [response.orders, response.orders_avg];
             $scope.$emit('requestEnd');
         });
