@@ -105,6 +105,12 @@ utilsServices.service("Utility", function(){
         var formatString = (null == format) ? 'YYYY-MM-DD' : format;
         return this.moment().format(formatString);
     };
+    //指定したフォーマットでパラメータの日付を文字列で取得する
+    this.formatString = function(d,format) {
+        var formatString = (null == format) ? 'YYYY-MM-DD' : format;
+        return this.moment(d).format(formatString);
+    };
+    
     //指定した年月の持つ最終日を取得する
     this.dayInMonth = function(a) {
         return moment(a).daysInMonth();
