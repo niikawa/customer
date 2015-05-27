@@ -80,7 +80,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             
                 //TODO 
                 var xAxis = 
-                  d3.svg.axis().scale(x).orient("bottom").tickFormat(d3.time.format("%Y/%m").innerTickSize(-10));
+                  d3.svg.axis().scale(x).orient("bottom").innerTickSize(-10).tickFormat(d3.time.format("%Y/%m"));
 
                 var yAxis = 
                   d3.svg.axis().scale(y).orient("left");
