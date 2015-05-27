@@ -8,6 +8,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
           data: '=',
           type: '@',
           headerLabel: '=',
+          dataLabel: '=',
         },
         link: function(scope, element)
         {
@@ -42,13 +43,16 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 
                 if(!scope.data) return;
                 removeSVG();
-                drow(false);
+                drowLine(false);
+                drowLegend(false);
+
             });
             
             w.on('resize', function()
             {
                 removeSVG();
-                drow(true);
+                drowLegend(true);
+                drowLine(true);
             });
             
             //---------------------
@@ -64,9 +68,38 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             }
             
             //---------------------
-            //描画
+            //凡例描画
             //---------------------
-            function drow(isResize)
+            function drowLegend(isResize)
+            {
+                var size = {width : 50, height: 50};
+                var svg = d3.select(element[0])
+                                  .append('svg')
+                                  .attr("width", size.width)
+                                  .attr("height", size.height);
+                var c1 = [100, 90, 30];
+                var c2 = [200, 120, 20];
+                var carray = [c1, c2];
+                
+                // line関数を定義 (x,y)は配列の[0],[1]とする。
+                var line = d3.svg.line()
+                .x(function(d) {return d[0];})
+                .y(function(d) {return d[1];});
+                
+                // path要素を作成
+                svg.append('path')
+                .attr({
+                'd': line(carray),
+                'stroke': 'lightgreen',
+                'stroke-width': 5,
+                });                
+
+            }
+            
+            //---------------------
+            //グラフ描画
+            //---------------------
+            function drowLine(isResize)
             {
                 //描画サイズ  
                 var size = {width : w.width(), height: w.height() / 2};

@@ -55,13 +55,14 @@ function ($scope, Shared, Customer, Azure, Utility)
             $scope.customer.frequency_avg = 
                 Math.round(response.customer.frequency * 10 / coefficient) / 10;
             $scope.customer.monetary_avg = 
-                Math.round(response.customer.monetary * 10 / coefficient) / 10;
+                Math.round(response.customer.monetary / coefficient);
             
             $scope.customer.last_purchasing_date = 
                 Utility.formatString($scope.customer.last_purchasing_date, 'YYYY年MM月DD日');
             
             //グラフ描画
             $scope.lineLabel = '直近1年の売上推移（月別サマリ）';
+            $scope.dataLabel = ['', 'ランク平均'];
             $scope.orders = [response.orders, response.orders_avg];
             $scope.$emit('requestEnd');
             $scope.isGetData = true;
