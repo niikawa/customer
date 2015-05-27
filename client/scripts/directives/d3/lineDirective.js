@@ -84,8 +84,8 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 .x(function(d) {return d.x;})
                 .y(function(d) {return d.y;});
                 
-                var dataset = ['test1', 'test2'];
-                var y = d3.scale.linear().range([w.height() / 2, 0]);
+                var dataset = ['1', '2'];
+                var y = d3.scale.linear().range([30, 0]);
                 var yAxis = 
                   d3.svg.axis().scale(y).orient("left");
                 y.domain(d3.extent(dataset, function(d){ return d; }));
