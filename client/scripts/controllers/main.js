@@ -21,7 +21,8 @@ function ($scope, Shared, Customer, Azure, Utility)
         //autocomplete用
         $scope.selectedCustomer = {};
         $scope.lineLabel = '';
-        $scope.addStyle="";
+        $scope.addStyle = "";
+        $scope.dataLabel = [];
         $scope.isGetData = false;
     }
     
