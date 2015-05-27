@@ -72,7 +72,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             function drowLegend(isResize)
             {
                 var size = {width : 150, height: 30};
-                var svg = d3.select(element[0].append("div"))
+                var svg = d3.select(element[0])
                                   .append('svg')
                                   .attr("width", size.width)
                                   .attr("height", size.height);
@@ -95,7 +95,9 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 .attr({
                 'class': 'line-avg',
                 'd': line(avgset),
-                });                
+                });
+                element.append("div").append(svg);
+                
             }
             
             //---------------------
