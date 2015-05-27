@@ -71,21 +71,30 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             //---------------------
             function drowLegend(isResize)
             {
-                var size = {width : 150, height: 30};
+                // if (void 0 !== scope.dataLabel)
+                // {
+                //     return;
+                // }
+                // var num = angular.isArray(scope.dataLabel) ? scope.dataLabel.length : 0;
+                // if (0 === num) return;
+                var num = 2;
+                var size = {width : 150, height: num * 10};
                 var svg = d3.select(element[0])
                                   .append('svg')
                                   .attr("width", size.width)
                                   .attr("height", size.height);
                 var colorScale = d3.scale.category20();
                 
-                var dataSet = ['80', '80'];
+                var dataSet = ['test1', 'test2'];
                 svg.selectAll('rect').data(dataSet)
-                  .enter().append('rect').attr("width", function(d){return d;})
+                  .enter().append('rect')
+                  .attr("width", 50)
                   .attr('height', 5)
-                  .attr('x', 70)
+                  .attr('x', 100)
                   .attr('y', function(d,i){return i*20})
                   .attr('fill', function(d){return colorScale(d.name);})
-                  .text("test");
+                  .text(function(d, i){ return d })
+                  .attr('y', function(d, i){ return i * 25 + 15});
                 
                 // svg.append('rect')
                 //         .attr('x', 130)
