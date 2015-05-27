@@ -71,12 +71,12 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             //---------------------
             function drowLegend(isResize)
             {
-                // if (void 0 !== scope.dataLabel)
-                // {
-                //     return;
-                // }
-                // var num = angular.isArray(scope.dataLabel) ? scope.dataLabel.length : 0;
-                // if (0 === num) return;
+                if (void 0 !== scope.dataLabel)
+                {
+                    return;
+                }
+                var num = angular.isArray(scope.dataLabel) ? scope.dataLabel.length : 0;
+                if (0 === num) return;
                 var num = 2;
                 var size = {width : 150, height: num * 15};
                 var svg = d3.select(element[0])
@@ -85,8 +85,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                                   .attr("height", size.height);
                 var colorScale = d3.scale.category20();
                 
-                var dataSet = ['test1', 'test2'];
-                svg.selectAll('rect').data(dataSet)
+                svg.selectAll('rect').data(scope.dataLabel)
                   .enter().append('rect')
                   .attr("width", 50)
                   .attr('height', 5)
@@ -95,58 +94,11 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                   .attr('fill', function(d){return colorScale(d.name);});
                 
                 //ラベル生成
-                svg.selectAll('text').data(dataSet)
+                svg.selectAll('text').data(scope.dataLabel)
                   .enter().append('text')
                   .text(function(d, i){ return d })
-                  .attr('y', function(d, i){ return i * 25 + 15});
+                  .attr('y', function(d, i){ return i * 5});
                 
-                // svg.append('rect')
-                //         .attr('x', 130)
-                //         .attr('height', 18)
-                //         .attr('fill', function(d){
-                //           return colorScale(d.name);
-                //         });
-                        
-                // dataSet.each(function(d, i){
-                //           var self = d3.select(this);
-                //           self.select('rect').attr('y', i * 25);
-                //           self.select('text').attr('y', i * 25 + 15);
-                //         });
-
-                //svg.append('text').text(getLabel).attr('height', 15);
-
-                // var mainset = [{x:80, y:0},{x:140, y:0}];
-                // var avgset = [{x:80, y:20},{x:140, y:20}];
-
-                // var line = d3.svg.line()
-                // .x(function(d) {return d.x;})
-                // .y(function(d) {return d.y;});
-                
-                // var y = d3.scale.linear().range([30, 0]);
-                // var yAxis = 
-                //   d3.svg.axis().scale(y).orient("left");
-                // y.domain(d3.extent(dataset, function(d){ return d; }));
-
-                // svg.append("g")
-                //   .attr("class", "y axis")
-                //   .call(yAxis)
-                //   .append("text")
-                //     .attr("y", 6)
-                //     .attr("dy", ".7em");
-                
-                // svg.append('path')
-                // .attr({
-                // 'class': 'line-main',
-                // 'stroke-width': 10,
-                // 'd': line(mainset),
-                // });
-
-                // svg.append('path')
-                // .attr({
-                // 'class': 'line-avg',
-                // 'stroke-width': 10,
-                // 'd': line(avgset),
-                // });
             }
             
             //---------------------
