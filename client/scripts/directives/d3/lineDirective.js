@@ -71,12 +71,13 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             //---------------------
             function drowLegend(isResize)
             {
-              console.log(scope.legendLabel);
                 if (void 0 !== scope.legendLabel)
                 {
                     return;
                 }
+              console.log(scope.legendLabel);
                 var num = angular.isArray(scope.legendLabel) ? scope.legendLabel.length : 0;
+              console.log(num);
                 if (0 === num) return;
                 var size = {width : 150, height: num * 15};
                 var svg = d3.select(element[0])
