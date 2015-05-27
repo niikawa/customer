@@ -22,6 +22,7 @@ function ($scope, Shared, Customer, Azure, Utility)
         $scope.selectedCustomer = {};
         $scope.lineLabel = '';
         $scope.addStyle="";
+        $scope.isGetData = false;
     }
     
     /**
@@ -63,6 +64,7 @@ function ($scope, Shared, Customer, Azure, Utility)
             $scope.lineLabel = '直近1年の売上推移（月別サマリ）';
             $scope.orders = [response.orders, response.orders_avg];
             $scope.$emit('requestEnd');
+            $scope.isGetData = true;
         });
     };
 
