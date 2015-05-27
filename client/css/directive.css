@@ -73,7 +73,11 @@ spinner-directive > div > img {
 /**
  * d3/lineDirective.js
  */
-.line-title{
+.line-chart {
+  background-color:#f5f5f5;
+}
+
+.line-title {
   text-align:center;
 }
 .line-label{}
