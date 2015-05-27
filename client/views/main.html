@@ -31,8 +31,10 @@
                     <div class="panel panel-default center">
                         <div class="panel-heading">購買頻度（F）</div>
                         <div class="panel-footer">
-                            {{customer.frequency}}回<br>
-                            ({{customer.frequency_avg}})回
+                            <div ng-show="customer.frequency">
+                                {{customer.frequency}}回<br>
+                                ({{customer.frequency_avg}})回
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -40,8 +42,10 @@
                     <div class="panel panel-default center">
                         <div class="panel-heading">購買金額（M）</div>
                         <div class="panel-footer">
-                            \{{customer.monetary}}<br>
-                            (Avg. \ {{customer.monetary_avg}})
+                            <div ng-show="customer.monetary">
+                                \{{customer.monetary}}<br>
+                                (Avg. \ {{customer.monetary_avg}})
+                            </div>
                         </div>
                     </div>
                 </div>
