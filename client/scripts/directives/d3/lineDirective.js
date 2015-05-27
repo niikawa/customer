@@ -84,23 +84,26 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 .x(function(d) {return d.x;})
                 .y(function(d) {return d.y;});
                 
+                svg.append("g")
+                  .attr("class", "y axis")
+                  .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", ".7em")
+                    .style("text-anchor", "end")
+                    .text('test');
+                
                 svg.append('path')
                 .attr({
                 'class': 'line-main',
                 'd': line(mainset),
                 });
-                
-                svg.append("text").attr("X", 0).attr("Y", 0).text("test1");
 
                 svg.append('path')
                 .attr({
                 'class': 'line-avg',
                 'd': line(avgset),
                 });
-                svg.append("text").attr("X", 0).attr("Y", 20).text("ランク平均");
-                
-                var appendElement = "<div class=''>" + svg + "</div>";
-                element.append(appendElement);
             }
             
             //---------------------
