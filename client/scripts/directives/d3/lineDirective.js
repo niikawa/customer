@@ -72,13 +72,13 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             //---------------------
             function drowLegend(isResize)
             {
-                var size = {width : 50, height: 50};
+                var size = {width : 150, height: 150};
                 var svg = d3.select(element[0])
                                   .append('svg')
                                   .attr("width", size.width)
                                   .attr("height", size.height);
-                var c1 = [100, 90, 30];
-                var c2 = [200, 120, 20];
+                var c1 = [10, 140];
+                var c2 = [140, 140];
                 var carray = [c1, c2];
                 
                 // line関数を定義 (x,y)は配列の[0],[1]とする。
