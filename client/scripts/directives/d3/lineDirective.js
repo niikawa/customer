@@ -81,11 +81,11 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             
                 //TODO 
                 var xAxis = 
-                  d3.svg.axis().scale(x).orient("bottom").innerTickSize(-xrange)
+                  d3.svg.axis().scale(x).orient("bottom").innerTickSize(-yrange)
                     .outerTickSize(0).tickFormat(d3.time.format("%Y/%m"));
 
                 var yAxis = 
-                  d3.svg.axis().scale(y).orient("left").innerTickSize(-yrange).outerTickSize(0);
+                  d3.svg.axis().scale(y).orient("left").innerTickSize(-xrange).outerTickSize(0);
                   
                 //描画エリアを生成
                 var svg = d3.select(element[0])
