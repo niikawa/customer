@@ -22,7 +22,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
               ];
 
             //描画時のmargin  
-            var margin = {top: 40, right: 40, bottom: 40, left: 90};
+            var margin = {top: 40, right: 40, bottom: 10, left: 90};
             
             //日付パース用
             var parseDate = d3.time.format("%Y/%m").parse;
