@@ -73,20 +73,17 @@ spinner-directive > div > img {
 /**
  * d3/lineDirective.js
  */
-.line-chart {
-  background-color:#f5f5f5;
+.domain {
+  border: 1px solid;
 }
-
 .line-title {
   text-align:center;
 }
-.line-label{}
 .line-main {
   fill:none;
   stroke:#FF8C00;
   stroke-width:1px;
 }
-
 .line-avg {
   fill:none;
   stroke:#A9A9A9;
