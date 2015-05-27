@@ -86,7 +86,6 @@ exports.getDetail = function(req, res)
         [
             function(callback)
             {
-                console.log('method 1');
                 if (null === data[0].rank_id)
                 {
                     console.log('rank id is null');
@@ -109,8 +108,6 @@ exports.getDetail = function(req, res)
             },
             function(callback)
             {
-                console.log('method 2');
-                
                 var col = "customer_id, FORMAT(date, 'yyyy/MM') as date, sum(price) as price";
                 var table = 'T_READ_ORDERS';
                 var groupby = "customer_id, FORMAT(date, 'yyyy/MM') having customer_id = @customer_id";
@@ -123,8 +120,6 @@ exports.getDetail = function(req, res)
             },
             function(callback)
             {
-                console.log('method 3');
-                
                 var col = "T2.rank_id , FORMAT(T1.date, 'yyyy/MM') as date,";
                 col += "sum(T1.price) / (select count(1) from M_CUSTOMER where rank_id = @rank_id) as price";
                 
@@ -136,7 +131,7 @@ exports.getDetail = function(req, res)
                     qObj.request.input('rank_id', model.db.Int, data[0].rank_id);
 
                 model.select(qObj, qObj.request,  function(err, data){callback(null, data)});
-            }
+            },
 
         ], function complete(err, items)
         {

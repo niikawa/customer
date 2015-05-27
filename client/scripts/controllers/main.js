@@ -6,8 +6,8 @@
  * Controller of the workspaceApp
  */
 var mainCtrl = angular.module('mainCtrl',['CustomerServices', 'AzureServices']);
-mainCtrl.controller('MainCtrl',['$scope', 'Shared', 'Customer', 'Azure',
-function ($scope, Shared, Customer, Azure)
+mainCtrl.controller('MainCtrl',['$scope', 'Shared', 'Customer', 'Azure', 'Utility',
+function ($scope, Shared, Customer, Azure, Utility)
 {
     /**
      * scope初期化用
@@ -46,7 +46,12 @@ function ($scope, Shared, Customer, Azure)
         {
             $scope.customer = response.customer;
             $scope.approch = response.approch;
-            $scope.rank = $scope.approch[0].name; 
+            $scope.rank = $scope.approch[0].name;
+            
+            var coefficient = Utility.diffMonth(response.customer.start_purchasing_date, response.customer.last_purchasing_date);
+            $scope.customer.frequency_avg = response.customer.frequency / coefficient;
+            $scope.customer.monetary_avg = response.customer.monetary / coefficient;
+            
             $scope.orders = [response.orders, response.orders_avg];
             $scope.$emit('requestEnd');
         });
