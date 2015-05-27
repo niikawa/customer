@@ -11,13 +11,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
         },
         link: function(scope, element)
         {
-            console.log(scope.headerLabel);
-            if (void 0 !== scope.headerLabel && '' !== scope.headerLabel)
-            {
-                var add = '<p class="line-title">'+scope.headerLabel+'</p>';
-                element.append(add);
-            }
-            
             //画面
             var w = angular.element($window);
 
@@ -37,6 +30,12 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             //dataを監視して変更があったら実行する
             scope.$watchCollection('data', function()
             {
+                if (void 0 !== scope.headerLabel && '' !== scope.headerLabel)
+                {
+                    var add = '<p class="line-title">'+scope.headerLabel+'</p>';
+                    element.append(add);
+                }
+                
                 if(!scope.data) return;
                 removeSVG();
                 drow(false);
