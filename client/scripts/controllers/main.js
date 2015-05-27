@@ -48,7 +48,8 @@ function ($scope, Shared, Customer, Azure, Utility)
             $scope.approch = response.approch;
             $scope.rank = $scope.approch[0].name;
             
-            var coefficient = Utility.diffMonth(response.customer.start_purchasing_date, response.customer.last_purchasing_date);
+            var coefficient = Utility.diffMonth(response.customer.last_purchasing_date, response.customer.start_purchasing_date);
+            console.log(coefficient);
             $scope.customer.frequency_avg = response.customer.frequency / coefficient;
             $scope.customer.monetary_avg = response.customer.monetary / coefficient;
             
