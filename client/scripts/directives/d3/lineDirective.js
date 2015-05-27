@@ -100,7 +100,16 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                   .enter().append('text')
                   .text(function(d, i){ return d }) 
                   .attr('x', function(d, i){ return w.width() - 250})
-                  .attr('y', function(d, i){ return i * 10 + 5});
+                  .attr('y', function(d, i){ 
+                    if (0 === i)
+                    {
+                        return 10;
+                    } 
+                    else
+                    {
+                        return i * 5 + 20;
+                    }
+                  });
             }
             
             //---------------------
