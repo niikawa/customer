@@ -18,13 +18,17 @@
                 <div class="col-md-3">
                     <div class="card-gray center">
                         <div class="panel-heading">ランク</div>
-                        <div class="panel-footer">{{rank}}<br></div>
+                        <div class="panel-footer two-row">
+                            <p>{{rank}}</p>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card-gray center">
                         <div class="panel-heading">直近購買日（R）</div>
-                        <div class="panel-footer">{{customer.last_purchasing_date}}<br></div>
+                        <div class="panel-footer two-row">
+                            <p>{{customer.last_purchasing_date}}</p>
+                            </div>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -32,8 +36,8 @@
                         <div class="panel-heading">購買頻度（F）</div>
                         <div class="panel-footer">
                             <div ng-show="customer.frequency">
-                                {{customer.frequency}}回<br>
-                                ({{customer.frequency_avg}})回
+                                <p>{{customer.frequency}}回</p>
+                                <p>({{customer.frequency_avg}})回</p>
                             </div>
                         </div>
                     </div>
@@ -43,8 +47,8 @@
                         <div class="panel-heading">購買金額（M）</div>
                         <div class="panel-footer">
                             <div ng-show="customer.monetary">
-                                \{{customer.monetary}}<br>
-                                (Avg. \ {{customer.monetary_avg}})
+                                <p>\{{customer.monetary}}</p>
+                                <p>(Avg. \ {{customer.monetary_avg}})</p>
                             </div>
                         </div>
                     </div>
