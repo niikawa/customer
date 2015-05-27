@@ -81,9 +81,11 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 var dataSet = ['80', '80'];
                 svg.selectAll('rect').data(dataSet)
                   .enter().append('rect').attr("width", function(d){return d;})
-                  .attr('height', 10)
-                  .attr('x', 0)
-                  .attr('y', function(d,i){return i*10});
+                  .attr('height', 5)
+                  .attr('x', 70)
+                  .attr('y', function(d,i){return i*20})
+                  .attr('fill', function(d){return colorScale(d.name);})
+                  .text("test");
                 
                 // svg.append('rect')
                 //         .attr('x', 130)
