@@ -32,6 +32,7 @@
                         <div class="panel-heading">購買頻度（F）</div>
                         <div class="panel-footer">
                             {{customer.frequency}}回
+                            <hr>
                             ({{customer.frequency_avg}})回
                         </div>
                     </div>
@@ -41,6 +42,7 @@
                         <div class="panel-heading">購買金額（M）</div>
                         <div class="panel-footer">
                             \{{customer.monetary}}
+                            <hr>
                             (Avg. \ {{customer.monetary_avg}})
                         </div>
                     </div>
@@ -51,8 +53,6 @@
             <div class="row">
                 <div class="col-md-12" line-chart data="orders" header-label="lineLabel" ></div>
             </div>
-
-            
 
             <!-- アプローチ方法 -->
             <div class="row">
