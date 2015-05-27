@@ -15,7 +15,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             //画面
             var w = angular.element($window);
 
-            var colorList = ['#FF8C0', '#A9A9A9'];
+            var colorList = ['#FF8C00', '#A9A9A9'];
 
             //D3.jsで表現できる線のリスト
             var lineTypeList = [
@@ -100,7 +100,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                   .enter().append('text')
                   .text(function(d, i){ return d }) 
                   .attr('x', function(d, i){ return w.width() - 250})
-                  .attr('y', function(d, i){ return i * 10 + 10});
+                  .attr('y', function(d, i){ return i * 10 + 5});
             }
             
             //---------------------
