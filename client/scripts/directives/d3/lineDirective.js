@@ -142,10 +142,10 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                           .call(xAxis)
                           .selectAll("text")
                             .attr("transform", "rotate (-70)")
-                            .attr("dx", "0.7em")
-                            .attr("dy", "-3em")
-                            ;
-                        
+                            .attr("dx", "-3em")
+                            .attr("dy", "-0.4em")
+                            .style("text-anchor", "start");
+
                         svg.append("g")
                           .attr("class", "y axis")
                           .call(yAxis)
