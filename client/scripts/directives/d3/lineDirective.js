@@ -86,7 +86,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 
                 var dataset = ['test1', 'test2'];
                 var y = d3.scale.linear().range([20, 0]);
-                var yAxis = y.domain(d3.extent(dataset, function(d){ return d; }));
+                var yAxis = y.domain(d3.extent(dataset, function(d){ console.log(d); return d[0]; }));
                 d3.svg.axis().scale(y).orient("left");
                 
                 svg.append("g")
@@ -95,8 +95,8 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                   .append("text")
                     .attr("y", 6)
                     .attr("dy", ".7em")
-                    .style("text-anchor", "end")
-                    .text(function(){});
+                    .style("text-anchor", "end");
+//                    .text(function(){});
                 
                 svg.append('path')
                 .attr({
