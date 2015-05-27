@@ -61,6 +61,8 @@ function ($scope, Shared, Customer, Azure, Utility)
             $scope.customer.last_purchasing_date = 
                 Utility.formatString($scope.customer.last_purchasing_date, 'YYYY年MM月DD日');
             
+            console.log($scope.selectedCustomer);
+            
             //グラフ描画
             $scope.lineLabel = '直近1年の売上推移（月別サマリ）';
             $scope.dataLabel = [$scope.selectedCustomer.customer_id, 'ランク平均'];
