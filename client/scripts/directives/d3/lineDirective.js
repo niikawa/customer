@@ -86,8 +86,15 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                         .attr('height', 18)
                         .attr('fill', function(d){
                           return colorScale(d.name);
-                        }).text('test');
+                        });
                         
+                var dataSet = ['1', '2'];
+                dataSet.each(function(d, i){
+                          var self = d3.select(this);
+                          self.select('rect').attr('y', i * 25);
+                          self.select('text').attr('y', i * 25 + 15);
+                        });
+
                 //svg.append('text').text(getLabel).attr('height', 15);
 
                 // var mainset = [{x:80, y:0},{x:140, y:0}];
@@ -97,7 +104,6 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 // .x(function(d) {return d.x;})
                 // .y(function(d) {return d.y;});
                 
-                // var dataset = ['1', '2'];
                 // var y = d3.scale.linear().range([30, 0]);
                 // var yAxis = 
                 //   d3.svg.axis().scale(y).orient("left");
