@@ -93,9 +93,10 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                   .attr('x', 100)
                   .attr('y', function(d,i){return i * 20})
                   .attr('fill', function(d){return colorScale(d.name);});
-                  
+                
+                //ラベル生成
                 svg.selectAll('text').data(dataSet)
-                  .append('text')
+                  .enter().append('text')
                   .text(function(d, i){ return d })
                   .attr('y', function(d, i){ return i * 25 + 15});
                 
