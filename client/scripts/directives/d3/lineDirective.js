@@ -11,6 +11,8 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
         },
         link: function(scope, element)
         {
+            element.addClass("card");
+          
             //画面
             var w = angular.element($window);
 
