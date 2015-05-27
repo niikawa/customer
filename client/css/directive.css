@@ -73,8 +73,11 @@ spinner-directive > div > img {
 /**
  * d3/lineDirective.js
  */
-.domain {
-  border: 1px solid;
+.axis path,
+.axis line {
+  fill:none;
+/*  stroke:#000;*/
+  shape-rendering:crispEdges;
 }
 .line-title {
   text-align:center;

@@ -136,8 +136,8 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                     if (0 === i)
                     {
                         lineClass = 'line-main';
-                        x.domain(d3.extent(dataset, function(d){ return d.date; }));
-                        y.domain(d3.extent(dataset, function(d){ return d.price; }));
+                        x.domain(d3.extent(dataset, function(d){ return d.date; })).nice();
+                        y.domain(d3.extent(dataset, function(d){ return d.price; })).nice();
                         
                         // 描画
                         svg.append("g")
