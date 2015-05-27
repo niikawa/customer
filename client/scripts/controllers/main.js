@@ -48,9 +48,6 @@ function ($scope, Shared, Customer, Azure, Utility)
             $scope.approch = response.approch;
             $scope.rank = $scope.approch[0].name;
             
-            $scope.customer.last_purchasing_date = 
-                Utility.formatString($scope.customer.last_purchasing_date, 'YYYY年MM月DD日');
-            
             var coefficient = Utility.diffMonth(
                                 response.customer.last_purchasing_date, response.customer.start_purchasing_date);
             
@@ -58,6 +55,9 @@ function ($scope, Shared, Customer, Azure, Utility)
                 Math.round(response.customer.frequency * 10 / coefficient) / 10;
             $scope.customer.monetary_avg = 
                 Math.round(response.customer.monetary * 10 / coefficient) / 10;
+            
+            $scope.customer.last_purchasing_date = 
+                Utility.formatString($scope.customer.last_purchasing_date, 'YYYY年MM月DD日');
             
             $scope.orders = [response.orders, response.orders_avg];
             $scope.$emit('requestEnd');
