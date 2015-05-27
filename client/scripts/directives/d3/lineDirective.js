@@ -77,7 +77,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 }
                 var num = angular.isArray(scope.legendLabel) ? scope.legendLabel.length : 0;
                 if (0 === num) return;
-                var size = {width : 150, height: num * 15};
+                var size = {width : '100%', height: num * 15};
                 var svg = d3.select(element[0])
                                   .append('svg')
                                   .attr("width", size.width)
@@ -89,7 +89,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                   .attr("class", "pull-right")
                   .attr("width", 50)
                   .attr('height', 5)
-                  .attr('x', 100)
+                  .attr('x', w.width() - 50)
                   .attr('y', function(d,i){return i * 20})
                   .attr('fill', function(d){return colorScale(d.name);});
                 
