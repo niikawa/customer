@@ -71,29 +71,32 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             //---------------------
             function drowLegend(isResize)
             {
-                var legend = '<div class="pull-right">';
-                legend += '';
-                legend += '</div>';
-                
                 var size = {width : 150, height: 30};
                 var svg = d3.select(element[0])
                                   .append('svg')
                                   .attr("width", size.width)
                                   .attr("height", size.height);
-                var colorScale = d3.scale.category20();        
-                svg.append('rect')
-                        .attr('x', 130)
-                        .attr('height', 18)
-                        .attr('fill', function(d){
-                          return colorScale(d.name);
-                        });
+                var colorScale = d3.scale.category20();
+                
+                var dataSet = ['80', '80'];
+                svg.selectAll('rect').data(dataSet)
+                  .enter().append('rect').attr("width", function(d){return d;})
+                  .attr('height', 10)
+                  .attr('x', 0)
+                  .attr('y', function(d,i){return i*10});
+                
+                // svg.append('rect')
+                //         .attr('x', 130)
+                //         .attr('height', 18)
+                //         .attr('fill', function(d){
+                //           return colorScale(d.name);
+                //         });
                         
-                var dataSet = ['1', '2'];
-                dataSet.each(function(d, i){
-                          var self = d3.select(this);
-                          self.select('rect').attr('y', i * 25);
-                          self.select('text').attr('y', i * 25 + 15);
-                        });
+                // dataSet.each(function(d, i){
+                //           var self = d3.select(this);
+                //           self.select('rect').attr('y', i * 25);
+                //           self.select('text').attr('y', i * 25 + 15);
+                //         });
 
                 //svg.append('text').text(getLabel).attr('height', 15);
 
