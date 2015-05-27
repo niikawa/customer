@@ -84,14 +84,19 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 .x(function(d) {return d.x;})
                 .y(function(d) {return d.y;});
                 
+                var dataset = ['test1', 'test2'];
+                var y = d3.scale.linear().range([20, 0]);
+                var yAxis = y.domain(d3.extent(dataset, function(d){ return d; }));
+                d3.svg.axis().scale(y).orient("left");
+                
                 svg.append("g")
                   .attr("class", "y axis")
+                  .call(yAxis)
                   .append("text")
-                    .attr("transform", "rotate(-90)")
                     .attr("y", 6)
                     .attr("dy", ".7em")
                     .style("text-anchor", "end")
-                    .text('test');
+                    .text(function(){});
                 
                 svg.append('path')
                 .attr({
@@ -118,7 +123,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 //Xメモリを日付にしてrangeで描画サイズを決定する
                 var x = d3.time.scale()
                   .range([0, xrange]);
-                //yは数値なのでscale
+                //yはscale
                 var y = d3.scale.linear()
                   .range([yrange, 0]);
             
