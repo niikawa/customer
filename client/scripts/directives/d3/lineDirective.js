@@ -86,7 +86,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 
                 var dataset = ['test1', 'test2'];
                 var y = d3.scale.linear().range([20, 0]);
-                var yAxis = y.domain(d3.extent(dataset, function(d){ console.log(d); return d[0]; }));
+                var yAxis = y.domain(d3.extent(dataset, function(d){return d; }));
                 d3.svg.axis().scale(y).orient("left");
                 
                 svg.append("g")
@@ -94,19 +94,19 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                   .call(yAxis)
                   .append("text")
                     .attr("y", 6)
-                    .attr("dy", ".7em")
-                    .style("text-anchor", "end");
-//                    .text(function(){});
+                    .attr("dy", ".7em");
                 
                 svg.append('path')
                 .attr({
                 'class': 'line-main',
+                'stroke-width': 10,
                 'd': line(mainset),
                 });
 
                 svg.append('path')
                 .attr({
                 'class': 'line-avg',
+                'stroke-width': 10,
                 'd': line(avgset),
                 });
             }
