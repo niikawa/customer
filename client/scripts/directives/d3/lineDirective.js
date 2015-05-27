@@ -43,16 +43,15 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 
                 if(!scope.data) return;
                 removeSVG();
-                drowLine(false);
                 drowLegend(false);
-
+                drowLine(false);
             });
             
             w.on('resize', function()
             {
                 removeSVG();
-                drowLegend(true);
                 drowLine(true);
+                drowLegend(true);
             });
             
             //---------------------
@@ -72,12 +71,14 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             //---------------------
             function drowLegend(isResize)
             {
-                var size = {width : 150, height: 150};
+                var size = {width : 150, height: 30};
                 var svg = d3.select(element[0])
                                   .append('svg')
                                   .attr("width", size.width)
                                   .attr("height", size.height);
-                var dateset = [{x:80, y:140},{x:140, y:140}];
+
+                var mainset = [{x:80, y:0},{x:140, y:0}];
+                var avgset = [{x:80, y:20},{x:140, y:20}];
 
                 // line関数を定義 (x,y)は配列の[0],[1]とする。
                 var line = d3.svg.line()
@@ -87,11 +88,17 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 // path要素を作成
                 svg.append('path')
                 .attr({
-                'd': line(dateset),
-                'stroke': 'lightgreen',
+                'class': 'line-main',
+                'd': line(mainset),
                 'stroke-width': 5,
                 });                
 
+                svg.append('path')
+                .attr({
+                'class': 'line-avg',
+                'd': line(avgset),
+                'stroke-width': 5,
+                });                
             }
             
             //---------------------
