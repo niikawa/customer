@@ -15,6 +15,8 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             //画面
             var w = angular.element($window);
 
+            var colorList = ['#FF8C0', '#A9A9A9'];
+
             //D3.jsで表現できる線のリスト
             var lineTypeList = [
               'linear','linear-closed', 'step', 'step-before', 'step-after',
@@ -82,7 +84,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                                   .append('svg')
                                   .attr("width", size.width)
                                   .attr("height", size.height);
-                var colorScale = d3.scale.category20();
+//                var colorScale = d3.scale.category20();
                 
                 svg.selectAll('rect').data(scope.legendLabel)
                   .enter().append('rect')
@@ -91,13 +93,13 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                   .attr('height', 5)
                   .attr('x', w.width() - 150)
                   .attr('y', function(d,i){return i * 20})
-                  .attr('fill', function(d){return colorScale(d.name);});
+                  .attr('fill', function(d, i){return colorList[i];});
                 
                 //ラベル生成
                 svg.selectAll('text').data(scope.legendLabel)
                   .enter().append('text')
                   .text(function(d, i){ return d }) 
-                  .attr('x', function(d, i){ return w.width() - 200})
+                  .attr('x', function(d, i){ return w.width() - 250})
                   .attr('y', function(d, i){ return i * 10 + 10});
             }
             
