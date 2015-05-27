@@ -89,7 +89,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                   .attr("class", "pull-right")
                   .attr("width", 50)
                   .attr('height', 5)
-                  .attr('x', w.width() - 50)
+                  .attr('x', w.width() - 150)
                   .attr('y', function(d,i){return i * 20})
                   .attr('fill', function(d){return colorScale(d.name);});
                 
@@ -97,6 +97,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                 svg.selectAll('text').data(scope.legendLabel)
                   .enter().append('text')
                   .text(function(d, i){ return d }) 
+                  .attr('x', function(d, i){ return w.width() - 200})
                   .attr('y', function(d, i){ return i * 10 + 10});
             }
             
