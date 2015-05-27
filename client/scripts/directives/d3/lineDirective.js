@@ -32,6 +32,10 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             {
                 if (void 0 !== scope.headerLabel && '' !== scope.headerLabel)
                 {
+                    if (element.children('p').length > 0)
+                    {
+                        element.children('p').remove();
+                    }
                     var add = '<p class="line-title">'+scope.headerLabel+'</p>';
                     element.append(add);
                 }
@@ -143,7 +147,7 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
                           .selectAll("text")
                             .attr("transform", "rotate (-70)")
                             .attr("dx", "-5em")
-                            .attr("dy", "-0.4em")
+                            .attr("dy", "-0.1em")
                             .style("text-anchor", "start");
 
                         svg.append("g")
