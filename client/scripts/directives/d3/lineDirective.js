@@ -70,21 +70,22 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             {
                 //描画サイズ  
                 var size = {width : w.width(), height: w.height() / 2};
-                
+                var xrange = size.width - margin.left - margin.right - 50;
+                var yrange = size.height - margin.top - margin.bottom;
                 //Xメモリを日付にしてrangeで描画サイズを決定する
                 var x = d3.time.scale()
-                  .range([0, size.width - margin.left - margin.right - 50]);
+                  .range([0, xrange]);
                 //yは数値なのでscale
                 var y = d3.scale.linear()
-                  .range([size.height - margin.top - margin.bottom, 0]);
+                  .range([yrange, 0]);
             
                 //TODO 
                 var xAxis = 
-                  d3.svg.axis().scale(x).orient("bottom").innerTickSize(-size.height)
+                  d3.svg.axis().scale(x).orient("bottom").innerTickSize(-xrange)
                     .outerTickSize(0).tickFormat(d3.time.format("%Y/%m"));
 
                 var yAxis = 
-                  d3.svg.axis().scale(y).orient("left").innerTickSize(-size.width).outerTickSize(0);
+                  d3.svg.axis().scale(y).orient("left").innerTickSize(-yrange).outerTickSize(0);
                   
                 //描画エリアを生成
                 var svg = d3.select(element[0])
