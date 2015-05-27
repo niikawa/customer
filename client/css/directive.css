@@ -79,6 +79,9 @@ spinner-directive > div > img {
   stroke:#000;
   shape-rendering:crispEdges;
 }
+.tick line{
+  opacity: 0.2;
+}
 .line-title {
   text-align:center;
 }
