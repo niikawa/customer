@@ -71,45 +71,58 @@ myApp.directive('lineChart', ['d3Service', '$parse', '$window', function (d3Serv
             //---------------------
             function drowLegend(isResize)
             {
+                var legend = '<div class="pull-right">';
+                legend += '';
+                legend += '</div>';
+                
                 var size = {width : 150, height: 30};
                 var svg = d3.select(element[0])
                                   .append('svg')
                                   .attr("width", size.width)
                                   .attr("height", size.height);
+                var colorScale = d3.scale.category20();        
+                svg.append('rect')
+                        .attr('x', 130)
+                        .attr('height', 18)
+                        .attr('fill', function(d){
+                          return colorScale(d.name);
+                        }).text('test');
+                        
+                //svg.append('text').text(getLabel).attr('height', 15);
 
-                var mainset = [{x:80, y:0},{x:140, y:0}];
-                var avgset = [{x:80, y:20},{x:140, y:20}];
+                // var mainset = [{x:80, y:0},{x:140, y:0}];
+                // var avgset = [{x:80, y:20},{x:140, y:20}];
 
-                var line = d3.svg.line()
-                .x(function(d) {return d.x;})
-                .y(function(d) {return d.y;});
+                // var line = d3.svg.line()
+                // .x(function(d) {return d.x;})
+                // .y(function(d) {return d.y;});
                 
-                var dataset = ['1', '2'];
-                var y = d3.scale.linear().range([30, 0]);
-                var yAxis = 
-                  d3.svg.axis().scale(y).orient("left");
-                y.domain(d3.extent(dataset, function(d){ return d; }));
+                // var dataset = ['1', '2'];
+                // var y = d3.scale.linear().range([30, 0]);
+                // var yAxis = 
+                //   d3.svg.axis().scale(y).orient("left");
+                // y.domain(d3.extent(dataset, function(d){ return d; }));
 
-                svg.append("g")
-                  .attr("class", "y axis")
-                  .call(yAxis)
-                  .append("text")
-                    .attr("y", 6)
-                    .attr("dy", ".7em");
+                // svg.append("g")
+                //   .attr("class", "y axis")
+                //   .call(yAxis)
+                //   .append("text")
+                //     .attr("y", 6)
+                //     .attr("dy", ".7em");
                 
-                svg.append('path')
-                .attr({
-                'class': 'line-main',
-                'stroke-width': 10,
-                'd': line(mainset),
-                });
+                // svg.append('path')
+                // .attr({
+                // 'class': 'line-main',
+                // 'stroke-width': 10,
+                // 'd': line(mainset),
+                // });
 
-                svg.append('path')
-                .attr({
-                'class': 'line-avg',
-                'stroke-width': 10,
-                'd': line(avgset),
-                });
+                // svg.append('path')
+                // .attr({
+                // 'class': 'line-avg',
+                // 'stroke-width': 10,
+                // 'd': line(avgset),
+                // });
             }
             
             //---------------------
