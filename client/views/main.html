@@ -20,7 +20,7 @@
                         <div class="panel-heading">ランク</div>
                         <div class="panel-footer ">
                             <p ng-show="isGetData">{{rank}}</p>
-                            <input type="button" class="btn btn-info" value="おすすめ商品を表示">
+                            <input ng-show="isGetData" type="button" class="btn btn-info" value="おすすめ商品を表示" ng-click="recomender()">
                         </div>
                     </div>
                 </div>
