@@ -9,7 +9,7 @@ azureServices.factory("Azure", ['$resource', '$http','Shared',
             recomender:
             {
                 method: 'POST',
-                url: 'azure/recomender/',
+                url: '/azure/recomender',
                 cache: true,
             },
         });
