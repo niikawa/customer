@@ -71,5 +71,14 @@ function ($scope, Shared, Customer, Azure, Utility)
             $scope.isGetData = true;
         });
     };
-
+    
+    $scope.recomender = function()
+    {
+        $scope.$emit('requestStart');
+        Azure.resource.recomender({id: $scope.selectedCustomer.Id}).$promise.then(function(response)
+        {
+            alert('そつうOK');
+            $scope.$emit('requestEnd');
+        });
+    };
 }]);

@@ -12,17 +12,13 @@ var express = require('express');
 var mssql = require('mssql');
 var config = {
   user: 'vxc-databese-master',
-//  user: 'databese_master',
   password: 'VirtUaleX001',
   server: 'oufq8kwys5.database.windows.net',
-//  server: 'customerreport.c6ykdlikt0mb.ap-northeast-1.rds.amazonaws.com',
   database: 'CustomerReport',
-//  databese: 'customerreport',
   stream: true, // You can enable streaming globally
 
   options: {
     encrypt: true // Use this if you're on Windows Azure
-//    encrypt: false 
   }
 };
 
@@ -35,54 +31,6 @@ mssql.connect(config, function(err) {
   }
 });
 
-var request = require('request');
-var key = 'TwKosJWQXnOc4KZak2WKPnE0lyCjqQfmrVLgFTW20gH2UCmB9a0j66eSNU7GWH+8x4xVBEVhQi+gpJQr+AgENw==';
-var param = {
-  "Inputs": {
-    "input1": {
-      "ColumnNames": [
-        "純広告",
-        "リスティング",
-        "CV_純広告",
-        "CV_リスティング"
-      ],
-      "Values": [
-        [
-          "0",
-          "0",
-          "0",
-          "0"
-        ],
-        [
-          "0",
-          "0",
-          "0",
-          "0"
-        ]
-      ]
-    }
-  },
-  "GlobalParameters": {}
-};
-
-var options = {
-  uri: 'https://ussouthcentral.services.azureml.net/workspaces/bb07a48a7dce4617b33d3a20dd4e2604/services/82d002728e7842f5828b114a21511835/execute?api-version=2.0&details=true',
-  form: JSON.stringify(param),
-  headers: {
-      'content-type': 'application/json',   
-      'Authorization': 'bearer ' + key
-  },
-  azure: true,
-};
-
-request.post(options, function(error, response, body){
-  if (!error && response.statusCode == 200) {
-    console.log('request ok!');
-  } else {
-    console.log('error: '+ response.statusCode);
-  }
-});
-
 var router = express();
 router.use(express.static(path.resolve(__dirname, 'client')));
 
@@ -91,6 +39,9 @@ router.get('/customer', customer.getAll);
 router.get('/customer/:id', customer.getById);
 router.get('/custmoer/detail/:id', customer.getDetail);
 router.get('/custmoer/orders/:id', customer.orders);
+
+var azure = require('./api/azureapi');
+router.get('azure/recomender/', azure.recommenderItem);
 
 //
 // ## SimpleServer `SimpleServer(obj)`
