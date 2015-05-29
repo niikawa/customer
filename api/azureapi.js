@@ -30,6 +30,8 @@ function getOptions(type, param)
 exports.recommenderItem = function(req, res)
 {
     console.log(req.params.id);
+    console.log(azure);
+    
     var param = {
           "Inputs": {
             "input1": {
