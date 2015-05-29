@@ -77,8 +77,8 @@ function ($scope, Shared, Customer, Azure, Utility)
         $scope.$emit('requestStart');
         Azure.resource.recomender({id: $scope.selectedCustomer.Id}).$promise.then(function(response)
         {
-            alert('そつうOK');
             console.log(response.data);
+            Utility.successSticky(response.data);
             $scope.$emit('requestEnd');
         });
     };
