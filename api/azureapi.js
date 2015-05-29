@@ -1,7 +1,6 @@
 var async = require('async');
 var request = require('request');
 var azure = require('../config/azure.json');
-console.log(azure);
 
 //======================================================
 // azure ml webサービスを呼び出す
@@ -10,6 +9,12 @@ console.log(azure);
 
 function getOptions(type, param)
 {
+    console.log('getOptions');
+    console.log(azure);
+    console.log(azure[type]);
+    console.log(azure[type].uri);
+    console.log(azure[type].key);
+    
     return {
         uri: azure[type].uri,
         form: JSON.stringify(param),
