@@ -9,14 +9,8 @@ var azure = require('../config/azure.json');
 
 function getOptions(type, param)
 {
-    console.log('getOptions');
-    console.log(azure);
-    console.log(azure[type]);
-    console.log(azure[type].uri);
-    console.log(azure[type].key);
-    
     return {
-        uri: azure[type].uri,
+        uri: azure[type].url,
         form: JSON.stringify(param),
         headers: {
           'content-type': 'application/json',
@@ -34,9 +28,6 @@ function getOptions(type, param)
  */
 exports.recommenderItem = function(req, res)
 {
-    console.log(req.params.id);
-    console.log(azure);
-    
     var param = {
           "Inputs": {
             "input1": {
@@ -61,7 +52,7 @@ exports.recommenderItem = function(req, res)
       }
       else
       {
-        console.log('error: '+ response.statusCode);
+        console.log('error: '+ error);
         res.json({data: ''});
       }
     });
