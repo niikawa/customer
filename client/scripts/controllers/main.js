@@ -78,6 +78,8 @@ function ($scope, Shared, Customer, Azure, Utility)
         Azure.resource.recomender({id: $scope.selectedCustomer.Id}).$promise.then(function(response)
         {
             console.log(response.data);
+            //0番目はユーザーIDのため削除
+            delete response.data[0];
             Utility.successSticky(response.data);
             $scope.$emit('requestEnd');
         });
