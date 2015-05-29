@@ -137,10 +137,8 @@ core.prototype.execute = function(sql, request, callback)
     // 常時最後によばれる
     request.on('done', function(returnValue)
     {
-        console.log('core execute');
-        console.log(sql);
-        console.log(result);
-        
+        // console.log(sql);
+        // console.log(result);
         callback(errList, result);
     });
 };
