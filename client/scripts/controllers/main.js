@@ -81,7 +81,7 @@ function ($scope, Shared, Customer, Azure, Utility)
             //0番目はユーザーIDのため削除
             var reco = response.data[0];
             delete reco[0];
-            Utility.successSticky(reco);
+            Utility.successSticky(reco.join());
             $scope.$emit('requestEnd');
         });
     };
