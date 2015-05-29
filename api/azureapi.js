@@ -3,7 +3,6 @@ var request = require('request');
 var azure = require('../config/azure.json');
 console.log(azure);
 
-
 //======================================================
 // azure ml webサービスを呼び出す
 //
