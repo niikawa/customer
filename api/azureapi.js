@@ -48,9 +48,8 @@ exports.recommenderItem = function(req, res)
     {
       if (!error && response.statusCode == 200)
       {
-        console.log('data: ');
-        
-          res.json({data: body, response: response});
+          console.log('data: ');
+          res.json({data: response.Results.output1.value.Values});
       }
       else
       {
