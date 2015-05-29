@@ -41,7 +41,7 @@ router.get('/custmoer/detail/:id', customer.getDetail);
 router.get('/custmoer/orders/:id', customer.orders);
 
 var azure = require('./api/azureapi');
-router.get('/azure/recomender', azure.recommenderItem);
+router.get('/azure/recomender/:id', azure.recommenderItem);
 
 //
 // ## SimpleServer `SimpleServer(obj)`

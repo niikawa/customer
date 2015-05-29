@@ -29,7 +29,7 @@ function getOptions(type, param)
  */
 exports.recommenderItem = function(req, res)
 {
-    console.log(req.body.id);
+    console.log(req.params.id);
     var param = {
           "Inputs": {
             "input1": {
@@ -38,7 +38,7 @@ exports.recommenderItem = function(req, res)
               ],
               "Values": [
                 [
-                  req.body.id
+                  req.params.id
                 ],
               ]
             }
