@@ -11,11 +11,11 @@ console.log(azure);
 function getOptions(type, param)
 {
     return {
-        uri: azure.type[0].uri,
+        uri: azure[type].uri,
         form: JSON.stringify(param),
         headers: {
           'content-type': 'application/json',
-          'Authorization': 'bearer ' + azure.type[0].key
+          'Authorization': 'bearer ' + azure[type].key
         },
         azure: true,
     };
