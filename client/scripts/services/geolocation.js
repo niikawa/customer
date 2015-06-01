@@ -17,6 +17,8 @@ geoServices.factory("GEO", ['$resource', '$http','Shared', 'Utility',
         
         function createGoogleMap(latitude, longitude)
         {
+            
+            
             var map = new GMaps({
                 div: "#map",
                 lat: latitude,
