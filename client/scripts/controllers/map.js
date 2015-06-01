@@ -5,7 +5,7 @@
  * # MainCtrl
  * Controller of the workspaceApp
  */
-var mapCtrl = angular.module('mapCtrl',['geoServices', '']);
+var mapCtrl = angular.module('mapCtrl',['GeoServices']);
 mapCtrl.controller('MapCtrl',['$scope', 'GEO', 'Shared', 'Utility',
 function ($scope, GEO, Shared, Utility)
 {
@@ -26,7 +26,7 @@ function ($scope, GEO, Shared, Utility)
         $scope._construct();
         setInitializeScope();
 
-        
+        GEO.getMyposition();
 
     };
     
