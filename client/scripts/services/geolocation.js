@@ -22,8 +22,7 @@ geoServices.factory("GEO", ['$resource', '$http','Shared', 'Utility',
             new GMaps({
                 div: '#map',
                 lat: latitude,
-                lng: longitude,
-                zoom: 15,
+                lng: longitude
             });            
         }
         
