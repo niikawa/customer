@@ -17,10 +17,10 @@ geoServices.factory("GEO", ['$resource', '$http','Shared', 'Utility',
         
         function createGoogleMap(latitude, longitude)
         {
-            
-            
-            var map = new GMaps({
-                div: "#map",
+            alert(latitude);
+            alert(longitude);
+            new GMaps({
+                div: '#map',
                 lat: latitude,
                 lng: longitude,
                 zoom: 15,
