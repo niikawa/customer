@@ -77,12 +77,18 @@ function ($scope, Shared, Customer, Azure, Utility)
         $scope.$emit('requestStart');
         Azure.resource.recomender({id: $scope.selectedCustomer.Id}).$promise.then(function(response)
         {
-            console.log(response.data);
-            //0番目はユーザーIDのため削除
-            var reco = response.data[0];
-            delete reco[0];
-            Utility.successSticky(reco.join());
             $scope.$emit('requestEnd');
+            if ( '' === response.data)
+            {
+                Utility.successSticky('おすすめ商品はありません');
+            }
+            else
+            {
+                //0番目はユーザーIDのため削除
+                var reco = response.data[0];
+                delete reco[0];
+                Utility.successSticky(reco.join());
+            }
         });
     };
 }]);

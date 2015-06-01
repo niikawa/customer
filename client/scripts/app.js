@@ -20,6 +20,7 @@ angular
     'coreCtrl',
     'loginCtrl',
     'mainCtrl',
+    'mapCtrl',
   ])
   .config(function ($routeProvider) {
     
@@ -52,6 +53,12 @@ angular
       .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
+      })
+      .when('/map', {
+        templateUrl: 'views/map.html',
+        controller: 'MapCtrl',
+        reloadOnSearch: false, //ページ内リンクを可能にする
+//        resolve: {isLogin: autoCheck}
       })
       .otherwise({
         redirectTo: '/'
