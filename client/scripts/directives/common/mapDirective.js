@@ -37,13 +37,32 @@ myApp.directive('mapDirective', [ 'Utility' ,function(Utility){
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
                     animation: google.maps.Animation.BOUNCE,
-                    title: '現在地',
+                    click: function(lat, lng)
+                    {
+                        var geocoder = new google.maps.Geocoder();
+                        var latlng = new google.maps.LatLng(lat, lng);
+
+                        geocoder.geocode({'latLng': latlng}, function(results, status)
+                        {
+                            if (status == google.maps.GeocoderStatus.OK)
+                            {
+                              if (results[1])
+                              {
+                                map.setZoom(11);
+                                alert(results[1].formatted_address);
+                              }
+                              else
+                              {
+                                alert('No results found');
+                              }
+                            }
+                            else
+                            {
+                              alert('Geocoder failed due to: ' + status);
+                            }
+                          });
+                    }
                 });
-                // map.drawOverlay({
-                //     lat: position.coords.latitude,
-                //     lng: position.coords.longitude,
-                //     content: '<div class="'+ scope.overlayClass +'">現在地</div>'
-                // });            
             }
             
             function error(error)
