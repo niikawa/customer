@@ -11,7 +11,9 @@ myApp.directive('drawerMenuDirective', function()
             
             element.on('click', function()
             {
-                element.after('<div class="buble-drawer-menu" style="transform: translate3d(50px,20px,10px);"></div>');
+                element.after('<div class="drawer-menu-item" style="transform: translate3d(50px,00px,10px);"></div>');
+                element.after('<div class="drawer-menu-item" style="transform: translate3d(100px,20px,10px);"></div>');
+                element.after('<div class="drawer-menu-item" style="transform: translate3d(150px,40px,10px);"></div>');
             });
             if (void 0 === scope.menuList) return;
             

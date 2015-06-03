@@ -112,5 +112,24 @@ spinner-directive > div > img {
   color: #FFF;
   box-sizing:border-box;
   font-size:20px;
-  
+  transform:translate3d(0,0,0);
+  transition:transform ease-out 200ms;
+}
+
+.drawer-menu-item {
+  position: absolute;
+  border-radius: 50%;
+  margin:10px;
+  height:80px;
+  width: 80px;
+  border-width: 3px;
+  border-color: #FF1493;
+  background-color: #FF00FF;
+  text-align: center;
+  color: #FFF;
+  box-sizing:border-box;
+  font-size:20px;
+  transform:translate3d(0,0,0);
+  transition:transform ease-out 200ms;
+
 }
