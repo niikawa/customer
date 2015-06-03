@@ -9,18 +9,19 @@ myApp.directive('mapDirective', [ 'Utility' ,function(Utility){
         restrict: 'AE',
         scope:{
             mapClass: '@',
+            overlayClass: '@',
         },
         link: function (scope, element, attrs) 
         {
             if (void 0 === attrs.id) return false;
-            
-            element.addClass(scope.mapClass); 
             
             if (!navigator.geolocation)
             {
                 Utility.errorSticky('ご利用のブラウザでは位置情報を取得できません。');
                 return false;
             }
+
+            element.addClass(scope.mapClass); 
 
             navigator.geolocation.getCurrentPosition(createGoogleMap, error);
             
@@ -40,7 +41,7 @@ myApp.directive('mapDirective', [ 'Utility' ,function(Utility){
                 map.drawOverlay({
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
-                    content: '<div class="overlay">現在地</div>'
+                    content: '<div class="'+ scope.overlayClass +'">現在地</div>'
                 });            
             }
             
