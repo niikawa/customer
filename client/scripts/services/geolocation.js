@@ -22,12 +22,11 @@ geoServices.factory("GEO", ['$resource', '$http','Shared', 'Utility',
                 lat: latitude,
                 lng: longitude
             });
-            map.addMarker(
-            {
-                lat: latitude,
-                lng: longitude,
-                title: '現在地',
-            });
+            map.drawOverlay({
+              lat: latitude,
+              lng: longitude,
+              content: '<div class="overlay">現在地</div>'
+            });            
         }
         
         geoServices.getMyposition = function()
