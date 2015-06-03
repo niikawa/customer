@@ -430,12 +430,12 @@ ul#nav1 {
 /*-----------------------------------------------*/
 .buble-drawer-menu {
   border-radius: 50%;
-  padding:10px;
+  margin:10px;
   height:50px;
   width: 50px;
   border-width: 3px;
   border-color: #FF1493;
-  background-color: #FF69B4;
+  background-color: #FF00FF;
   text-align: center;
   color: #FFF;
 }
