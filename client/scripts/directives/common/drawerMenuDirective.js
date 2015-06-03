@@ -4,10 +4,10 @@ myApp.directive('drawerMenuDirective', function()
     return {
         restrict: 'E',
         scope: {menuList: '='},
-        template: '<nav></nav>',
+        template: '<nav><label class="buble-drawer-menu" for="menu-open"><span class="hamburger hamburger-1"></span><span class="hamburger hamburger-2"></span><span class="hamburger hamburger-3"></span></label></nav>',
         link: function (scope, element, attrs) 
         {
-            element.append('<label class="menu-open-button" for="menu-open"><span class="hamburger hamburger-1"></span><span class="hamburger hamburger-2"></span><span class="hamburger hamburger-3"></span></label>');
+            element.append('');
             
             element.on('click', function()
             {
