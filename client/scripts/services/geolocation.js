@@ -26,10 +26,7 @@ geoServices.factory("GEO", ['$resource', '$http','Shared', 'Utility',
             {
                 lat: latitude,
                 lng: longitude,
-                title: 'Lima',
-                click: function(e) {
-                    alert('You clicked in this marker');
-                }                
+                title: '現在地',
             });
         }
         
