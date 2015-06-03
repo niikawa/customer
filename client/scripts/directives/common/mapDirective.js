@@ -12,9 +12,6 @@ myApp.directive('mapDirective', [ 'Utility' ,function(Utility){
         },
         link: function (scope, element, attrs) 
         {
-            
-            console.log(attrs.id);
-            
             if (void 0 === attrs.id) return false;
             
             element.addClass(scope.mapClass); 
@@ -30,7 +27,7 @@ myApp.directive('mapDirective', [ 'Utility' ,function(Utility){
             function createGoogleMap(position)
             {
                 var map = new GMaps({
-                    div: '#' + element.attrs('id'),
+                    div: '#' + attrs.id,
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 });
