@@ -6,7 +6,7 @@
 var myApp = angular.module('myApp');
 myApp.directive('mapDirective', [ 'Utility' ,function(Utility){
     return {
-        restrict: 'A',
+        restrict: 'AE',
         scope:{
             mapClass: '@',
         },
