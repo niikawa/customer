@@ -36,13 +36,14 @@ myApp.directive('mapDirective', [ 'Utility' ,function(Utility){
                 {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
+                    animation: google.maps.Animation.BOUNCE,
                     title: '現在地',
                 });
-                map.drawOverlay({
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                    content: '<div class="'+ scope.overlayClass +'">現在地</div>'
-                });            
+                // map.drawOverlay({
+                //     lat: position.coords.latitude,
+                //     lng: position.coords.longitude,
+                //     content: '<div class="'+ scope.overlayClass +'">現在地</div>'
+                // });            
             }
             
             function error(error)
