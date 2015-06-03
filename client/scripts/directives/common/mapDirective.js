@@ -31,7 +31,7 @@ myApp.directive('mapDirective', [ 'Utility' ,function(Utility){
                     div: '#' + attrs.id,
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
-                    zoom: 20,
+                    zoom: 18,
                 });
                 map.addMarker(
                 {
@@ -47,19 +47,19 @@ myApp.directive('mapDirective', [ 'Utility' ,function(Utility){
                         {
                             if (status == google.maps.GeocoderStatus.OK)
                             {
-                              if (results[1])
-                              {
-                                map.setZoom(11);
-                                alert(results[1].formatted_address);
-                              }
-                              else
-                              {
-                                alert('No results found');
-                              }
+                                if (results[1])
+                                {
+                                    Utility.info(results[1].formatted_address);
+                                    map.setZoom(15);
+                                }
+                                else
+                                {
+                                    Utility.warning('対象の住所は存在しません');
+                                }
                             }
                             else
                             {
-                              alert('Geocoder failed due to: ' + status);
+                                Utility.warning('対象の住所は存在しません');
                             }
                           });
                     }
