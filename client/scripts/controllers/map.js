@@ -5,7 +5,7 @@
  * # MainCtrl
  * Controller of the workspaceApp
  */
-var mapCtrl = angular.module('mapCtrl');
+var mapCtrl = angular.module('mapCtrl',[]);
 mapCtrl.controller('MapCtrl',['$scope', 'Shared', 'Utility',
 function ($scope, GEO, Shared, Utility)
 {
