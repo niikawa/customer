@@ -40,7 +40,7 @@ myApp.directive('mapDirective', [ 'Utility' ,function(Utility){
                     click: function(lat, lng)
                     {
                         var geocoder = new google.maps.Geocoder();
-                        var latlng = new google.maps.LatLng(lat, lng);
+                        var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
                         geocoder.geocode({'latLng': latlng}, function(results, status)
                         {
