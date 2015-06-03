@@ -31,6 +31,12 @@ myApp.directive('mapDirective', [ 'Utility' ,function(Utility){
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 });
+                map.addMarker(
+                {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                    title: '現在地',
+                });
                 map.drawOverlay({
                     lat: position.coords.latitude,
                     lng: position.coords.longitude,
