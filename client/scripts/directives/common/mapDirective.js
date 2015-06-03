@@ -30,7 +30,8 @@ myApp.directive('mapDirective', [ 'Utility' ,function(Utility){
                 var map = new GMaps({
                     div: '#' + attrs.id,
                     lat: position.coords.latitude,
-                    lng: position.coords.longitude
+                    lng: position.coords.longitude,
+                    zoom: 20,
                 });
                 map.addMarker(
                 {
