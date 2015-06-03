@@ -11,14 +11,14 @@ myApp.directive('mapDirective', [ 'Utility' ,function(Utility){
             mapClass: '@',
             overlayClass: '@',
         },
-        compile: function(element, attrs) {
+        // compile: function(element, attrs) {
             
-            //JS読み込みたいな
-            // <script src="http://maps.google.com/maps/api/js?sensor=true&libraries=places"></script>
-            // <script src="vendor/map/gmaps.js"></script>
+        //     //JS読み込みたいな
+        //     // <script src="http://maps.google.com/maps/api/js?sensor=true&libraries=places"></script>
+        //     // <script src="vendor/map/gmaps.js"></script>
             
             
-        },
+        // },
         link: function (scope, element, attrs) 
         {
             if (void 0 === attrs.id) return false;

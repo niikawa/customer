@@ -95,3 +95,21 @@ spinner-directive > div > img {
   stroke:#A9A9A9;
   stroke-width:1px;
 }
+
+/**
+ * common/drawerMenuDirective.js
+ */
+.buble-drawer-menu {
+  border-radius: 50%;
+  margin:10px;
+  height:80px;
+  width: 80px;
+  border-width: 3px;
+  border-color: #FF1493;
+  background-color: #FF00FF;
+  text-align: center;
+  color: #FFF;
+  box-sizing:border-box;
+  font-size:20px;
+  
+}

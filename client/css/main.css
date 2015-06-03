@@ -428,21 +428,6 @@ ul#nav1 {
 /*-----------------------------------------------*/
 /* Other
 /*-----------------------------------------------*/
-.buble-drawer-menu {
-  border-radius: 50%;
-  margin:10px;
-  height:50px;
-  width: 50px;
-  border-width: 3px;
-  border-color: #FF1493;
-  background-color: #FF00FF;
-  text-align: center;
-  color: #FFF;
-}
-
-/*-----------------------------------------------*/
-/* Other
-/*-----------------------------------------------*/
 div .two-row {
   padding-bottom: 40px;
 }
