@@ -11,10 +11,10 @@ myApp.directive('drawerMenuDirective', function()
             
             element.on('click', function()
             {
-                element.after('<div class="drawer-menu-item" style="transform: translate3d(80px,35px,10px);"></div>');
-                element.after('<div class="drawer-menu-item" style="transform: translate3d(180px,70px,10px);"></div>');
-                element.after('<div class="drawer-menu-item" style="transform: translate3d(240px,105px,10px);"></div>');
-                element.after('<div class="drawer-menu-item" style="transform: translate3d(320px,140x,10px);"></div>');
+                element.after('<div class="drawer-menu-item" style="transform: translate3d(60px,25px,10px);"></div>');
+                element.after('<div class="drawer-menu-item" style="transform: translate3d(80px,70px,10px);"></div>');
+                element.after('<div class="drawer-menu-item" style="transform: translate3d(100px,135px,10px);"></div>');
+                element.after('<div class="drawer-menu-item" style="transform: translate3d(120px,180x,10px);"></div>');
             });
             if (void 0 === scope.menuList) return;
             

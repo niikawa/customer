@@ -103,8 +103,8 @@ spinner-directive > div > img {
   position: absolute;
   border-radius: 50%;
   margin:10px;
-  height:70px;
-  width: 70px;
+  height:50px;
+  width: 50px;
   border-width: 3px;
   border-color: #FF1493;
   background-color: #FF00FF;
@@ -119,9 +119,8 @@ spinner-directive > div > img {
 .drawer-menu-item {
   position: absolute;
   border-radius: 50%;
-  margin:10px;
-  height:70px;
-  width: 70px;
+  height:50px;
+  width: 50px;
   border-width: 3px;
   border-color: #FF1493;
   background-color: #FF00FF;
