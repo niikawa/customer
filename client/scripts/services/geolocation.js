@@ -17,19 +17,20 @@ geoServices.factory("GEO", ['$resource', '$http','Shared', 'Utility',
         
         function createGoogleMap(latitude, longitude)
         {
-            new GMaps({
+            var map = new GMaps({
                 div: '#map',
                 lat: latitude,
+                lng: longitude
+            });
+            map.addMarker(
+            {
+                lat: latitude,
                 lng: longitude,
-                zoom: 15,
-                 markers: [
-                    {lat: latitude, lng: longitude},
-                    {lat: latitude, lng: longitude,
-                      size: 'small'},
-                    {lat: latitude, lng: longitude,
-                      color: 'blue'}
-                  ]                
-            });            
+                title: 'Lima',
+                click: function(e) {
+                    alert('You clicked in this marker');
+                }                
+            });
         }
         
         geoServices.getMyposition = function()
