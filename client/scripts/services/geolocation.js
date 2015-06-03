@@ -17,12 +17,11 @@ geoServices.factory("GEO", ['$resource', '$http','Shared', 'Utility',
         
         function createGoogleMap(latitude, longitude)
         {
-            alert(latitude);
-            alert(longitude);
             new GMaps({
                 div: '#map',
                 lat: latitude,
                 lng: longitude,
+                zoom: 15,
                  markers: [
                     {lat: latitude, lng: longitude},
                     {lat: latitude, lng: longitude,
