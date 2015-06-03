@@ -12,6 +12,9 @@ myApp.directive('mapDirective', [ 'Utility' ,function(Utility){
         },
         link: function (scope, element, attrs) 
         {
+            console.log(element.attrs('id'));
+            console.log(attrs('id'));
+            
             if (void 0 === element.attrs('id')) return false;
             
             element.addClass(scope.mapClass); 
