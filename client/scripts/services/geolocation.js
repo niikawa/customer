@@ -22,7 +22,14 @@ geoServices.factory("GEO", ['$resource', '$http','Shared', 'Utility',
             new GMaps({
                 div: '#map',
                 lat: latitude,
-                lng: longitude
+                lng: longitude,
+                 markers: [
+                    {lat: latitude, lng: longitude},
+                    {lat: latitude, lng: longitude,
+                      size: 'small'},
+                    {lat: latitude, lng: longitude,
+                      color: 'blue'}
+                  ]                
             });            
         }
         
