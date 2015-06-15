@@ -48,6 +48,7 @@ core.prototype.getAll = function(condtion ,callback){
     if (void 0 === condtion || '' === condtion || 'function' === typeof(condtion))
     {
         columns = this.pk;
+        callback = condtion;
     }
     else
     {
