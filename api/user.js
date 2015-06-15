@@ -70,7 +70,7 @@ exports.getList = function(req, res)
     var col = 'T1.user_id, T1.account_id, T1.name, T2.role_name';
     var where = '';
     var order = 'T1.user_id';
-    var qObj = model.getQueryObject(col, table, where, order);
+    var qObj = model.getQueryObject(col, table, where, '', order);
 
     model.select(qObj, qObj.request,  function(err, data)
     {
