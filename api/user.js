@@ -3,10 +3,11 @@ var Core = require('./core');
 
 /** テーブル名 */
 var tableName = 'M_USER';
+var pk = 'user_id';
 
-var user = function custmoer()
+var user = function user()
 {
-    Core.call(this, tableName);
+    Core.call(this, tableName, pk);
 };
 
 //coreModelを継承する

@@ -6,9 +6,10 @@
  * @class core
  * @constructor
  */
-var core = function core(modelName)
+var core = function core(modelName, pk)
 {
     this.modelName = modelName;
+    this.pk = pk;
 };
 
 core.prototype.async = require('async');
@@ -39,35 +40,26 @@ core.prototype.getQueryObject = function(col, table, where, groupby, orderby)
  * @method getAllSync
  * @param {Function} callback
  */
-core.prototype.getAll = function(callback){
+core.prototype.getAll = function(condtion ,callback){
 
-    var result = [];
-    var errList = [];
     var request = new this.db.Request();
-
-    request.stream = true;
-    var sql = 'select * from ' + this.modelName + ' order by Id';
-    request.query(sql);
-    request.on('recordset', function(columns)
+    var columns;
+    var option = ' asc';
+    if (void 0 === condtion)
     {
-       console.log(columns);
-    });
+        columns = this.pk;
+    }
+    else
+    {
+        columns = condtion.columns;
+        if (void 0 !== condtion.option)
+        {
+            option = condtion.option;
+        }
+    }
     
-    request.on('row', function(row)
-    {
-       result.push(row);
-    });
-
-    request.on('error', function(err)
-    {
-        errList.push(err);
-    });
-
-    request.on('done', function(returnValue)
-    {
-        callback(errList, result);
-    });
-    
+    var sql = 'select * from ' + this.modelName + ' order by ' + columns + option;
+    this.execute(sql, request, callback);
 };
 
 /**

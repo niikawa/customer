@@ -5,9 +5,9 @@
  * # MainCtrl
  * Controller of the workspaceApp
  */
-var userControlCtrl = angular.module('userControlCtrl',['UesrServices']);
-userControlCtrl.controller('UserControlCtrl',['$scope', '$routeParams','Shared', 'User',
-function ($scope, $routeParams, Shared, User)
+var userControlCtrl = angular.module('userControlCtrl',['UesrServices','RoleServices']);
+userControlCtrl.controller('UserControlCtrl',['$scope', '$routeParams','Shared', 'User', 'Role',
+function ($scope, $routeParams, Shared, User, Role)
 {
     var pageProp = User.getPageProp($routeParams.id);
     /**
@@ -20,22 +20,11 @@ function ($scope, $routeParams, Shared, User)
             
         if (2 === pageProp.type)
         {
-            var user = User.mock().user;
             var id = parseInt($routeParams.id);
-            
-            angular.forEach(user, function(value, key)
+            User.resource.get({id: id}).$promise.then(function(response)
             {
-                if (id === value.user_id)
-                {
-                    $scope.userData = value;
-                }
+                $scope.userData = response.data;
             });
-            /* サーバーサイド実装後に開放
-            Scenario.resource.get({id: id}).$promise.then(function(response)
-            {
-                $scope.segmentList = response.data;
-            });
-            */
         }
         else
         {
@@ -55,16 +44,10 @@ function ($scope, $routeParams, Shared, User)
         $scope._construct();
         setInitializeScope();
 
-        $scope.roleList = User.mock().role;
-        
-        
-
-        /* サーバーサイド実装後に開放
-        Segment.resource.get().$promise.then(function(response)
+        Role.resource.get().$promise.then(function(response)
         {
-            $scope.segmentList = response.data;
+            $scope.roleList = response.data;
         });
-        */
     };
     
     $scope.remove = function()

@@ -47,6 +47,10 @@ var user = require("./api/user");
 router.get('/user', user.getList);
 router.get('/user/:id', user.getById);
 
+var role = require("./api/role");
+router.get('/role', role.getAll);
+router.get('/role/:id', role.getById);
+
 //
 // ## SimpleServer `SimpleServer(obj)`
 //
