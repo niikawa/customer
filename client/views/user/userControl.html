@@ -13,7 +13,7 @@
                 <form name="userForm" novalidate>
                     <!-- アカウントID -->
                     <input type="text" class="form-control" placeholder="アカウントID" name="account_id" ng-model="user.account_id"
-                        ng-minlength= ng-maxlength=20 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
+                        ng-minlength=6 ng-maxlength=20 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
                     <p ng-message="userForm.account_id.$dirty || userForm.account_id.$submitted">6文字以上20文字以内の半角英数値で入力してください</p>
 
                     <!-- パスワード -->
