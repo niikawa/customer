@@ -30,8 +30,6 @@ function ($scope, $routeParams, Shared, User)
         $scope._construct();
         setInitializeScope();
 
-        $scope.userList = User.mock().user;
-
         User.resource.get().$promise.then(function(response)
         {
             $scope.userList = response.data;
