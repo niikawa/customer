@@ -43,6 +43,10 @@ router.get('/custmoer/orders/:id', customer.orders);
 var azure = require('./api/azureapi');
 router.get('/azure/recomender/:id', azure.recommenderItem);
 
+var user = require("./api/user");
+router.get('/user', user.getList);
+router.get('/user/:id', user.getById);
+
 //
 // ## SimpleServer `SimpleServer(obj)`
 //

@@ -1,4 +1,4 @@
-var modalService = angular.module("ModalService", []);
+var modalService = angular.module("myApp");
 modalService.service("Modal", ["$modal" ,　function($modal) 
 {
     var open = function($scope, path) {

@@ -1,0 +1,35 @@
+    <input type="number" class="form-control" placeholder="イベント発生後日数" ng-model="scenario.after_event_occurs_num">
+    <input type="number" class="form-control" placeholder="無効期間日数" ng-model="scenario.inoperative_num">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          <input type="text" class="form-control" placeholder="対象ログを絞り込みます" ng-model="logSearch" 
+            refine-directive refine-item="logList" keyword="logSearch" name-propertie="log_name" >
+        </div>
+        <ul class="list-group overflow-box-s" >
+            <li class="list-group-item" ng-repeat="item in logList" push-directive info="item" ng-click="show(item.log_id)">
+                {{item.log_name}}
+            </li>
+        </ul>
+    </div>
+    <div ng-if="isShowExtraction">
+        <table class="table table-hover">
+            <caption>抽出条件<i class="fa fa-plus-square"></i></caption>
+            <thead>
+                <tr class="info">
+                    <th>対象項目</th>
+                    <th>値</th>
+                    <th>選択</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <!--  ここデータでとるところ -->
+            <tbody>
+                <tr ng-repeat="item in segmentList">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button class="btn" ng-click="removeItem"><i class="fa fa-times"></i></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>

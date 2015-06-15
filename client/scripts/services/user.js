@@ -4,18 +4,17 @@ uesrServices.factory("User", ['$resource','Utility',
     {
         var userService = {};
         
-        userService.resource = $resource('https://api-gozaru9.c9.io/V1/users/:id', {id: '@id'},
+        var pageProp = {
+                regist: {type: 1, title: 'ユーザー登録'}, 
+                edit: {type: 2, title: 'ユーザー更新'}
+            };
+        
+        userService.resource = $resource('/users/:id', {id: '@id'},
         {
-            member:
-            {
-                method: 'POST',
-                url: 'https://api-gozaru9.c9.io/V1/member/',
-                cache: true,
-            },
             remove:
             {
-                method: 'POST',
-                url: 'https://api-gozaru9.c9.io/V1/users/delete',
+                method: 'GET',
+                url: 'users/delete',
             }
         });
         
@@ -52,6 +51,19 @@ uesrServices.factory("User", ['$resource','Utility',
             ];
         };
         
+        userService.getPageProp = function(id)
+        {
+            if (void 0 === id)
+            {
+                return pageProp.regist;
+            }
+            else
+            {
+                return pageProp.edit;
+            }
+            
+        };
+        
         userService.getSelectedUserIdAndML = function(list, name)
         {
             var selectedList = [];
@@ -64,6 +76,26 @@ uesrServices.factory("User", ['$resource','Utility',
                 }
             }
             return selectedList;
+        };
+        
+        userService.mock = function()
+        {
+            var user = [
+                {user_id:1, account_id:'vxctest001',user_name:'ばーちゃれくすゆーざー1',role: '特権ロール'},
+                {user_id:2, account_id:'vxctest002',user_name:'ばーちゃれくすゆーざー2',role: '編集ロール'},
+                {user_id:3, account_id:'vxctest003',user_name:'ばーちゃれくすゆーざー3',role: '閲覧ロール'},
+            ];
+            
+            var role = [
+                {role_id:1, role_name:'特権ロール',description: 'すべての機能を利用可能'},
+                {role_id:2, role_name:'編集ロール',description: 'ユーザー情報以外の閲覧・編集が可能'},
+                {role_id:3, role_name:'閲覧ロール',description: 'ユーザー情報以外の閲覧が可能'},
+            ];
+            
+            return {
+                user: user,
+                role: role,
+            };
         };
         
         return userService;        

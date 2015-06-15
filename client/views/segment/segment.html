@@ -1,0 +1,37 @@
+<div class="" ng-controller="SegmentCtrl" ng-init="initialize()">
+
+    <div class="page-title"><h2>セグメント管理</h2></div>
+    
+    <div class="box">
+        <h4>セグメント一覧
+            <a class="btn btn-default" ng-href="/#/segment/control/">新規登録</a> 
+            <!--<input type="text" class="" placeholder="Search for...">-->
+        </h4>
+
+        <div class="row" >
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="info">
+                            <th>セグメント名</th>
+                            <th>最終更新日</th>
+                            <th>利用状況</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <!--  ここデータでとるところ -->
+                    <tbody>
+                        <tr ng-repeat="item in segmentList">
+                            <td data-th="名称"><a ng-href='/#/segment/control/{{item.segment_id}}'>{{item.segment_name}}</a></td>
+                            <td data-th="更新日">{{item.update_date}}</td>
+                            <td data-th="状況">{{item.status}}</td>
+                            <td data-th="リフレッシュ"><button class="btn btn-default" ng-click="refresh">リフレッシュ</button></td>
+                            <td><button class="btn btn-default" ng-click="download">ダウンロード</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

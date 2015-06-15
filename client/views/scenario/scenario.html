@@ -1,0 +1,33 @@
+<div class="" ng-controller="ScenarioCtrl" ng-init="initialize()">
+
+    <div class="page-title"><h2>シナリオ管理</h2></div>
+    
+    <div class="box">
+        <h4>{{addPageTitle}}一覧
+            <a class="btn btn-default" ng-href="/#/scenario/{{type}}/control/">新規登録</a> 
+        </h4>
+
+        <div class="row" >
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="info">
+                            <th>シナリオ名</th>
+                            <th>最終更新日</th>
+                            <th>利用状況</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in scenarioList">
+                            <td><a ng-href='/#/scenario/{{type}}/control/{{item.scenario_id}}'>{{item.scenario_name}}</a></td>
+                            <td>{{item.update_date}}</td>
+                            <td>{{item.status}}</td>
+                            <td><button class="btn" ng-click="remove">削除</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

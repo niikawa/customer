@@ -10,7 +10,7 @@ coreCtrl.controller('CoreCtrl', ['$scope', 'Shared', function($scope, Shared)
 {
     /** ヘッダー表示 */
     $scope.isHeader = (void 0 !== Shared.get('id'));
-    
+
     $scope._construct = function()
     {
         $scope.isHeader = true;
@@ -19,6 +19,11 @@ coreCtrl.controller('CoreCtrl', ['$scope', 'Shared', function($scope, Shared)
     $scope.$on('loginComplete', function(event)
     {
         $scope.isHeader = true;
+    });
+
+    $scope.$on('loginInit', function(event)
+    {
+        $scope.isHeader = false;
     });
 
     $scope.$on('loginFailed', function(event)

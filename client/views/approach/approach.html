@@ -1,0 +1,52 @@
+<div class="" ng-controller="ApproachCtrl" ng-init="initialize()">
+
+    <div class="page-title"><h2>アプローチ管理</h2></div>
+    
+    <div class="box">
+        <h4>回数制限</h4>
+
+        <div class="row" >
+            <div class="col-md-12 vertical-container">
+                
+                <div class="input-group">
+                    <span class="input-group-addon">1日の制限回数</span>
+                    <input type="number" class="form-control">
+                    
+                    <span class="input-group-addon" >1週間の制限回数</span>
+                    <input type="number" class="form-control">
+                </div>
+            </div>
+            
+            <div class="row　col-md-12 center" >
+                <button class="btn btn-default" ng-click="save()">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="box">
+        <h4>シナリオ優先順位</h4>
+
+        <div class="row" >
+            <div class="col-md-12 vertical-container">
+                
+                <div ng-if="warningMessage" class="alert alert-warning" role="alert">
+                    {{warningMessage}}
+                </div>
+                
+                <div class="card-container" ng-model='scenarioList' drop-directive drop-area-key="1">
+                    
+                    <div class="card btn-draggable" ng-repeat="item in scenarioList track by $index" drag-item-directive dragindex="$index" >
+                        <span class="badge">{{$index+1}}</span>
+                        <a ng-href='/#/scenario/{{item.scenario_type}}/control/{{item.scenario_id}}'>{{item.scenario_name}}</a>
+                        <span class="label label-default">{{item.scenario_type}}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row　col-md-12 center" >
+                <button class="btn btn-default" ng-click="save()">保存</button>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,27 @@
+<!-- 
+コメント追加用モーダル
+
+[scope]
+comentList {array} 表示するコメントの配列
+comments {string} 入力したコメント
+
+@author niikawa
+-->
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()">&times;</button>
+    <img src="images/icon/1408515480_7.png" width="30" height="30">
+    <h3>コメントを入力</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="arrorw-panel form-group">
+                <textarea placeholder="コメントを入力してください" ng-model="modalParam.newComment"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="$close()">Close</button>
+    <button class="btn btn-primary" ng-click="modalParam.execute()">Add</button>
+</div>

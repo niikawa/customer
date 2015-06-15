@@ -1,0 +1,80 @@
+<div class="" ng-controller="ScenarioControlCtrl" ng-init="initialize()">
+
+    <div class="page-title"><h2>シナリオ管理</h2></div>
+    
+    <div class="box">
+        <h4>{{pageTitle}}</h4>
+
+        <div class="row" >
+            
+            <div class="col-md-12 vertical-container">
+                
+                <h3 ng-click="isBaseCollapse = !isBaseCollapse">
+                    <i ng-if="!isBaseCollapse" class="fa fa-caret-square-o-up"></i>
+                    <i ng-if="isBaseCollapse" class="fa fa-caret-square-o-down"></i>
+                    基本設定</h3>
+                
+                <div collapse="isBaseCollapse">
+                    
+                    <input type="text" class="form-control" placeholder="シナリオ名を入力してください" ng-model="scenario.scenario_name">
+                    
+                    <input type="text" class="form-control" placeholder="出力名を入力してください" ng-model="scenario.output_name">
+                    
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-model="approach" btn-radio=1 uncheckable>アプローチ対象</label>
+                        <label class="btn btn-default" ng-model="approach" btn-radio=2 uncheckable>アプローチ対象外</label>
+                    </div>
+
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-model="status" btn-radio=1 uncheckable>有効</label>
+                        <label class="btn btn-default" ng-model="status" btn-radio=0 uncheckable>無効</label>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <input type="text" class="form-control" placeholder="セグメントを絞り込みます" ng-model="segmentSearch" 
+                                refine-directive refine-item="queryList" keyword="segmentSearch" name-propertie="query_name" >
+                        </div>
+                        <ul class="list-group overflow-box-s" >
+                            <li class="list-group-item" ng-repeat="item in queryList" push-directive info="item">
+                            {{item.query_name}}
+                            </li>
+                        </ul>
+                    </div>                        
+    
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <input type="text" class="form-control" placeholder="IFレイアウトを絞り込みます" ng-model="ifSearch" 
+                                refine-directive refine-item="ifList" keyword="ifSearch" name-propertie="if_name" >
+                        </div>
+                        <ul class="list-group overflow-box-s" >
+                            <li class="list-group-item" ng-repeat="item in ifList" push-directive info="item">
+                            {{item.if_name}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row" >
+            <div class="col-md-12 vertical-container">
+                <h3 ng-click="isOriginCollapse = !isOriginCollapse">
+                    <i ng-if="!isOriginCollapse" class="fa fa-caret-square-o-up"></i>
+                    <i ng-if="isOriginCollapse" class="fa fa-caret-square-o-down"></i>
+                    個別設定</h3>
+                <div collapse="isOriginCollapse" ng-include="template">
+                </div>
+            </div>
+        </div>
+        
+        <div class="row　col-md-12 center" >
+            
+            <a class="btn btn-default" ng-href="#/scenario/{{type}}" >戻る</a>
+            <button class="btn btn-default" ng-click="clear()">クリア</button>
+            <button class="btn btn-default" ng-click="save()">保存</button>
+            
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="" ng-controller="DashbordCtrl" ng-init="initialize()">
+
+    <div class="page-title"><h2>ダッシュボード</h2></div>
+    
+    <div class="box">
+        <h4>設定済みシナリオ</h4>
+
+        <div class="row" >
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="info">
+                            <th>シナリオタイプ</th>
+                            <th>登録数</th>
+                            <th>登録上限数</th>
+                        </tr>
+                    </thead>
+                    <!--  ここデータでとるところ -->
+                    <tbody>
+                        <tr ng-repeat="item in scenario">
+                            <td data-th="タイプ"><a ng-href='/#/scenario/{{item.scenario_type}}'>{{item.scenario_name}}</a></td>
+                            <td data-th="数">{{item.regist_num}}</td>
+                            <td data-th="上限">{{item.regist_max}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="box">
+        <h4>実行予定のシナリオ</h4>
+
+        <div class="row" >
+            <div class="col-md-12">
+                <div class="panel-heading">
+                    <input type="text" class="form-control" placeholder="シナリオを絞り込みます" ng-model="scenarioSearch" 
+                        refine-directive refine-item="executePlanScenario" keyword="scenarioSearch" name-propertie="scenario_name" >
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr class="info">
+                            <th>シナリオ名</th>
+                        </tr>
+                    </thead>
+                    <!--  ここデータでとるところ -->
+                    <tbody>
+                        <tr ng-repeat="item in executePlanScenario">
+                            <td data-th="名"><a ng-href='/#/scenario/control/{{item.scenario_id}}'>{{item.scenario_name}}</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

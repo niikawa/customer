@@ -1,0 +1,28 @@
+      <div class="line-container" ng-controller="CardCtrl" ng-init="initialize()">
+        <div class="panel panel-info">
+          <div class="panel-heading">new card
+            <div class="row">
+              <div class="col-xs-3">
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer clearfix" >
+            <div class="card-container" ng-model='newContents' >
+              <div class="card btn-draggable" drag-item-directive dragindex="0" >
+                <textarea ng-model='newContents.contents'></textarea>
+                <div class="progress progress-striped active">
+                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{newContents.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{newContents.progress}}%">
+                    </div>
+                </div>
+                <button type="button" class="btn progress-left-image btn-default btn-xs" ng-click="changeProgress(100)">
+                  <i class="fa fa-check"></i>
+                </button>
+                <!-- valueをバインドさせる  -->
+                <rate-directive execute="changeProgress('')" bind="newContents.progress" value={{newContents.progress|rateFilter:max}} ></rate-directive>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>

@@ -7,10 +7,11 @@ myApp.directive('pushDirective', function(){
         restrict: 'A',
         scope:{
             pushInfo: '=info',
+            multiple: '='
         },
         link: function (scope, element, attrs) 
         {
-            element.css({cursor: 'pointer'}); 
+            element.css({cursor: 'pointer'});
             scope.pushInfo.isPush = false;
             
             element.on('click', function()
@@ -22,9 +23,14 @@ myApp.directive('pushDirective', function(){
                 }
                 else
                 {
+                    if (void 0 === scope.multiple || !scope.multiple)
+                    {
+                        element.parent().children().removeClass('push-active');
+                    }
                     scope.pushInfo.isPush = true;
                     element.addClass('push-active');
                 }
+
             });
         }
     };

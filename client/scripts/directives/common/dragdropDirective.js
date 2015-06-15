@@ -109,7 +109,9 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 {
                     pushItem = DDShared.getCopyFrom();
                 }
+                
                 var orverIndex = (ctrl.$modelValue.length === 0) ? 0 : DDShared.getOrverIndex();
+                
                 ctrl.$modelValue.splice(orverIndex, 0, pushItem);
                 
                 var len = ctrl.$modelValue.length;
@@ -129,7 +131,7 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 emitObject.from = DDShared.getFrom();
                 emitObject.remove = pushItem;
                 emitObject.isSameContainer = (emitObject.to == emitObject.from);
-                DDShared.clear();
+
                 scope.$emit('dropItemComplete', emitObject);
             });
         }

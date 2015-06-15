@@ -5,10 +5,10 @@ var myApp = angular.module('myApp');
 myApp.config(
     function($httpProvider) 
     {
-        $httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
-        $httpProvider.defaults.useXDomain = true;
-        $httpProvider.defaults.withCredentials = true;
-        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+        // $httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
+        // $httpProvider.defaults.useXDomain = true;
+        // $httpProvider.defaults.withCredentials = true;
+        // delete $httpProvider.defaults.headers.common['X-Requested-With'];
     
         $httpProvider.interceptors.push
         (
