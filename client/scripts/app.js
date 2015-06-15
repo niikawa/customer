@@ -16,6 +16,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'ngMessages',
     'ui.bootstrap',
     'coreCtrl',
     'loginCtrl',
