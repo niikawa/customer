@@ -14,16 +14,17 @@
                     <!-- アカウントID -->
                     <input type="text" class="form-control" placeholder="アカウントID" name="account_id" 
                         ng-model="userData.account_id" ng-model-options="{updateOn: 'blur'}" ng-minlength=3 ng-maxlength=20 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
-                    <p ng-show="userForm.account_id.$error.required">入力必須です</p>
-                    <p ng-show="userForm.account_id.$error.minlength">3文字以上です</p>
-                    <p ng-show="userForm.account_id.$error.pattern">半角英数値のみです</p>
-                    
+                    <p ng-show="userForm.account_id.$invalid">3文字以上20文字以内の半角数値で入力してください</p>
+
+                    <!-- パスワード -->
                     <input type="password" class="form-control" placeholder="パスワード"  ng-model="userData.password"/>
         
                     <input type="password" class="form-control" placeholder="パスワード再入力"/>
         
+                    <!-- ユーザー名 -->
                     <input type="text" class="form-control" placeholder="ユーザー名" ng-model="userData.user_name" />
                     
+                    <!-- 権限 -->
                     <ul class="list-group overflow-box-l" >
                         <li class="list-group-item" ng-repeat="item in roleList" push-directive info="item" >
                         {{item.role_name}}
