@@ -1,4 +1,5 @@
-app.directive('myValidators', function () {
+var myApp = angular.module('myApp');
+myApp.directive('myValidators', function () {
     return {
         require: 'ngModel',
         scope: {
