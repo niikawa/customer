@@ -12,14 +12,21 @@
                 
                 <form name="userForm" novalidate>
                     <!-- アカウントID -->
-                    <input type="text" class="form-control" placeholder="アカウントID" name="account_id" 
-                        ng-model="userData.account_id" ng-model-options="{updateOn: 'blur'}" ng-minlength=3 ng-maxlength=20 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
-                    <p ng-if="userForm.account_id.$dirty || userForm.account_id.$submitted">3文字以上20文字以内の半角数値で入力してください</p>
+                    <input type="text" class="form-control" placeholder="アカウントID" name="account_id" ng-model="user.account_id"
+                        ng-minlength= ng-maxlength=20 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
+                    <p ng-message="userForm.account_id.$dirty || userForm.account_id.$submitted">6文字以上20文字以内の半角英数値で入力してください</p>
 
-                    <input type="password" class="form-control" placeholder="パスワード再入力"/>
+                    <!-- パスワード -->
+                    <input type="password" class="form-control" name="password" ng-model="user.password" placeholder="パスワード"
+                        ng-minlength=6 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
+                    <p ng-message="userForm.password.$dirty || userForm.password.$submitted">6文字以上の半角英数値で入力してください</p>
+                        
+                    <input type="password" class="form-control" name="password_confirm" ng-model="user.password_confirm" placeholder="パスワード再入力"
+                        my-validators="validators.password_confirm" ng-required="true" />
+                    <span ng-message="confirm">パスワード確認が一致しません</span>
         
                     <!-- ユーザー名 -->
-                    <input type="text" class="form-control" placeholder="ユーザー名" ng-model="userData.user_name" />
+                    <input type="text" class="form-control" placeholder="ユーザー名" ng-model="user.name" />
                     
                     <!-- 権限 -->
                     <ul class="list-group overflow-box-l" >
