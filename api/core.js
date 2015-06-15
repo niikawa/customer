@@ -45,7 +45,7 @@ core.prototype.getAll = function(condtion ,callback){
     var request = new this.db.Request();
     var columns;
     var option = ' asc';
-    if (void 0 === condtion)
+    if (void 0 === condtion || '' === condtion || 'function' === typeof(condtion))
     {
         columns = this.pk;
     }
@@ -58,7 +58,15 @@ core.prototype.getAll = function(condtion ,callback){
         }
     }
     
-    var sql = 'select * from ' + this.modelName + ' order by ' + columns + option;
+    var sql = '';
+    if (void 0 === columns)
+    {
+        sql = 'select * from ' + this.modelName;
+    }
+    else
+    {
+        sql = 'select * from ' + this.modelName + ' order by ' + columns + option;
+    }
     this.execute(sql, request, callback);
 };
 
