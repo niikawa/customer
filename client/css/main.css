@@ -277,8 +277,9 @@ div .overflow-box-l {
 .vertical-container > input,
 .vertical-container > div,
 .vertical-container > div > input,
-.vertical-container > div > div 
-.vertical-container > form > div {
+.vertical-container > div > div, 
+.vertical-container > form > div,
+.vertical-container > form > input {
   margin-bottom: 10px;
 }
 
