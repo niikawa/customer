@@ -26,12 +26,7 @@ function ($scope, $routeParams, Shared, User, Role)
                 $scope.userData = response.data;
             });
         }
-        else
-        {
-            console.log(pageProp);
-        }
-        
-        
+
         $scope.warningMessage = '';
     }
     

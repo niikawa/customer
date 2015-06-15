@@ -7,30 +7,34 @@
         </h4>
 
         <div class="row" >
+            
             <div class="col-md-12 vertical-container">
-                
-                <input type="text" class="form-control" placeholder="アカウントID" ng-model="userData.account_id" />
-                
-                <input type="password" class="form-control" placeholder="パスワード"  ng-model="userData.password"/>
+                <form name="userForm" novalidate>
+                    <input type="text" class="form-control" placeholder="アカウントID" name="account_id" ng-model="userData.account_id" required ng-maxlength="20"/>
 
-                <input type="password" class="form-control" placeholder="パスワード再入力"/>
-
-                <input type="text" class="form-control" placeholder="ユーザー名" ng-model="userData.user_name" />
-                
-                <ul class="list-group overflow-box-l" >
-                    <li class="list-group-item" ng-repeat="item in roleList" push-directive info="item" >
-                    {{item.role_name}}
-                    <section>{{item.description}}</section>
-                    </li>
-                </ul>
-                
-            <div class="row　col-md-12 center" >
-                
-                <a class="btn btn-default" ng-href="#/user" >戻る</a>
-                <button class="btn btn-default" ng-click="save()">保存</button>
-                
-            </div>
-
+<div ng-messages="userForm.account_id.$error" ng-if="userForm.account_id.$touched && userForm.$submitted">
+aaa
+</div>                    
+                    
+                    <input type="password" class="form-control" placeholder="パスワード"  ng-model="userData.password"/>
+        
+                    <input type="password" class="form-control" placeholder="パスワード再入力"/>
+        
+                    <input type="text" class="form-control" placeholder="ユーザー名" ng-model="userData.user_name" />
+                    
+                    <ul class="list-group overflow-box-l" >
+                        <li class="list-group-item" ng-repeat="item in roleList" push-directive info="item" >
+                        {{item.role_name}}
+                        <section>{{item.description}}</section>
+                        </li>
+                    </ul>
+                    <div class="row　col-md-12 center" >
+                        
+                        <a class="btn btn-default" ng-href="#/user" >戻る</a>
+                        <button class="btn btn-default" ng-click="save()">保存</button>
+                        
+                    </div>
+                </form>    
             </div>
         </div>
     </div>
