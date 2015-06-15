@@ -10,10 +10,11 @@
             
             <div class="col-md-12 vertical-container">
                 <form name="userForm" novalidate>
-                    <input type="text" class="form-control" placeholder="アカウントID" name="account_id" ng-model="userData.account_id" required ng-maxlength="20"/>
+                    <input type="text" class="form-control" placeholder="アカウントID" name="account_id" 
+                        ng-model="userData.account_id" ng-model-options="{updateOn: 'blur'}" ng-minlength=3 ng-maxlength=20 ng-pattern="/^[a-zA-Z]*$/" required/>
 
-<span ng-show="userForm.account_id.$error.required">入力してください</span>
-
+                    <div class="error" ng-messages="userForm.account_id.$error" ng-show="signupForm.$dirty">
+    
                     <input type="password" class="form-control" placeholder="パスワード"  ng-model="userData.password"/>
         
                     <input type="password" class="form-control" placeholder="パスワード再入力"/>
