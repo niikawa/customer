@@ -14,7 +14,7 @@
                     <!-- アカウントID -->
                     <input type="text" class="form-control" placeholder="アカウントID" name="account_id" 
                         ng-model="userData.account_id" ng-model-options="{updateOn: 'blur'}" ng-minlength=3 ng-maxlength=20 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
-                    <p ng-show="userForm.account_id.$dirty">3文字以上20文字以内の半角数値で入力してください</p>
+                    <p ng-show="userForm.account_id.$touched">3文字以上20文字以内の半角数値で入力してください</p>
 
                     <!-- パスワード -->
                     <input type="password" class="form-control" placeholder="パスワード"  ng-model="userData.password"/>
