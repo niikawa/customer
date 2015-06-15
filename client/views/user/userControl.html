@@ -12,10 +12,8 @@
                 <form name="userForm" novalidate>
                     <input type="text" class="form-control" placeholder="アカウントID" name="account_id" ng-model="userData.account_id" required ng-maxlength="20"/>
 
-<div ng-messages="userForm.account_id.$error" ng-if="userForm.account_id.$touched && userForm.$submitted">
-ID不正
-</div>                    
-                    
+<span ng-show="userForm.account_id.$error.required">入力してください</span>
+
                     <input type="password" class="form-control" placeholder="パスワード"  ng-model="userData.password"/>
         
                     <input type="password" class="form-control" placeholder="パスワード再入力"/>
