@@ -23,6 +23,7 @@
 
                     <input type="password" class="form-control" name="password_confirm" ng-model="user.password_confirm" placeholder="パスワード再入力"
                         my-validators="validators.password_confirm" ng-required="true" />
+                    <span ng-messages="confirm">パスワード確認が一致しません</span>
         
                     <!-- ユーザー名 -->
                     <input type="text" class="form-control" placeholder="ユーザー名" name="name" ng-model="user.name" ng-maxlength=30 ng-required="true"/>
