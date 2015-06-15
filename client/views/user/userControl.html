@@ -14,7 +14,7 @@
                     <input type="text" class="form-control" placeholder="アカウントID" name="account_id" 
                         ng-model="userData.account_id" ng-model-options="{updateOn: 'blur'}" ng-minlength=3 ng-maxlength=20 ng-pattern="/^[a-zA-Z]*$/" required/>
 
-<div class="error" ng-messages="userData.account_id.$error">
+<div class="error" ng-messages="userForm.account_id.$error">
     <div ng-message="required">入力してください</div>
     <div ng-message="minlength">3文字以上入力してください</div>
     <div ng-message="maxlength">20文字以下で入力してください</div>
@@ -36,7 +36,7 @@
                     <div class="row　col-md-12 center" >
                         
                         <a class="btn btn-default" ng-href="#/user" >戻る</a>
-                        <button class="btn btn-default" ng-click="save()">保存</button>
+                        <button class="btn btn-default" ng-disabled="userForm.$invalid" ng-click="save()">保存</button>
                         
                     </div>
                 </form>    
