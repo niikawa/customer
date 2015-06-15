@@ -9,7 +9,7 @@ uesrServices.factory("User", ['$resource','Utility',
                 edit: {type: 2, title: 'ユーザー更新'}
             };
         
-        userService.resource = $resource('/users/:id', {id: '@id'},
+        userService.resource = $resource('/user/:id', {id: '@id'},
         {
             remove:
             {
