@@ -112,7 +112,7 @@ core.prototype.execute = function(sql, request, callback)
 {
     var result = [];
     var errList = [];
-    
+    console.log(sql);
     //auery実行
     request.query(sql);
     
