@@ -14,7 +14,7 @@
                     <!-- アカウントID -->
                     <input type="text" class="form-control" placeholder="アカウントID" name="account_id" ng-model="user.account_id"
                         ng-minlength=6 ng-maxlength=20 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
-                    <p ng-if="userForm.account_id.$dirty || userForm.account_id.$submitted">6文字以上20文字以内の半角英数値で入力してください</p>
+                    <p ng-if="(userForm.account_id.$dirty || userForm.account_id.$submitted)&&userForm.account_id.$error">6文字以上20文字以内の半角英数値で入力してください</p>
 
                     <!-- パスワード -->
                     <input type="password" class="form-control" name="password" ng-model="user.password" placeholder="パスワード"
@@ -23,10 +23,13 @@
 
                     <input type="password" class="form-control" name="password_confirm" ng-model="user.password_confirm" placeholder="パスワード再入力"
                         my-validators="validators.password_confirm" ng-required="true" />
-                    <span ng-messages="confirm">パスワード確認が一致しません</span>
+                    <div ng-messages="myForm.password_confirm.$error">
+                        <p ng-messages="confirm">パスワード確認が一致しません</p>
+                    </div>
         
                     <!-- ユーザー名 -->
                     <input type="text" class="form-control" placeholder="ユーザー名" name="name" ng-model="user.name" ng-maxlength=30 ng-required="true"/>
+                    
                     <p ng-if="userForm.name.$dirty || userForm.name.$submitted">30文字以内で入力してください</p>
                     
                     <!-- 権限 -->
