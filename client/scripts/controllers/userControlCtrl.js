@@ -16,7 +16,7 @@ function ($scope, $routeParams, Shared, User, Role)
      */
     function setInitializeScope()
     {
-        $scope.userData = {};
+        $scope.user = {};
         $scope.pageTitle = pageProp.title;
             
         if (2 === pageProp.type)
