@@ -55,14 +55,16 @@ function ($scope, $routeParams, Shared, User, Role)
             },
             selected_role:
             {
-                // パスワード確認
+                // ロール選択
                 role: function (modelValue, viewValue) {
                     var roleList = $scope.roleList || {};
                     var val = modelValue || viewValue;
                     
-                    console.log(val);
-    
-                    return val == roleList.isPush;
+                    angular.forEach(val, function(item, key)
+                    {
+                        if (item.isPush) return true;
+                    });
+                    return false;
                 }
             }
         };
@@ -70,10 +72,8 @@ function ($scope, $routeParams, Shared, User, Role)
     
     function setRole(items)
     {
-        console.log(items);
         angular.forEach(items, function(item, key)
         {
-            console.log(item.isPush);
             if (item.isPush)
             {
                 $scope.user.role_id = item.role_id;
@@ -110,7 +110,6 @@ function ($scope, $routeParams, Shared, User, Role)
         
         $scope.$watch('roleList', function()
         {
-            console.log('watch role');
             $scope.userForm.selected_role.$validate();
         },true);
     };
