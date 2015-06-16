@@ -84,56 +84,36 @@ exports.getList = function(req, res)
     });
 };
 
-/**
- * 
- */
-exports.orders = function(req, res)
+exports.crate = function(req, res)
 {
-    var id = req.params.id;
-    if (void 0 === id)
-    {
-        //
-    }
+    var table = tableName;
+    var request = model.getRequest();
+    var data = req.body.data;
+    
+    var insertData = model.merge(req.body.data, model.getInsCommonColumns());
 
-    //非同期でアプローチ方法と売り上げ推移を取得する
-    async.series(
-    [
-        function(callback)
-        {
-            var col = "customer_id, FORMAT(date, 'yyyy/MM') as date, sum(price) as price";
-            var table = 'T_READ_ORDERS';
-            var groupby = "customer_id, FORMAT(date, 'yyyy/MM') having customer_id = @customer_id";
-            var orderby = 'date';
-        
-            var qObj = model.getQueryObject(col, table, '', groupby, orderby);
-            qObj.request.input('customer_id', model.db.Int, id);
-            
-            model.select(qObj, qObj.request, function(err, data){console.log('custmoer orders'); callback(null, data)});
-        },
-        function(callback)
-        {
-            var col = "T2.rank_id , FORMAT(T1.date, 'yyyy/MM') as date, avg(T1.price) as price";
-            var table = 'T_READ_ORDERS T1 inner join M_CUSTOMER T2 on T1.customer_id = T2.customer_id';
-            var groupby = "T2.rank_id, FORMAT(T1.date, 'yyyy/MM') having T2.rank_id = (select rank_id from M_CUSTOMER where customer_id = @customer_id)";
-            var orderby = 'date';
-        
-            var qObj = model.getQueryObject(col, table, '', groupby, orderby);
-            qObj.request.input('customer_id', model.db.Int, id);
-            
-            model.select(qObj, qObj.request,  function(err, data){console.log('orders avg'); callback(null, data)});
-        }
-
-    ],function final(err, items)
+    request.input('delete_flag', model.db.Int, insertData.delete_flag);
+    request.input('craete_by', model.db.Int, insertData.craete_by);
+    request.input('create_date', model.db.DateTime, insertData.create_date);
+    request.input('update_by', model.db.Int, insertData.update_by);
+    request.input('update_date', model.db.DateTime, insertData.update_date);
+    request.input('mailaddress', model.db.NVarChar, insertData.mailaddress);
+    request.input('password', model.db.NVarChar, insertData.password);
+    request.input('role_id', model.db.Int, insertData.password);
+    request.input('name', model.db.NVarChar, insertData.name);
+    
+    model.insert(tableName, insertData, request, function(err, date)
     {
-        if (err)
+        if (err > 0)
         {
             console.log(err);
+            res.status(510).send('object not found');
         }
-        console.log('get getDetail items[0]');
-        console.log(items[0]);
-        console.log('get getDetail items[1]');
-        console.log(items[1]);
-        res.json({orders: items[0], orders_avg: items[1]});
+        res.status(200).send('date insert');
     });
     
+};
+
+exports.update = function(req, res)
+{
 };

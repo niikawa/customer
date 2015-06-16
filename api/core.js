@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 /**
  * core collection class
  * 
@@ -16,10 +18,31 @@ core.prototype.async = require('async');
 
 core.prototype.db = require('mssql');
 
+core.prototype.merge = function(source, add)
+{
+    if (!add) add = {};
+    for (var attrname in add)
+    {
+        if (add.hasOwnProperty(attrname))
+        {
+            source[attrname] = add[attrname];
+        }
+    }
+    return source;
+};
+
 core.prototype.getRequest = function()
 {
     var ms = require('mssql');
     return new ms.Request();
+};
+
+core.prototype.getInsCommonColumns = function()
+{
+    var date =  moment.format("YYYY-MM-DD- HH:mm:ss");
+    return {
+        delete_flag: 0, craete_by: 0, create_date: date, update_by: 0, update_date: date
+    };
 };
 
 core.prototype.getQueryObject = function(col, table, where, groupby, orderby)
@@ -106,6 +129,22 @@ core.prototype.select = function(queryObject, request, callback)
         sql +=  ' ORDER BY ' + queryObject.orderby;
     }
 
+    this.execute(sql, request, callback);
+};
+
+core.prototype.insert = function(table, data, request, callback)
+{
+    var dataList = [];
+    var columns = Object.keys(data);
+    var len = columns.length;
+    for (var i = 0; i < len; i ++)
+    {
+        var item = '@' + columns[i];
+        dataList.push(item);
+    }
+
+    var sql = 'INSERT INTO ' + table + ' ' + columns.join(',') + ' VALUES ( ' + dataList.join(',') + ' )';
+    console.log(sql);
     this.execute(sql, request, callback);
 };
 

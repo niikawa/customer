@@ -6,8 +6,8 @@
  * Controller of the workspaceApp
  */
 var userControlCtrl = angular.module('userControlCtrl',['UesrServices','RoleServices']);
-userControlCtrl.controller('UserControlCtrl',['$scope', '$routeParams','Shared', 'User', 'Role',
-function ($scope, $routeParams, Shared, User, Role)
+userControlCtrl.controller('UserControlCtrl',['$scope', '$routeParams', 'User', 'Role', 'Utility', 'Location',
+function ($scope, $routeParams, User, Role, Utility, Location)
 {
     var pageProp = User.getPageProp($routeParams.id);
     
@@ -114,11 +114,15 @@ function ($scope, $routeParams, Shared, User, Role)
         },true);
     };
     
-    
     $scope.save = function()
     {
         setRole($scope.roleList);
-        console.log($scope.user);
+        
+        User.resource.save($scope.user).$promise.then(function(response)
+        {
+            Utility.successSticky('新しくユーザーを登録しました');
+            Location.user();
+        });
     };
 
     $scope.remove = function()

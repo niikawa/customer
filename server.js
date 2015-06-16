@@ -46,6 +46,8 @@ router.get('/azure/recomender/:id', azure.recommenderItem);
 var user = require("./api/user");
 router.get('/user', user.getList);
 router.get('/user/:id', user.getById);
+router.post('/user/control', user.craete);
+//router.post('/user/control/:id', user.update);
 
 var role = require("./api/role");
 router.get('/role', role.getAll);
