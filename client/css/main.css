@@ -98,8 +98,8 @@ input[type="number"] {
 /*-----------------------------------------------*/
 /* error
 /*-----------------------------------------------*/
-#menu div {
-  position: relative;
+.ng-invalid.ng-dirty {
+  border: solid 1px red;
 }
 
 .item-error {
@@ -130,7 +130,7 @@ input[type="number"] {
   content: " ";
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .item-error {
     display: block;
     padding: 10px;
