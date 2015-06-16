@@ -45,8 +45,8 @@
         
                     <!-- 権限 -->
                     <div>
-                        <ul class="list-group overflow-box-l" name="role">
-                            <li class="list-group-item" ng-repeat="item in roleList" push-directive list="roleList" info="item" my-validators="validators.role">
+                        <ul class="list-group overflow-box-l" name="role" my-validators="validators.role">
+                            <li class="list-group-item" ng-repeat="item in roleList" push-directive list="roleList" info="item">
                             {{item.role_name}}
                             <section>{{item.description}}</section>
                             </li>
