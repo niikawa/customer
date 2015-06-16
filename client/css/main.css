@@ -102,7 +102,7 @@ input[type="number"] {
   position: relative;
 }
 
-p .item-error {
+.item-error {
   display: block;
   position: absolute;
   padding: 16px;
@@ -113,7 +113,7 @@ p .item-error {
   color: #fff;
 }
 
-p .item-error:after {
+.item-error:after {
   position: absolute;
   bottom: 100%;
   left: 50%;
