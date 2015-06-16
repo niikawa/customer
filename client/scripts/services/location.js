@@ -6,7 +6,7 @@
 var locationServices = angular.module("myApp");
 locationServices.service("Location", ['$location',function($location)
 {
-    var locationServices;
+    var locationServices = {};
     
     locationServices.home = function()
     {
