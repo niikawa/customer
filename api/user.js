@@ -86,6 +86,7 @@ exports.getList = function(req, res)
 
 exports.craete = function(req, res)
 {
+    console.log('body');
     console.log(req.body);
     var table = tableName;
     var request = model.getRequest();
