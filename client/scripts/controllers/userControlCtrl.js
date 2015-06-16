@@ -60,11 +60,13 @@ function ($scope, $routeParams, Shared, User, Role)
                     var roleList = $scope.roleList || {};
                     var val = modelValue || viewValue;
                     
+                    console.log(val);
+                    
                     angular.forEach(val, function(item, key)
                     {
-                        if (item.isPush) return true;
+                        if (item.isPush) return false;
                     });
-                    return false;
+                    return true;
                 }
             }
         };
