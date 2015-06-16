@@ -68,7 +68,7 @@ exports.getAll = function(req, res)
 exports.getList = function(req, res)
 {
     var table = 'M_USER T1 INNER JOIN M_ROLE T2 ON T1.role_id = T2.role_id ';
-    var col = 'T1.user_id, T1.account_id, T1.name, T2.role_name';
+    var col = 'T1.user_id, T1.mailaddress, T1.name, T2.role_name';
     var where = '';
     var order = 'T1.user_id';
     var qObj = model.getQueryObject(col, table, where, '', order);

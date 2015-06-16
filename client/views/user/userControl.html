@@ -11,11 +11,17 @@
             <div class="col-md-12 vertical-container">
                 
                 <form name="userForm" novalidate>
-                    <!-- アカウントID -->
+                    <!-- ユーザー名 -->
                     <div>
-                        <input type="text" class="form-control" placeholder="アカウントID" name="account_id" ng-model="user.account_id"
-                            ng-minlength=6 ng-maxlength=20 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
-                        <p class="item-error" ng-if="userForm.account_id.$dirty && userForm.account_id.$invalid">6文字以上20文字以内の半角英数値で入力してください</p>
+                        <input type="text" class="form-control" placeholder="ユーザー名" name="name" ng-model="user.name" ng-maxlength=30 ng-required="true"/>
+                        <p class="item-error" ng-if="userForm.name.$dirty && userForm.name.$invalid">30文字以内で入力してください</p>
+                    </div>
+                    
+                    <!-- メールアドレス -->
+                    <div>
+                        <input type="email" class="form-control" placeholder="メールアドレス" name="mailadress" ng-model="user.mailadress"
+                            ng-maxlength=255 ng-required="true" />
+                        <p class="item-error" ng-if="userForm.mailadress.$dirty && userForm.mailadress.$invalid">形式が不正です</p>
                     </div>
                     <!-- パスワード -->
                     <div>
@@ -32,11 +38,6 @@
                         </div>
                     </div>
         
-                    <!-- ユーザー名 -->
-                    <div>
-                        <input type="text" class="form-control" placeholder="ユーザー名" name="name" ng-model="user.name" ng-maxlength=30 ng-required="true"/>
-                        <p class="item-error" ng-if="userForm.name.$dirty && userForm.name.$invalid">30文字以内で入力してください</p>
-                    </div>
                     <!-- 権限 -->
                     <div>
                         <ul class="list-group overflow-box-l" >
