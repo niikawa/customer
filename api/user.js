@@ -88,7 +88,6 @@ exports.craete = function(req, res)
 {
     console.log('body');
     console.log(req.body);
-    var table = tableName;
     var request = model.getRequest();
     var data = req.body.data;
     
