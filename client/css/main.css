@@ -100,9 +100,6 @@ input[type="number"] {
 input.ng-invalid.ng-dirty {
   border: solid 1px red;
 }
-.vertical-container > form {
-  text-align:center;
-}
 .vertical-container > form > div {position:relative}
 
 .item-error {
@@ -357,7 +354,7 @@ div .overflow-box-l {
 .vertical-container > div > div, 
 .vertical-container > form > div,
 .vertical-container > form > input {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 /*-----------------------------------------------*/
