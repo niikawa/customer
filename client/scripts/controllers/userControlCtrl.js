@@ -98,7 +98,9 @@ function ($scope, $routeParams, Shared, User, Role)
     
     $scope.save = function()
     {
-        $scope.user.role_id = getPushItem($scope.roleList).role_id;
+        var role = getPushItem($scope.roleList);
+        console.log(role);
+        $scope.user.role_id = role.role_id;
         console.log($scope.user);
     };
 
