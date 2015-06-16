@@ -58,7 +58,7 @@ function ($scope, $routeParams, Shared, User, Role)
     
     function getPushItem(items)
     {
-        angular.forEach(items, function(key, item)
+        angular.forEach(items, function(item, key)
         {
             if (item.hasOwnProperty('isPush') && item.isPush)
             {
