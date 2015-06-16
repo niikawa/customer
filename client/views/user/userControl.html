@@ -33,16 +33,19 @@
                     </div>
         
                     <!-- ユーザー名 -->
-                    <input type="text" class="form-control" placeholder="ユーザー名" name="name" ng-model="user.name" ng-maxlength=30 ng-required="true"/>
-                    <p class="item-error" ng-if="userForm.name.$dirty && userForm.name.$invalid">30文字以内で入力してください</p>
-                    
+                    <div>
+                        <input type="text" class="form-control" placeholder="ユーザー名" name="name" ng-model="user.name" ng-maxlength=30 ng-required="true"/>
+                        <p class="item-error" ng-if="userForm.name.$dirty && userForm.name.$invalid">30文字以内で入力してください</p>
+                    </div>
                     <!-- 権限 -->
-                    <ul class="list-group overflow-box-l" >
-                        <li class="list-group-item" ng-repeat="item in roleList" push-directive info="item" >
-                        {{item.role_name}}
-                        <section>{{item.description}}</section>
-                        </li>
-                    </ul>
+                    <div>
+                        <ul class="list-group overflow-box-l" >
+                            <li class="list-group-item" ng-repeat="item in roleList" push-directive info="item" >
+                            {{item.role_name}}
+                            <section>{{item.description}}</section>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="row　col-md-12 center" >
                         
                         <a class="btn btn-default" ng-href="#/user" >戻る</a>
