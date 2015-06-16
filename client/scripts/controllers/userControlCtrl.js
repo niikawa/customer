@@ -112,7 +112,7 @@ function ($scope, $routeParams, Shared, User, Role)
         {
             console.log('watch role');
             $scope.userForm.selected_role.$validate();
-        });
+        },true);
     };
     
     
