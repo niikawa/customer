@@ -62,14 +62,13 @@ function ($scope, $routeParams, Shared, User, Role)
                     
                     console.log(val);
                     
+                    var isSelect = false;
                     angular.forEach(val, function(item, key)
                     {
-                        if (item.isPush) return false;
+                        if (item.isPush) isSelect = true;
                     });
-                    
-                    console.log('ret');
-
-                    return true;
+                    console.log(isSelect);
+                    return isSelect;
                 }
             }
         };
