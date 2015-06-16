@@ -87,10 +87,10 @@ input[type="number"] {
 }
 
 @media screen and (min-width: 767px) {
-  .vertical-container > form > input {
+  .vertical-container > form > div > input {
     width: 50%;
   }
-  .vertical-container > form > ul {
+  .vertical-container > form > div  > ul {
     width: 50%;
   }
 }
@@ -145,7 +145,7 @@ input.ng-invalid.ng-dirty {
 
 .item-error:after {
   position: absolute;
-  bottom: 100%;
+  top: -20px;
   left: 10%;
   width: 0;
   height: 0;
