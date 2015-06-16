@@ -56,14 +56,14 @@ function ($scope, $routeParams, Shared, User, Role)
         };
     }
     
-    function getPushItem(items)
+    function setRole(items)
     {
         angular.forEach(items, function(item, key)
         {
             console.log(item.isPush);
             if (item.isPush)
             {
-                return item;
+                $scope.user.role_id = item.role_id;
             }
         });
     }
@@ -99,9 +99,7 @@ function ($scope, $routeParams, Shared, User, Role)
     
     $scope.save = function()
     {
-        var role = getPushItem($scope.roleList);
-        console.log(role);
-        $scope.user.role_id = role.role_id;
+        setRole($scope.roleList);
         console.log($scope.user);
     };
 
