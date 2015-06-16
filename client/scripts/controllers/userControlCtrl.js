@@ -58,12 +58,8 @@ function ($scope, $routeParams, Shared, User, Role)
                 // ロール選択
                 role: function (modelValue, viewValue) {
                     var roleList = $scope.roleList || {};
-                    var val = modelValue || viewValue;
-                    
-                    console.log(val);
-                    
                     var isSelect = false;
-                    angular.forEach(val, function(item, key)
+                    angular.forEach(roleList, function(item, key)
                     {
                         if (item.isPush) isSelect = true;
                     });
