@@ -53,7 +53,7 @@ function ($scope, $routeParams, Shared, User, Role)
                     return val == user.password;
                 }
             },
-            role:
+            selected_role:
             {
                 // パスワード確認
                 role: function (modelValue, viewValue) {
@@ -111,7 +111,7 @@ function ($scope, $routeParams, Shared, User, Role)
         $scope.$watch('roleList', function()
         {
             console.log('watch role');
-            $scope.userForm.role.$validate();
+            $scope.userForm.selected_role.$validate();
         });
     };
     
