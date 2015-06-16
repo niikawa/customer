@@ -130,7 +130,7 @@ input.ng-invalid.ng-dirty {
 @media screen and (min-width: 768px) {
 .item-error {
   display: block;
-  position: absolute;
+  position: relative;
   padding: 10px;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;  
@@ -139,6 +139,7 @@ input.ng-invalid.ng-dirty {
   color: #fff;
   left: 30%;
   top: 25px;
+  width: 200px;
 }
 
 .item-error:after {
