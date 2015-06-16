@@ -6,6 +6,7 @@ myApp.directive('pushDirective', function(){
     return {
         restrict: 'A',
         scope:{
+            list : '=',
             pushInfo: '=info',
             multiple: '='
         },
@@ -18,7 +19,6 @@ myApp.directive('pushDirective', function(){
             {
                 scope.$apply(function ()
                 {
-
                     if (element.hasClass('push-active'))
                     {
                         scope.pushInfo.isPush = false;
@@ -29,6 +29,7 @@ myApp.directive('pushDirective', function(){
                         if (void 0 === scope.multiple || !scope.multiple)
                         {
                             element.parent().children().removeClass('push-active');
+                            angular.forEach(scope.list, function(item, key){item.isPush = false;});
                         }
                         scope.pushInfo.isPush = true;
                         element.addClass('push-active');
