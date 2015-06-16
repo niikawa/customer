@@ -60,8 +60,8 @@ function ($scope, $routeParams, Shared, User, Role)
     {
         angular.forEach(items, function(item, key)
         {
-            console.log(item);
-            if (item.hasOwnProperty('isPush') && item.isPush)
+            console.log(item.isPush);
+            if (item.isPush)
             {
                 return item;
             }
