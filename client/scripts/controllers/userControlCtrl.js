@@ -27,8 +27,6 @@ function ($scope, $routeParams, Shared, User, Role)
                 $scope.userData = response.data;
             });
         }
-
-        $scope.warningMessage = '';
     }
     
     // TODO コントローラーに記載すべきなのか。。。。。
@@ -56,6 +54,17 @@ function ($scope, $routeParams, Shared, User, Role)
                 }
             }
         };
+    }
+    
+    function getPushItem(items)
+    {
+        angular.forEach(items, function(key, item)
+        {
+            if (item.hasOwnProperty('isPush') && item.isPush)
+            {
+                return item;
+            }
+        });
     }
     
     /**
@@ -89,6 +98,7 @@ function ($scope, $routeParams, Shared, User, Role)
     
     $scope.save = function()
     {
+        $scope.user.role_id = getPushItem($scope.roleList).role_id;
         console.log($scope.user);
     };
 
