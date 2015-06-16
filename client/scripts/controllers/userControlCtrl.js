@@ -118,7 +118,7 @@ function ($scope, $routeParams, User, Role, Utility, Location)
     {
         setRole($scope.roleList);
         
-        User.resource.create($scope.user).$promise.then(function(response)
+        User.resource.create({data: $scope.user}).$promise.then(function(response)
         {
             Utility.successSticky('新しくユーザーを登録しました');
             Location.user();
