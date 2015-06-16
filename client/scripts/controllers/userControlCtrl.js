@@ -36,7 +36,7 @@ function ($scope, $routeParams, Shared, User, Role)
             password:
             {
                 // ユーザー名とパスワードは一緒はダメ
-                joe: function (modelValue, viewValue) {
+                same: function (modelValue, viewValue) {
                     var val = modelValue || viewValue;
                     var user = $scope.user || {};
     
@@ -51,6 +51,18 @@ function ($scope, $routeParams, Shared, User, Role)
                     var val = modelValue || viewValue;
     
                     return val == user.password;
+                }
+            },
+            role:
+            {
+                // パスワード確認
+                role: function (modelValue, viewValue) {
+                    var roleList = $scope.roleList || {};
+                    var val = modelValue || viewValue;
+                    
+                    console.log(val);
+    
+                    return val == roleList.isPush;
                 }
             }
         };
@@ -94,6 +106,12 @@ function ($scope, $routeParams, Shared, User, Role)
         $scope.$watch('user.password', function()
         {
             $scope.userForm.password_confirm.$validate();
+        });
+        
+        $scope.$watch('roleList', function()
+        {
+            console.log('watch role');
+            $scope.userForm.role.$validate();
         });
     };
     

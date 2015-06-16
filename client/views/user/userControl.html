@@ -26,8 +26,13 @@
                     <!-- パスワード -->
                     <div>
                         <input type="password" class="form-control" name="password" ng-model="user.password" placeholder="パスワード"
+                            my-validators="validators.password"
                             ng-minlength=6 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
                         <p class="item-error" ng-if="userForm.password.$dirty && userForm.password.$invalid">6文字以上の半角英数値で入力してください</p>
+                        <div ng-messages="userForm.password.$error">
+                            <p class="item-error" ng-message="same">ユーザー名と異なるパスワードにしてください</p>
+                        </div>
+
                     </div>
 
                     <div>
@@ -40,13 +45,18 @@
         
                     <!-- 権限 -->
                     <div>
-                        <ul class="list-group overflow-box-l" >
+                        <ul class="list-group overflow-box-l" name="role">
                             <li class="list-group-item" ng-repeat="item in roleList" push-directive list="roleList" info="item" >
                             {{item.role_name}}
                             <section>{{item.description}}</section>
                             </li>
                         </ul>
+                        <div ng-messages="userForm.role.$error">
+                            <p class="item-error" ng-message="confirm">パスワード確認が一致しません</p>
+                        </div>
                     </div>
+                    
+                    
                     <div class="row　col-md-12 center" >
                         
                         <a class="btn btn-default" ng-href="#/user" >戻る</a>
