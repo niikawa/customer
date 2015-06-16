@@ -111,8 +111,8 @@ input[type="number"] {
   border-radius: 8px;
   background: #333;
   color: #fff;
-  left: 50%;
-  top: -10px;
+  left: 30%;
+  top: 25px;
 }
 
 .item-error:after {
@@ -129,6 +129,33 @@ input[type="number"] {
   pointer-events: none;
   content: " ";
 }
+
+@media screen and (max-width: 768px) {
+  .item-error {
+    display: block;
+    padding: 10px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;  
+    border-radius: 8px;
+    background: #333;
+    color: #fff;
+  }
+  
+  .item-error:after {
+    bottom: 100%;
+    left: 10%;
+    width: 0;
+    height: 0;
+    margin-left: -10px;
+    border: solid transparent;
+    border-color: rgba(51, 51, 51, 0);
+    border-bottom-color: #333;
+    border-width: 10px;
+    pointer-events: none;
+    content: " ";
+  }
+}
+
 
 /*-----------------------------------------------*/
 /* background
