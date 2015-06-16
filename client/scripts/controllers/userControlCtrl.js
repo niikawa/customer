@@ -86,6 +86,12 @@ function ($scope, $routeParams, Shared, User, Role)
         });
     };
     
+    
+    $scope.save = function()
+    {
+        console.log($scope.roleList);
+    };
+
     $scope.remove = function()
     {
         
