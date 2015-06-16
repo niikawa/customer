@@ -14,7 +14,7 @@
                     <!-- アカウントID -->
                     <input type="text" class="form-control" placeholder="アカウントID" name="account_id" ng-model="user.account_id"
                         ng-minlength=6 ng-maxlength=20 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
-                    <p ng-if="userForm.account_id.$dirty && userForm.account_id.$invalid">6文字以上20文字以内の半角英数値で入力してください</p>
+                    <p class="item-error" ng-if="userForm.account_id.$dirty && userForm.account_id.$invalid">6文字以上20文字以内の半角英数値で入力してください</p>
 
                     <!-- パスワード -->
                     <input type="password" class="form-control" name="password" ng-model="user.password" placeholder="パスワード"
