@@ -100,7 +100,9 @@ input[type="number"] {
 input.ng-invalid.ng-dirty {
   border: solid 1px red;
 }
-
+.vertical-container > form {
+  text-align:center;
+}
 .vertical-container > form > div {position:relative}
 
 .item-error {
