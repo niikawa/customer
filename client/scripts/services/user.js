@@ -11,10 +11,15 @@ uesrServices.factory("User", ['$resource','Utility',
         
         userService.resource = $resource('/user/:id', {id: '@id'},
         {
+            create:
+            {
+                method: 'POST',
+                url: 'user/create',
+            },
             remove:
             {
                 method: 'GET',
-                url: 'users/delete',
+                url: 'user/delete',
             }
         });
         
