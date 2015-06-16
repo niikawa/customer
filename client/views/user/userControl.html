@@ -19,18 +19,17 @@
                     <!-- パスワード -->
                     <input type="password" class="form-control" name="password" ng-model="user.password" placeholder="パスワード"
                         ng-minlength=6 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
-                    <p ng-if="userForm.password.$dirty && userForm.password.$invalid">6文字以上の半角英数値で入力してください</p>
+                    <p class="item-error" ng-if="userForm.password.$dirty && userForm.password.$invalid">6文字以上の半角英数値で入力してください</p>
 
                     <input type="password" class="form-control" name="password_confirm" ng-model="user.password_confirm" placeholder="パスワード再入力"
                         my-validators="validators.password_confirm" ng-required="true" />
                     <div ng-messages="userForm.password_confirm.$dirty && userForm.password_confirm.$invalid">
-                        <p ng-messages="confirm">パスワード確認が一致しません</p>
+                        <p class="item-error" ng-messages="confirm">パスワード確認が一致しません</p>
                     </div>
         
                     <!-- ユーザー名 -->
                     <input type="text" class="form-control" placeholder="ユーザー名" name="name" ng-model="user.name" ng-maxlength=30 ng-required="true"/>
-                    
-                    <p ng-if="userForm.name.$dirty && userForm.name.$invalid">30文字以内で入力してください</p>
+                    <p class="item-error" ng-if="userForm.name.$dirty && userForm.name.$invalid">30文字以内で入力してください</p>
                     
                     <!-- 権限 -->
                     <ul class="list-group overflow-box-l" >
