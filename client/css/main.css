@@ -88,7 +88,10 @@ input[type="number"] {
 
 @media screen and (min-width: 767px) {
   .vertical-container > form > input {
-    width: 70%;
+    width: 50%;
+  }
+  .vertical-container > form > ul {
+    width: 50%;
   }
 }
 
