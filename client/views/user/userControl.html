@@ -34,7 +34,7 @@
                         <input type="password" class="form-control" name="password_confirm" ng-model="user.password_confirm" placeholder="パスワード再入力"
                             my-validators="validators.password_confirm" ng-required="true" />
                         <div ng-messages="userForm.password_confirm.$dirty && userForm.password_confirm.$invalid">
-                            <p class="item-error" ng-messages="confirm">パスワード確認が一致しません</p>
+                            <p class="item-error" ng-message="confirm">パスワード確認が一致しません</p>
                         </div>
                     </div>
         
