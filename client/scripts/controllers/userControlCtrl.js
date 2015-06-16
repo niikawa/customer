@@ -66,6 +66,9 @@ function ($scope, $routeParams, Shared, User, Role)
                     {
                         if (item.isPush) return false;
                     });
+                    
+                    console.log('ret');
+
                     return true;
                 }
             }

@@ -50,8 +50,8 @@
                             <section>{{item.description}}</section>
                             </li>
                         </ul>
-                        <div ng-messages="userForm.selected_role.$error">
-                            <p class="item-error" ng-message="role"></p>
+                        <div ng-messages="userForm.selected_role.$dirty && userForm.selected_role.$error">
+                            <p class="item-error" ng-message="role">ロールを選択してください</p>
                         </div>
                     </div>
                     
