@@ -101,7 +101,7 @@ input.ng-invalid.ng-dirty {
   border: solid 1px red;
 }
 
-.vertical-container > form {position:relative}
+.vertical-container > form > div {position:relative}
 
 .item-error {
   display: block;

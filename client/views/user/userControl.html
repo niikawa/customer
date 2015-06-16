@@ -12,19 +12,24 @@
                 
                 <form name="userForm" novalidate>
                     <!-- アカウントID -->
-                    <input type="text" class="form-control" placeholder="アカウントID" name="account_id" ng-model="user.account_id"
-                        ng-minlength=6 ng-maxlength=20 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
-                    <p class="item-error" ng-if="userForm.account_id.$dirty && userForm.account_id.$invalid">6文字以上20文字以内の半角英数値で入力してください</p>
-
+                    <div>
+                        <input type="text" class="form-control" placeholder="アカウントID" name="account_id" ng-model="user.account_id"
+                            ng-minlength=6 ng-maxlength=20 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
+                        <p class="item-error" ng-if="userForm.account_id.$dirty && userForm.account_id.$invalid">6文字以上20文字以内の半角英数値で入力してください</p>
+                    </div>
                     <!-- パスワード -->
-                    <input type="password" class="form-control" name="password" ng-model="user.password" placeholder="パスワード"
-                        ng-minlength=6 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
-                    <p class="item-error" ng-if="userForm.password.$dirty && userForm.password.$invalid">6文字以上の半角英数値で入力してください</p>
+                    <div>
+                        <input type="password" class="form-control" name="password" ng-model="user.password" placeholder="パスワード"
+                            ng-minlength=6 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
+                        <p class="item-error" ng-if="userForm.password.$dirty && userForm.password.$invalid">6文字以上の半角英数値で入力してください</p>
+                    </div>
 
-                    <input type="password" class="form-control" name="password_confirm" ng-model="user.password_confirm" placeholder="パスワード再入力"
-                        my-validators="validators.password_confirm" ng-required="true" />
-                    <div ng-messages="userForm.password_confirm.$dirty && userForm.password_confirm.$invalid">
-                        <p class="item-error" ng-messages="confirm">パスワード確認が一致しません</p>
+                    <div>
+                        <input type="password" class="form-control" name="password_confirm" ng-model="user.password_confirm" placeholder="パスワード再入力"
+                            my-validators="validators.password_confirm" ng-required="true" />
+                        <div ng-messages="userForm.password_confirm.$dirty && userForm.password_confirm.$invalid">
+                            <p class="item-error" ng-messages="confirm">パスワード確認が一致しません</p>
+                        </div>
                     </div>
         
                     <!-- ユーザー名 -->
