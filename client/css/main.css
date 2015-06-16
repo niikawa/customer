@@ -112,7 +112,7 @@ input[type="number"] {
   background: #333;
   color: #fff;
   left: 50%;
-  
+  top: -10px;
 }
 
 .item-error:after {
