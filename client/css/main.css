@@ -113,6 +113,7 @@ input .ng-invalid.ng-dirty {
 }
 
 .item-error:after {
+  position: absolute;
   bottom: 100%;
   left: 10%;
   width: 0;
