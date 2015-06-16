@@ -84,7 +84,7 @@ exports.getList = function(req, res)
     });
 };
 
-exports.crate = function(req, res)
+exports.craete = function(req, res)
 {
     var table = tableName;
     var request = model.getRequest();
