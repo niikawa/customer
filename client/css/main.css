@@ -94,13 +94,14 @@ input[type="number"] {
     width: 50%;
   }
 }
-.vertical-container {position:relative}
 /*-----------------------------------------------*/
 /* error
 /*-----------------------------------------------*/
 input.ng-invalid.ng-dirty {
   border: solid 1px red;
 }
+
+.vertical-container > form {position:relative}
 
 .item-error {
   display: block;
@@ -130,7 +131,7 @@ input.ng-invalid.ng-dirty {
 @media screen and (min-width: 768px) {
 .item-error {
   display: block;
-  position: relative;
+  position: absolute;
   padding: 10px;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;  
