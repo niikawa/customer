@@ -29,8 +29,6 @@ myApp.directive('refineDirective', function()
              */
             element.on('keyup', function()
             {
-                console.log(scope.keyword);
-                
                 if (0 === originList.length)
                 {
                     angular.copy(scope.refineItem, originList);
