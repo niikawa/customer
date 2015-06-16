@@ -58,6 +58,7 @@ function ($scope, $routeParams, Shared, User, Role)
     
     function setRole(items)
     {
+        console.log(items);
         angular.forEach(items, function(item, key)
         {
             console.log(item.isPush);
