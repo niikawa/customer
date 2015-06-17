@@ -26,9 +26,11 @@ myApp.directive('pushDirective', function(){
                 }
                 else if ("string" === typeof(scope.active) || "number" === typeof(scope.active))
                 {
-                    if (scope.pushInfo[scope.activekey] == scope.active) 
+                    console.log(scope.pushInfo[scope.activekey]);
+                    console.log(scope.active);
+                    if (scope.pushInfo[scope.activekey] == scope.active)
                     {
-                        scope.pushInfo.isPush = scope.active;
+                        scope.pushInfo.isPush = true;
                         setActive = true;
                     }
                 }
