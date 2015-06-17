@@ -36,6 +36,13 @@ function ($scope, $routeParams, Shared, User, Utility)
     {
         User.resource.delete({id: id}).$promise.then(function(response)
         {
+            angular.forEach($scope.userList, function(v, k)
+            {
+                if (v.user_id === id)
+                {
+                    $scope.userList.splice(k,1);
+                }
+            });
             Utility.successSticky('ユーザーを削除しました');
         });
         

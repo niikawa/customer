@@ -15,11 +15,11 @@ myApp.directive('pushDirective', function(){
         {
             element.css({cursor: 'pointer'});
             console.log(scope.active);
-            scope.pushInfo.isPush = (void 0 !== scope.active && scope.active);
+            scope.pushInfo.isPush = scope.active;
 
             element.on('click', function()
             {
-                scope.$apply(function ()
+                scope.$apply(function()
                 {
                     if (element.hasClass('push-active'))
                     {
