@@ -33,11 +33,10 @@ mssql.connect(config, function(err) {
 
 var router = express();
 router.use(express.static(path.resolve(__dirname, 'client')));
-
+router.use(express.bodyParser());
 router.use(express.json());
 router.use(express.urlencoded());
 router.use(express.methodOverride());
-
 
 var customer = require('./api/customer');
 router.get('/customer', customer.getAll);
