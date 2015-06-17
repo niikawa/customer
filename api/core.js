@@ -41,7 +41,7 @@ core.prototype.getInsCommonColumns = function()
 {
     var date =  moment().format("YYYY/MM/DD HH:mm:ss");
     return {
-        delete_flag: 0, create_by: 0, create_date: date, update_by: 0, update_date: date
+        delete_flag: 0, create_by: 1, create_date: date, update_by: 1, update_date: date
     };
 };
 
