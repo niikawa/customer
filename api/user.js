@@ -88,9 +88,8 @@ exports.craete = function(req, res)
 {
     var data = req.body.data;
     console.log(data);
-    console.log('merge');
-    console.log(model.merge);
-    var insertData = model.merge(req.body.data, model.getInsCommonColumns());
+    var commonColumns = model.getInsCommonColumns();
+    var insertData = model.merge(req.body.data, commonColumns);
     console.log('insertData');
     console.log(insertData);
 
