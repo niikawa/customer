@@ -92,17 +92,17 @@ exports.craete = function(req, res)
     var insertData = model.merge(req.body.data, commonColumns);
     delete insertData.password_confirm;
     console.log('insertData');
-    insertData.user_id = 2;
+//    insertData.user_id = 2;
     console.log(insertData);
 
     var request = model.getRequest();
-    request.input('user_id', model.db.Int, 2);
-    request.input('delete_flag', model.db.Int, insertData.delete_flag);
+//    request.input('user_id', model.db.Int, 2);
+    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
     request.input('craete_by', model.db.Int, insertData.craete_by);
-    request.input('create_date', model.db.DATETIME, insertData.create_date);
+    request.input('create_date', model.db.DateTime, insertData.create_date);
     request.input('update_by', model.db.Int, insertData.update_by);
-    request.input('update_date', model.db.DATETIME, insertData.update_date);
-    request.input('mailaddress', model.db.NVarChar, insertData.mailaddress);
+    request.input('update_date', model.db.DateTime, insertData.update_date);
+    request.input('mailaddress', model.db.VarChar, insertData.mailaddress);
     request.input('password', model.db.NVarChar, insertData.password);
     request.input('role_id', model.db.Int, insertData.role_id);
     request.input('name', model.db.NVarChar, insertData.name);
