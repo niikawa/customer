@@ -75,7 +75,7 @@ exports.getList = function(req, res)
 
     model.select(qObj, qObj.request,  function(err, data)
     {
-        if (err > 0)
+        if (err.length > 0)
         {
             console.log(err);
             res.status(510).send('object not found');
@@ -105,7 +105,7 @@ exports.craete = function(req, res)
     
     model.insert(tableName, insertData, request, function(err, date)
     {
-        if (err)
+        if (err.length > 0)
         {
             console.log(err);
             res.status(510).send('object not found');
@@ -126,7 +126,7 @@ exports.remove = function(req, res)
     console.log(user_id);
     model.removeById(user_id, function(err, data)
     {
-        if (err)
+        if (err.length > 0)
         {
             console.log(err);
             res.status(510).send('object not found');
