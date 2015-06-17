@@ -17,10 +17,8 @@ myApp.directive('pushDirective', function(){
             
             if (void 0 !== scope.active)
             {
-                scope.$apply(function()
-                {
-                    scope.pushInfo.isPush = scope.active();
-                });
+                scope.pushInfo.isPush = scope.active();
+                console.log(scope.pushInfo.isPush);
             }
             else
             {
