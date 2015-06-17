@@ -19,14 +19,14 @@
                     
                     <!-- メールアドレス -->
                     <div>
-                        <input type="email" class="form-control" placeholder="メールアドレス" name="mailaddress" ng-model="user.mailaddress"
-                            ng-maxlength=255 ng-required="true" />
+                        <input type="email" class="form-control" placeholder="メールアドレス" name="mailaddress" 
+                            ng-value="user.mailaddress" ng-model="user.mailaddress" ng-maxlength=255 ng-required="true" />
                         <p class="item-error" ng-if="userForm.mailaddress.$dirty && userForm.mailaddress.$invalid">形式が不正です</p>
                     </div>
                     <!-- パスワード -->
                     <div>
-                        <input type="password" class="form-control" name="password" ng-model="user.password" placeholder="パスワード"
-                            my-validators="validators.password"
+                        <input type="password" class="form-control" name="password" placeholder="パスワード"
+                            ng-value="user.password" ng-model="user.password" my-validators="validators.password"
                             ng-minlength=6 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
                         <p class="item-error" ng-if="userForm.password.$dirty && userForm.password.$invalid">6文字以上の半角英数値で入力してください</p>
                         <div ng-messages="userForm.password.$dirty && userForm.password.$error">
@@ -45,7 +45,8 @@
                     <!-- 権限 -->
                     <div>
                         <ul class="list-group overflow-box-l" name="selected_role" ng-model="user.role_id" my-validators="validators.selected_role">
-                            <li class="list-group-item" ng-repeat="item in roleList" push-directive list="roleList" info="item">
+                            <li class="list-group-item" ng-repeat="item in roleList" 
+                                push-directive list="roleList" info="item" active="item.role_id=" >
                             {{item.role_name}}
                             <section>{{item.description}}</section>
                             </li>
