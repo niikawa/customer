@@ -25,8 +25,7 @@ function ($scope, $routeParams, User, Role, Utility, Location)
             var id = parseInt($routeParams.id);
             User.resource.get({id: id}).$promise.then(function(response)
             {
-                console.log(response.data[0]);
-                $scope.userData = response.data[0];
+                $scope.user = response.data[0];
             });
         }
     }

@@ -12,7 +12,6 @@
                 
                 <form name="userForm" novalidate>
                     <!-- ユーザー名 -->
-                    {{user.name}}
                     <div>
                         <input type="text" class="form-control" placeholder="ユーザー名" name="name" ng-model="user.name" ng-maxlength=30 ng-required="true"/>
                         <p class="item-error" ng-if="userForm.name.$dirty && userForm.name.$invalid">30文字以内で入力してください</p>
@@ -21,13 +20,13 @@
                     <!-- メールアドレス -->
                     <div>
                         <input type="email" class="form-control" placeholder="メールアドレス" name="mailaddress" 
-                            ng-value="user.mailaddress" ng-model="user.mailaddress" ng-maxlength=255 ng-required="true" />
+                            ng-model="user.mailaddress" ng-maxlength=255 ng-required="true" />
                         <p class="item-error" ng-if="userForm.mailaddress.$dirty && userForm.mailaddress.$invalid">形式が不正です</p>
                     </div>
                     <!-- パスワード -->
                     <div>
                         <input type="password" class="form-control" name="password" placeholder="パスワード"
-                            ng-value="user.password" ng-model="user.password" my-validators="validators.password"
+                            ng-model="user.password" my-validators="validators.password"
                             ng-minlength=6 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
                         <p class="item-error" ng-if="userForm.password.$dirty && userForm.password.$invalid">6文字以上の半角英数値で入力してください</p>
                         <div ng-messages="userForm.password.$dirty && userForm.password.$error">
