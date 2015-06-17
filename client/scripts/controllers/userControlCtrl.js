@@ -82,9 +82,8 @@ function ($scope, $routeParams, User, Role, Utility, Location)
                     User.resource.isSameMailAddress({user_id: $scope.user.user_id, mailaddress: val}).$promise.then(function(response)
                     {
                         console.log(response.result.count);
-                        return (0 == response.result.count);
+                        return (0 === response.result.count);
                     });
-                    return false;
                 }
             }
         };
