@@ -86,13 +86,15 @@ exports.getList = function(req, res)
 
 exports.craete = function(req, res)
 {
-    var request = model.getRequest();
     var data = req.body.data;
     console.log(data);
+    console.log('merge');
+    console.log(model.merge);
     var insertData = model.merge(req.body.data, model.getInsCommonColumns());
     console.log('insertData');
     console.log(insertData);
 
+    var request = model.getRequest();
     request.input('delete_flag', model.db.Int, insertData.delete_flag);
     request.input('craete_by', model.db.Int, insertData.craete_by);
     request.input('create_date', model.db.DateTime, insertData.create_date);
