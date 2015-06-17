@@ -98,7 +98,7 @@ exports.craete = function(req, res)
     var request = model.getRequest();
 //    request.input('user_id', model.db.Int, 2);
     request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
-    request.input('craete_by', model.db.Int, insertData.craete_by);
+    request.input('create_by', model.db.Int, insertData.create_by);
     request.input('create_date', model.db.NVarChar, insertData.create_date);
     request.input('update_by', model.db.Int, insertData.update_by);
     request.input('update_date', model.db.NVarChar, insertData.update_date);
