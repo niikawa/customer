@@ -39,7 +39,7 @@ core.prototype.getRequest = function()
 
 core.prototype.getInsCommonColumns = function()
 {
-    var date =  moment().format("YYYY-MM-DD HH:mm:ss");
+    var date =  moment().format("YYYY/MM/DD HH:mm:ss");
     return {
         delete_flag: 0, craete_by: 0, create_date: date, update_by: 0, update_date: date
     };
@@ -144,7 +144,6 @@ core.prototype.insert = function(table, data, request, callback)
     }
 
     var sql = 'INSERT INTO ' + table + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
-    console.log(sql);
     this.execute(sql, request, callback);
 };
 
