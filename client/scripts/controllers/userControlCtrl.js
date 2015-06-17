@@ -26,6 +26,7 @@ function ($scope, $routeParams, User, Role, Utility, Location)
             User.resource.get({id: id}).$promise.then(function(response)
             {
                 $scope.user = response.data[0];
+                $scope.user.password_confirm = $scope.user.password;
             });
         }
     }
@@ -146,8 +147,6 @@ function ($scope, $routeParams, User, Role, Utility, Location)
      */
     $scope.roleActive = function(itemId, settinId)
     {
-        console.log(itemId);
-        console.log(settinId);
         return itemId == settinId;
     };
     

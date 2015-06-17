@@ -8,14 +8,16 @@ myApp.directive('pushDirective', function(){
         scope:{
             list : '=',
             pushInfo: '=info',
-            active: '=',
+            active: '&',
             multiple: '='
         },
         link: function (scope, element, attrs) 
         {
             element.css({cursor: 'pointer'});
-            console.log(scope.active);
-            scope.pushInfo.isPush = scope.active;
+            
+            var a = scope.active();
+            
+            scope.pushInfo.isPush = scope.active();
 
             element.on('click', function()
             {
