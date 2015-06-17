@@ -196,7 +196,7 @@ core.prototype.isSameItem = function(columns, value, type, callback)
 {
     var request = this.getRequest();
     request.input(columns, type, value);
-    var sql = 'SELECT COUNT(1) AS count' + this.modelName + ' WHERE ' + columns + ' = @' + columns;
+    var sql = 'SELECT COUNT(1) AS count FROM ' + this.modelName + ' WHERE ' + columns + ' = @' + columns;
     this.execute(sql, request, callback);
 };
 
