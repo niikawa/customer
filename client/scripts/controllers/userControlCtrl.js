@@ -72,7 +72,6 @@ function ($scope, $routeParams, User, Role, Utility, Location)
             },
             mailaddress:
             {
-                // ロール選択
                 same: function (modelValue, viewValue)
                 {
                     return false;
