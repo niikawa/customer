@@ -26,15 +26,15 @@ exports.getById = function(req, res)
 {
     model.getById(req.params.id, function(err, data)
     {
-        if (err)
+        if (err.length > 0)
         {
             console.log(err);
-            //レスポンスコード確認
-            res.json({data: data});
+            res.status(510).send('data not found');
+            res.json({data: []});
         }
         else
         {
-            res.json({data: data});
+            res.json({data: data[0]});
         }
     });
 };
