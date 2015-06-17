@@ -92,6 +92,7 @@ exports.craete = function(req, res)
     var insertData = model.merge(req.body.data, commonColumns);
     console.log('insertData');
     console.log(insertData);
+    delete insertData.password_confirm;
 
     var request = model.getRequest();
     request.input('delete_flag', model.db.Int, insertData.delete_flag);
