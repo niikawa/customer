@@ -70,7 +70,7 @@ function ($scope, $routeParams, User, Role, Utility, Location)
                     return isSelect;
                 }
             },
-            sameMailAddress:
+            mailaddress:
             {
                 // ロール選択
                 same: function (modelValue, viewValue)
