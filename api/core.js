@@ -149,7 +149,7 @@ core.prototype.insert = function(table, data, request, callback)
         = 'INSERT INTO M_USER (user_id, name, mailaddress, password, role_id, delete_flag, craete_by, create_date, update_by, update_date)' 
         +  "VALUES ( 2, 'a', 'a@a', 'a', 1, 1, 1, '2015/06/17 04:57:19', 1, '2015/06/17 04:57:19' )";
     
-    this.execute(dumy, request, callback);
+    this.execute(sql, request, callback);
 };
 
 core.prototype.execute = function(sql, request, callback)
