@@ -21,7 +21,7 @@
                     <div>
                         <input type="email" class="form-control" placeholder="メールアドレス" name="mailaddress" 
                             ng-model="user.mailaddress" ng-maxlength=255 ng-required="true" ng-blur="isSameMailAddress()" 
-                            my-validators="validators.mailaddress"/>
+                            my-validators="validators.mailaddress" />
                         <p class="item-error" ng-if="userForm.mailaddress.$dirty && userForm.mailaddress.$invalid">形式が不正です</p>
                         <div ng-messages="userForm.mailaddress.$dirty && userForm.mailaddress.$error">
                             <p class="item-error" ng-message="same">すでに登録されているメールアドレスです</p>

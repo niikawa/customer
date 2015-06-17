@@ -177,6 +177,6 @@ exports.isSameMailAddress = function(req, res)
             console.log(err);
             res.status(510).send('query execute faild');
         }
-        res.json({result: result});
+        res.json({result: result[0]});
     });
 };
