@@ -69,7 +69,7 @@ exports.getList = function(req, res)
 {
     var table = 'M_USER T1 INNER JOIN M_ROLE T2 ON T1.role_id = T2.role_id ';
     var col = 'T1.user_id, T1.mailaddress, T1.name, T2.role_name';
-    var where = '';
+    var where = 'T1.delete_flag = 0';
     var order = 'T1.user_id';
     var qObj = model.getQueryObject(col, table, where, '', order);
 
@@ -91,12 +91,8 @@ exports.craete = function(req, res)
     var commonColumns = model.getInsCommonColumns();
     var insertData = model.merge(req.body.data, commonColumns);
     delete insertData.password_confirm;
-    console.log('insertData');
-//    insertData.user_id = 2;
-    console.log(insertData);
 
     var request = model.getRequest();
-//    request.input('user_id', model.db.Int, 2);
     request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
     request.input('create_by', model.db.Int, insertData.create_by);
     request.input('create_date', model.db.NVarChar, insertData.create_date);
@@ -107,22 +103,48 @@ exports.craete = function(req, res)
     request.input('role_id', model.db.Int, insertData.role_id);
     request.input('name', model.db.NVarChar, insertData.name);
     
-    
-    
     model.insert(tableName, insertData, request, function(err, date)
     {
-        console.log('insert execute');
-        console.log(err);
-        if (err > 0)
+        if (err)
         {
             console.log(err);
             res.status(510).send('object not found');
         }
-        res.status(200).send('date insert');
+        res.status(200).send('insert ok');
     });
     
 };
 
 exports.update = function(req, res)
 {
+};
+
+exports.remove = function(req, res)
+{
+    var user_id = req.params.id;
+    console.log('remvoe target');
+    console.log(user_id);
+    model.removeById(user_id, function(err, data)
+    {
+        if (err)
+        {
+            console.log(err);
+            res.status(510).send('object not found');
+        }
+        res.status(200).send('remove ok');
+    });
+};
+
+exports.delete = function(req, res)
+{
+    var user_id = req.params.id;
+    model.deleteById(user_id, function(err, data)
+    {
+        if (err)
+        {
+            console.log(err);
+            res.status(510).send('object not found');
+        }
+        res.status(200).send('delete ok');
+    });
 };

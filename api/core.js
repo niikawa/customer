@@ -145,10 +145,22 @@ core.prototype.insert = function(table, data, request, callback)
 
     var sql = 'INSERT INTO ' + table + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
     
-    var dumy 
-        = 'INSERT INTO M_USER (user_id, name, mailaddress, password, role_id, delete_flag, craete_by, create_date, update_by, update_date)' 
-        +  "VALUES ( 2, 'a', 'a@a', 'a', 1, 1, 1, '2015/06/17 04:57:19', 1, '2015/06/17 04:57:19' )";
-    
+    this.execute(sql, request, callback);
+};
+
+core.prototype.removeById = function(idValue, callback)
+{
+    var request = this.getRequest();
+    request.input(this.pk, this.db.Int, idValue);
+    var sql = 'UPDATE ' + this.modelName + ' SET delete_flag = 1' + ' WHERE ' + this.pk + ' = @' + this.pk;
+    this.execute(sql, request, callback);
+};
+
+core.prototype.deleteById = function(idValue, callback)
+{
+    var request = this.getRequest();
+    request.input(this.pk, this.db.Int, idValue);
+    var sql = 'DELETE FROM ' + this.modelName + ' WHERE ' + this.pk + ' = @' + this.pk;
     this.execute(sql, request, callback);
 };
 

@@ -51,6 +51,7 @@ var user = require("./api/user");
 router.get('/user', user.getList);
 router.get('/user/:id', user.getById);
 router.post('/user/create', user.craete);
+router.remove('/user/:id', user.remove);
 //router.post('/user/control/:id', user.update);
 
 var role = require("./api/role");

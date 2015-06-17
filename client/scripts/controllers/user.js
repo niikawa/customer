@@ -36,8 +36,9 @@ function ($scope, $routeParams, Shared, User)
         });
     };
     
-    $scope.remove = function()
+    $scope.remove = function(id)
     {
+        console.log(id);
         
     };
     
