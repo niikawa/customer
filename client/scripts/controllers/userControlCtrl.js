@@ -120,20 +120,34 @@ function ($scope, $routeParams, User, Role, Utility, Location)
     $scope.save = function()
     {
         setRole($scope.roleList);
-        
-        User.resource.create({data: $scope.user}).$promise.then(function(response)
+        var message = '';
+        if (2 === pageProp.type)
         {
-            Utility.successSticky('新しくユーザーを登録しました');
-            Location.user();
-        });
+            message = $scope.user.name + 'の情報を更新しました';
+            User.resource.update({data: $scope.user}).$promise.then(function(response)
+            {
+                Utility.successSticky(message);
+                Location.user();
+            });
+        }
+        else
+        {
+            message = '新しくユーザーを登録しました';
+            User.resource.create({data: $scope.user}).$promise.then(function(response)
+            {
+                Utility.successSticky(message);
+                Location.user();
+            });
+        }
+        
     };
 
     /**
      * 更新画面初期表示時のロール選択
      */
-    $scope.roleActive = function(item, set)
+    $scope.roleActive = function(itemId, settinId)
     {
-        return item === set;
+        return itemId === settinId;
     };
     
     

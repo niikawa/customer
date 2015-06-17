@@ -87,8 +87,6 @@ exports.getList = function(req, res)
 
 exports.craete = function(req, res)
 {
-    var data = req.body.data;
-    console.log(data);
     var commonColumns = model.getInsCommonColumns();
     var insertData = model.merge(req.body.data, commonColumns);
     delete insertData.password_confirm;
@@ -113,11 +111,32 @@ exports.craete = function(req, res)
         }
         res.status(200).send('insert ok');
     });
-    
 };
 
 exports.update = function(req, res)
 {
+    var commonColumns = model.getUpdCommonColumns();
+    var updateData = model.merge(req.body.data, commonColumns);
+    delete updateData.password_confirm;
+    
+    var request = model.getRequest();
+    request.input('update_by', model.db.Int, updateData.update_by);
+    request.input('update_date', model.db.NVarChar, updateData.update_date);
+    request.input('mailaddress', model.db.VarChar, updateData.mailaddress);
+    request.input('password', model.db.NVarChar, updateData.password);
+    request.input('role_id', model.db.Int, updateData.role_id);
+    request.input('name', model.db.NVarChar, updateData.name);
+
+    model.updateById(updateData, request, function(err, date)
+    {
+        if (err.length > 0)
+        {
+            console.log(err);
+            res.status(510).send('object not found');
+        }
+        res.status(200).send('update ok');
+    });
+    
 };
 
 exports.remove = function(req, res)

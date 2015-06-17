@@ -14,6 +14,7 @@ myApp.directive('pushDirective', function(){
         link: function (scope, element, attrs) 
         {
             element.css({cursor: 'pointer'});
+            console.log(scope.active);
             scope.pushInfo.isPush = (void 0 !== scope.active && scope.active);
 
             element.on('click', function()

@@ -45,6 +45,14 @@ core.prototype.getInsCommonColumns = function()
     };
 };
 
+core.prototype.getUpdCommonColumns = function()
+{
+    var date =  moment().format("YYYY/MM/DD HH:mm:ss");
+    return {
+        create_date: date, update_by: 1, update_date: date
+    };
+};
+
 core.prototype.getQueryObject = function(col, table, where, groupby, orderby)
 {
     return {
@@ -143,8 +151,28 @@ core.prototype.insert = function(table, data, request, callback)
         dataList.push(item);
     }
 
-    var sql = 'INSERT INTO ' + table + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
+    var sql = 'INSERT INTO ' + this.modelName + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
     
+    this.execute(sql, request, callback);
+};
+
+core.prototype.updateById = function(data, request, callback)
+{
+    var id = data[this.pk];
+    if (void 0 === id) { console.log('pk is undefined'); return;}
+    request.input(this.pk, this.db.Int, id);
+    delete data[this.pk];
+
+    var dataList = [];
+    var columns = Object.keys(data);
+    var len = columns.length;
+    for (var i = 0; i < len; i ++)
+    {
+        var item = columns[i] + ' = @' + columns[i];
+        dataList.push(item);
+    }
+    
+    var sql = 'UPDATE ' + this.modelName + ' SET ' + dataList.join(',') + ' WHERE ' + this.pk + ' = @' + this.pk;
     this.execute(sql, request, callback);
 };
 

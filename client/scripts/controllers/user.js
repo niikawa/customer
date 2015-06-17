@@ -14,11 +14,7 @@ function ($scope, $routeParams, Shared, User, Utility)
      */
     function setInitializeScope()
     {
-//        $scope.addPageTitle = Approach.getPageProp($routeParams.scenario).title;
-//        $scope.type = $routeParams.scenario;
-        
         $scope.userList = [];
-        $scope.warningMessage = '';
     }
     
     /**
@@ -38,7 +34,6 @@ function ($scope, $routeParams, Shared, User, Utility)
     
     $scope.remove = function(id)
     {
-        console.log(id);
         User.resource.delete({id: id}).$promise.then(function(response)
         {
             Utility.successSticky('ユーザーを削除しました');
