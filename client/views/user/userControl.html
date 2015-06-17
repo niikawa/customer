@@ -12,6 +12,7 @@
                 
                 <form name="userForm" novalidate>
                     <!-- ユーザー名 -->
+                    {{user.name}}
                     <div>
                         <input type="text" class="form-control" placeholder="ユーザー名" name="name" ng-model="user.name" ng-maxlength=30 ng-required="true"/>
                         <p class="item-error" ng-if="userForm.name.$dirty && userForm.name.$invalid">30文字以内で入力してください</p>
