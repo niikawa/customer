@@ -144,7 +144,11 @@ core.prototype.insert = function(table, data, request, callback)
     }
 
     var sql = 'INSERT INTO ' + table + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
-    this.execute(sql, request, callback);
+    
+    var dumy 
+        = 'INSERT INTO M_USER (name,mailaddress,password,role_id,delete_flag,craete_by,create_date,update_by,update_date) VALUES ( "a", "a", "a", 1,1,1,"2015/06/17 04:57:19",1,""2015/06/17 04:57:19" )';
+    
+    this.execute(dumy, request, callback);
 };
 
 core.prototype.execute = function(sql, request, callback)
