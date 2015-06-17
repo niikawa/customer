@@ -21,6 +21,7 @@ function ($scope, $routeParams, User, Role, Utility, Location)
             
         if (2 === pageProp.type)
         {
+            console.log('get user!');
             var id = parseInt($routeParams.id);
             User.resource.get({id: id}).$promise.then(function(response)
             {
