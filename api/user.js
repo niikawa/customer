@@ -90,9 +90,9 @@ exports.craete = function(req, res)
     console.log(data);
     var commonColumns = model.getInsCommonColumns();
     var insertData = model.merge(req.body.data, commonColumns);
+    delete insertData.password_confirm;
     console.log('insertData');
     console.log(insertData);
-    delete insertData.password_confirm;
 
     var request = model.getRequest();
     request.input('delete_flag', model.db.Int, insertData.delete_flag);
