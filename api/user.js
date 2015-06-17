@@ -26,6 +26,7 @@ exports.getById = function(req, res)
 {
     model.getById(req.params.id, function(err, data)
     {
+        console.log(data);
         if (err.length > 0)
         {
             console.log(err);
@@ -34,7 +35,7 @@ exports.getById = function(req, res)
         }
         else
         {
-            res.json({data: data[0]});
+            res.json({data: data});
         }
     });
 };
