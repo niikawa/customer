@@ -25,8 +25,8 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in userList">
-                            <td data-th="名">{{item.name}}</td>
-                            <td data-th="アドレス"><a ng-href='/#/user/control/{{item.user_id}}'>{{item.mailaddress}}</a></td>
+                            <td data-th="名"><a ng-href='/#/user/control/{{item.user_id}}'>{{item.name}}</a></td>
+                            <td data-th="アドレス">{{item.mailaddress}}</td>
                             <td data-th="ロール">{{item.role_name}}</td>
                             <td data-th="削除"><button class="btn btn-default" ng-click="remove(item.user_id)">削除</button></td>
                         </tr>
