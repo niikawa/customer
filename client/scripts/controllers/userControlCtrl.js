@@ -84,6 +84,7 @@ function ($scope, $routeParams, User, Role, Utility, Location)
                         console.log(response.result.count);
                         return (0 == response.result.count);
                     });
+                    return false;
                 }
             }
         };
