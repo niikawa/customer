@@ -64,7 +64,6 @@ function ($scope, $routeParams, User, Role, Utility, Location)
                     {
                         if (item.isPush) isSelect = true;
                     });
-                    console.log(isSelect);
                     return isSelect;
                 }
             }
@@ -147,7 +146,9 @@ function ($scope, $routeParams, User, Role, Utility, Location)
      */
     $scope.roleActive = function(itemId, settinId)
     {
-        return itemId === settinId;
+        console.log(itemId);
+        console.log(settinId);
+        return itemId == settinId;
     };
     
     
