@@ -101,7 +101,7 @@ exports.craete = function(req, res)
     request.input('update_date', model.db.DateTime, insertData.update_date);
     request.input('mailaddress', model.db.NVarChar, insertData.mailaddress);
     request.input('password', model.db.NVarChar, insertData.password);
-    request.input('role_id', model.db.Int, insertData.password);
+    request.input('role_id', model.db.Int, insertData.role_id);
     request.input('name', model.db.NVarChar, insertData.name);
     
     console.log('go insert');
