@@ -85,7 +85,6 @@ function ($scope, $routeParams, User, Role, Utility, Location)
     
     /**
      * 初期処理
-     * @author niikawa
      */
     $scope.initialize = function()
     {
@@ -116,6 +115,9 @@ function ($scope, $routeParams, User, Role, Utility, Location)
         },true);
     };
     
+    /**
+     * 登録/更新
+     */
     $scope.save = function()
     {
         setRole($scope.roleList);
@@ -127,9 +129,14 @@ function ($scope, $routeParams, User, Role, Utility, Location)
         });
     };
 
-    $scope.remove = function()
+    /**
+     * 更新画面初期表示時のロール選択
+     */
+    $scope.roleActive = function(item, set)
     {
-        
+        return item === set;
     };
+    
+    
     
 }]);

@@ -8,7 +8,7 @@ myApp.directive('pushDirective', function(){
         scope:{
             list : '=',
             pushInfo: '=info',
-            active: '=active',
+            active: '&',
             multiple: '='
         },
         link: function (scope, element, attrs) 
