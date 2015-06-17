@@ -21,8 +21,7 @@ function ($scope, $routeParams, User, Role, Utility, Location)
             
         if (2 === pageProp.type)
         {
-            console.log('get user!');
-            var id = parseInt($routeParams.id);
+            var id = parseInt($routeParams.id, 10);
             User.resource.get({id: id}).$promise.then(function(response)
             {
                 $scope.user = response.data[0];
@@ -139,7 +138,6 @@ function ($scope, $routeParams, User, Role, Utility, Location)
                 Location.user();
             });
         }
-        
     };
 
     /**
@@ -147,6 +145,9 @@ function ($scope, $routeParams, User, Role, Utility, Location)
      */
     $scope.roleActive = function(itemId, settinId)
     {
+        console.log(itemId);
+        console.log(settinId);
+        
         return itemId == settinId;
     };
     
