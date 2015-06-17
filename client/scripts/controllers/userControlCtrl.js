@@ -75,6 +75,7 @@ function ($scope, $routeParams, User, Role, Utility, Location)
                 same: function (modelValue, viewValue)
                 {
                     var val = modelValue || viewValue;
+                    if (val.length === 0) return true;
                     
                     User.resource.isSameMailAddress({user_id: $scope.user.user_id, mailaddress: val}).$promise.then(function(response)
                     {
