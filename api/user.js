@@ -92,9 +92,11 @@ exports.craete = function(req, res)
     var insertData = model.merge(req.body.data, commonColumns);
     delete insertData.password_confirm;
     console.log('insertData');
+    insertData.user_id = 2;
     console.log(insertData);
 
     var request = model.getRequest();
+    request.input('user_id', model.db.Int, 2);
     request.input('delete_flag', model.db.Int, insertData.delete_flag);
     request.input('craete_by', model.db.Int, insertData.craete_by);
     request.input('create_date', model.db.DATETIME, insertData.create_date);
