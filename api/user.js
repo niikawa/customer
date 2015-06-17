@@ -106,6 +106,7 @@ exports.craete = function(req, res)
     request.input('password', model.db.NVarChar, insertData.password);
     request.input('role_id', model.db.Int, insertData.role_id);
     request.input('name', model.db.NVarChar, insertData.name);
+    
     model.insert(tableName, insertData, request, function(err, date)
     {
         console.log('insert execute');
