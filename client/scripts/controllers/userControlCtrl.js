@@ -18,7 +18,7 @@ function ($scope, $routeParams, User, Role, Utility, Location)
     {
         $scope.user = {};
         $scope.pageTitle = pageProp.title;
-            
+
         if (2 === pageProp.type)
         {
             var id = parseInt($routeParams.id, 10);
@@ -140,17 +140,4 @@ function ($scope, $routeParams, User, Role, Utility, Location)
         }
     };
 
-    /**
-     * 更新画面初期表示時のロール選択
-     */
-    $scope.roleActive = function(itemId, settinId)
-    {
-        console.log(itemId);
-        console.log(settinId);
-        
-        return itemId == settinId;
-    };
-    
-    
-    
 }]);

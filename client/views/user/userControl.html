@@ -46,7 +46,7 @@
                     <div>
                         <ul class="list-group overflow-box-l" name="selected_role" ng-model="user.role_id" my-validators="validators.selected_role">
                             <li class="list-group-item" ng-repeat="item in roleList" 
-                                push-directive list="roleList" info="item" active="roleActive(item.role_id, user.role_id)" >
+                                push-directive list="roleList" info="item" active="user.role_id" activekey="role_id">
                             {{item.role_name}}
                             <section>{{item.description}}</section>
                             </li>
