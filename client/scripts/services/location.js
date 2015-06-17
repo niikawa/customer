@@ -15,7 +15,7 @@ locationServices.service("Location", ['$location',function($location)
     
     locationServices.user = function()
     {
-        $location.path('/#/user');
+        $location.path('#/user');
     };
 
     return locationServices;

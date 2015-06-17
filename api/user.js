@@ -108,6 +108,7 @@ exports.craete = function(req, res)
     model.insert(tableName, insertData, request, function(err, date)
     {
         console.log('insert execute');
+        console.log(err);
         if (err > 0)
         {
             console.log(err);
