@@ -86,12 +86,12 @@ exports.getList = function(req, res)
 
 exports.craete = function(req, res)
 {
-    console.log('body');
-    console.log(req.body);
     var request = model.getRequest();
     var data = req.body.data;
-    
+    console.log(data);
     var insertData = model.merge(req.body.data, model.getInsCommonColumns());
+    console.log('insertData');
+    console.log(insertData);
 
     request.input('delete_flag', model.db.Int, insertData.delete_flag);
     request.input('craete_by', model.db.Int, insertData.craete_by);
@@ -103,8 +103,10 @@ exports.craete = function(req, res)
     request.input('role_id', model.db.Int, insertData.password);
     request.input('name', model.db.NVarChar, insertData.name);
     
+    console.log('go insert');
     model.insert(tableName, insertData, request, function(err, date)
     {
+        console.log('insert execute');
         if (err > 0)
         {
             console.log(err);
