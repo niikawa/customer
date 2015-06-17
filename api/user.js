@@ -136,7 +136,6 @@ exports.update = function(req, res)
         }
         res.status(200).send('update ok');
     });
-    
 };
 
 exports.remove = function(req, res)
@@ -160,11 +159,24 @@ exports.delete = function(req, res)
     var user_id = req.params.id;
     model.deleteById(user_id, function(err, data)
     {
-        if (err)
+        if (err.length > 0)
         {
             console.log(err);
             res.status(510).send('object not found');
         }
         res.status(200).send('delete ok');
+    });
+};
+
+exports.isSameMailAddress = function(req, res)
+{
+    model.isSameItem('mailaddress', req.body.mailaddress, model.db.VarChar, function(err, result)
+    {
+        if (err.length > 0)
+        {
+            console.log(err);
+            res.status(510).send('query execute faild');
+        }
+        res.json({result: result});
     });
 };

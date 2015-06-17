@@ -23,6 +23,11 @@ uesrServices.factory("User", ['$resource','Utility',
             {
                 method: 'GET',
                 url: 'user/delete',
+            },
+            isSameMailAddress:
+            {
+                method: 'POST',
+                url: 'user/mail/',
             }
         });
         

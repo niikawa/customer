@@ -192,6 +192,14 @@ core.prototype.deleteById = function(idValue, callback)
     this.execute(sql, request, callback);
 };
 
+core.prototype.isSameItem = function(columns, value, type, callback)
+{
+    var request = this.getRequest();
+    request.input(columns, type, value);
+    var sql = 'SELECT COUNT(1) AS count' + this.modelName + ' WHERE ' + columns + ' = @' + columns;
+    this.execute(sql, request, callback);
+};
+
 core.prototype.execute = function(sql, request, callback)
 {
     var result = [];

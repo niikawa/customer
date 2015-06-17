@@ -53,6 +53,7 @@ router.get('/user/:id', user.getById);
 router.post('/user/create', user.craete);
 router.put('/user', user.update);
 router.delete('/user/:id', user.remove);
+router.post('/user/mail/', user.isSameMailAddress);
 
 var role = require("./api/role");
 router.get('/role', role.getAll);

@@ -139,5 +139,10 @@ function ($scope, $routeParams, User, Role, Utility, Location)
             });
         }
     };
+    
+    $scope.isSameMailAddress = function()
+    {
+        alert('aa');
+    }
 
 }]);
