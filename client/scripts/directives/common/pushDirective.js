@@ -26,11 +26,10 @@ myApp.directive('pushDirective', function(){
                 }
                 else if ("string" === typeof(scope.active) || "number" === typeof(scope.active))
                 {
-                    console.log(scope.pushInfo[scope.activekey]);
                     if (scope.pushInfo[scope.activekey] == scope.active) 
                     {
                         scope.pushInfo.isPush = scope.active;
-                        setActive = scope.active;
+                        setActive = true;
                     }
                 }
                 
