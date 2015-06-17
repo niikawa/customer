@@ -39,7 +39,7 @@ function ($scope, $routeParams, Shared, User, Utility)
     $scope.remove = function(id)
     {
         console.log(id);
-        User.resource.remove({id: id}).$promise.then(function(response)
+        User.resource.delete({id: id}).$promise.then(function(response)
         {
             Utility.successSticky('ユーザーを削除しました');
         });
