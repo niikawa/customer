@@ -104,9 +104,9 @@ core.prototype.getAll = function(condtion ,callback){
  */
 core.prototype.getById = function(id, callback)
 {
-    var request = new this.db.Request();
-    request.input('id', this.db.Int, id);
-    var sql = 'select * from ' + this.modelName + ' where id = @id';
+    var request = this.getRequest();
+    request.input(this.pk, this.db.Int, id);
+    var sql = 'select * from ' + this.modelName + ' WHERE ' + this.pk + ' = @' + this.pk;
     this.execute(sql, request, callback);
 };
 
