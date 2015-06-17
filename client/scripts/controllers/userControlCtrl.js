@@ -37,7 +37,8 @@ function ($scope, $routeParams, User, Role, Utility, Location)
             password:
             {
                 // ユーザー名とパスワードは一緒はダメ
-                same: function (modelValue, viewValue) {
+                same: function (modelValue, viewValue)
+                {
                     var val = modelValue || viewValue;
                     var user = $scope.user || {};
     
@@ -47,7 +48,8 @@ function ($scope, $routeParams, User, Role, Utility, Location)
             password_confirm:
             {
                 // パスワード確認
-                confirm: function (modelValue, viewValue) {
+                confirm: function (modelValue, viewValue)
+                {
                     var user = $scope.user || {};
                     var val = modelValue || viewValue;
     
@@ -57,7 +59,8 @@ function ($scope, $routeParams, User, Role, Utility, Location)
             selected_role:
             {
                 // ロール選択
-                role: function (modelValue, viewValue) {
+                role: function (modelValue, viewValue)
+                {
                     var roleList = $scope.roleList || {};
                     var isSelect = false;
                     angular.forEach(roleList, function(item, key)
@@ -65,6 +68,14 @@ function ($scope, $routeParams, User, Role, Utility, Location)
                         if (item.isPush) isSelect = true;
                     });
                     return isSelect;
+                }
+            },
+            sameMailAddress:
+            {
+                // ロール選択
+                same: function (modelValue, viewValue)
+                {
+                    return false;
                 }
             }
         };
@@ -142,7 +153,7 @@ function ($scope, $routeParams, User, Role, Utility, Location)
     
     $scope.isSameMailAddress = function()
     {
-        alert('aa');
-    }
+        $scope.userForm.mailaddress.$validate();
+    };
 
 }]);
