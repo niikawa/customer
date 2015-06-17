@@ -16,6 +16,7 @@ myApp.directive('pushDirective', function(){
             element.css({cursor: 'pointer'});
             
             var a = scope.active();
+            console.log(a);
             
             scope.pushInfo.isPush = scope.active();
 
