@@ -18,7 +18,7 @@ myApp.directive('pushDirective', function(){
             if (void 0 !== scope.active)
             {
                 scope.pushInfo.isPush = scope.active();
-                console.log(scope.pushInfo.isPush);
+                element.removeClass('push-active');
             }
             else
             {
