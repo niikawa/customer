@@ -143,7 +143,7 @@ core.prototype.insert = function(table, data, request, callback)
         dataList.push(item);
     }
 
-    var sql = 'INSERT INTO ' + table + ' ' + columns.join(',') + ' VALUES ( ' + dataList.join(',') + ' )';
+    var sql = 'INSERT INTO ' + table + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
     console.log(sql);
     this.execute(sql, request, callback);
 };
