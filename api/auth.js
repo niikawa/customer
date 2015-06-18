@@ -65,9 +65,8 @@ exports.login = function(req, res)
 
     model.select(qObj, qObj.request,  function(err, data)
     {
-        if (err.length > 0)
+        if (err.length > 0 || void 0 === data[0].user_id)
         {
-            console.log(err);
             res.status(509).send('メールアドレスまたはパスワードに誤りがあります');
         }
         res.json({data: data[0]});
