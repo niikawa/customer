@@ -68,7 +68,7 @@ exports.login = function(req, res)
         if (err.length > 0)
         {
             console.log(err);
-            res.status(510).send('object not found');
+            res.status(509).send('メールアドレスまたはパスワードに誤りがあります');
         }
         res.json({data: data[0]});
     });

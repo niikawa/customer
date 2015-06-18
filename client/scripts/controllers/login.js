@@ -1,6 +1,6 @@
 var loginCtrl = angular.module('loginCtrl',['AuthServices',]);
-loginCtrl.controller('LoginCtrl', ['$scope', '$location', 'Auth',
-    function($scope, $location, Auth) {
+loginCtrl.controller('LoginCtrl', ['$scope', '$location', 'Auth', 'Location',
+    function($scope, $location, Auth, Location) {
     
     $scope.initialize = function()
     {
@@ -15,7 +15,8 @@ loginCtrl.controller('LoginCtrl', ['$scope', '$location', 'Auth',
         {
             $scope.$emit('requestEnd');
             $scope.$emit('loginComplete');
-            Auth.setLoginStatus(response.data.user_id);
+            Location.home();
+            //Auth.setLoginStatus(response.data.user_id);
         });
     };
 }]);
