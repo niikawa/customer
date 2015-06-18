@@ -31,6 +31,7 @@
                     <div ng-if="!showPassword && 2==pageType" class="btn-group">
                         <label class="btn btn-default" ng-model="passwordEdit" btn-checkbox=true uncheckable>パスワードを変更する</label>
                     </div>
+                    <pre>{{passwordEdit}}</pre>
                     <div ng-if="passwordEdit">
                         <div>
                             <input type="password" class="form-control" name="password" placeholder="パスワード"
