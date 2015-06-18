@@ -28,24 +28,28 @@
                         </div>
                     </div>
                     <!-- パスワード -->
-                    <div>
-                        <input type="password" class="form-control" name="password" placeholder="パスワード"
-                            ng-model="user.password" my-validators="validators.password"
-                            ng-minlength=6 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
-                        <p class="item-error" ng-if="userForm.password.$dirty && userForm.password.$invalid">6文字以上の半角英数値で入力してください</p>
-                        <div ng-messages="userForm.password.$dirty && userForm.password.$error">
-                            <p class="item-error" ng-message="same">ユーザー名と異なるパスワードにしてください</p>
+                    <div ng-if="!showPassword && 2==$scope.pageType">
+                        <input type="checkbox" ng-click="showPassword=!showPassword">パスワードを変更する
+                    </div>
+                    <div ng-if="showPassword">
+                        <div>
+                            <input type="password" class="form-control" name="password" placeholder="パスワード"
+                                ng-model="user.password" my-validators="validators.password"
+                                ng-minlength=6 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
+                            <p class="item-error" ng-if="userForm.password.$dirty && userForm.password.$invalid">6文字以上の半角英数値で入力してください</p>
+                            <div ng-messages="userForm.password.$dirty && userForm.password.$error">
+                                <p class="item-error" ng-message="same">ユーザー名と異なるパスワードにしてください</p>
+                            </div>
+                        </div>
+    
+                        <div>
+                            <input type="password" class="form-control" name="password_confirm" ng-model="user.password_confirm" placeholder="パスワード再入力"
+                                my-validators="validators.password_confirm" ng-required="true" />
+                            <div ng-messages="userForm.password_confirm.$error">
+                                <p class="item-error" ng-message="confirm">パスワード確認が一致しません</p>
+                            </div>
                         </div>
                     </div>
-
-                    <div>
-                        <input type="password" class="form-control" name="password_confirm" ng-model="user.password_confirm" placeholder="パスワード再入力"
-                            my-validators="validators.password_confirm" ng-required="true" />
-                        <div ng-messages="userForm.password_confirm.$error">
-                            <p class="item-error" ng-message="confirm">パスワード確認が一致しません</p>
-                        </div>
-                    </div>
-        
                     <!-- 権限 -->
                     <div>
                         <ul class="list-group overflow-box-l" name="selected_role" ng-model="user.role_id" my-validators="validators.selected_role">
