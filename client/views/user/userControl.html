@@ -32,7 +32,7 @@
                         <label class="btn btn-default" ng-model="passwordEdit" btn-radio=1 uncheckable>パスワードを変更する</label>
                     </div>
                     <pre>{{passwordEdit}}</pre>
-                    <div ng-if="passwordEdit">
+                    <div ng-if="passwordEdit==1">
                         <div>
                             <input type="password" class="form-control" name="password" placeholder="パスワード"
                                 ng-model="user.password" my-validators="validators.password"

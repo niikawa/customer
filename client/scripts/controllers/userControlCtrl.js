@@ -19,12 +19,12 @@ function ($scope, $routeParams, User, Role, Utility, Location)
         $scope.user = {};
         $scope.pageTitle = pageProp.title;
         $scope.showPassword = true;
-        $scope.passwordEdit = true;
+        $scope.passwordEdit = 1;
         $scope.pageType = pageProp.type;
 
         if (2 === pageProp.type)
         {
-            $scope.passwordEdit = false;
+            $scope.passwordEdit = 0;
             $scope.showPassword = false;
             var id = parseInt($routeParams.id, 10);
             User.resource.get({id: id}).$promise.then(function(response)
