@@ -10,14 +10,12 @@ loginCtrl.controller('LoginCtrl', ['$scope', '$location', 'Auth',
     
     $scope.submit = function()
     {
-        $scope.$emit('loginComplete');
-        $location.path('/');
-        //$scope.$emit('requestStart');
-        // Auth.login($scope.data).then(function(response)
-        // {
-        //     $scope.$emit('requestEnd');
-        //     $scope.$emit('loginComplete');
-        //     Auth.setLoginStatus(response.data.item._id);
-        // });
+        $scope.$emit('requestStart');
+        Auth.login($scope.data).then(function(response)
+        {
+            $scope.$emit('requestEnd');
+            $scope.$emit('loginComplete');
+            Auth.setLoginStatus(response.data.user_id);
+        });
     };
 }]);
