@@ -37,7 +37,7 @@ angular
         
         var deferred = $q.defer();
         
-        $http.post('api/isLogin', {remembertkn: $cookies.remembertkn}
+        $http.post('/auth/isLogin', {remembertkn: $cookies.remembertkn}
         
         ).success(function(data) {
           
@@ -57,7 +57,7 @@ angular
         templateUrl: 'views/dashbord.html',
         controller: 'DashbordCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
-//        resolve: {isLogin: autoCheck}
+        resolve: {isLogin: autoCheck}
       })
       .when('/login', {
         templateUrl: 'views/login.html',

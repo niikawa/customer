@@ -67,7 +67,7 @@ exports.login = function(req, res)
     {
         if (err.length > 0 )
         {
-            res.status(509).send('data is not found');
+            res.status(510).send('data is not found');
         }
         req.session.isLogin = true;
         res.json({data: data});
