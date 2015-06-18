@@ -28,8 +28,8 @@
                         </div>
                     </div>
                     <!-- パスワード -->
-                    <div ng-if="!showPassword && 2==pageType">
-                        <input type="checkbox" ng-click="showPassword=!showPassword">パスワードを変更する
+                    <div ng-if="!showPassword && 2==pageType" class="btn-group">
+                        <label class="btn btn-default" ng-click="showPassword = !showPassword" btn-checkbox=1 uncheckable>パスワードを変更する</label>
                     </div>
                     <div ng-if="showPassword">
                         <div>

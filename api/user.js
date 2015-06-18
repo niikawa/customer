@@ -118,13 +118,22 @@ exports.update = function(req, res)
 {
     var commonColumns = model.getUpdCommonColumns();
     var updateData = model.merge(req.body.data, commonColumns);
-    delete updateData.password_confirm;
+    
+    if (void 0 !== updateData.password_confirm) delete updateData.password_confirm;
     
     var request = model.getRequest();
+    if (void 0 !== updateData.password)
+    {
+        delete updateData.password;
+    }
+    else
+    {
+        request.input('password', model.db.NVarChar, crypto.createHash('md5').update(updateData.password).digest("hex"));
+    }
+    
     request.input('update_by', model.db.Int, updateData.update_by);
     request.input('update_date', model.db.NVarChar, updateData.update_date);
     request.input('mailaddress', model.db.VarChar, updateData.mailaddress);
-    request.input('password', model.db.NVarChar, updateData.password);
     request.input('role_id', model.db.Int, updateData.role_id);
     request.input('name', model.db.NVarChar, updateData.name);
 
