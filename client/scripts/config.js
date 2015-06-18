@@ -33,8 +33,15 @@ myApp.config(
                         }
                         else if (500 <= rejection.status)
                         {
-                            console.log(rejection);
-                            Utility.errorSticky('システムエラーが発生しました');
+                            console.log(rejection.data);
+                            if (rejection.data)
+                            {
+                                Utility.errorSticky(rejection.data);
+                            }
+                            else
+                            {
+                                Utility.errorSticky('システムエラーが発生しました');
+                            }
                         }
                         
                         return $q.reject(rejection);
