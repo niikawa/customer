@@ -1,3 +1,4 @@
+var crypto = require('crypto');
 var async = require('async');
 var Core = require('./core');
 
@@ -90,7 +91,7 @@ exports.craete = function(req, res)
     var commonColumns = model.getInsCommonColumns();
     var insertData = model.merge(req.body.data, commonColumns);
     delete insertData.password_confirm;
-
+    
     var request = model.getRequest();
     request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
     request.input('create_by', model.db.Int, insertData.create_by);
@@ -98,7 +99,7 @@ exports.craete = function(req, res)
     request.input('update_by', model.db.Int, insertData.update_by);
     request.input('update_date', model.db.NVarChar, insertData.update_date);
     request.input('mailaddress', model.db.VarChar, insertData.mailaddress);
-    request.input('password', model.db.NVarChar, insertData.password);
+    request.input('password', model.db.NVarChar, crypto.createHash('md5').update(insertData.password).digest("hex"));
     request.input('role_id', model.db.Int, insertData.role_id);
     request.input('name', model.db.NVarChar, insertData.name);
     

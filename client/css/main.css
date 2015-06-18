@@ -352,8 +352,8 @@ div .overflow-box-l {
 .vertical-container > div,
 .vertical-container > div > input,
 .vertical-container > div > div, 
-.vertical-container > div > div > input, 
 .vertical-container > form > div,
+.vertical-container > form > div > div, 
 .vertical-container > form > input {
   margin-bottom: 13px;
 }
