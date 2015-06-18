@@ -6,7 +6,7 @@ authServices.factory("Auth", ['$resource', '$http', '$location', '$cookies','Uti
         
         authServices.login = function(data)
         {
-            var promise = $http.post('https://api-gozaru9.c9.io/V1/login', {mailAddress: data.mailAddress, password: data.password
+            var promise = $http.post('/auth/login', {mailAddress: data.mailAddress, password: data.password
             }).success(function(data, status, headers, config)
             {
                 if (data.remember) {

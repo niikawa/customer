@@ -43,6 +43,9 @@ router.use(express.json());
 router.use(express.urlencoded());
 router.use(express.methodOverride());
 
+var auth = require('./api/auth');
+router.post('/auth/login', auth.login);
+
 var customer = require('./api/customer');
 router.get('/customer', customer.getAll);
 router.get('/customer/:id', customer.getById);
