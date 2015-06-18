@@ -40,7 +40,7 @@ exports.isLogin = function(req, res)
             //新しいトークンを生成
         }
         
-        res.status(510).send('Authentication Failed');
+        res.status(511).send('Authentication Failed');
     }
 };
 
