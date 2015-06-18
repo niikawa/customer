@@ -19,6 +19,7 @@ function ($scope, $routeParams, User, Role, Utility, Location)
         $scope.user = {};
         $scope.pageTitle = pageProp.title;
         $scope.showPassword = true;
+        $scope.passwordEdit = true;
         $scope.pageType = pageProp.type;
 
         if (2 === pageProp.type)

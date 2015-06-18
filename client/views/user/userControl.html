@@ -29,9 +29,9 @@
                     </div>
                     <!-- パスワード -->
                     <div ng-if="!showPassword && 2==pageType" class="btn-group">
-                        <label class="btn btn-default" ng-model="passwordEdit" ng-click="showPassword = !showPassword" btn-checkbox=1 uncheckable>パスワードを変更する</label>
+                        <label class="btn btn-default" ng-model="passwordEdit" btn-checkbox=1 uncheckable>パスワードを変更する</label>
                     </div>
-                    <div ng-if="showPassword">
+                    <div collapse="passwordEdit">
                         <div>
                             <input type="password" class="form-control" name="password" placeholder="パスワード"
                                 ng-model="user.password" my-validators="validators.password"
