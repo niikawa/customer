@@ -8,7 +8,7 @@
         <div class="row" >
             <div class="col-md-12 break-all label-box">
                 <div class="label label-success" ng-repeat="item in selectColumns">
-                    {{item.table.logicalname}}.{{item.column.name}}
+                    {{item.table.logicalname}}.{{item.column.logicalname}}
                     <span type="button" class="label-close" ng-click="removeColumn($index)">&times;</span>
                 </div>
                 <!--<span class="label label-success" ng-repeat="item in selectColumns" >{{item.table.logicalname}}.{{item.column.name}}-->
@@ -44,7 +44,7 @@
                     <tbody>
                         <tr ng-repeat="col in columnList" ng-click="setColumn($index)">
                             <td data-th="#">{{$index+1}}</td>
-                            <td data-th="カラム">{{col.name}}</td>
+                            <td data-th="カラム">{{col.logicalname}}</td>
                             <td data-th="説明">{{col.description}}</td>
                         </tr>
                     </tbody>

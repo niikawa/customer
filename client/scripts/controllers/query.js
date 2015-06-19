@@ -48,8 +48,11 @@ function ($scope, Shared, Query)
         var table = {logicalname: target.logicalname, physicalname:  target.physicalname};
         var selectItem = {table: table, column: target.column[index]};
         var isSame = false;
+        console.log(selectItem);
         angular.forEach($scope.selectColumns, function(v, k)
         {
+            console.log(v);
+
             if (v === selectItem)
             {
                 isSame = true;

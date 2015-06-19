@@ -4,10 +4,10 @@
         "physicalname": "M_USER",
         "description": "本システムへアクセスできるユーザーを管理",
         "column": [
-            {"name": "user_id", "description": "ユーザーを一意に識別するためのID", "type": "INT", "length": 10},
-            {"name": "mailaddress", "description": "ユーザーに割り振られたメールアドレスで重複を許さない", "type": "VARCHAR", "length": 255},
-            {"name": "password", "description": "ログインするためのパスワード", "type": "VARCHAR", "length": 50},
-            {"name": "role_id", "description": "ユーザーに設定された権限を識別するID", "type": "INT", "length": 10}
+            {"physicalname": "user_id", "logicalname": "ユーザーID", "description": "ユーザーを一意に識別するためのID", "type": "INT", "length": 10},
+            {"physicalname": "mailaddress", "logicalname": "メールアドレス", "description": "ユーザーに割り振られたメールアドレスで重複を許さない", "type": "VARCHAR", "length": 255},
+            {"physicalname": "password", "logicalname": "パスワード", "description": "ログインするためのパスワード", "type": "VARCHAR", "length": 50},
+            {"physicalname": "role_id", "logicalname": "ロールID", "description": "ユーザーに設定された権限を識別するID", "type": "INT", "length": 10}
         ]
     },
     "M_ROLE": {
@@ -15,9 +15,9 @@
         "physicalname": "M_ROLE",
         "description": "本システムの操作を制限するための権限を管理",
         "column": [
-            {"name": "role_id", "description": "権限を一意に識別するためのID", "type": "INT", "length": 10},
-            {"name": "role_name", "description": "権限の名称", "type": "VARCHAR", "length": 30},
-            {"name": "description", "description": "権限の説明", "type": "VARCHAR", "length": 50}
+            {"physicalname": "role_id", "logicalname": "ロールID", "description": "権限を一意に識別するためのID", "type": "INT", "length": 10},
+            {"physicalname": "role_name", "logicalname": "ロール名","description": "権限の名称", "type": "VARCHAR", "length": 30},
+            {"physicalname": "description", "logicalname": "説明","description": "権限の説明", "type": "VARCHAR", "length": 50}
         ]
     },
     "M_CUSTOMER": {
@@ -25,13 +25,13 @@
         "physicalname": "M_CUSTOMER",
         "description": "本システムの操作を制限するための権限を管理",
         "column": [
-            {"name": "Id", "description": "システムにより割り振られる顧客を一意に識別するID", "type": "INT", "length": 10},
-            {"name": "customer_id", "description": "別システムで管理されている顧客を一意に識別するID", "type": "VARCHAR", "length": 20},
-            {"name": "rank_id", "description": "クラスタ分割の結果割り振られたランク", "type": "INT", "length": 10},
-            {"name": "start_purchasing_date", "description": "購買日開始日", "type": "DATETIME", "format": "YYYY-MM-DD"},
-            {"name": "last_purchasing_date", "description": "最終購買日", "type": "DATETIME", "format": "YYYY-MM-DD"},
-            {"name": "frequency", "description": "購買頻度", "type": "FLOTE", "length": 10},
-            {"name": "monetary", "description": "購買総合計金額", "type": "INT", "length": 10}
+            {"physicalname": "Id", "logicalname": "ID","description": "システムにより割り振られる顧客を一意に識別するID", "type": "INT", "length": 10},
+            {"physicalname": "customer_id", "logicalname": "顧客ID","description": "別システムで管理されている顧客を一意に識別するID", "type": "VARCHAR", "length": 20},
+            {"physicalname": "rank_id", "logicalname": "ランクID","description": "クラスタ分割の結果割り振られたランク", "type": "INT", "length": 10},
+            {"physicalname": "start_purchasing_date", "logicalname": "購買開始日","description": "対象顧客が最初に購入した日", "type": "DATETIME", "format": "YYYY-MM-DD"},
+            {"physicalname": "last_purchasing_date", "logicalname": "最終購買日", "description": "対象顧客が最後に購入した日", "type": "DATETIME", "format": "YYYY-MM-DD"},
+            {"physicalname": "frequency", "logicalname": "購買頻度", "description": "購買頻度", "type": "FLOTE", "length": 10},
+            {"physicalname": "monetary", "logicalname": "購買総合計金額", "description": "購買総合計金額", "type": "INT", "length": 10}
         ]
     }
 }
