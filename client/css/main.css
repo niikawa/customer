@@ -500,10 +500,11 @@ div .break-all {
 /* label 
 /*-----------------------------------------------*/
 /*bootstrap orverride  */
+.label-box {
+  margin:10px;
+}
 
 .label {
-  margin-top: 20px;
-  margin-bottom: 20px;
   margin-right: 5px;
   font-size: 100%;
 }

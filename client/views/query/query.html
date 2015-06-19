@@ -6,7 +6,7 @@
         <h4>クエリー一覧</h4>
 
         <div class="row" >
-            <div class="col-md-12 break-all">
+            <div class="col-md-12 break-all label-box">
                 <div class="label label-success" ng-repeat="item in selectColumns">
                     {{item.table.logicalname}}.{{item.column.name}}
                     <span type="button" class="label-close" ng-click="removeColumn($index)">&times;</span>
