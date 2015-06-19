@@ -30,7 +30,7 @@
                         <div class="box-gray mh" ng-model='conditions' drop-directive drop-area-key="" >
                             <div class="panel panel-success" ng-repeat="condition in conditions" drag-item-directive dragindex="$index">
                                 <div class="panel-heading">{{condition.query_name}}
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+                                    <button type="button" class="close" ng-click="$dismiss()">&times;</button>
                                 </div>
                                 <div class="panel-body"></div>
                             </div>
