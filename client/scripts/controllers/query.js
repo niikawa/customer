@@ -36,7 +36,7 @@ function ($scope, Shared, Query)
     $scope.showColumns = function(table)
     {
         $scope.columnList = $scope.tableList[table].column;
-        $scope.columnNum = Object.keys($scope.columnList).length;
+        $scope.columnNum = $scope.columnList.length;
     };
 
 }]);

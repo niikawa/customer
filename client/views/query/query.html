@@ -6,7 +6,7 @@
         <h4>クエリー一覧</h4>
 
         <div class="row" >
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="panel panel-default">
                   <div class="panel-heading">
                       <input type="text" class="form-control" placeholder="テーブルを絞り込みます" ng-model="tableSearch" 
@@ -19,7 +19,10 @@
                         
                     </li>
                   </ul>
-                </div>                        
+                </div>     
+            </div>
+            <div class="col-md-6">
+                
             </div>
         </div>
         
@@ -34,10 +37,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="(key, value) in columnList">
+                        <tr ng-repeat="col in columnList">
                             <td data-th="#">{{$index+1}}</td>
-                            <td data-th="カラム">{{key}}</td>
-                            <td data-th="説明">{{value}}</td>
+                            <td data-th="カラム">{{col.name}}</td>
+                            <td data-th="説明">{{col.description}}</td>
                         </tr>
                     </tbody>
                 </table>
