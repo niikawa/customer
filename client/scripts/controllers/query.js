@@ -15,6 +15,7 @@ function ($scope, Shared, Query)
     function setInitializeScope()
     {
         $scope.tableList = [];
+        $scope.columnNum = 0;
     }
     
     /**
@@ -35,7 +36,9 @@ function ($scope, Shared, Query)
     
     $scope.showColumns = function(table)
     {
-        alert(table);
+        $scope.columnList = $scope.tableList[table];
+        $scope.columnNum = $scope.columnList.length;
+        console.log($scope.columnNum);
     };
 
 }]);
