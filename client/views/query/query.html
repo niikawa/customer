@@ -7,7 +7,7 @@
 
         <div class="row" >
             <div class="col-md-12">
-                <span class="label label-default" ng-repeat="item in selectColumns" >{{item}}</span>
+                <span class="label label-default" ng-repeat="item in selectColumns" >{{item.table.logicalname}}.{{item.column.name}}</span>
             </div>
         </div>
 
@@ -20,7 +20,7 @@
                   </div>
                   <ul class="list-group" >
                     <li class="list-group-item" ng-repeat="item in tableList" push-directive list="tableList" info="item" ng-click="showColumns(item.physicalname)">
-                        {{item.logicalname}}
+                        {{item.logicalname}}({{item.physicalname}})
                         <section>{{item.description}}</section>
                         
                     </li>

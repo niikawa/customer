@@ -44,7 +44,9 @@ function ($scope, Shared, Query)
     
     $scope.setColumn = function(index)
     {
-        var selectItem = {table: selectTable, column: $scope.tableList[selectTable].column[index]};
+        var target = $scope.tableList[table];
+        var table = {logicalname: target.logicalname, physicalname: target.physicalname};
+        var selectItem = {table: table, column: target.column[index]};
         $scope.selectColumns.push(selectItem);
     };
 
