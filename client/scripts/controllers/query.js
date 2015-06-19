@@ -33,9 +33,9 @@ function ($scope, Shared, Query)
         });
     };
     
-    $scope.setColumns = function()
+    $scope.showColumns = function(table)
     {
-        alert('hoeg');
+        alert(table);
     };
 
 }]);

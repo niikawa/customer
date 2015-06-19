@@ -11,11 +11,11 @@
                     <div class="panel panel-default">
                       <div class="panel-heading">
                           <input type="text" class="form-control" placeholder="テーブルを絞り込みます" ng-model="tableSearch" 
-                            refine-directive refine-item="tableList" keyword="tableSearch" name-propertie="physicalname|description" >
+                            refine-directive refine-item="tableList" keyword="tableSearch" name-propertie="logicalname|description" >
                       </div>
                       <ul class="list-group" >
-                        <li class="list-group-item" ng-repeat="item in tableList" push-directive list="tableList" info="item" >
-                            {{item.physicalname}}
+                        <li class="list-group-item" ng-repeat="item in tableList" push-directive list="tableList" info="item" ng-click="showColumns(item.physicalname)">
+                            {{item.logicalname}}
                             <section>{{item.description}}</section>
                         </li>
                       </ul>
