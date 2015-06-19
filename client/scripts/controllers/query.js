@@ -75,8 +75,7 @@ function ($scope, Shared, Query)
     /***************************````*/
     $scope.nextValidation = function()
     {
-        
-        
+        console.log($scope.selectColumns);
     };
 
 }]);
