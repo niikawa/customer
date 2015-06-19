@@ -19,9 +19,9 @@ function ($scope, $routeParams, Modal, Shared, Segment)
     {
         $scope.$on('dropItemComplete', function(event, data)
         {
+            $scope.queryList = data.from;
             event.stopPropagation();
         });
-        $scope.$apply();
     }
     
     function createQuery()
