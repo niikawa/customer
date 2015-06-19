@@ -115,7 +115,7 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 ctrl.$modelValue.splice(orverIndex, 0, pushItem);
                 
                 var len = ctrl.$modelValue.length;
-                console.log(len);
+                console.log(ctrl.$modelValue);
                 
                 for (var i=0; i < len; i++)
                 {
