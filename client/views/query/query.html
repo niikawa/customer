@@ -11,16 +11,37 @@
                     <div class="panel panel-default">
                       <div class="panel-heading">
                           <input type="text" class="form-control" placeholder="テーブルを絞り込みます" ng-model="tableSearch" 
-                            refine-directive refine-item="tableList" keyword="tableSearch" name-propertie="table_name" >
+                            refine-directive refine-item="tableList" keyword="tableSearch" name-propertie="physicalname|description" >
                       </div>
                       <ul class="list-group" >
                         <li class="list-group-item" ng-repeat="item in tableList" push-directive list="tableList" info="item" >
                             {{item.physicalname}}
-                            {{item.description}}
+                            <section>{{item.description}}</section>
                         </li>
                       </ul>
                     </div>                        
                 </div>
+            </div>
+        </div>
+        
+        <div class="row" >
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="info">
+                            <th>#</th>
+                            <th>カラム名</th>
+                            <th>説明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(key, value) in columnList">
+                            <td data-th="#">{{$index+1}}</td>
+                            <td data-th="カラム">{{key}}</td>
+                            <td data-th="説明">{{value}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -32,5 +32,10 @@ function ($scope, Shared, Query)
             $scope.tableList = response.data;
         });
     };
+    
+    $scope.setColumns = function()
+    {
+        alert('hoeg');
+    };
 
 }]);
