@@ -61,7 +61,7 @@ function ($scope, Shared, Query)
                 column: target.column[index]
             });
         }
-        $scope.cshowSelectedColumnsBox = ($scope.selectColumns.length > 0);
+        $scope.showSelectedColumnsBox = ($scope.selectColumns.length > 0);
     };
     
     $scope.removeColumn = function(index)
