@@ -9,6 +9,7 @@ var queryCtrl = angular.module('queryCtrl',['QueryServices']);
 queryCtrl.controller('QueryCtrl',['$scope', 'Shared', 'Query', 
 function ($scope, Shared, Query)
 {
+    var selectTable = '';
     /**
      * scope初期化用
      */
@@ -16,6 +17,7 @@ function ($scope, Shared, Query)
     {
         $scope.tableList = [];
         $scope.columnNum = 0;
+        $scope.selectColumns = 0;
     }
     
     /**
@@ -35,8 +37,14 @@ function ($scope, Shared, Query)
     
     $scope.showColumns = function(table)
     {
+        selectTable = table;
         $scope.columnList = $scope.tableList[table].column;
         $scope.columnNum = $scope.columnList.length;
+    };
+    
+    $scope.setColumn = function(selectTable, index)
+    {
+        console.log($scope.tableList[selectTable].column[index]);
     };
 
 }]);

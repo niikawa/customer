@@ -6,6 +6,10 @@
         <h4>クエリー一覧</h4>
 
         <div class="row" >
+            
+        </div>
+
+        <div class="row" >
             <div class="col-md-6">
                 <div class="panel panel-default">
                   <div class="panel-heading">
@@ -22,12 +26,6 @@
                 </div>     
             </div>
             <div class="col-md-6">
-                
-            </div>
-        </div>
-        
-        <div class="row" >
-            <div class="col-md-12">
                 <table class="table table-hover" ng-if="columnNum > 0">
                     <thead>
                         <tr class="info">
@@ -37,7 +35,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="col in columnList">
+                        <tr ng-repeat="col in columnList" ng-click="setColumn($index)">
                             <td data-th="#">{{$index+1}}</td>
                             <td data-th="カラム">{{col.name}}</td>
                             <td data-th="説明">{{col.description}}</td>
