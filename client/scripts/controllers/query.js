@@ -48,12 +48,9 @@ function ($scope, Shared, Query)
         var isSame = false;
         angular.forEach($scope.selectColumns, function(v, k)
         {
-            console.log(v.table.physicalname + '.' + v.column.physicalname);
-
             if (v.table.physicalname === selectTable && v.column.physicalname === target.column[index].physicalname)
             {
                 isSame = true;
-                console.log('same object!');
             }
         });
         if (!isSame)
@@ -63,7 +60,6 @@ function ($scope, Shared, Query)
                 column: target.column[index]
             });
         }
-        
     };
     
     $scope.removeColumn = function(index)
