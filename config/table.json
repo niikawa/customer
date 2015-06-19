@@ -17,7 +17,7 @@
             "role_name": "権限の名称",
             "description": "権限の説明"
         }
-    }
+    },
     "M_CUSTOMER": {
         "logicalname": "顧客マスタ",
         "description": "本システムの操作を制限するための権限を管理",
