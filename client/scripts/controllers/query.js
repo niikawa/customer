@@ -45,14 +45,24 @@ function ($scope, Shared, Query)
     $scope.setColumn = function(index)
     {
         var target = $scope.tableList[selectTable];
-        var table = {logicalname: target.logicalname, physicalname: target.physicalname};
+        var table = {logicalname: target.logicalname, physicalname:  target.physicalname};
         var selectItem = {table: table, column: target.column[index]};
-        $scope.selectColumns.push(selectItem);
+        var isSame = false;
+        angular.forEach($scope.selectColumns, function(v, k)
+        {
+            if (v === selectItem)
+            {
+                isSame = true;
+                console.log('same object!');
+            }
+        });
+        if (!isSame) $scope.selectColumns.push(selectItem);
+        
     };
     
     $scope.removeColumn = function(index)
     {
         $scope.selectColumns.splice(index, 1);
-    }
+    };
 
 }]);
