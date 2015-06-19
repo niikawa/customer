@@ -17,7 +17,7 @@ function ($scope, Shared, Query)
     {
         $scope.tableList = [];
         $scope.columnNum = 0;
-        $scope.selectColumns = 0;
+        $scope.selectColumns = [];
     }
     
     /**
@@ -42,9 +42,10 @@ function ($scope, Shared, Query)
         $scope.columnNum = $scope.columnList.length;
     };
     
-    $scope.setColumn = function(selectTable, index)
+    $scope.setColumn = function(index)
     {
         console.log($scope.tableList[selectTable].column[index]);
+        $scope.selectColumns.push($scope.tableList[selectTable].column[index]);
     };
 
 }]);
