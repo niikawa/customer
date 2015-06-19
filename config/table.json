@@ -1,6 +1,7 @@
 {
     "M_USER": {
         "logicalname": "ユーザーマスタ",
+        "physicalname": "M_USER",
         "description": "本システムへアクセスできるユーザーを管理",
         "column": {
             "user_id": "ユーザーを一意に識別するためのID",
@@ -11,6 +12,7 @@
     },
     "M_ROLE": {
         "logicalname": "権限マスタ",
+        "physicalname": "M_ROLE",
         "description": "本システムの操作を制限するための権限を管理",
         "column": {
             "role_id": "権限を一意に識別するためのID",
@@ -20,6 +22,7 @@
     },
     "M_CUSTOMER": {
         "logicalname": "顧客マスタ",
+        "physicalname": "M_CUSTOMER",
         "description": "本システムの操作を制限するための権限を管理",
         "column": {
             "Id": "システムにより割り振られる顧客を一意に識別するID",
