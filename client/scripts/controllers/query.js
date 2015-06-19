@@ -61,12 +61,13 @@ function ($scope, Shared, Query)
                 column: target.column[index]
             });
         }
-        $scope.showSelectedColumnsBox = ($scope.selectColumns.length > 0);
+        $scope.showSelectedColumnsBox = true;
     };
     
     $scope.removeColumn = function(index)
     {
         $scope.selectColumns.splice(index, 1);
+        $scope.showSelectedColumnsBox = ($scope.selectColumns.length > 0);
     };
 
 }]);
