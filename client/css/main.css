@@ -255,7 +255,7 @@ h4 > input {
   position: fixed;
 }
 
-.center {text-align:center;}
+.center {text-align:center; margin-bottom: 10px;}
 
 /*-----------------------------------------------*/
 /* box area
@@ -502,7 +502,7 @@ div .break-all {
 /*bootstrap orverride  */
 .label-box {
   margin-top:10px;
-  margin-bottom:20px;
+  margin-bottom:10px;
 }
 
 .label {

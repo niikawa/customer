@@ -96,7 +96,7 @@ angular
       })
       .when('/query/set', {
         templateUrl: 'views/query/querySetting.html',
-        controller: 'QueryCtrl',
+        controller: 'QuerySetCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
         resolve: {isLogin: autoCheck}
       })

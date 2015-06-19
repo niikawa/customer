@@ -62,12 +62,14 @@ function ($scope, Shared, Query)
             });
         }
         $scope.showSelectedColumnsBox = true;
+        Shared.set('queryColumns', $scope.selectColumns);
     };
     
     $scope.removeColumn = function(index)
     {
         $scope.selectColumns.splice(index, 1);
         $scope.showSelectedColumnsBox = ($scope.selectColumns.length > 0);
+        Shared.set('queryColumns', $scope.selectColumns);
     };
 
     /********************************/
@@ -75,7 +77,33 @@ function ($scope, Shared, Query)
     /***************************````*/
     $scope.nextValidation = function()
     {
+        Shared.get('queryColumns');
         console.log($scope.selectColumns);
     };
 
+}]);
+
+queryCtrl.controller('QuerySetCtrl',['$scope', 'Shared', 'Query', 
+function ($scope, Shared, Query)
+{
+    /**
+     * scope初期化用
+     */
+    function setInitializeScope()
+    {
+        $scope.tableList = [];
+        $scope.columnNum = 0;
+        $scope.selectColumns = [];
+        $scope.showSelectedColumnsBox = true;
+    }
+    
+    /**
+     * 初期処理
+     * @author niikawa
+     */
+    $scope.initialize = function()
+    {
+        Shared.get('queryColumns');
+        console.log($scope.selectColumns);
+    };
 }]);
