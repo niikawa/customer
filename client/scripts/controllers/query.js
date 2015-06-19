@@ -29,7 +29,6 @@ function ($scope, Shared, Query)
 
         Query.resource.get().$promise.then(function(response)
         {
-            console.log(response.data);
             $scope.tableList = response.data;
         });
     };
@@ -37,6 +36,7 @@ function ($scope, Shared, Query)
     $scope.showColumns = function(table)
     {
         $scope.columnList = $scope.tableList[table];
+        console.log($scope.columnList);
         $scope.columnNum = $scope.columnList.length;
         console.log($scope.columnNum);
     };
