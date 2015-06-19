@@ -1,0 +1,34 @@
+{
+    "M_USER": {
+        "logicalname": "ユーザーマスタ",
+        "description": "本システムへアクセスできるユーザーを管理",
+        "column": {
+            "user_id": "ユーザーを一意に識別するためのID",
+            "mailaddress": "ユーザーに割り振られたメールアドレスで重複を許さない",
+            "password": "ログインするためのパスワード",
+            "role_id": "ユーザーに設定された権限を識別するID"
+        }
+    },
+    "M_ROLE": {
+        "logicalname": "権限マスタ",
+        "description": "本システムの操作を制限するための権限を管理",
+        "column": {
+            "role_id": "権限を一意に識別するためのID",
+            "role_name": "権限の名称",
+            "description": "権限の説明"
+        }
+    }
+    "M_CUSTOMER": {
+        "logicalname": "顧客マスタ",
+        "description": "本システムの操作を制限するための権限を管理",
+        "column": {
+            "Id": "システムにより割り振られる顧客を一意に識別するID",
+            "customer_id": "別システムで管理されている顧客を一意に識別するID",
+            "rank_id": "クラスタ分割の結果割り振られたランク",
+            "start_purchasing_date": "購買日開始日",
+            "last_purchasing_date": "最終購買日",
+            "frequency": "購買頻度",
+            "monetary": "購買総合計金額"
+        }
+    }
+}

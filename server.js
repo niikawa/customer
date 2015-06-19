@@ -56,6 +56,9 @@ router.get('/custmoer/orders/:id', customer.orders);
 var azure = require('./api/azureapi');
 router.get('/azure/recomender/:id', azure.recommenderItem);
 
+var table = require('./api/table');
+router.get('/table', table.getTables);
+
 var user = require("./api/user");
 router.get('/user', user.getList);
 router.get('/user/:id', user.getById);

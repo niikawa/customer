@@ -24,6 +24,7 @@ angular
     'dashbordCtrl',
     'segmentCtrl',
     'segmentControlCtrl',
+    'queryCtrl',
     'scenarioCtrl',
     'scenarioControlCtrl',
     'approachCtrl',
@@ -67,69 +68,73 @@ angular
         templateUrl: 'views/customer/customer.html',
         controller: 'MainCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
-//        resolve: {isLogin: autoCheck}
+        resolve: {isLogin: autoCheck}
       })
       .when('/segment', {
         templateUrl: 'views/segment/segment.html',
         controller: 'SegmentCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
-//        resolve: {isLogin: autoCheck}
+        resolve: {isLogin: autoCheck}
       })
       .when('/segment/control', {
         templateUrl: 'views/segment/segmentControl.html',
         controller: 'SegmentControlCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
-//        resolve: {isLogin: autoCheck}
+        resolve: {isLogin: autoCheck}
       })
       .when('/segment/control/:id', {
         templateUrl: 'views/segment/segmentControl.html',
         controller: 'SegmentControlCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
-//        resolve: {isLogin: autoCheck}
+        resolve: {isLogin: autoCheck}
+      })
+      .when('/query', {
+        templateUrl: 'views/query/query.html',
+        controller: 'QueryControlCtrl',
+        reloadOnSearch: false, //ページ内リンクを可能にする
+        resolve: {isLogin: autoCheck}
       })
       .when('/scenario/:scenario', {
         templateUrl: 'views/scenario/scenario.html',
         controller: 'ScenarioCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
-//        resolve: {isLogin: autoCheck}
+        resolve: {isLogin: autoCheck}
       })
       .when('/scenario/:scenario/control', {
         templateUrl: 'views/scenario/scenarioControl.html',
         controller: 'ScenarioControlCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
-//        resolve: {isLogin: autoCheck}
+        resolve: {isLogin: autoCheck}
       })
       .when('/scenario/:scenario/control/:id', {
         templateUrl: 'views/scenario/scenarioControl.html',
         controller: 'ScenarioControlCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
-//        resolve: {isLogin: autoCheck}
+        resolve: {isLogin: autoCheck}
       })
       .when('/approach', {
         templateUrl: 'views/approach/approach.html',
         controller: 'ApproachCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
-//        resolve: {isLogin: autoCheck}
+        resolve: {isLogin: autoCheck}
       })
-      
       .when('/user', {
         templateUrl: 'views/user/user.html',
         controller: 'UserCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
-//        resolve: {isLogin: autoCheck}
+        resolve: {isLogin: autoCheck}
       })
-      
       .when('/user/control', {
         templateUrl: 'views/user/userControl.html',
         controller: 'UserControlCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
-//        resolve: {isLogin: autoCheck}
+        resolve: {isLogin: autoCheck}
       })
       .when('/user/control/:id', {
         templateUrl: 'views/user/userControl.html',
         controller: 'UserControlCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
-//        resolve: {isLogin: autoCheck}
+        resolve: {isLogin: autoCheck}
       })
 
 //       .when('/map', {
