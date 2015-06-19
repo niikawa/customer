@@ -18,6 +18,7 @@ function ($scope, Shared, Query)
         $scope.tableList = [];
         $scope.columnNum = 0;
         $scope.selectColumns = [];
+        $scope.showSelectedColumnsBox = false;
     }
     
     /**
@@ -60,6 +61,7 @@ function ($scope, Shared, Query)
                 column: target.column[index]
             });
         }
+        $scope.cshowSelectedColumnsBox = ($scope.selectColumns.length > 0);
     };
     
     $scope.removeColumn = function(index)
