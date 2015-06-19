@@ -56,6 +56,7 @@ function ($scope, $routeParams, Modal, Shared, Segment)
     {
         $scope.queryList.push($scope.conditions[index]);
         $scope.conditions.slice(index, 1);
+        console.log($scope.conditions);
     };
     
     $scope.showQueryModal = function()
