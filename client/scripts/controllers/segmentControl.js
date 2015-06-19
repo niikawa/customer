@@ -55,7 +55,7 @@ function ($scope, $routeParams, Modal, Shared, Segment)
     $scope.removeItem = function(index)
     {
         $scope.queryList.push($scope.conditions[index]);
-        $scope.conditions.slice(index, 1);
+        $scope.conditions.splice(index,1);
         console.log($scope.conditions);
     };
     
