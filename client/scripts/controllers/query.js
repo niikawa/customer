@@ -35,10 +35,8 @@ function ($scope, Shared, Query)
     
     $scope.showColumns = function(table)
     {
-        $scope.columnList = $scope.tableList[table];
-        console.log($scope.columnList);
+        $scope.columnList = $scope.tableList[table].column;
         $scope.columnNum = Object.keys($scope.columnList).length;
-        console.log($scope.columnNum);
     };
 
 }]);

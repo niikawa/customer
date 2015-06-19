@@ -7,20 +7,19 @@
 
         <div class="row" >
             <div class="col-md-12">
-                <div class="col-md-6 col-sm-6">
-                    <div class="panel panel-default">
-                      <div class="panel-heading">
-                          <input type="text" class="form-control" placeholder="テーブルを絞り込みます" ng-model="tableSearch" 
-                            refine-directive refine-item="tableList" keyword="tableSearch" name-propertie="logicalname|description" >
-                      </div>
-                      <ul class="list-group" >
-                        <li class="list-group-item" ng-repeat="item in tableList" push-directive list="tableList" info="item" ng-click="showColumns(item.physicalname)">
-                            {{item.logicalname}}
-                            <section>{{item.description}}</section>
-                        </li>
-                      </ul>
-                    </div>                        
-                </div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                      <input type="text" class="form-control" placeholder="テーブルを絞り込みます" ng-model="tableSearch" 
+                        refine-directive refine-item="tableList" keyword="tableSearch" name-propertie="logicalname|description" >
+                  </div>
+                  <ul class="list-group" >
+                    <li class="list-group-item" ng-repeat="item in tableList" push-directive list="tableList" info="item" ng-click="showColumns(item.physicalname)">
+                        {{item.logicalname}}
+                        <section>{{item.description}}</section>
+                        
+                    </li>
+                  </ul>
+                </div>                        
             </div>
         </div>
         
