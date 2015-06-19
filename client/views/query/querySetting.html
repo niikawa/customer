@@ -1,4 +1,4 @@
-<div class="" ng-controller="QueryCtrl" ng-init="nextValidation()">
+<div class="" ng-controller="QueryCtrl" ng-init="initialize()">
 
     <div class="page-title"><h2>クエリー管理</h2></div>
     
@@ -8,13 +8,10 @@
         <div class="row" >
             
             <div class="col-md-12 break-all label-box">
-                <h3>選択したカラム</h3>
-                <div ng-if="showSelectedColumnsBox" class="label label-success" ng-repeat="item in selectColumns">
+                <h3>選択しているカラム</h3>
+                <div class="label label-success" ng-repeat="item in selectColumns">
                     {{item.table.logicalname}}.{{item.column.logicalname}}
                     <span type="button" class="label-close" ng-click="removeColumn($index)">&times;</span>
-                </div>
-                <div ng-if="!showSelectedColumnsBox" class="alert alert-info" role="alert">
-                    選択しているカラムはありません。
                 </div>
             </div>
         </div>
