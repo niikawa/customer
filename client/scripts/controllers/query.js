@@ -5,7 +5,7 @@
  * # MainCtrl
  * Controller of the workspaceApp
  */
-var queryCtrl = angular.module('queryCtrl',['SegmentServices']);
+var queryCtrl = angular.module('queryCtrl',['QueryServices']);
 queryCtrl.controller('QueryCtrl',['$scope', 'Shared', 'Query', 
 function ($scope, Shared, Query)
 {
