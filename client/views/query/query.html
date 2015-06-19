@@ -9,7 +9,7 @@
             <div class="col-md-12 break-all">
                 <div class="label label-success" ng-repeat="item in selectColumns">
                     {{item.table.logicalname}}.{{item.column.name}}
-                    <span type="button" class="close" ng-click="removeItem($index)">&times;</span>
+                    <span type="button" class="label-close" ng-click="removeColumn($index)">&times;</span>
                 </div>
                 <!--<span class="label label-success" ng-repeat="item in selectColumns" >{{item.table.logicalname}}.{{item.column.name}}-->
                 <!--    <button type="button" class="close" ng-click="removeItem($index)">&times;</button>-->

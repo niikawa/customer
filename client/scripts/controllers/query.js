@@ -49,5 +49,10 @@ function ($scope, Shared, Query)
         var selectItem = {table: table, column: target.column[index]};
         $scope.selectColumns.push(selectItem);
     };
+    
+    $scope.removeColumn = function(index)
+    {
+        $scope.selectColumns.splice(index, 1);
+    }
 
 }]);
