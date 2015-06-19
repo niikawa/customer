@@ -10,6 +10,10 @@
 
         <div class="row" >
             <div class="col-md-12">
+                <div class="panel-heading">
+                    <input type="text" class="form-control" placeholder="ユーザーを絞り込みます" ng-model="segmentSearch" 
+                        refine-directive refine-item="segmentList" keyword="segmentSearch" name-propertie="segment_name" >
+                </div>
                 <table class="table table-hover">
                     <thead>
                         <tr class="info">
