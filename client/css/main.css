@@ -501,8 +501,20 @@ div .break-all {
 /*-----------------------------------------------*/
 /*bootstrap orverride  */
 .label {
+  margin-top: 10px;
   margin-right: 5px;
   font-size: 100%;
+}
+
+.label-close {
+  color: #FFF;
+  font-size: 100%;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.2em 0.6em 0.3em;
+  opacity: 0.2;
+  text-shadow: 0 1px 0 #fff;
+  cursor: pointer;
 }
 
 /*-----------------------------------------------*/
@@ -685,4 +697,3 @@ div .two-row {
   padding: 0;
   margin: 0;
 }
-
