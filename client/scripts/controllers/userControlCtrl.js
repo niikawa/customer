@@ -119,21 +119,21 @@ function ($scope, $routeParams, User, Role, Utility, Location)
             $scope.roleList = response.data;
         });
         
-       // user_name != password判定のため
-        $scope.$watch('user.name', function()
-        {
-            $scope.userForm.password.$validate();
-        });
- 
-        // password == password_confirm判定のため
-        
         if (1 === pageProp.type)
         {
+           // user_name != password判定のため
+            $scope.$watch('user.name', function()
+            {
+                $scope.userForm.password.$validate();
+            });
+     
+            // password == password_confirm判定のため
             $scope.$watch('user.password', function()
             {
                 $scope.userForm.password_confirm.$validate();
             });
         }
+        
         $scope.$watch('roleList', function()
         {
             $scope.userForm.selected_role.$validate();
