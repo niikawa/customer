@@ -501,12 +501,14 @@ div .break-all {
 /*-----------------------------------------------*/
 /*bootstrap orverride  */
 .label-box {
-  margin:10px;
+  margin-top:10px;
+  margin-bottom:20px;
 }
 
 .label {
   margin-right: 5px;
   font-size: 100%;
+  line-height:2.5;
 }
 
 .label-close {
