@@ -52,6 +52,11 @@ function ($scope, $routeParams, Modal, Shared, Segment)
         }
     };
     
+    $scope.removeItem = function(index)
+    {
+        $scope.queryList.push($scope.conditions[index]);
+    };
+    
     $scope.showQueryModal = function()
     {
         $scope.modalParam = 
