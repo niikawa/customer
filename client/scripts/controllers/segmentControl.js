@@ -21,6 +21,7 @@ function ($scope, $routeParams, Modal, Shared, Segment)
         {
             event.stopPropagation();
         });
+        $scope.apply();
     }
     
     function createQuery()
