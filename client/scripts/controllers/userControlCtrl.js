@@ -126,11 +126,14 @@ function ($scope, $routeParams, User, Role, Utility, Location)
         });
  
         // password == password_confirm判定のため
-        $scope.$watch('user.password', function()
-        {
-            $scope.userForm.password_confirm.$validate();
-        });
         
+        if (1 === pageProp.type)
+        {
+            $scope.$watch('user.password', function()
+            {
+                $scope.userForm.password_confirm.$validate();
+            });
+        }
         $scope.$watch('roleList', function()
         {
             $scope.userForm.selected_role.$validate();
