@@ -70,4 +70,13 @@ function ($scope, Shared, Query)
         $scope.showSelectedColumnsBox = ($scope.selectColumns.length > 0);
     };
 
+    /********************************/
+    /*          auery set           */
+    /***************************````*/
+    $scope.nextValidation = function()
+    {
+        
+        
+    };
+
 }]);
