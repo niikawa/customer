@@ -111,8 +111,10 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 }
                 
                 var orverIndex = (ctrl.$modelValue.length === 0) ? 0 : DDShared.getOrverIndex();
-                
-                ctrl.$modelValue.splice(orverIndex, 0, pushItem);
+                if (void 0 !== pushItem)
+                {
+                    ctrl.$modelValue.splice(orverIndex, 0, pushItem);
+                }
                 
                 var len = ctrl.$modelValue.length;
                 console.log(ctrl.$modelValue);
