@@ -4,7 +4,7 @@
 var myApp = angular.module('myApp');
 myApp.directive('conditionDirective', function(){
     return {
-        restrict: 'A',
+        restrict: 'E',
         template: '指定した値' +
                 '<select ng-model="selectedCondition" ng-options="item as item.name for item in items">'+
                 'ものを条件とする'+
