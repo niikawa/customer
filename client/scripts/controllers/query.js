@@ -84,11 +84,8 @@ function ($scope, Shared, Query)
         
         angular.forEach($scope.selectColumns, function(v, k)
         {
-            console.log(v.column.type);
             v.column.inputType = Query.getContentsByColumsType(v.column.type);
         });
-        
-        console.log($scope.selectColumns);
     };
     
     $scope.removeItem = function(index)

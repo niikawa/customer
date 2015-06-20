@@ -21,6 +21,7 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
             {
                 countents.inputType = 'date';
             }
+            return countents.inputType;
         };
 
         return queryServices;
