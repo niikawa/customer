@@ -77,6 +77,15 @@ function ($scope, Shared, Query)
     $scope.nextValidation = function()
     {
         $scope.selectColumns = Shared.get('queryColumns');
+        if (void 0 === $scope.selectColumns)
+        {
+            
+        }
+        
+        angular.forEach($scope.selectColumns, function(v, k)
+        {
+            v.column.inputType = Query.setContentsByColumsType(v.column.type);
+        });
     };
     
     $scope.removeItem = function(index)
