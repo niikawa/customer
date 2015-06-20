@@ -17,7 +17,7 @@ function ($scope, Shared, Query)
     {
         $scope.tableList = [];
         $scope.columnNum = 0;
-        $scope.selectColumns = [];
+//        $scope.selectColumns = [];
         $scope.showSelectedColumnsBox = false;
     }
     
@@ -72,11 +72,9 @@ function ($scope, Shared, Query)
         Shared.set('queryColumns', $scope.selectColumns);
     };
     
-    $scope.nextV = function()
+    $scope.nextValidation = function()
     {
         $scope.selectColumns = Shared.get('queryColumns');
-        console.log('nextV');
-        console.log($scope.selectColumns);
     }
     
 

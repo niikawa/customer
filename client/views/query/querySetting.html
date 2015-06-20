@@ -1,4 +1,4 @@
-<div class="" ng-controller="QueryCtrl" ng-init="nextV()">
+<div class="" ng-controller="QueryCtrl" ng-init="nextValidation()">
 
     <div class="page-title"><h2>クエリー管理</h2></div>
     
@@ -14,10 +14,10 @@
                     <span type="button" class="label-close" ng-click="removeColumn($index)">&times;</span>
                 </div>
             </div>
-        </div>
-        <div class="col-md-12 center" >
-            <a class="btn btn-default" ng-href="#/query" >戻る</a>
-            <button class="btn btn-default" ng-disabled="showSelectedColumnsBox" ng-click="save()">保存</button>
+            <div class="col-md-12 center" >
+                <a class="btn btn-default" ng-href="#/query" >戻る</a>
+                <button class="btn btn-default" ng-disabled="showSelectedColumnsBox" ng-click="save()">保存</button>
+            </div>
         </div>
     </div>
 </div>
