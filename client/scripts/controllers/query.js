@@ -70,15 +70,7 @@ function ($scope, Shared, Query)
         $scope.selectColumns.splice(index, 1);
         $scope.showSelectedColumnsBox = ($scope.selectColumns.length > 0);
         Shared.set('queryColumns', $scope.selectColumns);
-    };
-
-    /********************************/
-    /*          auery set           */
-    /***************************````*/
-    $scope.nextValidation = function()
-    {
-        Shared.get('queryColumns');
-        console.log($scope.selectColumns);
+        
     };
 
 }]);
@@ -103,7 +95,7 @@ function ($scope, Shared, Query)
      */
     $scope.initialize = function()
     {
-        Shared.get('queryColumns');
+        $scope.selectColumns = Shared.get('queryColumns');
         console.log($scope.selectColumns);
     };
 }]);
