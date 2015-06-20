@@ -17,6 +17,7 @@ function ($scope, Shared, Query)
     {
         $scope.tableList = [];
         $scope.columnNum = 0;
+        console.log(Shared.get('queryColumns'));
         $scope.selectColumns = Shared.get('queryColumns') || [];
 
         $scope.showSelectedColumnsBox = false;
