@@ -6,8 +6,8 @@
  * Controller of the workspaceApp
  */
 var queryCtrl = angular.module('queryCtrl',['QueryServices']);
-queryCtrl.controller('QueryCtrl',['$scope', 'Shared', 'Query', 
-function ($scope, Shared, Query)
+queryCtrl.controller('QueryCtrl',['$scope', 'Shared', 'Query', 'Location', 
+function ($scope, Shared, Query, Location)
 {
     var selectTable = '';
     /**
@@ -77,7 +77,7 @@ function ($scope, Shared, Query)
         $scope.selectColumns = Shared.get('queryColumns');
         if (void 0 === $scope.selectColumns)
         {
-            
+            Location.query();
         }
         
         angular.forEach($scope.selectColumns, function(v, k)
@@ -90,7 +90,12 @@ function ($scope, Shared, Query)
     {
         $scope.selectColumns.splice(index, 1);
     };
-
+    
+    $scope.next = function()
+    {
+        Location.querySave();
+    };
+    
 }]);
 
 queryCtrl.controller('QuerySetCtrl',['$scope', 'Shared', 'Query', 

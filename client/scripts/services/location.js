@@ -18,6 +18,16 @@ locationServices.service("Location", ['$location',function($location)
         $location.path('/user');
     };
 
+    locationServices.query = function()
+    {
+        $location.path('/query');
+    };
+
+    locationServices.querySet = function()
+    {
+        $location.path('/query/set');
+    };
+
     return locationServices;
 
 }]);
