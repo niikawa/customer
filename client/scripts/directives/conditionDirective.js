@@ -47,7 +47,10 @@ myApp.directive('conditionDirective', function(){
             element.find('select').on('change', function()
             {
                 console.log(scope.selectedCondition);
-                scope.selectedCondition.execute();
+                scope.$apply(function()
+                {
+                    scope.selectedCondition.execute();
+                });
             });
         }
     };
