@@ -86,6 +86,8 @@ function ($scope, Shared, Query)
         {
             v.column.inputType = Query.getContentsByColumsType(v.column.type);
         });
+        
+        console.log($scope.selectColumns);
     };
     
     $scope.removeItem = function(index)
