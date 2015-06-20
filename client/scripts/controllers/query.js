@@ -70,8 +70,15 @@ function ($scope, Shared, Query)
         $scope.selectColumns.splice(index, 1);
         $scope.showSelectedColumnsBox = ($scope.selectColumns.length > 0);
         Shared.set('queryColumns', $scope.selectColumns);
-        
     };
+    
+    $scope.nextV = function()
+    {
+        $scope.selectColumns = Shared.get('queryColumns');
+        console.log('nextV');
+        console.log($scope.selectColumns);
+    }
+    
 
 }]);
 
