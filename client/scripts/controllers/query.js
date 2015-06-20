@@ -84,7 +84,7 @@ function ($scope, Shared, Query)
         
         angular.forEach($scope.selectColumns, function(v, k)
         {
-            v.column.inputType = Query.setContentsByColumsType(v.column.type);
+            v.column.inputType = Query.getContentsByColumsType(v.column.type);
         });
     };
     
