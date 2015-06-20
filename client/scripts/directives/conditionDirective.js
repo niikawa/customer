@@ -16,7 +16,7 @@ myApp.directive('conditionDirective', function(){
         },
         link: function (scope, element, attrs) 
         {
-            var items = [
+            scope.items = [
                 {name: 'に等しい', value: 1},
                 {name: '以上', value: 2},
                 {name: '以下', value: 3},
