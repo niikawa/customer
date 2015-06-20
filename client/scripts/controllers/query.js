@@ -75,8 +75,12 @@ function ($scope, Shared, Query)
     $scope.nextValidation = function()
     {
         $scope.selectColumns = Shared.get('queryColumns');
-    }
+    };
     
+    $scope.removeItem = function(index)
+    {
+        $scope.selectColumns.splice(index, 1);
+    };
 
 }]);
 
