@@ -16,6 +16,7 @@ myApp.directive('conditionDirective', function(){
                   ,
         link: function (scope, element, attrs) 
         {
+            console.log(scope.appendModel);
             scope.appendModel.selectedCondition = {name: '', value: ''};
             scope.appendModel.condition = {value1: '', value2: ''};
             
