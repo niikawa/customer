@@ -16,6 +16,9 @@ myApp.directive('conditionDirective', function(){
         },
         link: function (scope, element, attrs) 
         {
+            scope.appendModel.selectedCondition = {name: '', value: ''};
+            scope.appendModel.condition = {value1: '', value2: ''};
+            
             var showOneInput = function()
             {
                 scope.isOneInput = true;
@@ -47,6 +50,7 @@ myApp.directive('conditionDirective', function(){
             element.find('select').on('change', function()
             {
                 console.log(scope.selectedCondition);
+                scope.appendModel = scope.selectedCondition;
                 scope.$apply(function()
                 {
                     scope.selectedCondition.execute();
