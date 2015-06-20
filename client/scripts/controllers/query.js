@@ -93,6 +93,7 @@ function ($scope, Shared, Query, Location)
     
     $scope.next = function()
     {
+        console.log($scope.selectColumns);
         Location.querySave();
     };
     

@@ -100,7 +100,7 @@ angular
         reloadOnSearch: false, //ページ内リンクを可能にする
         resolve: {isLogin: autoCheck}
       })
-      .when('/query/set/save', {
+      .when('/query/save', {
         templateUrl: 'views/query/querySave.html',
         controller: 'QueryCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする

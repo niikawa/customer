@@ -28,6 +28,11 @@ locationServices.service("Location", ['$location',function($location)
         $location.path('/query/set');
     };
 
+    locationServices.querySave = function()
+    {
+        $location.path('/query/save');
+    };
+
     return locationServices;
 
 }]);
