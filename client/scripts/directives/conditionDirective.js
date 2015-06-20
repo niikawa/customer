@@ -2,7 +2,7 @@
  * 
  */
 var myApp = angular.module('myApp');
-myApp.directive('pushDirective', function(){
+myApp.directive('conditionDirective', function(){
     return {
         restrict: 'A',
         template: '指定した値' +
