@@ -47,17 +47,17 @@ myApp.directive('conditionDirective', function(){
             };
             
             scope.selectItems = [
-                {name: 'に等しい', value: 1, execute: showOneInput},
-                {name: '以上', value: 2, execute: showOneInput},
-                {name: '以下', value: 3, execute: showOneInput},
-                {name: 'を超える', value: 4, execute: showOneInput},
-                {name: '未満', value: 5, execute: showOneInput},
-                {name: 'の間', value: 6, execute: showTwoInput},
-                {name: 'を含む', value: 7, execute: showTextArea},
-                {name: 'を含まない', value: 8, execute: showTextArea},
-                {name: 'から始まる', value: 9, execute: showOneInput},
-                {name: 'で終わる', value: 10, execute: showOneInput},
-                {name: 'を一部に持つ', value: 11, execute: showOneInput},
+                {name: 'に等しい', value: 1, execute: showOneInput, 'symbol': '='},
+                {name: '以上', value: 2, execute: showOneInput, 'symbol': '>='},
+                {name: '以下', value: 3, execute: showOneInput, 'symbol': '<='},
+                {name: 'を超える', value: 4, execute: showOneInput, 'symbol': '>'},
+                {name: '未満', value: 5, execute: showOneInput, 'symbol': '<'},
+                {name: 'の間', value: 6, execute: showTwoInput, 'symbol': 'between'},
+                {name: 'を含む', value: 7, execute: showTextArea, 'symbol': 'IN'},
+                {name: 'を含まない', value: 8, execute: showTextArea, 'symbol': 'NOT IN'},
+                {name: 'から始まる', value: 9, execute: showOneInput, 'symbol': 'like '},
+                {name: 'で終わる', value: 10, execute: showOneInput, 'symbol': 'like '},
+                {name: 'を一部に持つ', value: 11, execute: showOneInput, 'symbol': 'like '},
             ];
             element.find('select').on('change', function()
             {

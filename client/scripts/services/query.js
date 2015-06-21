@@ -42,6 +42,26 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
             
         };
 
+        queryServices.createSQL = function(list)
+        {
+            var sql = 'SELECT * FROM ';
+            var where = 'WHERE ';
+            angular.forEach(list, function(v, k)
+            {
+                where += v.table.logicalname+v.column.logicalname + ' ' + v.selectedCondition.symbol
+                
+                if (void 0 === v.condition.value2 || '' === v.condition.value2)
+                {
+                    where += v.condition.value1;
+                }
+                else
+                {
+                    where += v.condition.value1 + ' AND ' + v.condition.value2;
+                }
+            });
+            return where;
+        };
+
         return queryServices;
     }
 ]);

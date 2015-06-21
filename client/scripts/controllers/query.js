@@ -107,12 +107,12 @@ function ($scope, Shared, Query, Location)
             Location.query();
         }
         Query.createCondtionString($scope.selectColumns);
-        $scope.sql = '';
+        $scope.sql = Query.createSQL($scope.selectColumns);
     };
     
     $scope.createQuery = function(index, appned)
     {
         var target = $scope.selectColumns[index];
-        $scope.sql += target.table.physicalname+target.column.physicalname+'  '+appned;
-    }
+        $scope.sql += target.table.physicalname+target.column.physicalname+target.selectedCondition.symbol+appned;
+    };
 }]);
