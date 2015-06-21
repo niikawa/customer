@@ -16,9 +16,13 @@ myApp.directive('conditionDirective', function(){
                   ,
         link: function (scope, element, attrs) 
         {
-            // scope.appendModel.selectedCondition = {name: '', value: ''};
-            // scope.appendModel.condition = {value1: '', value2: ''};
-            
+            scope.conditionAppend = {
+                selectedCondition: {
+                    name: '', value: ''},
+                condition: {
+                    value1: '', value2: ''},
+            };
+
             scope.isOneInput = false;
             scope.isTwoInput = false;
             
@@ -49,6 +53,8 @@ myApp.directive('conditionDirective', function(){
             ];
             element.find('select').on('change', function()
             {
+                scope.conditionAppend.selectedCondition.name = scope.mySlected.name;
+                scope.conditionAppend.selectedCondition.value = scope.mySlected.value;
                 console.log(scope.conditionAppend);
                 scope.$apply(function()
                 {
