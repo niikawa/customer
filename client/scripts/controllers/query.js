@@ -85,7 +85,8 @@ function ($scope, Shared, Query, Location)
         {
             v.column.inputType = Query.getContentsByColumsType(v.column.type);
         });
-        $scope.conditions = Shared.get('queryColumns');;
+        
+        $scope.conditions = [{}];
     };
     
     $scope.removeItem = function(index)
@@ -95,7 +96,6 @@ function ($scope, Shared, Query, Location)
     
     $scope.next = function()
     {
-        console.log($scope.selectColumns);
         Location.querySave();
     };
     
