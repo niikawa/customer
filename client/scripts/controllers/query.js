@@ -106,5 +106,6 @@ function ($scope, Shared, Query, Location)
         {
             Location.query();
         }
+        Query.createCondtionString($scope.selectColumns);
     };
 }]);

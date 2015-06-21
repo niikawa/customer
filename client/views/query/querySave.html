@@ -20,7 +20,7 @@
               <ul class="list-group" >
                 <li class="list-group-item" ng-repeat="item in selectColumns" ng-model="item" drag-item-directive dragindex="$index">
                     {{item.table.logicalname}}.{{item.column.logicalname}}が
-                    {{item.condition.value1}}{{item.selectedCondition.name}}
+                    {{item.selectedCondition.conditionString}}
                 </li>
               </ul>
             </div>

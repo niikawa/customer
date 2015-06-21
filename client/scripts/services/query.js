@@ -26,7 +26,19 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
         
         queryServices.createCondtionString = function(list)
         {
-            
+            angular.forEach(list, function(v, k)
+            {
+                if (void 0 === v.condition.value2)
+                {
+                    v.selectedCondition.condtionString = 
+                        v.condition.value1 +''+ v.selectedCondition.name;
+                }
+                else
+                {
+                    v.selectedCondition.condtionString = 
+                        v.condition.value1 +'から'+ v.condition.value2 + v.selectedCondition.name;
+                }
+            });
             
         };
 
