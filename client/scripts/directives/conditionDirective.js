@@ -4,7 +4,7 @@
 var myApp = angular.module('myApp');
 myApp.directive('conditionDirective', function(){
     return {
-        restrict: 'E',
+        restrict: 'EA',
         // scope:{
         //     append: '='
         // },
