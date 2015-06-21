@@ -9,15 +9,16 @@ myApp.directive('conditionDirective', function(){
             conditionAppend: '=',
             
         },
-        template: '<div ng-repeat="condition in conditionAppend.selectedCondition">'+
-                '指定した値' +
-                '<select ng-model="condition" ng-options="item as item.name for item in selectItems"></select>'+
-                'ものを条件とする'+
-                '<div ng-if="isOneInput"><input type="text" ng-model="condition.input1"></div>'+
-                '<div ng-if="isTextArea"><input type="text" ng-model="condition.input1"></div>'+
-                '<div ng-if="isTwoInput"><input type="text" ng-model="condition.input1">～<input type="text" ng-model="condition.input2"></div>'*
-                '</div>'+
-                '<button class="btn btn-default" ng-click="add()">追加</button>',
+        template: 
+                '<div ng-repeat="condition in conditionAppend.selectedCondition">'+
+                    '指定した値' +
+                    '<select ng-model="condition" ng-options="item as item.name for item in selectItems"></select>'+
+                    'ものを条件とする'+
+                    '<div ng-if="isOneInput"><input type="text" ng-model="condition.input1"></div>'+
+                    '<div ng-if="isTextArea"><input type="text" ng-model="condition.input1"></div>'+
+                    '<div ng-if="isTwoInput"><input type="text" ng-model="condition.input1">～<input type="text" ng-model="condition.input2"></div>'*
+                '</div>'
+        ,
         link: function (scope, element, attrs) 
         {
             scope.conditionAppend.selectedCondition = [{name: '', value: '', input1: '', input2: ''}];
