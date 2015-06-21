@@ -107,5 +107,12 @@ function ($scope, Shared, Query, Location)
             Location.query();
         }
         Query.createCondtionString($scope.selectColumns);
+        $scope.sql = '';
     };
+    
+    $scope.createQuery = function(index, appned)
+    {
+        var target = $scope.selectColumns[index];
+        $scope.sql += target.table.physicalname+target.column.physicalname+'  '+appned;
+    }
 }]);

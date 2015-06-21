@@ -26,14 +26,15 @@
                         </p>
                         
                         <div class="btn-group" ng-if="!$last">
-                            <label class="btn btn-default" ng-model="item.selectedCondition.where" btn-radio=1 uncheckable>かつ</label>
-                            <label class="btn btn-default" ng-model="item.selectedCondition.where" btn-radio=2 uncheckable>または</label>
+                            <label class="btn btn-default" ng-model="item.selectedCondition.where" btn-radio=1 uncheckable ng-click="createQuery($index, 'AND')">かつ</label>
+                            <label class="btn btn-default" ng-model="item.selectedCondition.where" btn-radio=2 uncheckable ng-click="createQuery($index, 'OR')">または</label>
                         </div>
                     </div>
                 </div>
             </div>
             
             <div class="col-md-6 col-sm-6">
+                <div class="box-gray mh" ng-model='sql' >
             </div>
 
             <div class="col-md-12 center" >
