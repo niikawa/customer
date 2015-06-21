@@ -12,7 +12,7 @@ myApp.directive('conditionDirective', function(){
                 '<select ng-model="mySlected" ng-options="item as item.name for item in selectItems"></select>'+
                 'ものを条件とする'+
                 '<div ng-if="isOneInput"><input type="text" ng-model="append.condition.value1"></div>'+
-                '<div ng-if="isTwoInput"><input type="text" ng-model="append.condition.value1">～<input type="text" ng-model="appendModel.condition.value2"></div>'
+                '<div ng-if="isTwoInput"><input type="text" ng-model="append.condition.value1">～<input type="text" ng-model="append.condition.value2"></div>'
                   ,
         link: function (scope, element, attrs) 
         {
@@ -51,10 +51,10 @@ myApp.directive('conditionDirective', function(){
             {
                console.log(scope.append);
              //scope.append = scope.mySlected;
-                scope.$apply(function()
-                {
-                    scope.mySlected.execute();
-                });
+                scope.mySlected.execute();
+                // scope.$apply(function()
+                // {
+                // });
             });
         }
     };
