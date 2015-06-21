@@ -18,8 +18,8 @@ myApp.directive('conditionDirective', function(){
                   ,
         link: function (scope, element, attrs) 
         {
-            scope.conditionAppend.selectedCondition = {name: '', value: ''};
-            scope.conditionAppend.condition = {value1: '', value2: ''};
+            scope.conditionAppend.selectedCondition = {name: '', value: '', symbol: ''};
+            scope.conditionAppend.condition = {value1: '', value2: '', where: ''};
 
             scope.isOneInput = false;
             scope.isTextArea = false;
@@ -63,6 +63,7 @@ myApp.directive('conditionDirective', function(){
             {
                 scope.conditionAppend.selectedCondition.name = scope.mySlected.name;
                 scope.conditionAppend.selectedCondition.value = scope.mySlected.value;
+                scope.conditionAppend.selectedCondition.symbol = scope.mySlected.symbol;
                 console.log(scope.conditionAppend);
                 scope.$apply(function()
                 {
