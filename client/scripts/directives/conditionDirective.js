@@ -9,8 +9,9 @@ myApp.directive('conditionDirective', function(){
         //     append: '='
         // },
         template: '指定した値' +
-                '<select ng-options="item as item.name for item in items"></select>'+
+                '<select ng-model="mySlected" ng-options="item as item.name for item in selectItems"></select>'+
                 'ものを条件とする'+
+                '{{mySlected}}'+
                 '<div ng-if="isOneInput"><input type="text" ng-model="append.condition.value1"></div>'+
                 '<div ng-if="isTwoInput"><input type="text" ng-model="append.condition.value1">～<input type="text" ng-model="appendModel.condition.value2"></div>'
                   ,
@@ -35,7 +36,7 @@ myApp.directive('conditionDirective', function(){
                 scope.isTwoInput = true;
             };
             
-            scope.items = [
+            scope.selectItems = [
                 {name: 'に等しい', value: 1, execute: showOneInput},
                 {name: '以上', value: 2, execute: showOneInput},
                 {name: '以下', value: 3, execute: showOneInput},
