@@ -19,7 +19,7 @@ myApp.directive('conditionDirective', function(){
         link: function (scope, element, attrs) 
         {
             scope.conditionAppend.selectedCondition = {name: '', value: '', symbol: ''};
-            scope.conditionAppend.condition = {value1: '', value2: '', where: ''};
+            scope.conditionAppend.condition = {value1: '', value2: '', where: 'AND'};
 
             scope.isOneInput = false;
             scope.isTextArea = false;

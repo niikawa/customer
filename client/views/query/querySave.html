@@ -26,8 +26,8 @@
                         </p>
                         
                         <div class="btn-group" ng-if="!$last">
-                            <label class="btn btn-default" ng-model="item.condition.where" btn-radio='AND' uncheckable ng-click="createQuery($index, 'AND')">かつ</label>
-                            <label class="btn btn-default" ng-model="item.condition.where" btn-radio='OR' uncheckable ng-click="createQuery($index, 'OR')">または</label>
+                            <label class="btn btn-default" ng-model="item.condition.where" btn-radio='AND' uncheckable>かつ</label>
+                            <label class="btn btn-default" ng-model="item.condition.where" btn-radio='OR' uncheckable>または</label>
                         </div>
                         <pre>{{item.condition.where}}</pre>
                     </div>
