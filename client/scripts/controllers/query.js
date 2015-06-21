@@ -107,7 +107,7 @@ function ($scope, Shared, Query, Location)
             Location.query();
         }
         Query.createCondtionString($scope.selectColumns);
-        $scope.sql = Query.createSQL($scope.selectColumns);
+        console.log($scope.selectColumns);
     };
     
     $scope.createQuery = function(index, appned)
