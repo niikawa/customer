@@ -26,8 +26,8 @@
                         </p>
                         
                         <div class="btn-group" ng-if="!$last">
-                            <label class="btn btn-default" ng-model="item.selectedCondition.where" btn-radio='AND' uncheckable ng-click="createQuery($index, 'AND')">かつ</label>
-                            <label class="btn btn-default" ng-model="item.selectedCondition.where" btn-radio='OR' uncheckable ng-click="createQuery($index, 'OR')">または</label>
+                            <label class="btn btn-default" ng-model="item.condition.where" btn-radio='AND' uncheckable ng-click="createQuery($index, 'AND')">かつ</label>
+                            <label class="btn btn-default" ng-model="item.condition.where" btn-radio='OR' uncheckable ng-click="createQuery($index, 'OR')">または</label>
                         </div>
                     </div>
                 </div>
@@ -36,8 +36,8 @@
             <div class="col-md-6 col-sm-6">
                 <div class="box-gray mh" ng-model='sql' >
                     <p class="" ng-repeat="item in selectColumns">
-                            {{item.table.logicalname}}.{{item.column.logicalname}}{{item.selectedCondition.symbol}}{{item.selectedCondition.input1}}
-                            {{item.selectedCondition.where}}
+                            {{item.table.logicalname}}.{{item.column.logicalname}}{{item.condition.symbol}}{{item.condition.input1}}
+                            {{item.condition.where}}
                     </p>
                 
                 </div>
