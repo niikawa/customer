@@ -34,11 +34,16 @@
             </div>
             
             <div class="col-md-6 col-sm-6">
-                <div class="box-gray mh" ng-model='sql' >
-                    <p class="" ng-repeat="item in selectColumns">
-                        {{item.table.logicalname}}.{{item.column.logicalname}}{{item.selectedCondition.symbol}}{{item.condition.value1}}
-                        {{item.condition.where}}
-                    </p>
+                <div class="box-gray mh" >
+                
+                    <div class="" ng-repeat="item in selectColumns">
+                        <p>
+                            {{item.table.logicalname}}.{{item.column.logicalname}}{{item.selectedCondition.symbol}}{{item.condition.value1}}
+                        </p>
+                        <p ng-if="!$last">
+                            {{item.condition.where}}
+                        </p>
+                    </div>
                 
                 </div>
             </div>
