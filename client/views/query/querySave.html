@@ -1,4 +1,4 @@
-<div class="" ng-controller="QueryCtrl" ng-init="nextValidation()">
+<div class="" ng-controller="QueryCtrl" ng-init="saveInitialize()">
 
     <div class="page-title"><h2>クエリー管理</h2></div>
     
@@ -19,7 +19,8 @@
             <div class="col-md-6 col-sm-6">
               <ul class="list-group" >
                 <li class="list-group-item" ng-repeat="item in selectColumns" ng-model="item" drag-item-directive dragindex="$index">
-                    {{item.table.logicalname}}.{{item.column.logicalname}}
+                    {{item.table.logicalname}}.{{item.column.logicalname}}が
+                    {{item.condition.value1}}{{item.selectedCondition.name}}
                 </li>
               </ul>
             </div>
@@ -27,10 +28,10 @@
             <div class="col-md-6 col-sm-6">
                 <div class="box-gray mh" ng-model='conditions' drop-directive drop-area-key="" >
                     <div class="panel panel-success" ng-repeat="condition in conditions" drag-item-directive dragindex="$index">
-                        <div class="panel-heading">{{item.table.logicalname}}.{{item.column.logicalname}}
+                        <div class="panel-heading">{{condition.table.logicalname}}.{{condition.column.logicalname}}
                             <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
                         </div>
-                        <div>
+                        <div >
                             <div class="btn-group">
                                 <label class="btn btn-default" ng-model="approach" btn-radio=1 uncheckable>かつ</label>
                                 <label class="btn btn-default" ng-model="approach" btn-radio=2 uncheckable>または</label>

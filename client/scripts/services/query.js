@@ -24,6 +24,7 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
             return countents.inputType;
         };
 
+
         return queryServices;
     }
 ]);

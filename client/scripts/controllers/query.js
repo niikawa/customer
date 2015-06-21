@@ -85,8 +85,6 @@ function ($scope, Shared, Query, Location)
         {
             v.column.inputType = Query.getContentsByColumsType(v.column.type);
         });
-        
-        $scope.conditions = [];
     };
     
     $scope.removeItem = function(index)
@@ -99,29 +97,14 @@ function ($scope, Shared, Query, Location)
         Location.querySave();
     };
     
-}]);
-
-queryCtrl.controller('QuerySetCtrl',['$scope', 'Shared', 'Query', 
-function ($scope, Shared, Query)
-{
-    /**
-     * scope初期化用
-     */
-    function setInitializeScope()
+    $scope.saveInitialize = function()
     {
-        $scope.tableList = [];
-        $scope.columnNum = 0;
-        $scope.selectColumns = [];
-        $scope.showSelectedColumnsBox = true;
-    }
-    
-    /**
-     * 初期処理
-     * @author niikawa
-     */
-    $scope.initialize = function()
-    {
+        $scope.conditions = [];
         $scope.selectColumns = Shared.get('queryColumns');
-        console.log($scope.selectColumns);
+        
+        if (void 0 === $scope.selectColumns)
+        {
+            Location.query();
+        }
     };
 }]);
