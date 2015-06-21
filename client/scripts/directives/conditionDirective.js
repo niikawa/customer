@@ -5,19 +5,18 @@ var myApp = angular.module('myApp');
 myApp.directive('conditionDirective', function(){
     return {
         restrict: 'E',
-        scope:{
-            appendModel: '='
-        },
+        // scope:{
+        //     append: '='
+        // },
         template: '指定した値' +
                 '<select ng-options="item as item.name for item in items"></select>'+
                 'ものを条件とする'+
-                '<div>{{appendModel.table}}</div>'+
-                '<div ng-if="isOneInput"><input type="text" ng-model="appendModel.condition.value1"></div>'+
-                '<div ng-if="isTwoInput"><input type="text" ng-model="appendModel.condition.value1">～<input type="text" ng-model="appendModel.condition.value2"></div>'
+                '<div ng-if="isOneInput"><input type="text" ng-model="append.condition.value1"></div>'+
+                '<div ng-if="isTwoInput"><input type="text" ng-model="append.condition.value1">～<input type="text" ng-model="appendModel.condition.value2"></div>'
                   ,
         link: function (scope, element, attrs) 
         {
-            console.log(scope.appendModel);
+            console.log(scope.append);
             // scope.appendModel.selectedCondition = {name: '', value: ''};
             // scope.appendModel.condition = {value1: '', value2: ''};
             
