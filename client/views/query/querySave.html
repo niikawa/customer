@@ -33,7 +33,8 @@
                         <div class="panel-heading">{{condition.table.logicalname}}.{{condition.column.logicalname}}
                             <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
                         </div>
-                        <div >
+                        <div panel-body>
+                            {{item.table.logicalname}}.{{item.column.logicalname}}が{{item.selectedCondition.condtionString}}
                             <div class="btn-group">
                                 <label class="btn btn-default" ng-model="approach" btn-radio=1 uncheckable>かつ</label>
                                 <label class="btn btn-default" ng-model="approach" btn-radio=2 uncheckable>または</label>
