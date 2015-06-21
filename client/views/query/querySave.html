@@ -17,20 +17,27 @@
             </div>
                 
             <div class="col-md-6 col-sm-6">
-              <ul class="list-group" >
-                <li class="list-group-item" ng-repeat="item in selectColumns" ng-model="item" drag-item-directive dragindex="$index">
-                    {{item.table.logicalname}}.{{item.column.logicalname}}が
-                    {{item.selectedCondition.condtionString}}
-                </li>
-              </ul>
+                
+                <div class="card-container" ng-model='selectColumns' drop-directive drop-area-key="1">
+                    
+                    <div class="card btn-draggable" ng-repeat="item in selectColumns track by $index" drag-item-directive dragindex="$index" >
+                        <p>
+                            {{item.table.logicalname}}.{{item.column.logicalname}}が{{item.selectedCondition.condtionString}}
+                        </p>
+                        
+                        <div class="btn-group">
+                            <label class="btn btn-default" ng-model="approach" btn-radio=1 uncheckable>かつ</label>
+                            <label class="btn btn-default" ng-model="approach" btn-radio=2 uncheckable>または</label>
+                        </div>
+                    </div>
+                </div>
             </div>
-                
+            
             <div class="col-md-6 col-sm-6">
-                
                 <button class="btn btn-default" ng-click="save()">追加</button>
                 <div class="box-gray mh" ng-model='conditions' drop-directive drop-area-key="" >
                     <div class="panel panel-success" ng-repeat="condition in conditions" drag-item-directive dragindex="$index">
-                        <div panel-body>
+                        <div class="panel-body">
                             {{condition.table.logicalname}}.{{condition.column.logicalname}}
                             が{{condition.selectedCondition.condtionString}}
                         </div>
