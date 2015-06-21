@@ -23,7 +23,12 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
             }
             return countents.inputType;
         };
-
+        
+        queryServices.createCondtionString = function(list)
+        {
+            
+            
+        };
 
         return queryServices;
     }
