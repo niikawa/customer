@@ -68,7 +68,7 @@ myApp.directive('conditionDirective', function(){
                 scope.conditionAppend.selectedCondition.push({name: '', value: '', input1: '', input2: ''});
             };
             
-            element.find('div').find('select').on('change', function()
+            element.find('div').children('select').on('change', function()
             {
                 console.log(scope.conditionAppend);
                 scope.$apply(function()
