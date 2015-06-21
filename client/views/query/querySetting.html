@@ -15,8 +15,9 @@
                             <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
                         </div>
                         <div class="panel-body">
-                            <section>{{item.column.description}}</section>
-                            <condition-directive appned="item"></condition-directive>
+                            <section>{{item.column.description}}</section><br>
+                            
+                            <condition-directive condition-append="item"></condition-directive>
 
                         </div>
                     </div>
