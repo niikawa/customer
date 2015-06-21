@@ -5,19 +5,17 @@ var myApp = angular.module('myApp');
 myApp.directive('conditionDirective', function(){
     return {
         restrict: 'EA',
-        // scope:{
-        //     append: '='
-        // },
+        scope:{
+            append: '='
+        },
         template: '指定した値' +
                 '<select ng-model="mySlected" ng-options="item as item.name for item in selectItems"></select>'+
                 'ものを条件とする'+
-                '<pre>{{mySlected}}</pre>'+
                 '<div ng-if="isOneInput"><input type="text" ng-model="append.condition.value1"></div>'+
                 '<div ng-if="isTwoInput"><input type="text" ng-model="append.condition.value1">～<input type="text" ng-model="appendModel.condition.value2"></div>'
                   ,
         link: function (scope, element, attrs) 
         {
-            console.log(scope.append);
             // scope.appendModel.selectedCondition = {name: '', value: ''};
             // scope.appendModel.condition = {value1: '', value2: ''};
             
@@ -51,11 +49,11 @@ myApp.directive('conditionDirective', function(){
             ];
             element.find('select').on('change', function()
             {
-                console.log(scope.selectedCondition);
-                scope.appendModel = scope.selectedCondition;
+               console.log(scope.append);
+             //scope.append = scope.mySlected;
                 scope.$apply(function()
                 {
-                    scope.selectedCondition.execute();
+                    scope.mySlected.execute();
                 });
             });
         }
