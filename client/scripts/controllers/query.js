@@ -19,6 +19,7 @@ function ($scope, Shared, Query, Location)
         $scope.columnNum = 0;
         $scope.selectColumns = Shared.get('queryColumns') || [];
         $scope.showSelectedColumnsBox = $scope.selectColumns.length > 0;
+        $scope.conditions = [];
     }
     
     /**
