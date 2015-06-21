@@ -9,8 +9,9 @@ myApp.directive('conditionDirective', function(){
             appendModel: '='
         },
         template: '指定した値' +
-                '<select ng-model="selectedCondition" ng-options="item as item.name for item in items"></select>'+
+                '<select ng-options="item as item.name for item in items"></select>'+
                 'ものを条件とする'+
+                '<div>{{appendModel.table}}</div>'+
                 '<div ng-if="isOneInput"><input type="text" ng-model="appendModel.condition.value1"></div>'+
                 '<div ng-if="isTwoInput"><input type="text" ng-model="appendModel.condition.value1">～<input type="text" ng-model="appendModel.condition.value2"></div>'
                   ,
