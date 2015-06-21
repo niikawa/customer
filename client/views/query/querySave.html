@@ -29,7 +29,6 @@
                             <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'AND'" uncheckable>かつ</label>
                             <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'OR'" uncheckable>または</label>
                         </div>
-                        <pre>{{item.condition.where}}</pre>
                     </div>
                 </div>
             </div>
@@ -38,7 +37,7 @@
                 <div class="box-gray mh" ng-model='sql' >
                     <p class="" ng-repeat="item in selectColumns">
                         {{item.table.logicalname}}.{{item.column.logicalname}}{{item.selectedCondition.symbol}}{{item.condition.value1}}
-                        <p>{{item.condition.where}}</p>
+                        {{item.condition.where}}
                     </p>
                 
                 </div>
