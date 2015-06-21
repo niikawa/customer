@@ -16,12 +16,8 @@ myApp.directive('conditionDirective', function(){
                   ,
         link: function (scope, element, attrs) 
         {
-            scope.conditionAppend = {
-                selectedCondition: {
-                    name: '', value: ''},
-                condition: {
-                    value1: '', value2: ''},
-            };
+            scope.conditionAppend.selectedCondition = {name: '', value: ''};
+            scope.conditionAppend.condition = {value1: '', value2: ''};
 
             scope.isOneInput = false;
             scope.isTwoInput = false;
