@@ -16,8 +16,9 @@ myApp.directive('conditionDirective', function(){
                     'ものを条件とする'+
                     '<div ng-if="isOneInput"><input type="text" ng-model="condition.input1"></div>'+
                     '<div ng-if="isTextArea"><input type="text" ng-model="condition.input1"></div>'+
-                    '<div ng-if="isTwoInput"><input type="text" ng-model="condition.input1">～<input type="text" ng-model="condition.input2"></div>'*
-                '</div>'
+                    '<div ng-if="isTwoInput"><input type="text" ng-model="condition.input1">～<input type="text" ng-model="condition.input2"></div>'+
+                '</div>'+
+                '<button class="btn btn-default" ng-click="add()">条件を追加</button>'
         ,
         link: function (scope, element, attrs) 
         {
@@ -67,7 +68,7 @@ myApp.directive('conditionDirective', function(){
                 scope.conditionAppend.selectedCondition.push({name: '', value: '', input1: '', input2: ''});
             };
             
-            element.find('select').on('change', function()
+            element.find('div').find('select').on('change', function()
             {
                 console.log(scope.conditionAppend);
                 scope.$apply(function()
