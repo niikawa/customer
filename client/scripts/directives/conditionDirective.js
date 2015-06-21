@@ -24,6 +24,12 @@ myApp.directive('conditionDirective', function(){
         {
             scope.conditionAppend.selectedCondition = [{name: '', value: '', input1: '', input2: ''}];
             
+            scope.$watch('conditionAppend.selectedCondition', function(newValue, oldValue)
+            {
+                console.log(scope.conditionAppend);
+            }, true);
+
+            
             scope.isOneInput = false;
             scope.isTextArea = false;
             scope.isTwoInput = false;
