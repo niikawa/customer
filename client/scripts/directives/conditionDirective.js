@@ -7,29 +7,20 @@ myApp.directive('conditionDirective', function(){
         restrict: 'EA',
         scope:{
             conditionAppend: '=',
-            
         },
         template: 
-                '<div ng-repeat="condition in conditionAppend.selectedCondition">'+
-                    '指定した値' +
-                    '<select ng-model="condition" ng-options="item as item.name for item in selectItems"></select>'+
-                    'ものを条件とする'+
-                    '<div ng-if="isOneInput"><input type="text" ng-model="condition.input1"></div>'+
-                    '<div ng-if="isTextArea"><input type="text" ng-model="condition.input1"></div>'+
-                    '<div ng-if="isTwoInput"><input type="text" ng-model="condition.input1">～<input type="text" ng-model="condition.input2"></div>'+
-                '</div>'+
-                '<button class="btn btn-default" ng-click="add()">条件を追加</button>'
-        ,
+                '指定した値' +
+                '<select ng-model="mySlected" ng-options="item as item.name for item in selectItems"></select>'+
+                'ものを条件とする'+
+                '<div ng-if="isOneInput"><input type="text" ng-model="conditionAppend.condition.value1"></div>'+
+                '<div ng-if="isTextArea"><input type="text" ng-model="conditionAppend.condition.value1"></div>'+
+                '<div ng-if="isTwoInput"><input type="text" ng-model="conditionAppend.condition.value1">～<input type="text" ng-model="conditionAppend.condition.value2"></div>'
+                  ,
         link: function (scope, element, attrs) 
         {
-            scope.conditionAppend.selectedCondition = [{name: '', value: '', input1: '', input2: ''}];
-            
-            scope.$watch('conditionAppend.selectedCondition', function(newValue, oldValue)
-            {
-                console.log(scope.conditionAppend);
-            }, true);
+            scope.conditionAppend.selectedCondition = {name: '', value: ''};
+            scope.conditionAppend.condition = {value1: '', value2: ''};
 
-            
             scope.isOneInput = false;
             scope.isTextArea = false;
             scope.isTwoInput = false;
@@ -68,14 +59,10 @@ myApp.directive('conditionDirective', function(){
                 {name: 'で終わる', value: 10, execute: showOneInput},
                 {name: 'を一部に持つ', value: 11, execute: showOneInput},
             ];
-            
-            scope.add = function()
+            element.find('select').on('change', function()
             {
-                scope.conditionAppend.selectedCondition.push({name: '', value: '', input1: '', input2: ''});
-            };
-            
-            element.find('div').children('select').on('change', function()
-            {
+                scope.conditionAppend.selectedCondition.name = scope.mySlected.name;
+                scope.conditionAppend.selectedCondition.value = scope.mySlected.value;
                 console.log(scope.conditionAppend);
                 scope.$apply(function()
                 {
