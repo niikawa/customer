@@ -18,8 +18,11 @@ myApp.directive('conditionDirective', function(){
         link: function (scope, element, attrs) 
         {
             console.log(scope.appendModel);
-            scope.appendModel.selectedCondition = {name: '', value: ''};
-            scope.appendModel.condition = {value1: '', value2: ''};
+            // scope.appendModel.selectedCondition = {name: '', value: ''};
+            // scope.appendModel.condition = {value1: '', value2: ''};
+            
+            scope.isOneInput = false;
+            scope.isTwoInput = false;
             
             var showOneInput = function()
             {
@@ -46,9 +49,6 @@ myApp.directive('conditionDirective', function(){
                 {name: 'で終わる', value: 10, execute: showOneInput},
                 {name: 'を一部に持つ', value: 11, execute: showOneInput},
             ];
-            scope.isOneInput = false;
-            scope.isTwoInput = false;
-            
             element.find('select').on('change', function()
             {
                 console.log(scope.selectedCondition);
