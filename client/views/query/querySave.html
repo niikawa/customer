@@ -37,7 +37,7 @@
                             
                         </div>
                         <div class="pull-right">
-                            <div class="drop-join" drop-join-directive ng-model="item">
+                            <div class="drop-join" drop-join-directive ng-model="items">
                                 
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                                 <span ng-if="item.selectedCondition.symbol=='BETWEEN'">{{item.selectedCondition.symbol}}{{item.condition.value1}} AND {{item.condition.value2}}</span>
                             </p>
                             
-                            <span ng-if="$index=$last">)</span>
+                            <span ng-if="!$parent.$index>0&&$index=$last">)</span>
                             <p ng-if="!$parent.$last">
                                 
                                 {{item.condition.where}}
