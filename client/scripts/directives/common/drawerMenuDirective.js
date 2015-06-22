@@ -5,7 +5,10 @@ myApp.directive('drawerMenuDirective', function()
         restrict: 'E',
         scope: {menuList: '=', position: '@'},
         template: '<nav class="hi-icon-effect-8 drawer-menu">'
-                    +'<a ng-repeat="item in itemList" style="{{item.style}}" class="drawer-menu-item" href={{item.link}}><i class="fa {{item.fa}} fa-3x"></i></a>'
+                    +'<a ng-repeat="item in itemList" style="{{item.style}}" class="drawer-menu-item" ng-href={{item.link}}>'+
+                    '<i ng-if="item.fa" class="fa {{item.fa}} fa-3x"></i>'+
+                    '<span ng-if="item.s">{{item.s}}</span>'+
+                    '</a>'+
                  +'</nav>',
         link: function (scope, element, attrs) 
         {
@@ -65,7 +68,8 @@ myApp.directive('drawerMenuDirective', function()
                         
                         //element.addClass('move');
                         
-                        var linkList = ['#/', '/#/segment', '/#/scenario', '/#/approach', '/#/user'];
+                        var linkList = ['', '/#/segment', '/#/scenario', '/#/approach', '/#/user'];
+                        var sList = ['D', 'SE', 'SC', 'AP', 'US'];
 
                         if (1 === type)
                         {
@@ -77,7 +81,7 @@ myApp.directive('drawerMenuDirective', function()
                                 y = Math.sin(angle) * 75 - ((i-1) * targetWidth) - targetWidth/2;
                                 var dur = durbase+(400*i);
                                 var translate = 'transition-timing-function:cubic-bezier(0.935, 0.000, 0.340, 1.330);transition-duration: '+dur+'ms;transform: translate3d(' + x +'px,' + y + 'px, 0);';
-                                var add = {fa: 'fa-dashcube', link: linkList[i-1],style: translate};
+                                var add = {s: sList [i-1], link: linkList[i-1],style: translate};
                                 scope.itemList.push(add);
                             }
                         }
