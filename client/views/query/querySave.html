@@ -18,7 +18,6 @@
                 
             <div class="col-md-12 center" >
                 <a class="btn btn-default" ng-href="#/query/set" >戻る</a>
-                <button class="btn btn-default"  ng-disabled="queryForm.$invalid" ng-click="join()">チェックしたものをまとめる保存</button>
                 <button class="btn btn-default"  ng-disabled="queryForm.$invalid" ng-click="save()">保存</button>
             </div>
             
@@ -38,7 +37,6 @@
                                 <div class="drop-join" drop-join-directive ng-model="items">
                                     
                                 </div>
-                                <input type="checkbox" ng-model="item.join">まとめる
                             </div>
                         </div>
                         
