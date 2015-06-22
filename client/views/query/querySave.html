@@ -61,7 +61,7 @@
                             </p>
                             
                             <span ng-if="$index!=0 && $index==$last">)</span>
-                            <p ng-if="!$parent.$last || $index!=$last">
+                            <p ng-if="!$parent.$last">
                                 {{item.condition.where}}
                             </p>
                         </div>
