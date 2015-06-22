@@ -58,8 +58,6 @@ myApp.directive('dragItemDirective', ['DDShared', function(DDShared)
             element.attr('draggable', true);
             element.attr('data-index', scope.dragindex);
             
-            scope.$$phase || scope.$apply();
-            
             element.on('dragstart', function(event)
             {
                 var index = event.target.dataset.index;
