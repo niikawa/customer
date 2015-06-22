@@ -57,7 +57,10 @@ var azure = require('./api/azureapi');
 router.get('/azure/recomender/:id', azure.recommenderItem);
 
 var table = require('./api/table');
-router.get('/table', table.getTables);
+router.get('/query', table.getTables);
+
+var query = require("./api/query");
+router.post('/query', query.addItem);
 
 var user = require("./api/user");
 router.get('/user', user.getList);
@@ -71,8 +74,6 @@ var role = require("./api/role");
 router.get('/role', role.getAll);
 router.get('/role/:id', role.getById);
 
-var query = require("./api/query");
-router.post('/query', query.addItem);
 
 //
 // ## SimpleServer `SimpleServer(obj)`
