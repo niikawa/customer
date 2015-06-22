@@ -188,7 +188,7 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 console.log(pushItem);
                 if (void 0 !== pushItem)
                 {
-                    ctrl.$modelValue.push(pushItem[0]);
+                    ctrl.$modelValue.push(pushItem);
                 }
                 console.log(ctrl.$modelValue);
 //                scope.$emit('dropItemComplete', emitObject);
