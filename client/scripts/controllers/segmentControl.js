@@ -13,7 +13,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility)
         $scope.queryList = [];
         $scope.conditions = [];
         $scope.segmentSearch = '';
-        $scope.segment = {segment_name: ''};
+        $scope.segment = {};
     }
     
     function setEvntListeners()
@@ -63,11 +63,13 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility)
         var sql = Segment.createSQL($scope.conditions);
         var data =  {segment_name: $scope.segment.segment_name, sql: sql};
         
-        Segment.resource.create({data: data}).$promise.then(function(response)
-        {
-            Utility.info('セグメントを作成しました');
-            console.log(response);
-        });
+        console.log($scope.segment.segment_name);
+        
+        // Segment.resource.create({data: data}).$promise.then(function(response)
+        // {
+        //     Utility.info('セグメントを作成しました');
+        //     console.log(response);
+        // });
     };
 
 }]);

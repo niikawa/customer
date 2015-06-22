@@ -123,16 +123,12 @@ function ($scope, Shared, Query, Location, Utility)
         var sql = Query.createSQL($scope.showConditions);
         var c = Shared.get('queryColumns');
         var tables = Query.getTables(c);
-        console.log(tables);
-        
-        
-        // var data =  {query_name: $scope.query.query_name, sql: sql, tables: tables};
-        // Query.resource.create({data: data}).$promise.then(function(response, err)
-        // {
-        //     Shared.destloyByName('queryColumns');
-        //     Utility.info('クエリを保存しました');
-        //     Location.query();
-        // });
-        
+        var data =  {query_name: $scope.query.query_name, sql: sql, tables: tables};
+        Query.resource.create({data: data}).$promise.then(function(response, err)
+        {
+            Shared.destloyByName('queryColumns');
+            Utility.info('クエリを保存しました');
+            Location.query();
+        });
     };
 }]);
