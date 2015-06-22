@@ -117,7 +117,7 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 }
                 
                 var len = ctrl.$modelValue.length;
-                console.log(ctrl.$modelValue);
+                console.log(pushItem);
                 
                 for (var i=0; i < len; i++)
                 {
