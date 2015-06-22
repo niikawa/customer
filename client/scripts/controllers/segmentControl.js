@@ -65,6 +65,8 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query)
     $scope.save = function()
     {
         console.log($scope.conditions);
+        var sql = Segment.createSQL($scope.conditions);
+        
     };
 
 }]);
