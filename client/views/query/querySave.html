@@ -36,10 +36,8 @@
                             </div>
                             
                         </div>
-                        <div class="pull-right">
-                            <div class="drop-join" drop-join-directive ng-model="items">
-                                
-                            </div>
+                        <div class="pull-right drop-join" drop-join-directive ng-model="items">
+                            
                         </div>
                     </div>
                 </div>
@@ -62,6 +60,7 @@
                             
                             <span ng-if="$index!=0 && $index==$last">)</span>
                             <p ng-if="!$parent.$last || ($first!=$last && !$last)">
+                                
                                 {{item.condition.where}}
                             </p>
                         </div>
