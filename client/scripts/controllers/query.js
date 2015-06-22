@@ -107,7 +107,7 @@ function ($scope, Shared, Query, Location, Utility)
         {
             Location.query();
         }
-        $scope.showConditions = [];
+        $scope.selectColumns = [];
         Query.createCondtionString(selectColumns);
         angular.forEach(selectColumns, function(v, k)
         {
