@@ -29,7 +29,7 @@
                         
                         <div ng-repeat="item in items track by $index">
                             <p>{{item.table.logicalname}}.{{item.column.logicalname}}が{{item.selectedCondition.condtionString}}</p>
-                            <div class="btn-group" ng-if="!$parent.$last">
+                            <div class="btn-group" ng-if="!$parent.$last || !$last">
                                 <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'AND'" uncheckable>かつ</label>
                                 <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'OR'" uncheckable>または</label>
                             </div>
