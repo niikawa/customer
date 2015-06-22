@@ -12,13 +12,13 @@ exports.addItem = function(req, res)
 {
     console.log('api query param');
     console.log(req.body);
-    
+    var d = {sql: 'sssss'}
     if (!req.session.isLogin) {
         
         res.status(511).send('authentication faild');
     }
 
-    Query.addItem(req.body.sql, function(err)
+    Query.addItem(d, function(err)
     {
         if (err) {
             

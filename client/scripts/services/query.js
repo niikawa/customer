@@ -11,7 +11,7 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
             create:
             {
                 method: 'POST',
-                url: 'query/create',
+                url: '/query/create',
             },
         });
         
