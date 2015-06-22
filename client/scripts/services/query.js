@@ -59,10 +59,12 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
         {
 //            var sql = 'SELECT * FROM ';
             var where = 'WHERE ';
-            var last = list.length -1;
+            var firstLooplast = list.length -1;
             angular.forEach(list, function(items, k1)
             {
+                var secondLoopLast = items.length -1;
                 if (items.length > 1) where += '(';
+                
                 angular.forEach(items, function(v, k2)
                 {
                     
@@ -82,9 +84,9 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
                         default:
                             where += v.condition.value1;
                     }
-                    if (items.length > 1 && items.length === k2 ) where += ')';
+                    if (items.length > 1 && secondLoopLast === k2 ) where += ')';
                     
-                    if (k1 !== last) where += ' ' +v.condition.where+ ' ';
+                    where += ' ' +v.condition.where+ ' ';
                 });
                 
             });
