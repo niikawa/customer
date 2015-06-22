@@ -9,7 +9,7 @@ myApp.directive('drawerMenuDirective', function()
                     '<i ng-if="item.fa" class="fa {{item.fa}} fa-3x"></i>'+
                     '<span ng-if="item.s">{{item.s}}</span>'+
                     '</a>'+
-                 +'</nav>',
+                    '</nav>',
         link: function (scope, element, attrs) 
         {
             if (void 0 === scope.menuList)
