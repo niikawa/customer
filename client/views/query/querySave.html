@@ -51,8 +51,8 @@
                 
                     <div class="" ng-repeat="items in showConditions track by $index">
                         
-                        <span ng-if="">(</span>
                         <div ng-repeat="item in items track by $index">
+                            <span ng-if="$index==$first">(</span>
                             <p>
                                 {{item.table.logicalname}}.{{item.column.logicalname}}
                                 <span ng-if="item.selectedCondition.symbol=='IN' || item.selectedCondition.symbol=='NOT IN'">{{item.selectedCondition.symbol}}({{item.condition.value1}})</span>
