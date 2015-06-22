@@ -160,7 +160,7 @@ drawer-menu-directive > nav > a {text-align:center;}
 .drawer-menu-right {
 	position:absolute;
 	top:0;
-	right: 50%;
+	right: 0%;
 	animation: moveOutEffect 0.5s 2s ease-out;
 }
 
