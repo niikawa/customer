@@ -60,7 +60,7 @@
                                 <span ng-if="item.selectedCondition.symbol=='BETWEEN'">{{item.selectedCondition.symbol}}{{item.condition.value1}} AND {{item.condition.value2}}</span>
                             </p>
                             
-                            <span ng-if="$parent.$index!=0 && $index==$last">)</span>
+                            <span ng-if="$index!=0 && $index==$last">)</span>
                             <p ng-if="!$parent.$last">
                                 
                                 {{item.condition.where}}
