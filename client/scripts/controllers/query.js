@@ -101,14 +101,18 @@ function ($scope, Shared, Query, Location, Utility)
     {
         $scope.query = {query_name: ''};
         $scope.conditions = [];
-        $scope.selectColumns = Shared.get('queryColumns');
+        var selectColumns = Shared.get('queryColumns');
         
-        if (void 0 === $scope.selectColumns)
+        if (void 0 === selectColumns)
         {
             Location.query();
         }
-        Query.createCondtionString($scope.selectColumns);
-        console.log($scope.selectColumns);
+        $scope.showConditions = [];
+        Query.createCondtionString(selectColumns);
+        angular.forEach(selectColumns, function(v, k)
+        {
+            $scope.showConditions.push(v);
+        });
     };
     
     $scope.createQuery = function(index, appned)
@@ -119,6 +123,20 @@ function ($scope, Shared, Query, Location, Utility)
     
     $scope.join = function()
     {
+        var joinList = [];
+        angular.forEach($scope.selectColumns, function(v, k)
+        {
+            if (v.join)
+            {
+                joinList.push(v);
+            }
+        });
+        
+        if (0 != joinList.length)
+        {
+            
+        }
+        
         console.log($scope.selectColumns);
     };
 
