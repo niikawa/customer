@@ -21,7 +21,7 @@
                           </div>
                           <ul class="list-group" >
                             <li class="list-group-item" ng-repeat="item in queryList" ng-model="queryList" drag-item-directive dragindex="$index">
-                                {{item.query_name}}
+                                {{$index}}{{item.query_name}}
                             </li>
                           </ul>
                         </div>                        
