@@ -38,8 +38,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query)
         $scope._construct();
         setInitializeScope();
         setEvntListeners();
-        
-        $scope.queryList = Segment.mock().queryData;
+        Shared.destloyByName('queryColumns');
         
         Query.resource.getQuery().$promise.then(function(response)
         {
