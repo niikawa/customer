@@ -117,8 +117,7 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 }
                 
                 var len = ctrl.$modelValue.length;
-                console.log(pushItem);
-                
+
                 for (var i=0; i < len; i++)
                 {
                     ctrl.$modelValue[i].line = i+1;
@@ -136,6 +135,7 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 emitObject.remove = pushItem;
                 emitObject.isSameContainer = (emitObject.to == emitObject.from);
                 scope.$emit('dropItemComplete', emitObject);
+                console.log(emitObject);
                 scope.$$phase || scope.$apply();
             });
         }
