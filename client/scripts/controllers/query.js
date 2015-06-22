@@ -6,7 +6,7 @@
  * Controller of the workspaceApp
  */
 var queryCtrl = angular.module('queryCtrl',['QueryServices']);
-queryCtrl.controller('QueryCtrl',['$scope', 'Shared', 'Query', 'Location', 'Utility'
+queryCtrl.controller('QueryCtrl',['$scope', 'Shared', 'Query', 'Location', 'Utility',
 function ($scope, Shared, Query, Location, Utility)
 {
     var selectTable = '';
