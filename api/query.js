@@ -18,8 +18,12 @@ exports.addItem = function(req, res)
         res.status(511).send('authentication faild');
     }
 
-    Query.addItem(d, function(err)
+    Query.addItem(d, function(err, doc)
     {
+        
+        console.log('add item return');
+        console.log(err);
+        console.log(doc);
         if (err) {
             
             res.status(511).send('access ng');
