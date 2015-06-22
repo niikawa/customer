@@ -99,7 +99,7 @@ function ($scope, Shared, Query, Location, Utility)
     
     $scope.saveInitialize = function()
     {
-        $scope.query_name = '';
+        $scope.query = {query_name: ''};
         $scope.conditions = [];
         $scope.selectColumns = Shared.get('queryColumns');
         
@@ -121,7 +121,7 @@ function ($scope, Shared, Query, Location, Utility)
     {
         var sql = Query.createSQL($scope.selectColumns);
         console.log(sql);
-        var data =  {title: $scope.query_name, sql: sql};
+        var data =  {query_name: $scope.query.query_name, sql: sql};
         Query.resource.create({data: data}).$promise.then(function(response, err)
         {
             Shared.destloyByName('queryColumns');
