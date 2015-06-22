@@ -42,6 +42,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query)
         Query.resource.getQuery().$promise.then(function(response)
         {
             $scope.queryList = response.data;
+            Segment.setWhereProp($scope.queryList);
         });
         
         if (2 === Segment.pageProp($routeParams.id).pageTitle)

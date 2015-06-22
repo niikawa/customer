@@ -38,6 +38,14 @@ segmentServices.factory("Segment", ['$resource','Utility',
             }
         };
         
+        segmentServices.setWhereProp = function(list)
+        {
+            angular.forEach(list, function(v, k)
+            {
+                v.where = 'AND';
+            });
+        };
+        
         segmentServices.mock = function()
         {
             var download = function(id)
