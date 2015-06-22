@@ -109,6 +109,7 @@ function ($scope, Shared, Query, Location, Utility)
         }
         $scope.selectColumns = [];
         Query.createCondtionString(selectColumns);
+        $scope.showConditions = [];
         angular.forEach(selectColumns, function(v, k)
         {
             var array = [];
