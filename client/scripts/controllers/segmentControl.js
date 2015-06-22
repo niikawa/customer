@@ -55,7 +55,8 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility)
     $scope.deleteItem = function(index)
     {
         console.log($scope.queryList[index]);
-    }
+        Utility.warn('実装中でーす');
+    };
     
     $scope.removeItem = function(index)
     {
