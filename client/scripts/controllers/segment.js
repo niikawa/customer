@@ -25,14 +25,13 @@ function ($scope, Shared, Segment)
     {
         $scope._construct();
         setInitializeScope();
-        $scope.segmentList = Segment.mock().data;
+//        $scope.segmentList = Segment.mock().data;
 
-        /* サーバーサイド実装後に開放
         Segment.resource.get().$promise.then(function(response)
         {
+            console.log(response);
             $scope.segmentList = response.data;
         });
-        */
     };
     
     $scope.refresh = function()

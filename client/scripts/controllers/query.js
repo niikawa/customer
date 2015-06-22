@@ -121,7 +121,11 @@ function ($scope, Shared, Query, Location, Utility)
     $scope.save = function()
     {
         var sql = Query.createSQL($scope.showConditions);
-        console.log(sql);
+//        var tables = Query.getTables($scope.showConditions);
+        
+        console.log($scope.showConditions);
+        console.log(Shared.get('queryColumns'));
+        
         var data =  {query_name: $scope.query.query_name, sql: sql};
         Query.resource.create({data: data}).$promise.then(function(response, err)
         {
