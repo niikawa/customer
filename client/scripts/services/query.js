@@ -86,7 +86,7 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
                     }
                     if (items.length > 1 && secondLoopLast === k2 ) where += ')';
                     
-                    where += ' ' +v.condition.where+ ' ';
+                    if (k1 !== firstLooplast || k2 !== secondLoopLast) where += ' ' +v.condition.where+ ' ';
                 });
                 
             });
