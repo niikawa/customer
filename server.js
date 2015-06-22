@@ -71,6 +71,9 @@ var role = require("./api/role");
 router.get('/role', role.getAll);
 router.get('/role/:id', role.getById);
 
+var query = require("./api/query");
+router.post('/query', query.addItem);
+
 //
 // ## SimpleServer `SimpleServer(obj)`
 //

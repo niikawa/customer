@@ -115,4 +115,12 @@ function ($scope, Shared, Query, Location)
         var target = $scope.selectColumns[index];
         $scope.sql += target.table.physicalname+target.column.physicalname+target.selectedCondition.symbol+appned;
     };
+    
+    $scope.save = function()
+    {
+        Query.resource.save({sql: $scope.sql}).$promise.then(function(response, err)
+        {
+            console.log(response);
+        });
+    };
 }]);
