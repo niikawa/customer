@@ -52,6 +52,11 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility)
         }
     };
     
+    $scope.deleteItem = function(index)
+    {
+        console.log($scope.queryList[index]);
+    }
+    
     $scope.removeItem = function(index)
     {
         $scope.queryList.push($scope.conditions[index]);
