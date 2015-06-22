@@ -13,7 +13,7 @@
                 <input type="text" class="form-control" placeholder="セグメント名を入力してください" ng-model="segment.segment_name">
                 <hr>
                 <div class="row">
-                    <div class="col-md-4 col-sm-4">
+                    <div class="col-md-6 col-sm-6">
                         <div class="panel panel-default">
                           <div class="panel-heading">
                               <input type="text" class="form-control" placeholder="クエリを絞り込みます" ng-model="segmentSearch" 
@@ -26,7 +26,7 @@
                           </ul>
                         </div>                        
                     </div>
-                    <div class="col-md-8 col-sm-8">
+                    <div class="col-md-6 col-sm-6">
                         <div class="box-gray mh" ng-model='conditions' drop-directive drop-area-key="" >
                             <div class="panel panel-success" ng-repeat="condition in conditions" drag-item-directive dragindex="$index">
                                 <div class="panel-heading">{{condition.query_name}}
