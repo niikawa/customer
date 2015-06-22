@@ -10,12 +10,15 @@ Query.init();
 
 exports.addItem = function(req, res)
 {
+    console.log('api query param');
+    console.log(req.body);
+    
     if (!req.session.isLogin) {
         
         res.status(511).send('Authentication Succsess');
     }
 
-    Query.addItem(req.body.item, function(err)
+    Query.addItem(req.body.sql, function(err)
     {
         if (err) {
             
