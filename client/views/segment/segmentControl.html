@@ -30,8 +30,10 @@
                         <div class="box-gray mh" ng-model='conditions' drop-directive drop-area-key="" >
                             <div class="panel panel-success" ng-repeat="condition in conditions track by $index" drag-item-directive dragindex="$index">
                                 <div class="panel-heading">{{condition.query_name}}
-                                    <button type="button" class="btn btn-default" ng-click="removeItem($index)">かつ</button>
-                                    <button type="button" class="btn btn-default" ng-click="removeItem($index)">または</button>
+                                    <div class="pull-left">
+                                        <button type="button" class="btn btn-default" ng-click="removeItem($index)">かつ</button>
+                                        <button type="button" class="btn btn-default" ng-click="removeItem($index)">または</button>
+                                    </div>
                                     <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
                                 </div>
                             </div>

@@ -61,17 +61,6 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query)
         $scope.conditions.splice(index,1);
     };
     
-    $scope.showQueryModal = function()
-    {
-        $scope.modalParam = 
-        {
-            mailaddress:'',
-            execute: createQuery,
-        };
-        $scope.modalInstance = Modal.open($scope, "partials/queryView.html");
-    };
-    
-    
     $scope.createOrUpdate = function()
     {
         

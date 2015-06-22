@@ -122,12 +122,12 @@ function ($scope, Shared, Query, Location, Utility)
     {
         var sql = Query.createSQL($scope.showConditions);
         console.log(sql);
-        // var data =  {query_name: $scope.query.query_name, sql: sql};
-        // Query.resource.create({data: data}).$promise.then(function(response, err)
-        // {
-        //     Shared.destloyByName('queryColumns');
-        //     Utility.info('クエリを保存しました');
-        //     Location.query();
-        // });
+        var data =  {query_name: $scope.query.query_name, sql: sql};
+        Query.resource.create({data: data}).$promise.then(function(response, err)
+        {
+            Shared.destloyByName('queryColumns');
+            Utility.info('クエリを保存しました');
+            Location.query();
+        });
     };
 }]);
