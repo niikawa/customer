@@ -45,7 +45,7 @@ exports.addItem = function(req, res)
             
         } else {
             
-            res.status(200).send('create query succsess');
+            res.json({data: doc});
         }
     });
 };
