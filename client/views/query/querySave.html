@@ -16,6 +16,12 @@
                 </form>
             </div>
                 
+            <div class="col-md-12 center" >
+                <a class="btn btn-default" ng-href="#/query/set" >戻る</a>
+                <button class="btn btn-default"  ng-disabled="queryForm.$invalid" ng-click="join()">チェックしたものをまとめる保存</button>
+                <button class="btn btn-default"  ng-disabled="queryForm.$invalid" ng-click="save()">保存</button>
+            </div>
+            
             <div class="col-md-6 col-sm-6">
                 
                 <div class="card-container" ng-model='selectColumns' drop-directive drop-area-key="1">
@@ -29,8 +35,8 @@
                             <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'AND'" uncheckable>かつ</label>
                             <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'OR'" uncheckable>または</label>
                         </div>
-                        <div class="pull-left">
-                            <input type="checkbox">まとめる
+                        <div class="pull-right">
+                            <input type="checkbox" ng-model="item.join">まとめる
                         </div>
                     </div>
                 </div>

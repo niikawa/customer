@@ -117,6 +117,11 @@ function ($scope, Shared, Query, Location, Utility)
         $scope.sql += target.table.physicalname+target.column.physicalname+target.selectedCondition.symbol+appned;
     };
     
+    $scope.join = function()
+    {
+        console.log($scope.selectColumns);
+    };
+
     $scope.save = function()
     {
         var sql = Query.createSQL($scope.selectColumns);
