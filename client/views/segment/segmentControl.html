@@ -31,8 +31,10 @@
                             <div class="panel panel-success" ng-repeat="condition in conditions track by $index" drag-item-directive dragindex="$index">
                                 <div class="panel-heading">{{condition.query_name}}
                                     <div class="pull-left">
-                                        <button type="button" class="btn btn-default" ng-click="removeItem($index)">かつ</button>
-                                        <button type="button" class="btn btn-default" ng-click="removeItem($index)">または</button>
+                                        <div class="btn-group" ng-if="!$parent.$last || !$last">
+                                            <label class="btn btn-default" ng-model="condition.where" btn-radio="'AND'" uncheckable>かつ</label>
+                                            <label class="btn btn-default" ng-model="condition.where" btn-radio="'OR'" uncheckable>または</label>
+                                        </div>
                                     </div>
                                     <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
                                 </div>

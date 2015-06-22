@@ -61,10 +61,9 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query)
         $scope.conditions.splice(index,1);
     };
     
-    $scope.createOrUpdate = function()
+    $scope.save = function()
     {
-        
-        
+        console.log($scope.conditions);
     };
 
 }]);
