@@ -102,7 +102,6 @@ function ($scope, Shared, Query, Location, Utility)
         $scope.query = {query_name: ''};
         $scope.conditions = [];
         var selectColumns = Shared.get('queryColumns');
-        console.log(selectColumns);
 
         if (void 0 === selectColumns)
         {
@@ -122,12 +121,18 @@ function ($scope, Shared, Query, Location, Utility)
     $scope.save = function()
     {
         var sql = Query.createSQL($scope.showConditions);
-        var data =  {query_name: $scope.query.query_name, sql: sql};
-        Query.resource.create({data: data}).$promise.then(function(response, err)
-        {
-            Shared.destloyByName('queryColumns');
-            Utility.info('クエリを保存しました');
-            Location.query();
-        });
+        var c = Shared.get('queryColumns');
+        var tables = Query.getTables(c);
+        console.log(tables);
+        
+        
+        // var data =  {query_name: $scope.query.query_name, sql: sql, tables: tables};
+        // Query.resource.create({data: data}).$promise.then(function(response, err)
+        // {
+        //     Shared.destloyByName('queryColumns');
+        //     Utility.info('クエリを保存しました');
+        //     Location.query();
+        // });
+        
     };
 }]);

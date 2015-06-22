@@ -55,6 +55,18 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
             });
         };
 
+        queryServices.getTables = function(list)
+        {
+            var tables = [];
+            angular.forEach(list, function(v, k)
+            {
+                if (void 0 === tables[v.table.physicalname])
+                {
+                    tables[v.table.physicalname] = v.table.logicalname;
+                }
+            });
+            return tables;
+        };
 
         queryServices.createSQL = function(list)
         {
