@@ -82,6 +82,9 @@ table caption {text-align:center;}
   }
 }
 
+table.table-pointer > tbody > tr {
+  cursor: pointer;
+}
 input[type="number"] {
   max-width: 100px;
 }
@@ -503,6 +506,7 @@ div .break-all {
 .label-box {
   margin-top:10px;
   margin-bottom:10px;
+  height: 20px;
 }
 
 .label {
