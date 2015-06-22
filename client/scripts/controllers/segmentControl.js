@@ -60,7 +60,6 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility)
     
     $scope.save = function()
     {
-        console.log($scope.conditions);
         var sql = Segment.createSQL($scope.conditions);
         var data =  {segment_name: $scope.segment.segment_name, sql: sql};
         

@@ -102,7 +102,8 @@ function ($scope, Shared, Query, Location, Utility)
         $scope.query = {query_name: ''};
         $scope.conditions = [];
         var selectColumns = Shared.get('queryColumns');
-        
+        console.log(selectColumns);
+
         if (void 0 === selectColumns)
         {
             Location.query();
@@ -121,11 +122,6 @@ function ($scope, Shared, Query, Location, Utility)
     $scope.save = function()
     {
         var sql = Query.createSQL($scope.showConditions);
-//        var tables = Query.getTables($scope.showConditions);
-        
-        console.log($scope.showConditions);
-        console.log(Shared.get('queryColumns'));
-        
         var data =  {query_name: $scope.query.query_name, sql: sql};
         Query.resource.create({data: data}).$promise.then(function(response, err)
         {

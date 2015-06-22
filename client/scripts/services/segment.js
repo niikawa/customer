@@ -59,8 +59,8 @@ segmentServices.factory("Segment", ['$resource','Utility',
             {
                 sql += '(' + list.sql + ') ' ;
                 if (last !== k) sql += list.where;
-                
             });
+            return sql;
         };
         
         segmentServices.mock = function()

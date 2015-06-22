@@ -55,6 +55,7 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
             });
         };
 
+
         queryServices.createSQL = function(list)
         {
 //            var sql = 'SELECT * FROM ';
