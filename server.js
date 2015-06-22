@@ -60,7 +60,7 @@ var table = require('./api/table');
 router.get('/query', table.getTables);
 
 var query = require("./api/query");
-router.post('/query/get', query.getItem);
+router.get('/query/get', query.getItem);
 router.post('/query/create', query.addItem);
 
 var user = require("./api/user");
