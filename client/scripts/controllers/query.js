@@ -118,37 +118,16 @@ function ($scope, Shared, Query, Location, Utility)
         });
     };
     
-    $scope.join = function()
-    {
-        var joinList = [];
-        var joinKeyList = []
-        angular.forEach($scope.showConditions, function(v, k)
-        {
-            if (v.join)
-            {
-                joinList.push(v);
-                joinKeyList.push(k);
-            }
-        });
-        
-        if (0 != joinList.length)
-        {
-            
-        }
-        
-        console.log($scope.selectColumns);
-    };
-
     $scope.save = function()
     {
         var sql = Query.createSQL($scope.selectColumns);
         console.log(sql);
-        var data =  {query_name: $scope.query.query_name, sql: sql};
-        Query.resource.create({data: data}).$promise.then(function(response, err)
-        {
-            Shared.destloyByName('queryColumns');
-            Utility.info('クエリを保存しました');
-            Location.query();
-        });
+        // var data =  {query_name: $scope.query.query_name, sql: sql};
+        // Query.resource.create({data: data}).$promise.then(function(response, err)
+        // {
+        //     Shared.destloyByName('queryColumns');
+        //     Utility.info('クエリを保存しました');
+        //     Location.query();
+        // });
     };
 }]);

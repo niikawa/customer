@@ -59,22 +59,34 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
         {
 //            var sql = 'SELECT * FROM ';
             var where = 'WHERE ';
-            angular.forEach(list, function(v, k)
+            var last = list.length -1;
+            angular.forEach(list, function(items, k1)
             {
-                where += v.table.physicalname + '.' + v.column.physicalname + ' ' + v.selectedCondition.symbol + ' ';
-                
-                switch (v.selectedCondition.symbol)
+                if (items.length > 1) where += '(';
+                angular.forEach(items, function(v, k2)
                 {
-                    case 'IN':
-                    case 'NOT IN':
-                        where += ' (' + v.condition.value1 + ')';
-                        break;
-                    case 'BETWEEN':
-                        where += v.condition.value1 + ' AND ' + v.condition.value2;
-                    default:
-                        where += v.condition.value1;
-                }
-                if (k < list.length -1) where += ' ' +v.condition.where+ ' ';
+                    
+                    where += v.table.physicalname + '.' + v.column.physicalname + ' ' + v.selectedCondition.symbol + ' ';
+                    
+                    switch (v.selectedCondition.symbol)
+                    {
+                        case 'IN':
+                        case 'NOT IN':
+                            where += ' (' + v.condition.value1 + ')';
+                            break;
+                        case 'BETWEEN':
+                            where += v.condition.value1 + ' AND ' + v.condition.value2;
+                            break;
+                        case 'LIKE':
+                            break;
+                        default:
+                            where += v.condition.value1;
+                    }
+                    if (items.length > 1 && items.length === k2 ) where += ')';
+                    
+                    if (k1 !== last) where += ' ' +v.condition.where+ ' ';
+                });
+                
             });
             return where;
         };
