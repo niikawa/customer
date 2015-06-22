@@ -137,7 +137,7 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 emitObject.isSameContainer = (emitObject.to == emitObject.from);
                 scope.$emit('dropItemComplete', emitObject);
                 console.log(emitObject);
-//                scope.$$phase || scope.$apply();
+                scope.$$phase || scope.$apply();
             });
         }
     };
