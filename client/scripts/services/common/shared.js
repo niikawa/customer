@@ -12,6 +12,11 @@ sharedServices.service('Shared', function()
         return data[name];
     };
     
+    sharedServices.destloyByName = function(name)
+    {
+        delete data[name];
+    };
+
     sharedServices.destloy = function()
     {
         data = [];

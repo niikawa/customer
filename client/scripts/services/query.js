@@ -69,6 +69,7 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
                     default:
                         where += v.condition.value1;
                 }
+                where += ' ' +v.condition.where+ ' ';
             });
             return where;
         };

@@ -6,8 +6,8 @@
  * Controller of the workspaceApp
  */
 var queryCtrl = angular.module('queryCtrl',['QueryServices']);
-queryCtrl.controller('QueryCtrl',['$scope', 'Shared', 'Query', 'Location', 
-function ($scope, Shared, Query, Location)
+queryCtrl.controller('QueryCtrl',['$scope', 'Shared', 'Query', 'Location', 'Utility'
+function ($scope, Shared, Query, Location, Utility)
 {
     var selectTable = '';
     /**
@@ -123,7 +123,9 @@ function ($scope, Shared, Query, Location)
         var data =  {title: $scope.query_name, sql: sql};
         Query.resource.create({data: data}).$promise.then(function(response, err)
         {
-            console.log(response);
+            Shared.destloyByName('queryColumns');
+            Utility.info('クエリを保存しました');
+            Location.query();
         });
     };
 }]);
