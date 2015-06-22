@@ -121,7 +121,7 @@ function ($scope, Shared, Query, Location, Utility)
     {
         var joinList = [];
         var joinKeyList = []
-        angular.forEach($scope.selectColumns, function(v, k)
+        angular.forEach($scope.showConditions, function(v, k)
         {
             if (v.join)
             {
