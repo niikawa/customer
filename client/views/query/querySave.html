@@ -39,8 +39,8 @@
                     <div class="" ng-repeat="item in selectColumns">
                         <p>
                             {{item.table.logicalname}}.{{item.column.logicalname}}
-                            <span ng-if="item.selectedCondition.symbol==IN">{{item.selectedCondition.symbol}}({{item.condition.value1}})</span>
-                            <span ng-if="item.selectedCondition.symbol!=IN">{{item.selectedCondition.symbol}}{{item.condition.value1}}</span>
+                            <span ng-if="item.selectedCondition.symbol=='IN'">{{item.selectedCondition.symbol}}({{item.condition.value1}})</span>
+                            <span ng-if="item.selectedCondition.symbol!='IN'">{{item.selectedCondition.symbol}}{{item.condition.value1}}</span>
                             
                         </p>
                         <p ng-if="!$last">
