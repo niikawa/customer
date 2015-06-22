@@ -111,24 +111,22 @@ function ($scope, Shared, Query, Location, Utility)
         Query.createCondtionString(selectColumns);
         angular.forEach(selectColumns, function(v, k)
         {
-            $scope.showConditions.push(v);
+            var array = [];
+            array.push(v);
+            $scope.showConditions.push(array);
         });
-    };
-    
-    $scope.createQuery = function(index, appned)
-    {
-        var target = $scope.selectColumns[index];
-        $scope.sql += target.table.physicalname+target.column.physicalname+target.selectedCondition.symbol+appned;
     };
     
     $scope.join = function()
     {
         var joinList = [];
+        var joinKeyList = []
         angular.forEach($scope.selectColumns, function(v, k)
         {
             if (v.join)
             {
                 joinList.push(v);
+                joinKeyList.push(k);
             }
         });
         
