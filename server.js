@@ -63,6 +63,10 @@ var query = require("./api/query");
 router.get('/query/get', query.getItem);
 router.post('/query/create', query.addItem);
 
+var segment = require("./api/segment");
+router.get('/segment', segment.getItem);
+router.post('/segment/create', segment.addItem);
+
 var user = require("./api/user");
 router.get('/user', user.getList);
 router.get('/user/:id', user.getById);

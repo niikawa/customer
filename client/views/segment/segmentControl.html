@@ -29,11 +29,10 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="box-gray mh" ng-model='conditions' drop-directive drop-area-key="" >
                             <div class="panel panel-success" ng-repeat="condition in conditions track by $index" drag-item-directive dragindex="$index">
-                                <div class="panel-heading">
+                                <div class="panel-heading">{{condition.query_name}}
                                     <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
                                 </div>
                                 <div class="panel-body">
-                                    {{condition.query_name}}
                                     <div class="btn-group" ng-if="!$last">
                                         <label class="btn btn-default" ng-model="condition.where" btn-radio="'AND'" uncheckable>かつ</label>
                                         <label class="btn btn-default" ng-model="condition.where" btn-radio="'OR'" uncheckable>または</label>

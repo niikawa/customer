@@ -4,18 +4,23 @@ segmentServices.factory("Segment", ['$resource','Utility',
     {
         var segmentServices = {};
         
-        segmentServices.resource = $resource('/scenario/:id/', {id: '@id'},
+        segmentServices.resource = $resource('/segment/:id/', {id: '@id'},
         {
+            create:
+            {
+                method: 'POST',
+                url: 'segment/create',
+            },
             refresh:
             {
                 method: 'GET',
-                url: 'scenario/refresh/:id',
+                url: 'segment/refresh/:id',
                 cache: true,
             },
             download:
             {
                 method: 'GET',
-                url: 'scenario/download/:id',
+                url: 'segment/download/:id',
                 cache: true,
             },
         });

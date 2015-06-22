@@ -1,6 +1,6 @@
 var segmentControlCtrl = angular.module('segmentControlCtrl',['SegmentServices', 'QueryServices']);
-segmentControlCtrl.controller('SegmentControlCtrl',['$scope', '$routeParams', 'Modal','Shared', 'Segment', 'Query',
-function ($scope, $routeParams, Modal, Shared, Segment, Query)
+segmentControlCtrl.controller('SegmentControlCtrl',['$scope', '$routeParams', 'Modal','Shared', 'Segment', 'Query', 'Utility',
+function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility)
 {
     /**
      * scope初期化用
@@ -13,6 +13,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query)
         $scope.queryList = [];
         $scope.conditions = [];
         $scope.segmentSearch = '';
+        $scope.segment = {segment_name: ''};
     }
     
     function setEvntListeners()
@@ -22,12 +23,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query)
             event.stopPropagation();
         });
     }
-    
-    function createQuery()
-    {
-        
-    }
-    
+
     /**
      * 初期処理
      * @author niikawa
@@ -66,7 +62,12 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query)
     {
         console.log($scope.conditions);
         var sql = Segment.createSQL($scope.conditions);
+        var data =  {segment_name: $scope.segment.segment_name, sql: sql};
         
+        Segment.resource.create({data: data}).$promise.then(function(response)
+        {
+            Utility.info('セグメントを作成しました');
+        });
     };
 
 }]);
