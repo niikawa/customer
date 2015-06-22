@@ -118,8 +118,7 @@ function ($scope, Shared, Query, Location)
     
     $scope.save = function()
     {
-        Query.sql = $scope.sql;
-        Query.resource.save().$promise.then(function(response, err)
+        Query.resource.create({data: $scope.sql}).$promise.then(function(response, err)
         {
             console.log(response);
         });
