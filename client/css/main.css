@@ -312,9 +312,9 @@ div .drop-join {
   border: 1px solid ;
   width: 40px;
   height: 40px;
-  top: 0px;
-  left: -50%;
-  position: absolute;
+  top: -50px;
+  left: -5%;
+  position: relative;
 }
 
 /*-----------------------------------------------*/
