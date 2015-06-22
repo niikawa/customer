@@ -10,20 +10,18 @@ Query.init();
 
 exports.addItem = function(req, res)
 {
-    console.log('api query param');
-    console.log(req.body);
-    var d = {sql: 'sssss'}
     if (!req.session.isLogin) {
         
         res.status(511).send('authentication faild');
     }
-
-    Query.addItem(d, function(err, doc)
+    
+    if (void 0 === req.body)
     {
-        
-        console.log('add item return');
-        console.log(err);
-        console.log(doc);
+        res.status(511).send('parameters not found');
+    }
+
+    Query.addItem(req.body.data, function(err, doc)
+    {
         if (err) {
             
             res.status(511).send('access ng');

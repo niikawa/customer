@@ -48,24 +48,26 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
                         v.condition.value1 +'から'+ v.condition.value2 + v.selectedCondition.name;
                 }
             });
-            
         };
 
         queryServices.createSQL = function(list)
         {
-            var sql = 'SELECT * FROM ';
+//            var sql = 'SELECT * FROM ';
             var where = 'WHERE ';
             angular.forEach(list, function(v, k)
             {
-                where += v.table.logicalname+v.column.logicalname + ' ' + v.selectedCondition.symbol
+                where += v.table.physicalname + '.' + v.column.physicalname + ' ' + v.selectedCondition.symbol + ' ';
                 
-                if (void 0 === v.condition.value2 || '' === v.condition.value2)
+                switch (v.selectedCondition.symbol)
                 {
-                    where += v.condition.value1;
-                }
-                else
-                {
-                    where += v.condition.value1 + ' AND ' + v.condition.value2;
+                    case 'IN':
+                    case 'NOT IN':
+                        where += ' (' + v.condition.value1 + ')';
+                        break;
+                    case 'BETWEEN':
+                        where += v.condition.value1 + ' AND ' + v.condition.value2;
+                    default:
+                        where += v.condition.value1;
                 }
             });
             return where;
