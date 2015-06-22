@@ -4,6 +4,8 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
     {
         var queryServices = {};
         
+        queryServices.sql = '';
+        
         queryServices.resource = $resource('/query');
         
         queryServices.getContentsByColumsType = function(type)

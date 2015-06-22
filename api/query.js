@@ -15,7 +15,7 @@ exports.addItem = function(req, res)
     
     if (!req.session.isLogin) {
         
-        res.status(511).send('Authentication Succsess');
+        res.status(511).send('authentication faild');
     }
 
     Query.addItem(req.body.sql, function(err)
