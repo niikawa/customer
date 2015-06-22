@@ -8,6 +8,11 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
         
         queryServices.resource = $resource('/query',{},
         {
+            getQuery:
+            {
+                method: 'GET',
+                url: '/query/get',
+            },
             create:
             {
                 method: 'POST',

@@ -8,6 +8,23 @@ var docDbClient = new DocumentDBClient('https://ixcpm.documents.azure.com:443/',
 var Query = new query(docDbClient, 'ixcpm', 'cpm');
 Query.init();
 
+exports.getItem = function(req, res)
+{
+    var query = 'SELECT * FROM doc';
+    
+    Query.find(query, function(err, doc)
+    {
+        if (err) {
+            
+            res.status(511).send('access ng');
+            
+        } else {
+            
+            res.json({data: doc});
+        }
+    });
+};
+
 exports.addItem = function(req, res)
 {
     if (!req.session.isLogin) {
@@ -32,5 +49,3 @@ exports.addItem = function(req, res)
         }
     });
 };
-
-

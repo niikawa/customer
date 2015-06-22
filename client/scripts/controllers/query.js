@@ -99,6 +99,7 @@ function ($scope, Shared, Query, Location, Utility)
     
     $scope.saveInitialize = function()
     {
+        $scope.query_name = '';
         $scope.conditions = [];
         $scope.selectColumns = Shared.get('queryColumns');
         

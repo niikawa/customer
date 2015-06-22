@@ -1,6 +1,6 @@
-var segmentControlCtrl = angular.module('segmentControlCtrl',['SegmentServices']);
-segmentControlCtrl.controller('SegmentControlCtrl',['$scope', '$routeParams', 'Modal','Shared', 'Segment', 
-function ($scope, $routeParams, Modal, Shared, Segment)
+var segmentControlCtrl = angular.module('segmentControlCtrl',['SegmentServices', 'QueryServices']);
+segmentControlCtrl.controller('SegmentControlCtrl',['$scope', '$routeParams', 'Modal','Shared', 'Segment', 'Query',
+function ($scope, $routeParams, Modal, Shared, Segment, Query)
 {
     /**
      * scope初期化用
@@ -40,6 +40,11 @@ function ($scope, $routeParams, Modal, Shared, Segment)
         setEvntListeners();
         
         $scope.queryList = Segment.mock().queryData;
+        
+        Query.resource.getQuery().$promise.then(function(response)
+        {
+            $scope.queryList = response.data;
+        });
         
         if (2 === Segment.pageProp($routeParams.id).pageTitle)
         {
