@@ -132,4 +132,9 @@ function ($scope, Shared, Query, Location, Utility)
             Location.query();
         });
     };
+    
+    $scope.execute = function()
+    {
+        Utility.info('現状のSQLを実行して対象数を出すよ');
+    };
 }]);

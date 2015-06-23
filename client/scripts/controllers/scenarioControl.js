@@ -96,7 +96,5 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
         
     };
     
-    //スケジュール型
-    
-    
+
 }]);

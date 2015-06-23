@@ -84,4 +84,8 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         });
     };
 
+    $scope.execute = function()
+    {
+        Utility.info('現状のSQLを実行して対象数を出すよ');
+    };
 }]);
