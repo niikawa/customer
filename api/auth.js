@@ -74,7 +74,7 @@ exports.login = function(req, res)
             var userId = data[0].user_id;
             model.insertLog(userId, 1);
             req.session.isLogin = true;
-            req.session.user_id = userId;
+            req.session.userId = userId;
             res.json({data: data});
         }
     });

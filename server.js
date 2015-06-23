@@ -64,10 +64,12 @@ router.get('/query/get', query.getItem);
 router.post('/query/create', query.addItem);
 router.delete('/query/:id', query.removeItem);
 
+var segmentdoc = require("./api/segmentdoc");
+router.get('/segment', segmentdoc.getItem);
+router.post('/segment/createdoc', segmentdoc.addItem);
 
 var segment = require("./api/segment");
-router.get('/segment', segment.getItem);
-router.post('/segment/create', segment.addItem);
+router.post('/segment/create', segment.create);
 
 var user = require("./api/user");
 router.get('/user', user.getList);

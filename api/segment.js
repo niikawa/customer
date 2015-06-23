@@ -1,51 +1,43 @@
 var async = require('async');
-var DocumentDBClient = require('documentdb').DocumentClient;
-var query = require('../collection/segment');
+var Core = require('./core');
 
-var docDbClient = new DocumentDBClient('https://ixcpm.documents.azure.com:443/', {
-    masterKey: 'BAVJ6Lb3xefcLJVh7iShAAngAHrYC08mtTj2ieVIVXuoBkftXwxKSCJaOcNrvctBwhi6oFoG6GlDVrDiDyXOzg=='
-});
-var Segment = new query(docDbClient, 'ixcpm', 'segment');
-Segment.init();
+/** テーブル名 */
+var tableName = 'M_SEGMENT';
+var pk = 'segment_id';
 
-exports.getItem = function(req, res)
+var segment = function segment()
 {
-    var query = 'SELECT * FROM doc';
-    
-    Segment.find(query, function(err, doc)
-    {
-        if (err) {
-            
-            res.status(511).send('access ng');
-            
-        } else {
-            
-            res.json({data: doc});
-        }
-    });
+    Core.call(this, tableName, pk);
 };
 
-exports.addItem = function(req, res)
-{
-    if (!req.session.isLogin) {
-        
-        res.status(511).send('authentication faild');
-    }
-    
-    if (void 0 === req.body)
-    {
-        res.status(511).send('parameters not found');
-    }
+//coreModelを継承する
+var util = require('util');
+util.inherits(segment, Core);
 
-    Segment.addItem(req.body.data, function(err, doc)
+var model = new segment();
+
+exports.craete = function(req, res)
+{
+    var commonColumns = model.getInsCommonColumns();
+    var insertData = model.merge(req.body.data, commonColumns);
+
+    var request = model.getRequest();
+    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+    request.input('create_by', model.db.Int, req.sesstion.userId);
+    request.input('create_date', model.db.NVarChar, insertData.create_date);
+    request.input('update_by', model.db.Int, req.sesstion.userId);
+    request.input('update_date', model.db.NVarChar, insertData.update_date);
+    request.input('segmant_name', model.db.NVarChar, insertData.segmant_name);
+    request.input('status', model.db.SmallInt, 1);
+    request.input('segmant_document_id', model.db.NVarChar, insertData.docId);
+
+    model.insert(tableName, insertData, request, function(err, date)
     {
-        if (err) {
-            
-            res.status(511).send('access ng');
-            
-        } else {
-            
-            res.json({data: doc});
+        if (err.length > 0)
+        {
+            console.log(err);
+            res.status(510).send('object not found');
         }
+        res.status(200).send('insert ok');
     });
 };

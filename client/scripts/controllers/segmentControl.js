@@ -71,12 +71,16 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility)
     $scope.save = function()
     {
         var sql = Segment.createSQL($scope.conditions);
-        var data =  {segment_name: $scope.segment.segment_name, sql: sql};
+        var docdata =  {segment_name: $scope.segment.segment_name, sql: sql};
         
-        Segment.resource.create({data: data}).$promise.then(function(response)
+        Segment.resource.createDoc({data: docdata}).$promise.then(function(response)
         {
-            Utility.info('セグメントを作成しました');
-            console.log(response);
+            var data = {segment_name: $scope.segment.segment_name, docId:response.id};
+            Segment.resource.create({data: data}).$promise.then(function(response)
+            {
+                Utility.info('セグメントを作成しました');
+                console.log(response);
+            });
         });
     };
 
