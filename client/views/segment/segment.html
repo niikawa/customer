@@ -22,15 +22,17 @@
                             <th>利用状況</th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in segmentList">
+                        <tr ng-repeat="(i,item) in segmentList">
                             <td data-th="名称"><a ng-href='/#/segment/control/{{item.segment_id}}'>{{item.segment_name}}</a></td>
                             <td data-th="更新日">{{item.update_date}}</td>
                             <td data-th="状況">{{item.status}}</td>
                             <td data-th="リフレッシュ"><button class="btn btn-default" ng-click="refresh">リフレッシュ</button></td>
                             <td><button class="btn btn-default" ng-click="download">ダウンロード</button></td>
+                            <td><button class="btn btn-default" ng-click="remove(i)">削除</button></td>
                         </tr>
                     </tbody>
                 </table>

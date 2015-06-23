@@ -6,8 +6,8 @@
  * Controller of the workspaceApp
  */
 var segmentCtrl = angular.module('segmentCtrl',['SegmentServices']);
-segmentCtrl.controller('SegmentCtrl',['$scope', 'Shared', 'Segment', 
-function ($scope, Shared, Segment)
+segmentCtrl.controller('SegmentCtrl',['$scope', 'Shared', 'Segment', 'Utility',
+function ($scope, Shared, Segment, Utility)
 {
     /**
      * scope初期化用
@@ -36,12 +36,16 @@ function ($scope, Shared, Segment)
     
     $scope.refresh = function()
     {
-        
+        Utility.info('未実装だよ');
     };
     
     $scope.download = function()
     {
-        
+        Utility.info('未実装だよ');
     };
 
+    $scope.remove = function(index)
+    {
+        Utility.info('実装中だよ');
+    };
 }]);

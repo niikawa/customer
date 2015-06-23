@@ -33,6 +33,12 @@ segmentServices.factory("Segment", ['$resource','Utility',
                 url: 'segment/download/:id',
                 cache: true,
             },
+            remove:
+            {
+                method: 'DELETE',
+                url: 'segment/remove/:id/:docId',
+                cache: true,
+            },
         });
         
         segmentServices.pageProp = function(id)
