@@ -54,8 +54,12 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility)
     
     $scope.deleteItem = function(index)
     {
-        console.log($scope.queryList[index]);
-        Utility.warn('実装中でーす');
+        Query.resource.remove({id: $scope.queryList[index].id}).$promise.then(function(response)
+        {
+            Utility.info('実装中でーす');
+            console.log(response);
+            $scope.conditions.splice(index,1);
+        });
     };
     
     $scope.removeItem = function(index)

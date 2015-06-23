@@ -18,6 +18,11 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
                 method: 'POST',
                 url: '/query/create',
             },
+            remove:
+            {
+                method: 'DELETE',
+                url: '/query/:id',
+            },
         });
         
         queryServices.getContentsByColumsType = function(type)

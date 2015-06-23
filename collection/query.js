@@ -68,7 +68,8 @@ Query.prototype = {
                 callback(err);
 
             } else {
-                doc.completed = true;
+                
+                //ここに更新する値を入れるはず
 
                 self.client.replaceDocument(doc._self, doc, function (err, replaced) {
                     if (err) {
@@ -99,6 +100,28 @@ Query.prototype = {
 
             } else {
                 callback(null, results[0]);
+            }
+        });
+    },
+    
+    removeItem: function(itemId, callback) {
+        
+        var self = this;
+
+        self.getItem(itemId, function (err, doc) {
+            if (err) {
+                callback(err);
+
+            } else {
+
+                self.client.deleteDocument(doc._self, doc, function (err, result) {
+                    if (err) {
+                        callback(err);
+
+                    } else {
+                        callback(null, result);
+                    }
+                });
             }
         });
     }

@@ -49,3 +49,27 @@ exports.addItem = function(req, res)
         }
     });
 };
+exports.removeItem = function(req, res)
+{
+    if (!req.session.isLogin) {
+        
+        res.status(511).send('authentication faild');
+    }
+    
+    if (void 0 === req.params)
+    {
+        res.status(511).send('parameters not found');
+    }
+
+    Query.removeItem(req.params.id, function(err, doc)
+    {
+        if (err) {
+            
+            res.status(511).send('access ng');
+            
+        } else {
+            
+            res.json({data: doc});
+        }
+    });
+};
