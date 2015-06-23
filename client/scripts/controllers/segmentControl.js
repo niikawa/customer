@@ -59,7 +59,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility)
         {
             Utility.info('実装中でーす');
             console.log(response);
-            $scope.conditions.splice(index,1);
+            $scope.queryList.splice(index,1);
         });
     };
     
