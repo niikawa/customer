@@ -98,6 +98,18 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
                             where += v.condition.value1 + ' AND ' + v.condition.value2;
                             break;
                         case 'LIKE':
+                            if (9 == v.condition.value)
+                            {
+                                where += v.condition.value1 + '%';
+                            }
+                            else if (10 == v.condition.value)
+                            {
+                                where += '%'+v.condition.value1;
+                            }
+                            else
+                            {
+                                where += '%'+v.condition.value1 + '%';
+                            }
                             break;
                         default:
                             where += v.condition.value1;
