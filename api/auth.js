@@ -83,6 +83,7 @@ exports.login = function(req, res)
             request.input('update_by', model.db.Int, userId);
             request.input('update_date', model.db.NVarChar, moment().format('YYYY/MM/DD hh:mm:ss'));
             request.input('user_id', model.db.Int, userId);
+            request.input('show_flag', model.db.Int, 1);
             request.input('control_type', model.db.Int, 1);
             request.input('detail', model.db.NVarChar, 'ログインしました');
             model.execute(sql, request, function(err, ret)
