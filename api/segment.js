@@ -20,7 +20,7 @@ exports.create = function(req, res)
 {
     var commonColumns = model.getInsCommonColumns();
     var insertData = model.merge(req.body.data, commonColumns);
-
+console.log(insertData);
     var request = model.getRequest();
     request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
     request.input('create_by', model.db.Int, req.session.userId);

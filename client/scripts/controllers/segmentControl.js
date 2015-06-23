@@ -75,7 +75,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility)
         
         Segment.resource.createDoc({data: docdata}).$promise.then(function(response)
         {
-            var data = {segment_name: $scope.segment.segment_name, docId:response.id};
+            var data = {segment_name: response.data.segment_name, docId:response.data.id};
             Segment.resource.create({data: data}).$promise.then(function(response)
             {
                 Utility.info('セグメントを作成しました');
