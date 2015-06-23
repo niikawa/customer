@@ -55,9 +55,9 @@ myApp.directive('conditionDirective', function(){
                 {name: 'の間', value: 6, execute: showTwoInput, 'symbol': 'BETWEEN'},
                 {name: 'を含む', value: 7, execute: showTextArea, 'symbol': 'IN'},
                 {name: 'を含まない', value: 8, execute: showTextArea, 'symbol': 'NOT IN'},
-                {name: 'から始まる', value: 9, execute: showOneInput, 'symbol': 'like '},
-                {name: 'で終わる', value: 10, execute: showOneInput, 'symbol': 'like '},
-                {name: 'を一部に持つ', value: 11, execute: showOneInput, 'symbol': 'like '},
+                {name: 'から始まる', value: 9, execute: showOneInput, 'symbol': 'LIKE'},
+                {name: 'で終わる', value: 10, execute: showOneInput, 'symbol': 'LIKE'},
+                {name: 'を一部に持つ', value: 11, execute: showOneInput, 'symbol': 'LIKE'},
             ];
             element.find('select').on('change', function()
             {
