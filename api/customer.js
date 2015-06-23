@@ -6,7 +6,7 @@ var tableName = 'M_CUSTOMER';
 
 var custmoer = function custmoer()
 {
-    Core.call(this, tableName);
+    Core.call(this, tableName, 'id');
 };
 
 //coreModelを継承する
