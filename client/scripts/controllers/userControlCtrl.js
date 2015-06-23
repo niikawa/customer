@@ -143,6 +143,9 @@ function ($scope, $routeParams, User, Role, Utility, Location)
     $scope.save = function()
     {
         setRole($scope.roleList);
+        
+        console.log($scope.user);
+        
         var message = '';
         if (2 === pageProp.type)
         {

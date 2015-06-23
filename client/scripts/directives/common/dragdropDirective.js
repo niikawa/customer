@@ -54,7 +54,6 @@ myApp.directive('dragItemDirective', ['DDShared', function(DDShared)
         scope: {dragindex: '='},
         link: function (scope, element, attrs, ctrl) 
         {
-            console.log(scope.dragindex);
             element.attr('draggable', true);
             element.attr('data-index', scope.dragindex);
             
