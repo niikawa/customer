@@ -1,6 +1,6 @@
 var segmentControlCtrl = angular.module('segmentControlCtrl',['SegmentServices', 'QueryServices']);
-segmentControlCtrl.controller('SegmentControlCtrl',['$scope', '$routeParams', 'Modal','Shared', 'Segment', 'Query', 'Utility',
-function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility)
+segmentControlCtrl.controller('SegmentControlCtrl',['$scope', '$routeParams', 'Modal','Shared', 'Segment', 'Query', 'Utility','Location',
+function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location)
 {
     /**
      * scope初期化用
@@ -79,7 +79,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility)
             Segment.resource.create({data: data}).$promise.then(function(response)
             {
                 Utility.info('セグメントを作成しました');
-                console.log(response);
+                Location.segment();
             });
         });
     };

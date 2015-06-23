@@ -36,12 +36,12 @@ function ($scope, Shared, Segment, Utility)
     
     $scope.refresh = function()
     {
-        Utility.info('未実装だよ');
+        Utility.info('この機能は意味不明だよ');
     };
     
     $scope.download = function()
     {
-        Utility.info('未実装だよ');
+        Utility.info('セグメントの抽出結果をダウンロードさせるよ');
     };
 
     $scope.remove = function(index)

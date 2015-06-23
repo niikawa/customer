@@ -33,6 +33,11 @@ locationServices.service("Location", ['$location',function($location)
         $location.path('/query/save');
     };
 
+    locationServices.segment = function()
+    {
+        $location.path('/segment');
+    };
+
     return locationServices;
 
 }]);

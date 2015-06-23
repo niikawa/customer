@@ -16,6 +16,22 @@ util.inherits(segment, Core);
 
 var model = new segment();
 
+exports.getAll = function(req, res)
+{
+    model.getAll(function(err, data)
+    {
+        if (err)
+        {
+            console.log(err);
+            //レスポンスコード確認
+            res.json({data: data});
+        }
+        else
+        {
+            res.json({data: data});
+        }
+    });
+};
 exports.create = function(req, res)
 {
     var commonColumns = model.getInsCommonColumns();
