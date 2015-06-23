@@ -71,26 +71,8 @@ exports.login = function(req, res)
         }
         else
         {
-            console.log('login');
-            console.log(data);
             var userId = data[0].user_id;
-            var sql = "INSERT INTO T_LOG (delete_flag, create_by, create_date, update_by, update_date, user_id, show_flag, control_type, detail)";
-            sql += " VALUES (@delete_flag, @create_by, @create_date, @update_by, @update_date, @user_id, @show_flag, @control_type, @detail)";
-            var request = model.getRequest();
-            request.input('delete_flag', model.db.SmallInt, 0);
-            request.input('create_by', model.db.Int, userId);
-            request.input('create_date', model.db.NVarChar, moment().format('YYYY/MM/DD hh:mm:ss'));
-            request.input('update_by', model.db.Int, userId);
-            request.input('update_date', model.db.NVarChar, moment().format('YYYY/MM/DD hh:mm:ss'));
-            request.input('user_id', model.db.Int, userId);
-            request.input('show_flag', model.db.Int, 1);
-            request.input('control_type', model.db.Int, 1);
-            request.input('detail', model.db.NVarChar, 'ログインしました');
-            model.execute(sql, request, function(err, ret)
-            {
-                console.log(ret);
-                console.log(err);
-            });
+            model.insertLog(userId, 1);
             req.session.isLogin = true;
             req.session.user_id = userId;
             res.json({data: data});

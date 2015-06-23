@@ -1,4 +1,5 @@
 var moment = require('moment');
+var logInfo = require('../config/controlLog');
 
 /**
  * core collection class
@@ -235,5 +236,27 @@ core.prototype.execute = function(sql, request, callback)
     });
 };
 
+core.prototype.insertLog = function(userId, controlType, appendString, callback)
+{
+    var logData = logInfo.get(controlType);
+    var detail = (void 0 !== appendString) ? logData.detail + appendString : logData.detail;
+    var sql = "INSERT INTO T_LOG (delete_flag, create_by, create_date, update_by, update_date, user_id, show_flag, control_type, detail)";
+    sql += " VALUES (@delete_flag, @create_by, @create_date, @update_by, @update_date, @user_id, @show_flag, @control_type, @detail)";
+    var request = this.getRequest();
+    request.input('delete_flag', this.db.SmallInt, 0);
+    request.input('create_by', this.db.Int, userId);
+    request.input('create_date', this.db.NVarChar, moment().format('YYYY/MM/DD hh:mm:ss'));
+    request.input('update_by', this.db.Int, userId);
+    request.input('update_date', this.db.NVarChar, moment().format('YYYY/MM/DD hh:mm:ss'));
+    request.input('user_id', this.db.Int, userId);
+    request.input('show_flag', this.db.Int, logData.show_flag);
+    request.input('control_type', this.db.Int, controlType);
+    request.input('detail', this.db.NVarChar, detail);
+    this.execute(sql, request, function(err, ret)
+    {
+        console.log(err);
+    });
+    if (void 0 !== callback) callback();
+};
 //モジュール化
 module.exports = core;
