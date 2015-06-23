@@ -20,6 +20,7 @@ exports.create = function(req, res)
 {
     var commonColumns = model.getInsCommonColumns();
     var insertData = model.merge(req.body.data, commonColumns);
+    insertData.status = 1;
     var request = model.getRequest();
     request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
     request.input('create_by', model.db.Int, req.session.userId);
@@ -27,7 +28,7 @@ exports.create = function(req, res)
     request.input('update_by', model.db.Int, req.session.userId);
     request.input('update_date', model.db.NVarChar, insertData.update_date);
     request.input('segment_name', model.db.NVarChar, insertData.segment_name);
-    request.input('status', model.db.SmallInt, 1);
+    request.input('status', model.db.SmallInt, insertData.status);
     request.input('segment_document_id', model.db.NVarChar, insertData.segment_document_id);
 
     model.insert(tableName, insertData, request, function(err, date)
