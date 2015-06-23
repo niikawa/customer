@@ -101,5 +101,26 @@ Segment.prototype = {
                 callback(null, results[0]);
             }
         });
+    },
+    removeItem: function(itemId, callback) {
+        
+        var self = this;
+
+        self.getItem(itemId, function (err, doc) {
+            if (err) {
+                callback(err);
+
+            } else {
+
+                self.client.deleteDocument(doc._self, doc, function (err, result) {
+                    if (err) {
+                        callback(err);
+
+                    } else {
+                        callback(null, result);
+                    }
+                });
+            }
+        });
     }
 };

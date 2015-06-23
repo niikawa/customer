@@ -27,7 +27,7 @@ console.log(insertData);
     request.input('create_date', model.db.NVarChar, insertData.create_date);
     request.input('update_by', model.db.Int, req.session.userId);
     request.input('update_date', model.db.NVarChar, insertData.update_date);
-    request.input('segmant_name', model.db.NVarChar, insertData.segmant_name);
+    request.input('segmant_name', model.db.NVarChar, insertData.segment_name);
     request.input('status', model.db.SmallInt, 1);
     request.input('segmant_document_id', model.db.NVarChar, insertData.docId);
 
