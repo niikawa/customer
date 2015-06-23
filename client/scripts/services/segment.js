@@ -67,8 +67,8 @@ segmentServices.factory("Segment", ['$resource','Utility',
             var last = list.length -1;
             angular.forEach(list, function(v, k)
             {
-                sql += '(' + list.sql + ') ' ;
-                if (last !== k) sql += list.where;
+                sql += '(' + v.sql + ') ' ;
+                if (last !== k) sql += v.where;
             });
             return sql;
         };
