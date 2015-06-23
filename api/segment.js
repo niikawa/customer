@@ -16,7 +16,7 @@ util.inherits(segment, Core);
 
 var model = new segment();
 
-exports.craete = function(req, res)
+exports.create = function(req, res)
 {
     var commonColumns = model.getInsCommonColumns();
     var insertData = model.merge(req.body.data, commonColumns);

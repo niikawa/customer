@@ -6,6 +6,11 @@ segmentServices.factory("Segment", ['$resource','Utility',
         
         segmentServices.resource = $resource('/segment/:id/', {id: '@id'},
         {
+            getDoc:
+            {
+                method: 'GET',
+                url: 'segment/getdoc',
+            },
             createDoc:
             {
                 method: 'POST',
