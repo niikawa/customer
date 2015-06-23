@@ -238,6 +238,7 @@ core.prototype.execute = function(sql, request, callback)
 
 core.prototype.insertLog = function(userId, controlType, appendString, callback)
 {
+    console.log('insertLog');
     var logData = logInfo.get(controlType);
     var detail = (void 0 !== appendString) ? logData.detail + appendString : logData.detail;
     var sql = "INSERT INTO T_LOG (delete_flag, create_by, create_date, update_by, update_date, user_id, show_flag, control_type, detail)";
