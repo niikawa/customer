@@ -1,7 +1,7 @@
 var crypto = require('crypto');
 var async = require('async');
 var Core = require('./core');
-
+var moment = require("moment");
 /** テーブル名 */
 var tableName = 'M_USER';
 var pk = 'user_id';
@@ -71,19 +71,21 @@ exports.login = function(req, res)
         }
         else
         {
-            var sql = "INSERT INTO T_LOG (delete_flag, create_by, create_date, update_by, update_date, user_id, show_flag, control_type, detail)";
-            sql += " VALUES (@delete_flag, @create_by, @create_date, @update_by, @update_date, @user_id, @show_flag, @control_type, @detail)";
-            var request = model.getRequest();
-            request.input('delete_flag', model.db.SmallInt, 0);
-            request.input('create_by', model.db.Int, req.session.id);
-            request.input('create_date', model.db.NVarChar, insertData.create_date);
-            request.input('update_by', model.db.Int, insertData.update_by);
-            request.input('update_date', model.db.NVarChar, insertData.update_date);
-            
-            model.execute(sql, request, function(err, data)
-            {
+            // var sql = "INSERT INTO T_LOG (delete_flag, create_by, create_date, update_by, update_date, user_id, show_flag, control_type, detail)";
+            // sql += " VALUES (@delete_flag, @create_by, @create_date, @update_by, @update_date, @user_id, @show_flag, @control_type, @detail)";
+            // var request = model.getRequest();
+            // request.input('delete_flag', model.db.SmallInt, 0);
+            // request.input('create_by', model.db.Int, data[0].user_id);
+            // request.input('create_date', model.db.NVarChar, moment().format('YYYY/MM/DD hh:mm:ss'));
+            // request.input('update_by', model.db.Int, data[0].user_id);
+            // request.input('update_date', model.db.NVarChar, moment().format('YYYY/MM/DD hh:mm:ss'));
+            // request.input('user_id', model.db.Int, data[0].user_id);
+            // request.input('control_type', model.db.Int, 1);
+            // request.input('detail', model.db.NVarChar, 'ログインしました');
+            // model.execute(sql, request, function(err, data)
+            // {
                 
-            });
+            // });
             req.session.isLogin = true;
             req.session.user_id = true;
             res.json({data: data});
