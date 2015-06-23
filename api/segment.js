@@ -23,9 +23,9 @@ exports.create = function(req, res)
 
     var request = model.getRequest();
     request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
-    request.input('create_by', model.db.Int, req.sesstion.userId);
+    request.input('create_by', model.db.Int, req.session.userId);
     request.input('create_date', model.db.NVarChar, insertData.create_date);
-    request.input('update_by', model.db.Int, req.sesstion.userId);
+    request.input('update_by', model.db.Int, req.session.userId);
     request.input('update_date', model.db.NVarChar, insertData.update_date);
     request.input('segmant_name', model.db.NVarChar, insertData.segmant_name);
     request.input('status', model.db.SmallInt, 1);
