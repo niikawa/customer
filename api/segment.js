@@ -28,7 +28,7 @@ exports.create = function(req, res)
     request.input('update_date', model.db.NVarChar, insertData.update_date);
     request.input('segment_name', model.db.NVarChar, insertData.segment_name);
     request.input('status', model.db.SmallInt, 1);
-    request.input('segmant_document_id', model.db.NVarChar, insertData.docId);
+    request.input('segment_document_id', model.db.NVarChar, insertData.docId);
 
     model.insert(tableName, insertData, request, function(err, date)
     {
