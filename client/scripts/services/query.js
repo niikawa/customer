@@ -57,7 +57,7 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
 
         queryServices.getTables = function(list)
         {
-            var tables = [];
+            var tables = {};
             angular.forEach(list, function(v, k)
             {
                 if (void 0 === tables[v.table.physicalname])
