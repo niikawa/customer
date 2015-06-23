@@ -62,7 +62,7 @@ router.get('/query', table.getTables);
 var query = require("./api/query");
 router.get('/query/get', query.getItem);
 router.post('/query/create', query.addItem);
-router.delete('query/:id', query.removeItem);
+router.delete('/query/:id', query.removeItem);
 
 
 var segment = require("./api/segment");
