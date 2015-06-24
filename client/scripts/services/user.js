@@ -21,11 +21,6 @@ uesrServices.factory("User", ['$resource','$http','$q','Utility',
                 method: 'GET',
                 url: 'user/delete',
             },
-            isSameMailAddress:
-            {
-                method: 'POST',
-                url: 'user/mail/',
-            }
         });
         
         userService.validators = 
