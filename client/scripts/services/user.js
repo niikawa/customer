@@ -35,7 +35,7 @@ uesrServices.factory("User", ['$resource','$http','$q','Utility',
         {
             isSameMailAddress : function(userId, mailaddress)
             {
-                $http.post('user/mail/',{user_id: userId, mailaddress: mailaddress}
+                return $http.post('user/mail/',{user_id: userId, mailaddress: mailaddress}
                 ).then(
                 function resolved()
                 {
