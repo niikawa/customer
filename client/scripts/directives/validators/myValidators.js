@@ -13,3 +13,17 @@ myApp.directive('myValidators', function () {
         }
     };
 });
+myApp.directive('myAsyncValidators', function () {
+    return {
+        require: 'ngModel',
+        scope: {
+            myAsyncValidators: '='
+        },
+        link: function (scope, elem, attrs, ctrl) {
+            var asyncValidators = scope.myAsyncValidators || {};
+            angular.forEach(asyncValidators, function (val, key) {
+                ctrl.$asyncValidators[key] = val;
+            });
+        }
+    };
+});

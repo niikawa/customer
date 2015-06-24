@@ -34,12 +34,11 @@ angular
   ])
   .config(function ($routeProvider) {
     
-    var autoCheck = function($http, $q, $window, $cookies, Shared) {
-        
+    var autoCheck = function($http, $q, $window, $cookies, Shared)
+    {
         var deferred = $q.defer();
         
         $http.post('/auth/isLogin', {remembertkn: $cookies.remembertkn}
-        
         ).success(function(data) {
           
             Shared.set('id', data.id);

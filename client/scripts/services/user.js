@@ -1,6 +1,6 @@
 var uesrServices = angular.module("UesrServices", ["ngResource"]);
-uesrServices.factory("User", ['$resource','Utility',
-    function($resource, Utility)
+uesrServices.factory("User", ['$resource','$http','$q','Utility',
+    function($resource, $http, $q, Utility)
     {
         var userService = {};
         
@@ -30,6 +30,28 @@ uesrServices.factory("User", ['$resource','Utility',
                 url: 'user/mail/',
             }
         });
+        
+        userService.validators = 
+        {
+            isSameMailAddress : function(userId, mailaddress)
+            {
+                var deferred = $q.defer();
+                $http.post('user/mail/',{user_id: userId, mailaddress: mailaddress}
+                ).success(function(data)
+                {
+                    if (data.result.count > 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                });
+
+                return deferred.promise;
+            }
+        };
         
         //生年月日を生成
         userService.createBirth = function (year, month, day)
