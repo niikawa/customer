@@ -16,6 +16,7 @@ myApp.directive('pushDirective', function(){
         {
             element.css({cursor: 'pointer'});
             
+            console.log(scope.active);
             if (void 0 !== scope.active)
             {
                 var setActive = false;
