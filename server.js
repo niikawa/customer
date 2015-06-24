@@ -74,6 +74,7 @@ router.post('/segment/create', segment.create);
 var user = require("./api/user");
 router.get('/user', user.getList);
 router.get('/user/:id', user.getById);
+router.post('/user/:id', user.update);
 router.post('/user/create', user.craete);
 router.put('/user', user.update);
 router.delete('/user/:id', user.remove);
