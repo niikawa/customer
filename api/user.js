@@ -194,7 +194,7 @@ exports.isSameMailAddress = function(req, res)
     else
     {
         var conditions = [
-            {columns: 'user_id', type: model.db.int, value: userId, symbol: '!='},
+            {columns: 'user_id', type: model.db.Int, value: userId, symbol: '!='},
             {columns: 'mailaddress', type: model.db.VarChar, value: req.body.mailaddress, symbol: '='},
         ];
         console.log(conditions);

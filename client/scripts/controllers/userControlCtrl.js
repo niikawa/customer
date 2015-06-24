@@ -117,14 +117,14 @@ function ($scope, $routeParams, User, Role, Utility, Location)
             $scope.roleList = response.data;
         });
         
-       // user_name != password判定のため
-        $scope.$watch('user.name', function()
-        {
-            $scope.userForm.password.$validate();
-        });
- 
         if (2 !== pageProp.type)
         {
+            // user_name != password判定のため
+            $scope.$watch('user.name', function()
+            {
+                $scope.userForm.password.$validate();
+            });
+     
             // password == password_confirm判定のため
             $scope.$watch('user.password', function()
             {
