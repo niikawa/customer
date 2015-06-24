@@ -151,8 +151,6 @@ exports.update = function(req, res)
 exports.remove = function(req, res)
 {
     var user_id = req.params.id;
-    console.log('remvoe target');
-    console.log(user_id);
     model.removeById(user_id, function(err, data)
     {
         if (err.length > 0)
@@ -196,8 +194,8 @@ exports.isSameMailAddress = function(req, res)
     else
     {
         var conditions = [
-            {columns: 'user_id', type: model.db.int, value: userId},
-            {columns: 'mailaddress', type: model.db.VarChar, value: req.body.mailaddress},
+            {columns: 'user_id', type: model.db.int, value: userId, symbol: '!='},
+            {columns: 'mailaddress', type: model.db.VarChar, value: req.body.mailaddress, symbol: '='},
         ];
         model.isSameItemByMultipleCondition(conditions , function(err, result)
         {
