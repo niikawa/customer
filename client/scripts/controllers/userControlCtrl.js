@@ -151,7 +151,7 @@ function ($scope, $routeParams, User, Role, Utility, Location)
         if (2 === pageProp.type)
         {
             message = $scope.user.name + 'の情報を更新しました';
-            User.resource.update({data: $scope.user}).$promise.then(function(response)
+            User.resource.save({id: $scope.user.user_id, data: $scope.user}).$promise.then(function(response)
             {
                 Utility.successSticky(message);
                 Location.user();
