@@ -18,6 +18,7 @@ uesrServices.factory("User", ['$resource','$http','$q','Utility',
             },
             updata: {
                 method: 'PUT',
+                url: 'user/:id',
             },            
             remove:
             {

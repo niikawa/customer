@@ -16,7 +16,6 @@ myApp.directive('pushDirective', function(){
         {
             element.css({cursor: 'pointer'});
             
-            console.log(scope.active);
             if (void 0 !== scope.active)
             {
                 var setActive = false;
@@ -27,15 +26,12 @@ myApp.directive('pushDirective', function(){
                 }
                 else if ("string" === typeof(scope.active) || "number" === typeof(scope.active))
                 {
-                    console.log(scope.pushInfo[scope.activekey]);
-                    console.log(scope.active);
                     if (scope.pushInfo[scope.activekey] == scope.active)
                     {
                         scope.pushInfo.isPush = true;
                         setActive = true;
                     }
                 }
-                console.log(setActive);
                 if (setActive) element.addClass('push-active');
             }
             else
