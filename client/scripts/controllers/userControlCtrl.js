@@ -38,7 +38,8 @@ function ($scope, $routeParams, User, Role, Utility, Location)
     // TODO コントローラーに記載すべきなのか。。。。。
     function setValidation()
     {
-        $scope.validators = {
+        $scope.validators = 
+        {
             password:
             {
                 // ユーザー名とパスワードは一緒はダメ
@@ -75,6 +76,9 @@ function ($scope, $routeParams, User, Role, Utility, Location)
                     return isSelect;
                 }
             },
+        };
+        $scope.asyncValidators = 
+        {
             mailaddress:
             {
                 same: function (modelValue, viewValue)

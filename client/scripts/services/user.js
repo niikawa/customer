@@ -35,22 +35,16 @@ uesrServices.factory("User", ['$resource','$http','$q','Utility',
         {
             isSameMailAddress : function(userId, mailaddress)
             {
-                var deferred = $q.defer();
                 $http.post('user/mail/',{user_id: userId, mailaddress: mailaddress}
-                ).success(function(data)
+                ).then(
+                function resolved()
                 {
-                    console.log(data.result.count);
-                    if (data.result.count > 0)
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                });
-
-                return deferred.promise;
+                    return $q.reject('exists');
+                },
+                function rejected()
+                {
+                    return true;
+               });
             }
         };
         
