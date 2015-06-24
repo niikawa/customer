@@ -197,6 +197,7 @@ exports.isSameMailAddress = function(req, res)
             {columns: 'user_id', type: model.db.int, value: userId, symbol: '!='},
             {columns: 'mailaddress', type: model.db.VarChar, value: req.body.mailaddress, symbol: '='},
         ];
+        console.log(conditions);
         model.isSameItemByMultipleCondition(conditions , function(err, result)
         {
             if (err.length > 0)

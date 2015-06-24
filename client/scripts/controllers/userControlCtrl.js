@@ -123,7 +123,7 @@ function ($scope, $routeParams, User, Role, Utility, Location)
             $scope.userForm.password.$validate();
         });
  
-        if (2 === pageProp.type)
+        if (2 !== pageProp.type)
         {
             // password == password_confirm判定のため
             $scope.$watch('user.password', function()
