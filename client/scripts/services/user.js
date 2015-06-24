@@ -36,15 +36,14 @@ uesrServices.factory("User", ['$resource','$http','$q','Utility',
             isSameMailAddress : function(userId, mailaddress)
             {
                 return $http.post('user/mail/',{user_id: userId, mailaddress: mailaddress}
-                ).then(
-                function resolved()
+                ).then(function(response)
                 {
-                    return $q.reject('exists');
-                },
-                function rejected()
-                {
-                    return true;
-               });
+                    if (response.result.count > 0)
+                    {
+                        return $q.reject('exists');
+                    }
+                    return false;
+                });
             }
         };
         
