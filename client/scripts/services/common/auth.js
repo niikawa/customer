@@ -13,10 +13,6 @@ authServices.factory("Auth", ['$resource', '$http', '$location', '$cookies','Uti
                     //クッキーに入れる
                     $cookies.remembertkn = data.remembertkn;
                 }
-            }
-            ).error(function(data)
-            {
-                Utility.errorSticky(data);
             });
             return promise;
         };

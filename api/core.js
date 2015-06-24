@@ -197,7 +197,21 @@ core.prototype.isSameItem = function(columns, value, type, callback)
 {
     var request = this.getRequest();
     request.input(columns, type, value);
-    var sql = 'SELECT COUNT(1) AS count FROM ' + this.modelName + ' WHERE ' + columns + ' = @' + columns;
+    var sql = 'SELECT COUNT(1) AS count FROM ' + this.modelName + ' WHERE ' + columns + ' = @' + columns +' AND delete_flag=0';
+    this.execute(sql, request, callback);
+};
+
+core.prototype.isSameItemByMultipleCondition = function(conditions, callback)
+{
+    var sql = 'SELECT COUNT(1) AS count FROM ' + this.modelName + ' WHERE ';
+    var request = this.getRequest();
+    var num = conditions.length;
+    for(var index = 0; index < num; index++)
+    {
+        request.input(conditions[index].columns, conditions[index].value, conditions[index].type);
+        sql += ' AND ' +conditions[index].columns + ' =@' + conditions[index].columns;
+    }
+    sql += ' AND delete_flag = 0';
     this.execute(sql, request, callback);
 };
 

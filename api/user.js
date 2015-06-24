@@ -180,13 +180,34 @@ exports.delete = function(req, res)
 
 exports.isSameMailAddress = function(req, res)
 {
-    model.isSameItem('mailaddress', req.body.mailaddress, model.db.VarChar, function(err, result)
+    var userId = req.body.user_id;
+    if (void 0 === userId)
     {
-        if (err.length > 0)
+        model.isSameItem('mailaddress', req.body.mailaddress, model.db.VarChar, function(err, result)
         {
-            console.log(err);
-            res.status(510).send('query execute faild');
-        }
-        res.json({result: result[0]});
-    });
+            if (err.length > 0)
+            {
+                console.log(err);
+                res.status(510).send('query execute faild');
+            }
+            res.json({result: result[0]});
+        });
+    }
+    else
+    {
+        var conditions = [
+            {columns: 'user_id', type: model.db.int, value: userId},
+            {columns: 'mailaddress', type: model.db.VarChar, value: req.body.mailaddress},
+        ];
+        model.isSameItem(conditions , function(err, result)
+        {
+            if (err.length > 0)
+            {
+                console.log(err);
+                res.status(510).send('query execute faild');
+            }
+            res.json({result: result[0]});
+        });
+    }
+    
 };
