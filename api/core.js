@@ -209,9 +209,9 @@ core.prototype.isSameItemByMultipleCondition = function(conditions, callback)
     for(var index = 0; index < num; index++)
     {
         request.input(conditions[index].columns, conditions[index].value, conditions[index].type);
-        sql += ' AND ' +conditions[index].columns + ' =@' + conditions[index].columns;
+        sql += conditions[index].columns + ' =@' + conditions[index].columns + ' AND ';
     }
-    sql += ' AND delete_flag = 0';
+    sql += 'delete_flag = 0';
     this.execute(sql, request, callback);
 };
 
