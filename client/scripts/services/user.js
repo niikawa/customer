@@ -43,7 +43,7 @@ uesrServices.factory("User", ['$resource','$http','$q','Utility',
                 },
                 function rejected()
                 {
-                    return true;
+                    return $q.reject('not exists');
                });
             }
         };
