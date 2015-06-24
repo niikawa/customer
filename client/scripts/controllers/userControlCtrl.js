@@ -117,7 +117,7 @@ function ($scope, $routeParams, User, Role, Utility, Location)
             $scope.roleList = response.data;
         });
         
-        if (2 !== pageProp.type)
+        if (1 === $scope.passwordEdit)
         {
             // user_name != password判定のため
             $scope.$watch('user.name', function()
