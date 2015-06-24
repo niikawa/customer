@@ -17,6 +17,9 @@ loginCtrl.controller('LoginCtrl', ['$scope', '$location', 'Auth', 'Location',
             $scope.$emit('loginComplete');
             Location.home();
             //Auth.setLoginStatus(response.data.user_id);
+        }, function()
+        {
+            $scope.$emit('requestEnd');
         });
     };
 }]);
