@@ -27,10 +27,12 @@
                             <p class="item-error" ng-message="same">すでに登録されているメールアドレスです</p>
                         </div>
                     </div>
-                     パスワード 
+                    
+                    <!-- パスワード -->
                     <div ng-if="2==pageType" class="btn-group">
                         <label class="btn btn-default" ng-model="passwordEdit" btn-radio=1 uncheckable>パスワードを変更する</label>
                     </div>
+                    <pre>{{passwordEdit}}</pre>
                     <div ng-if="passwordEdit==1">
                         <div>
                             <input type="password" class="form-control" name="password" placeholder="パスワード"
@@ -41,7 +43,7 @@
                                 <p class="item-error" ng-message="same">ユーザー名と異なるパスワードにしてください</p>
                             </div>
                         </div>
-    
+                        
                         <div>
                             <input type="password" class="form-control" name="password_confirm" ng-model="user.password_confirm" placeholder="パスワード再入力"
                                 my-validators="validators.password_confirm" ng-required="true" />
