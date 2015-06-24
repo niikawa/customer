@@ -38,6 +38,7 @@ uesrServices.factory("User", ['$resource','$http','$q','Utility',
                 return $http.post('user/mail/',{user_id: userId, mailaddress: mailaddress}
                 ).then(function(response)
                 {
+                    console.log(response);
                     if (response.result.count > 0)
                     {
                         return $q.reject('exists');
