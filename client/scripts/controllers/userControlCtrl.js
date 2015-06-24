@@ -83,10 +83,8 @@ function ($scope, $routeParams, User, Role, Utility, Location)
                     if (void 0 === val || val.length === 0) return true;
                     
                     //形式不正の場合も送信したくない
-                    
-                    User.resource.isSameMailAddress({user_id: $scope.user.user_id, mailaddress: val}).$promise.then(function(response)
+                    return User.resource.isSameMailAddress({user_id: $scope.user.user_id, mailaddress: val}).$promise.then(function(response)
                     {
-                        console.log(response.result.count);
                         return (0 === response.result.count);
                     });
                 }
