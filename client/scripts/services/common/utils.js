@@ -30,7 +30,6 @@ utilsServices.service("Utility", function()
             if (param.hasOwnProperty('update_by')) delete param.update_by;
             if (param.hasOwnProperty('update_date')) delete param.update_date;
         }
-        console.log(param);
     };
     
     //--------------------------------------------------------------------------

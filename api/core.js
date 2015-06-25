@@ -46,12 +46,10 @@ core.prototype.getInsCommonColumns = function()
     };
 };
 
-core.prototype.getUpdCommonColumns = function()
+core.prototype.getUpdCommonColumns = function(userId)
 {
     var date =  moment().format("YYYY/MM/DD HH:mm:ss");
-    return {
-        create_date: date, update_by: 1, update_date: date
-    };
+    return {update_by: userId, update_date: date};
 };
 
 core.prototype.getQueryObject = function(col, table, where, groupby, orderby)
