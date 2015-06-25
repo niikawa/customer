@@ -169,7 +169,7 @@ core.prototype.updateById = function(data, request, callback)
     var len = columns.length;
     for (var i = 0; i < len; i ++)
     {
-        var item = columns[i] + ' = @' + columns[i];
+        var item = columns[i] + ' =@' + columns[i];
         dataList.push(item);
     }
     
@@ -226,7 +226,7 @@ core.prototype.execute = function(sql, request, callback)
     // レコードセットを取得するたびに呼び出される
     request.on('recordset', function(columns)
     {
-       console.log(columns);
+       //console.log(columns);
     });
     
     // 行を取得するたびに呼ばれる

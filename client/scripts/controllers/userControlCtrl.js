@@ -150,6 +150,7 @@ function ($scope, $routeParams, User, Role, Utility, Location)
         var message = '';
         if (2 === pageProp.type)
         {
+            Utility.deleteCommonInfo($scope.user);
             message = $scope.user.name + 'の情報を更新しました';
             User.resource.save({id: $scope.user.user_id, data: $scope.user}).$promise.then(function(response)
             {

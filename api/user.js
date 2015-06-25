@@ -131,6 +131,7 @@ exports.update = function(req, res)
         request.input('password', model.db.NVarChar, crypto.createHash('md5').update(updateData.password).digest("hex"));
     }
     
+    request.input('delete_flag', model.db.SmallInt, 0);
     request.input('update_by', model.db.Int, updateData.update_by);
     request.input('update_date', model.db.NVarChar, updateData.update_date);
     request.input('mailaddress', model.db.VarChar, updateData.mailaddress);

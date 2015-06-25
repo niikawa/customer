@@ -4,12 +4,39 @@
  * @author niikawa
  */
 var utilsServices = angular.module("myApp");
-utilsServices.service("Utility", function(){
+utilsServices.service("Utility", function()
+{
+    //--------------------------------------------------------------------------
+    //共通項目除去
+    //--------------------------------------------------------------------------
+    this.deleteCommonInfo = function(param)
+    {
+        var target = [];
+        if (angular.isArray(param))
+        {
+            target = param;
+        }
+        else
+        {
+            target.push(param);
+        }
+
+        angular.forEach(param, function(data, k)
+        {
+            if (data.hasOwnProperty('delete_flag')) delete data.delete_flag;
+            if (data.hasOwnProperty('create_by')) delete data.create_by;
+            if (data.hasOwnProperty('create_date')) delete data.create_date;
+            if (data.hasOwnProperty('update_by')) delete data.update_by;
+            if (data.hasOwnProperty('update_date')) delete data.update_date;
+        });
+    };
+    
     //--------------------------------------------------------------------------
     //メッセージアラート
     //stickyの場合は自動で消えない
     //--------------------------------------------------------------------------
-    this.info = function(message, position) {
+    this.info = function(message, position)
+    {
         position = position == null ? 'top-center' : position;
         $().toastmessage('showToast', {
             text     : message,
