@@ -77,7 +77,7 @@ router.post('/user/mail', user.isSameMailAddress);
 router.get('/user/:id', user.getById);
 router.post('/user/:id', user.update);
 router.post('/user/create', user.craete);
-router.post('/user', user.update);
+router.post('/user/:id', user.update);
 router.delete('/user/:id', user.remove);
 
 var role = require("./api/role");
