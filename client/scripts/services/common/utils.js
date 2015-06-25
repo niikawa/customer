@@ -11,24 +11,26 @@ utilsServices.service("Utility", function()
     //--------------------------------------------------------------------------
     this.deleteCommonInfo = function(param)
     {
-        var target = [];
         if (angular.isArray(param))
         {
-            target = param;
+            angular.forEach(param, function(data, k)
+            {
+                if (data.hasOwnProperty('delete_flag')) delete data.delete_flag;
+                if (data.hasOwnProperty('create_by')) delete data.create_by;
+                if (data.hasOwnProperty('create_date')) delete data.create_date;
+                if (data.hasOwnProperty('update_by')) delete data.update_by;
+                if (data.hasOwnProperty('update_date')) delete data.update_date;
+            });
         }
         else
         {
-            target.push(param);
+            if (param.hasOwnProperty('delete_flag')) delete param.delete_flag;
+            if (param.hasOwnProperty('create_by')) delete param.create_by;
+            if (param.hasOwnProperty('create_date')) delete param.create_date;
+            if (param.hasOwnProperty('update_by')) delete param.update_by;
+            if (param.hasOwnProperty('update_date')) delete param.update_date;
         }
-
-        angular.forEach(param, function(data, k)
-        {
-            if (data.hasOwnProperty('delete_flag')) delete data.delete_flag;
-            if (data.hasOwnProperty('create_by')) delete data.create_by;
-            if (data.hasOwnProperty('create_date')) delete data.create_date;
-            if (data.hasOwnProperty('update_by')) delete data.update_by;
-            if (data.hasOwnProperty('update_date')) delete data.update_date;
-        });
+        console.log(param);
     };
     
     //--------------------------------------------------------------------------
