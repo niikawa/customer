@@ -30,7 +30,7 @@
                             <td data-th="更新日">{{item.update_date}}</td>
                             <td data-th="状況">{{item.status}}</td>
                             <td><a class="btn btn-default" ng-click="download"><i class="fa fa-download"></i></a></td>
-                            <td><button class="btn btn-default" ng-click="remove(i)">削除</button></td>
+                            <td><button type="button" class="close" ng-click="remove(i)">&times;</button></td>
                         </tr>
                     </tbody>
                 </table>
