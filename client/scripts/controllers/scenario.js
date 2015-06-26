@@ -30,6 +30,7 @@ function ($scope, $routeParams, Shared, Scenario)
         $scope._construct();
         setInitializeScope();
         $scope.scenarioList = Scenario.mock().getList(Scenario.getPageProp($routeParams.scenario).type);
+        $scope.showInfo = $scope.scenarioList.length > 0 ? true: false;
 
         /* サーバーサイド実装後に開放
         Segment.resource.get().$promise.then(function(response)

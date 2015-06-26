@@ -9,7 +9,12 @@
 
         <div class="row" >
             <div class="col-md-12">
-                <table class="table table-hover">
+
+                <div ng-if="!showInfo" class="alert alert-info" role="alert">
+                    作成しているシナリオはありません。
+                </div>
+                
+                <table mg-if="showInfo" class="table table-hover">
                     <thead>
                         <tr class="info">
                             <th>シナリオ名</th>

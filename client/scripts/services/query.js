@@ -25,6 +25,43 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
             },
         });
         
+        queryServices.validation = 
+        {
+            require: function(list)
+            {
+                angular.forEach(list, function(v, k)
+                {
+                    
+                    var isValue1 = v.condition.hasOwnProperty('value1');
+                    var isValue2 = v.condition.hasOwnProperty('value2');
+                    if (isValue1)
+                    {
+                        if (v.condition.value1);
+                    }
+                    
+                    if (isValue2)
+                    {
+                        if (v.condition.value2);
+                    }
+
+                    if (void 0 === v.condition.value2 || '' === v.condition.value2)
+                    {
+                        v.selectedCondition.condtionString = 
+                            v.condition.value1 +''+ v.selectedCondition.name;
+                    }
+                    else
+                    {
+                        v.selectedCondition.condtionString = 
+                            v.condition.value1 +'から'+ v.condition.value2 + v.selectedCondition.name;
+                    }
+                });
+                
+            }
+            
+            
+        };
+        
+        
         queryServices.getContentsByColumsType = function(type)
         {
             var countents = {inputType:'', };

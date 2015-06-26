@@ -73,6 +73,9 @@ function ($scope, Shared, Query, Location, Utility)
         Shared.set('queryColumns', $scope.selectColumns);
     };
     
+    /****************************************/
+    /*                  set                 */
+    /****************************************/
     $scope.nextValidation = function()
     {
         $scope.selectColumns = Shared.get('queryColumns');
@@ -94,9 +97,17 @@ function ($scope, Shared, Query, Location, Utility)
     
     $scope.next = function()
     {
-        Location.querySave();
+        var isNext = false;
+        angular.forEach($scope.selectColumns, function(v, k)
+        {
+            
+        });
+        if (isNext) Location.querySave();
     };
     
+    /*****************************************/
+    /*                  save                 */
+    /*****************************************/
     $scope.saveInitialize = function()
     {
         $scope.query = {query_name: ''};

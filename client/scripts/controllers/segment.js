@@ -25,18 +25,12 @@ function ($scope, Shared, Segment, Utility)
     {
         $scope._construct();
         setInitializeScope();
-//        $scope.segmentList = Segment.mock().data;
 
         Segment.resource.get().$promise.then(function(response)
         {
-            console.log(response);
             $scope.segmentList = response.data;
+            $scope.showInfo = $scope.segmentList.length > 0 ? true : false; 
         });
-    };
-    
-    $scope.refresh = function()
-    {
-        Utility.info('この機能は意味不明だよ');
     };
     
     $scope.download = function()

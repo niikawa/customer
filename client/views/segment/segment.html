@@ -5,7 +5,6 @@
     <div class="box">
         <h4>セグメント一覧
             <a class="btn btn-default" ng-href="/#/segment/control/">新規登録</a> 
-            <!--<input type="text" class="" placeholder="Search for...">-->
         </h4>
 
         <div class="row" >
@@ -14,7 +13,12 @@
                     <input type="text" class="form-control" placeholder="セグメントを絞り込みます" ng-model="segmentSearch" 
                         refine-directive refine-item="segmentList" keyword="segmentSearch" name-propertie="segment_name" >
                 </div>
-                <table class="table table-hover">
+                
+                <div ng-if="!showInfo" class="alert alert-info" role="alert">
+                    作成しているセグメントはありません。
+                </div>
+                
+                <table ng-if="showInfo" class="table table-hover">
                     <thead>
                         <tr class="info">
                             <th>セグメント名</th>
