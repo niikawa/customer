@@ -56,7 +56,7 @@ exports.login = function(req, res)
 {
     var table = 'M_USER T1 ';
     var col = ' T1.user_id, T1.user_name';
-    var where = ' T1.delete_flag = 0 AND mailaddress = @mailaddress AND password = @password';
+    var where = ' T1.delete_flag = 0 AND mailaddress =@mailaddress AND password =@password';
     var qObj = model.getQueryObject(col, table, where, '', '');
     
     qObj.request.input('mailaddress', model.db.VarChar, req.body.mailAddress);
