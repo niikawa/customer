@@ -56,7 +56,7 @@ ul#nav1 {
 .mh {
   min-height: 200px;
 }
-
+button.btn-clear,
 button.close-button,
 button.close-button-right,
 button.close-button-left {
