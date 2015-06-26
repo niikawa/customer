@@ -57,6 +57,14 @@ ul#nav1 {
   min-height: 200px;
 }
 
+button.close-button,
+button.close-button-right,
+button.close-button-left {
+  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+  border: 0 none;
+  cursor: pointer;
+  padding: 0;
+}
 .close-button {
   color: #000;
   font-size: 21px;
@@ -64,9 +72,28 @@ ul#nav1 {
   line-height: 1;
   opacity: 0.4;
   text-shadow: 0 1px 0 #fff;
-}  
-
-.close-button:hover {
+}
+.close-button-left {
+  color: #000;
+  float: left;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0.4;
+  text-shadow: 0 1px 0 #fff;
+}
+.close-button-right {
+  color: #000;
+  float: right;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0.4;
+  text-shadow: 0 1px 0 #fff;
+}
+.close-button:hover,
+.close-button-left:hover,
+.close-button-right:hover {
   color: #000;
   font-size: 21px;
   font-weight: 700;
