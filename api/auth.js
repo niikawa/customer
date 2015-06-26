@@ -55,7 +55,7 @@ exports.isLogin = function(req, res)
 exports.login = function(req, res)
 {
     var table = 'M_USER T1 ';
-    var col = ' T1.user_id, T1.user_name';
+    var col = ' T1.user_id, T1.name';
     var where = ' T1.delete_flag = 0 AND mailaddress =@mailaddress AND password =@password';
     var qObj = model.getQueryObject(col, table, where, '', '');
     
@@ -65,11 +65,9 @@ exports.login = function(req, res)
 
     model.select(qObj, qObj.request,  function(err, data)
     {
-        console.log('ログイン');
-        console.log(err);
-        console.log(data);
         if (err.length > 0 || 0 === data.length )
         {
+            console.log(err);
             res.status(510).send('メールアドレスまたはパスワードに誤りがあります');
         }
         else
@@ -78,7 +76,7 @@ exports.login = function(req, res)
             model.insertLog(userId, 1);
             req.session.isLogin = true;
             req.session.userId = userId;
-            req.session.userName = data[0].user_name;
+            req.session.userName = data[0].name;
             res.json({data: data});
         }
     });
