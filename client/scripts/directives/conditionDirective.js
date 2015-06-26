@@ -12,9 +12,9 @@ myApp.directive('conditionDirective', function(){
                 '指定した値' +
                 '<select ng-model="mySlected" class="form-control" ng-options="item as item.name for item in selectItems"></select>'+
                 'ものを条件とする'+
-                '<div ng-if="isOneInput"><input type="text" class="form-control" ng-model="conditionAppend.condition.value1" ng-require></div>'+
-                '<div ng-if="isTextArea"><input type="text" class="form-control" ng-model="conditionAppend.condition.value1" ng-require></div>'+
-                '<div ng-if="isTwoInput"><input type="text" class="form-control" ng-model="conditionAppend.condition.value1" ng-require>～<input type="text" ng-model="conditionAppend.condition.value2" ng-require></div>'
+                '<div ng-if="isOneInput"><input type="text" class="form-control" ng-model="conditionAppend.condition.value1" ng-required="true"></div>'+
+                '<div ng-if="isTextArea"><input type="text" class="form-control" ng-model="conditionAppend.condition.value1" ng-required="true"></div>'+
+                '<div ng-if="isTwoInput"><input type="text" class="form-control" ng-model="conditionAppend.condition.value1" ng-required="true">～<input type="text" ng-model="conditionAppend.condition.value2" ng-required="true"></div>'
                   ,
         link: function (scope, element, attrs) 
         {
