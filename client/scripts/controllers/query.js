@@ -97,12 +97,7 @@ function ($scope, Shared, Query, Location, Utility)
     
     $scope.next = function()
     {
-        var isNext = false;
-        angular.forEach($scope.selectColumns, function(v, k)
-        {
-            
-        });
-         Location.querySave();
+        if (Query.validation.require($scope.selectColumns)) Location.querySave();
 //        if (isNext) Location.querySave();
     };
     

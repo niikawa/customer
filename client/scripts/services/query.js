@@ -34,31 +34,19 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
                     
                     var isValue1 = v.condition.hasOwnProperty('value1');
                     var isValue2 = v.condition.hasOwnProperty('value2');
+                    if (!isValue1) return false;
                     if (isValue1)
                     {
-                        if (v.condition.value1);
+                        if (0 === v.condition.value1.trim.length) return false;
                     }
                     
                     if (isValue2)
                     {
-                        if (v.condition.value2);
-                    }
-
-                    if (void 0 === v.condition.value2 || '' === v.condition.value2)
-                    {
-                        v.selectedCondition.condtionString = 
-                            v.condition.value1 +''+ v.selectedCondition.name;
-                    }
-                    else
-                    {
-                        v.selectedCondition.condtionString = 
-                            v.condition.value1 +'から'+ v.condition.value2 + v.selectedCondition.name;
+                        if (0 === v.condition.value2.trim.length) return false;
                     }
                 });
-                
+                return true;
             }
-            
-            
         };
         
         
