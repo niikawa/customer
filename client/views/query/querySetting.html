@@ -5,10 +5,10 @@
     <div class="box">
         <h4>選択したカラムに対する条件を設定してください</h4>
 
-        <div class="row">
-            <div class="col-md-12 break-all label-box">
-                <h3>選択しているカラム</h3>
-                <from name="queryForm" novalidate>
+        <from name="queryForm" novalidate>
+            <div class="row">
+                <div class="col-md-12 break-all label-box">
+                    <h3>選択しているカラム</h3>
                     <div class="col-md-4" ng-repeat="item in selectColumns">
                         <div class="panel panel-success" >
                             <div class="panel-heading">{{item.table.logicalname}}.{{item.column.logicalname}}
@@ -20,15 +20,15 @@
                             </div>
                         </div>
                     </div>
-                </from>
+                </div>
             </div>
-        </div>
-
-        <div class="row" >
-            <div class="col-md-12 center" >
-                <a class="btn btn-default" ng-href="#/query" >戻る</a>
-                <button class="btn btn-default" ng-disabled="queryForm.$invalid" ng-click="next()">次へ</button>
+    
+            <div class="row" >
+                <div class="col-md-12 center" >
+                    <a class="btn btn-default" ng-href="#/query" >戻る</a>
+                    <button class="btn btn-default" ng-disabled="queryForm.$invalid" ng-click="next()">次へ</button>
+                </div>
             </div>
-        </div>
+        </from>
     </div>
 </div>
