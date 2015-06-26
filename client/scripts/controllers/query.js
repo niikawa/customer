@@ -102,7 +102,8 @@ function ($scope, Shared, Query, Location, Utility)
         {
             
         });
-        if (isNext) Location.querySave();
+         Location.querySave();
+//        if (isNext) Location.querySave();
     };
     
     /*****************************************/
