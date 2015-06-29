@@ -39,7 +39,7 @@
                                     <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'OR'" uncheckable>または</label>
                                 </div>
 
-                                <div class="btn-group" ng-if="!$last && $index!=$last">
+                                <div class="btn-group" ng-if="!$last">
                                     <label class="label label-success " ng-click="release($parent.$index, $index)">
                                         解除
                                     </label>
