@@ -104,6 +104,10 @@ button.close-button-left {
 
 ul > li > a > i {cursor: pointer;}
 
+.sidebar {
+  position: absolute;
+  z-index: 1000000;
+}
 .sidebar .sidebar-nav.navbar-collapse {
     padding-right: 0;
     padding-left: 0;
