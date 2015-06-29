@@ -97,6 +97,7 @@ function ($scope, Shared, Query, Location, Utility)
     
     $scope.next = function()
     {
+        console.log($scope.selectColumns);
         if (Query.validation.require($scope.selectColumns)) Location.querySave();
 //        if (isNext) Location.querySave();
     };
@@ -130,7 +131,6 @@ function ($scope, Shared, Query, Location, Utility)
         var sql = Query.createSQL($scope.showConditions);
         var c = Shared.get('queryColumns');
         var tables = Query.getTables(c);
-        console.log(tables);
         var data =  {query_name: $scope.query.query_name, sql: sql, tables: tables};
         Query.resource.create({data: data}).$promise.then(function(response, err)
         {
@@ -142,6 +142,12 @@ function ($scope, Shared, Query, Location, Utility)
     
     $scope.execute = function()
     {
-        Utility.info('現状のSQLを実行して対象数を出すよ');
+//        Utility.info('現状のSQLを実行して対象数を出すよ');
+        var data = Shared.get('queryColumns');
+        var tables = Query.getTables(c);
+        Query.resource.executeQuery({data: data, tables: tables}).$promise.then(function(response, err)
+        {
+            console.log(response);
+        });
     };
 }]);

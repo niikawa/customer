@@ -23,6 +23,11 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
                 method: 'DELETE',
                 url: '/query/:id',
             },
+            executeQuery:
+            {
+                method: 'POST',
+                url: '/query/execute',
+            },
         });
         
         queryServices.validation = 
@@ -143,7 +148,6 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
                     
                     if (k1 !== firstLooplast || k2 !== secondLoopLast) where += ' ' +v.condition.where+ ' ';
                 });
-                
             });
             return where;
         };

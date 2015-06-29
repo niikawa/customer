@@ -59,10 +59,13 @@ router.get('/azure/recomender/:id', azure.recommenderItem);
 var table = require('./api/table');
 router.get('/query', table.getTables);
 
-var query = require("./api/query");
-router.get('/query/get', query.getItem);
-router.post('/query/create', query.addItem);
-router.delete('/query/:id', query.removeItem);
+var querydoc = require('./api/querydoc');
+router.get('/query/get', querydoc.getItem);
+router.post('/query/create', querydoc.addItem);
+router.delete('/query/:id', querydoc.removeItem);
+
+var query = require('./api/query');
+router.post('/query/execute', query.execute);
 
 var segmentdoc = require("./api/segmentdoc");
 router.post('/segment/createdoc', segmentdoc.addItem);

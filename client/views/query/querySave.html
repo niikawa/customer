@@ -27,16 +27,25 @@
                 <div class="card-container" ng-model='showConditions' drop-directive drop-area-key="1">
                     
                     <div class="card btn-draggable" ng-repeat="items in showConditions track by $index" drag-item-directive dragindex="$index" >
+                        
                         <div ng-repeat="item in items track by $index">
                             
-                            <p>{{item.table.logicalname}}.{{item.column.logicalname}}が{{item.selectedCondition.condtionString}}</p>
+                            <p>
+                                {{item.table.logicalname}}.{{item.column.logicalname}}が{{item.selectedCondition.condtionString}}
+                                <label ng-if="$first==$last && $index!=$first" class="label-success" ng-click="release($parent.$index, $index)">
+                                    解除する
+                                </label>
+                            </p>
                             
                             <div class="btn-group" ng-if="!$parent.$last || !$last">
                                 <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'AND'" uncheckable>かつ</label>
                                 <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'OR'" uncheckable>または</label>
                             </div>
                             
+                            
+                            
                         </div>
+                        
                         <div class="pull-right drop-join" drop-join-directive ng-model="items">
                             
                         </div>
@@ -64,7 +73,6 @@
                             
                             <span ng-if="$index!=0 && $index==$last">)</span>
                             <p ng-if="!$parent.$last || ($first!=$last && !$last)">
-                                
                                 {{item.condition.where}}
                             </p>
                         </div>

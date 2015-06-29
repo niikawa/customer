@@ -1,75 +1,109 @@
 var async = require('async');
-var DocumentDBClient = require('documentdb').DocumentClient;
-var query = require('../collection/query');
+var Core = require('./core');
 
-var docDbClient = new DocumentDBClient('https://ixcpm.documents.azure.com:443/', {
-    masterKey: 'BAVJ6Lb3xefcLJVh7iShAAngAHrYC08mtTj2ieVIVXuoBkftXwxKSCJaOcNrvctBwhi6oFoG6GlDVrDiDyXOzg=='
-});
-var Query = new query(docDbClient, 'ixcpm', 'cpm');
-Query.init();
+/** テーブル名 */
+var tableName = '';
+var pk = '';
 
-exports.getItem = function(req, res)
+var query = function query()
 {
-    var query = 'SELECT * FROM doc';
-    
-    Query.find(query, function(err, doc)
-    {
-        if (err) {
-            
-            res.status(511).send('access ng');
-            
-        } else {
-            
-            res.json({data: doc});
-        }
-    });
+    Core.call(this, tableName, pk);
 };
 
-exports.addItem = function(req, res)
-{
-    if (!req.session.isLogin) {
-        
-        res.status(511).send('authentication faild');
-    }
-    
-    if (void 0 === req.body)
-    {
-        res.status(511).send('parameters not found');
-    }
+//coreModelを継承する
+var util = require('util');
+util.inherits(query, Core);
 
-    Query.addItem(req.body.data, function(err, doc)
-    {
-        if (err) {
-            
-            res.status(511).send('access ng');
-            
-        } else {
-            
-            res.status(200).send('create query succsess');
-        }
-    });
-};
-exports.removeItem = function(req, res)
-{
-    if (!req.session.isLogin) {
-        
-        res.status(511).send('authentication faild');
-    }
-    
-    if (void 0 === req.params)
-    {
-        res.status(511).send('parameters not found');
-    }
+var model = new query();
 
-    Query.removeItem(req.params.id, function(err, doc)
+function getColType(type)
+{
+    switch(type)
     {
-        if (err) {
+        case 'INT':
+            return model.db.Int;
+        case 'VARCHAR':
+            return model.db.VarChar;
+        case 'NVarChar':
+        case 'DATETIME':
+        default:
+            return model.db.NVarChar;
+    }
+}
+
+function createSQL(list, request)
+{
+    var where = ' ';
+    var firstLength = list.length;
+    var firstLooplast = firstLength -1;
+    
+    for (var i = 0; i < firstLength; i++)
+    {
+        var items = list[i];
+        var secondLength = items.length;
+        var secondLoopLast = secondLength -1;
+        if (items.length > 1) where += '(';
+        
+        for (var j = 0; j < secondLength; j++)
+        {
+            where += items[j].table.physicalname + '.' + items[j].column.physicalname + ' ' + items[j].selectedCondition.symbol + ' ';
+            switch (items[j].selectedCondition.symbol)
+            {
+                case 'IN':
+                case 'NOT IN':
+                    where += ' (' + items[j].condition.value1 + ')';
+                    break;
+                case 'BETWEEN':
+                    where += items[j].condition.value1 + ' AND ' + items[j].condition.value2;
+                    break;
+                case 'LIKE':
+                    if (9 == items[j].condition.value)
+                    {
+                        where += items[j].condition.value1 + '%';
+                    }
+                    else if (10 == items[j].condition.value)
+                    {
+                        where += '%'+ items[j].condition.value1;
+                    }
+                    else
+                    {
+                        where += '%'+ items[j].condition.value1 + '%';
+                    }
+                    break;
+                default:
+                    where += '@'+items[j].column.physicalname;
+                    var type = getColType(items[j].column.type);
+                    request.input(items[j].column.physicalname, type, items[j].condition.value1);
+            }
+            if (items.length > 1 && secondLoopLast === j ) where += ')';
             
-            res.status(511).send('access ng');
+            if (i !== firstLooplast || j !== secondLoopLast) where += ' ' + items[j].condition.where + ' ';
             
-        } else {
-            
-            res.json({data: doc});
         }
+    }
+    return {where: where, request: request};
+}
+
+exports.exeucte = function(req, res)
+{
+    console.log('exeucte query');
+    
+    var request = model.getRequest();
+    var data = req.body.data;
+    console.log(data);
+
+    var tableList = Object.keys(data.tables);
+    console.log(tableList);
+    var exexuteData = createSQL(data, request);
+    
+    var sql = "SELECT * FROM " + tableList.join(',') + exexuteData.where;
+    model.execute(sql, exexuteData.request, function(err, date)
+    {
+        if (err.length > 0)
+        {
+            console.log(err);
+            res.status(510).send('object not found');
+        }
+        res.status(200).send('insert ok');
     });
 };
