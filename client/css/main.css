@@ -355,14 +355,22 @@ div .break-all {
 }
 
 div .drop-join {
+  display: table-cell;
   border: 2px dotted ;
   width: 60px;
   height: 60px;
   position: relative;
 }
 
-div .cell {
-  display: table-cell;
+div .card-cell-left {
+  float: left;
+  width: 80%;
+}
+
+div .card-cell-right-b {
+  vertical-align: button;
+  width: 20%;
+  float: right;
 }
 
 /*-----------------------------------------------*/

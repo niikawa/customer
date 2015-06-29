@@ -28,7 +28,7 @@
                     
                     <div class="card-info btn-draggable" ng-repeat="items in showConditions track by $index" drag-item-directive dragindex="$index" >
                         
-                        <div class="pull-left">
+                        <div class="card-cell-left">
                             <div ng-repeat="item in items track by $index">
                                 <p>
                                     {{item.table.logicalname}}.{{item.column.logicalname}}が{{item.selectedCondition.condtionString}}
@@ -40,11 +40,11 @@
                                 </div>
                             </div>
                         </div>
+                        <label class="label label-success " ng-if="$first==$last && $index!=$first" ng-click="release($parent.$index, $index)">
+                            解除
+                        </label>
 
-                        <div class="pull-right" drop-join-directive ng-model="items">
-                            <label class="label label-success " ng-if="$first==$last && $index!=$first" ng-click="release($parent.$index, $index)">
-                                解除
-                            </label>
+                        <div class="card-cell-right" drop-join-directive ng-model="items">
                             <div class="drop-join"></div>
                         </div>
                         
