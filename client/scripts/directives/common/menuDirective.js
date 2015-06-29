@@ -38,6 +38,10 @@ myApp.directive('myHeader', function(){
         link: function (scope, element, attrs, ctrl) 
         {
             scope.isOpenMenu = false;
+            scope.openClose = function()
+            {
+                scope.isOpenMenu = !scope.isOpenMenu;
+            }
         }
     };
 });
