@@ -38,8 +38,17 @@
                                     <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'AND'" uncheckable>かつ</label>
                                     <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'OR'" uncheckable>または</label>
                                 </div>
+
+                                <div class="btn-group" ng-if="!$parent.$last || !$last">
+                                    <label class="label label-success " ng-click="release($parent.$index, $index)">
+                                        解除
+                                    </label>
+                                </div>
                             </div>
                         </div>
+                        <!--<label class="label label-success " ng-if="$first==$last && $index!=$first" ng-click="release($parent.$index, $index)">-->
+                        <!--    解除-->
+                        <!--</label>-->
                         <label class="label label-success " ng-if="$first==$last && $index!=$first" ng-click="release($parent.$index, $index)">
                             解除
                         </label>
