@@ -106,6 +106,7 @@ ul > li > a > i {cursor: pointer;}
 
 .sidebar {
   width: 200px;
+  background-color: #e7e7e7;
   position: absolute;
   z-index: 1000000;
 }
