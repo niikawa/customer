@@ -12,7 +12,10 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-left">
-            <li><a href="/#/"><i class="fa fa-arrow-circle-o-right fa-3x"></i></a></li>
+            <li>
+              <a href="/#/" ng-if="!isOpenMenu" ng-click="isOpenMenu=!isOpenMenu"><i class="fa fa-arrow-circle-o-right fa-3x"></i></a>
+              <a href="/#/" ng-if="isOpenMenu" ng-click="isOpenMenu=!isOpenMenu"><i class="fa fa-arrow-circle-o-left fa-3x"></i></a>
+            </li>
             <!--<li><a href="/#/project"><img src="images/icon/1426685709_bubbles.png" ></a></li>-->
             <!--<li><a ><img src="images/icon/Cute-Ball.png" ng-click="addMenber()"></a></li>-->
             <!--<li><a href="/#/user"><img src="images/icon/1426683594_man.png"></a></li>-->
