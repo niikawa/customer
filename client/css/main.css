@@ -494,7 +494,7 @@ div .cell {
   cursor: move;
 }
 .card-info {
-  float:left ;
+  overflow: hidden;;
 }
 
 .card:hover,
