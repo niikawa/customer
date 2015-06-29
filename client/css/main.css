@@ -105,6 +105,7 @@ button.close-button-left {
 ul > li > a > i {cursor: pointer;}
 
 .sidebar {
+  width: 200px;
   position: absolute;
   z-index: 1000000;
 }
