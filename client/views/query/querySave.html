@@ -28,25 +28,25 @@
                     
                     <div class="card btn-draggable" ng-repeat="items in showConditions track by $index" drag-item-directive dragindex="$index" >
                         
-                        <div class="col-md-10 col-sm-10" ng-repeat="item in items track by $index">
+                        <div class="" ng-repeat="item in items track by $index">
                             <p>
                                 {{item.table.logicalname}}.{{item.column.logicalname}}が{{item.selectedCondition.condtionString}}
                             </p>
+                            
+                            <label class="label label-success " ng-if="$first==$last && $index!=$first" ng-click="release($parent.$index, $index)">
+                                解除
+                            </label>
                             
                             <div class="btn-group" ng-if="!$parent.$last || !$last">
                                 <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'AND'" uncheckable>かつ</label>
                                 <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'OR'" uncheckable>または</label>
                             </div>
                         </div>
-                        
-                        <div class="col-md-2 col-sm-2">
-                            <label ng-if="$first==$last && $index!=$first" class="label label-success" ng-click="release($parent.$index, $index)">
-                                解除する
-                            </label>
-                            <div class="drop-join" drop-join-directive ng-model="items">
-                                
-                            </div>
+
+                        <div class="drop-join" drop-join-directive ng-model="items">
+                            
                         </div>
+                        
                     </div>
                 </div>
             </div>
