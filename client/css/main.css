@@ -111,7 +111,7 @@ ul > li > a > i {cursor: pointer;}
   position: absolute;
   z-index: 1000000;
 }
-.sidebar .sidebar-nav {
+.sidebar {
     padding-right: 0;
     padding-left: 0;
 }
@@ -120,22 +120,13 @@ ul > li > a > i {cursor: pointer;}
     border-bottom: 1px solid #e7e7e7;
 }
 
-.sidebar ul li a.active {
+.sidebar ul li {
+  line-height: 1.5em;
+}
+
+.sidebar ul li a:hover {
     background-color: #eee;
 }
-
-.sidebar .arrow {
-    float: right;
-}
-
-.sidebar .fa.arrow:before {
-    content: "\f104";
-}
-
-.sidebar .active>a>.fa.arrow:before {
-    content: "\f107";
-}
-
 
 /*-----------------------------------------------*/
 /* table
