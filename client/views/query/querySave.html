@@ -28,7 +28,7 @@
                     
                     <div class="card-info btn-draggable" ng-repeat="items in showConditions track by $index" drag-item-directive dragindex="$index" >
                         
-                        <div class="pull-right">
+                        <div class="pull-left">
                             <div ng-repeat="item in items track by $index">
                                 <p>
                                     {{item.table.logicalname}}.{{item.column.logicalname}}が{{item.selectedCondition.condtionString}}
