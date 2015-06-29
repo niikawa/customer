@@ -84,7 +84,7 @@ function createSQL(list, request)
     return {where: where, request: request};
 }
 
-exports.exeucte = function(req, res)
+exports.execute = function(req, res)
 {
     console.log('exeucte query');
     
