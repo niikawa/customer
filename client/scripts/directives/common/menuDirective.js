@@ -41,7 +41,12 @@ myApp.directive('myHeader', function(){
             scope.openClose = function()
             {
                 scope.isOpenMenu = !scope.isOpenMenu;
-            }
+                if (scope.isOpenMenu)
+                {
+                    
+                }
+            };
+            
         }
     };
 });
