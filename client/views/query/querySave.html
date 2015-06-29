@@ -31,7 +31,7 @@
                         <div class="card-cell-left">
                             <div ng-repeat="item in items track by $index">
                                 <p>
-                                    {{item.table.logicalname}}.{{item.column.logicalname}}が{{item.selectedCondition.condtionString}}{{$index}}{{$first}}{{$last}}
+                                    {{item.table.logicalname}}.{{item.column.logicalname}}が{{item.selectedCondition.condtionString}}
                                 </p>
                                 
                                 <div class="btn-group" ng-if="!$parent.$last || !$last">
@@ -39,7 +39,7 @@
                                     <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'OR'" uncheckable>または</label>
                                 </div>
 
-                                <div class="btn-group" ng-if="$first==$last">
+                                <div class="btn-group" ng-if="!$last && $first!=$last">
                                     <label class="label label-success " ng-click="release($parent.$index, $index)">
                                         解除
                                     </label>
