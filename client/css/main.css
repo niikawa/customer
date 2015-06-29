@@ -109,6 +109,10 @@ ul > li > a > i {cursor: pointer;}
     padding-left: 0;
 }
 
+.sidebar .sidebar-search {
+    padding: 15px;
+}
+
 .sidebar ul li {
     border-bottom: 1px solid #e7e7e7;
 }
