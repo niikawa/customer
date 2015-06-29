@@ -476,7 +476,8 @@ div .drop-join {
 /*-----------------------------------------------*/
 /* D&D item
 /*-----------------------------------------------*/
-.card {
+.card,
+.card-info {
   background-color: #fff;
   font-size: 1.2em;
   padding: 5px 5px 10px 5px;
@@ -488,7 +489,14 @@ div .drop-join {
   display: block;
   cursor: move;
 }
-.card:hover { background-color: #ddd }
+.card-info {
+  float:left ;
+}
+
+.card:hover,
+.card-info:hover {
+  background-color: #ddd 
+}
 .card > .content {width: 100%;}
 .setting-list {
   display:inline-block;
