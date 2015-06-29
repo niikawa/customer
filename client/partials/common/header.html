@@ -1,37 +1,40 @@
-    <div>
+<div>
     <div class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            
-            <!--<auto-complete-directive item-list="projectList" selected-item="selectedProject" name-propertie="name" execute="projectChangeExecute()"></auto-complete-directive>-->
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-left">
-              <li>
-                <a ng-if="!isOpenMenu" ng-click="openClose()"><i class="fa fa-arrow-circle-o-right fa-3x"></i></a>
-                <a ng-if="isOpenMenu" ng-click="openClose()"><i class="fa fa-arrow-circle-o-left fa-3x"></i></a>
-              </li>
-              <!--<li><a href="/#/project"><img src="images/icon/1426685709_bubbles.png" ></a></li>-->
-              <!--<li><a ><img src="images/icon/Cute-Ball.png" ng-click="addMenber()"></a></li>-->
-              <!--<li><a href="/#/user"><img src="images/icon/1426683594_man.png"></a></li>-->
-              <!--<li><a ><img src="images/icon/1426685764_browser.png"></a></li>-->
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li>
-                <a ng-click="logout()" ><i class="fa fa-sign-out fa-3x"></i></a>
-              </li>
-            </ul>
-          </div>
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+          <!--<auto-complete-directive item-list="projectList" selected-item="selectedProject" name-propertie="name" execute="projectChangeExecute()"></auto-complete-directive>-->
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-left">
+            <li>
+              <a ng-if="!isOpenMenu" ng-click="openClose()"><i class="fa fa-arrow-circle-o-right fa-3x"></i></a>
+              <a ng-if="isOpenMenu" ng-click="openClose()"><i class="fa fa-arrow-circle-o-left fa-3x"></i></a>
+            </li>
+            <!--<li><a href="/#/project"><img src="images/icon/1426685709_bubbles.png" ></a></li>-->
+            <!--<li><a ><img src="images/icon/Cute-Ball.png" ng-click="addMenber()"></a></li>-->
+            <!--<li><a href="/#/user"><img src="images/icon/1426683594_man.png"></a></li>-->
+            <!--<li><a ><img src="images/icon/1426685764_browser.png"></a></li>-->
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a ng-click="logout()" ><i class="fa fa-sign-out fa-3x"></i></a>
+            </li>
+          </ul>
         </div>
       </div>
-      <div class="sidebar-nav navbar-collapse">
-      </div>
+    </div>
+    <div class="sidebar-nav navbar-collapse">
+      
+      <ul class="nav in">
+        <li><a href="/#/">ダッシュボード</a></li>
+      </ul>
       
     </div>
-  
+</div>
