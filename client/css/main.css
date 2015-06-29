@@ -528,7 +528,7 @@ div .drop-join {
   display: block;
 }
 
-.a {width:80%; float:left; display:block;}
+.a {width:80%; float:right; display:block;}
 .b {width:20%; display:block;}
 
 /*-----------------------------------------------*/
