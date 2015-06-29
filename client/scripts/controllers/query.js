@@ -125,7 +125,13 @@ function ($scope, Shared, Query, Location, Utility)
             $scope.showConditions.push(array);
         });
     };
-    
+
+    $scope.release = function(p, c)
+    {
+        console.log(p);
+        console.log(c);
+    };
+
     $scope.save = function()
     {
         var sql = Query.createSQL($scope.showConditions);
