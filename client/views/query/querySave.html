@@ -26,9 +26,9 @@
                 
                 <div class="card-container" ng-model='showConditions' drop-directive drop-area-key="1">
                     
-                    <div class="card btn-draggable" ng-repeat="items in showConditions track by $index" drag-item-directive dragindex="$index" >
+                    <div class="card cell btn-draggable" ng-repeat="items in showConditions track by $index" drag-item-directive dragindex="$index" >
                         
-                        <div class="a" ng-repeat="item in items track by $index">
+                        <div class="" ng-repeat="item in items track by $index">
                             <p>
                                 {{item.table.logicalname}}.{{item.column.logicalname}}が{{item.selectedCondition.condtionString}}
                             </p>
@@ -39,7 +39,7 @@
                             </div>
                         </div>
 
-                        <div class="b pull-right " drop-join-directive ng-model="items">
+                        <div class=" pull-right " drop-join-directive ng-model="items">
                             <label class="label label-success " ng-if="$first==$last && $index!=$first" ng-click="release($parent.$index, $index)">
                                 解除
                             </label>

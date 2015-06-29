@@ -363,6 +363,10 @@ div .drop-join {
   position: relative;
 }
 
+div .cell {
+  display: table-cell;
+}
+
 /*-----------------------------------------------*/
 /* container
 /*-----------------------------------------------*/
@@ -527,9 +531,6 @@ div .drop-join {
   box-shadow: 0 1px 6px rgba(0,0,0,0.175);
   display: block;
 }
-
-.a {width:80%;}
-.b {width:20%; float:right; display:block;}
 
 /*-----------------------------------------------*/
 /* modal bootstrap orverride
