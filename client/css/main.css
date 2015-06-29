@@ -121,7 +121,10 @@ ul > li > a > i {cursor: pointer;}
 }
 
 .sidebar ul li {
-  line-height: 1.5em;
+  line-height: 2.5em;
+}
+
+.sidebar ul li a {
   color: #000;
 }
 

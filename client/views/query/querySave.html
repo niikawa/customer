@@ -31,7 +31,7 @@
                         <div class="card-cell-left">
                             <div ng-repeat="item in items track by $index">
                                 <p>
-                                    {{item.table.logicalname}}.{{item.column.logicalname}}が{{item.selectedCondition.condtionString}}{{$index}}
+                                    {{item.table.logicalname}}.{{item.column.logicalname}}が{{item.selectedCondition.condtionString}}{{$index}}{{$first}}{{$last}}
                                 </p>
                                 
                                 <div class="btn-group" ng-if="!$parent.$last || !$last">
