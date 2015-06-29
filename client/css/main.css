@@ -355,6 +355,7 @@ div .break-all {
 }
 
 div .drop-join {
+  left: 100%;
   display: table-cell;
   border: 2px dotted ;
   width: 60px;
@@ -369,6 +370,7 @@ div .card-cell-left {
 
 div .card-cell-right-b {
   vertical-align: button;
+  height: 100%;
   width: 20%;
   float: right;
 }
