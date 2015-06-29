@@ -528,8 +528,8 @@ div .drop-join {
   display: block;
 }
 
-.a {width:80%; float:right; display:block;}
-.b {width:20%; display:block;}
+.a {width:80%;}
+.b {width:20%; float:right; display:block;}
 
 /*-----------------------------------------------*/
 /* modal bootstrap orverride
