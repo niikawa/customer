@@ -91,6 +91,12 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
         }
     };
 
+    $scope.release = function(p, c)
+    {
+        console.log(p);
+        console.log(c);
+    };
+
     $scope.removeItem = function()
     {
         
