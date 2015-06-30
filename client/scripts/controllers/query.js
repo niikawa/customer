@@ -131,7 +131,7 @@ function ($scope, Shared, Query, Location, Utility)
         {
             var array = [];
             array.push(v);
-            array.isJoin = true;
+            array.isJoin = false;
             $scope.showConditions.push(array);
         });
     };
