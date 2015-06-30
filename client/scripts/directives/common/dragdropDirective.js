@@ -100,6 +100,7 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 event.preventDefault();
                 var index = event.originalEvent.dataTransfer.getData('itemIndex');
                 var pushItem = {};
+                console.log(DDShared.getFrom());
                 if (angular.isArray(DDShared.getFrom()))
                 {
                     pushItem = DDShared.getFromCopyByIndex(index);
@@ -111,6 +112,8 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 }
                 
                 var orverIndex = (ctrl.$modelValue.length === 0) ? 0 : DDShared.getOrverIndex();
+                console.log(index);
+                console.log(orverIndex);
                 if (void 0 !== pushItem)
                 {
                     ctrl.$modelValue.splice(orverIndex, 0, pushItem);
@@ -178,15 +181,11 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 var pushItem = {};
                 if (angular.isArray(DDShared.getFrom()))
                 {
-                    console.log('is array');
                     pushItem = DDShared.getFromCopyByIndex(index);
-                    
                     DDShared.getFrom().splice(index, 1);
-                    console.log(DDShared.getFrom());
                 }
                 else
                 {
-                    console.log('is not array');
                     pushItem = DDShared.getCopyFrom();
                 }
                 
@@ -202,7 +201,6 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 }
                 else
                 {
-                    console.log(pushItem[0]);
                     ctrl.$modelValue.push(pushItem[0]);
                 }
 
@@ -214,7 +212,6 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 {
                     ctrl.$modelValue.isJoin = false;
                 }
-                console.log(ctrl.$modelValue);
                 scope.$$phase || scope.$apply();
             });
         }
