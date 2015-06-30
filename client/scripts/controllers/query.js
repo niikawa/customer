@@ -130,6 +130,7 @@ function ($scope, Shared, Query, Location, Utility)
     {
         console.log(p);
         console.log(c);
+        console.log($scope.showConditions);
     };
 
     $scope.save = function()

@@ -26,12 +26,12 @@
                 
                 <div class="card-container" ng-model='showConditions' drop-directive drop-area-key="1">
                     
-                    <div class="card-info btn-draggable" ng-repeat="items in showConditions track by $index" drag-item-directive dragindex="$index" >
+                    <div class="card-info btn-draggable" ng-repeat="(i, items) in showConditions track by $index" drag-item-directive dragindex="$index" >
                         
                         <div class="card-cell-left">
-                            <div ng-repeat="item in items track by $index">
+                            <div ng-repeat="(j, item) in items track by $index">
                                 <p>
-                                    {{item.table.logicalname}}.{{item.column.logicalname}}が{{item.selectedCondition.condtionString}}{{$parent.$index}}
+                                    {{item.table.logicalname}}.{{item.column.logicalname}}が{{item.selectedCondition.condtionString}}
                                 </p>
                                 
                                 <div class="btn-group" ng-if="!$parent.$last || !$last">
