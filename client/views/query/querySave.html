@@ -50,11 +50,11 @@
                                 </div>
                             </div>
                             
-                            <div ng-if="!items.isJoin" class="card-cell-right" drop-join-directive ng-model="items">
+                            <div ng-if="!isJoin(items)" class="card-cell-right" drop-join-directive ng-model="items">
                                 <div class="drop-join"></div>
                             </div>
                         </div>
-                        <div ng-if="items.isJoin" drop-join-directive ng-model="items">
+                        <div ng-if="isJoin(items)" drop-join-directive ng-model="items">
                             <div class="drop-join-long"><p>まとめる条件をドロップしてください</p></div>
                         </div>
 

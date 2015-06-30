@@ -120,6 +120,7 @@ function ($scope, Shared, Query, Location, Utility)
         $scope.showConditions = [];
         angular.forEach(selectColumns, function(v, k)
         {
+            console.log(v);
             v.isJoin = true;
             var array = [];
             array.push(v);
