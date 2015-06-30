@@ -123,13 +123,14 @@ function ($scope, Shared, Query, Location, Utility)
             v.isJoin = false;
             var array = [];
             array.push(v);
-            $scope.showConditions.push(v);
+            $scope.showConditions.push(array);
         });
     };
     
     $scope.isJoin = function(items)
     {
-        return items.isJoin;
+        if (void 0 === items[0]) return false;
+        return items[0].isJoin;
     };
 
     $scope.release = function(pIndex, cIndex)
