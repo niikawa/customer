@@ -120,9 +120,9 @@ function ($scope, Shared, Query, Location, Utility)
         $scope.showConditions = [];
         angular.forEach(selectColumns, function(v, k)
         {
-            v.isJoin = false;
             var array = [];
             array.push(v);
+            array.isJoin = false;
             $scope.showConditions.push(array);
         });
     };
@@ -131,8 +131,7 @@ function ($scope, Shared, Query, Location, Utility)
     {
         console.log(items);
         console.log(items.isJoin);
-        if (void 0 === items[0]) return false;
-        return items[0].isJoin;
+        return items.isJoin;
     };
 
     $scope.isJoin2 = function(items)
@@ -140,8 +139,7 @@ function ($scope, Shared, Query, Location, Utility)
         console.log('join2');
         console.log(items);
         console.log(items.isJoin);
-        if (void 0 === items[0]) return false;
-        return items[0].isJoin;
+        return items.isJoin;
     };
 
     $scope.release = function(pIndex, cIndex)
