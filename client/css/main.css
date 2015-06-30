@@ -393,6 +393,14 @@ div .drop-join {
   position: relative;
 }
 
+div .drop-join-long {
+  display: table-cell;
+  border: 2px dotted ;
+  width: 100%;
+  height: 60px;
+  position: relative;
+}
+
 div .card-cell-left {
   float: left;
   width: 80%;

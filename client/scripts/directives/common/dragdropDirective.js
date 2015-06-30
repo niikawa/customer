@@ -211,7 +211,6 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                     ctrl.$modelValue.isJoin = false;
                 }
                 console.log(ctrl.$modelValue);
-//                scope.$emit('dropItemComplete', emitObject);
                 scope.$$phase || scope.$apply();
             });
         }
