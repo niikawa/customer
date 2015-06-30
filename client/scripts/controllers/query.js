@@ -120,6 +120,7 @@ function ($scope, Shared, Query, Location, Utility)
         $scope.showConditions = [];
         angular.forEach(selectColumns, function(v, k)
         {
+            v.isJoin = false;
             var array = [];
             array.push(v);
             $scope.showConditions.push(array);
@@ -133,6 +134,7 @@ function ($scope, Shared, Query, Location, Utility)
         {
             return items.isJoin;
         }
+        
         
         return false;
     };
