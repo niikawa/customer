@@ -26,10 +26,10 @@
                 
                 <div class="card-container" ng-model='showConditions' drop-directive drop-area-key="1">
                     
-                    <div ng-class="{childlist: isJoin(items)}" ng-repeat="(i, items) in showConditions track by $index" >
+                    <div ng-class="{childlist: isJoin(items)}" ng-repeat="(i, items) in showConditions" >
                         
                         <!-- ここがdragするやつ -->
-                        <div class="card-info btn-draggable" ng-repeat="(j, item) in items track by $index" drag-item-directive dragindex="i">
+                        <div class="card-info btn-draggable" ng-repeat="(j, item) in items" drag-item-directive dragindex="i">
                             
                             <div class="card-cell-left">
                                 <div >
@@ -42,7 +42,7 @@
                                         <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'OR'" uncheckable>または</label>
                                     </div>
     
-                                    <div class="btn-group" ng-if="!$last || $index > 0">
+                                    <div class="btn-group" ng-if="!$last || j > 0">
                                         <label class="label label-success " ng-click="release(i, j)">
                                             解除
                                         </label>
