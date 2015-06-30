@@ -183,7 +183,9 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 //自分自身へのjoinは禁止
                 var pushItem = DDShared.getFromCopyByIndex(index);
                 if (void 0 === pushItem) return false;
-                if (ctrl.$modelValue[0] === pushItem[0]) return false;
+                console.log(ctrl.$modelValue[0]);
+                console.log(pushItem[0]);
+                if (ctrl.$modelValue[0] == pushItem[0]) return false;
                 
                 if (angular.isArray(DDShared.getFrom()))
                 {
