@@ -188,7 +188,14 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 {
                     ctrl.$modelValue.push(pushItem[0]);
                 }
-                if (ctrl.$modelValue.length > 1) ctrl.$modelValue.isJoin = true;
+                if (ctrl.$modelValue.length > 1) 
+                {
+                    ctrl.$modelValue.isJoin = true;
+                }
+                else
+                {
+                    ctrl.$modelValue.isJoin = false;
+                }
                 console.log(ctrl.$modelValue);
 //                scope.$emit('dropItemComplete', emitObject);
                 scope.$$phase || scope.$apply();

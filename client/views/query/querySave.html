@@ -26,10 +26,10 @@
                 
                 <div class="card-container" ng-model='showConditions' drop-directive drop-area-key="1">
                     
-                    <div ng-class="{childlist: isJoin(items)}"  ng-repeat="(i, items) in showConditions track by $index" drag-item-directive dragindex="$index">
+                    <div ng-class="{childlist: isJoin(items)}"  ng-repeat="(i, items) in showConditions track by $index" drop-directive drop-area-key="1">
                         
                         <!-- ここがdragするやつ -->
-                        <div class="card-info btn-draggable" ng-repeat="(j, item) in items track by $index">
+                        <div class="card-info btn-draggable" ng-repeat="(j, item) in items track by $index" drag-item-directive dragindex="$index">
                             
                             <div class="card-cell-left">
                                 <div >
