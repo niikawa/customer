@@ -150,6 +150,7 @@ function ($scope, Shared, Query, Location, Utility)
 
         if (1 === $scope.showConditions[pIndex].length) $scope.showConditions[pIndex].isJoin = false;
         $scope.showConditions.push(pIndex, 0, target);
+        console.log($scope.showConditions);
     };
 
     $scope.save = function()
