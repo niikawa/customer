@@ -190,7 +190,7 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 {
                     console.log(index);
                     //順番を入れ替える
-                    ctrl.$modelValue.splice(index, index-1, pushItem, ctrl.$modelValue[index-1]);
+                    ctrl.$modelValue.splice(index, index+1, pushItem, ctrl.$modelValue[index+1]);
                     return false;
                 }
                 else
