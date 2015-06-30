@@ -71,26 +71,14 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                     ctrl.$modelValue.splice(orverIndex, 0, pushItem);
                 }
                 
+                console.log(ctrl.$modelValue);
+                
                 var len = ctrl.$modelValue.length;
 
                 for (var i=0; i < len; i++)
                 {
                     ctrl.$modelValue[i].line = i+1;
                 }
-                var emitObject = {
-                    to:{}, 
-                    from:{}, 
-                    remove:{}, 
-                    isSameContainer:false, 
-                    areaKey: attrs.dropAreaKey, 
-                    insertLine: orverIndex
-                };
-                emitObject.to = ctrl.$modelValue;
-                emitObject.from = DDShared.getFrom();
-                emitObject.remove = pushItem;
-                emitObject.isSameContainer = (emitObject.to == emitObject.from);
-                scope.$emit('dropItemComplete', emitObject);
-                console.log(emitObject);
                 scope.$$phase || scope.$apply();
             });
         }
