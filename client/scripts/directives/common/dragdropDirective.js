@@ -180,6 +180,9 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 {
                     console.log('is array');
                     pushItem = DDShared.getFromCopyByIndex(index);
+                    
+                    DDShared.getFrom().splice(index, 1);
+                    console.log(DDShared.getFrom());
                 }
                 else
                 {
@@ -211,7 +214,6 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 {
                     ctrl.$modelValue.isJoin = false;
                 }
-                DDShared.getFrom().splice(index, 1);
                 console.log(ctrl.$modelValue);
                 scope.$$phase || scope.$apply();
             });
