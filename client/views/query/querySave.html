@@ -82,7 +82,7 @@
                             
                             <span ng-if="$index!=0 && $last">)</span>
                             
-                            <p ng-if="!$parent.$last || ($first!=$last && !$last)">
+                            <p ng-if="!$parent.$last || !$last">
                                 {{item.condition.where}}
                             </p>
                         </div>
