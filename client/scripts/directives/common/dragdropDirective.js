@@ -200,6 +200,7 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 }
                 else
                 {
+                    console.log(pushItem[0]);
                     ctrl.$modelValue.push(pushItem[0]);
                 }
 

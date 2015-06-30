@@ -129,6 +129,7 @@ function ($scope, Shared, Query, Location, Utility)
     
     $scope.isJoin = function(items)
     {
+        if (void 0 === items[0]) return false;
         return items[0].isJoin;
     };
 
