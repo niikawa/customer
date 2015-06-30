@@ -180,23 +180,19 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 if (ctrl.$modelValue == DDShared.getFrom()) return false;
 
                 var index = event.originalEvent.dataTransfer.getData('itemIndex');
-                console.log(index);
-                console.log(ctrl.$modelValue);
-                console.log(DDShared.getFrom());
-                return false;
-                var pushItem = {};
+                //自分自身へのjoinは禁止
+                var pushItem = DDShared.getFromCopyByIndex(index);
+                if (void 0 === pushItem) return false;
+                if (ctrl.$modelValue[0] === pushItem[0]) return false;
+                
                 if (angular.isArray(DDShared.getFrom()))
                 {
-                    pushItem = DDShared.getFromCopyByIndex(index);
                     DDShared.getFrom().splice(index, 1);
                 }
                 else
                 {
                     pushItem = DDShared.getCopyFrom();
                 }
-                
-                console.log(pushItem);
-                if (void 0 === pushItem) return false;
                 
                 if (ctrl.$modelValue == DDShared.getFrom())
                 {
