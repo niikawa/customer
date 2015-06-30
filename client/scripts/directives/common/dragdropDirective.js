@@ -188,6 +188,7 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                     pushItem = DDShared.getCopyFrom();
                 }
                 
+                console.log(pushItem);
                 if (void 0 === pushItem) return false;
                 
                 if (ctrl.$modelValue == DDShared.getFrom())
