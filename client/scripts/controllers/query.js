@@ -129,6 +129,7 @@ function ($scope, Shared, Query, Location, Utility)
     
     $scope.isJoin = function(items)
     {
+        console.log(items.isJoin)
         return items.isJoin;
     };
 
