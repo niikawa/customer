@@ -121,6 +121,7 @@ function ($scope, Shared, Query, Location, Utility)
         angular.forEach(selectColumns, function(v, k)
         {
             var array = [];
+            array.push(v);
             $scope.showConditions.push(array);
         });
     };
