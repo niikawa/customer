@@ -122,14 +122,13 @@ function ($scope, Shared, Query, Location, Utility)
         {
             var array = [];
             array.push(v);
-            array.isJoin = false;
+            array.isJoin = true;
             $scope.showConditions.push(array);
         });
     };
     
     $scope.isJoin = function(items)
     {
-        console.log(items.isJoin)
         return items.isJoin;
     };
 
