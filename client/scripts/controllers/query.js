@@ -125,6 +125,16 @@ function ($scope, Shared, Query, Location, Utility)
             $scope.showConditions.push(array);
         });
     };
+    
+    $scope.isJoin = function(items)
+    {
+        if (items.hasOwnProperty('isJoin'))
+        {
+            return items.isJoin;
+        }
+        
+        return false;
+    };
 
     $scope.release = function(p, c)
     {
