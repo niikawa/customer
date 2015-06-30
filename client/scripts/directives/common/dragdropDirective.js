@@ -103,6 +103,8 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 if (angular.isArray(DDShared.getFrom()))
                 {
                     pushItem = DDShared.getFromCopyByIndex(index);
+                    console.log('drop:'+index);
+                    console.log(pushItem);
                     DDShared.getFrom().splice(index, 1);
                 }
                 else
