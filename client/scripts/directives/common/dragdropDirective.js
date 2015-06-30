@@ -184,11 +184,11 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 }
                 
 //                var orverIndex = (ctrl.$modelValue.length === 0) ? 0 : DDShared.getOrverIndex();
-                console.log(pushItem);
                 if (void 0 !== pushItem)
                 {
                     ctrl.$modelValue.push(pushItem[0]);
                 }
+                if (ctrl.$modelValue.length > 1) ctrl.$modelValue.isJoin = true;
                 console.log(ctrl.$modelValue);
 //                scope.$emit('dropItemComplete', emitObject);
                 scope.$$phase || scope.$apply();
