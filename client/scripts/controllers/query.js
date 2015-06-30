@@ -111,6 +111,7 @@ function ($scope, Shared, Query, Location, Utility)
         {
             angular.forEach($scope.showConditions, function(v, k)
             {
+                console.log(v.length);
                 if (1 === v.length) v.isJoin = false;
             });
         });
