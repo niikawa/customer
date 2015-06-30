@@ -120,7 +120,7 @@ function ($scope, Shared, Query, Location, Utility)
         $scope.showConditions = [];
         angular.forEach(selectColumns, function(v, k)
         {
-            v.isJoin = false;
+            v.isJoin = true;
             var array = [];
             array.push(v);
             $scope.showConditions.push(array);
@@ -147,6 +147,7 @@ function ($scope, Shared, Query, Location, Utility)
         $scope.showConditions[pIndex].splice(cIndex, 1);
         
         console.log('削除後：' +$scope.showConditions.length);
+        console.log($scope.showConditions);
 
         if (1 === $scope.showConditions[pIndex].length) $scope.showConditions[pIndex].isJoin = false;
         $scope.showConditions.push(pIndex, 0, target);
