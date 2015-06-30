@@ -136,11 +136,17 @@ function ($scope, Shared, Query, Location, Utility)
         return false;
     };
 
-    $scope.release = function(p, c)
+    $scope.release = function(pIndex, cIndex)
     {
-        console.log(p);
-        console.log(c);
-        console.log($scope.showConditions[p]);
+        //該当オブジェクトを特定
+        var target = $scope.showConditions[pIndex][cIndex];
+        console.log(pIndex);
+        console.log(cIndex);
+        console.log(target);
+        //配列から除去
+        $scope.showConditions[pIndex].splice(cIndex, 1);
+        //新しい親要素に追加
+        $scope.showConditions.push(pIndex, 0, target);
     };
 
     $scope.save = function()
