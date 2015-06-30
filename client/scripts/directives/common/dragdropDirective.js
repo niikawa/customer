@@ -180,7 +180,7 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 {
                     console.log('is array');
                     pushItem = DDShared.getFromCopyByIndex(index);
-                    DDShared.getFrom().splice(index, 1);
+                    //DDShared.getFrom().splice(index, 1);
                 }
                 else
                 {
