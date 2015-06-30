@@ -129,8 +129,7 @@ function ($scope, Shared, Query, Location, Utility)
     
     $scope.isJoin = function(items)
     {
-        console.log(items[0]);
-        return true;
+        console.log(items[0].isJoin);
         if (items.hasOwnProperty('isJoin'))
         {
             return items.isJoin;
@@ -152,6 +151,8 @@ function ($scope, Shared, Query, Location, Utility)
 
         if (1 === $scope.showConditions[pIndex].length) $scope.showConditions[pIndex].isJoin = false;
         $scope.showConditions.push(pIndex, 0, target);
+        console.log('ぷっしゅ後：' +$scope.showConditions.length);
+
         console.log($scope.showConditions);
     };
 
