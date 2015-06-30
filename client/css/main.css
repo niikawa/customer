@@ -387,7 +387,7 @@ div .break-all {
 div .drop-join {
   left: 100%;
   display: table-cell;
-  border: 2px dotted ;
+  border: 2px dotted;
   width: 60px;
   height: 60px;
   position: relative;
@@ -395,10 +395,11 @@ div .drop-join {
 
 div .drop-join-long {
   text-align:center;
-  border: 2px dotted ;
+  border: 2px dotted;
   width: 100%;
   height: 60px;
   position: relative;
+  background-color: #F8F8FF;
 }
 
 div .drop-join-long > p {

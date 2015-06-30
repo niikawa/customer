@@ -138,16 +138,10 @@ function ($scope, Shared, Query, Location, Utility)
 
     $scope.release = function(pIndex, cIndex)
     {
-        
-        //該当オブジェクトを特定
         var target = [];
         target.push($scope.showConditions[pIndex][cIndex]);
-        //配列から除去
         $scope.showConditions[pIndex].splice(cIndex, 1);
-        //新しい親要素に追加
-        console.log(pIndex);
-        console.log(cIndex);
-        console.log(target);
+        if (1 === $scope.showConditions[pIndex].length) $scope.showConditions[pIndex].isJoin = false;
         $scope.showConditions.push(pIndex, 0, target);
     };
 
