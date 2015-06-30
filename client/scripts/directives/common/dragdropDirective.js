@@ -97,7 +97,7 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
             
             element.on('drop', function(event)
             {
-                event.preventDefault();
+                event.stopPropagation();
                 var index = event.originalEvent.dataTransfer.getData('itemIndex');
                 var pushItem = {};
                 console.log(DDShared.getFrom());
