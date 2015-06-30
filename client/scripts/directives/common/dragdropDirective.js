@@ -172,9 +172,6 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
             {
                 event.preventDefault();
                 
-                //
-                if (ctrl.$modelValue == DDShared.getFrom()) return false;
-                
                 var index = event.originalEvent.dataTransfer.getData('itemIndex');
                 var pushItem = {};
                 if (angular.isArray(DDShared.getFrom()))
@@ -187,11 +184,20 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                     pushItem = DDShared.getCopyFrom();
                 }
                 
-//                var orverIndex = (ctrl.$modelValue.length === 0) ? 0 : DDShared.getOrverIndex();
-                if (void 0 !== pushItem)
+                if (void 0 === pushItem) return false;
+                
+                if (ctrl.$modelValue == DDShared.getFrom())
+                {
+                    console.log(index);
+                    //順番を入れ替える
+                    ctrl.$modelValue.splice(index, index-1, pushItem, ctrl.$modelValue[index-1]);
+                    return false;
+                }
+                else
                 {
                     ctrl.$modelValue.push(pushItem[0]);
                 }
+
                 if (ctrl.$modelValue.length > 1) 
                 {
                     ctrl.$modelValue.isJoin = true;
