@@ -145,7 +145,7 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
 {
     return {
         restrict: 'A',
-        scope: {},
+        scope: {dropJoinIndex: '='},
         require: '^ngModel',
         link: function (scope, element, attrs, ctrl) 
         {
