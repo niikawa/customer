@@ -105,8 +105,17 @@ function ($scope, Shared, Query, Location, Utility)
     /*****************************************/
     /*                  save                 */
     /*****************************************/
+    function a()
+    {
+        $scope.$on('dropItemComplete', function(event, data)
+        {
+            $scope.$apply();
+        });
+    }
+    
     $scope.saveInitialize = function()
     {
+        a();
         $scope.query = {query_name: ''};
         $scope.conditions = [];
         var selectColumns = Shared.get('queryColumns');
