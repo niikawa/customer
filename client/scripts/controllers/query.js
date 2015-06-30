@@ -134,8 +134,6 @@ function ($scope, Shared, Query, Location, Utility)
         {
             return items.isJoin;
         }
-        
-        
         return false;
     };
 
@@ -143,7 +141,13 @@ function ($scope, Shared, Query, Location, Utility)
     {
         var target = [];
         target.push($scope.showConditions[pIndex][cIndex]);
+        
+        console.log('削除前：' + $scope.showConditions.length);
+        
         $scope.showConditions[pIndex].splice(cIndex, 1);
+        
+        console.log('削除後：' +$scope.showConditions.length);
+
         if (1 === $scope.showConditions[pIndex].length) $scope.showConditions[pIndex].isJoin = false;
         $scope.showConditions.push(pIndex, 0, target);
     };
