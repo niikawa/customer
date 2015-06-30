@@ -185,6 +185,8 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 if (void 0 === pushItem) return false;
                 console.log(ctrl.$modelValue[0]);
                 console.log(pushItem[0]);
+                console.log(ctrl.$modelValue[0].table == pushItem[0].table);
+                console.log(ctrl.$modelValue[0].column == pushItem[0].column);
                 if (ctrl.$modelValue[0].table == pushItem[0].table && ctrl.$modelValue[0].column == pushItem[0].column) return false;
                 
                 if (angular.isArray(DDShared.getFrom()))
