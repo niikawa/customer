@@ -103,8 +103,6 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 if (angular.isArray(DDShared.getFrom()))
                 {
                     pushItem = DDShared.getFromCopyByIndex(index);
-                    console.log('drop:'+index);
-                    console.log(pushItem);
                     DDShared.getFrom().splice(index, 1);
                 }
                 else
@@ -172,7 +170,7 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
             
             element.on('drop', function(event)
             {
-                event.preventDefault();
+                event.stopPropagation();
                 if (ctrl.$modelValue == DDShared.getFrom()) return false;
 
                 var index = event.originalEvent.dataTransfer.getData('itemIndex');
