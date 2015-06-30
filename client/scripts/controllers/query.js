@@ -129,7 +129,8 @@ function ($scope, Shared, Query, Location, Utility)
     
     $scope.isJoin = function(items)
     {
-        if (items[0].hasOwnProperty('isJoin'))
+        console.log(items[0]);
+        if (items.hasOwnProperty('isJoin'))
         {
             return items.isJoin;
         }
