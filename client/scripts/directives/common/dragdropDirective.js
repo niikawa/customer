@@ -177,12 +177,13 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 var pushItem = {};
                 if (angular.isArray(DDShared.getFrom()))
                 {
-                    console.log();
+                    console.log('is array');
                     pushItem = DDShared.getFromCopyByIndex(index);
                     DDShared.getFrom().splice(index, 1);
                 }
                 else
                 {
+                    console.log('is not array');
                     pushItem = DDShared.getCopyFrom();
                 }
                 
