@@ -105,8 +105,21 @@ function ($scope, Shared, Query, Location, Utility)
     /*****************************************/
     /*                  save                 */
     /*****************************************/
+    function setEventListeners()
+    {
+        $scope.$on('dropItemComplete', function(event, data)
+        {
+            angular.forEach($scope.showConditions, function(v, k)
+            {
+                if (1 === v.length) v.isJoin = false;
+            });
+        });
+        
+    }
+
     $scope.saveInitialize = function()
     {
+        setEventListeners();
         $scope.query = {query_name: ''};
         $scope.conditions = [];
         var selectColumns = Shared.get('queryColumns');
