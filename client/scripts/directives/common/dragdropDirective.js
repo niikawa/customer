@@ -100,7 +100,11 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 event.stopPropagation();
                 var index = event.originalEvent.dataTransfer.getData('itemIndex');
                 var pushItem = {};
+                
                 console.log(DDShared.getFrom());
+                var orverIndex = (ctrl.$modelValue.length === 0) ? 0 : DDShared.getOrverIndex();
+                if (index === orverIndex) return false;
+
                 if (angular.isArray(DDShared.getFrom()))
                 {
                     pushItem = DDShared.getFromCopyByIndex(index);
@@ -111,9 +115,6 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                     pushItem = DDShared.getCopyFrom();
                 }
                 
-                var orverIndex = (ctrl.$modelValue.length === 0) ? 0 : DDShared.getOrverIndex();
-                console.log(index);
-                console.log(orverIndex);
                 if (void 0 !== pushItem)
                 {
                     ctrl.$modelValue.splice(orverIndex, 0, pushItem);
