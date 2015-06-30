@@ -49,6 +49,10 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div ng-if="items.isJoin" >
+                                <div class="drop-join"><p>dropするエリア</p></div>
+                            </div>
     
                             <div ng-if="!items.isJoin" class="card-cell-right" drop-join-directive ng-model="items">
                                 <div class="drop-join"></div>
