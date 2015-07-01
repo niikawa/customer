@@ -89,14 +89,10 @@ core.prototype.getAll = function(condtion ,callback){
         }
     }
     
-    var sql = '';
-    if (void 0 === columns)
+    var sql = 'select * from ' + this.modelName + ' where delete_flag = 0 ';
+    if (void 0 !== columns)
     {
-        sql = 'select * from ' + this.modelName;
-    }
-    else
-    {
-        sql = 'select * from ' + this.modelName + ' order by ' + columns + option;
+        sql += ' order by ' + columns + option;
     }
     this.execute(sql, request, callback);
 };
