@@ -92,6 +92,8 @@ exports.save = function(req, res)
 
 exports.remove = function(req, res)
 {
+    console.log('segment remove');
+    console.log(req.params);
     if (void 0 === req.params.id || void 0 === req.params.segment_document_id) res.status(510).send('parameters not found');
     
     var segmentdoc = require("./segmentdoc");
