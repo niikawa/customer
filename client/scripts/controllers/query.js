@@ -109,6 +109,7 @@ function ($scope, Shared, Query, Location, Utility)
     {
         $scope.$on('dropItemComplete', function(event, data)
         {
+            event.stopPropagation();
             angular.forEach($scope.showConditions, function(v, k)
             {
                 console.log(v.length);
@@ -181,12 +182,14 @@ function ($scope, Shared, Query, Location, Utility)
     
     $scope.execute = function()
     {
-//        Utility.info('現状のSQLを実行して対象数を出すよ');
         var data = Shared.get('queryColumns');
+        var c = Shared.get('queryColumns');
         var tables = Query.getTables(c);
-        Query.resource.executeQuery({data: data, tables: tables}).$promise.then(function(response, err)
-        {
-            console.log(response);
-        });
+        var sql = Query.createSQL($scope.showConditions);
+        console.log(sql);
+        // Query.resource.executeQuery({data: data, tables: tables}).$promise.then(function(response, err)
+        // {
+        //     console.log(response);
+        // });
     };
 }]);
