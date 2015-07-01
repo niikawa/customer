@@ -57,3 +57,25 @@ exports.create = function(req, res)
         res.status(200).send('insert ok');
     });
 };
+
+exports.execute = function(req, res)
+{
+    var request = model.getRequest();
+    var tableList = [];
+    Object.keys(req.body.tables).forEach(function(key)
+    {
+        tableList.push(key);
+    });
+    
+    var sql = "SELECT count(1) AS count FROM " + tableList.join(',') + ' WHERE ' + req.body.condition;
+    model.execute(sql, request, function(err, data)
+    {
+        if (err.length > 0)
+        {
+            console.log(err);
+            res.status(510).send('data not found');
+        }
+        res.json({result: data[0].count});
+    });
+};
+

@@ -73,6 +73,7 @@ router.post('/segment/createdoc', segmentdoc.addItem);
 var segment = require("./api/segment");
 router.get('/segment', segment.getAll);
 router.post('/segment/create', segment.create);
+router.post('/segment/execute', segment.execute);
 
 var user = require("./api/user");
 router.get('/user', user.getList);
@@ -94,8 +95,10 @@ router.get('/role/:id', role.getById);
 // Creates a new instance of SimpleServer with the following options:
 //  * `port` - The HTTP port to listen on. If `process.env.PORT` is set, _it overrides this value_.
 //
-process.on('uncaughtException', function(err) {
+process.on('uncaughtException', function(err)
+{
     console.log(err);
+    
 });
 
 var server = http.createServer(router);

@@ -39,6 +39,11 @@ segmentServices.factory("Segment", ['$resource','Utility',
                 url: 'segment/remove/:id/:docId',
                 cache: true,
             },
+            executeQuery:
+            {
+                method: 'POST',
+                url: 'segment/execute',
+            },
         });
         
         segmentServices.pageProp = function(id)
@@ -67,9 +72,29 @@ segmentServices.factory("Segment", ['$resource','Utility',
             });
         };
         
+        segmentServices.getExecuteInfo = function(list)
+        {
+            var sql = '';
+            var tables = {};
+            var last = list.length -1;
+            angular.forEach(list, function(v, k)
+            {
+                sql += '(' + v.sql + ') ' ;
+                if (last !== k) sql += v.where;
+                Object.keys(v.tables).forEach(function(key)
+                {
+                    if (!tables.hasOwnProperty(key))
+                    {
+                        tables[key] = key;
+                    }
+                });
+            });
+            return {'condition': sql, tables: tables};
+        };
+        
         segmentServices.createSQL = function(list)
         {
-            var sql = 'WHERE ';
+            var sql = '';
             var last = list.length -1;
             angular.forEach(list, function(v, k)
             {
@@ -78,6 +103,23 @@ segmentServices.factory("Segment", ['$resource','Utility',
             });
             return sql;
         };
+        
+        segmentServices.getTables = function(list)
+        {
+            var tables = {};
+            angular.forEach(list, function(v, k)
+            {
+                Object.keys(v.tables).forEach(function(key)
+                {
+                    if (!tables.hasOwnProperty(key))
+                    {
+                        tables[key] = key;
+                    }
+                });
+            });
+            return tables;
+        };
+        
         
         segmentServices.mock = function()
         {
