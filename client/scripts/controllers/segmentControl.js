@@ -41,7 +41,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
             Segment.setWhereProp($scope.queryList);
         });
         
-        if (2 === Segment.pageProp($routeParams.id).pageTitle)
+        if (2 === Segment.pageProp($routeParams.id).viewMode)
         {
             Segment.resource.get({id: $routeParams.id}).$promise.then(function(response)
             {
