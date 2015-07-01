@@ -95,7 +95,7 @@ exports.remove = function(req, res)
     if (void 0 === req.params.id || void 0 === req.params.segment_document_id) res.status(510).send('parameters not found');
     
     var segmentdoc = require("./segmentdoc");
-    segmentdoc.getItemByIdForWeb(req.params.segment_document_id, function(err, doc)
+    segmentdoc.removeItemForWeb(req.params.segment_document_id, function(err, doc)
     {
         if (err) res.status(510).send('document is not found');
         

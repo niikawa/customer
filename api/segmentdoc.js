@@ -83,7 +83,7 @@ exports.getItemByIdForWeb = function(id, callback)
 
 exports.removeItemForWeb = function(id, callback)
 {
-    Segment.getItem(id, function(err, doc)
+    Segment.removeItem(id, function(err, doc)
     {
         callback(err, doc);
     });

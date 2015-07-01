@@ -44,6 +44,7 @@ function ($scope, Shared, Segment, Utility)
         Segment.resource.remove({id: target.segment_id, segment_document_id: target.segment_document_id}).$promise.then(function()
         {
             Utility.info('削除しました');
+            $scope.segmentList.splice(index, 1);
         });
     };
 }]);
