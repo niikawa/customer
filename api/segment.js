@@ -101,7 +101,7 @@ exports.remove = function(req, res)
         
         model.removeById(req.params.id, function(err, data)
         {
-           if (err)
+           if (err.length > 0)
            {
                 console.log(err);
                 res.status(510).send('object not found');

@@ -120,6 +120,8 @@ Segment.prototype = {
                 callback(err);
 
             } else {
+                
+                if (doc )
 
                 self.client.deleteDocument(doc._self, doc, function (err, result) {
                     if (err) {
