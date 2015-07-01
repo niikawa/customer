@@ -37,7 +37,6 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         
         Query.resource.getQuery().$promise.then(function(response)
         {
-            $scope.queryList = response.data;
             Segment.setWhereProp($scope.queryList);
             
             if (2 === Segment.pageProp($routeParams.id).viewMode)
@@ -47,8 +46,13 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
                     $scope.segment.segment_id = $routeParams.id;
                     $scope.segment.segment_name = response.segment_name;
                     $scope.segment.segment_document_id = response.segment_document_id;
-                    Segment.setListData($scope.queryList, response.qIds, $scope.conditions);
+                    Segment.setListData(response.data, response.qIds, $scope.conditions);
+                    $scope.queryList = response.data;
                 });
+            }
+            else
+            {
+                $scope.queryList = response.data;
             }
         });
     };
