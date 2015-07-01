@@ -97,7 +97,7 @@ exports.execute = function(req, res)
         tableList.push(key);
     });
     
-    var sql = "SELECT count(1) AS count FROM " + tableList.join(',') + req.body.condition;
+    var sql = "SELECT count(1) AS count FROM " + tableList.join(',') + ' WHERE ' + req.body.condition;
     model.execute(sql, request, function(err, data)
     {
         console.log(data);
@@ -105,7 +105,7 @@ exports.execute = function(req, res)
         if (err.length > 0)
         {
             console.log(err);
-            res.status(510).send('object not found');
+            res.status(510).send('data not found');
         }
         res.json({data: data});
     });
