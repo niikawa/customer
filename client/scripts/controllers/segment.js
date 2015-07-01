@@ -35,11 +35,17 @@ function ($scope, Shared, Segment, Utility)
     
     $scope.download = function()
     {
-        Utility.info('セグメントの抽出結果をダウンロードさせるよ');
+        Utility.info('〔ベータ版では未開放〕<br>セグメントの抽出結果をダウンロードさせるよ');
     };
 
     $scope.remove = function(index)
     {
         Utility.info('実装中だよ');
+        var target = $scope.segmentList[index];
+        console.log(target);
+        // Segment.resource.remove().$promise.then(function()
+        // {
+            
+        // });
     };
 }]);
