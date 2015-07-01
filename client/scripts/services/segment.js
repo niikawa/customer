@@ -130,7 +130,7 @@ segmentServices.factory("Segment", ['$resource','Utility',
             {
                 sql += '(' + v.sql + ') ' ;
                 if (last !== k) sql += v.where;
-                ids.push(list.id);
+                ids.push(v.id);
             });
             
             return {sql: sql, qIds: ids};
