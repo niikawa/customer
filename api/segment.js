@@ -18,16 +18,14 @@ var model = new segment();
 
 exports.getById = function(req, res)
 {
-    console.log('segment get by id');
     if (void 0 === req.params.id) return res.status(510).send('Invalid parameter');
     model.getById(req.params.id, function(err, data)
     {
-        console.log(data);
         if (err.length > 0)
         {
             return res.status(510).send('data not found');
         }
-        var segmentdoc = require("./api/segmentdoc");
+        var segmentdoc = require("./segmentdoc");
         segmentdoc.getItemByIdToWeb(data[0].segment_document_id, function(err, doc)
         {
             if (err) res.status(510).send('document is not found');
