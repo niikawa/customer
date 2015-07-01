@@ -90,6 +90,20 @@ exports.save = function(req, res)
     }
 };
 
+exports.remove = function(req, res)
+{
+    if (void 0 === req.params.id) return ;
+    model.removeById(req.params.id, function(err, data)
+    {
+       if (err)
+       {
+            console.log(err);
+            res.status(510).send('object not found');
+       }
+       res.status(200).send('delete ok');
+    });
+};
+
 function create(req, res)
 {
     var commonColumns = model.getInsCommonColumns();
@@ -135,5 +149,4 @@ function update(req, res)
         }
         res.status(200).send('update ok');
     });
-    
 }

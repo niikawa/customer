@@ -67,6 +67,8 @@ Segment.prototype = {
     },
 
     updateItem: function (data, callback) {
+        console.log('segment updateItem');
+        console.log(data);
         var self = this;
 
         self.getItem(data.itemId, function (err, doc) {
