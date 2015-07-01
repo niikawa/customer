@@ -78,7 +78,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
             var data = {segment_name: response.data.segment_name, segment_document_id:response.data.id};
             Segment.resource.create({data: data}).$promise.then(function(response)
             {
-                Utility.info('セグメントを作成しました');
+                Utility.info('セグメントを保存しました');
                 Location.segment();
             });
         });

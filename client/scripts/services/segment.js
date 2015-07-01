@@ -78,13 +78,15 @@ segmentServices.factory("Segment", ['$resource','Utility',
             {
                 angular.forEach(queryList, function(query, k2)
                 {
-                    if (qid === query.id)
+                    if (qid == query.id)
                     {
                         conditionList.push(query);
                         queryList.splice(k2, 1);
                     }
                 });
             });
+            
+            console.log(conditionList);
         };
         
         segmentServices.createExecuteInfo = function(list)
