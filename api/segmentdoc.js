@@ -25,6 +25,14 @@ exports.getItem = function(req, res)
     });
 };
 
+exports.getItemByIdToWeb = function(id, callback)
+{
+    Segment.getItem(id, function(err, doc)
+    {
+        callback(err, doc);
+    });
+};
+
 exports.addItem = function(req, res)
 {
     if (!req.session.isLogin) {

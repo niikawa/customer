@@ -72,7 +72,7 @@ segmentServices.factory("Segment", ['$resource','Utility',
             });
         };
         
-        segmentServices.getExecuteInfo = function(list)
+        segmentServices.createExecuteInfo = function(list)
         {
             var sql = '';
             var tables = {};
@@ -117,9 +117,24 @@ segmentServices.factory("Segment", ['$resource','Utility',
                     }
                 });
             });
+            
             return tables;
         };
         
+        segmentServices.createDocData = function(list)
+        {
+            var sql = '';
+            var last = list.length -1;
+            var ids = [];
+            angular.forEach(list, function(v, k)
+            {
+                sql += '(' + v.sql + ') ' ;
+                if (last !== k) sql += v.where;
+                ids.push(list.id);
+            });
+            
+            return {sql: sql, qIds: ids};
+        };
         
         segmentServices.mock = function()
         {

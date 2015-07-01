@@ -43,12 +43,10 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         
         if (2 === Segment.pageProp($routeParams.id).pageTitle)
         {
-            /* サーバーサイド実装後に開放
-            Segment.resource.get(id: ).$promise.then(function(response)
+            Segment.resource.get({id: $routeParams.id}).$promise.then(function(response)
             {
                 $scope.segmentList = response.data;
             });
-            */
         }
     };
     
@@ -70,8 +68,8 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
     
     $scope.save = function()
     {
-        var sql = Segment.createSQL($scope.conditions);
-        var docdata =  {segment_name: $scope.segment.segment_name, sql: sql};
+        var doc = Segment.createDocData($scope.conditions);
+        var docdata =  {segment_name: $scope.segment.segment_name, sql: doc.sql, qIds: doc.qIds};
         
         Segment.resource.createDoc({data: docdata}).$promise.then(function(response)
         {
@@ -86,7 +84,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
 
     $scope.execute = function()
     {
-        var data = Segment.getExecuteInfo($scope.conditions);
+        var data = Segment.createExecuteInfo($scope.conditions);
         console.log(data);
         Segment.resource.executeQuery(data).$promise.then(function(response, err)
         {
