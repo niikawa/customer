@@ -49,8 +49,14 @@ Segment.prototype = {
 
     addItem: function (item, callback) {
         var self = this;
+        
+        var data = {
+            segment_name: item.segment_name,
+            condition: item.condition,
+            qIds: item.qIds,
+        };
 
-        self.client.createDocument(self.collection._self, item, function (err, doc) {
+        self.client.createDocument(self.collection._self, data, function (err, doc) {
             if (err) {
                 callback(err);
 
@@ -60,16 +66,19 @@ Segment.prototype = {
         });
     },
 
-    updateItem: function (itemId, callback) {
+    updateItem: function (data, callback) {
         var self = this;
 
-        self.getItem(itemId, function (err, doc) {
+        self.getItem(data.itemId, function (err, doc) {
             if (err) {
                 callback(err);
 
             } else {
-                doc.completed = true;
-
+                
+                doc.segment_name = data.segment_name;
+                doc.condition = data.condition;
+                doc.qIds = data.qIds;
+                
                 self.client.replaceDocument(doc._self, doc, function (err, replaced) {
                     if (err) {
                         callback(err);

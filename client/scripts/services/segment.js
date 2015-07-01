@@ -11,15 +11,15 @@ segmentServices.factory("Segment", ['$resource','Utility',
                 method: 'GET',
                 url: 'segment/getdoc',
             },
-            createDoc:
+            saveDoc:
             {
                 method: 'POST',
-                url: 'segment/createdoc',
+                url: 'segment/savedoc',
             },
-            create:
+            save:
             {
                 method: 'POST',
-                url: 'segment/create',
+                url: 'segment/save',
             },
             refresh:
             {
@@ -85,8 +85,6 @@ segmentServices.factory("Segment", ['$resource','Utility',
                     }
                 });
             });
-            
-            console.log(conditionList);
         };
         
         segmentServices.createExecuteInfo = function(list)
@@ -106,7 +104,7 @@ segmentServices.factory("Segment", ['$resource','Utility',
                     }
                 });
             });
-            return {'condition': sql, tables: tables};
+            return {condition: sql, tables: tables};
         };
         
         segmentServices.createSQL = function(list)
@@ -150,7 +148,7 @@ segmentServices.factory("Segment", ['$resource','Utility',
                 ids.push(v.id);
             });
             
-            return {sql: sql, qIds: ids};
+            return {condition: sql, qIds: ids};
         };
         
         segmentServices.mock = function()

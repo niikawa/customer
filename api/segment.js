@@ -29,7 +29,11 @@ exports.getById = function(req, res)
         segmentdoc.getItemByIdToWeb(data[0].segment_document_id, function(err, doc)
         {
             if (err) res.status(510).send('document is not found');
-            res.json({segment_name: data[0].segment_name, qIds: doc.qIds});
+            res.json({
+                segment_name: data[0].segment_name, 
+                segment_document_id: data[0].segment_document_id,
+                qIds: doc.qIds
+            });
         });
     });
 };
@@ -48,31 +52,6 @@ exports.getAll = function(req, res)
         {
             res.json({data: data});
         }
-    });
-};
-exports.create = function(req, res)
-{
-    var commonColumns = model.getInsCommonColumns();
-    var insertData = model.merge(req.body.data, commonColumns);
-    insertData.status = 1;
-    var request = model.getRequest();
-    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
-    request.input('create_by', model.db.Int, req.session.userId);
-    request.input('create_date', model.db.NVarChar, insertData.create_date);
-    request.input('update_by', model.db.Int, req.session.userId);
-    request.input('update_date', model.db.NVarChar, insertData.update_date);
-    request.input('segment_name', model.db.NVarChar, insertData.segment_name);
-    request.input('status', model.db.SmallInt, insertData.status);
-    request.input('segment_document_id', model.db.NVarChar, insertData.segment_document_id);
-
-    model.insert(tableName, insertData, request, function(err, date)
-    {
-        if (err.length > 0)
-        {
-            console.log(err);
-            res.status(510).send('object not found');
-        }
-        res.status(200).send('insert ok');
     });
 };
 
@@ -97,3 +76,64 @@ exports.execute = function(req, res)
     });
 };
 
+exports.save = function(req, res)
+{
+    var isCreate = 
+        (void 0 === req.body.data.segment_id || '' === req.body.data.segment_id);
+    if (isCreate)
+    {
+        create(req, res);
+    }
+    else
+    {
+        update(req, res);
+    }
+};
+
+function create(req, res)
+{
+    var commonColumns = model.getInsCommonColumns();
+    var insertData = model.merge(req.body.data, commonColumns);
+    insertData.status = 1;
+    var request = model.getRequest();
+    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+    request.input('create_by', model.db.Int, req.session.userId);
+    request.input('create_date', model.db.NVarChar, insertData.create_date);
+    request.input('update_by', model.db.Int, req.session.userId);
+    request.input('update_date', model.db.NVarChar, insertData.update_date);
+    request.input('segment_name', model.db.NVarChar, insertData.segment_name);
+    request.input('status', model.db.SmallInt, insertData.status);
+    request.input('segment_document_id', model.db.NVarChar, insertData.segment_document_id);
+
+    model.insert(tableName, insertData, request, function(err, date)
+    {
+        if (err.length > 0)
+        {
+            console.log(err);
+            res.status(510).send('object not found');
+        }
+        res.status(200).send('insert ok');
+    });
+}
+
+function update(req, res)
+{
+    var commonColumns = model.getUpdCommonColumns();
+    var updateData = model.merge(req.body.data, commonColumns);
+    var request = model.getRequest();
+    request.input('update_by', model.db.Int, req.session.userId);
+    request.input('update_date', model.db.NVarChar, updateData.update_date);
+    request.input('segment_name', model.db.NVarChar, updateData.segment_name);
+    request.input('segment_document_id', model.db.NVarChar, updateData.segment_document_id);
+
+    model.updateById(updateData, request, function(err, date)
+    {
+        if (err.length > 0)
+        {
+            console.log(err);
+            res.status(510).send('object not found');
+        }
+        res.status(200).send('update ok');
+    });
+    
+}

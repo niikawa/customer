@@ -33,27 +33,50 @@ exports.getItemByIdToWeb = function(id, callback)
     });
 };
 
-exports.addItem = function(req, res)
+exports.saveItem = function(req, res)
 {
     if (!req.session.isLogin) {
         
         res.status(511).send('authentication faild');
     }
     
-    if (void 0 === req.body)
+    if (void 0 === req.body.data)
     {
         res.status(511).send('parameters not found');
     }
-
-    Segment.addItem(req.body.data, function(err, doc)
+    
+    var isCreate = 
+        (void 0 === req.body.data.segment_document_id || '' === req.body.data.segment_document_id);
+    
+    if (isCreate)
     {
-        if (err) {
-            
-            res.status(511).send('access ng');
-            
-        } else {
-            
-            res.json({data: doc});
-        }
-    });
+        Segment.addItem(req.body.data, function(err, doc)
+        {
+            if (err)
+            {
+                console.log('document create faild');
+                console.log(err);
+                res.status(511).send('document create faild');
+            }
+            else
+            {
+                res.json({data: doc});
+            }
+        });
+    }
+    else
+    {
+        Segment.updateItem(req.body.data, function(err, doc)
+        {
+            if (err)
+            {
+                console.log('document update faild');
+                console.log(err);
+            }
+            else
+            {
+                res.json({data: doc});
+            }
+        });
+    }
 };

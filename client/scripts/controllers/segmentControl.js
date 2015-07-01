@@ -46,6 +46,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
                 {
                     $scope.segment.segment_id = $routeParams.id;
                     $scope.segment.segment_name = response.segment_name;
+                    $scope.segment.segment_document_id = response.segment_document_id;
                     Segment.setListData($scope.queryList, response.qIds, $scope.conditions);
                 });
             }
@@ -71,12 +72,21 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
     $scope.save = function()
     {
         var doc = Segment.createDocData($scope.conditions);
-        var docdata =  {segment_name: $scope.segment.segment_name, sql: doc.sql, qIds: doc.qIds};
+        var docdata = {
+            segment_name: $scope.segment.segment_name, 
+            segment_document_id: $scope.segment.segment_document_id,
+            condition: doc.condition, 
+            qIds: doc.qIds
+        };
         
-        Segment.resource.createDoc({data: docdata}).$promise.then(function(response)
+        Segment.resource.saveDoc({data: docdata}).$promise.then(function(response)
         {
-            var data = {segment_name: response.data.segment_name, segment_document_id:response.data.id};
-            Segment.resource.create({data: data}).$promise.then(function(response)
+            var data = {
+                segment_id: $scope.segment.segment_id, 
+                segment_name: response.data.segment_name, 
+                segment_document_id:response.data.id
+            };
+            Segment.resource.save({data: data}).$promise.then(function(response)
             {
                 Utility.info('セグメントを保存しました');
                 Location.segment();
