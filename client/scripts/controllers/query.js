@@ -187,7 +187,7 @@ function ($scope, Shared, Query, Location, Utility)
         var condition = Query.createSQL($scope.showConditions);
         Query.resource.executeQuery({condition: condition, tables: tables}).$promise.then(function(response, err)
         {
-            console.log(response);
+            Utility.info('該当データは' + response.result + '件あります');
         });
     };
 }]);

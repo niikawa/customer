@@ -86,11 +86,7 @@ function createSQL(list, request)
 
 exports.execute = function(req, res)
 {
-    console.log('exeucte query');
-    
     var request = model.getRequest();
-    console.log(req.body);
-    
     var tableList = [];
     Object.keys(req.body.tables).forEach(function(key)
     {
@@ -100,13 +96,11 @@ exports.execute = function(req, res)
     var sql = "SELECT count(1) AS count FROM " + tableList.join(',') + ' WHERE ' + req.body.condition;
     model.execute(sql, request, function(err, data)
     {
-        console.log(data);
-        console.log(err);
         if (err.length > 0)
         {
             console.log(err);
             res.status(510).send('data not found');
         }
-        res.json({data: data});
+        res.json({result: data[0].count});
     });
 };
