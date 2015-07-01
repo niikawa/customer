@@ -89,21 +89,24 @@ exports.execute = function(req, res)
     console.log('exeucte query');
     
     var request = model.getRequest();
-    var data = req.body.data;
-    console.log(data);
-
-    var tableList = Object.keys(data.tables);
-    console.log(tableList);
-    var exexuteData = createSQL(data, request);
+    console.log(req.body);
     
-    var sql = "SELECT * FROM " + tableList.join(',') + exexuteData.where;
-    model.execute(sql, exexuteData.request, function(err, date)
+    var tableList = [];
+    Object.keys(req.body.tables).forEach(function(key)
     {
+        tableList.push(key);
+    });
+    
+    var sql = "SELECT count(1) AS count FROM " + tableList.join(',') + req.body.condition;
+    model.execute(sql, request, function(err, data)
+    {
+        console.log(data);
+        console.log(err);
         if (err.length > 0)
         {
             console.log(err);
             res.status(510).send('object not found');
         }
-        res.status(200).send('insert ok');
+        res.json({data: data});
     });
 };

@@ -183,13 +183,11 @@ function ($scope, Shared, Query, Location, Utility)
     $scope.execute = function()
     {
         var data = Shared.get('queryColumns');
-        var c = Shared.get('queryColumns');
-        var tables = Query.getTables(c);
-        var sql = Query.createSQL($scope.showConditions);
-        console.log(sql);
-        // Query.resource.executeQuery({data: data, tables: tables}).$promise.then(function(response, err)
-        // {
-        //     console.log(response);
-        // });
+        var tables = Query.getTables(data);
+        var condition = Query.createSQL($scope.showConditions);
+        Query.resource.executeQuery({condition: condition, tables: tables}).$promise.then(function(response, err)
+        {
+            console.log(response);
+        });
     };
 }]);
