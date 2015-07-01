@@ -29,8 +29,7 @@ exports.getById = function(req, res)
         segmentdoc.getItemByIdToWeb(data[0].segment_document_id, function(err, doc)
         {
             if (err) res.status(510).send('document is not found');
-            console.log(doc);
-            res.json({data: doc});
+            res.json({segment_name: data[0].segment_name, qIds: doc.qIds});
         });
     });
 };

@@ -39,15 +39,17 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         {
             $scope.queryList = response.data;
             Segment.setWhereProp($scope.queryList);
-        });
-        
-        if (2 === Segment.pageProp($routeParams.id).viewMode)
-        {
-            Segment.resource.get({id: $routeParams.id}).$promise.then(function(response)
+            
+            if (2 === Segment.pageProp($routeParams.id).viewMode)
             {
-                $scope.segmentList = response.data;
-            });
-        }
+                Segment.resource.get({id: $routeParams.id}).$promise.then(function(response)
+                {
+                    $scope.segment.segment_id = $routeParams.id;
+                    $scope.segment.segment_name = response.segment_name;
+                    Segment.setListData($scope.queryList, response.qIds, $scope.conditions);
+                });
+            }
+        });
     };
     
     $scope.deleteItem = function(index)
@@ -85,7 +87,6 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
     $scope.execute = function()
     {
         var data = Segment.createExecuteInfo($scope.conditions);
-        console.log(data);
         Segment.resource.executeQuery(data).$promise.then(function(response, err)
         {
             Utility.info('該当データは' + response.result + '件あります');

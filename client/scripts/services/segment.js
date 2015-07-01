@@ -72,6 +72,21 @@ segmentServices.factory("Segment", ['$resource','Utility',
             });
         };
         
+        segmentServices.setListData = function(queryList, queryIdList, conditionList)
+        {
+            angular.forEach(queryIdList, function(qid, k1)
+            {
+                angular.forEach(queryList, function(query, k2)
+                {
+                    if (qid === query.id)
+                    {
+                        conditionList.push(query);
+                        queryList.splice(k2, 1);
+                    }
+                });
+            });
+        };
+        
         segmentServices.createExecuteInfo = function(list)
         {
             var sql = '';
