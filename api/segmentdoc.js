@@ -25,14 +25,6 @@ exports.getItem = function(req, res)
     });
 };
 
-exports.getItemByIdToWeb = function(id, callback)
-{
-    Segment.getItem(id, function(err, doc)
-    {
-        callback(err, doc);
-    });
-};
-
 exports.saveItem = function(req, res)
 {
     if (!req.session.isLogin) {
@@ -80,3 +72,20 @@ exports.saveItem = function(req, res)
         });
     }
 };
+
+exports.getItemByIdForWeb = function(id, callback)
+{
+    Segment.getItem(id, function(err, doc)
+    {
+        callback(err, doc);
+    });
+};
+
+exports.removeItemForWeb = function(id, callback)
+{
+    Segment.getItem(id, function(err, doc)
+    {
+        callback(err, doc);
+    });
+};
+

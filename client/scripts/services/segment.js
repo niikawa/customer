@@ -36,7 +36,7 @@ segmentServices.factory("Segment", ['$resource','Utility',
             remove:
             {
                 method: 'DELETE',
-                url: 'segment/remove/:id/:docId',
+                url: 'segment/remove/:id/:segment_document_id',
                 cache: true,
             },
             executeQuery:

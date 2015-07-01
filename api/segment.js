@@ -26,7 +26,7 @@ exports.getById = function(req, res)
             return res.status(510).send('data not found');
         }
         var segmentdoc = require("./segmentdoc");
-        segmentdoc.getItemByIdToWeb(data[0].segment_document_id, function(err, doc)
+        segmentdoc.getItemByIdForWeb(data[0].segment_document_id, function(err, doc)
         {
             if (err) res.status(510).send('document is not found');
             res.json({
@@ -92,15 +92,22 @@ exports.save = function(req, res)
 
 exports.remove = function(req, res)
 {
-    if (void 0 === req.params.id) return ;
-    model.removeById(req.params.id, function(err, data)
+    if (void 0 === req.params.id || void 0 === req.params.segment_document_id) res.status(510).send('parameters not found');
+    
+    var segmentdoc = require("./segmentdoc");
+    segmentdoc.getItemByIdForWeb(req.params.segment_document_id, function(err, doc)
     {
-       if (err)
-       {
-            console.log(err);
-            res.status(510).send('object not found');
-       }
-       res.status(200).send('delete ok');
+        if (err) res.status(510).send('document is not found');
+        
+        model.removeById(req.params.id, function(err, data)
+        {
+           if (err)
+           {
+                console.log(err);
+                res.status(510).send('object not found');
+           }
+           res.status(200).send('delete ok');
+        });
     });
 };
 

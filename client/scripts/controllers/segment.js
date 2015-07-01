@@ -40,12 +40,11 @@ function ($scope, Shared, Segment, Utility)
 
     $scope.remove = function(index)
     {
-        Utility.info('実装中だよ');
         var target = $scope.segmentList[index];
         console.log(target);
-        // Segment.resource.remove().$promise.then(function()
-        // {
-            
-        // });
+        Segment.resource.remove({id: target.segment_id, segment_document_id: target.segment_document_id}).$promise.then(function()
+        {
+            Utility.info('削除しました');
+        });
     };
 }]);
