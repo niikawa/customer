@@ -59,12 +59,12 @@ exports.getAll = function(req, res)
 
 exports.execute = function(req, res)
 {
-    segmentdoc.getItemByIdsForWeb(req.body.idList, function(err, docs)
+    segmentdoc.getItemByIdsForWeb(req.body.qIds, function(err, docs)
     {
         if (err)
         {
             console.log(err);
-            console.log(req.body.idList);
+            console.log(req.body.qIds);
             res.status(510).send('docs not found');
         }
 
