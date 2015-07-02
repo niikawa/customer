@@ -36,6 +36,11 @@ exports.addItem = function(req, res)
     {
         res.status(511).send('parameters not found');
     }
+    
+    
+    
+    
+    
 
     Query.addItem(req.body.data, function(err, doc)
     {

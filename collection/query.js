@@ -50,7 +50,14 @@ Query.prototype = {
     addItem: function (item, callback) {
         var self = this;
 
-        self.client.createDocument(self.collection._self, item, function (err, doc) {
+        var data = {
+            query_name: item.query_name,
+            sql: item.sql,
+            tables: item.tables,
+            whereList: item.whereList,
+        };
+
+        self.client.createDocument(self.collection._self, data, function (err, doc) {
             if (err) {
                 callback(err);
 

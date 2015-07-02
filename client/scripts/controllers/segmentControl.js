@@ -112,8 +112,5 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         {
             Utility.info('該当データは' + response.result + '件あります');
         });
-        
-//        var docdata =  {segment_name: $scope.segment.segment_name, sql: sql};
-
     };
 }]);

@@ -102,53 +102,6 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
             return tables;
         };
 
-        queryServices.createSQL = function(list)
-        {
-            var where = ' ';
-            var firstLooplast = list.length -1;
-            angular.forEach(list, function(items, k1)
-            {
-                var secondLoopLast = items.length -1;
-                if (items.length > 1) where += '(';
-                
-                angular.forEach(items, function(v, k2)
-                {
-                    
-                    where += v.table.physicalname + '.' + v.column.physicalname + ' ' + v.selectedCondition.symbol + ' ';
-                    switch (v.selectedCondition.symbol)
-                    {
-                        case 'IN':
-                        case 'NOT IN':
-                            where += ' (\'' + v.condition.value1 + '\')';
-                            break;
-                        case 'BETWEEN':
-                            where += v.condition.value1 + ' AND ' + v.condition.value2;
-                            break;
-                        case 'LIKE':
-                            if (9 == v.condition.value)
-                            {
-                                where += v.condition.value1 + '%';
-                            }
-                            else if (10 == v.condition.value)
-                            {
-                                where += '%'+v.condition.value1;
-                            }
-                            else
-                            {
-                                where += '%'+v.condition.value1 + '%';
-                            }
-                            break;
-                        default:
-                            where += v.condition.value1;
-                    }
-                    if (items.length > 1 && secondLoopLast === k2 ) where += ')';
-                    
-                    if (k1 !== firstLooplast || k2 !== secondLoopLast) where += ' ' +v.condition.where+ ' ';
-                });
-            });
-            return where;
-        };
-
         return queryServices;
     }
 ]);
