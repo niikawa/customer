@@ -4,7 +4,7 @@
  * @author niikawa
  */
 var utilsServices = angular.module("myApp");
-utilsServices.service("Utility", function()
+utilsServices.service("Utility", [$rootScope', function($rootScope)
 {
     //--------------------------------------------------------------------------
     //共通項目除去
@@ -227,4 +227,17 @@ utilsServices.service("Utility", function()
         }
         return yearList;
     };
-});
+    
+    this.setSpinner = function(bool)
+    {
+        if (bool)
+        {
+            $rootScope.$broadcast('requestStart');
+        }
+        else
+        {
+            $rootScope.$broadcast('requestEnd');
+        }
+    };
+    
+}]);
