@@ -117,12 +117,11 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
                 {
                     
                     where += v.table.physicalname + '.' + v.column.physicalname + ' ' + v.selectedCondition.symbol + ' ';
-                    
                     switch (v.selectedCondition.symbol)
                     {
                         case 'IN':
                         case 'NOT IN':
-                            where += ' (' + v.condition.value1 + ')';
+                            where += ' (\'' + v.condition.value1 + '\')';
                             break;
                         case 'BETWEEN':
                             where += v.condition.value1 + ' AND ' + v.condition.value2;
