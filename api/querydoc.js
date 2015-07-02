@@ -37,7 +37,7 @@ exports.addItem = function(req, res)
     {
         res.status(511).send('parameters not found');
     }
-    
+    console.log(req.body);
     var creator = new Creator(req.body.conditionList);
     var sql = creator.getCountSql(req.body.tables);
     var values = creator.getValueList();

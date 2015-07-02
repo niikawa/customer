@@ -52,8 +52,6 @@ CreateSQL.prototype =
     {
         return this.valueList;
     },
-    
-    
 };
 
 function getColType(type)
