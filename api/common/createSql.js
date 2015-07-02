@@ -1,4 +1,5 @@
 var values = {};
+var colTypes = {};
 function CreateSQL(list, request)
 {
     this.values = {};
@@ -13,6 +14,7 @@ function CreateSQL(list, request)
     }
     this.consitions = createData(list, this.request);
     this.valueList = values;
+    this.colTypeList = colTypes;
 }
 
 module.exports = CreateSQL;
@@ -23,7 +25,6 @@ CreateSQL.prototype =
     {
         return this.request;
     },
-    
     getConstionString: function()
     {
         return this.consitions;
@@ -52,6 +53,10 @@ CreateSQL.prototype =
     {
         return this.valueList;
     },
+    getColTypeList: function()
+    {
+        return this.colTypeList;
+    }
 };
 
 function getColType(type)
@@ -145,6 +150,7 @@ function createValuePartBySymbol(item, name, request)
     var type = getColType(item.column.type);
     request.input(name, type, item.condition.value1);
     values[name] = item.condition.value1;
+    colTypes[name] = type;
     if (isMultiple)
     {
         request.input(name2, type, item.condition.value2);

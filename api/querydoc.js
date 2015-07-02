@@ -37,10 +37,11 @@ exports.addItem = function(req, res)
     {
         res.status(511).send('parameters not found');
     }
-    console.log(req.body);
+    
     var creator = new Creator(req.body.conditionList);
     var sql = creator.getSql(req.body.tables);
     var values = creator.getValueList();
+    var colTypes = creator.getColTypeList();
 
     var parameters =
     {
@@ -48,7 +49,8 @@ exports.addItem = function(req, res)
         tables: req.body.tables,
         whereList: req.body.whereList,
         sql: sql,
-        bindInfo: values
+        bindInfo: values,
+        columnTypeList: colTypes
     };
 
     Query.addItem(parameters, function(err, doc)

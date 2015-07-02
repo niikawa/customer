@@ -55,7 +55,8 @@ Query.prototype = {
             sql: item.sql,
             tables: item.tables,
             whereList: item.whereList,
-            bindInfo: item.bindInfo
+            bindInfo: item.bindInfo,
+            columnTypeList: item.columnTypeList
         };
 
         self.client.createDocument(self.collection._self, data, function (err, doc) {
