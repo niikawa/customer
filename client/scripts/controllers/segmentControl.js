@@ -48,8 +48,9 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
                     $scope.segment.segment_document_id = response.segment_document_id;
                     Segment.setListData(doc.data, response.qIds, $scope.conditions);
                     $scope.queryList = doc.data;
-                    Segment.setWhereProp($scope.queryList, response.whereList);
-
+                    Segment.setWhereProp($scope.queryList);
+                    Segment.setWhereProp($scope.conditions, response.whereList);
+                    $scope.isExecte = true;
                 });
             }
             else

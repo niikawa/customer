@@ -56,12 +56,23 @@ segmentServices.factory("Segment", ['$resource','Utility',
             }
         };
         
-        segmentServices.setWhereProp = function(list)
+        segmentServices.setWhereProp = function(list, initializeData)
         {
-            angular.forEach(list, function(v, k)
+            if (void 0 === initializeData)
             {
-                v.where = 'AND';
-            });
+                angular.forEach(list, function(v, k)
+                {
+                    v.where = 'AND';
+                });
+            }
+            else
+            {
+                angular.forEach(list, function(v, k)
+                {
+                    var value = (null === initializeData[k]) ? 'AND' : initializeData[k];
+                    v.where = value;
+                });
+            }
         };
         
         segmentServices.setListData = function(queryList, queryIdList, conditionList)
