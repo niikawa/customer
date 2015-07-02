@@ -42,9 +42,10 @@ function createSQL(list, request)
         var items = list[index];
         if (items.length > 1) where += '(';
         var isLast = index === last;
-        where += getRow(items, isLast, request);
+        var rowInfo = getRow(items, isLast, request);
+        where += rowInfo.row;
     }
-    return {where: where, request: request};
+    return {where: where, request: rowInfo.request};
 }
 
 function getRow(items, isLast, request)
@@ -58,13 +59,14 @@ function getRow(items, isLast, request)
         var item = items[index];
         row += item.table.physicalname + '.' + item.column.physicalname + ' ' + item.selectedCondition.symbol + ' ';
         var baindName = item.table.physicalname + '' + item.column.physicalname;
-        row += createValuePartBySymbol(item, baindName, request);
+        var info = createValuePartBySymbol(item, baindName, request);
+        row += info.part;
 
         if (num > 1 && last === index) row += ')';
         
         if (!isLast || last === index) row += ' ' + item.condition.where + ' ';
     }
-    return row;
+    return {row: row, request: request};
 }
 
 function createValuePartBySymbol(item, name, request)
@@ -106,7 +108,7 @@ function createValuePartBySymbol(item, name, request)
     request.input(bindName, type, item.condition.value1);
     if (isMultiple) request.input(bindName2, type, item.condition.value2);
 
-    return part;
+    return {part: part, request: request};
 }
 
 exports.execute = function(req, res)
@@ -120,14 +122,14 @@ exports.execute = function(req, res)
     
 //    var sql = "SELECT count(1) AS count FROM " + tableList.join(',') + ' WHERE ' + req.body.condition;
     
-    var append = createSQL(req.body.conditionList, request);
-    var sql = "SELECT count(1) AS count FROM " + tableList.join(',') + ' WHERE ' + append.where;
+    var eexecuteInfo = createSQL(req.body.conditionList, request);
+    var sql = "SELECT count(1) AS count FROM " + tableList.join(',') + ' WHERE ' + eexecuteInfo.where;
     
     
     console.log('query exexute');
     console.log(sql);
     
-    model.execute(sql, request, function(err, data)
+    model.execute(sql, eexecuteInfo.request, function(err, data)
     {
         if (err.length > 0)
         {
