@@ -4,7 +4,7 @@
  * @author niikawa
  */
 var utilsServices = angular.module("myApp");
-utilsServices.service("Utility", [$rootScope', function($rootScope)
+utilsServices.service("Utility", ['$rootScope', function($rootScope)
 {
     //--------------------------------------------------------------------------
     //共通項目除去
