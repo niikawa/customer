@@ -55,6 +55,7 @@ CreateSQL.prototype =
     },
     getColTypeList: function()
     {
+        console.log(this.colTypeList);
         return this.colTypeList;
     }
 };
