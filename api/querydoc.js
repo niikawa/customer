@@ -1,6 +1,7 @@
 var async = require('async');
 var DocumentDBClient = require('documentdb').DocumentClient;
 var query = require('../collection/query');
+var Creator = require("./common/createSql");
 
 var docDbClient = new DocumentDBClient('https://ixcpm.documents.azure.com:443/', {
     masterKey: 'BAVJ6Lb3xefcLJVh7iShAAngAHrYC08mtTj2ieVIVXuoBkftXwxKSCJaOcNrvctBwhi6oFoG6GlDVrDiDyXOzg=='
@@ -37,12 +38,20 @@ exports.addItem = function(req, res)
         res.status(511).send('parameters not found');
     }
     
-    
-    
-    
-    
+    var creator = new Creator(req.body.conditionList);
+    var sql = creator.getCountSql(req.body.tables);
+    var values = creator.getValueList();
 
-    Query.addItem(req.body.data, function(err, doc)
+    var parameters =
+    {
+        query_name: req.body.query_name,
+        tables: req.body.tables,
+        whereList: req.body.whereList,
+        sql: sql,
+        bindInfo: values
+    };
+
+    Query.addItem(parameters, function(err, doc)
     {
         if (err) {
             

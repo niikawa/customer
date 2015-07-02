@@ -20,15 +20,8 @@ var model = new query();
 exports.execute = function(req, res)
 {
     var request = model.getRequest();
-    var tableList = [];
-    Object.keys(req.body.tables).forEach(function(key)
-    {
-        tableList.push(key);
-    });
     var creator = new Creator(req.body.conditionList, request);
-    var where = creator.getConstionString();
-    
-    var sql = "SELECT count(1) AS count FROM " + tableList.join(',') + ' WHERE ' + where;
+    var sql = creator.getCountSql(req.body.tables);
     model.execute(sql, request, function(err, data)
     {
         if (err.length > 0)

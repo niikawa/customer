@@ -1,7 +1,18 @@
+var values = {};
 function CreateSQL(list, request)
 {
-    this.request = request;
-    this.sql = createSQL(list, this.request);
+    this.values = {};
+    if (void 0 === request)
+    {
+        var ms = require('mssql');
+        this.request = new ms.Request();
+    }
+    else
+    {
+        this.request = request;
+    }
+    this.consitions = createData(list, this.request);
+    this.valueList = values;
 }
 
 module.exports = CreateSQL;
@@ -15,8 +26,34 @@ CreateSQL.prototype =
     
     getConstionString: function()
     {
-        return this.sql;
-    }
+        return this.consitions;
+    },
+    getSql: function(tableList)
+    {
+        var work = [];
+        Object.keys(tableList).forEach(function(key)
+        {
+            work.push(key);
+        });
+        
+        return "SELECT * FROM " + work.join(',') + ' WHERE ' + this.consitions;
+    },
+    getCountSql: function(tableList)
+    {
+        var work = [];
+        Object.keys(tableList).forEach(function(key)
+        {
+            work.push(key);
+        });
+        
+        return "SELECT count(1) AS count FROM " + work.join(',') + ' WHERE ' + this.consitions;
+    },
+    getValueList: function()
+    {
+        return this.valueList;
+    },
+    
+    
 };
 
 function getColType(type)
@@ -35,7 +72,7 @@ function getColType(type)
     }
 }
 
-function createSQL(list, request)
+function createData(list, request)
 {
     var where = ' ';
     var num = list.length;
@@ -109,7 +146,12 @@ function createValuePartBySymbol(item, name, request)
     
     var type = getColType(item.column.type);
     request.input(name, type, item.condition.value1);
-    if (isMultiple) request.input(name2, type, item.condition.value2);
+    values[name] = item.condition.value1;
+    if (isMultiple)
+    {
+        request.input(name2, type, item.condition.value2);
+        values[name2] = item.condition.value2;
+    }
 
     return part;
 }
