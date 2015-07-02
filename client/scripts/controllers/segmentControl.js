@@ -14,7 +14,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         $scope.conditions = [];
         $scope.segmentSearch = '';
         $scope.segment = {};
-        $scope.isExecte = {};
+        $scope.isExecte = false;
     }
     
     function setEvntListeners()
@@ -73,6 +73,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
     {
         $scope.queryList.push($scope.conditions[index]);
         $scope.conditions.splice(index,1);
+        console.log($scope.conditions.length);
         if (0 === $scope.conditions.length) $scope.isExecte = false;
         
     };
