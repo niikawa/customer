@@ -1,5 +1,3 @@
-var db = require('mssql');
-
 function CreateSQL(list, request)
 {
     this.request = request;
@@ -23,16 +21,17 @@ CreateSQL.prototype =
 
 function getColType(type)
 {
+    var db = require('mssql');
     switch(type)
     {
         case 'INT':
-            return this.db.Int;
+            return db.Int;
         case 'VARCHAR':
-            return this.db.VarChar;
+            return db.VarChar;
         case 'NVarChar':
         case 'DATETIME':
         default:
-            return this.db.NVarChar;
+            return db.NVarChar;
     }
 }
 
