@@ -49,8 +49,8 @@
 
                 <div class="col-md-12 center" >
                     <a class="btn btn-default" ng-href="#/segment" >戻る</a>
-                    <button class="btn btn-default"  ng-disabled="segmentForm.$invalid && isExecte" ng-click="execute()">実行する</button>
-                    <button class="btn btn-default"  ng-disabled="segmentForm.$invalid && isExecte" ng-click="save()">保存</button>
+                    <button class="btn btn-default"  ng-disabled="segmentForm.$invalid && !isExecte" ng-click="execute()">実行する</button>
+                    <button class="btn btn-default"  ng-disabled="segmentForm.$invalid && !isExecte" ng-click="save()">保存</button>
                 </div>
 
             </div>
