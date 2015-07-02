@@ -1,5 +1,6 @@
 var async = require('async');
 var Core = require('./core');
+var Creator = require("./common/createSql");
 
 /** テーブル名 */
 var tableName = 'M_SEGMENT';
@@ -60,6 +61,10 @@ exports.execute = function(req, res)
 {
     var request = model.getRequest();
     var tableList = [];
+    
+    var creator = new Creator(req.body.conditionList);
+    var sql = creator.getCountSql(req.body.tables);
+    
     Object.keys(req.body.tables).forEach(function(key)
     {
         tableList.push(key);

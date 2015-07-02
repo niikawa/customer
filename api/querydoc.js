@@ -39,7 +39,7 @@ exports.addItem = function(req, res)
     }
     
     var creator = new Creator(req.body.conditionList);
-    var sql = creator.getSql(req.body.tables);
+    var sql = creator.getConstionString(req.body.tables);
     var values = creator.getValueList();
     var colTypes = creator.getColTypeList();
 

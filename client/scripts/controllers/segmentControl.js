@@ -108,9 +108,10 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
     $scope.execute = function()
     {
         var data = Segment.createExecuteInfo($scope.conditions);
-        Segment.resource.executeQuery(data).$promise.then(function(response, err)
-        {
-            Utility.info('該当データは' + response.result + '件あります');
-        });
+        console.log($scope.conditions);
+        // Segment.resource.executeQuery(data).$promise.then(function(response, err)
+        // {
+        //     Utility.info('該当データは' + response.result + '件あります');
+        // });
     };
 }]);
