@@ -41,7 +41,7 @@ function createSQL(list, request)
     {
         var items = list[index];
         if (items.length > 1) where += '(';
-        var isLast = index === last;
+        var isLast = (index === last);
         var rowInfo = getRow(items, isLast, request);
         where += rowInfo.row;
     }
@@ -64,7 +64,7 @@ function getRow(items, isLast, request)
 
         if (num > 1 && last === index) row += ')';
         
-        if (!isLast || last === index) row += ' ' + item.condition.where + ' ';
+        if (!isLast || last !== index) row += ' ' + item.condition.where + ' ';
     }
     return {row: row, request: request};
 }
