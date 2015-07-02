@@ -8,6 +8,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
     function setInitializeScope()
     {
         $scope.pageTitle = Segment.pageProp($routeParams.id).pageTitle;
+        $scope.viewMode = Segment.pageProp($routeParams.id).viewMode;
 
         $scope.segmenData = {};
         $scope.queryList = [];
@@ -76,7 +77,6 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         $scope.conditions.splice(index,1);
         console.log($scope.conditions.length);
         if (0 === $scope.conditions.length) $scope.isExecte = false;
-        
     };
     
     $scope.save = function()
