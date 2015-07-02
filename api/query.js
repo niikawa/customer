@@ -37,7 +37,7 @@ function createSQL(list, request)
     var num = list.length;
     var last = num -1;
     
-    for (var index = 0; index < num; i++)
+    for (var index = 0; index < num; index++)
     {
         var items = list[index];
         if (items.length > 1) where += '(';
