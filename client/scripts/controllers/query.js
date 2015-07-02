@@ -170,8 +170,8 @@ function ($scope, Shared, Query, Location, Utility)
     {
         var queryColumns = Shared.get('queryColumns');
         var tables = Query.getTables(queryColumns);
-        var data =  {query_name: $scope.query.query_name, conditionList: $scope.showConditions, tables: tables};
-        Query.resource.create({data: data}).$promise.then(function(response, err)
+        var parameters =  {query_name: $scope.query.query_name, conditionList: $scope.showConditions, tables: tables};
+        Query.resource.create(parameters).$promise.then(function(response, err)
         {
             Shared.destloyByName('queryColumns');
             Utility.info('クエリを保存しました');
@@ -183,7 +183,8 @@ function ($scope, Shared, Query, Location, Utility)
     {
         var data = Shared.get('queryColumns');
         var tables = Query.getTables(data);
-        Query.resource.executeQuery({tables: tables, conditionList: $scope.showConditions}).$promise.then(function(response, err)
+        var parameters = {tables: tables, conditionList: $scope.showConditions};
+        Query.resource.executeQuery(parameters).$promise.then(function(response, err)
         {
             Utility.info('該当データは' + response.result + '件あります');
         });
