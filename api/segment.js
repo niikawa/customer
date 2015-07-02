@@ -32,6 +32,7 @@ exports.getById = function(req, res)
             res.json({
                 segment_name: data[0].segment_name, 
                 segment_document_id: data[0].segment_document_id,
+                whereList: doc.whereList,
                 qIds: doc.qIds
             });
         });
