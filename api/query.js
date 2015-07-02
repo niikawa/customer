@@ -106,6 +106,10 @@ function createValuePartBySymbol(item, name, request)
     
     var type = getColType(item.column.type);
     request.input(bindName, type, item.condition.value1);
+    
+    console.log(type);
+    console.log(item.condition.value1);
+    
     if (isMultiple) request.input(bindName2, type, item.condition.value2);
 
     return {part: part, request: request};
