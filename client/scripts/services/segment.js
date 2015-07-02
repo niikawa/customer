@@ -133,14 +133,16 @@ segmentServices.factory("Segment", ['$resource','Utility',
             var sql = '';
             var last = list.length -1;
             var ids = [];
+            var where = [];
             angular.forEach(list, function(v, k)
             {
                 sql += '(' + v.sql + ') ' ;
                 if (last !== k) sql += v.where;
                 ids.push(v.id);
+                where.push(v.where);
             });
             
-            return {condition: sql, qIds: ids};
+            return {condition: sql, qIds: ids, whereList: where};
         };
         
         segmentServices.mock = function()

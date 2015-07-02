@@ -39,6 +39,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         
         Query.resource.getQuery().$promise.then(function(doc)
         {
+            console.log(doc);
             if (2 === Segment.pageProp($routeParams.id).viewMode)
             {
                 Segment.resource.get({id: $routeParams.id}).$promise.then(function(response)
@@ -85,6 +86,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
             segment_name: $scope.segment.segment_name, 
             segment_document_id: $scope.segment.segment_document_id,
             condition: doc.condition, 
+            whereList: doc.whereList, 
             qIds: doc.qIds
         };
         

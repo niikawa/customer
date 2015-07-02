@@ -53,6 +53,7 @@ Segment.prototype = {
         var data = {
             segment_name: item.segment_name,
             condition: item.condition,
+            whereList: item.whereList,
             qIds: item.qIds,
         };
 
@@ -77,6 +78,7 @@ Segment.prototype = {
                 
                 doc.segment_name = data.segment_name;
                 doc.condition = data.condition;
+                doc.whereList = data.whereList;
                 doc.qIds = data.qIds;
                 
                 self.client.replaceDocument(doc._self, doc, function (err, replaced) {
