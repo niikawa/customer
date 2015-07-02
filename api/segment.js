@@ -1,6 +1,5 @@
 var async = require('async');
 var Core = require('./core');
-var segmentdoc = require("./segmentdoc");
 var Creator = require("./common/createSql");
 
 /** テーブル名 */
@@ -27,6 +26,7 @@ exports.getById = function(req, res)
         {
             return res.status(510).send('data not found');
         }
+        var segmentdoc = require("./segmentdoc");
         segmentdoc.getItemByIdForWeb(data[0].segment_document_id, function(err, doc)
         {
             if (err) res.status(510).send('document is not found');
@@ -59,7 +59,8 @@ exports.getAll = function(req, res)
 
 exports.execute = function(req, res)
 {
-    segmentdoc.getItemByIdsForWeb(req.body.qIds, function(err, docs)
+    var querydoc = require("./querydoc");
+    querydoc.getItemByIdsForWeb(req.body.qIds, function(err, docs)
     {
         if (err)
         {

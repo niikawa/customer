@@ -93,7 +93,7 @@ segmentServices.factory("Segment", ['$resource','Utility',
         segmentServices.createExecuteInfo = function(list)
         {
             var qIds = [];
-            var where = []
+            var where = {};
             var tables = {};
             
             angular.forEach(list, function(v, k)
