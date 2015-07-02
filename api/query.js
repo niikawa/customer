@@ -121,7 +121,7 @@ exports.execute = function(req, res)
 //    var sql = "SELECT count(1) AS count FROM " + tableList.join(',') + ' WHERE ' + req.body.condition;
     
     var append = createSQL(req.body.conditionList, request);
-    var sql = "SELECT count(1) AS count FROM " + tableList.join(',') + ' WHERE ' + append;
+    var sql = "SELECT count(1) AS count FROM " + tableList.join(',') + ' WHERE ' + append.where;
     
     
     console.log('query exexute');
