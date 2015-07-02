@@ -14,6 +14,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         $scope.conditions = [];
         $scope.segmentSearch = '';
         $scope.segment = {};
+        $scope.isExecte = {};
     }
     
     function setEvntListeners()
@@ -21,6 +22,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         $scope.$on('dropItemComplete', function(event, data)
         {
             event.stopPropagation();
+            $scope.isExecte = true;
         });
     }
 
@@ -63,7 +65,6 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         if (void 0 === $scope.queryList[index].id) return;
         Query.resource.remove({id: $scope.queryList[index].id}).$promise.then(function(response)
         {
-            console.log(response);
             $scope.queryList.splice(index,1);
         });
     };
@@ -72,6 +73,8 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
     {
         $scope.queryList.push($scope.conditions[index]);
         $scope.conditions.splice(index,1);
+        if (0 === $scope.conditions.length) $scope.isExecte = false;
+        
     };
     
     $scope.save = function()
