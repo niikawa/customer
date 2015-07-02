@@ -20,7 +20,7 @@ var model = new query();
 exports.execute = function(req, res)
 {
     var request = model.getRequest();
-    var creator = new Creator(req.body.conditionList, request, 'query');
+    var creator = new Creator('query', req.body.conditionList, request);
     var sql = creator.getCountSql(req.body.tables);
     model.execute(sql, request, function(err, data)
     {

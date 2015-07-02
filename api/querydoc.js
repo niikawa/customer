@@ -51,8 +51,8 @@ exports.addItem = function(req, res)
     {
         res.status(511).send('parameters not found');
     }
-    
-    var creator = new Creator(req.body.conditionList);
+
+    var creator = new Creator('query', req.body.conditionList);
     var sql = creator.getConstionString(req.body.tables);
     var values = creator.getValueList();
     var colTypes = creator.getColTypeList();

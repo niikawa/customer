@@ -1,6 +1,6 @@
 var values = {};
 var colTypes = {};
-function CreateSQL(list, request, createType)
+function CreateSQL(createType, list, request)
 {
     this.values = {};
     if (void 0 === request)

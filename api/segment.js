@@ -70,7 +70,7 @@ exports.execute = function(req, res)
 
         var request = model.getRequest();
         var params = {docs: docs, conditionMap: req.body.conditionMap};
-        var creator = new Creator(params, request, 'segment');
+        var creator = new Creator('segment', params, request);
         var sql = creator.getCountSql(req.body.tables);
 
         model.execute(sql, request, function(err, data)
