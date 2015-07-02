@@ -56,9 +56,9 @@ function getRow(items, isLast, request)
     for (var index = 0; index < num; index++)
     {
         var item = items[index];
-        var colName = item.table.physicalname + '.' + item.column.physicalname + ' ' + item.selectedCondition.symbol;
-        row += colName + ' ';
-        row += createValuePartBySymbol(item, colName, request);
+        row += item.table.physicalname + '.' + item.column.physicalname + ' ' + item.selectedCondition.symbol + ' ';
+        var baindName = item.table.physicalname + '' + item.column.physicalname;
+        row += createValuePartBySymbol(item, baindName, request);
 
         if (num > 1 && last === index) row += ')';
         
