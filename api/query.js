@@ -75,7 +75,8 @@ function createValuePartBySymbol(item, name, request)
     var isMultiple = false;
     var symbol = item.selectedCondition.symbol;
     var bindName = '@' + name;
-    var bindName2 = bindName+'2';
+    var name2 = name + '2';
+    var bindName2 = '@' + name2;
     switch (symbol)
     {
         case 'IN':
@@ -105,11 +106,7 @@ function createValuePartBySymbol(item, name, request)
     }
     
     var type = getColType(item.column.type);
-    request.input(bindName, type, item.condition.value1);
-    
-    console.log(type);
-    console.log(item.condition.value1);
-    
+    request.input(name, type, item.condition.value1);
     if (isMultiple) request.input(bindName2, type, item.condition.value2);
 
     return {part: part, request: request};
@@ -133,7 +130,7 @@ exports.execute = function(req, res)
     console.log('query exexute');
     console.log(sql);
     
-    model.execute(sql, eexecuteInfo.request, function(err, data)
+    model.execute(sql, request, function(err, data)
     {
         if (err.length > 0)
         {
