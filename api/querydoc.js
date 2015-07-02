@@ -105,9 +105,9 @@ exports.removeItem = function(req, res)
     });
 };
 
-exports.getItemByIdsForWeb = function(idList, callback)
+exports.getItemByIdsForWeb = function(idList, columnList, callback)
 {
-    Query.getItemByIds(idList, function(err, doc)
+    Query.getItemByIds(idList, columnList, function(err, doc)
     {
         callback(err,doc);
     });
