@@ -21,23 +21,15 @@ segmentServices.factory("Segment", ['$resource','Utility',
                 method: 'POST',
                 url: 'segment/save',
             },
-            refresh:
-            {
-                method: 'GET',
-                url: 'segment/refresh/:id',
-                cache: true,
-            },
             download:
             {
                 method: 'GET',
                 url: 'segment/download/:id',
-                cache: true,
             },
             remove:
             {
                 method: 'DELETE',
                 url: 'segment/remove/:id/:segment_document_id',
-                cache: true,
             },
             executeQuery:
             {

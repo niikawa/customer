@@ -76,6 +76,7 @@ router.get('/segment/:id', segment.getById);
 router.post('/segment/save', segment.save);
 router.post('/segment/execute', segment.execute);
 router.delete('/segment/remove/:id/:segment_document_id', segment.remove);
+router.get('/segment/download/:id', segment.download);
 
 var user = require("./api/user");
 router.get('/user', user.getList);

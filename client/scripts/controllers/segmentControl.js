@@ -35,10 +35,8 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         setEvntListeners();
         Shared.destloyByName('queryColumns');
         
-        Query.resource.getQuery().$promise.then(function(response)
+        Query.resource.getQuery().$promise.then(function(doc)
         {
-            Segment.setWhereProp($scope.queryList);
-            
             if (2 === Segment.pageProp($routeParams.id).viewMode)
             {
                 Segment.resource.get({id: $routeParams.id}).$promise.then(function(response)
@@ -46,13 +44,15 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
                     $scope.segment.segment_id = $routeParams.id;
                     $scope.segment.segment_name = response.segment_name;
                     $scope.segment.segment_document_id = response.segment_document_id;
-                    Segment.setListData(response.data, response.qIds, $scope.conditions);
-                    $scope.queryList = response.data;
+                    Segment.setListData(doc.data, response.qIds, $scope.conditions);
+                    $scope.queryList = doc.data;
+                    Segment.setWhereProp($scope.queryList);
                 });
             }
             else
             {
-                $scope.queryList = response.data;
+                $scope.queryList = doc.data;
+                Segment.setWhereProp($scope.queryList);
             }
         });
     };
