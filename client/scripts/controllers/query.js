@@ -185,7 +185,7 @@ function ($scope, Shared, Query, Location, Utility)
         var data = Shared.get('queryColumns');
         var tables = Query.getTables(data);
         var condition = Query.createSQL($scope.showConditions);
-        Query.resource.executeQuery({condition: condition, tables: tables}).$promise.then(function(response, err)
+        Query.resource.executeQuery({condition: condition, tables: tables, conditionList: $scope.showConditions}).$promise.then(function(response, err)
         {
             Utility.info('該当データは' + response.result + '件あります');
         });

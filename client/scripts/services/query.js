@@ -54,7 +54,6 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
             }
         };
         
-        
         queryServices.getContentsByColumsType = function(type)
         {
             var countents = {inputType:'', };
@@ -105,7 +104,6 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
 
         queryServices.createSQL = function(list)
         {
-//            var sql = 'SELECT * FROM ';
             var where = ' ';
             var firstLooplast = list.length -1;
             angular.forEach(list, function(items, k1)

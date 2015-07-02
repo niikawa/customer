@@ -34,54 +34,79 @@ function getColType(type)
 function createSQL(list, request)
 {
     var where = ' ';
-    var firstLength = list.length;
-    var firstLooplast = firstLength -1;
+    var num = list.length;
+    var last = num -1;
     
-    for (var i = 0; i < firstLength; i++)
+    for (var index = 0; index < num; i++)
     {
         var items = list[i];
-        var secondLength = items.length;
-        var secondLoopLast = secondLength -1;
         if (items.length > 1) where += '(';
-        
-        for (var j = 0; j < secondLength; j++)
-        {
-            where += items[j].table.physicalname + '.' + items[j].column.physicalname + ' ' + items[j].selectedCondition.symbol + ' ';
-            switch (items[j].selectedCondition.symbol)
-            {
-                case 'IN':
-                case 'NOT IN':
-                    where += ' (' + items[j].condition.value1 + ')';
-                    break;
-                case 'BETWEEN':
-                    where += items[j].condition.value1 + ' AND ' + items[j].condition.value2;
-                    break;
-                case 'LIKE':
-                    if (9 == items[j].condition.value)
-                    {
-                        where += items[j].condition.value1 + '%';
-                    }
-                    else if (10 == items[j].condition.value)
-                    {
-                        where += '%'+ items[j].condition.value1;
-                    }
-                    else
-                    {
-                        where += '%'+ items[j].condition.value1 + '%';
-                    }
-                    break;
-                default:
-                    where += '@'+items[j].column.physicalname;
-                    var type = getColType(items[j].column.type);
-                    request.input(items[j].column.physicalname, type, items[j].condition.value1);
-            }
-            if (items.length > 1 && secondLoopLast === j ) where += ')';
-            
-            if (i !== firstLooplast || j !== secondLoopLast) where += ' ' + items[j].condition.where + ' ';
-            
-        }
+        var isLast = index === last;
+        where += getRow(items, isLast, request);
     }
     return {where: where, request: request};
+}
+
+function getRow(items, isLast, request)
+{
+    var num = items.length;
+    var last = num -1;
+    var row = '';
+    
+    for (var index = 0; index < num; index++)
+    {
+        var item = items[index];
+        var colName = item.table.physicalname + '.' + item.column.physicalname + ' ' + item.selectedCondition.symbol;
+        row += colName + ' ';
+        row += createValuePartBySymbol(item, colName, request);
+
+        if (num > 1 && last === index) row += ')';
+        
+        if (!isLast || last === index) row += ' ' + item.condition.where + ' ';
+    }
+    return row;
+}
+
+function createValuePartBySymbol(item, name, request)
+{
+    var part = '';
+    var isMultiple = false;
+    var symbol = item.selectedCondition.symbol;
+    var bindName = '@' + name;
+    var bindName2 = bindName+'2';
+    switch (symbol)
+    {
+        case 'IN':
+        case 'NOT IN':
+            part = ' (@' + bindName + ')';
+            break;
+        case 'BETWEEN':
+            part = '' + bindName + ' AND ' + bindName2;
+            isMultiple = true;
+            break;
+        case 'LIKE':
+            if (9 == item.condition.value)
+            {
+                part = bindName + '%';
+            }
+            else if (10 == item.condition.value)
+            {
+                part = '%'+ bindName;
+            }
+            else
+            {
+                part = '%'+ bindName + '%';
+            }
+            break;
+        default:
+            part = bindName;
+    }
+    
+    var type = getColType(item.column.type);
+    request.input(bindName, type, item.condition.value1);
+    if (isMultiple) request.input(bindName2, type, item.condition.value2);
+
+    return part;
 }
 
 exports.execute = function(req, res)
@@ -93,7 +118,15 @@ exports.execute = function(req, res)
         tableList.push(key);
     });
     
-    var sql = "SELECT count(1) AS count FROM " + tableList.join(',') + ' WHERE ' + req.body.condition;
+//    var sql = "SELECT count(1) AS count FROM " + tableList.join(',') + ' WHERE ' + req.body.condition;
+    
+    var append = createSQL(req.body.showConditions, request);
+    var sql = "SELECT count(1) AS count FROM " + tableList.join(',') + ' WHERE ' + append;
+    
+    
+    console.log('query exexute');
+    console.log(sql);
+    
     model.execute(sql, request, function(err, data)
     {
         if (err.length > 0)
