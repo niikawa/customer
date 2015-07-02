@@ -26,7 +26,7 @@ exports.getItem = function(req, res)
 
 exports.getAllItem = function(req, res)
 {
-    var query = 'SELECT doc.id ,doc.query_name FROM doc';
+    var query = 'SELECT doc.id ,doc.query_name, doc.tables FROM doc';
     Query.find(query, function(err, doc)
     {
         if (err) {
