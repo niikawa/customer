@@ -30,7 +30,6 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
      */
     $scope.initialize = function()
     {
-        Utility.setSpinner(true);
         $scope._construct();
         setInitializeScope();
         setEvntListeners();
@@ -48,7 +47,6 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
                     Segment.setListData(doc.data, response.qIds, $scope.conditions);
                     $scope.queryList = doc.data;
                     Segment.setWhereProp($scope.queryList);
-                    Utility.setSpinner(false);
 
                 });
             }
@@ -56,7 +54,6 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
             {
                 $scope.queryList = doc.data;
                 Segment.setWhereProp($scope.queryList);
-                Utility.setSpinner(false);
             }
         });
     };
