@@ -39,7 +39,7 @@ function createSQL(list, request)
     
     for (var index = 0; index < num; i++)
     {
-        var items = list[i];
+        var items = list[index];
         if (items.length > 1) where += '(';
         var isLast = index === last;
         where += getRow(items, isLast, request);
