@@ -113,6 +113,45 @@ Query.prototype = {
         });
     },
     
+    getItemByIds: function (idList, columnList, callback) {
+        var self = this;
+        
+        var column = columnList.join(',');
+        var query = 'SELECT ' + column + ' FROM doc WHERE doc.id IN (@ids)';
+        
+        var num = idList.length;
+        var last = num - 1;
+        var parameters = [];
+        for (var index = 0; num < index; index++)
+        {
+            var bindName = '@ids' + index;
+            parameters.push({name: bindName, value: idList[index]});
+            
+            if (last === index) 
+            {
+                query += bindName + ')';
+            }
+            else
+            {
+                query += bindName + ', ';
+            }
+        }
+
+        var querySpec = {
+            query: query,
+            parameters: parameters
+        };
+
+        self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
+            if (err) {
+                callback(err);
+
+            } else {
+                callback(null, results[0]);
+            }
+        });
+    },
+    
     removeItem: function(itemId, callback) {
         
         var self = this;

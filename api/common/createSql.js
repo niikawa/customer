@@ -1,6 +1,6 @@
 var values = {};
 var colTypes = {};
-function CreateSQL(list, request)
+function CreateSQL(list, request, createType)
 {
     this.values = {};
     if (void 0 === request)
@@ -12,9 +12,16 @@ function CreateSQL(list, request)
     {
         this.request = request;
     }
-    this.consitions = createData(list, this.request);
-    this.valueList = values;
-    this.colTypeList = colTypes;
+    if ('query' === createType)
+    {
+        this.consitions = createQuery(list, this.request);
+        this.valueList = values;
+        this.colTypeList = colTypes;
+    }
+    else if ('segment')
+    {
+        this.consitions = createSegment(list, this.request);
+    }
 }
 
 module.exports = CreateSQL;
@@ -75,7 +82,7 @@ function getColType(type)
     }
 }
 
-function createData(list, request)
+function createQuery(list, request)
 {
     var where = ' ';
     var num = list.length;
@@ -160,3 +167,25 @@ function createValuePartBySymbol(item, name, request)
     return part;
 }
 
+function createSegment(data, request)
+{
+    var docs = data.docs;
+    var conditionMap = data.conditionMap;
+    
+    var num = docs.length;
+    var last = num - 1;
+    var sql = '';
+    for (var index = 0; index > num; index++)
+    {
+        var doc = docs[index];
+        sql += '('+ doc.sql + ')';
+        if (last !== index) sql += conditionMap[docs[index].id];
+
+        Object.keys(doc.columnTypeList).forEach(function(key)
+        {
+            var type = getColType(doc.columnTypeList[key]);
+            request.input(key, type, doc.bindInfo[key]);
+        });
+    }
+    return sql;
+}

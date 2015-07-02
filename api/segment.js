@@ -1,5 +1,6 @@
 var async = require('async');
 var Core = require('./core');
+var segmentdoc = require("./segmentdoc");
 var Creator = require("./common/createSql");
 
 /** テーブル名 */
@@ -26,7 +27,6 @@ exports.getById = function(req, res)
         {
             return res.status(510).send('data not found');
         }
-        var segmentdoc = require("./segmentdoc");
         segmentdoc.getItemByIdForWeb(data[0].segment_document_id, function(err, doc)
         {
             if (err) res.status(510).send('document is not found');
@@ -59,26 +59,29 @@ exports.getAll = function(req, res)
 
 exports.execute = function(req, res)
 {
-    var request = model.getRequest();
-    var tableList = [];
-    
-    var creator = new Creator(req.body.conditionList);
-    var sql = creator.getCountSql(req.body.tables);
-    
-    Object.keys(req.body.tables).forEach(function(key)
+    segmentdoc.getItemByIdsForWeb(req.body.idList, function(err, docs)
     {
-        tableList.push(key);
-    });
-    
-    var sql = "SELECT count(1) AS count FROM " + tableList.join(',') + ' WHERE ' + req.body.condition;
-    model.execute(sql, request, function(err, data)
-    {
-        if (err.length > 0)
+        if (err)
         {
             console.log(err);
-            res.status(510).send('data not found');
+            console.log(req.body.idList);
+            res.status(510).send('docs not found');
         }
-        res.json({result: data[0].count});
+
+        var request = model.getRequest();
+        var params = {docs: docs, conditionMap: req.body.conditionMap};
+        var creator = new Creator(params, request, 'segment');
+        var sql = creator.getCountSql(req.body.tables);
+
+        model.execute(sql, request, function(err, data)
+        {
+            if (err.length > 0)
+            {
+                console.log(err);
+                res.status(510).send('data not found');
+            }
+            res.json({result: data[0].count});
+        });
     });
 };
 

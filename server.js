@@ -60,7 +60,7 @@ var table = require('./api/table');
 router.get('/query', table.getTables);
 
 var querydoc = require('./api/querydoc');
-router.get('/query/get', querydoc.getItem);
+router.get('/query/get', querydoc.getAllItem);
 router.post('/query/create', querydoc.addItem);
 router.delete('/query/:id', querydoc.removeItem);
 

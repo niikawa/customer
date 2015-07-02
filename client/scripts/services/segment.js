@@ -92,13 +92,14 @@ segmentServices.factory("Segment", ['$resource','Utility',
         
         segmentServices.createExecuteInfo = function(list)
         {
-            var sql = '';
+            var qIds = [];
+            var where = []
             var tables = {};
-            var last = list.length -1;
+            
             angular.forEach(list, function(v, k)
             {
-                sql += '(' + v.sql + ') ' ;
-                if (last !== k) sql += v.where;
+                qIds.push(v.id);
+                where[v.id] = v.where;
                 Object.keys(v.tables).forEach(function(key)
                 {
                     if (!tables.hasOwnProperty(key))
@@ -107,7 +108,7 @@ segmentServices.factory("Segment", ['$resource','Utility',
                     }
                 });
             });
-            return {condition: sql, tables: tables};
+            return {qIds: qIds, tables: tables, conditionMap: where};
         };
         
         segmentServices.createSQL = function(list)

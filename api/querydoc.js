@@ -6,13 +6,27 @@ var Creator = require("./common/createSql");
 var docDbClient = new DocumentDBClient('https://ixcpm.documents.azure.com:443/', {
     masterKey: 'BAVJ6Lb3xefcLJVh7iShAAngAHrYC08mtTj2ieVIVXuoBkftXwxKSCJaOcNrvctBwhi6oFoG6GlDVrDiDyXOzg=='
 });
-var Query = new query(docDbClient, 'ixcpm', 'cpm');
+var Query = new query(docDbClient, 'ixcpm', 'query');
 Query.init();
 
 exports.getItem = function(req, res)
 {
-    var query = 'SELECT * FROM doc';
-    
+    Query.getItem(req.params.id, function(err, doc)
+    {
+        if (err) {
+            
+            res.status(511).send('access ng');
+            
+        } else {
+            
+            res.json({data: doc});
+        }
+    });
+};
+
+exports.getAllItem = function(req, res)
+{
+    var query = 'SELECT doc.id ,doc.query_name FROM doc';
     Query.find(query, function(err, doc)
     {
         if (err) {
@@ -65,6 +79,7 @@ exports.addItem = function(req, res)
         }
     });
 };
+
 exports.removeItem = function(req, res)
 {
     if (!req.session.isLogin) {
@@ -87,5 +102,13 @@ exports.removeItem = function(req, res)
             
             res.json({data: doc});
         }
+    });
+};
+
+exports.getItemByIdsForWeb = function(idList, callback)
+{
+    Query.getItemByIds(idList, function(err, doc)
+    {
+        callback(err,doc);
     });
 };
