@@ -33,5 +33,15 @@
             {"physicalname": "frequency", "logicalname": "購買頻度", "description": "購買頻度", "type": "FLOTE", "length": 10},
             {"physicalname": "monetary", "logicalname": "購買総合計金額", "description": "購買総合計金額", "type": "INT", "length": 10}
         ]
-    }
+    },
+    "T_READ_ORDERS": {
+        "logicalname": "購買データ",
+        "physicalname": "T_READ_ORDERS",
+        "description": "取り込んだ購買データ",
+        "column": [
+            {"physicalname": "date", "logicalname": "購入日", "description": "購入した日", "type": "DATETIME", "format": "YYYY-MM-DD"},
+            {"physicalname": "price", "logicalname": "金額","description": "購入した金額", "type": "INT", "length": 10},
+            {"physicalname": "customer_id", "logicalname": "顧客","description": "別システムで管理されている顧客を一意に識別するID", "type": "VARCHAR", "length": 20}
+        ]
+    },
 }

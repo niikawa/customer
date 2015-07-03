@@ -85,7 +85,6 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         var docdata = {
             segment_name: $scope.segment.segment_name, 
             segment_document_id: $scope.segment.segment_document_id,
-            condition: doc.condition, 
             whereList: doc.whereList, 
             qIds: doc.qIds
         };
