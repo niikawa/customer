@@ -50,7 +50,9 @@ exports.getAll = function(req, res)
     var where = "delete_flag = 0 AND scenario_type = @scenario_type";
     var order = "scenario_id";
     var qObj = model.getQueryObject(col, tableName, where, '', order);
-    qObj.request.input('scenario_type', model.db.SmallInt, req.params.type);
+    
+    var scenarioType = ('trigger' == req.params.type) ? 1 : 2;
+    qObj.request.input('scenario_type', model.db.SmallInt, scenarioType);
 
     model.select(qObj, qObj.request, function(err, data)
     {
