@@ -123,10 +123,7 @@ Query.prototype = {
         var last = num - 1;
         var parameters = [];
         
-        console.log(idList);
-        console.log(num);
-        
-        for (var index = 0; num < index; index++)
+        for (var index = 0; index < num; index++)
         {
             var bindName = '@ids' + index;
             parameters.push({name: bindName, value: idList[index]});
