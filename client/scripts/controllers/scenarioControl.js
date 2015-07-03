@@ -74,7 +74,9 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
     
     $scope.save = function()
     {
-        
+        console.log($scope.scenario);
+        console.log($scope.approach);
+        console.log($scope.status);
     };
     
     $scope.show = function(selectLogId)
