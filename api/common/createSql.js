@@ -14,13 +14,13 @@ function CreateSQL(createType, list, request)
     }
     if ('query' === createType)
     {
-        this.consitions = createQuery(list, this.request);
+        this.conditions = createQuery(list, this.request);
         this.valueList = values;
         this.colTypeList = colTypes;
     }
     else if ('segment' === createType)
     {
-        this.consitions = createSegment(list, this.request);
+        this.conditions = createSegment(list, this.request);
     }
 }
 
@@ -34,7 +34,7 @@ CreateSQL.prototype =
     },
     getConstionString: function()
     {
-        return this.consitions;
+        return this.conditions;
     },
     getSql: function(tableList)
     {
@@ -44,7 +44,7 @@ CreateSQL.prototype =
             work.push(key);
         });
         
-        return "SELECT * FROM " + work.join(',') + ' WHERE ' + this.consitions;
+        return "SELECT * FROM " + work.join(',') + ' WHERE ' + this.conditions;
     },
     getCountSql: function(tableList)
     {
@@ -53,8 +53,8 @@ CreateSQL.prototype =
         {
             work.push(key);
         });
-        
-        return "SELECT count(1) AS count FROM " + work.join(',') + ' WHERE ' + this.consitions;
+        console.log(this.conditions);
+        return "SELECT count(1) AS count FROM " + work.join(',') + ' WHERE ' + this.conditions;
     },
     getValueList: function()
     {
@@ -182,6 +182,8 @@ function createSegment(data, request)
         var doc = docs[index];
         sql += '('+ doc.sql + ')';
         if (last !== index) sql += conditionMap[docs[index].id];
+
+        console.log(doc.columnTypeList);
 
         Object.keys(doc.columnTypeList).forEach(function(key)
         {

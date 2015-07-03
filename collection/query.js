@@ -12,45 +12,59 @@ function Query(documentDBClient, databaseId, collectionId) {
 
 module.exports = Query;
 
-Query.prototype = {
-    init: function (callback) {
+Query.prototype =
+{
+    init: function (callback)
+    {
         var self = this;
 
-        docdbUtils.getOrCreateDatabase(self.client, self.databaseId, function (err, db) {
-            if (err) {
+        docdbUtils.getOrCreateDatabase(self.client, self.databaseId, function (err, db)
+        {
+            if (err)
+            {
                 callback(err);
-
-            } else {
+            }
+            else
+            {
                 self.database = db;
-                docdbUtils.getOrCreateCollection(self.client, self.database._self, self.collectionId, function (err, coll) {
-                    if (err) {
+                docdbUtils.getOrCreateCollection(
+                    self.client, self.database._self, self.collectionId, function (err, coll)
+                {
+                    if (err)
+                    {
                         callback(err);
-
-                    } else {
+                    }
+                    else
+                    {
                         self.collection = coll;
                     }
                 });
             }
         });
     },
-
-    find: function (querySpec, callback) {
+    find: function (querySpec, callback)
+    {
         var self = this;
 
-        self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
-            if (err) {
+        self.client.queryDocuments(
+            self.collection._self, querySpec).toArray(function (err, results)
+        {
+            if (err)
+            {
                 callback(err);
-
-            } else {
+            }
+            else
+            {
                 callback(null, results);
             }
         });
     },
-
-    addItem: function (item, callback) {
+    addItem: function (item, callback)
+    {
         var self = this;
 
-        var data = {
+        var data =
+        {
             query_name: item.query_name,
             sql: item.sql,
             tables: item.tables,
@@ -59,32 +73,41 @@ Query.prototype = {
             columnTypeList: item.columnTypeList
         };
 
-        self.client.createDocument(self.collection._self, data, function (err, doc) {
-            if (err) {
+        self.client.createDocument(self.collection._self, data, function (err, doc)
+        {
+            if (err)
+            {
                 callback(err);
-
-            } else {
+            }
+            else
+            {
                 callback(null, doc);
             }
         });
     },
-
-    updateItem: function (itemId, callback) {
+    updateItem: function (itemId, callback)
+    {
         var self = this;
 
-        self.getItem(itemId, function (err, doc) {
-            if (err) {
+        self.getItem(itemId, function (err, doc)
+        {
+            if (err)
+            {
                 callback(err);
-
-            } else {
-                
+            }
+            else
+            {
                 //ここに更新する値を入れるはず
 
-                self.client.replaceDocument(doc._self, doc, function (err, replaced) {
-                    if (err) {
+                self.client.replaceDocument(doc._self, doc, function (err, replaced)
+                {
+                    if (err)
+                    {
                         callback(err);
 
-                    } else {
+                    }
+                    else
+                    {
                         callback(null, replaced);
                     }
                 });
@@ -92,10 +115,12 @@ Query.prototype = {
         });
     },
 
-    getItem: function (itemId, callback) {
+    getItem: function (itemId, callback)
+    {
         var self = this;
 
-        var querySpec = {
+        var querySpec =
+        {
             query: 'SELECT * FROM root r WHERE r.id=@id',
             parameters: [{
                 name: '@id',
@@ -103,17 +128,21 @@ Query.prototype = {
             }]
         };
 
-        self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
-            if (err) {
+        self.client.queryDocuments(
+            self.collection._self, querySpec).toArray(function (err, results)
+        {
+            if (err)
+            {
                 callback(err);
-
-            } else {
+            }
+            else
+            {
                 callback(null, results[0]);
             }
         });
     },
-    
-    getItemByIds: function (idList, columnList, callback) {
+    getItemByIds: function (idList, columnList, callback)
+    {
         var self = this;
         
         var column = columnList.join(',');
@@ -143,31 +172,39 @@ Query.prototype = {
             parameters: parameters
         };
         
-        self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
-            if (err) {
+        self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results)
+        {
+            if (err)
+            {
                 callback(err);
-
-            } else {
+            }
+            else
+            {
                 callback(null, results);
             }
         });
     },
-    
-    removeItem: function(itemId, callback) {
+    removeItem: function(itemId, callback)
+    {
         
         var self = this;
 
-        self.getItem(itemId, function (err, doc) {
-            if (err) {
+        self.getItem(itemId, function (err, doc)
+        {
+            if (err)
+            {
                 callback(err);
-
-            } else {
-
-                self.client.deleteDocument(doc._self, doc, function (err, result) {
-                    if (err) {
+            }
+            else
+            {
+                self.client.deleteDocument(doc._self, doc, function (err, result)
+                {
+                    if (err)
+                    {
                         callback(err);
-
-                    } else {
+                    }
+                    else
+                    {
                         callback(null, result);
                     }
                 });
