@@ -71,8 +71,6 @@ exports.execute = function(req, res)
             res.status(510).send('docs not found');
         }
         
-        console.log('query execute!!');
-
         var request = model.getRequest();
         var params = {docs: docs, conditionMap: req.body.conditionMap};
         var creator = new Creator('segment', params, request);

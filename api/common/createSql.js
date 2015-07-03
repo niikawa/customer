@@ -18,7 +18,7 @@ function CreateSQL(createType, list, request)
         this.valueList = values;
         this.colTypeList = colTypes;
     }
-    else if ('segment')
+    else if ('segment' === createType)
     {
         this.consitions = createSegment(list, this.request);
     }
