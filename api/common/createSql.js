@@ -53,7 +53,6 @@ CreateSQL.prototype =
         {
             work.push(key);
         });
-        console.log(this.conditions);
         return "SELECT count(1) AS count FROM " + work.join(',') + ' WHERE ' + this.conditions;
     },
     getValueList: function()
@@ -177,13 +176,11 @@ function createSegment(data, request)
     var num = docs.length;
     var last = num - 1;
     var sql = '';
-    for (var index = 0; index > num; index++)
+    for (var index = 0; index < num; index++)
     {
         var doc = docs[index];
         sql += '('+ doc.sql + ')';
         if (last !== index) sql += conditionMap[docs[index].id];
-
-        console.log(doc.columnTypeList);
 
         Object.keys(doc.columnTypeList).forEach(function(key)
         {
