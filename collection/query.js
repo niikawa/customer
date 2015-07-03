@@ -117,7 +117,7 @@ Query.prototype = {
         var self = this;
         
         var column = columnList.join(',');
-        var query = 'SELECT ' + column + ' FROM doc WHERE doc.id IN (@ids)';
+        var query = 'SELECT ' + column + ' FROM doc WHERE doc.id IN (';
         
         var num = idList.length;
         var last = num - 1;
@@ -141,6 +141,9 @@ Query.prototype = {
             query: query,
             parameters: parameters
         };
+        
+        console.log('getItemByIds');
+        console.log(querySpec);
 
         self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
             if (err) {
