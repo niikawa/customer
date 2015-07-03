@@ -103,3 +103,49 @@ exports.delete = function(req, res)
         res.status(200).send('delete ok');
     });
 };
+
+exports.initializeData = function(req, res)
+{
+    model.async.parallel(
+    [
+        //セグメント情報
+        function(callback)
+        {
+            var table = 'M_SEGMENT';
+            var col = 'segment_id, segment_name';
+            var where = 'delete_flag = 0';
+            var order = 'segment_id';
+            var qObj = model.getQueryObject(col, table, where, '', order);
+
+            model.select(qObj, qObj.request,  function(err, data){callback(null, data)});
+        },
+        //IF情報
+        function(callback)
+        {
+            var data = {if_id: 1, if_name: 'デフォルトテンプレート'};
+            callback(null, data);
+        },
+        //アクション情報
+        function(callback)
+        {
+            if ('trigger' === req.params.type)
+            {
+                var data = {action_id: 1, action_name: '行動履歴'};
+                callback(null, data);
+            }
+            else if ('schedule' === req.params.type)
+            {
+                callback(null, {});
+            }
+        },
+    ], function complete(err, items)
+    {
+        if (err > 0)
+        {
+            res.status(510).send('object not found');
+            console.log(req.params);
+            console.log(err);
+        }
+        res.json({segment: items[0], ifLayout: items[1], specificInfo: items[2]});
+    });
+};
