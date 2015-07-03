@@ -123,7 +123,7 @@ exports.initializeData = function(req, res)
         //IF情報
         function(callback)
         {
-            var data = {if_id: 1, if_name: 'デフォルトテンプレート'};
+            var data = [{if_id: 1, if_name: 'デフォルトテンプレート'}];
             callback(null, data);
         },
         //アクション情報
@@ -131,7 +131,7 @@ exports.initializeData = function(req, res)
         {
             if ('trigger' === req.params.type)
             {
-                var data = {action_id: 1, action_name: '行動履歴'};
+                var data = [{action_id: 1, action_name: '行動履歴'}];
                 callback(null, data);
             }
             else if ('schedule' === req.params.type)
