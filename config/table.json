@@ -43,5 +43,5 @@
             {"physicalname": "price", "logicalname": "金額","description": "購入した金額", "type": "INT", "length": 10},
             {"physicalname": "customer_id", "logicalname": "顧客","description": "別システムで管理されている顧客を一意に識別するID", "type": "VARCHAR", "length": 20}
         ]
-    },
+    }
 }
