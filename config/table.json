@@ -1,25 +1,4 @@
 {
-    "M_USER": {
-        "logicalname": "ユーザーマスタ",
-        "physicalname": "M_USER",
-        "description": "本システムへアクセスできるユーザーを管理",
-        "column": [
-            {"physicalname": "user_id", "logicalname": "ユーザーID", "description": "ユーザーを一意に識別するためのID", "type": "INT", "length": 10},
-            {"physicalname": "mailaddress", "logicalname": "メールアドレス", "description": "ユーザーに割り振られたメールアドレスで重複を許さない", "type": "VARCHAR", "length": 255},
-            {"physicalname": "password", "logicalname": "パスワード", "description": "ログインするためのパスワード", "type": "VARCHAR", "length": 50},
-            {"physicalname": "role_id", "logicalname": "ロールID", "description": "ユーザーに設定された権限を識別するID", "type": "INT", "length": 10}
-        ]
-    },
-    "M_ROLE": {
-        "logicalname": "権限マスタ",
-        "physicalname": "M_ROLE",
-        "description": "本システムの操作を制限するための権限を管理",
-        "column": [
-            {"physicalname": "role_id", "logicalname": "ロールID", "description": "権限を一意に識別するためのID", "type": "INT", "length": 10},
-            {"physicalname": "role_name", "logicalname": "ロール名","description": "権限の名称", "type": "VARCHAR", "length": 30},
-            {"physicalname": "description", "logicalname": "説明","description": "権限の説明", "type": "VARCHAR", "length": 50}
-        ]
-    },
     "M_CUSTOMER": {
         "logicalname": "顧客マスタ",
         "physicalname": "M_CUSTOMER",

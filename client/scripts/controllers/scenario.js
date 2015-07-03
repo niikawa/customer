@@ -6,8 +6,8 @@
  * Controller of the workspaceApp
  */
 var scenarioCtrl = angular.module('scenarioCtrl',['ScenarioServices']);
-scenarioCtrl.controller('ScenarioCtrl',['$scope', '$routeParams','Shared', 'Scenario', 
-function ($scope, $routeParams, Shared, Scenario)
+scenarioCtrl.controller('ScenarioCtrl',['$scope', '$routeParams','Shared', 'Utility', 'Scenario', 
+function ($scope, $routeParams, Shared, Utility, Scenario)
 {
     /**
      * scope初期化用
@@ -18,7 +18,6 @@ function ($scope, $routeParams, Shared, Scenario)
         $scope.type = $routeParams.scenario;
         
         $scope.scenarioList = [];
-        
     }
     
     /**
@@ -30,19 +29,27 @@ function ($scope, $routeParams, Shared, Scenario)
         $scope._construct();
         setInitializeScope();
         $scope.scenarioList = Scenario.mock().getList(Scenario.getPageProp($routeParams.scenario).type);
-        $scope.showInfo = $scope.scenarioList.length > 0 ? true: false;
 
-        /* サーバーサイド実装後に開放
-        Segment.resource.get().$promise.then(function(response)
+        Scenario.resource.get({type: $routeParams.scenario}).$promise.then(function(response)
         {
-            $scope.segmentList = response.data;
+            $scope.isScenarioShow = $scope.scenarioList.length > 0 ? true: false;
+            if ($scope.isScenarioShow)
+            {
+                $scope.scenarioList = response.data;
+            }
         });
-        */
     };
     
-    $scope.remove = function()
+    $scope.remove = function(index)
     {
-        
+        if (void 0 === index || isNaN(parseInt(index, 10))) return false;
+        var id = $scope.scenarioList[index].scenario_id;
+        var name = $scope.scenarioList[index].scenario_name;
+        Scenario.resource.delete({id: id}).$promise.then(function(response)
+        {
+            Utility.infoSticky(name+'<br>'+'を削除しました。');
+            $scope.scenarioList.splice(index, 1);
+        });
     };
     
 }]);
