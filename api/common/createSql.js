@@ -169,6 +169,8 @@ function createValuePartBySymbol(item, name, request)
 
 function createSegment(data, request)
 {
+    console.log('createSegment start');
+    console.log(data);
     var docs = data.docs;
     var conditionMap = data.conditionMap;
     
