@@ -60,18 +60,15 @@ exports.getAll = function(req, res)
 exports.execute = function(req, res)
 {
     console.log('segment exexute start');
-    console.log(req.body);
     var querydoc = require("./querydoc");
     var colmunList = [];
     colmunList.push('*');
     
     querydoc.getItemByIdsForWeb(req.body.qIds, colmunList, function(err, docs)
     {
-        
         console.log('query docs');
         console.log(docs);
-        console.log(req.body.qIds);
-        
+
         if (err)
         {
             console.log(err);

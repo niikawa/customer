@@ -122,6 +122,10 @@ Query.prototype = {
         var num = idList.length;
         var last = num - 1;
         var parameters = [];
+        
+        console.log(idList);
+        console.log(num);
+        
         for (var index = 0; num < index; index++)
         {
             var bindName = '@ids' + index;

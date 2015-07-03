@@ -107,8 +107,6 @@ exports.removeItem = function(req, res)
 
 exports.getItemByIdsForWeb = function(idList, columnList, callback)
 {
-    console.log('getItemByIdsForWeb');
-    console.log(idList);
     Query.getItemByIds(idList, columnList, function(err, doc)
     {
         callback(err,doc);
