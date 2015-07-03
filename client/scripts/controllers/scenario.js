@@ -28,7 +28,6 @@ function ($scope, $routeParams, Shared, Utility, Scenario)
     {
         $scope._construct();
         setInitializeScope();
-        $scope.scenarioList = Scenario.mock().getList(Scenario.getPageProp($routeParams.scenario).type);
 
         Scenario.resource.get({type: $routeParams.scenario}).$promise.then(function(response)
         {
