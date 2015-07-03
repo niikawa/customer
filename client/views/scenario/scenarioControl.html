@@ -33,11 +33,11 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <input type="text" class="form-control" placeholder="セグメントを絞り込みます" ng-model="segmentSearch" 
-                                refine-directive refine-item="queryList" keyword="segmentSearch" name-propertie="query_name" >
+                                refine-directive refine-item="segmentList" keyword="segmentSearch" name-propertie="segment_name" >
                         </div>
                         <ul class="list-group overflow-box-s" >
-                            <li class="list-group-item" ng-repeat="item in queryList" push-directive info="item">
-                            {{item.query_name}}
+                            <li class="list-group-item" ng-repeat="item in segmentList" push-directive info="item">
+                            {{item.segment_name}}
                             </li>
                         </ul>
                     </div>                        

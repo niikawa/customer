@@ -79,7 +79,7 @@ router.delete('/segment/remove/:id/:segment_document_id', segment.remove);
 router.get('/segment/download/:id', segment.download);
 
 var scenario = require("./api/scenario");
-router.get('/scenario/initializeData/:type', scenario.initializeData);
+router.get('/scenario/initialize/:type', scenario.initializeData);
 router.get('/scenario/:type', scenario.getAll);
 router.get('/scenario/:type/:id', scenario.getById);
 router.delete('/scenario/:type/remove/:id', scenario.remove);

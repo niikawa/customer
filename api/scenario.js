@@ -106,6 +106,7 @@ exports.delete = function(req, res)
 
 exports.initializeData = function(req, res)
 {
+    console.log('scenario control initializeData');
     model.async.parallel(
     [
         //セグメント情報

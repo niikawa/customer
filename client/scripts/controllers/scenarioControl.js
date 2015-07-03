@@ -35,12 +35,9 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
     {
         Scenario.resource.initializeData({type: $routeParams.scenario}).$promise.then(function(response)
         {
-                $scope.queryList = response.data;
-                $scope.ifList = Scenario.mock().getIf();
-                
-                $scope.logList =  Scenario.mock().getLog();
-                
-                $scope.segmentList = response.data;
+            $scope.segmentList = response.segment;
+            $scope.ifList = response.ifLayout;
+            $scope.actionList =  response.specificInfo;
         });
         
         if (2 === pageProp.mode)

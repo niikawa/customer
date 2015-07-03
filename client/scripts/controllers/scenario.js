@@ -31,6 +31,7 @@ function ($scope, $routeParams, Shared, Utility, Scenario)
 
         Scenario.resource.get({type: $routeParams.scenario}).$promise.then(function(response)
         {
+            console.log(response.data.length);
             $scope.isScenarioShow = response.data.length > 0 ? true: false;
             if ($scope.isScenarioShow)
             {

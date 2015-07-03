@@ -2,11 +2,11 @@
     <input type="number" class="form-control" placeholder="無効期間日数" ng-model="scenario.inoperative_num">
     <div class="panel panel-default">
         <div class="panel-heading">
-          <input type="text" class="form-control" placeholder="アクションを絞り込みます" ng-model="logSearch" 
-            refine-directive refine-item="logList" keyword="logSearch" name-propertie="log_name" >
+          <input type="text" class="form-control" placeholder="アクションを絞り込みます" ng-model="actionSearch" 
+            refine-directive refine-item="actionList" keyword="actionSearch" name-propertie="action_name" >
         </div>
         <ul class="list-group overflow-box-s" >
-            <li class="list-group-item" ng-repeat="item in logList" push-directive info="item" ng-click="show(item.log_id)">
+            <li class="list-group-item" ng-repeat="item in actionList" push-directive info="item" ng-click="show(item.action_id)">
                 {{item.log_name}}
             </li>
         </ul>
