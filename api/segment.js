@@ -70,6 +70,7 @@ exports.execute = function(req, res)
         
         console.log('query docs');
         console.log(docs);
+        console.log(req.body.qIds);
         
         if (err)
         {
