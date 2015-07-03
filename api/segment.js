@@ -70,6 +70,8 @@ exports.execute = function(req, res)
             console.log(req.body.qIds);
             res.status(510).send('docs not found');
         }
+        
+        console.log('query execute!!');
 
         var request = model.getRequest();
         var params = {docs: docs, conditionMap: req.body.conditionMap};
