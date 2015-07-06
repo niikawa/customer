@@ -137,6 +137,9 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
     {
         console.log($scope.scenario);
 
+$scope.scenario.segment_id = '';
+$scope.scenario.if_layout_id = '';
+
         $scope.scenario.segment_id = Scenario.getActivePushItem($scope.segmentList, 'segment_id');
         $scope.scenario.if_layout_id = Scenario.getActivePushItem($scope.ifList, 'if_layout_id');
         
