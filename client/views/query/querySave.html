@@ -15,7 +15,7 @@
                     </div>
                 </form>
             </div>
-                
+
             <div class="col-md-12 center" >
                 <a class="btn btn-default" ng-href="#/query/set" >戻る</a>
                 <button class="btn btn-default"  ng-disabled="queryForm.$invalid" ng-click="execute()">実行する</button>
@@ -25,7 +25,7 @@
             <div class="col-md-6 col-sm-6">
                 
                 <div class="card-container" ng-model='showConditions' drop-directive drop-area-key="1">
-                    
+
                     <div ng-class="{childlist: isJoin(items)}" ng-repeat="(i, items) in showConditions track by $index" >
                         
                         <!-- ここがdragするやつ -->
@@ -41,7 +41,7 @@
                                         <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'AND'" uncheckable>かつ</label>
                                         <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'OR'" uncheckable>または</label>
                                     </div>
-    
+
                                     <div class="btn-group" ng-if="!$last || j > 0">
                                         <label class="label label-success " ng-click="release(i, j)">
                                             解除
