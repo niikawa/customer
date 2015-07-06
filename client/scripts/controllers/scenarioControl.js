@@ -35,6 +35,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
     {
         Scenario.resource.initializeData({type: $routeParams.scenario}).$promise.then(function(response)
         {
+            console.log(response);
             $scope.segmentList = response.segment;
             $scope.ifList = response.ifLayout;
             $scope.actionList =  response.specificInfo;
