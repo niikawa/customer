@@ -22,24 +22,38 @@
         </ul>
     </div>
     <div ng-if="isShowExtraction">
-        <table class="table table-hover">
-            <caption>抽出条件</caption>
-            <thead>
-                <tr class="info">
-                    <th>対象項目</th>
-                    <th>値</th>
-                    <th>選択</th>
-                    <th></th>
-                </tr>
-            </thead>
+        
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <input type="text" class="form-control" placeholder="カラムを絞り込みます" ng-model="columnSearch" 
+                            refine-directive refine-item="columnList" keyword="columnSearch" name-propertie="logicalname|description" >
+                    </div>
+                    <ul class="list-group" >
+                        <li class="list-group-item" ng-repeat="item in columnList track by $index" ng-model="columnList" drag-item-directive dragindex="$index">
+                            {{item.logicalname}}
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-6 col-sm-6">
+                    <div class="box-gray mh" ng-model='conditions' drop-directive drop-area-key="" >
+                        <div class="panel panel-success" ng-repeat="condition in conditions track by $index" drag-item-directive dragindex="$index">
+                            <div class="panel-heading">{{condition.logicalname}}
+                                <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
+                            </div>
+                            <div class="panel-body">
+                                <div class="btn-group" ng-if="!$last">
+                                    <label class="btn btn-default" ng-model="condition.where" btn-radio="'AND'" uncheckable>かつ</label>
+                                    <label class="btn btn-default" ng-model="condition.where" btn-radio="'OR'" uncheckable>または</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <tbody>
-                <tr ng-repeat="item in segmentList">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><button class="btn" ng-click="removeItem"><i class="fa fa-times"></i></button></td>
-                </tr>
-            </tbody>
-        </table>
+            </div>
+        
+        </div>
     </div>

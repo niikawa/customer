@@ -4,13 +4,21 @@
         "physicalname": "Action_History",
         "description": "顧客のオペレーション内容を追跡したもの",
         "column": [
-            {"physicalname": "Id", "logicalname": "ID","description": "システムにより割り振られる顧客を一意に識別するID", "type": "INT", "length": 10},
             {"physicalname": "customer_id", "logicalname": "顧客ID","description": "別システムで管理されている顧客を一意に識別するID", "type": "VARCHAR", "length": 20},
-            {"physicalname": "rank_id", "logicalname": "ランクID","description": "クラスタ分割の結果割り振られたランク", "type": "INT", "length": 10},
-            {"physicalname": "start_purchasing_date", "logicalname": "購買開始日","description": "対象顧客が最初に購入した日", "type": "DATETIME", "format": "YYYY-MM-DD"},
-            {"physicalname": "last_purchasing_date", "logicalname": "最終購買日", "description": "対象顧客が最後に購入した日", "type": "DATETIME", "format": "YYYY-MM-DD"},
-            {"physicalname": "frequency", "logicalname": "購買頻度", "description": "購買頻度", "type": "FLOTE", "length": 10},
-            {"physicalname": "monetary", "logicalname": "購買総合計金額", "description": "購買総合計金額", "type": "INT", "length": 10}
+            {"physicalname": "operation_type", "logicalname": "オペレーションタイプ", "description": "オペレーションの種類", "type": "INT", "length": 10},
+            {"physicalname": "operation_time", "logicalname": "オペレーション時間", "description": "オペレーションをした時間", "type": "DATETIME", "format": "YYYY-MM-DD hh:mm:ss"},
+        ]
+    },
+    "Purchasing": {
+        "logicalname": "購買",
+        "physicalname": "Purchasing",
+        "description": "何を購入したかの情報",
+        "column": [
+            {"physicalname": "customer_id", "logicalname": "顧客","description": "別システムで管理されている顧客を一意に識別するID", "type": "VARCHAR", "length": 20}
+            {"physicalname": "date", "logicalname": "購入日", "description": "購入した日", "type": "DATETIME", "format": "YYYY-MM-DD"},
+            {"physicalname": "price", "logicalname": "金額","description": "購入した金額", "type": "INT", "length": 10},
+            {"physicalname": "category_name", "logicalname": "カテゴリ名","description": "購入した商品のカテゴリ", "type": "VARCHAR", "length": 50},
+            {"physicalname": "product_name", "logicalname": "商品名","description": "購入した商品名", "type": "VARCHAR", "length": 50}
         ]
     },
     "Mail_Opening": {
@@ -18,9 +26,8 @@
         "physicalname": "Mail_Opening",
         "description": "送信メールを開封したかどうか",
         "column": [
-            {"physicalname": "date", "logicalname": "購入日", "description": "購入した日", "type": "DATETIME", "format": "YYYY-MM-DD"},
-            {"physicalname": "price", "logicalname": "金額","description": "購入した金額", "type": "INT", "length": 10},
             {"physicalname": "customer_id", "logicalname": "顧客","description": "別システムで管理されている顧客を一意に識別するID", "type": "VARCHAR", "length": 20}
+            {"physicalname": "date", "logicalname": "メール開封日", "description": "メールを開封した日", "type": "DATETIME", "format": "YYYY-MM-DD"}
         ]
     }
 }

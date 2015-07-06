@@ -160,6 +160,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
             {
                 actionName = targetName;
                 $scope.isShowExtraction = true;
+                $scope.columnList = response.data.column;
                 console.log(response.data);
             });
         }
