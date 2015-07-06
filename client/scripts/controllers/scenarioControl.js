@@ -139,8 +139,6 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
         $scope.scenario.if_layout_id = Scenario.getActivePushItem($scope.ifList, 'if_layout_id');
         
         console.log($scope.scenario);
-        console.log($scope.approach);
-        console.log($scope.status);
     };
     
     $scope.show = function(selectLogId)

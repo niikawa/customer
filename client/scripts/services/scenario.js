@@ -60,8 +60,10 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
         {
             angular.forEach(items, function(item, key)
             {
+                console.log(item);
                 if (item.isPush)
                 {
+                console.log('return');
                     return item[propertie];
                 }
             });
