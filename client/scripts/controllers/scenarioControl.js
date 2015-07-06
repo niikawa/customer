@@ -88,6 +88,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
             else if (2 === pageProp.type)
             {
                 $scope.actionList =  response.specificInfo;
+                $scope.condition = [];
             }
             
         });
