@@ -48,14 +48,23 @@
                                 <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
                             </div>
                             <div class="panel-body">
-                                <section>{{condition.description}}</section><br>
-                                <condition-directive condition-append="condition"></condition-directive>
                                 
-                                <div class="btn-group" ng-if="!$last">
-                                    <label class="btn btn-default" ng-model="condition.where" btn-radio="'AND'" uncheckable>かつ</label>
-                                    <label class="btn btn-default" ng-model="condition.where" btn-radio="'OR'" uncheckable>または</label>
+                                <div class="card-cell-left">
+                                    <section>{{condition.description}}</section>
                                 </div>
                                 
+                                <div ng-if="!isJoin(items)" class="card-cell-right" drop-join-directive ng-model="items">
+                                    <div class="drop-join"></div>
+                                </div>
+
+                                <condition-directive condition-append="condition"></condition-directive>
+                                
+                                <div class="col-md-12 center">
+                                    <div class="btn-group" ng-if="!$last">
+                                        <label class="btn btn-default" ng-model="condition.where" btn-radio="'AND'" uncheckable>かつ</label>
+                                        <label class="btn btn-default" ng-model="condition.where" btn-radio="'OR'" uncheckable>または</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
