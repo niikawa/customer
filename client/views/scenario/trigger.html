@@ -50,13 +50,13 @@
                                     {{items.logicalname}}
                                 </p>
                                 
-                                <div class="btn-group" ng-if="!$parent.$last || !$last">
+                                <div class="btn-group" ng-if="$last">
                                     <label class="btn btn-default" ng-model="items.where" btn-radio="'AND'" uncheckable>かつ</label>
                                     <label class="btn btn-default" ng-model="items.where" btn-radio="'OR'" uncheckable>または</label>
                                 </div>
 
-                                <div class="btn-group" ng-if="!$last || j > 0">
-                                    <label class="label label-success " ng-click="release(i, j)">
+                                <div class="btn-group" ng-if="!$last || i > 0">
+                                    <label class="label label-success " ng-click="release(i)">
                                         解除
                                     </label>
                                 </div>
