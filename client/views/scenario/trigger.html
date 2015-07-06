@@ -42,7 +42,7 @@
             <div class="col-md-6 col-sm-6">
                 <div class="card-container" ng-model='conditions' drop-directive drop-area-key="1">
     
-                    <div ng-class="card-info btn-draggable {childlist: isJoin(items)}" ng-repeat="(i, items) in conditions track by $index" drag-item-directive dragindex="i">
+                    <div ng-class="card-info" ng-repeat="(i, items) in conditions track by $index" drag-item-directive dragindex="i">
                         
                         <div class="card-cell-left">
                             <div >
