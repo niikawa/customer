@@ -26,7 +26,7 @@
         "physicalname": "Mail_Opening",
         "description": "送信メールを開封したかどうか",
         "column": [
-            {"physicalname": "customer_id", "logicalname": "顧客","description": "別システムで管理されている顧客を一意に識別するID", "type": "VARCHAR", "length": 20}
+            {"physicalname": "customer_id", "logicalname": "顧客","description": "別システムで管理されている顧客を一意に識別するID", "type": "VARCHAR", "length": 20},
             {"physicalname": "date", "logicalname": "メール開封日", "description": "メールを開封した日", "type": "DATETIME", "format": "YYYY-MM-DD"}
         ]
     }
