@@ -37,37 +37,26 @@
                         </li>
                     </ul>
                 </div>
-            </div>
-
-            <div class="col-md-6 col-sm-6">
-                <div class="card-container" ng-model='conditions' drop-directive drop-area-key="1">
-    
-                    <div ng-class="card-info" ng-repeat="(i, items) in conditions track by $index" drag-item-directive dragindex="i">
+                
+                <div class="col-md-6 col-sm-6">
+                    <div class="box-gray mh" ng-model='conditions' drop-directive drop-area-key="" >
                         
-                        <div class="card-cell-left">
-                            <div >
-                                <p>
-                                    {{items.logicalname}}
-                                </p>
-                                
-                                <div class="btn-group" ng-if="$last">
-                                    <label class="btn btn-default" ng-model="items.where" btn-radio="'AND'" uncheckable>かつ</label>
-                                    <label class="btn btn-default" ng-model="items.where" btn-radio="'OR'" uncheckable>または</label>
+                        <div ng-repeat="condition in conditions track by $index" drag-item-directive dragindex="$index">
+                            <div class="panel panel-success" >
+                                <div class="panel-heading">{{item.logicalname}}
+                                    <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
                                 </div>
-
-                                <div class="btn-group" ng-if="!$last || i > 0">
-                                    <label class="label label-success " ng-click="release(i)">
-                                        解除
-                                    </label>
+                                <div class="panel-body">
+                                    <section>{{item.description}}</section><br>
+                                    <condition-directive condition-append="item"></condition-directive>
+                                    
+                                    <div class="btn-group" ng-if="!$last">
+                                        <label class="btn btn-default" ng-model="condition.where" btn-radio="'AND'" uncheckable>かつ</label>
+                                        <label class="btn btn-default" ng-model="condition.where" btn-radio="'OR'" uncheckable>または</label>
+                                    </div>
+                                    
                                 </div>
                             </div>
-
-                            <div ng-if="!isJoin(items)" class="card-cell-right" drop-join-directive ng-model="items">
-                                <div class="drop-join"></div>
-                            </div>
-                        </div>
-                        <div ng-if="isJoin(items)" drop-join-directive ng-model="items">
-                            <div class="drop-join-long"><p>まとめる条件をドロップしてください</p></div>
                         </div>
                     </div>
                 </div>
