@@ -24,8 +24,8 @@
                             <p class="item-error" ng-message="same">すでに登録されているシナリオ名です</p>
                         </div>
                         
-                        
-                        <input type="text" class="form-control" placeholder="出力名を入力してください" ng-model="scenario.output_name">
+                        <input type="text" class="form-control" placeholder="出力名を入力してください" 
+                            ng-model="scenario.output_name" ng-maxlength=50 ng-required="true">
                         
                         <div class="btn-group">
                             <label class="btn btn-default" name="approach" ng-model="scenario.approach" btn-radio=1 uncheckable>アプローチ対象</label>
