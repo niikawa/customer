@@ -1,0 +1,26 @@
+{
+    "Action_History": {
+        "logicalname": "行動履歴",
+        "physicalname": "Action_History",
+        "description": "顧客のオペレーション内容を追跡したもの",
+        "column": [
+            {"physicalname": "Id", "logicalname": "ID","description": "システムにより割り振られる顧客を一意に識別するID", "type": "INT", "length": 10},
+            {"physicalname": "customer_id", "logicalname": "顧客ID","description": "別システムで管理されている顧客を一意に識別するID", "type": "VARCHAR", "length": 20},
+            {"physicalname": "rank_id", "logicalname": "ランクID","description": "クラスタ分割の結果割り振られたランク", "type": "INT", "length": 10},
+            {"physicalname": "start_purchasing_date", "logicalname": "購買開始日","description": "対象顧客が最初に購入した日", "type": "DATETIME", "format": "YYYY-MM-DD"},
+            {"physicalname": "last_purchasing_date", "logicalname": "最終購買日", "description": "対象顧客が最後に購入した日", "type": "DATETIME", "format": "YYYY-MM-DD"},
+            {"physicalname": "frequency", "logicalname": "購買頻度", "description": "購買頻度", "type": "FLOTE", "length": 10},
+            {"physicalname": "monetary", "logicalname": "購買総合計金額", "description": "購買総合計金額", "type": "INT", "length": 10}
+        ]
+    },
+    "Mail_Opening": {
+        "logicalname": "メール開封",
+        "physicalname": "Mail_Opening",
+        "description": "送信メールを開封したかどうか",
+        "column": [
+            {"physicalname": "date", "logicalname": "購入日", "description": "購入した日", "type": "DATETIME", "format": "YYYY-MM-DD"},
+            {"physicalname": "price", "logicalname": "金額","description": "購入した金額", "type": "INT", "length": 10},
+            {"physicalname": "customer_id", "logicalname": "顧客","description": "別システムで管理されている顧客を一意に識別するID", "type": "VARCHAR", "length": 20}
+        ]
+    }
+}

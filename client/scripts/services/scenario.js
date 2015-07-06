@@ -28,6 +28,12 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
                 method: 'GET',
                 url: 'scenario/initialize/:type',
                 cache: true,
+            },
+            action:
+            {
+                method: 'GET',
+                url: 'action/:name',
+                cache: true,
             }
         });
         
@@ -63,7 +69,6 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
                 console.log(item[propertie]);
                 if (item.isPush)
                 {
-                    console.log('りたーん');
                     bindObj[propertie] = item[propertie];
                     return false;
                 }
@@ -88,21 +93,6 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
                 }
             };
             
-            var getIf = function()
-            {
-                return [
-                    {if_id: 1, if_name: 'デフォルトテンプレート'}
-                ];
-            };
-            
-            var getLog = function()
-            {
-                return [
-                    {log_id: 1, log_name: '購買ログ'},
-                    {log_id: 2, log_name: '行動履歴ログ'},
-                ];
-            };
-            
             var data = {
                 scenario : [
                     {scenario_type: 'schedule', scenario_name:'スケジュール型シナリオ', regist_num: 1, regist_max: 99},
@@ -124,9 +114,7 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
                 ],
                 
                 getList: getList,
-                getIf: getIf,
-                getLog: getLog,
-                
+
             };
             return data;
         };

@@ -84,6 +84,7 @@ router.get('/scenario/initialize/:type', scenario.initializeData);
 router.get('/scenario/:type', scenario.getAll);
 router.get('/scenario/:type/:id', scenario.getById);
 router.delete('/scenario/:type/remove/:id', scenario.remove);
+router.get('/action/:name', scenario.getActionByName);
 
 var user = require("./api/user");
 router.get('/user', user.getList);

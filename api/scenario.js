@@ -153,8 +153,15 @@ exports.initializeData = function(req, res)
         {
             if ('trigger' === req.params.type)
             {
-                var data = [{action_id: 1, action_name: '行動履歴'}];
-                callback(null, data);
+                var action = require('../config/action.json');
+                var num = action.length;
+                var list = [];
+                for (var index = 0; index < num; index++)
+                {
+                    var target = action[index];
+                    list.push({logicalname: target.logicalname, physicalname: target.physicalname, description: target.description});
+                }
+                callback(null, list);
             }
             else if ('schedule' === req.params.type)
             {
@@ -223,6 +230,22 @@ exports.isSameName = function(req, res)
             }
             res.json({result: result[0]});
         });
+    }
+};
+
+exports.getActionByName = function(req, res)
+{
+    var physicalname = req.params.name;
+    if (void 0 === physicalname) res.status(510).send('params not found');
+
+    var action = require('../config/action.json');
+    if (action.hasOwnProperty(physicalname))
+    {
+        res.json({data: action[physicalname]});
+    }
+    else
+    {
+        res.status(510).send('action is not found');
     }
 };
 

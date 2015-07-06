@@ -82,7 +82,15 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
         {
             $scope.segmentList = response.segment;
             $scope.ifList = response.ifLayout;
-            $scope.actionList =  response.specificInfo;
+            if (1 === pageProp.type)
+            {
+                $scope.actionList =  response.specificInfo;
+            }
+            else if (2 === pageProp.type)
+            {
+                
+            }
+            
         });
         
         if (2 === pageProp.mode)
@@ -143,6 +151,9 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
     
     $scope.show = function(selectLogId)
     {
+        
+        
+        
         if (logId == selectLogId)
         {
             $scope.isShowExtraction = !$scope.isShowExtraction;
