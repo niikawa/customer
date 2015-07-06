@@ -63,7 +63,7 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
                 if (item.isPush)
                 {
                     console.log(item[propertie]);
-                    return item[propertie];
+                    return item.segment_id;
                 }
             });
         };
