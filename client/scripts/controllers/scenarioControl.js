@@ -165,7 +165,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
                 angular.forEach($scope.columnList, function(v, k)
                 {
                     v.isJoin = false;
-                })
+                });
                 console.log(response.data);
             });
         }
