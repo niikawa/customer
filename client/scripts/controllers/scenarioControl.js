@@ -84,11 +84,10 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
             $scope.ifList = response.ifLayout;
             if (1 === pageProp.type)
             {
-                $scope.actionList =  response.specificInfo;
             }
             else if (2 === pageProp.type)
             {
-                
+                $scope.actionList =  response.specificInfo;
             }
             
         });
