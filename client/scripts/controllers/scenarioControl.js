@@ -40,7 +40,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
                 {
                     var segmentList = $scope.segmentList || {};
                     var isSelect = false;
-                    angular.forEach(ifList, function(item, key)
+                    angular.forEach(segmentList, function(item, key)
                     {
                         if (item.isPush) isSelect = true;
                     });
@@ -104,17 +104,6 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
         
     }
     
-    function setSegment(items)
-    {
-        angular.forEach(items, function(item, key)
-        {
-            if (item.isPush)
-            {
-                $scope.scenario.segment_id = item.segment_id;
-            }
-        });
-    }
-    
     /**
      * 初期処理
      * @author niikawa
@@ -123,9 +112,9 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
     {
         $scope._construct();
         setInitializeScope();
-        setWatchItems();
         getInitializeData();
         setValidation();
+        setWatchItems();
     };
     
     $scope.clear = function()
