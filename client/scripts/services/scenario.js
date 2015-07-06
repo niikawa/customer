@@ -56,14 +56,16 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
             }
         };
         
-        scenarioServices.getActivePushItem = function(items, propertie)
+        scenarioServices.getActivePushItem = function(items, propertie, bindObj)
         {
             angular.forEach(items, function(item, key)
             {
+                console.log(item[propertie]);
                 if (item.isPush)
                 {
-                    console.log(item[propertie]);
-                    return item.segment_id;
+                    console.log('りたーん');
+                    bindObj[propertie] = item[propertie];
+                    return false;
                 }
             });
         };
