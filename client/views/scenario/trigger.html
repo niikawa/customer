@@ -14,7 +14,7 @@
           <input type="text" class="form-control" placeholder="アクションを絞り込みます" ng-model="actionSearch" 
             refine-directive refine-item="actionList" keyword="actionSearch" name-propertie="logicalname|description" >
         </div>
-        <ul class="list-group overflow-box-s" >
+        <ul class="list-group overflow-box-l" >
             <li class="list-group-item" ng-repeat="item in actionList" push-directive info="item" ng-click="show(item.physicalname)">
                 <p>{{item.logicalname}}</p>
                 <section>{{item.description}}</section>

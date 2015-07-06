@@ -1,6 +1,6 @@
 var scenarioControlCtrl = angular.module('scenarioControlCtrl',['ScenarioServices','SegmentServices']);
-scenarioControlCtrl.controller('ScenarioControlCtrl',['$scope', '$routeParams', 'Modal','Shared', 'Scenario', 'Segment',
-function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
+scenarioControlCtrl.controller('ScenarioControlCtrl',['$scope', '$routeParams', 'Modal','Shared', 'Scenario',
+function ($scope, $routeParams, Modal, Shared, Scenario)
 {
     var pageProp = Scenario.getPageProp($routeParams.scenario, $routeParams.id);
     var id = $routeParams.id;
@@ -156,7 +156,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
         }
         else
         {
-            Segment.resource.action({name: targetName}).$promise.then(function(response)
+            Scenario.resource.action({name: targetName}).$promise.then(function(response)
             {
                 actionName = targetName;
                 $scope.isShowExtraction = true;
