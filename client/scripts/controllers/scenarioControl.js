@@ -139,7 +139,6 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
         {
             if (item.isPush)
             {
-                console.log(item.segment_id);
                 $scope.scenario.segment_id = item.segment_id;
             }
         });
@@ -149,14 +148,15 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
         {
             if (item.isPush)
             {
-                console.log(item.if_layout_id);
                 $scope.scenario.if_layout_id = item.if_layout_id;
             }
         });
 
 
-        // $scope.scenario.segment_id = Scenario.getActivePushItem($scope.segmentList, 'segment_id');
-        // $scope.scenario.if_layout_id = Scenario.getActivePushItem($scope.ifList, 'if_layout_id');
+        var segment_id = Scenario.getActivePushItem($scope.segmentList, 'segment_id');
+        console.log(segment_id);
+        var if_layout_id = Scenario.getActivePushItem($scope.ifList, 'if_layout_id');
+        console.log(if_layout_id);
         
         console.log($scope.scenario);
     };
