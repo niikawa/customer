@@ -162,9 +162,18 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
                 actionName = targetName;
                 $scope.isShowExtraction = true;
                 $scope.columnList = response.data.column;
+                angular.forEach($scope.columnList, function(v, k)
+                {
+                    v.isJoin = false;
+                })
                 console.log(response.data);
             });
         }
+    };
+    
+    $scope.isJoin = function(items)
+    {
+        return items.isJoin;
     };
 
 }]);
