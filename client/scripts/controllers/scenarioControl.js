@@ -63,7 +63,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
         };
         $scope.asyncValidators = 
         {
-            segmentName:
+            scenario_name:
             {
                 same: function (modelValue, viewValue)
                 {
@@ -99,7 +99,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
     {
         $scope.$watch('scenar.scenario_name', function()
         {
-            $scope.scenarioForm.segmentName.$asyncValidators();
+            $scope.scenarioForm.scenario_name.$asyncValidators();
         });
 
         $scope.$watch('segmentList', function()
@@ -109,7 +109,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
         
         $scope.$watch('ifList', function()
         {
-            $scope.scenarioForm.segment.$validate();
+            $scope.scenarioForm.ifLayout.$validate();
         },true);
         
     }
