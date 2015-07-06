@@ -20,7 +20,7 @@
                         <input type="text" class="form-control" name="scenario_name" placeholder="シナリオ名を入力してください" 
                             ng-model="scenario.scenario_name" 
                             ng-maxlength=50 ng-required="true"
-                            my-async-validators="asyncValidators.scenarioName">
+                            my-async-validators="asyncValidators.scenario_name">
                         <div ng-messages="scenarioForm.scenario_name.$dirty && scenarioForm.scenario_name.$error">
                             <p class="item-error" ng-message="same">すでに登録されているシナリオ名です</p>
                         </div>
