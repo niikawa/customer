@@ -6,7 +6,7 @@
         "column": [
             {"physicalname": "customer_id", "logicalname": "顧客ID","description": "別システムで管理されている顧客を一意に識別するID", "type": "VARCHAR", "length": 20},
             {"physicalname": "operation_type", "logicalname": "オペレーションタイプ", "description": "オペレーションの種類", "type": "INT", "length": 10},
-            {"physicalname": "operation_time", "logicalname": "オペレーション時間", "description": "オペレーションをした時間", "type": "DATETIME", "format": "YYYY-MM-DD hh:mm:ss"},
+            {"physicalname": "operation_time", "logicalname": "オペレーション時間", "description": "オペレーションをした時間", "type": "DATETIME", "format": "YYYY-MM-DD hh:mm:ss"}
         ]
     },
     "Purchasing": {
