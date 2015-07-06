@@ -97,7 +97,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
     }
     function setWatchItems()
     {
-        $scope.$watch('roleList', function()
+        $scope.$watch('segmentList', function()
         {
             $scope.scenarioForm.segment.$validate();
         },true);
