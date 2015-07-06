@@ -145,7 +145,7 @@ exports.initializeData = function(req, res)
         //IF情報
         function(callback)
         {
-            var data = [{if_id: 1, if_name: 'デフォルトテンプレート'}];
+            var data = [{if_layout_id: 1, if_name: 'デフォルトテンプレート'}];
             callback(null, data);
         },
         //アクション情報
