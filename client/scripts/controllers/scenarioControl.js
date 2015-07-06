@@ -135,8 +135,10 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
     
     $scope.save = function()
     {
-        Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario.segment_id);
-        Scenario.setActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario.if_layout_id);
+        console.log($scope.scenario);
+
+        $scope.scenario.segment_id = Scenario.getActivePushItem($scope.segmentList, 'segment_id');
+        $scope.scenario.if_layout_id = Scenario.getActivePushItem($scope.ifList, 'if_layout_id');
         
         console.log($scope.scenario);
     };
