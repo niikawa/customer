@@ -135,13 +135,28 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
     
     $scope.save = function()
     {
-        console.log($scope.scenario);
+        angular.forEach($scope.segmentList, function(item, key)
+        {
+            if (item.isPush)
+            {
+                console.log(item.segment_id);
+                $scope.scenario.segment_id = item.segment_id;
+            }
+        });
 
-$scope.scenario.segment_id = '';
-$scope.scenario.if_layout_id = '';
 
-        $scope.scenario.segment_id = Scenario.getActivePushItem($scope.segmentList, 'segment_id');
-        $scope.scenario.if_layout_id = Scenario.getActivePushItem($scope.ifList, 'if_layout_id');
+        angular.forEach($scope.ifList, function(item, key)
+        {
+            if (item.isPush)
+            {
+                console.log(item.if_layout_id);
+                $scope.scenario.if_layout_id = item.if_layout_id;
+            }
+        });
+
+
+        // $scope.scenario.segment_id = Scenario.getActivePushItem($scope.segmentList, 'segment_id');
+        // $scope.scenario.if_layout_id = Scenario.getActivePushItem($scope.ifList, 'if_layout_id');
         
         console.log($scope.scenario);
     };
