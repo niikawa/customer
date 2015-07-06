@@ -97,9 +97,9 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
     }
     function setWatchItems()
     {
-        $scope.$watch('scenar.scenario_name', function()
+        $scope.$watch('scenario.scenario_name', function()
         {
-            $scope.scenarioForm.scenario_name.$asyncValidators();
+            $scope.scenarioForm.scenario_name.$validate();
         });
 
         $scope.$watch('segmentList', function()
