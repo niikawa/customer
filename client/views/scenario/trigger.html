@@ -1,9 +1,11 @@
     <div class="row">
         <div class="col-lg-6">
-            <input type="number" class="form-control" placeholder="イベント発生後日数" ng-model="scenario.after_event_occurs_num">
+            <input type="number" class="form-control" placeholder="イベント発生後日数" 
+                ng-model="scenario.after_event_occurs_num" ng-required="true">
         </div>
         <div class="col-lg-6">
-            <input type="number" class="form-control" placeholder="無効期間日数" ng-model="scenario.inoperative_num">
+            <input type="number" class="form-control" placeholder="無効期間日数"
+                ng-model="scenario.inoperative_num" ng-required="true">
         </div>
     </div>
     
