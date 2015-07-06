@@ -14,7 +14,7 @@
         "physicalname": "Purchasing",
         "description": "何を購入したかの情報",
         "column": [
-            {"physicalname": "customer_id", "logicalname": "顧客","description": "別システムで管理されている顧客を一意に識別するID", "type": "VARCHAR", "length": 20}
+            {"physicalname": "customer_id", "logicalname": "顧客","description": "別システムで管理されている顧客を一意に識別するID", "type": "VARCHAR", "length": 20},
             {"physicalname": "date", "logicalname": "購入日", "description": "購入した日", "type": "DATETIME", "format": "YYYY-MM-DD"},
             {"physicalname": "price", "logicalname": "金額","description": "購入した金額", "type": "INT", "length": 10},
             {"physicalname": "category_name", "logicalname": "カテゴリ名","description": "購入した商品のカテゴリ", "type": "VARCHAR", "length": 50},
