@@ -5,76 +5,87 @@
     <div class="box">
         <h4>{{pageTitle}}</h4>
 
-        <div class="row" >
-            
-            <div class="col-md-12 vertical-container">
+        <form name="segmentForm" novalidate>
+            <div class="row" >
                 
-                <h3 ng-click="isBaseCollapse = !isBaseCollapse">
-                    <i ng-if="!isBaseCollapse" class="fa fa-caret-square-o-up"></i>
-                    <i ng-if="isBaseCollapse" class="fa fa-caret-square-o-down"></i>
-                    基本設定</h3>
-                
-                <div collapse="isBaseCollapse">
+                <div class="col-md-12 vertical-container">
                     
-                    <input type="text" class="form-control" placeholder="シナリオ名を入力してください" ng-model="scenario.scenario_name">
+                    <h3 ng-click="isBaseCollapse = !isBaseCollapse">
+                        <i ng-if="!isBaseCollapse" class="fa fa-caret-square-o-up"></i>
+                        <i ng-if="isBaseCollapse" class="fa fa-caret-square-o-down"></i>
+                        基本設定</h3>
                     
-                    <input type="text" class="form-control" placeholder="出力名を入力してください" ng-model="scenario.output_name">
-                    
-                    <div class="btn-group">
-                        <label class="btn btn-default" ng-model="approach" btn-radio=1 uncheckable>アプローチ対象</label>
-                        <label class="btn btn-default" ng-model="approach" btn-radio=0 uncheckable>アプローチ対象外</label>
-                    </div>
-
-                    <div class="btn-group">
-                        <label class="btn btn-default" ng-model="status" btn-radio=1 uncheckable>有効</label>
-                        <label class="btn btn-default" ng-model="status" btn-radio=0 uncheckable>無効</label>
-                    </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <input type="text" class="form-control" placeholder="セグメントを絞り込みます" ng-model="segmentSearch" 
-                                refine-directive refine-item="segmentList" keyword="segmentSearch" name-propertie="segment_name" >
+                    <div collapse="isBaseCollapse">
+                        
+                        <input type="text" class="form-control" name="scenario_name" placeholder="シナリオ名を入力してください" 
+                            ng-model="scenario.scenario_name" ng-maxlength=50 ng-required="true"
+                            my-async-validators="asyncValidators.scenarioName">
+                        <div ng-messages="scenarioForm.scenario_name.$dirty && scenarioForm.scenario_name.$error">
+                            <p class="item-error" ng-message="same">すでに登録されているシナリオ名です</p>
                         </div>
-                        <ul class="list-group overflow-box-s"  mg-model="scenario.segment_id">
-                            <li class="list-group-item" ng-repeat="item in segmentList" push-directive info="item" active="scenario.segment_id" activekey="segment_id">
-                            {{item.segment_name}}
-                            </li>
-                        </ul>
-                    </div>                        
+                        
+                        
+                        <input type="text" class="form-control" placeholder="出力名を入力してください" ng-model="scenario.output_name">
+                        
+                        <div class="btn-group">
+                            <label class="btn btn-default" name="approach" ng-model="scenario.approach" btn-radio=1 uncheckable>アプローチ対象</label>
+                            <label class="btn btn-default" name="approach" ng-model="scenario.approach" btn-radio=0 uncheckable>アプローチ対象外</label>
+                        </div>
     
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <input type="text" class="form-control" placeholder="IFレイアウトを絞り込みます" ng-model="ifSearch" 
-                                refine-directive refine-item="ifList" keyword="ifSearch" name-propertie="if_name" >
+                        <div class="btn-group">
+                            <label class="btn btn-default" name="status" ng-model="scenario.status" btn-radio=1 uncheckable>有効</label>
+                            <label class="btn btn-default" name="status" ng-model="scenario.status" btn-radio=0 uncheckable>無効</label>
                         </div>
-                        <ul class="list-group overflow-box-s" mg-model="scenario.if_layout_id">
-                            <li class="list-group-item" ng-repeat="item in ifList" push-directive info="item" active="scenario.if_layout_id" activekey="if_layout_id">
-                            {{item.if_name}}
-                            </li>
-                        </ul>
+    
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <input type="text" class="form-control" placeholder="セグメントを絞り込みます" ng-model="segmentSearch" 
+                                    refine-directive refine-item="segmentList" keyword="segmentSearch" name-propertie="segment_name" >
+                            </div>
+                            <ul class="list-group overflow-box-s" mg-model="scenario.segment_id" my-validators="validators.segment">
+                                <li class="list-group-item" ng-repeat="item in segmentList" push-directive list="segmentList" info="item" active="scenario.segment_id" activekey="segment_id">
+                                {{item.segment_name}}
+                                </li>
+                            </ul>
+                            <div ng-messages="scenarioForm.segment.$dirty && scenarioForm.segment.$error">
+                                <p class="item-error" ng-message="isSelect">セグメントを選択してください</p>
+                            </div>
+                        </div>                        
+        
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <input type="text" class="form-control" placeholder="IFレイアウトを絞り込みます" ng-model="ifSearch" 
+                                    refine-directive refine-item="ifList" keyword="ifSearch" name-propertie="if_name" >
+                            </div>
+                            <ul class="list-group overflow-box-s" mg-model="scenario.if_layout_id" my-validators="validators.ifLayout">
+                                <li class="list-group-item" ng-repeat="item in ifList" push-directive list="ifList" info="item" active="scenario.if_layout_id" activekey="if_layout_id">
+                                {{item.if_name}}
+                                </li>
+                            </ul>
+                            <div ng-messages="scenarioForm.ifLayout.$dirty && scenarioForm.ifLayout.$error">
+                                <p class="item-error" ng-message="isSelect">IFレイアウトを選択してください</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="row" >
-            <div class="col-md-12 vertical-container">
-                <h3 ng-click="isOriginCollapse = !isOriginCollapse">
-                    <i ng-if="!isOriginCollapse" class="fa fa-caret-square-o-up"></i>
-                    <i ng-if="isOriginCollapse" class="fa fa-caret-square-o-down"></i>
-                    個別設定</h3>
-                <div collapse="isOriginCollapse" ng-include="template">
+            
+            <div class="row" >
+                <div class="col-md-12 vertical-container">
+                    <h3 ng-click="isOriginCollapse = !isOriginCollapse">
+                        <i ng-if="!isOriginCollapse" class="fa fa-caret-square-o-up"></i>
+                        <i ng-if="isOriginCollapse" class="fa fa-caret-square-o-down"></i>
+                        個別設定</h3>
+                    <div collapse="isOriginCollapse" ng-include="template">
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="row　col-md-12 center" >
             
-            <a class="btn btn-default" ng-href="#/scenario/{{type}}" >戻る</a>
-            <button class="btn btn-default" ng-click="clear()">クリア</button>
-            <button class="btn btn-default" ng-click="save()">保存</button>
-            
-        </div>
-
+            <div class="row　col-md-12 center" >
+                <a class="btn btn-default" ng-href="#/scenario/{{type}}" >戻る</a>
+                <button class="btn btn-default" ng-click="clear()">クリア</button>
+                <button class="btn btn-default" ng-disabled="segmentForm.$invalid" ng-click="save()">保存</button>
+            </div>
+        </form>
     </div>
 </div>

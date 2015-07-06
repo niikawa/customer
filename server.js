@@ -79,17 +79,16 @@ router.delete('/segment/remove/:id/:segment_document_id', segment.remove);
 router.get('/segment/download/:id', segment.download);
 
 var scenario = require("./api/scenario");
+router.post('/scenario/name', scenario.isSameName);
 router.get('/scenario/initialize/:type', scenario.initializeData);
 router.get('/scenario/:type', scenario.getAll);
 router.get('/scenario/:type/:id', scenario.getById);
 router.delete('/scenario/:type/remove/:id', scenario.remove);
 
-
 var user = require("./api/user");
 router.get('/user', user.getList);
 router.post('/user/mail', user.isSameMailAddress);
 router.get('/user/:id', user.getById);
-router.post('/user/:id', user.update);
 router.post('/user/create', user.craete);
 router.post('/user/:id', user.update);
 router.delete('/user/:id', user.remove);

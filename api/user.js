@@ -208,5 +208,4 @@ exports.isSameMailAddress = function(req, res)
             res.json({result: result[0]});
         });
     }
-    
 };

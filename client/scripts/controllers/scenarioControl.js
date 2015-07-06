@@ -14,28 +14,72 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
         $scope.isBaseCollapse = false; //基本設定Collapse制御
         $scope.isOriginCollapse = false; //個別設定Collapse制御
         $scope.isShowExtraction = false; //抽出条件表示制御
+
+        $scope.pageTitle = pageProp.title+pageProp.addTitle;
         
         $scope.scenario = {};
-        $scope.pageTitle = pageProp.title+pageProp.addTitle;
+        $scope.scenario.approach;
+        $scope.scenario.status;
         
         $scope.type = $routeParams.scenario;
         $scope.template = pageProp.template;
-
-        $scope.approach;
-        $scope.status;
 
         $scope.roop;
         $scope.interval;
         $scope.intervalCondition;
         $scope.intervalConditionList = Scenario.intervalConditionList;
-        
+    }
+    
+    function setValidation()
+    {
+        $scope.validators = 
+        {
+            segment:
+            {
+                isSelect: function (modelValue, viewValue)
+                {
+                    var segmentList = $scope.segmentList || {};
+                    var isSelect = false;
+                    angular.forEach(ifList, function(item, key)
+                    {
+                        if (item.isPush) isSelect = true;
+                    });
+                    return isSelect;
+                }
+            },
+            ifLayout:
+            {
+                isSelect: function (modelValue, viewValue)
+                {
+                    var ifList = $scope.ifList || {};
+                    var isSelect = false;
+                    angular.forEach(ifList, function(item, key)
+                    {
+                        if (item.isPush) isSelect = true;
+                    });
+                    return isSelect;
+                }
+            },
+        };
+        $scope.asyncValidators = 
+        {
+            segmentName:
+            {
+                same: function (modelValue, viewValue)
+                {
+                    var val = modelValue || viewValue;
+                    if (void 0 === val || val.length === 0) return true;
+                    
+                    return Scenario.validators.isSameName($scope.scenario.segment_name, val);
+                }
+            }
+        };
     }
     
     function getInitializeData()
     {
         Scenario.resource.initializeData({type: $routeParams.scenario}).$promise.then(function(response)
         {
-            console.log(response);
             $scope.segmentList = response.segment;
             $scope.ifList = response.ifLayout;
             $scope.actionList =  response.specificInfo;
@@ -51,8 +95,24 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
             */
         }
     }
-    function setEvntListeners()
+    function setWatchItems()
     {
+        $scope.$watch('roleList', function()
+        {
+            $scope.scenarioForm.segment.$validate();
+        },true);
+        
+    }
+    
+    function setSegment(items)
+    {
+        angular.forEach(items, function(item, key)
+        {
+            if (item.isPush)
+            {
+                $scope.scenario.segment_id = item.segment_id;
+            }
+        });
     }
     
     /**
@@ -63,8 +123,9 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
     {
         $scope._construct();
         setInitializeScope();
-        setEvntListeners();
+        setWatchItems();
         getInitializeData();
+        setValidation();
     };
     
     $scope.clear = function()
@@ -75,6 +136,9 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
     
     $scope.save = function()
     {
+        $scope.scenario.segment_id = Scenario.getActivePushItem($scope.segmentList, 'segment_id');
+        $scope.scenario.if_layout_id = Scenario.getActivePushItem($scope.ifList, 'if_layout_id');
+        
         console.log($scope.scenario);
         console.log($scope.approach);
         console.log($scope.status);

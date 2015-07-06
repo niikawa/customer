@@ -1,13 +1,14 @@
 var scenarioServices = angular.module("ScenarioServices", ["ngResource"]);
-scenarioServices.factory("Scenario", ['$resource','Utility',
-    function($resource, Utility) 
+scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
+    function($resource, $http, $q, Utility) 
     {
         var scenarioServices = {};
 
         var pageProp = {
                 schedule: {type: 1, mode: 0, title: 'スケジュール型', addTitle: '', template: 'views/scenario/schedule.html'}, 
                 trigger: {type: 2, mode: 0, title: 'トリガー型', addTitle: '', template: 'views/scenario/trigger.html'}
-            };
+        };
+        
         scenarioServices.intervalConditionList = [
             1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
             21,22,23,24,25,26,27,28,28,30,31
@@ -37,6 +38,33 @@ scenarioServices.factory("Scenario", ['$resource','Utility',
             target.mode = (void 0 === id) ? 1 : 2;
             
             return target;
+        };
+        
+        scenarioServices.validators =
+        {
+            isSameName : function(userId, mailaddress)
+            {
+                return $http.post('scenario/name/',{user_id: userId, mailaddress: mailaddress}
+                ).then(function(response)
+                {
+                    if (response.data.result.count > 0)
+                    {
+                        return $q.reject('exists');
+                    }
+                    return false;
+                });
+            }
+        };
+        
+        scenarioServices.getActivePushItem = function(items, propertie)
+        {
+            angular.forEach(items, function(item, key)
+            {
+                if (item.isPush)
+                {
+                    return item[propertie];
+                }
+            });
         };
         
         scenarioServices.mock = function()
