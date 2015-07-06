@@ -154,13 +154,13 @@ exports.initializeData = function(req, res)
             if ('trigger' === req.params.type)
             {
                 var action = require('../config/action.json');
-                var num = action.length;
                 var list = [];
-                for (var index = 0; index < num; index++)
+                Object.keys(action).forEach(function(key)
                 {
-                    var target = action[index];
+                    var target = action[key];
                     list.push({logicalname: target.logicalname, physicalname: target.physicalname, description: target.description});
-                }
+                });
+                
                 callback(null, list);
             }
             else if ('schedule' === req.params.type)

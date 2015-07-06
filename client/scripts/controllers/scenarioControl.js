@@ -4,7 +4,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
 {
     var pageProp = Scenario.getPageProp($routeParams.scenario, $routeParams.id);
     var id = $routeParams.id;
-    var logId = 0;
+    var actionName = '';
     
     /**
      * scope初期化用
@@ -149,19 +149,20 @@ function ($scope, $routeParams, Modal, Shared, Scenario, Segment)
         console.log($scope.scenario);
     };
     
-    $scope.show = function(selectLogId)
+    $scope.show = function(targetName)
     {
-        
-        
-        
-        if (logId == selectLogId)
+        if (actionName == targetName)
         {
             $scope.isShowExtraction = !$scope.isShowExtraction;
         }
         else
         {
-            logId = selectLogId;
-            $scope.isShowExtraction = true;
+            Segment.resource.action({name: targetName}).$promise.then(function(response)
+            {
+                actionName = targetName;
+                $scope.isShowExtraction = true;
+                console.log(response.data);
+            });
         }
     };
 
