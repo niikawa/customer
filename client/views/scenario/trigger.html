@@ -39,22 +39,24 @@
                 </div>
             </div>
                 
-            <div class="col-md-6 col-sm-6 box-gray" ng-model='conditions' drop-directive drop-area-key="" >
+            <div class="col-md-6 col-sm-6" ng-model='conditions' drop-directive drop-area-key="" >
                 
-                <div ng-repeat="condition in conditions track by $index" drag-item-directive dragindex="$index">
-                    <div class="panel panel-success" >
-                        <div class="panel-heading">{{condition.logicalname}}
-                            <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
-                        </div>
-                        <div class="panel-body">
-                            <section>{{condition.description}}</section><br>
-                            <condition-directive condition-append="condition"></condition-directive>
-                            
-                            <div class="btn-group" ng-if="!$last">
-                                <label class="btn btn-default" ng-model="condition.where" btn-radio="'AND'" uncheckable>かつ</label>
-                                <label class="btn btn-default" ng-model="condition.where" btn-radio="'OR'" uncheckable>または</label>
+                <div class="box-gray">
+                    <div ng-repeat="condition in conditions track by $index" drag-item-directive dragindex="$index">
+                        <div class="panel panel-success" >
+                            <div class="panel-heading">{{condition.logicalname}}
+                                <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
                             </div>
-                            
+                            <div class="panel-body">
+                                <section>{{condition.description}}</section><br>
+                                <condition-directive condition-append="condition"></condition-directive>
+                                
+                                <div class="btn-group" ng-if="!$last">
+                                    <label class="btn btn-default" ng-model="condition.where" btn-radio="'AND'" uncheckable>かつ</label>
+                                    <label class="btn btn-default" ng-model="condition.where" btn-radio="'OR'" uncheckable>または</label>
+                                </div>
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
