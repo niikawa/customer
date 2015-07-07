@@ -411,10 +411,8 @@ div .card-cell-left {
   width: 80%;
 }
 
-div .card-cell-left-fixd-50 {
+.fixed-50 {
   height: 50px;
-  float: left;
-  width: 80%;
 }
 
 div .card-cell-right-b {
