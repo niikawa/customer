@@ -57,7 +57,7 @@ exports.getAll = function(req, res)
     var order = "scenario_id";
     var qObj = model.getQueryObject(col, tableName, where, '', order);
     
-    var scenarioType = ('trigger' == req.params.type) ? 1 : 2;
+    var scenarioType = ('trigger' == req.params.type) ? 2 : 1;
     qObj.request.input('scenario_type', model.db.SmallInt, scenarioType);
 
     model.select(qObj, qObj.request, function(err, data)
