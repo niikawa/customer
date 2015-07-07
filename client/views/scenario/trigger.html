@@ -55,7 +55,7 @@
                                 <condition-directive condition-append="item"></condition-directive>
                                 
                                 <div class="col-md-12 center">
-                                    <div class="btn-group" ng-if="!$last">
+                                    <div class="btn-group" ng-if="!$parent.$last || !$last">
                                         <label class="btn btn-default" ng-model="item.where" btn-radio="'AND'" uncheckable>かつ</label>
                                         <label class="btn btn-default" ng-model="item.where" btn-radio="'OR'" uncheckable>または</label>
                                     </div>
