@@ -126,7 +126,6 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
         {
             console.log(data);
             event.stopPropagation();
-            $scope.conditions = data;
             $scope.$$phase || $scope.$apply();
             
             // angular.forEach($scope.showConditions, function(v, k)
@@ -179,11 +178,15 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
             {
                 actionName = targetName;
                 $scope.isShowExtraction = true;
-                $scope.columnList = response.data.column;
-                angular.forEach($scope.columnList, function(v, k)
+                $scope.columnList = [];
+                angular.forEach(response.data.column, function(v, k)
                 {
                     v.isJoin = false;
                     v.selectedCondition = {};
+                    var array = [];
+                    array.push(v);
+                    array.isJoin = false;
+                    $scope.columnList.push(array);
                 });
             });
         }
