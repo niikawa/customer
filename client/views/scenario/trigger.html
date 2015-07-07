@@ -32,8 +32,8 @@
                     </div>
                     <ul class="list-group" >
                         <li class="list-group-item" ng-repeat="item in columnList track by $index" ng-model="columnList" drag-item-directive dragindex="$index">
-                            {{item.logicalname}}
-                            <section>{{item.description}}</section>
+                            {{item[0].logicalname}}
+                            <section>{{item[0].description}}</section>
                         </li>
                     </ul>
                 </div>
