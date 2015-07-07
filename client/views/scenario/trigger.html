@@ -47,25 +47,23 @@
             <div class="col-md-6 col-sm-6" >
                 <div class="box-gray mh">
                     
-                        <div class="panel panel-success" >
+                    <div class="panel panel-success" >
+                        
+                        <div class="panel-body" ng-repeat="(i, condition) in conditions">
                             
-                            <div class="panel-body" ng-repeat="(i, condition) in conditions">
-                                
-                                <button type="button" class="close" ng-click="removeItem(i)">&times;</button>
-                                {{condition.logicalname}}が
-                                <condition-directive condition-append="condition"></condition-directive>
-                                
-                                <div ng-if="!$last" class="col-md-12 center">
-                                    <div class="btn-group">
-                                        <label class="btn btn-default" ng-model="condition.where" btn-radio="'AND'" uncheckable>かつ</label>
-                                        <label class="btn btn-default" ng-model="condition.where" btn-radio="'OR'" uncheckable>または</label>
-                                    </div>
+                            <button type="button" class="close" ng-click="removeItem(i)">&times;</button>
+                            {{condition.logicalname}}が
+                            <condition-directive condition-append="condition"></condition-directive>
+                            
+                            <div ng-if="!$last" class="col-md-12 center">
+                                <div class="btn-group">
+                                    <label class="btn btn-default" ng-model="condition.where" btn-radio="'AND'" uncheckable>かつ</label>
+                                    <label class="btn btn-default" ng-model="condition.where" btn-radio="'OR'" uncheckable>または</label>
                                 </div>
                             </div>
-                            
-                            <div class="panel-footer center">
-                                <button class="btn btn-default">決定</button>
-                            </div>
+                        </div>
+                        <div class="panel-footer center">
+                            <button class="btn btn-default">決定</button>
                         </div>
                     </div>
                 </div>

@@ -28,6 +28,8 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
         $scope.interval;
         $scope.intervalCondition;
         $scope.intervalConditionList = Scenario.intervalConditionList;
+        
+        $scope.decisionList = [];
     }
     
     function setValidation()
@@ -185,7 +187,9 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
     
     $scope.moveCondition = function(item)
     {
-        $scope.conditions.push(item);
+        var push = {};
+        angular.copy(item, push);
+        $scope.conditions.push(push);
     };
 
     $scope.removeItem = function(index)
@@ -195,7 +199,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
     
     $scope.decision = function()
     {
-        
+        $scope.decisionList.push($scope.conditions);
     };
 
 }]);
