@@ -194,6 +194,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
     
     $scope.isJoin = function(items)
     {
+        console.log(items);
         return items.isJoin;
     };
 
