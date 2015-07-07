@@ -1,6 +1,6 @@
 var scenarioControlCtrl = angular.module('scenarioControlCtrl',['ScenarioServices','SegmentServices']);
-scenarioControlCtrl.controller('ScenarioControlCtrl',['$scope', '$routeParams', 'Modal','Shared', 'Scenario',
-function ($scope, $routeParams, Modal, Shared, Scenario)
+scenarioControlCtrl.controller('ScenarioControlCtrl',['$scope', '$routeParams', 'Modal','Shared', 'Utility', 'Location', 'Scenario',
+function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
 {
     var pageProp = Scenario.getPageProp($routeParams.scenario, $routeParams.id);
     var id = $routeParams.id;
@@ -153,25 +153,10 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
         setEventListeners();
     };
     
-    $scope.clear = function()
-    {
-        setInitializeScope();
-        getInitializeData();
-    };
-    
-    $scope.save = function()
-    {
-        Scenario.getActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
-        Scenario.getActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
-        
-        var conditionInfo = Scenario.getConditionDoc($scope.conditions);
-
-        console.log($scope.scenario);
-    };
-    
-    $scope.show = function(targetName)
+    $scope.showAction = function(targetName)
     {
         $scope.conditions = [];
+        $scope.decisionList = [];
         if (actionName == targetName)
         {
             $scope.isShowExtraction = !$scope.isShowExtraction;
@@ -209,6 +194,41 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
     $scope.removeDecisionList = function(index)
     {
         $scope.decisionList.splice(index, 1);
+    };
+
+    $scope.clear = function()
+    {
+        setInitializeScope();
+        getInitializeData();
+    };
+    
+    $scope.save = function()
+    {
+        Scenario.getActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
+        Scenario.getActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
+        
+        var doc = 
+        {
+            actionName: actionName,
+            conditionList: Scenario.getConditionDoc($scope.conditions)
+        };
+        
+        var params = {scenario: $scope.scenario, doc: doc};
+
+        console.log(params);
+        
+        Scenario.resource.save(params).$promise.then(function(response)
+        {
+            Utility.info('シナリオを保存しました。');
+            if (1 === pageProp.type)
+            {
+                Location.schedule();
+            }
+            else if (2 === pageProp.type)
+            {
+                Location.trigger();
+            }
+        });
     };
 
 }]);

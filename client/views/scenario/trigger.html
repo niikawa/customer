@@ -15,7 +15,7 @@
             refine-directive refine-item="actionList" keyword="actionSearch" name-propertie="logicalname|description" >
         </div>
         <ul class="list-group overflow-box-l" >
-            <li class="list-group-item" ng-repeat="item in actionList" push-directive info="item" ng-click="show(item.physicalname)">
+            <li class="list-group-item" ng-repeat="item in actionList" push-directive info="item" ng-click="showAction(item.physicalname)">
                 <p>{{item.logicalname}}</p>
                 <section>{{item.description}}</section>
             </li>

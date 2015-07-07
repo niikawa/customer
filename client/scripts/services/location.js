@@ -38,6 +38,16 @@ locationServices.service("Location", ['$location',function($location)
         $location.path('/segment');
     };
 
+    locationServices.trigger = function()
+    {
+        $location.path('/scenario/trigger');
+    };
+
+    locationServices.schedule = function()
+    {
+        $location.path('/scenario/schedule');
+    };
+
     return locationServices;
 
 }]);

@@ -71,13 +71,73 @@ exports.getAll = function(req, res)
     });
 };
 
-exports.craete = function(req, res)
+exports.save = function(req, res)
 {
+    console.log('scenario save execute');
+    console.log(req.body);
+    if (void 0 === req.body.scenario) res.status(510).send('param is not found');
+    if (void 0 === req.body.doc) res.status(510).send('param is not found');
+    
+    if (req.body.scenario.hasOwnProperty('scenario_id'))
+    {
+        update(req, res);
+    }
+    else
+    {
+        create(req, res);
+    }
 };
 
-exports.update = function(req, res)
+function create(req, res)
 {
-};
+    var scenariodoc = require("./scenariodoc");
+    scenariodoc.saveItemForWeb(true, req.body.doc, function(err, doc)
+    {
+        if (err)
+        {
+            console.log('scenario create doc faild');
+            console.log(err);
+            console.log(params);
+            res.status(510).send('scenario crate faild');
+        }
+        
+        var commonColumns = model.getInsCommonColumns();
+        var insertData = model.merge(req.body.scenario, commonColumns);
+        insertData.status = 1;
+        var request = model.getRequest();
+        request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+        request.input('create_by', model.db.Int, req.session.userId);
+        request.input('create_date', model.db.NVarChar, insertData.create_date);
+        request.input('update_by', model.db.Int, req.session.userId);
+        request.input('update_date', model.db.NVarChar, insertData.update_date);
+        
+        request.input('segment_id', model.db.Int, insertData.segment_id);
+        request.input('if_layout_id', model.db.Int, insertData.if_layout_id);
+        request.input('scenario_name', model.db.NVarChar, insertData.scenario_name);
+        request.input('output_name', model.db.NVarChar, insertData.output_name);
+        request.input('scenario_type', model.db.SmallInt, insertData.scenario_type);
+        request.input('status', model.db.SmallInt, insertData.status);
+        request.input('approach', model.db.SmallInt, insertData.approach);
+        request.input('segment_document_id', model.db.NVarChar, insertData.segment_document_id);
+        
+        model.insert(tableName, insertData, request, function(err, date)
+        {
+            if (err.length > 0)
+            {
+                console.log(err);
+                res.status(510).send('object not found');
+            }
+
+            res.status(200).send('insert ok');
+        });
+
+    });
+}
+
+function update(req, res)
+{
+    
+}
 
 /**
  * PKに合致したレコードのdelete_flagを1にする

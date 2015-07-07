@@ -34,7 +34,12 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
                 method: 'GET',
                 url: 'action/:name',
                 cache: true,
-            }
+            },
+            save:
+            {
+                method: 'POST',
+                url: 'scenario/save',
+            },
         });
         
         scenarioServices.getPageProp = function(type, id)
@@ -98,13 +103,17 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
         
         scenarioServices.getConditionDoc = function(list)
         {
-            
+            var doc = [];
             angular.forEach(list, function(item, key)
             {
-                
+                doc.push(
+                {
+                    physicalname: item.physicalname,
+                    condition: item.condition,
+                    selectedCondition: item.selectedCondition
+                });
             });
-            
-            
+            return doc;
         };
         
         scenarioServices.mock = function()
