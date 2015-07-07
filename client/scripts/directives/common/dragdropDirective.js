@@ -175,7 +175,6 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
             {
                 event.stopPropagation();
                 
-                
                 if (ctrl.$modelValue == DDShared.getFrom()) return false;
 
                 var index = event.originalEvent.dataTransfer.getData('itemIndex');
@@ -194,12 +193,10 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 
                 if (angular.isArray(DDShared.getFrom()))
                 {
-                    console.log('is array');
                     DDShared.getFrom().splice(index, 1);
                 }
                 else
                 {
-                    console.log('not array');
                     pushItem = DDShared.getCopyFrom();
                 }
                 
@@ -212,16 +209,19 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 }
                 else
                 {
-                    
-                    
-                    console.log(ctrl.$modelValue);
-                    console.log(pushItem);
                     if (!isModelArray)
                     {
                         var originModel = {};
                         angular.copy(ctrl.$modelValue, originModel);
                         ctrl.$modelValue = [];
                         ctrl.$modelValue.push(originModel);
+                        
+                        var test = []
+                        test.push(ctrl.$modelValue);
+                        test.push(pushItem);
+                        console.log('test');
+                        console.log(test);
+                        ctrl.$modelValue = test;
                     }
                     if (angular.isArray(pushItem))
                     {
@@ -229,8 +229,7 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                     }
                     else
                     {
-                        ctrl.$modelValue = pushItem;
-                        //ctrl.$modelValue.push(pushItem);
+                        ctrl.$modelValue.push(pushItem);
                     }
                 }
 
