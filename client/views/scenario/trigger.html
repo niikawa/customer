@@ -31,8 +31,8 @@
                             refine-directive refine-item="columnList" keyword="columnSearch" name-propertie="logicalname|description" >
                     </div>
                     <ul class="list-group" >
-                        <li class="list-group-item" ng-repeat="item in columnList track by $index" ng-model="columnList" drag-item-directive dragindex="$index">
-                            <div class="card-cell-left">
+                        <li class="list-group-item " ng-repeat="item in columnList track by $index" ng-model="columnList" drag-item-directive dragindex="$index">
+                            <div class="card-cell-left-fixd-50">
                                 {{item.logicalname}}
                                 <section>{{item.description}}</section>
                             </div>
