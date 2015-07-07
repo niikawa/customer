@@ -75,6 +75,15 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
             });
         };
         
+        scenarioServices.createCondtionString = function(list)
+        {
+            console.log(list);
+            angular.forEach(list, function(item, key)
+            {
+                
+            });
+        };
+        
         scenarioServices.mock = function()
         {
             var getList = function(type)

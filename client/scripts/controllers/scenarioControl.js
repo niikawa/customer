@@ -199,7 +199,9 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
     
     $scope.decision = function()
     {
-        $scope.decisionList.push($scope.conditions);
+        var condtionString = Scenario.createCondtionString();
+        $scope.decisionList.push(condtionString);
+        $scope.conditions = [];
     };
 
 }]);
