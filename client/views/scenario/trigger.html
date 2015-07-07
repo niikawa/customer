@@ -49,16 +49,16 @@
                     
                         <div class="panel panel-success" >
                             
-                            <div class="panel-body">
+                            <div class="panel-body" ng-repeat="(i, condition) in conditions">
                                 
-                                <button type="button" class="close" ng-click="removeItem()">&times;</button>
-                                {{conditions.logicalname}}が
-                                <condition-directive condition-append="conditions"></condition-directive>
+                                <button type="button" class="close" ng-click="removeItem(i)">&times;</button>
+                                {{condition.logicalname}}が
+                                <condition-directive condition-append="condition"></condition-directive>
                                 
                                 <div class="col-md-12 center">
                                     <div class="btn-group">
-                                        <label class="btn btn-default" ng-model="conditions.where" btn-radio="'AND'" uncheckable>かつ</label>
-                                        <label class="btn btn-default" ng-model="conditions.where" btn-radio="'OR'" uncheckable>または</label>
+                                        <label class="btn btn-default" ng-model="condition.where" btn-radio="'AND'" uncheckable>かつ</label>
+                                        <label class="btn btn-default" ng-model="condition.where" btn-radio="'OR'" uncheckable>または</label>
                                     </div>
                                 </div>
                                 
