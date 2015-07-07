@@ -44,6 +44,9 @@
                 <div class="box-gray mh">
                     <div ng-repeat="condition in conditions track by $index" drag-item-directive dragindex="$index">
                         <div class="panel panel-success" >
+                            
+                            <!-- ここからループさせるのがよさげ -->
+                            
                             <div class="panel-heading">{{condition.logicalname}}
                                 <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
                             </div>
@@ -59,6 +62,9 @@
                                         <label class="btn btn-default" ng-model="condition.where" btn-radio="'OR'" uncheckable>または</label>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="panel-heading">{{condition.logicalname}}
+                                <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
                             </div>
                             <div class="panel-body">
                                 
