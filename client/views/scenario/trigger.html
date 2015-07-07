@@ -47,7 +47,7 @@
                             
                             <!-- ここからループさせるのがよさげ -->
                             
-                            <div class="panel-body" ng-repeat="item in condition">
+                            <div class="panel-body" ng-repeat="item in condition track by $index">
                                 
                                 <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
                                 {{item.logicalname}}が
