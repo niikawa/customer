@@ -62,9 +62,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel-footer center">
-                        <button ng-click="decision()" class="btn btn-default">決定</button>
+                        <div class="panel-footer center">
+                            <button ng-click="decision()" class="btn btn-default">決定</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -73,10 +73,9 @@
         <div class="row">
             
             <div class="col-md-12 col-sm-12">
-                
                 <ul class="list-group" >
                     <li class="list-group-item fixed-60" ng-repeat="(i,item) in decisionList">
-                        <span class="label label-default">条件{{i}}</span>{{item}}
+                        <span class="label label-success">条件{{i+1}}</span>{{item}}
                         <button type="button" class="close-button-right" ng-click="deleteItem($index)"><i class="fa fa-times"></i></button>
                     </li>
                 </ul>
