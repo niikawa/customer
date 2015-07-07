@@ -90,7 +90,7 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
                 
                 if (key !== last)
                 {
-                    condition += item.condition.where;
+                    condition += ('AND' === item.condition.where) ? ' かつ ' : ' または ';
                 }
             });
             return condition;
