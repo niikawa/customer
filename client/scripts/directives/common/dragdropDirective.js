@@ -211,12 +211,11 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 {
                     if (!isModelArray)
                     {
-                        var originModel = {};
-                        angular.copy(ctrl.$modelValue, originModel);
-                        ctrl.$modelValue = [];
-                        ctrl.$modelValue.push(originModel);
+                        // var originModel = ctrl.$modelValue;
+                        // ctrl.$modelValue = [];
+                        // ctrl.$modelValue.push(originModel);
                         
-                        var test = []
+                        var test = [];
                         test.push(ctrl.$modelValue);
                         test.push(pushItem);
                         console.log('test');
