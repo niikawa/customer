@@ -192,9 +192,10 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     
     $scope.save = function()
     {
-        Scenario.getActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
-        Scenario.getActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
-        
+        $scope.scenario.scenario_type = pageProp.type;
+        Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
+        Scenario.setActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
+
         var doc = 
         {
             actionName: actionName,

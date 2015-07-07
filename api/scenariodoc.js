@@ -1,11 +1,11 @@
 var async = require('async');
 var DocumentDBClient = require('documentdb').DocumentClient;
-var query = require('../collection/scenario');
+var scenario = require('../collection/scenario');
 
 var docDbClient = new DocumentDBClient('https://ixcpm.documents.azure.com:443/', {
     masterKey: 'BAVJ6Lb3xefcLJVh7iShAAngAHrYC08mtTj2ieVIVXuoBkftXwxKSCJaOcNrvctBwhi6oFoG6GlDVrDiDyXOzg=='
 });
-var Scenario = new query(docDbClient, 'ixcpm', 'scenario');
+var Scenario = new scenario(docDbClient, 'ixcpm', 'scenario');
 Scenario.init();
 
 exports.getItem = function(req, res)
