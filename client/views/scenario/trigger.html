@@ -32,8 +32,13 @@
                     </div>
                     <ul class="list-group" >
                         <li class="list-group-item" ng-repeat="item in columnList track by $index" ng-model="columnList" drag-item-directive dragindex="$index">
-                            {{item[0].logicalname}}
-                            <section>{{item[0].description}}</section>
+                            <div class="card-cell-left">
+                                {{item.logicalname}}
+                                <section>{{item.description}}</section>
+                            </div>
+                            <div class="card-cell-right">
+                                <i class="fa fa-plus-square"></i>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -43,6 +48,8 @@
                 
                 <div class="box-gray mh">
                     <div ng-repeat="condition in conditions track by $index" drag-item-directive dragindex="$index">
+                        
+                        
                         <div class="panel panel-success" >
                             
                             <!-- ここからループさせるのがよさげ -->

@@ -178,16 +178,16 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
             {
                 actionName = targetName;
                 $scope.isShowExtraction = true;
-                $scope.columnList = [];
-                angular.forEach(response.data.column, function(v, k)
-                {
-                    v.isJoin = true;
-                    v.selectedCondition = {};
-                    var array = [];
-                    array.push(v);
-                    array.isJoin = true;
-                    $scope.columnList.push(array);
-                });
+                $scope.columnList = response.data.column;
+                // angular.forEach(response.data.column, function(v, k)
+                // {
+                //     v.isJoin = true;
+                //     v.selectedCondition = {};
+                //     var array = [];
+                //     array.push(v);
+                //     array.isJoin = true;
+                //     $scope.columnList.push(array);
+                // });
             });
         }
     };
