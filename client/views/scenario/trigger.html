@@ -51,7 +51,6 @@
                                 
                                 <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
                                 {{item.logicalname}}が
-
                                 <condition-directive condition-append="item"></condition-directive>
                                 
                                 <div class="col-md-12 center">
@@ -61,7 +60,7 @@
                                     </div>
                                 </div>
                                 
-                                <div ng-if="isJoin(item)" drop-join-directive ng-model="item">
+                                <div ng-if="!isJoin(item)" drop-join-directive ng-model="item">
                                     <div class="drop-join-long"><p>まとめる条件をドロップしてください</p></div>
                                 </div>
                             </div>
