@@ -101,7 +101,6 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 var index = event.originalEvent.dataTransfer.getData('itemIndex');
                 var pushItem = {};
                 
-                console.log(DDShared.getFrom());
                 var orverIndex = (ctrl.$modelValue.length === 0) ? 0 : DDShared.getOrverIndex();
                 if (index === orverIndex) return false;
 
@@ -183,15 +182,22 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 //自分自身へのjoinは禁止
                 var pushItem = DDShared.getFromCopyByIndex(index);
                 if (void 0 === pushItem) return false;
-                if (ctrl.$modelValue[0].table.physicalname == pushItem[0].table.physicalname 
-                    && ctrl.$modelValue[0].column.physicalname == pushItem[0].column.physicalname) return false;
+                
+                //固有条件
+                if (angular.isArray(ctrl.$modelValue))
+                {
+                    if (ctrl.$modelValue[0].table.physicalname == pushItem[0].table.physicalname 
+                        && ctrl.$modelValue[0].column.physicalname == pushItem[0].column.physicalname) return false;
+                }
                 
                 if (angular.isArray(DDShared.getFrom()))
                 {
+                    console.log('is array');
                     DDShared.getFrom().splice(index, 1);
                 }
                 else
                 {
+                    console.log('not array');
                     pushItem = DDShared.getCopyFrom();
                 }
                 
@@ -204,7 +210,15 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 }
                 else
                 {
-                    ctrl.$modelValue.push(pushItem[0]);
+                    console.log(pushItem);
+                    if (angular.isArray(pushItem))
+                    {
+                        ctrl.$modelValue.push(pushItem[0]);
+                    }
+                    else
+                    {
+                        ctrl.$modelValue.push(pushItem);
+                    }
                 }
 
                 if (ctrl.$modelValue.length > 1) 

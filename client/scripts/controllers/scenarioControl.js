@@ -176,4 +176,9 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
         return items.isJoin;
     };
 
+    $scope.removeItem = function(index)
+    {
+        $scope.conditions.splice(index, 1);
+    };
+
 }]);
