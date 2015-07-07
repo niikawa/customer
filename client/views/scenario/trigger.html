@@ -60,13 +60,12 @@
                                         <label class="btn btn-default" ng-model="item.where" btn-radio="'OR'" uncheckable>または</label>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="panel-footer">
-                                <div drop-join-directive ng-model="conditions">
+                                
+                                <div ng-if="isJoin(item)" drop-join-directive ng-model="item">
                                     <div class="drop-join-long"><p>まとめる条件をドロップしてください</p></div>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
