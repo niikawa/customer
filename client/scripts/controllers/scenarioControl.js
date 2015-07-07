@@ -178,7 +178,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
 
     $scope.removeItem = function(index)
     {
-        $scope.actionList.push($scope.conditions[index]);
+        $scope.columnList.push($scope.conditions[index]);
         $scope.conditions.splice(index, 1);
     };
 
