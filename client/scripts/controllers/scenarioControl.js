@@ -192,5 +192,10 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
     {
         $scope.conditions.splice(index, 1);
     };
+    
+    $scope.decision = function()
+    {
+        
+    };
 
 }]);
