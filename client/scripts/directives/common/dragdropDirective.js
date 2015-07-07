@@ -188,8 +188,13 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 var isModelArray = false;
                 if (angular.isArray(ctrl.$modelValue))
                 {
-                    if (ctrl.$modelValue[0].table.physicalname == pushItem[0].table.physicalname 
-                        && ctrl.$modelValue[0].column.physicalname == pushItem[0].column.physicalname) return false;
+                    //画面別
+                    if (ctrl.$modelValue[0].hasOwnProperty('table') 
+                        && ctrl.$modelValue[0].hasOwnProperty('column') )
+                    {
+                        if (ctrl.$modelValue[0].table.physicalname == pushItem[0].table.physicalname 
+                            && ctrl.$modelValue[0].column.physicalname == pushItem[0].column.physicalname) return false;
+                    }
                     isModelArray = true;
                 }
                 
