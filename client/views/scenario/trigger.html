@@ -47,11 +47,10 @@
                             
                             <!-- ここからループさせるのがよさげ -->
                             
-                            <div class="panel-heading">{{condition.logicalname}}
-                                <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
-                            </div>
                             <div class="panel-body">
                                 
+                                <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
+                                {{condition.logicalname}}が
                                 <section>{{condition.description}}</section>
 
                                 <condition-directive condition-append="condition"></condition-directive>
@@ -63,22 +62,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-heading">{{condition.logicalname}}
-                                <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
-                            </div>
-                            <div class="panel-body">
-                                
-                                <section>{{condition.description}}</section>
-
-                                <condition-directive condition-append="condition"></condition-directive>
-                                
-                                <div class="col-md-12 center">
-                                    <div class="btn-group" ng-if="!$last">
-                                        <label class="btn btn-default" ng-model="condition.where" btn-radio="'AND'" uncheckable>かつ</label>
-                                        <label class="btn btn-default" ng-model="condition.where" btn-radio="'OR'" uncheckable>または</label>
-                                    </div>
-                                </div>
-                                
+                            
                             </div>
                             <div class="panel-footer">
                                 <div drop-join-directive ng-model="condition">
