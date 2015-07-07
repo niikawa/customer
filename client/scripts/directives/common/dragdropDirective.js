@@ -144,6 +144,8 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
         }
     };
 }]);
+
+//完全に画面（データ依存）のため使い回しはできない
 myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
 {
     return {
@@ -211,24 +213,20 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 {
                     if (!isModelArray)
                     {
-                        // var originModel = ctrl.$modelValue;
-                        // ctrl.$modelValue = [];
-                        // ctrl.$modelValue.push(originModel);
-                        
-                        var test = [];
-                        test.push(ctrl.$modelValue);
-                        test.push(pushItem);
-                        console.log('test');
-                        console.log(test);
-                        ctrl.$modelValue = test;
-                    }
-                    if (angular.isArray(pushItem))
-                    {
-                        ctrl.$modelValue.push(pushItem[0]);
+                        var mergeItems = [];
+                        mergeItems.push(ctrl.$modelValue);
+                        mergeItems.push(pushItem);
                     }
                     else
                     {
-                        ctrl.$modelValue.push(pushItem);
+                        if (angular.isArray(pushItem))
+                        {
+                            ctrl.$modelValue.push(pushItem[0]);
+                        }
+                        else
+                        {
+                            ctrl.$modelValue.push(pushItem);
+                        }
                     }
                 }
 
@@ -242,7 +240,7 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 }
                 
                 scope.$$phase || scope.$apply();
-                console.log(ctrl.$modelValue);
+                scope.$emit('dropJoinItemComplete', mergeItems);
                 console.log('drop join complete');
             });
         }

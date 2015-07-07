@@ -120,6 +120,20 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
         },true);
         
     }
+    function setEventListeners()
+    {
+        $scope.$on('dropJoinItemComplete', function(event, data)
+        {
+            event.stopPropagation();
+            $scope.conditions = data;
+            // angular.forEach($scope.showConditions, function(v, k)
+            // {
+            //     console.log(v.length);
+            //     if (1 === v.length) v.isJoin = false;
+            // });
+        });
+        
+    }
     
     /**
      * 初期処理
@@ -132,6 +146,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
         getInitializeData();
         setValidation();
         setWatchItems();
+        setEventListeners();
     };
     
     $scope.clear = function()
