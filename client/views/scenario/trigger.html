@@ -75,9 +75,9 @@
             <div class="col-md-12 col-sm-12">
                 
                 <ul class="list-group" >
-                    <li class="list-group-item fixed-60" ng-repeat="item in decisionList">
-                        {{item}}
-                        <span type="button" class="label-close" ng-click="removeColumn($index)">&times;</span>
+                    <li class="list-group-item fixed-60" ng-repeat="(i,item) in decisionList">
+                        <span class="label label-default">条件{{i}}</span>{{item}}
+                        <button type="button" class="close-button-right" ng-click="deleteItem($index)"><i class="fa fa-times"></i></button>
                     </li>
                 </ul>
             </div>
