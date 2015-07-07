@@ -124,8 +124,11 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
     {
         $scope.$on('dropJoinItemComplete', function(event, data)
         {
+            console.log(data);
             event.stopPropagation();
             $scope.conditions = data;
+            $scope.$$phase || $scope.$apply();
+            
             // angular.forEach($scope.showConditions, function(v, k)
             // {
             //     console.log(v.length);
