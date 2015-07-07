@@ -184,10 +184,12 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 if (void 0 === pushItem) return false;
                 
                 //固有条件
+                var isModelArray = false;
                 if (angular.isArray(ctrl.$modelValue))
                 {
                     if (ctrl.$modelValue[0].table.physicalname == pushItem[0].table.physicalname 
                         && ctrl.$modelValue[0].column.physicalname == pushItem[0].column.physicalname) return false;
+                    isModelArray = true;
                 }
                 
                 if (angular.isArray(DDShared.getFrom()))
@@ -210,6 +212,7 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 }
                 else
                 {
+                    console.log(ctrl.$modelValue);
                     console.log(pushItem);
                     if (angular.isArray(pushItem))
                     {
