@@ -181,11 +181,11 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
                 $scope.columnList = [];
                 angular.forEach(response.data.column, function(v, k)
                 {
-                    v.isJoin = false;
+                    v.isJoin = true;
                     v.selectedCondition = {};
                     var array = [];
                     array.push(v);
-                    array.isJoin = false;
+                    array.isJoin = true;
                     $scope.columnList.push(array);
                 });
             });
