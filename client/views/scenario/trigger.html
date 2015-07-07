@@ -49,13 +49,7 @@
                             </div>
                             <div class="panel-body">
                                 
-                                <div class="card-cell-left">
-                                    <section>{{condition.description}}</section>
-                                </div>
-                                
-                                <div ng-if="!isJoin(items)" class="card-cell-right" drop-join-directive ng-model="items">
-                                    <div class="drop-join"></div>
-                                </div>
+                                <section>{{condition.description}}</section>
 
                                 <condition-directive condition-append="condition"></condition-directive>
                                 
@@ -64,6 +58,12 @@
                                         <label class="btn btn-default" ng-model="condition.where" btn-radio="'AND'" uncheckable>かつ</label>
                                         <label class="btn btn-default" ng-model="condition.where" btn-radio="'OR'" uncheckable>または</label>
                                     </div>
+                                </div>
+                                
+                            </div>
+                            <div class="panel-footer">
+                                <div ng-if="isJoin(items)" drop-join-directive ng-model="items">
+                                    <div class="drop-join-long"><p>まとめる条件をドロップしてください</p></div>
                                 </div>
                             </div>
                         </div>
