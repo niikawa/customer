@@ -203,5 +203,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
         $scope.decisionList.push(condtionString);
         $scope.conditions = [];
     };
+    
+    
 
 }]);
