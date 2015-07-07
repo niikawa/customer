@@ -334,7 +334,8 @@ h4 > input {
   position: fixed;
 }
 
-.center {text-align:center; margin-bottom: 10px;}
+.center {text-align:center;}
+.center-b {text-align:center; margin-bottom: 10px;}
 
 /*-----------------------------------------------*/
 /* box area

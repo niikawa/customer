@@ -163,6 +163,8 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
     {
         Scenario.getActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
         Scenario.getActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
+        
+        var conditionInfo = Scenario.getConditionDoc($scope.conditions);
 
         console.log($scope.scenario);
     };
@@ -204,6 +206,9 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
         $scope.conditions = [];
     };
     
-    
+    $scope.removeDecisionList = function(index)
+    {
+        $scope.decisionList.splice(index, 1);
+    };
 
 }]);
