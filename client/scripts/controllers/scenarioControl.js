@@ -29,6 +29,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.intervalCondition;
         $scope.intervalConditionList = Scenario.intervalConditionList;
         
+        $scope.specificInfo = {};
         $scope.decisionList = [];
     }
     
@@ -86,12 +87,12 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             $scope.ifList = response.ifLayout;
             if (1 === pageProp.type)
             {
+                
             }
             else if (2 === pageProp.type)
             {
                 $scope.actionList =  response.specificInfo;
             }
-            
         });
         
         if (2 === pageProp.mode)
@@ -124,19 +125,6 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     }
     function setEventListeners()
     {
-        $scope.$on('dropJoinItemComplete', function(event, data)
-        {
-            console.log(data);
-            event.stopPropagation();
-            $scope.$$phase || $scope.$apply();
-            
-            // angular.forEach($scope.showConditions, function(v, k)
-            // {
-            //     console.log(v.length);
-            //     if (1 === v.length) v.isJoin = false;
-            // });
-        });
-        
     }
     
     /**
@@ -213,7 +201,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             conditionList: Scenario.getConditionDoc($scope.conditions)
         };
         
-        var params = {scenario: $scope.scenario, doc: doc};
+        var params = {scenario: $scope.scenario, specificInfo: $scope.specificInfo, doc: doc};
 
         console.log(params);
         

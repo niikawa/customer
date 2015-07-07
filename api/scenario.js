@@ -97,9 +97,11 @@ function create(req, res)
         {
             console.log('scenario create doc faild');
             console.log(err);
-            console.log(params);
+            console.log(req.body);
             res.status(510).send('scenario crate faild');
         }
+        
+        console.log(doc);
         
         var commonColumns = model.getInsCommonColumns();
         var insertData = model.merge(req.body.scenario, commonColumns);
