@@ -194,8 +194,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
     
     $scope.isJoin = function(items)
     {
-        console.log(items);
-        return items.isJoin;
+        return items[0].isJoin;
     };
 
     $scope.removeItem = function(index)
