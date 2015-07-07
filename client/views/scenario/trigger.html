@@ -31,47 +31,39 @@
                             refine-directive refine-item="columnList" keyword="columnSearch" name-propertie="logicalname|description" >
                     </div>
                     <ul class="list-group" >
-                        <li class="list-group-item fixed-50" ng-repeat="item in columnList">
+                        <li class="list-group-item fixed-60" ng-repeat="item in columnList">
                             <div class="card-cell-left">
                                 {{item.logicalname}}
                                 <section>{{item.description}}</section>
                             </div>
                             <div class="card-cell-right">
-                                <i class="fa fa-plus-square"></i>
+                                <button class="btn-clear" ng-click="moveCondition(item)"><i class="fa fa-plus-square fa-2x"></i></button>
                             </div>
                         </li>
                     </ul>
                 </div>
             </div>
                 
-            <div class="col-md-6 col-sm-6" ng-model='conditions' drop-directive drop-area-key="" >
-                
+            <div class="col-md-6 col-sm-6" >
                 <div class="box-gray mh">
-                    <div ng-repeat="condition in conditions track by $index" drag-item-directive dragindex="$index">
-                        
-                        
+                    
                         <div class="panel panel-success" >
                             
-                            <!-- ここからループさせるのがよさげ -->
-                            
-                            <div class="panel-body" ng-repeat="item in condition track by $index">
+                            <div class="panel-body">
                                 
-                                <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
-                                {{item.logicalname}}が
-                                <condition-directive condition-append="item"></condition-directive>
-                                
-                                <pre>{{$parent.$last}}</pre>
-                                <pre>{{$last}}</pre>
+                                <button type="button" class="close" ng-click="removeItem()">&times;</button>
+                                {{conditions.logicalname}}が
+                                <condition-directive condition-append="conditions"></condition-directive>
                                 
                                 <div class="col-md-12 center">
-                                    <div class="btn-group" ng-if="!$parent.$last||!$last">
-                                        <label class="btn btn-default" ng-model="item.where" btn-radio="'AND'" uncheckable>かつ</label>
-                                        <label class="btn btn-default" ng-model="item.where" btn-radio="'OR'" uncheckable>または</label>
+                                    <div class="btn-group">
+                                        <label class="btn btn-default" ng-model="conditions.where" btn-radio="'AND'" uncheckable>かつ</label>
+                                        <label class="btn btn-default" ng-model="conditions.where" btn-radio="'OR'" uncheckable>または</label>
                                     </div>
                                 </div>
                                 
-                                <div class="col-md-12 center" ng-if="isJoin(condition)" drop-join-directive ng-model="condition">
-                                    <div class="drop-join-long"><p>まとめる条件をドロップしてください</p></div>
+                                <div class="col-md-12 center" >
+                                    <button class="btn btn-default">決定</button>
                                 </div>
                             </div>
                             

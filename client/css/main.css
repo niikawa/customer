@@ -411,15 +411,19 @@ div .card-cell-left {
   width: 80%;
 }
 
-.fixed-50 {
-  height: 50px;
+.fixed-60 {
+  height: 60px;
 }
 
+div .card-cell-right,
 div .card-cell-right-b {
-  vertical-align: button;
+  text-align:right;
   height: 100%;
   width: 20%;
   float: right;
+}
+div .card-cell-right-b {
+  vertical-align: button;
 }
 
 /*-----------------------------------------------*/

@@ -196,6 +196,11 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
     {
         return items[0].isJoin;
     };
+    
+    $scope.moveCondition = function(item)
+    {
+        $scope.conditions = item;
+    };
 
     $scope.removeItem = function(index)
     {
