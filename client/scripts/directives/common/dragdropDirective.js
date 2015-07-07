@@ -239,7 +239,9 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 {
                     ctrl.$modelValue.isJoin = false;
                 }
+                
                 scope.$$phase || scope.$apply();
+                console.log(ctrl.$modelValue);
                 console.log('drop join complete');
             });
         }
