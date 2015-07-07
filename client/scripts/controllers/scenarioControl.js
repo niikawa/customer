@@ -88,7 +88,6 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
             else if (2 === pageProp.type)
             {
                 $scope.actionList =  response.specificInfo;
-                $scope.conditions = [];
             }
             
         });
@@ -151,6 +150,7 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
     
     $scope.show = function(targetName)
     {
+        $scope.conditions = [];
         if (actionName == targetName)
         {
             $scope.isShowExtraction = !$scope.isShowExtraction;
@@ -167,7 +167,6 @@ function ($scope, $routeParams, Modal, Shared, Scenario)
                     v.isJoin = false;
                     v.selectedCondition = {};
                 });
-                console.log(response.data);
             });
         }
     };
