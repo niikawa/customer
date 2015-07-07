@@ -82,7 +82,7 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
             var last = list.length - 1;
             angular.forEach(list, function(item, key)
             {
-                condition = item.logicalname + 'が[' + item.condition.value1;
+                condition += item.logicalname + 'が[' + item.condition.value1;
                 if ('' !== item.condition.value2)
                 {
                     condition += ',' + item.condition.value2;
