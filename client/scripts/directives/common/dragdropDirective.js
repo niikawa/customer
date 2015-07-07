@@ -186,6 +186,7 @@ myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
                 
                 //固有条件
                 var isModelArray = false;
+                console.log(ctrl.$modelValue);
                 if (angular.isArray(ctrl.$modelValue))
                 {
                     //画面別

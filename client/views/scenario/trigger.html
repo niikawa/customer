@@ -50,7 +50,7 @@
                             <div class="panel-body" ng-repeat="item in condition">
                                 
                                 <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
-                                {{condition.logicalname}}が
+                                {{item.logicalname}}が
 
                                 <condition-directive condition-append="item"></condition-directive>
                                 
