@@ -370,11 +370,13 @@ exports.initializeData = function(req, res)
             {
                 if ('trigger' === req.params.type)
                 {
-                    var TriigerScenario = require("./triggerscenario");
-                    TriigerScenario.getByScenarioId(req.params.id, function(err, data)
-                    {
-                        callback(err, data);
-                    });
+                    //他ソースのものを実行すると実行結果が戻る前に
+                    //completeしてしまうため、直接SQLを実行する
+                    var col = "trigger_scenario_id, scenario_id, after_event_occurs_num, inoperative_num, scenario_action_document_id";
+                    var where = "delete_flag = 0 AND scenario_id = @scenario_id";
+                    var qObj = model.getQueryObject(col, tableName, where, '', '');
+                    qObj.request.input('scenario_id', model.db.SmallInt, req.params.id);
+                    model.select(qObj, qObj.request, callback);
                 }
                 else if ('schedule' === req.params.type)
                 {
