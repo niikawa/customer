@@ -373,6 +373,11 @@ exports.initializeData = function(req, res)
                     var TriigerScenario = require("./triggerscenario");
                     TriigerScenario.getByScenarioId(req.params.id, function(err, triggerData)
                     {
+                        if (err.length > 0)
+                        {
+                            console.log('trigger scenario is not found');
+                            console.log(req.params.id);
+                        }
                         var scenariodoc = require("./scenariodoc");
                         scenariodoc.getItemByIdForWeb(
                             triggerData[0].scenario_action_document_id, callback);
@@ -398,7 +403,7 @@ exports.initializeData = function(req, res)
             console.log(req.params);
             console.log(err);
         }
-        res.json({segment: items[0], ifLayout: items[1], specificInfo: items[2], target: items[3], doc: items[4]});
+        res.json({segment: items[0], ifLayout: items[1], specificInfo: items[2], target: items[3][0], doc: items[4]});
     });
 };
 

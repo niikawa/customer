@@ -78,6 +78,9 @@ exports.getItemByIdForWeb = function(id, callback)
 {
     Scenario.getItem(id, function(err, doc)
     {
+        console.log('getItemByIdForWeb');
+        console.log(id);
+        console.log(doc);
         callback(err, doc);
     });
 };
