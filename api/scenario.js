@@ -386,6 +386,7 @@ exports.initializeData = function(req, res)
         
     ], function complete(err, items)
     {
+        console.log(items);
         //parallel実行ではnoSQLデータベースの戻りを取得できないため
         //ここで実行させる。
         model.async.waterfall(
