@@ -208,15 +208,34 @@ function update(req, res)
 exports.remove = function(req, res)
 {
     var id = req.params.id;
-    model.removeById(id, function(err, data)
+    
+    var TriigerScenario = require("./triggerscenario");
+    TriigerScenario.getByScenarioId(id, function(err, triggerData)
     {
         if (err.length > 0)
         {
+            console.log('scenario remove faild');
+            console.log(id);
             console.log(err);
-            res.status(510).send('object not found');
         }
-        res.status(200).send('remove ok');
+        
+        if (0 === triggerData.length)
+        {
+            console.log('scenario trigger data not found');
+            console.log(id);
+        }
+        
+        model.removeById(id, function(err, data)
+        {
+            if (err.length > 0)
+            {
+                console.log(err);
+                res.status(510).send('object not found');
+            }
+            res.status(200).send('remove ok');
+        });
     });
+    
 };
 
 /**

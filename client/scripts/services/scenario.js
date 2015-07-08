@@ -39,6 +39,11 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
                 method: 'POST',
                 url: 'scenario/save',
             },
+            remove:
+            {
+                method: 'DELETE',
+                url: 'scenario/:type/remove/:id',
+            },
         });
         
         scenarioServices.getPageProp = function(type, id)

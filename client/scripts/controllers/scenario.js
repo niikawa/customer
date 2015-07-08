@@ -45,7 +45,13 @@ function ($scope, $routeParams, Shared, Utility, Scenario)
         if (void 0 === index || isNaN(parseInt(index, 10))) return false;
         var id = $scope.scenarioList[index].scenario_id;
         var name = $scope.scenarioList[index].scenario_name;
-        Scenario.resource.delete({id: id}).$promise.then(function(response)
+        var params = 
+        {
+            type:$routeParams.scenario,
+            id: id,
+        };
+
+        Scenario.resource.remove(params).$promise.then(function(response)
         {
             Utility.infoSticky(name+'<br>'+'を削除しました。');
             $scope.scenarioList.splice(index, 1);
