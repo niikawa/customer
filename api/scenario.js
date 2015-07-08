@@ -196,6 +196,8 @@ function create(req, res)
 function update(req, res)
 {
     console.log('scenario update start');
+    
+    var TriigerScenario = require("./triggerscenario");
     scenariodoc.saveItemForWeb(false, req.body.doc, function(err, doc)
     {
         if (err)
@@ -209,6 +211,31 @@ function update(req, res)
         var commonColumns = model.getUpdCommonColumns();
         model.async.waterfall(
         [
+            function(callback)
+            {
+                TriigerScenario.getByScenarioId(req.body.scenario.scenario_id, function(err, data)
+                {
+                    if (err.length > 0)
+                    {
+                        console.log('trigger scenario is not found');
+                        console.log(err);
+                    }
+                    callback(data);
+                });
+            },
+            function(trigger, callback)
+            {
+                if (0 === trigger.length)
+                {
+                    
+                }
+                else
+                {
+                    var doc = req.body.doc;
+                    doc.id = trigger[0].scenario_action_document_id;
+                    scenariodoc.saveItemForWeb(false, doc, callback);
+                }
+            },
             function(callback)
             {
                 var updateData = model.merge(req.body.scenario, commonColumns);
@@ -240,7 +267,6 @@ function update(req, res)
                 request.input('after_event_occurs_num', model.db.Int, updateData.after_event_occurs_num);
                 request.input('inoperative_num', model.db.Int, updateData.inoperative_num);
 
-                var TriigerScenario = require("./triggerscenario");
                 TriigerScenario.updateById(updateData, request, callback);
             }
             
