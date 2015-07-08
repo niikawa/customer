@@ -163,8 +163,10 @@ function create(req, res)
                 
                 request.input('scenario_id', model.db.Int, insertData.scenario_id);
                 request.input('after_event_occurs_num', model.db.Int, insertData.after_event_occurs_num);
-                request.input('inoperative_time', model.db.Int, insertData.inoperative_time);
+                request.input('inoperative_num', model.db.Int, insertData.inoperative_num);
                 request.input('scenario_action_document_id', model.db.NVarChar, insertData.scenario_action_document_id);
+                
+                console.log(insertData);
                 
                 model.insert('M_TRIGGER_SCENARIO', insertData, request, function(err, date)
                 {
