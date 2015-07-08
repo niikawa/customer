@@ -129,6 +129,8 @@ function create(req, res)
                 console.log(err);
                 res.status(510).send('object not found');
             }
+            
+            console.log(date);
 
             res.status(200).send('insert ok');
         });

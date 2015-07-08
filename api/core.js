@@ -38,6 +38,16 @@ core.prototype.getRequest = function()
     return new ms.Request();
 };
 
+core.prototype.tran = function(callback)
+{
+    var ms = require('mssql');
+    var tran = new ms.Transaction();
+
+    var request = new ms.Request();
+    
+    
+};
+
 core.prototype.getInsCommonColumns = function()
 {
     var date =  moment().format("YYYY/MM/DD HH:mm:ss");
@@ -146,7 +156,7 @@ core.prototype.insert = function(table, data, request, callback)
         dataList.push(item);
     }
 
-    var sql = 'INSERT INTO ' + this.modelName + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
+    var sql = 'INSERT INTO ' + table + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
     
     this.execute(sql, request, callback);
 };
