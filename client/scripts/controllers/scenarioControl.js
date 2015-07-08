@@ -5,7 +5,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     var pageProp = Scenario.getPageProp($routeParams.scenario, $routeParams.id);
     var id = $routeParams.id;
     var actionName = '';
-    
+    var selectConditionList = [];
     /**
      * scope初期化用
      */
@@ -165,11 +165,13 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         var push = {};
         angular.copy(item, push);
         $scope.conditions.push(push);
+        selectConditionList.push(push);
     };
 
     $scope.removeItem = function(index)
     {
         $scope.conditions.splice(index, 1);
+        selectConditionList.splice(index, 1);
     };
     
     $scope.decision = function()
@@ -196,11 +198,10 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
         Scenario.setActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
 
-        var conditionList = Scenario.getConditionDoc($scope.conditions);
         var doc = 
         {
             actionName: actionName,
-            conditionList: conditionList
+            conditionList: Scenario.getConditionDoc(selectConditionList)
         };
         
         var params = {scenario: $scope.scenario, specificInfo: $scope.specificInfo, doc: doc};
