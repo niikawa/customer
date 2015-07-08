@@ -268,7 +268,7 @@ function update(req, res)
     ], function(err)
     {
         console.log(err);
-        if (null != err)
+        if (err.length > 0)
         {
             console.log(err);
             res.status(510).send('object not found');

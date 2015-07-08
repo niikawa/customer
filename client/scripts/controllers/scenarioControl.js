@@ -107,12 +107,12 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         
         $scope.specificInfo = initData.specificInfo.specific;
         console.log(initData.specificInfo.doc);
-        $scope.activeName = initData.specificInfo.doc.actionName;
         Scenario.resource.action({name: $scope.activeName}).$promise.then(function(response)
         {
             actionName = $scope.activeName;
             $scope.isShowExtraction = true;
             $scope.columnList = response.data.column;
+            $scope.activeName = initData.specificInfo.doc.actionName;
             
             var createConditionList = [];
             angular.forEach(initData.specificInfo.doc.conditionList, function(conditionItem)
