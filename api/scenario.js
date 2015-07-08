@@ -107,7 +107,6 @@ function create(req, res)
             {
                 var commonColumns = model.getInsCommonColumns();
                 var insertData = model.merge(req.body.scenario, commonColumns);
-                insertData.status = 1;
                 var request = model.getRequest();
                 request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
                 request.input('create_by', model.db.Int, req.session.userId);
@@ -132,7 +131,7 @@ function create(req, res)
                         res.status(510).send('object not found');
                     }
                             
-                    var col = "select MAX(scenario_id) as scenario_id";
+                    var col = "MAX(scenario_id) as scenario_id";
                     var where = "delete_flag = 0 ";
                     var qObj = model.getQueryObject(col, tableName, where, '', '');
                     model.select(qObj, qObj.request, function(err, data)
@@ -151,12 +150,11 @@ function create(req, res)
             },
             function(data, callback)
             {
-                
                 var commonColumns = model.getInsCommonColumns();
                 var insertData = model.merge(req.body.specificInfo, commonColumns);
-                var request = model.getRequest();
                 insertData.scenario_action_document_id = doc.id;
                 
+                var request = model.getRequest();
                 request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
                 request.input('create_by', model.db.Int, req.session.userId);
                 request.input('create_date', model.db.NVarChar, insertData.create_date);
@@ -164,7 +162,7 @@ function create(req, res)
                 request.input('update_date', model.db.NVarChar, insertData.update_date);
                 
                 request.input('scenario_id', model.db.Int, insertData.scenario_id);
-                request.input('event_after_days', model.db.Int, insertData.event_after_days);
+                request.input('after_event_occurs_num', model.db.Int, insertData.after_event_occurs_num);
                 request.input('inoperative_time', model.db.Int, insertData.inoperative_time);
                 request.input('scenario_action_document_id', model.db.NVarChar, insertData.scenario_action_document_id);
                 
