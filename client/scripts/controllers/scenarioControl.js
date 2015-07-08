@@ -101,13 +101,13 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         });
     }
     
-    function editInitialize(response)
+    function editInitialize(initData)
     {
-        $scope.scenario = response.target;
+        $scope.scenario = initData.target;
         
-        $scope.specificInfo = response.specificInfo.specific;
-        console.log(response.specificInfo.doc);
-        $scope.activeName = response.specificInfo.doc.actionName;
+        $scope.specificInfo = initData.specificInfo.specific;
+        console.log(initData.specificInfo.doc);
+        $scope.activeName = initData.specificInfo.doc.actionName;
         Scenario.resource.action({name: $scope.activeName}).$promise.then(function(response)
         {
             actionName = $scope.activeName;
@@ -115,7 +115,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             $scope.columnList = response.data.column;
             
             var createConditionList = [];
-            angular.forEach(response.specificInfo.doc.conditionList, function(condition)
+            angular.forEach(initData.specificInfo.doc.conditionList, function(condition)
             {
                 angular.forEach($scope.columnList, function(info)
                 {
