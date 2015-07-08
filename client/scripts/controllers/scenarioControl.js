@@ -96,19 +96,26 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             else if (2 === pageProp.type)
             {
                 $scope.actionList =  response.specific;
-                if (isEdit)
-                {
-                    $scope.scenario = response.target;
-                    $scope.specificInfo = response.specificInfo.specific;
-                }
-                else
-                {
-                    
-                }
+                if (isEdit) editInitialize(response);
             }
-            
-            
         });
+    }
+    
+    function editInitialize(response)
+    {
+        $scope.scenario = response.target;
+        
+        $scope.specificInfo = response.specificInfo.specific;
+        console.log(response.specificInfo.doc);
+        angular.forEach($scope.actionList, function(v, k)
+        {
+            if (v.physicalname === response.specificInfo.actionName)
+            {
+                v.isPush = true;
+                return false;
+            }
+        });
+
     }
     function setWatchItems()
     {
