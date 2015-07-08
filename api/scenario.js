@@ -229,6 +229,10 @@ function update(req, res)
         function(callback)
         {
             //scenarioマスタを更新
+            delete req.body.scenario.delete_flag;
+            delete req.body.scenario.create_by;
+            delete req.body.scenario.create_date;
+            
             var updateData = model.merge(req.body.scenario, commonColumns);
             var request = model.getRequest();
             request.input('update_by', model.db.Int, req.session.userId);
