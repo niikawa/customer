@@ -115,13 +115,15 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             $scope.columnList = response.data.column;
             
             var createConditionList = [];
-            angular.forEach(initData.specificInfo.doc.conditionList, function(condition)
+            angular.forEach(initData.specificInfo.doc.conditionList, function(conditionItem)
             {
                 angular.forEach($scope.columnList, function(info)
                 {
                     console.log(info);
-                    if (condition.physicalname == info.physicalname)
+                    if (conditionItem.physicalname == info.physicalname)
                     {
+                        info.condition = conditionItem.condition;
+                        info.selectedCondition = conditionItem.selectedCondition;
                         createConditionList.push(info);
                         return false;
                     }
