@@ -54,3 +54,8 @@ exports.getByScenarioId = function(scenario_id, callback)
         callback(err, data);
     });
 };
+
+exports.remove = function(id, callback)
+{
+    
+};

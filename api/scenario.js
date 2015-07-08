@@ -207,11 +207,13 @@ function update(req, res)
  */
 exports.remove = function(req, res)
 {
+    console.log('scenario remove exexute');
     var id = req.params.id;
     
     var TriigerScenario = require("./triggerscenario");
     TriigerScenario.getByScenarioId(id, function(err, triggerData)
     {
+        console.log(triggerData);
         if (err.length > 0)
         {
             console.log('scenario remove faild');
@@ -225,15 +227,39 @@ exports.remove = function(req, res)
             console.log(id);
         }
         
-        model.removeById(id, function(err, data)
-        {
-            if (err.length > 0)
+        model.async.parallel(
+        [
+            //トリガー情報削除
+            function(callback)
             {
-                console.log(err);
-                res.status(510).send('object not found');
+                TriigerScenario.remove(
+                    triggerData[0].trigger_scenario_id , callback);
+            },
+            
+            //シナリオ情報削除
+            function(callback)
+            {
+                model.removeById(id, callback);
+            },
+            
+            //シナリオdox削除
+            function(callback)
+            {
+                var scenariodoc = require("./scenariodoc");
+                scenariodoc.removeItemForWeb(
+                    triggerData[0].scenario_action_document_id, callback);
             }
-            res.status(200).send('remove ok');
-        });
+            
+        ], function complete(err, items)
+            {
+                if (null !== err || err.length > 0)
+                {
+                    console.log(err);
+                    res.status(510).send('scenario remove faild');
+                }
+                res.status(200).send('remove ok');
+            }
+        );
     });
     
 };
