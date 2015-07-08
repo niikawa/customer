@@ -183,7 +183,7 @@ function create(req, res)
         ],
         function(err)
         {
-            if (err.length > 0)
+            if (null != err)
             {
                 console.log(err);
                 res.status(510).send('object not found');
