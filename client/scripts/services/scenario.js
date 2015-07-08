@@ -107,6 +107,7 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
         
         scenarioServices.getConditionDoc = function(list)
         {
+            console.log(list);
             var doc = [];
             angular.forEach(list, function(item, key)
             {
