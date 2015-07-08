@@ -93,17 +93,9 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             {
                 $scope.actionList =  response.specificInfo;
             }
+            
+            
         });
-        
-        if (2 === pageProp.mode)
-        {
-            /* サーバーサイド実装後に開放
-            Scenario.resource.get({id: id}).$promise.then(function(response)
-            {
-                $scope.segmentList = response.data;
-            });
-            */
-        }
     }
     function setWatchItems()
     {
