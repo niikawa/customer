@@ -81,6 +81,8 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     
     function getInitializeData()
     {
+        
+        
         Scenario.resource.initializeData({type: $routeParams.scenario}).$promise.then(function(response)
         {
             $scope.segmentList = response.segment;
@@ -190,6 +192,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
         Scenario.setActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
 
+        console.log(selectConditionList);
         var doc = 
         {
             actionName: actionName,
