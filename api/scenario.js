@@ -197,6 +197,7 @@ function create(req, res)
 function update(req, res)
 {
     
+    res.status(200).send('update ok');
 }
 
 /**
