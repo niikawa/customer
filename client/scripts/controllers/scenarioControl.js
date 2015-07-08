@@ -109,7 +109,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         console.log(response.specificInfo.doc);
         angular.forEach($scope.actionList, function(v, k)
         {
-            if (v.physicalname === response.specificInfo.actionName)
+            if (v.physicalname === response.specificInfo.doc.actionName)
             {
                 v.isPush = true;
                 return false;
