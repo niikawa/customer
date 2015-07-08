@@ -1,6 +1,7 @@
 var crypto = require('crypto');
 var async = require('async');
 var Core = require('./core');
+var scenariodoc = require("./scenariodoc");
 
 /** テーブル名 */
 var tableName = 'M_SCENARIO';
@@ -90,7 +91,6 @@ exports.save = function(req, res)
 
 function create(req, res)
 {
-    var scenariodoc = require("./scenariodoc");
     scenariodoc.saveItemForWeb(true, req.body.doc, function(err, doc)
     {
         if (err)
@@ -382,7 +382,6 @@ exports.initializeData = function(req, res)
                         var TriigerScenario = require("./triggerscenario");
                         TriigerScenario.getByScenarioId(req.params.id, function(err, data)
                         {
-                            var scenariodoc = require("./scenariodoc");
                             scenariodoc.getItemByIdForWeb(data[0].scenario_action_document_id, function(err, doc)
                             {
                                 callback(null, {specific: data, doc: doc});

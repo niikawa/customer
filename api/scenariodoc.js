@@ -76,7 +76,6 @@ exports.saveItem = function(req, res)
 
 exports.getItemByIdForWeb = function(id, callback)
 {
-    Scenario.init();
     Scenario.getItem(id, function(err, doc)
     {
         callback(err, doc);
@@ -85,7 +84,6 @@ exports.getItemByIdForWeb = function(id, callback)
 
 exports.saveItemForWeb = function(isCrate ,parameters, callback)
 {
-    Scenario.init();
     if (isCrate)
     {
         Scenario.addItem(parameters, callback);
