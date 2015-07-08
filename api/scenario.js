@@ -239,6 +239,10 @@ exports.remove = function(req, res)
                     TriigerScenario.remove(
                         triggerData[0].trigger_scenario_id , callback);
                 }
+                else
+                {
+                    callback();
+                }
             },
             
             //シナリオ情報削除
@@ -255,6 +259,10 @@ exports.remove = function(req, res)
                     var scenariodoc = require("./scenariodoc");
                     scenariodoc.removeItemForWeb(
                         triggerData[0].scenario_action_document_id, callback);
+                }
+                else
+                {
+                    callback();
                 }
             }
             
