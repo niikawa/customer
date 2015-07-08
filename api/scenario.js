@@ -410,10 +410,8 @@ exports.initializeData = function(req, res)
                     ifLayout: items.ifLayout,
                     specificInfo: items.action, 
                     target: items.target[0], 
-                    specificData: items2
+                    specificData: items2.specificData
                 });
-            
-            
         });
         
         // if (void 0 !== req.params.id)

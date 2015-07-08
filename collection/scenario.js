@@ -92,6 +92,8 @@ Scenario.prototype = {
 
     getItem: function (itemId, callback) {
         var self = this;
+        
+        console.log(self.collection);
 
         var querySpec = {
             query: 'SELECT * FROM root r WHERE r.id=@id',
