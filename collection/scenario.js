@@ -67,7 +67,7 @@ Scenario.prototype = {
     {
         var self = this;
 
-        self.getItem(data.scenario_action_document_id, function (err, doc) {
+        self.getItem(data.id, function (err, doc) {
             if (err) {
                 callback(err);
 

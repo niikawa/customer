@@ -219,25 +219,25 @@ function update(req, res)
                     {
                         console.log('trigger scenario is not found');
                         console.log(err);
+                        res.status(510).send('scenario update faild');
+                        
                     }
                     callback(data);
                 });
             },
             function(trigger, callback)
             {
-                if (0 === trigger.length)
+                console.log(trigger);
+                var doc = req.body.doc;
+                doc.id = trigger[0].scenario_action_document_id;
+                scenariodoc.saveItemForWeb(false, doc, function(err, doc)
                 {
-                    
-                }
-                else
-                {
-                    var doc = req.body.doc;
-                    doc.id = trigger[0].scenario_action_document_id;
-                    scenariodoc.saveItemForWeb(false, doc, callback);
-                }
+                    callback(err);
+                });
             },
             function(callback)
             {
+                //scenarioマスタを更新
                 var updateData = model.merge(req.body.scenario, commonColumns);
                 var request = model.getRequest();
                 request.input('update_by', model.db.Int, req.session.userId);
@@ -250,12 +250,12 @@ function update(req, res)
                 request.input('scenario_type', model.db.SmallInt, updateData.scenario_type);
                 request.input('status', model.db.SmallInt, updateData.status);
                 request.input('approach', model.db.SmallInt, updateData.approach);
-                request.input('segment_document_id', model.db.NVarChar, updateData.segment_document_id);
 
                 model.updateById(updateData, request, callback);
             },
             function(callback)
             {
+                //トリガーscenarioマスタを更新
                 var updateData = model.merge(req.body.specificInfo, commonColumns);
                 updateData.scenario_id = req.body.scenario.scenario_id;
 
