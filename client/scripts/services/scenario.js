@@ -25,7 +25,7 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
             initializeData:
             {
                 method: 'GET',
-                url: 'scenario/initialize/:type',
+                url: 'scenario/initialize/:type/:id',
                 cache: true,
             },
             action:
