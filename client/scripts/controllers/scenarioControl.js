@@ -107,7 +107,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         
         $scope.specificInfo = initData.specificInfo.specific;
         console.log(initData.specificInfo.doc);
-        Scenario.resource.action({name: $scope.activeName}).$promise.then(function(response)
+        Scenario.resource.action({name: initData.specificInfo.doc.actionName}).$promise.then(function(response)
         {
             actionName = $scope.activeName;
             $scope.isShowExtraction = true;
