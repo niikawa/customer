@@ -351,18 +351,6 @@ exports.initializeData = function(req, res)
                 callback(null, {});
             }
         },
-        //該当情報
-        function(callback)
-        {
-            if (void 0 !== req.params.id)
-            {
-                model.getById(req.params.id, callback);
-            }
-            else
-            {
-                callback(null, {});
-            }
-        },
         //個別情報
         function(callback)
         {
@@ -386,6 +374,18 @@ exports.initializeData = function(req, res)
                 {
                     callback(null, {});
                 }
+            }
+            else
+            {
+                callback(null, {});
+            }
+        },
+        //該当情報
+        function(callback)
+        {
+            if (void 0 !== req.params.id)
+            {
+                model.getById(req.params.id, callback);
             }
             else
             {
