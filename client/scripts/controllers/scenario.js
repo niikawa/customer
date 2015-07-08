@@ -53,7 +53,7 @@ function ($scope, $routeParams, Shared, Utility, Scenario)
 
         Scenario.resource.remove(params).$promise.then(function(response)
         {
-            Utility.infoSticky(name+'<br>'+'を削除しました。');
+            Utility.info(name+'<br>'+'を削除しました。');
             $scope.scenarioList.splice(index, 1);
         });
     };

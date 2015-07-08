@@ -6,7 +6,7 @@ var Core = require('./core');
 
 /** テーブル名 */
 var tableName = 'M_TRIGGER_SCENARIO';
-var pk = 'scenario_id';
+var pk = 'trigger_scenario_id';
 
 var triggerScenario = function triggerScenario()
 {
