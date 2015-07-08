@@ -221,10 +221,12 @@ exports.remove = function(req, res)
             console.log(err);
         }
         
+        var exsitsTrriger = true;
         if (0 === triggerData.length)
         {
             console.log('scenario trigger data not found');
             console.log(id);
+            exsitsTrriger = false:
         }
         
         model.async.parallel(
@@ -232,8 +234,11 @@ exports.remove = function(req, res)
             //トリガー情報削除
             function(callback)
             {
-                TriigerScenario.remove(
-                    triggerData[0].trigger_scenario_id , callback);
+                if (exsitsTrriger)
+                {
+                    TriigerScenario.remove(
+                        triggerData[0].trigger_scenario_id , callback);
+                }
             },
             
             //シナリオ情報削除
@@ -245,9 +250,12 @@ exports.remove = function(req, res)
             //シナリオdox削除
             function(callback)
             {
-                var scenariodoc = require("./scenariodoc");
-                scenariodoc.removeItemForWeb(
-                    triggerData[0].scenario_action_document_id, callback);
+                if (exsitsTrriger)
+                {
+                    var scenariodoc = require("./scenariodoc");
+                    scenariodoc.removeItemForWeb(
+                        triggerData[0].scenario_action_document_id, callback);
+                }
             }
             
         ], function complete(err, items)
