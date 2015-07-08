@@ -152,6 +152,7 @@ function create(req, res)
             {
                 var commonColumns = model.getInsCommonColumns();
                 var insertData = model.merge(req.body.specificInfo, commonColumns);
+                insertData.scenario_id = data.scenario_id;
                 insertData.scenario_action_document_id = doc.id;
                 
                 var request = model.getRequest();
