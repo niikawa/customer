@@ -161,10 +161,11 @@ table caption {text-align:center;}
 table.table-pointer > tbody > tr {
   cursor: pointer;
 }
+/*
 input[type="number"] {
   max-width: 100px;
 }
-
+*/
 @media screen and (min-width: 767px) {
   .vertical-container > form > div > input,
   .vertical-container > form > div > div >input {
