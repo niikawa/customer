@@ -99,8 +99,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 if (isEdit)
                 {
                     $scope.scenario = response.target;
-                    $scope.specificInfo = response.specificInfo;
-                    console.log(response.specificData);
+                    $scope.specificInfo = response.specificInfo.specific;
                 }
                 else
                 {
