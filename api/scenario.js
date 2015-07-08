@@ -241,7 +241,7 @@ exports.remove = function(req, res)
                 }
                 else
                 {
-                    callback();
+                    callback([], []);
                 }
             },
             
@@ -262,7 +262,7 @@ exports.remove = function(req, res)
                 }
                 else
                 {
-                    callback();
+                    callback([], []);
                 }
             }
             

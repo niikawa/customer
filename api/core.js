@@ -248,8 +248,6 @@ core.prototype.execute = function(sql, request, callback)
     // 常時最後によばれる
     request.on('done', function(returnValue)
     {
-        console.log('done');
-        console.log(result);
         callback(errList, result);
     });
 };

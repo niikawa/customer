@@ -57,5 +57,5 @@ exports.getByScenarioId = function(scenario_id, callback)
 
 exports.remove = function(id, callback)
 {
-    
+    model.removeById(id, callback);
 };
