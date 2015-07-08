@@ -313,9 +313,9 @@ exports.initializeData = function(req, res)
 {
     console.log('scenario control initializeData');
     model.async.parallel(
-    [
+    {
         //セグメント情報
-        function(callback)
+        segment: function(callback)
         {
             var table = 'M_SEGMENT';
             var col = 'segment_id, segment_name';
@@ -326,13 +326,13 @@ exports.initializeData = function(req, res)
             model.select(qObj, qObj.request,  function(err, data){callback(null, data)});
         },
         //IF情報
-        function(callback)
+        ifLayout: function(callback)
         {
             var data = [{if_layout_id: 1, if_name: 'デフォルトテンプレート'}];
             callback(null, data);
         },
         //アクション情報
-        function(callback)
+        action: function(callback)
         {
             if ('trigger' === req.params.type)
             {
@@ -351,7 +351,7 @@ exports.initializeData = function(req, res)
                 callback(null, {});
             }
         },
-        function(callback)
+        specific: function(callback)
         {
             if (void 0 !== req.params.id)
             {
@@ -378,7 +378,7 @@ exports.initializeData = function(req, res)
             }
         },
         //該当情報
-        function(callback)
+        target: function(callback)
         {
             if (void 0 !== req.params.id)
             {
@@ -390,7 +390,7 @@ exports.initializeData = function(req, res)
             }
         }
         //個別情報
-    ], function complete(err, items)
+    }, function complete(err, items)
     {
         console.log(items);
         //parallel実行ではnoSQLデータベースの戻りを取得できないため
