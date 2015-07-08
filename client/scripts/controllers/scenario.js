@@ -55,7 +55,7 @@ function ($scope, $routeParams, Shared, Utility, Scenario)
         {
             Utility.info(name+'<br>'+'を削除しました。');
             $scope.scenarioList.splice(index, 1);
-            $scope.isScenarioShow = response.data.length > 0 ? true: false;
+            $scope.isScenarioShow = $scope.scenarioList.length > 0 ? true: false;
         });
     };
     

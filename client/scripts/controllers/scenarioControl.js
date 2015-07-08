@@ -196,10 +196,11 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
         Scenario.setActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
 
+        var conditionList = Scenario.getConditionDoc($scope.conditions);
         var doc = 
         {
             actionName: actionName,
-            conditionList: Scenario.getConditionDoc($scope.conditions)
+            conditionList: conditionList
         };
         
         var params = {scenario: $scope.scenario, specificInfo: $scope.specificInfo, doc: doc};
