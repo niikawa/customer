@@ -354,9 +354,9 @@ exports.initializeData = function(req, res)
         //該当情報
         function(callback)
         {
-            if (void 0 !== req.body.id)
+            if (void 0 !== req.params.id)
             {
-                model.getById(req.body.scenario_id, callback);
+                model.getById(req.params.id, callback);
             }
             else
             {
@@ -366,12 +366,12 @@ exports.initializeData = function(req, res)
         //doc情報
         function(callback)
         {
-            if (void 0 !== req.body.id)
+            if (void 0 !== req.params.id)
             {
                 if ('trigger' === req.params.type)
                 {
                     var TriigerScenario = require("./triggerscenario");
-                    TriigerScenario.getByScenarioId(req.body.id, function(err, triggerData)
+                    TriigerScenario.getByScenarioId(req.params.id, function(err, triggerData)
                     {
                         var scenariodoc = require("./scenariodoc");
                         scenariodoc.getItemByIdForWeb(
