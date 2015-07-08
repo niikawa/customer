@@ -397,6 +397,8 @@ exports.initializeData = function(req, res)
         
     ], function complete(err, items)
     {
+        console.log('initializeData complete');
+        console.log(items);
         if (err > 0)
         {
             res.status(510).send('object not found');
