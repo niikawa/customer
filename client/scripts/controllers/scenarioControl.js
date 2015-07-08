@@ -107,9 +107,8 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         
         $scope.specificInfo = response.specificInfo.specific;
         console.log(response.specificInfo.doc);
-        console.log($scope.actionList);
         $scope.activeName = response.specificInfo.doc.actionName;
-
+        $scope.showAction($scope.activeName);
     }
     function setWatchItems()
     {
