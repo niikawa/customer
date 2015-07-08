@@ -101,40 +101,95 @@ function create(req, res)
             res.status(510).send('scenario crate faild');
         }
         
-        console.log(doc);
-        
-        var commonColumns = model.getInsCommonColumns();
-        var insertData = model.merge(req.body.scenario, commonColumns);
-        insertData.status = 1;
-        var request = model.getRequest();
-        request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
-        request.input('create_by', model.db.Int, req.session.userId);
-        request.input('create_date', model.db.NVarChar, insertData.create_date);
-        request.input('update_by', model.db.Int, req.session.userId);
-        request.input('update_date', model.db.NVarChar, insertData.update_date);
-        
-        request.input('segment_id', model.db.Int, insertData.segment_id);
-        request.input('if_layout_id', model.db.Int, insertData.if_layout_id);
-        request.input('scenario_name', model.db.NVarChar, insertData.scenario_name);
-        request.input('output_name', model.db.NVarChar, insertData.output_name);
-        request.input('scenario_type', model.db.SmallInt, insertData.scenario_type);
-        request.input('status', model.db.SmallInt, insertData.status);
-        request.input('approach', model.db.SmallInt, insertData.approach);
-        request.input('segment_document_id', model.db.NVarChar, insertData.segment_document_id);
-        
-        model.insert(tableName, insertData, request, function(err, date)
+        model.async.waterfall(
+        [
+            function(callback)
+            {
+                var commonColumns = model.getInsCommonColumns();
+                var insertData = model.merge(req.body.scenario, commonColumns);
+                insertData.status = 1;
+                var request = model.getRequest();
+                request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+                request.input('create_by', model.db.Int, req.session.userId);
+                request.input('create_date', model.db.NVarChar, insertData.create_date);
+                request.input('update_by', model.db.Int, req.session.userId);
+                request.input('update_date', model.db.NVarChar, insertData.update_date);
+                
+                request.input('segment_id', model.db.Int, insertData.segment_id);
+                request.input('if_layout_id', model.db.Int, insertData.if_layout_id);
+                request.input('scenario_name', model.db.NVarChar, insertData.scenario_name);
+                request.input('output_name', model.db.NVarChar, insertData.output_name);
+                request.input('scenario_type', model.db.SmallInt, insertData.scenario_type);
+                request.input('status', model.db.SmallInt, insertData.status);
+                request.input('approach', model.db.SmallInt, insertData.approach);
+                request.input('segment_document_id', model.db.NVarChar, insertData.segment_document_id);
+                    
+                model.insert(tableName, insertData, request, function(err, date)
+                {
+                    if (err.length > 0)
+                    {
+                        console.log(err);
+                        res.status(510).send('object not found');
+                    }
+                            
+                    var col = "select MAX(scenario_id) as scenario_id";
+                    var where = "delete_flag = 0 ";
+                    var qObj = model.getQueryObject(col, tableName, where, '', '');
+                    model.select(qObj, qObj.request, function(err, data)
+                    {
+                        if (err.length > 0)
+                        {
+                            console.log(err);
+                            res.status(510).send('object not found');
+                        }
+                        
+                        console.log(data);
+                        
+                        callback(null, data[0]);
+                    });
+                });
+            },
+            function(data, callback)
+            {
+                
+                var commonColumns = model.getInsCommonColumns();
+                var insertData = model.merge(req.body.specificInfo, commonColumns);
+                var request = model.getRequest();
+                insertData.scenario_action_document_id = doc.id;
+                
+                request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+                request.input('create_by', model.db.Int, req.session.userId);
+                request.input('create_date', model.db.NVarChar, insertData.create_date);
+                request.input('update_by', model.db.Int, req.session.userId);
+                request.input('update_date', model.db.NVarChar, insertData.update_date);
+                
+                request.input('scenario_id', model.db.Int, insertData.scenario_id);
+                request.input('event_after_days', model.db.Int, insertData.event_after_days);
+                request.input('inoperative_time', model.db.Int, insertData.inoperative_time);
+                request.input('scenario_action_document_id', model.db.NVarChar, insertData.scenario_action_document_id);
+                
+                model.insert(tableName, insertData, request, function(err, date)
+                {
+                    if (err.length > 0)
+                    {
+                        console.log(err);
+                        res.status(510).send('object not found');
+                    }
+                    
+                    callback(null, data);
+                });
+            }
+        ],
+        function(err)
         {
             if (err.length > 0)
             {
                 console.log(err);
                 res.status(510).send('object not found');
             }
-            
-            console.log(date);
-
             res.status(200).send('insert ok');
         });
-
+        
     });
 }
 
