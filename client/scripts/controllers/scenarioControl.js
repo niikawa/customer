@@ -109,17 +109,23 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         console.log(response.specificInfo.doc);
         $scope.activeName = response.specificInfo.doc.actionName;
         $scope.showAction($scope.activeName);
-        angular.forEach(response.specificInfo.doc.conditionList, function(condition, k)
+        var createConditionList = [];
+        angular.forEach(response.specificInfo.doc.conditionList, function(condition)
         {
-            angular.forEach($scope.columnList, function(info, k)
+            console.log(condition.physicalname);
+            angular.forEach($scope.columnList, function(info)
             {
+                console.log(info);
                 if (condition.physicalname == info.physicalname)
                 {
-                    $scope.conditions.push(info);
+                    createConditionList.push(info);
                     return false;
                 }
             });
         });
+        var condtionString = Scenario.createCondtionString(createConditionList);
+        $scope.decisionList.push(condtionString);
+
     }
     function setWatchItems()
     {
