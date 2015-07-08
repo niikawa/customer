@@ -226,7 +226,7 @@ exports.remove = function(req, res)
         {
             console.log('scenario trigger data not found');
             console.log(id);
-            exsitsTrriger = false:
+            exsitsTrriger = false;
         }
         
         model.async.parallel(
