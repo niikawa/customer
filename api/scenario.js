@@ -354,9 +354,35 @@ exports.initializeData = function(req, res)
         //該当情報
         function(callback)
         {
-            if (void 0 !== req.body.scenario_id)
+            if (void 0 !== req.body.id)
             {
                 model.getById(req.body.scenario_id, callback);
+            }
+            else
+            {
+                callback(null, {});
+            }
+        },
+        //doc情報
+        function(callback)
+        {
+            if (void 0 !== req.body.id)
+            {
+                if ('trigger' === req.params.type)
+                {
+                    var TriigerScenario = require("./triggerscenario");
+                    TriigerScenario.getByScenarioId(req.body.id, function(err, triggerData)
+                    {
+                        var scenariodoc = require("./scenariodoc");
+                        scenariodoc.getItemByIdForWeb(
+                            triggerData[0].scenario_action_document_id, callback);
+                    });
+                }
+                else if ('schedule' === req.params.type)
+                {
+                    callback(null, {});
+                }
+
             }
             else
             {
@@ -372,7 +398,7 @@ exports.initializeData = function(req, res)
             console.log(req.params);
             console.log(err);
         }
-        res.json({segment: items[0], ifLayout: items[1], specificInfo: items[2], target: items[3]});
+        res.json({segment: items[0], ifLayout: items[1], specificInfo: items[2], target: items[3], doc: items[4]});
     });
 };
 

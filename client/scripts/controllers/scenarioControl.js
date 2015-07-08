@@ -81,9 +81,13 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     
     function getInitializeData()
     {
+        var params = {type: $routeParams.scenario};
+        if (void 0 !== id)
+        {
+            params.id = id;
+        }
         
-        
-        Scenario.resource.initializeData({type: $routeParams.scenario}).$promise.then(function(response)
+        Scenario.resource.initializeData(params).$promise.then(function(response)
         {
             $scope.segmentList = response.segment;
             $scope.ifList = response.ifLayout;
@@ -93,6 +97,8 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             }
             else if (2 === pageProp.type)
             {
+                
+                
                 $scope.actionList =  response.specificInfo;
             }
             
@@ -191,8 +197,6 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.scenario.scenario_type = pageProp.type;
         Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
         Scenario.setActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
-
-        console.log(selectConditionList);
         var doc = 
         {
             actionName: actionName,
@@ -201,8 +205,6 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         
         var params = {scenario: $scope.scenario, specificInfo: $scope.specificInfo, doc: doc};
 
-        console.log(params);
-        
         Scenario.resource.save(params).$promise.then(function(response)
         {
             Utility.info('シナリオを保存しました。');
