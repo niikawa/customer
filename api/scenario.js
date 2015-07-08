@@ -198,89 +198,78 @@ function update(req, res)
     console.log('scenario update start');
     
     var TriigerScenario = require("./triggerscenario");
-    scenariodoc.saveItemForWeb(false, req.body.doc, function(err, doc)
-    {
-        if (err)
+
+    var commonColumns = model.getUpdCommonColumns();
+    model.async.waterfall(
+    [
+        function(callback)
         {
-            console.log('scenario update doc faild');
-            console.log(err);
-            console.log(req.body);
-            res.status(510).send('scenario crate faild');
+            TriigerScenario.getByScenarioId(req.body.scenario.scenario_id, function(err, data)
+            {
+                if (err.length > 0)
+                {
+                    console.log('trigger scenario is not found');
+                    console.log(err);
+                    res.status(510).send('scenario update faild');
+                    
+                }
+                callback(null, data);
+            });
+        },
+        function(trigger, callback)
+        {
+            console.log(trigger);
+            var doc = req.body.doc;
+            doc.id = trigger[0].scenario_action_document_id;
+            scenariodoc.saveItemForWeb(false, doc, function(err, doc)
+            {
+                callback(err);
+            });
+        },
+        function(callback)
+        {
+            //scenarioマスタを更新
+            var updateData = model.merge(req.body.scenario, commonColumns);
+            var request = model.getRequest();
+            request.input('update_by', model.db.Int, req.session.userId);
+            request.input('update_date', model.db.NVarChar, updateData.update_date);
+            
+            request.input('segment_id', model.db.Int, updateData.segment_id);
+            request.input('if_layout_id', model.db.Int, updateData.if_layout_id);
+            request.input('scenario_name', model.db.NVarChar, updateData.scenario_name);
+            request.input('output_name', model.db.NVarChar, updateData.output_name);
+            request.input('scenario_type', model.db.SmallInt, updateData.scenario_type);
+            request.input('status', model.db.SmallInt, updateData.status);
+            request.input('approach', model.db.SmallInt, updateData.approach);
+
+            model.updateById(updateData, request, callback);
+        },
+        function(callback)
+        {
+            //トリガーscenarioマスタを更新
+            var updateData = model.merge(req.body.specificInfo, commonColumns);
+            updateData.scenario_id = req.body.scenario.scenario_id;
+
+            var request = model.getRequest();
+            request.input('update_by', model.db.Int, req.session.userId);
+            request.input('update_date', model.db.NVarChar, updateData.update_date);
+            
+            request.input('scenario_id', model.db.Int, updateData.scenario_id);
+            request.input('after_event_occurs_num', model.db.Int, updateData.after_event_occurs_num);
+            request.input('inoperative_num', model.db.Int, updateData.inoperative_num);
+
+            TriigerScenario.updateById(updateData, request, callback);
         }
         
-        var commonColumns = model.getUpdCommonColumns();
-        model.async.waterfall(
-        [
-            function(callback)
-            {
-                TriigerScenario.getByScenarioId(req.body.scenario.scenario_id, function(err, data)
-                {
-                    if (err.length > 0)
-                    {
-                        console.log('trigger scenario is not found');
-                        console.log(err);
-                        res.status(510).send('scenario update faild');
-                        
-                    }
-                    callback(data);
-                });
-            },
-            function(trigger, callback)
-            {
-                console.log(trigger);
-                var doc = req.body.doc;
-                doc.id = trigger[0].scenario_action_document_id;
-                scenariodoc.saveItemForWeb(false, doc, function(err, doc)
-                {
-                    callback(err);
-                });
-            },
-            function(callback)
-            {
-                //scenarioマスタを更新
-                var updateData = model.merge(req.body.scenario, commonColumns);
-                var request = model.getRequest();
-                request.input('update_by', model.db.Int, req.session.userId);
-                request.input('update_date', model.db.NVarChar, updateData.update_date);
-                
-                request.input('segment_id', model.db.Int, updateData.segment_id);
-                request.input('if_layout_id', model.db.Int, updateData.if_layout_id);
-                request.input('scenario_name', model.db.NVarChar, updateData.scenario_name);
-                request.input('output_name', model.db.NVarChar, updateData.output_name);
-                request.input('scenario_type', model.db.SmallInt, updateData.scenario_type);
-                request.input('status', model.db.SmallInt, updateData.status);
-                request.input('approach', model.db.SmallInt, updateData.approach);
-
-                model.updateById(updateData, request, callback);
-            },
-            function(callback)
-            {
-                //トリガーscenarioマスタを更新
-                var updateData = model.merge(req.body.specificInfo, commonColumns);
-                updateData.scenario_id = req.body.scenario.scenario_id;
-
-                var request = model.getRequest();
-                request.input('update_by', model.db.Int, req.session.userId);
-                request.input('update_date', model.db.NVarChar, updateData.update_date);
-                
-                request.input('scenario_id', model.db.Int, updateData.scenario_id);
-                request.input('after_event_occurs_num', model.db.Int, updateData.after_event_occurs_num);
-                request.input('inoperative_num', model.db.Int, updateData.inoperative_num);
-
-                TriigerScenario.updateById(updateData, request, callback);
-            }
-            
-        ], function(err)
+    ], function(err)
+    {
+        console.log(err);
+        if (null != err)
         {
             console.log(err);
-            if (null != err)
-            {
-                console.log(err);
-                res.status(510).send('object not found');
-            }
-            res.status(200).send('update ok');
-        });
-        
+            res.status(510).send('object not found');
+        }
+        res.status(200).send('update ok');
     });
 }
 
