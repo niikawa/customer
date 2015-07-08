@@ -82,11 +82,9 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     function getInitializeData()
     {
         var params = {type: $routeParams.scenario};
-        if (void 0 !== id)
-        {
-            params.id = id;
-        }
-        
+        var isEdit = void 0 !== id;
+        if (isEdit) params.id = id;
+
         Scenario.resource.initializeData(params).$promise.then(function(response)
         {
             $scope.segmentList = response.segment;
@@ -97,7 +95,15 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             }
             else if (2 === pageProp.type)
             {
-                
+                if (isEdit)
+                {
+                    $scope.scenario = response.target;
+                    console.log(response.doc);
+                }
+                else
+                {
+                    
+                }
                 
                 $scope.actionList =  response.specificInfo;
             }
