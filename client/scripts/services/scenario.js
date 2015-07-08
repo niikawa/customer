@@ -56,9 +56,9 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
         
         scenarioServices.validators =
         {
-            isSameName : function(userId, scenario_name)
+            isSameName : function(id, scenario_name)
             {
-                return $http.post('scenario/name/',{user_id: userId, scenario_name: scenario_name}
+                return $http.post('scenario/name/',{id: id, scenario_name: scenario_name}
                 ).then(function(response)
                 {
                     if (response.data.result.count > 0)

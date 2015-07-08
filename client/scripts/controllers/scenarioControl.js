@@ -73,7 +73,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                     var val = modelValue || viewValue;
                     if (void 0 === val || val.length === 0) return true;
                     
-                    return Scenario.validators.isSameName($scope.scenario.segment_name, val);
+                    return Scenario.validators.isSameName(id, $scope.scenario.segment_name, val);
                 }
             }
         };
@@ -161,6 +161,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 actionName = targetName;
                 $scope.isShowExtraction = true;
                 $scope.columnList = response.data.column;
+                console.log(response.data.column);
             });
         }
     };
