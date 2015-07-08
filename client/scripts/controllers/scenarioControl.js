@@ -107,8 +107,10 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         
         $scope.specificInfo = response.specificInfo.specific;
         console.log(response.specificInfo.doc);
+        console.log($scope.actionList);
         angular.forEach($scope.actionList, function(v, k)
         {
+            console.log(v.physicalname);
             if (v.physicalname === response.specificInfo.doc.actionName)
             {
                 v.isPush = true;
