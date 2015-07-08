@@ -108,24 +108,28 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.specificInfo = response.specificInfo.specific;
         console.log(response.specificInfo.doc);
         $scope.activeName = response.specificInfo.doc.actionName;
-        $scope.showAction($scope.activeName);
-        var createConditionList = [];
-        angular.forEach(response.specificInfo.doc.conditionList, function(condition)
+        Scenario.resource.action({name: $scope.activeName}).$promise.then(function(response)
         {
-            console.log(condition.physicalname);
-            angular.forEach($scope.columnList, function(info)
+            actionName = $scope.activeName;
+            $scope.isShowExtraction = true;
+            $scope.columnList = response.data.column;
+            
+            var createConditionList = [];
+            angular.forEach(response.specificInfo.doc.conditionList, function(condition)
             {
-                console.log(info);
-                if (condition.physicalname == info.physicalname)
+                angular.forEach($scope.columnList, function(info)
                 {
-                    createConditionList.push(info);
-                    return false;
-                }
+                    console.log(info);
+                    if (condition.physicalname == info.physicalname)
+                    {
+                        createConditionList.push(info);
+                        return false;
+                    }
+                });
             });
+            var condtionString = Scenario.createCondtionString(createConditionList);
+            $scope.decisionList.push(condtionString);
         });
-        var condtionString = Scenario.createCondtionString(createConditionList);
-        $scope.decisionList.push(condtionString);
-
     }
     function setWatchItems()
     {
