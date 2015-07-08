@@ -268,6 +268,8 @@ exports.remove = function(req, res)
             
         ], function complete(err, items)
             {
+                console.log('complete');
+                
                 if (null !== err || err.length > 0)
                 {
                     console.log(err);
