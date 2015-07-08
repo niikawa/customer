@@ -168,7 +168,7 @@ function create(req, res)
                 request.input('inoperative_time', model.db.Int, insertData.inoperative_time);
                 request.input('scenario_action_document_id', model.db.NVarChar, insertData.scenario_action_document_id);
                 
-                model.insert(tableName, insertData, request, function(err, date)
+                model.insert('M_TRIGGER_SCENARIO', insertData, request, function(err, date)
                 {
                     if (err.length > 0)
                     {
