@@ -367,7 +367,6 @@ exports.initializeData = function(req, res)
     },
     function complete(err, items)
     {
-        console.log(items);
         //parallel実行した場合、5米のfunctionが実行完了前に
         //completeしてしまう。これはたぶんライブラリのバグだと思うけど、
         //どうにもならないのでここでさらに実行させる
@@ -384,7 +383,7 @@ exports.initializeData = function(req, res)
                         {
                             scenariodoc.getItemByIdForWeb(data[0].scenario_action_document_id, function(err, doc)
                             {
-                                callback(null, {specific: data, doc: doc});
+                                callback(null, {specific: data[0], doc: doc});
                             });
                         });
                     }
@@ -402,64 +401,15 @@ exports.initializeData = function(req, res)
         },
         function complete(err, items2)
         {
-            console.log(items2);
             res.json(
                 {
                     segment: items.segment,
                     ifLayout: items.ifLayout,
-                    specificInfo: items.action, 
+                    specific: items.action, 
                     target: items.target[0], 
-                    specificData: items2.specificData
+                    specificInfo: items2.specificData
                 });
         });
-        
-        // if (void 0 !== req.params.id)
-        // {
-        //     if ('trigger' === req.params.type)
-        //     {
-        //         var TriigerScenario = require("./triggerscenario");
-        //         TriigerScenario.getByScenarioId(req.params.id, function(err, data)
-        //         {
-        //             var scenariodoc = require("./scenariodoc");
-        //             scenariodoc.getItemByIdForWeb(data[0].scenario_action_document_id, function(err, doc)
-        //             {
-        //             });
-        //         });
-        //     }
-        //     else if ('schedule' === req.params.type)
-        //     {
-        //     }
-        // }
-
-
-        
-        //parallel実行ではnoSQLデータベースの戻りを取得できないため
-        //ここで実行させる。
-        // model.async.waterfall(
-        // [
-        //     function(callback)
-        //     {
-        //         if (void 0 !== req.params.id)
-        //         {
-        //             var scenariodoc = require("./scenariodoc");
-        //             scenariodoc.getItemByIdForWeb(
-        //                 items[4][0].scenario_action_document_id, callback);
-                    
-        //         }
-        //     }
-        // ], function(err, doc)
-        // {
-        //     console.log('initializeData complete');
-        //     console.log(doc);
-        //     if (err)
-        //     {
-        //         res.status(510).send('object not found');
-        //         console.log(req.params);
-        //         console.log(err);
-        //     }
-        //     res.json({segment: items[0], ifLayout: items[1], specificInfo: items[2], target: items[3][0], doc: doc});
-        // });
-                
     });
 };
 

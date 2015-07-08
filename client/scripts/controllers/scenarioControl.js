@@ -95,17 +95,17 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             }
             else if (2 === pageProp.type)
             {
+                $scope.actionList =  response.specific;
                 if (isEdit)
                 {
                     $scope.scenario = response.target;
+                    $scope.specificInfo = response.specificInfo;
                     console.log(response.specificData);
                 }
                 else
                 {
                     
                 }
-                
-                $scope.actionList =  response.specificInfo;
             }
             
             
