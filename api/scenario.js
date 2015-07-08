@@ -351,20 +351,17 @@ exports.initializeData = function(req, res)
                 callback(null, {});
             }
         },
-        //個別情報
         function(callback)
         {
             if (void 0 !== req.params.id)
             {
                 if ('trigger' === req.params.type)
                 {
-                    //他ソースのものを実行すると実行結果が戻る前に
-                    //completeしてしまうため、直接SQLを実行する
-                    var col = "trigger_scenario_id, scenario_id, after_event_occurs_num, inoperative_num, scenario_action_document_id";
-                    var where = "delete_flag = 0 AND scenario_id = @scenario_id";
-                    var qObj = model.getQueryObject(col, 'M_TRIGGER_SCENARIO', where, '', '');
-                    qObj.request.input('scenario_id', model.db.SmallInt, req.params.id);
-                    model.select(qObj, qObj.request, callback);
+                    var TriigerScenario = require("./triggerscenario");
+                    TriigerScenario.getByScenarioId(req.params.id, function(err, data)
+                    {
+                        callback(err, data);
+                    });
                 }
                 else if ('schedule' === req.params.type)
                 {
@@ -391,8 +388,8 @@ exports.initializeData = function(req, res)
             {
                 callback(null, {});
             }
-        },
-        
+        }
+        //個別情報
     ], function complete(err, items)
     {
         console.log(items);
@@ -407,10 +404,7 @@ exports.initializeData = function(req, res)
                     var scenariodoc = require("./scenariodoc");
                     scenariodoc.getItemByIdForWeb(
                         items[4][0].scenario_action_document_id, callback);
-                }
-                else
-                {
-                    callback(null, []);
+                    
                 }
             }
         ], function(err, doc)
