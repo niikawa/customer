@@ -360,7 +360,11 @@ exports.initializeData = function(req, res)
                     var TriigerScenario = require("./triggerscenario");
                     TriigerScenario.getByScenarioId(req.params.id, function(err, data)
                     {
-                        callback(err, data);
+                        var scenariodoc = require("./scenariodoc");
+                        scenariodoc.getItemByIdForWeb(data[0].scenario_action_document_id, function(err, doc)
+                        {
+                            callback(null, {specific: data, doc: doc});
+                        });
                     });
                 }
                 else if ('schedule' === req.params.type)
