@@ -241,7 +241,7 @@ exports.remove = function(req, res)
                 }
                 else
                 {
-                    callback([], []);
+                    callback(null);
                 }
             },
             
@@ -262,7 +262,7 @@ exports.remove = function(req, res)
                 }
                 else
                 {
-                    callback([], []);
+                    callback(null);
                 }
             }
             
@@ -270,7 +270,7 @@ exports.remove = function(req, res)
             {
                 console.log('complete');
                 
-                if (null !== err || err.length > 0)
+                if (null === err)
                 {
                     console.log(err);
                     res.status(510).send('scenario remove faild');
