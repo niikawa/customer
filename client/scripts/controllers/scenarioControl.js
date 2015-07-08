@@ -109,6 +109,17 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         console.log(response.specificInfo.doc);
         $scope.activeName = response.specificInfo.doc.actionName;
         $scope.showAction($scope.activeName);
+        angular.forEach(response.specificInfo.doc.conditionList, function(condition, k)
+        {
+            angular.forEach($scope.columnList, function(info, k)
+            {
+                if (condition.physicalname == info.physicalname)
+                {
+                    $scope.conditions.push(info);
+                    return false;
+                }
+            });
+        });
     }
     function setWatchItems()
     {
@@ -161,7 +172,6 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 actionName = targetName;
                 $scope.isShowExtraction = true;
                 $scope.columnList = response.data.column;
-                console.log(response.data.column);
             });
         }
     };
