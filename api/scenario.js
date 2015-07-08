@@ -363,7 +363,7 @@ exports.initializeData = function(req, res)
                 callback(null, {});
             }
         },
-        //doc情報
+        //個別情報
         function(callback)
         {
             if (void 0 !== req.params.id)
@@ -371,23 +371,12 @@ exports.initializeData = function(req, res)
                 if ('trigger' === req.params.type)
                 {
                     var TriigerScenario = require("./triggerscenario");
-                    TriigerScenario.getByScenarioId(req.params.id, function(err, triggerData)
-                    {
-                        if (err.length > 0)
-                        {
-                            console.log('trigger scenario is not found');
-                            console.log(req.params.id);
-                        }
-                        var scenariodoc = require("./scenariodoc");
-                        scenariodoc.getItemByIdForWeb(
-                            triggerData[0].scenario_action_document_id, callback);
-                    });
+                    TriigerScenario.getByScenarioId(req.params.id, callback);
                 }
                 else if ('schedule' === req.params.type)
                 {
                     callback(null, {});
                 }
-
             }
             else
             {
@@ -397,15 +386,33 @@ exports.initializeData = function(req, res)
         
     ], function complete(err, items)
     {
-        console.log('initializeData complete');
-        console.log(items);
-        if (err > 0)
+        //parallel実行ではnoSQLデータベースの戻りを取得できないため
+        //ここで実行させる。
+        model.async.waterfall(
+        [
+            function(callback)
+            {
+                if (void 0 !== req.params.id)
+                {
+                    var scenariodoc = require("./scenariodoc");
+                    scenariodoc.getItemByIdForWeb(
+                        items[4][0].scenario_action_document_id, callback);
+                    
+                }
+            }
+        ], function(err, doc)
         {
-            res.status(510).send('object not found');
-            console.log(req.params);
-            console.log(err);
-        }
-        res.json({segment: items[0], ifLayout: items[1], specificInfo: items[2], target: items[3][0], doc: items[4]});
+            console.log('initializeData complete');
+            console.log(doc);
+            if (err)
+            {
+                res.status(510).send('object not found');
+                console.log(req.params);
+                console.log(err);
+            }
+            res.json({segment: items[0], ifLayout: items[1], specificInfo: items[2], target: items[3][0], doc: doc});
+        });
+                
     });
 };
 
