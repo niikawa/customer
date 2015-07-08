@@ -13,8 +13,7 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
             1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
             21,22,23,24,25,26,27,28,28,30,31
             ];
-        
-        
+
         scenarioServices.resource = $resource('/scenario/:type/:id/', {id: '@id'},
         {
             list:
@@ -53,9 +52,9 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
         
         scenarioServices.validators =
         {
-            isSameName : function(userId, mailaddress)
+            isSameName : function(userId, scenario_name)
             {
-                return $http.post('scenario/name/',{user_id: userId, mailaddress: mailaddress}
+                return $http.post('scenario/name/',{user_id: userId, scenario_name: scenario_name}
                 ).then(function(response)
                 {
                     if (response.data.result.count > 0)
