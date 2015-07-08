@@ -377,6 +377,10 @@ exports.initializeData = function(req, res)
                 {
                     callback(null, {});
                 }
+                else
+                {
+                    callback(null, {});
+                }
             }
             else
             {

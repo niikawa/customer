@@ -51,6 +51,7 @@ exports.getByScenarioId = function(scenario_id, callback)
 
     model.select(qObj, qObj.request, function(err, data)
     {
+        console.log(data);
         callback(err, data);
     });
 };
