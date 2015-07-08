@@ -55,6 +55,11 @@ exports.getByScenarioId = function(scenario_id, callback)
     });
 };
 
+exports.update = function(id, callback)
+{
+    model.updateById(id, callback);
+};
+
 exports.remove = function(id, callback)
 {
     model.removeById(id, callback);
