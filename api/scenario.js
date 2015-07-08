@@ -374,7 +374,7 @@ exports.initializeData = function(req, res)
                     //completeしてしまうため、直接SQLを実行する
                     var col = "trigger_scenario_id, scenario_id, after_event_occurs_num, inoperative_num, scenario_action_document_id";
                     var where = "delete_flag = 0 AND scenario_id = @scenario_id";
-                    var qObj = model.getQueryObject(col, tableName, where, '', '');
+                    var qObj = model.getQueryObject(col, 'M_TRIGGER_SCENARIO', where, '', '');
                     qObj.request.input('scenario_id', model.db.SmallInt, req.params.id);
                     model.select(qObj, qObj.request, callback);
                 }
@@ -407,7 +407,10 @@ exports.initializeData = function(req, res)
                     var scenariodoc = require("./scenariodoc");
                     scenariodoc.getItemByIdForWeb(
                         items[4][0].scenario_action_document_id, callback);
-                    
+                }
+                else
+                {
+                    callback(null, []);
                 }
             }
         ], function(err, doc)
