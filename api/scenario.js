@@ -371,7 +371,10 @@ exports.initializeData = function(req, res)
                 if ('trigger' === req.params.type)
                 {
                     var TriigerScenario = require("./triggerscenario");
-                    TriigerScenario.getByScenarioId(req.params.id, callback);
+                    TriigerScenario.getByScenarioId(req.params.id, function(err, data)
+                    {
+                        callback(err, data);
+                    });
                 }
                 else if ('schedule' === req.params.type)
                 {
