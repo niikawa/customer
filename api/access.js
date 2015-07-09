@@ -17,7 +17,7 @@ var model = new log();
 
 exports.getAll = function(req, res)
 {
-    var col = "T1.log_id, FROMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as date, T1.user_id, T1.detail, T2.name";
+    var col = "T1.log_id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as date, T1.user_id, T1.detail, T2.name";
     var table = "T_LOG T1 INNER JOIN M_USER T2 ON T1.user_id = T2.user_id";
     var where = "T1.delete_flag = 0 AND T2.delete_flag = 0";
     var order = "T1.log_id DESC";
