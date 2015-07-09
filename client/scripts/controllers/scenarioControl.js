@@ -201,7 +201,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     
     $scope.decision = function()
     {
-        selectConditionList.push([$scope.conditions]);
+        selectConditionList.push($scope.conditions);
         var condtionString = Scenario.createCondtionString($scope.conditions);
         $scope.decisionList.push(condtionString);
         $scope.conditions = [];
