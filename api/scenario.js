@@ -94,7 +94,20 @@ exports.getValid = function(req, res)
 };
 exports.savePriority = function(req, res)
 {
-}
+    console.log('scenario save priority execute');
+    console.log(req.body);
+    async.forEach(req.body.scenarioList, function(data, callback)
+    {
+        callback();
+    }, 
+    function (err) 
+    {
+        console.log(err);
+        console.log("end");
+    });    
+    
+    
+};
 
 exports.save = function(req, res)
 {
@@ -258,6 +271,7 @@ function update(req, res)
             delete req.body.scenario.delete_flag;
             delete req.body.scenario.create_by;
             delete req.body.scenario.create_date;
+            delete req.body.scenario.priority;  //優先順位はここで更新したくないため削除
             
             var updateData = model.merge(req.body.scenario, commonColumns);
             var request = model.getRequest();
