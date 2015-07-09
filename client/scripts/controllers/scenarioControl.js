@@ -119,9 +119,9 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             {
                 console.log('conditionItems');
                 console.log(conditionItems);
+                var restoration = [];
                 angular.forEach(conditionItems, function(items)
                 {
-                    var restoration = [];
                     angular.forEach($scope.columnList, function(info)
                     {
                         if (items.physicalname == info.physicalname)
@@ -132,11 +132,10 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                             //return false;
                         }
                     });
-                    selectConditionList.push(restoration);
-                    var condtionString = Scenario.createCondtionString(restoration);
-                    $scope.decisionList.push(condtionString);
                 });
-                
+                selectConditionList.push(restoration);
+                var condtionString = Scenario.createCondtionString(restoration);
+                $scope.decisionList.push(condtionString);
             });
         });
     }
