@@ -8,7 +8,8 @@ function ($scope, Shared, Access, Utility)
     
     function getInitializeData()
     {
-        Access.resource.get().$promise.then(function(response)
+        var today = Utility.today('YYYY/MM/DD');
+        Access.resource.post({day: today}).$promise.then(function(response)
         {
             $scope.logList = response.data;
         });
