@@ -129,7 +129,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                             info.condition = items.condition;
                             info.selectedCondition = items.selectedCondition;
                             restoration.push(info);
-                            return false;
+                            //return false;
                         }
                     });
                     selectConditionList.push(restoration);
