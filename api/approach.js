@@ -22,14 +22,11 @@ exports.getOrCreate = function(req, res)
     {
         console.log(data);
         console.log(err);
-        if (null !== err)
+        if (null !== err && err.length > 0)
         {
-            if (err.length > 0)
-            {
-                console.log('approach data get error');
-                console.log(err);
-                res.status(510).send('data get faild');
-            }
+            console.log('approach data get error');
+            console.log(err);
+            res.status(510).send('data get faild');
         }
         var approachData = data[0];
         
