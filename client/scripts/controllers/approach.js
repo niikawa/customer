@@ -44,9 +44,6 @@ function ($scope, $routeParams, Shared, Approach, Scenario)
         setInitializeScope();
         getInitializeData();
         setEventListeners();
-        
-        var data = Scenario.mock();
-        $scope.scenarioList = data.priorities;
     };
     
     $scope.save = function()
