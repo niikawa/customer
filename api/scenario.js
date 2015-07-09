@@ -223,6 +223,9 @@ function update(req, res)
             doc.id = trigger[0].scenario_action_document_id;
             scenariodoc.saveItemForWeb(false, doc, function(err, doc)
             {
+                console.log('scenario doc update');
+                console.log(err);
+                console.log(doc);
                 callback(err);
             });
         },

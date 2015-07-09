@@ -73,11 +73,9 @@ Scenario.prototype = {
 
             } else {
                 
-                doc.segment_name = data.segment_name;
-                doc.condition = data.condition;
-                doc.whereList = data.whereList;
-                doc.qIds = data.qIds;
-                
+                doc.action_name = data.actionName;
+                doc.conditionList = data.conditionList;
+
                 self.client.replaceDocument(doc._self, doc, function (err, replaced) {
                     if (err) {
                         callback(err);
