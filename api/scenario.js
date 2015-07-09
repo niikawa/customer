@@ -136,8 +136,8 @@ exports.getScenarioCount = function(req, res)
         var envInfo = items.env[0];
         if (0 === items.count.length)
         {
-            list.push({scenario_type_key: 'schedule', scenario_name:'スケジュール型シナリオ', regist_num: 0, regist_max: envInfo.schedule_scenario_max});
-            list.push({scenario_type_key: 'trigger', scenario_name:'トリガー型シナリオ', regist_num: 0, regist_max: envInfo.trigger_scenario_max});
+            list.push({scenario_type_key: 'schedule', scenario_type_name:'スケジュール型シナリオ', regist_num: 0, regist_max: envInfo.schedule_scenario_max});
+            list.push({scenario_type_key: 'trigger', scenario_type_name:'トリガー型シナリオ', regist_num: 0, regist_max: envInfo.trigger_scenario_max});
         }
         else if (1 === items.count.length)
         {
@@ -146,11 +146,11 @@ exports.getScenarioCount = function(req, res)
             {
                 items.count[0].regist_max = envInfo.schedule_scenario_max;
                 list.push(items.count[0]);
-                list.push({scenario_type_key: 'trigger', scenario_name:'トリガー型シナリオ', regist_num: 0, regist_max: envInfo.trigger_scenario_max});
+                list.push({scenario_type_key: 'trigger', scenario_type_name:'トリガー型シナリオ', regist_num: 0, regist_max: envInfo.trigger_scenario_max});
             }
             else
             {
-                list.push({scenario_type_key: 'schedule', scenario_name:'スケジュール型シナリオ', regist_num: 0, regist_max: envInfo.schedule_scenario_max});
+                list.push({scenario_type_key: 'schedule', scenario_type_name:'スケジュール型シナリオ', regist_num: 0, regist_max: envInfo.schedule_scenario_max});
                 items.count[0].regist_max = envInfo.trigger_scenario_max;
                 list.push(items.count[0]);
             }
