@@ -24,4 +24,16 @@ function ($scope, Shared, Access, Utility)
         
         $scope.$emit('requestEnd');
     };
+    
+    
+    function getTimeInitializeData()
+    {
+        
+    };
+    
+    $scope.timeLineInitialize = function()
+    {
+        getInitializeData();
+    };
+    
 }]);
