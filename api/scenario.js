@@ -187,7 +187,7 @@ exports.getExecutePlanScenario = function(req, res)
 {
     var col = "scenario_id, scenario_name, "+
         "CASE scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type";
-    var where = "delete_flag = 0 AND AND approach = 1 AND status = 1";
+    var where = "delete_flag = 0 AND approach = 1 AND status = 1";
     var order = "priority, scenario_id";
     var qObj = model.getQueryObject(col, tableName, where, '', order);
     
@@ -197,6 +197,7 @@ exports.getExecutePlanScenario = function(req, res)
         {
             console.log('get execute plan scenario faild');
             console.log(err);
+            res.status(510).send('scenario crate faild');
         }
         res.json({data: data});
     });
@@ -239,6 +240,7 @@ exports.savePriority = function(req, res)
         {
             console.log('scenario priority update faild');
             console.log(err);
+            res.status(510).send('scenario crate faild');
         }
         res.status(200).send('scenario priority update ok');
     });    
