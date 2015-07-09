@@ -121,21 +121,20 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 console.log(conditionItems);
                 angular.forEach(conditionItems, function(items)
                 {
-                console.log('items');
-                console.log(items);
-                    
-                    // angular.forEach($scope.columnList, function(info)
-                    // {
-                    //     if (conditionItem.physicalname == info.physicalname)
-                    //     {
-                    //         info.condition = conditionItem.condition;
-                    //         info.selectedCondition = conditionItem.selectedCondition;
-                    //         selectConditionList.push(info);
-                    //         return false;
-                    //     }
-                    // });
-                    // var condtionString = Scenario.createCondtionString(selectConditionList);
-                    // $scope.decisionList.push(condtionString);
+                    var restoration = [];
+                    angular.forEach($scope.columnList, function(info)
+                    {
+                        if (items.physicalname == info.physicalname)
+                        {
+                            info.condition = items.condition;
+                            info.selectedCondition = items.selectedCondition;
+                            restoration.push(info);
+                            return false;
+                        }
+                    });
+                    selectConditionList.push(restoration);
+                    var condtionString = Scenario.createCondtionString(restoration);
+                    $scope.decisionList.push(condtionString);
                 });
                 
             });
