@@ -30,6 +30,7 @@ angular
     'approachCtrl',
     'userCtrl',
     'userControlCtrl',
+    'accessControlCtrl',
     'mapCtrl',
   ])
   .config(function ($routeProvider) {
@@ -144,6 +145,12 @@ angular
       .when('/user/control/:id', {
         templateUrl: 'views/user/userControl.html',
         controller: 'UserControlCtrl',
+        reloadOnSearch: false, //ページ内リンクを可能にする
+        resolve: {isLogin: autoCheck}
+      })
+      .when('/access', {
+        templateUrl: 'views/access/history.html',
+        controller: 'AccessControlCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
         resolve: {isLogin: autoCheck}
       })
