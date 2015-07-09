@@ -73,11 +73,9 @@ exports.save = function(req, res)
 {
     if (void 0 === req.body) res.status(510).send('params is not found');
     
-    //うーん
-    var approach_setting_id = (1 === req.body.approach.approach_setting_id) ? req.body.approach.approach_setting_id : 1;
-    
+    //approach_settingは1レコードしか存在しない
     var data = {
-        approach_setting_id: approach_setting_id,
+        approach_setting_id: 1,
         daily_limit_num: req.body.approach.daily_limit_num, 
         weekly_limit_num: req.body.approach.weekly_limit_num
     };
@@ -100,7 +98,7 @@ exports.save = function(req, res)
             console.log('approach update faild');
             console.log(err);
         }
-       res.status(200).send('update ok');
+        res.status(200).send('update ok');
     });
 };
 

@@ -99,12 +99,12 @@ exports.savePriority = function(req, res)
 
     async.forEach(req.body.data, function(data, callback)
     {
-        console.log(data);
         delete data.scenario_name;
         delete data.scenario_type;
         
         var updateData = model.merge(data, commonColumns);
         updateData.scenario_id = req.body.scenario.scenario_id;
+        console.log(data);
 
         var request = model.getRequest();
         request.input('update_by', model.db.Int, req.session.userId);
