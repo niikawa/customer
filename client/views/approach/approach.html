@@ -46,6 +46,10 @@
                         <span class="badge">{{$index+1}}</span>
                         <span class="label label-default">{{item.scenario_type}}</span>
                         <a ng-href='/#/scenario/{{item.scenario_type}}/control/{{item.scenario_id}}'>{{item.scenario_name}}</a>
+                        <div class="btn-group">
+                            <label class="btn btn-default" name="status" ng-model="item.status" btn-radio=1 uncheckable>有効</label>
+                            <label class="btn btn-default" name="status" ng-model="item.status" btn-radio=0 uncheckable>無効</label>
+                        </div>
                     </div>
                 </div>
             </div>
