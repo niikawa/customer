@@ -90,7 +90,7 @@ router.delete('/scenario/:type/remove/:id', scenario.remove);
 router.get('/action/:name', scenario.getActionByName);
 
 var approach = require("./api/approach");
-router.get('/approach/', approach.getOrCreate);
+router.get('/approach', approach.getOrCreate);
 
 var user = require("./api/user");
 router.get('/user', user.getList);
