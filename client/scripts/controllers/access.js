@@ -8,7 +8,7 @@ function ($scope, Shared, Access, Utility)
     
     function getInitializeData()
     {
-        Access.resource.get().$promise.then(function(err, response)
+        Access.resource.get().$promise.then(function(response)
         {
             $scope.logList = response.data;
         });
