@@ -40,7 +40,7 @@
                     {{warningMessage}}
                 </div>
                 
-                <div class="card-container" ng-model='scenarioList' drop-directive drop-area-key="1">
+                <div class="card-container" ng-model='scenarioList' drop-directive drop-line-name="priority" drop-area-key="1">
                     
                     <div class="card btn-draggable" ng-repeat="item in scenarioList track by $index" drag-item-directive dragindex="$index" >
                         <span class="badge">{{$index+1}}</span>

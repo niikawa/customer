@@ -72,10 +72,12 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
 {
     return {
         restrict: 'A',
-        scope: {},
+        scope: {dropLineName: '@'},
         require: '^ngModel',
         link: function (scope, element, attrs, ctrl) 
         {
+            var lineName = (void 0 === scope.dropLineName || '' === scope.dropLineName)  ? 'line' : scope.dropLineName;
+            
             element.on('dragenter', function(event)
             {
                 element.addClass('ui-drop-target');
@@ -123,7 +125,7 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
 
                 for (var i=0; i < len; i++)
                 {
-                    ctrl.$modelValue[i].line = i+1;
+                    ctrl.$modelValue[i][lineName] = i+1;
                 }
                 var emitObject = {
                     to:{}, 
