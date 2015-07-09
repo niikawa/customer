@@ -109,7 +109,7 @@ router.get('/role', role.getAll);
 router.get('/role/:id', role.getById);
 
 var access = require("./api/access");
-router.get('/role', access.getAll);
+router.get('/access', access.getAll);
 
 
 //
