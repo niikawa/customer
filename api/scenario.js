@@ -99,6 +99,7 @@ exports.savePriority = function(req, res)
 
     async.forEach(req.body.data, function(data, callback)
     {
+        console.log(data);
         delete data.scenario_name;
         delete data.scenario_type;
         

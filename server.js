@@ -92,6 +92,7 @@ router.get('/action/:name', scenario.getActionByName);
 
 var approach = require("./api/approach");
 router.get('/approach', approach.getOrCreate);
+router.post('/approach', approach.save);
 
 var user = require("./api/user");
 router.get('/user', user.getList);
