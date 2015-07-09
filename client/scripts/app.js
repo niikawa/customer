@@ -154,6 +154,12 @@ angular
         reloadOnSearch: false, //ページ内リンクを可能にする
         resolve: {isLogin: autoCheck}
       })
+      .when('/access/:id', {
+        templateUrl: 'views/access/timeLine.html',
+        controller: 'AccessCtrl',
+        reloadOnSearch: false, //ページ内リンクを可能にする
+        resolve: {isLogin: autoCheck}
+      })
 
 //       .when('/map', {
 //         templateUrl: 'views/map.html',
