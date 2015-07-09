@@ -103,8 +103,8 @@ exports.savePriority = function(req, res)
         delete item.scenario_type;
         
         var updateData = model.merge(item, commonColumns);
-        updateData.scenario_id = req.body.scenario.scenario_id;
-        console.log(item);
+//        updateData.scenario_id = item.scenario_id;
+        console.log(updateData);
 
         var request = model.getRequest();
         request.input('update_by', model.db.Int, req.session.userId);
