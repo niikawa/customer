@@ -52,18 +52,19 @@ exports.getOrCreate = function(req, res)
             },
         ], function(err)
         {
-            console.log(err);
-            if (null === err)
+            if (null !== err)
             {
                 console.log(err);
                 res.status(510).send('object not found');
             }
-            
-            var ret = {daily_limit_num: 0, weekly_limit_num: 0};
-            ret.daily_limit_num = approachData.daily_limit_num;
-            ret.weekly_limit_num = approachData.weekly_limit_num;
-            
-            res.json({data: ret});
+            else
+            {
+                var ret = {daily_limit_num: 0, weekly_limit_num: 0};
+                ret.daily_limit_num = approachData.daily_limit_num;
+                ret.weekly_limit_num = approachData.weekly_limit_num;
+                
+                res.json({data: ret});
+            }
         });
     });
 };

@@ -92,6 +92,9 @@ exports.getValid = function(req, res)
         res.json({data: data});
     });
 };
+exports.savePriority = function(req, res)
+{
+}
 
 exports.save = function(req, res)
 {
