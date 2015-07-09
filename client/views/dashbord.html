@@ -45,7 +45,6 @@
                   </div>
                   <ul class="list-group" >
                     <li class="list-group-item" ng-repeat="(i, item) in executePlanScenario">
-                        <span class="badge">{{i+1}}</span>
                         <span class="label-m label-default">{{item.scenario_type}}</span>
                         <a ng-href='/#/scenario/control/{{item.scenario_id}}'>{{item.scenario_name}}</a>
                     </li>
