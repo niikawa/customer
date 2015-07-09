@@ -49,7 +49,7 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario)
     $scope.save = function()
     {
         console.log($scope.approach);
-        Approach.resource.save().$promise.then(function(response)
+        Approach.resource.save($scope.approach).$promise.then(function(response)
         {
             Utility.info('設定を更新しました');
         });
