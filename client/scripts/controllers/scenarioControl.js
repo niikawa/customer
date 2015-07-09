@@ -115,20 +115,29 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             $scope.columnList = response.data.column;
             $scope.activeName = initData.specificInfo.doc.actionName;
             
-            angular.forEach(initData.specificInfo.doc.conditionList, function(conditionItem)
+            angular.forEach(initData.specificInfo.doc.conditionList, function(conditionItems)
             {
-                angular.forEach($scope.columnList, function(info)
+                console.log('conditionItems');
+                console.log(conditionItems);
+                angular.forEach(conditionItems, function(items)
                 {
-                    if (conditionItem.physicalname == info.physicalname)
-                    {
-                        info.condition = conditionItem.condition;
-                        info.selectedCondition = conditionItem.selectedCondition;
-                        selectConditionList.push(info);
-                        return false;
-                    }
+                console.log('items');
+                console.log(items);
+                    
+                    // angular.forEach($scope.columnList, function(info)
+                    // {
+                    //     if (conditionItem.physicalname == info.physicalname)
+                    //     {
+                    //         info.condition = conditionItem.condition;
+                    //         info.selectedCondition = conditionItem.selectedCondition;
+                    //         selectConditionList.push(info);
+                    //         return false;
+                    //     }
+                    // });
+                    // var condtionString = Scenario.createCondtionString(selectConditionList);
+                    // $scope.decisionList.push(condtionString);
                 });
-                var condtionString = Scenario.createCondtionString(selectConditionList);
-                $scope.decisionList.push(condtionString);
+                
             });
         });
     }
@@ -223,6 +232,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.scenario.scenario_type = pageProp.type;
         Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
         Scenario.setActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
+        
         var doc = 
         {
             actionName: actionName,

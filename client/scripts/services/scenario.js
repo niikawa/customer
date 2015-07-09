@@ -120,9 +120,6 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
                         selectedCondition: item.selectedCondition
                     });
                 });
-                
-                console.log('push');
-                console.log(push);
                 doc.push(push);
             });
             return doc;
