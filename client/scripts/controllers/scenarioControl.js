@@ -227,6 +227,9 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     
     $scope.save = function()
     {
+        //ベータ版のための制御
+        if (0 === selectConditionList.length) return false;
+        
         $scope.scenario.scenario_type = pageProp.type;
         Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
         Scenario.setActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
