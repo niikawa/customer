@@ -1,6 +1,6 @@
-var accessCtrl = angular.module('accessCtrl',['ScenarioServices']);
-accessCtrl.controller('AccessCtrl',['$scope', 'Shared', 'Scenario', 'Utility',
-function ($scope, Shared, Scenario, Utility)
+var accessCtrl = angular.module('accessCtrl',['AccessServices']);
+accessCtrl.controller('AccessCtrl',['$scope', 'Shared', 'Access', 'Utility',
+function ($scope, Shared, Access, Utility)
 {
     function setInitializeScope()
     {
@@ -8,6 +8,10 @@ function ($scope, Shared, Scenario, Utility)
     
     function getInitializeData()
     {
+        Access.resource.get().$promise.then(function(err, response)
+        {
+            $scope.logList = response.data;
+        });
     }
     
     $scope.initialize = function()
