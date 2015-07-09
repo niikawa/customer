@@ -71,16 +71,37 @@ exports.getOrCreate = function(req, res)
 
 exports.save = function(req, res)
 {
-    var isCreate = 
-        (void 0 === req.body.data.segment_id || '' === req.body.data.segment_id);
-    if (isCreate)
+    if (void 0 === req.body) res.status(510).send('params is not found');
+    
+    //うーん
+    var approach_setting_id = (1 === req.body.approach.approach_setting_id) ? req.body.approach.approach_setting_id : 1;
+    
+    var data = {
+        approach_setting_id: approach_setting_id,
+        daily_limit_num: req.body.approach.daily_limit_num, 
+        weekly_limit_num: req.body.approach.weekly_limit_num
+    };
+    
+    var commonColumns = model.getUpdCommonColumns();
+    var updateData = model.merge(data, commonColumns);
+
+    var request = model.getRequest();
+    request.input('update_by', model.db.Int, req.session.userId);
+    request.input('update_date', model.db.NVarChar, updateData.update_date);
+    
+    request.input('approach_setting_id', model.db.Int, updateData.approach_setting_id);
+    request.input('daily_limit_num', model.db.Int, updateData.daily_limit_num);
+    request.input('weekly_limit_num', model.db.Int, updateData.weekly_limit_num);
+
+    model.updateById(updateData, request, function(err, data)
     {
-        create(req, res);
-    }
-    else
-    {
-        update(req, res);
-    }
+        if (err.length > 0)
+        {
+            console.log('approach update faild');
+            console.log(err);
+        }
+       res.status(200).send('update ok');
+    });
 };
 
 exports.remove = function(req, res)
@@ -103,55 +124,3 @@ exports.remove = function(req, res)
         });
     });
 };
-
-exports.download = function(req, res)
-{
-   res.status(200).send('download ok');
-};
-
-function create(req, res)
-{
-    var commonColumns = model.getInsCommonColumns();
-    var insertData = model.merge(req.body.data, commonColumns);
-    insertData.status = 1;
-    var request = model.getRequest();
-    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
-    request.input('create_by', model.db.Int, req.session.userId);
-    request.input('create_date', model.db.NVarChar, insertData.create_date);
-    request.input('update_by', model.db.Int, req.session.userId);
-    request.input('update_date', model.db.NVarChar, insertData.update_date);
-    request.input('segment_name', model.db.NVarChar, insertData.segment_name);
-    request.input('status', model.db.SmallInt, insertData.status);
-    request.input('segment_document_id', model.db.NVarChar, insertData.segment_document_id);
-
-    model.insert(tableName, insertData, request, function(err, date)
-    {
-        if (err.length > 0)
-        {
-            console.log(err);
-            res.status(510).send('object not found');
-        }
-        res.status(200).send('insert ok');
-    });
-}
-
-function update(req, res)
-{
-    var commonColumns = model.getUpdCommonColumns();
-    var updateData = model.merge(req.body.data, commonColumns);
-    var request = model.getRequest();
-    request.input('update_by', model.db.Int, req.session.userId);
-    request.input('update_date', model.db.NVarChar, updateData.update_date);
-    request.input('segment_name', model.db.NVarChar, updateData.segment_name);
-    request.input('segment_document_id', model.db.NVarChar, updateData.segment_document_id);
-
-    model.updateById(updateData, request, function(err, date)
-    {
-        if (err.length > 0)
-        {
-            console.log(err);
-            res.status(510).send('object not found');
-        }
-        res.status(200).send('update ok');
-    });
-}

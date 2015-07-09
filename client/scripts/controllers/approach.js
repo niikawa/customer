@@ -6,8 +6,8 @@
  * Controller of the workspaceApp
  */
 var approachCtrl = angular.module('approachCtrl',['ApproachServices','ScenarioServices']);
-approachCtrl.controller('ApproachCtrl',['$scope', '$routeParams','Shared', 'Approach', 'Scenario',
-function ($scope, $routeParams, Shared, Approach, Scenario)
+approachCtrl.controller('ApproachCtrl',['$scope', '$routeParams','Shared', 'Utility', 'Approach', 'Scenario',
+function ($scope, $routeParams, Shared, Utility, Approach, Scenario)
 {
     function setInitializeScope()
     {
@@ -49,6 +49,10 @@ function ($scope, $routeParams, Shared, Approach, Scenario)
     $scope.save = function()
     {
         console.log($scope.approach);
+        Approach.resource.save().$promise.then(function(response)
+        {
+            Utility.info('設定を更新しました');
+        });
     };
     
     $scope.savePriority = function()
