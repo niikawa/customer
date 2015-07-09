@@ -20,9 +20,7 @@ exports.getOrCreate = function(req, res)
 {
     model.getAll(function(err, data)
     {
-        console.log(data);
-        console.log(err);
-        if (null !== err && err.length > 0)
+        if (err.length > 0)
         {
             console.log('approach data get error');
             console.log(err);
@@ -55,7 +53,7 @@ exports.getOrCreate = function(req, res)
         ], function(err)
         {
             console.log(err);
-            if (err.length > 0)
+            if (null === err)
             {
                 console.log(err);
                 res.status(510).send('object not found');
