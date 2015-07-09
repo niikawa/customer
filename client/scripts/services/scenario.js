@@ -108,13 +108,16 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
         {
             console.log(list);
             var doc = [];
-            angular.forEach(list, function(item, key)
+            angular.forEach(list, function(items, key)
             {
-                doc.push(
+                angular.forEach(items, function(item, key)
                 {
-                    physicalname: item.physicalname,
-                    condition: item.condition,
-                    selectedCondition: item.selectedCondition
+                    doc.push(
+                    {
+                        physicalname: item.physicalname,
+                        condition: item.condition,
+                        selectedCondition: item.selectedCondition
+                    });
                 });
             });
             return doc;
