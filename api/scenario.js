@@ -97,14 +97,14 @@ exports.savePriority = function(req, res)
     console.log(req.body);
     var commonColumns = model.getUpdCommonColumns();
 
-    async.forEach(req.body.data, function(data, callback)
+    async.forEach(req.body.data, function(item, callback)
     {
-        delete data.scenario_name;
-        delete data.scenario_type;
+        delete item.scenario_name;
+        delete item.scenario_type;
         
-        var updateData = model.merge(data, commonColumns);
+        var updateData = model.merge(item, commonColumns);
         updateData.scenario_id = req.body.scenario.scenario_id;
-        console.log(data);
+        console.log(item);
 
         var request = model.getRequest();
         request.input('update_by', model.db.Int, req.session.userId);

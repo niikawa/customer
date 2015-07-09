@@ -76,8 +76,8 @@ exports.save = function(req, res)
     //approach_settingは1レコードしか存在しない
     var data = {
         approach_setting_id: 1,
-        daily_limit_num: req.body.approach.daily_limit_num, 
-        weekly_limit_num: req.body.approach.weekly_limit_num
+        daily_limit_num: req.body.daily_limit_num, 
+        weekly_limit_num: req.body.weekly_limit_num
     };
     
     var commonColumns = model.getUpdCommonColumns();
