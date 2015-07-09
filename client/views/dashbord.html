@@ -33,7 +33,12 @@
 
         <div class="row" >
             <div class="col-md-12">
-                <div class="panel panel-default">
+                
+                <div ng-if="!isShowExecutePlanScenario" class="alert alert-info" role="alert">
+                    実行予定のシナリオはありません。
+                </div>
+                
+                <div ng-if="isShowExecutePlanScenario" class="panel panel-default">
                   <div class="panel-heading">
                     <input type="text" class="form-control" placeholder="シナリオを絞り込みます" ng-model="scenarioSearch" 
                         refine-directive refine-item="executePlanScenario" keyword="scenarioSearch" name-propertie="scenario_name" >
@@ -45,7 +50,8 @@
                         <a ng-href='/#/scenario/control/{{item.scenario_id}}'>{{item.scenario_name}}</a>
                     </li>
                   </ul>
-                </div>     
+                </div>
+                
             </div>
         </div>
     </div>
