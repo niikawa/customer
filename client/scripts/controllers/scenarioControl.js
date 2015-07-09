@@ -114,22 +114,20 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             $scope.columnList = response.data.column;
             $scope.activeName = initData.specificInfo.doc.actionName;
             
-            var createConditionList = [];
             angular.forEach(initData.specificInfo.doc.conditionList, function(conditionItem)
             {
                 angular.forEach($scope.columnList, function(info)
                 {
-                    console.log(info);
                     if (conditionItem.physicalname == info.physicalname)
                     {
                         info.condition = conditionItem.condition;
                         info.selectedCondition = conditionItem.selectedCondition;
-                        createConditionList.push(info);
+                        selectConditionList.push(info);
                         return false;
                     }
                 });
             });
-            var condtionString = Scenario.createCondtionString(createConditionList);
+            var condtionString = Scenario.createCondtionString(selectConditionList);
             $scope.decisionList.push(condtionString);
         });
     }
