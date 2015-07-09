@@ -16,7 +16,6 @@ function ($scope, Shared, Scenario, Utility)
             
             Scenario.resource.executeplan().$promise.then(function(response)
             {
-                console.log(response.data.length);
                 $scope.isShowExecutePlanScenario = (response.data.length > 0);
                 $scope.executePlanScenario = response.data;
             });
@@ -32,14 +31,5 @@ function ($scope, Shared, Scenario, Utility)
         getInitializeData();
         
         $scope.$emit('requestEnd');
-        
-        /* サーバーサイド実装後に開放
-        Scenario.resource.get().$promise.then(function(response)
-        {
-            $scope.scenario = response.data.scenario;
-            $scope.executePlanScenario = response.data.executePlanScenario;
-        });
-        */
-        
     };
 }]);
