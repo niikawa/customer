@@ -74,10 +74,9 @@ exports.getAll = function(req, res)
 
 exports.getValid = function(req, res)
 {
-    var col = "scenario_id, scenario_name, " +
+    var col = "scenario_id, scenario_name, status, priority, " +
                 "CASE scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type";
-                "CASE status WHEN 1 THEN N'有効' WHEN 0 THEN N'無効' ELSE N'未設定' END AS status";
-                
+
     var where = "delete_flag = 0 AND approach = 1";
     var order = "priority, scenario_id";
     var qObj = model.getQueryObject(col, tableName, where, '', order);
@@ -96,9 +95,22 @@ exports.savePriority = function(req, res)
 {
     console.log('scenario save priority execute');
     console.log(req.body);
+    var commonColumns = model.getUpdCommonColumns();
+
     async.forEach(req.body.scenarioList, function(data, callback)
     {
-        callback();
+        var updateData = model.merge(data, commonColumns);
+        updateData.scenario_id = req.body.scenario.scenario_id;
+
+        var request = model.getRequest();
+        request.input('update_by', model.db.Int, req.session.userId);
+        request.input('update_date', model.db.NVarChar, updateData.update_date);
+        
+        request.input('scenario_id', model.db.Int, updateData.scenario_id);
+        request.input('priority', model.db.Int, updateData.priority);
+        request.input('status', model.db.Int, updateData.status);
+
+        model.updateById(updateData, request, callback);
     }, 
     function (err) 
     {
