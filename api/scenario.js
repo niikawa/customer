@@ -119,8 +119,8 @@ exports.getScenarioCount = function(req, res)
         //count
         count: function(callback)
         {
-            var col = "scenario_type, count(1) as regist_num "+
-                "CASE scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key " +
+            var col = "scenario_type, count(1) as regist_num, "+
+                "CASE scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key, " +
                 "CASE scenario_type WHEN 1 THEN N'スケジュール型シナリオ' WHEN 2 THEN N'トリガー型シナリオ' ELSE N'未設定' END AS scenario_type_name";
             var where = "delete_flag = 0";
             var grop = "scenario_type";
