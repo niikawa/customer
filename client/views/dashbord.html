@@ -33,23 +33,19 @@
 
         <div class="row" >
             <div class="col-md-12">
-                <div class="panel-heading">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
                     <input type="text" class="form-control" placeholder="シナリオを絞り込みます" ng-model="scenarioSearch" 
                         refine-directive refine-item="executePlanScenario" keyword="scenarioSearch" name-propertie="scenario_name" >
-                </div>
-                <table class="table">
-                    <thead>
-                        <tr class="info">
-                            <th>シナリオ名</th>
-                        </tr>
-                    </thead>
-                    <!--  ここデータでとるところ -->
-                    <tbody>
-                        <tr ng-repeat="item in executePlanScenario">
-                            <td data-th="名"><a ng-href='/#/scenario/control/{{item.scenario_id}}'>{{item.scenario_name}}</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+                  </div>
+                  <ul class="list-group" >
+                    <li class="list-group-item" ng-repeat="(i, item) in executePlanScenario">
+                        <span class="badge">{{$index+1}}</span>
+                        <span class="label-m label-default">{{item.scenario_type}}</span>
+                        <a ng-href='/#/scenario/control/{{item.scenario_id}}'>{{item.scenario_name}}</a>
+                    </li>
+                  </ul>
+                </div>     
             </div>
         </div>
     </div>

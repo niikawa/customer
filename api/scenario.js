@@ -176,6 +176,31 @@ exports.getScenarioCount = function(req, res)
     });
 };
 
+/**
+ * 実行予定のシナリオを取得する
+ * 並び順はpriorityとscenario_idの昇順
+ * 
+ * @param {Object} req 画面からのリクエスト
+ * @param {Object} res 画面へのレスポンス
+ */
+exports.getExecutePlanScenario = function(req, res)
+{
+    var col = "scenario_id, scenario_name, "+
+        "CASE scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type";
+    var where = "delete_flag = 0 AND AND approach = 1 AND status = 1";
+    var order = "priority, scenario_id";
+    var qObj = model.getQueryObject(col, tableName, where, '', order);
+    
+    model.select(qObj, qObj.request, function(err, data)
+    {
+        if (err.length > 0)
+        {
+            console.log('get execute plan scenario faild');
+            console.log(err);
+        }
+        res.json({data: data});
+    });
+};
 
 
 /**
@@ -210,7 +235,6 @@ exports.savePriority = function(req, res)
     }, 
     function (err) 
     {
-        console.log(err);
         if (err.length > 0)
         {
             console.log('scenario priority update faild');

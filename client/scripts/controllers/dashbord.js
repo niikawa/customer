@@ -13,6 +13,11 @@ function ($scope, Shared, Scenario, Utility)
         Scenario.resource.typeCount().$promise.then(function(response)
         {
             $scope.scenarioList = response.data;
+            
+            Scenario.resource.executeplan().$promise.then(function(response)
+            {
+                $scope.executePlanScenario = response.data;
+            });
         });
     }
     
@@ -23,9 +28,6 @@ function ($scope, Shared, Scenario, Utility)
         $scope._construct();
         setInitializeScope();
         getInitializeData();
-        
-        var data= Scenario.mock();
-        $scope.executePlanScenario = data.executePlanScenario;
         
         $scope.$emit('requestEnd');
         
