@@ -29,6 +29,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.intervalCondition;
         $scope.intervalConditionList = Scenario.intervalConditionList;
         
+        $scope.conditions = [];
         $scope.specificInfo = {};
         $scope.decisionList = [];
     }
