@@ -83,10 +83,14 @@ router.post('/scenario/save', scenario.save);
 router.post('/scenario/name', scenario.isSameName);
 router.get('/scenario/initialize/:type', scenario.initializeData);
 router.get('/scenario/initialize/:type/:id', scenario.initializeData);
+router.get('/scenario/valid', scenario.getValid);
 router.get('/scenario/:type', scenario.getAll);
 router.get('/scenario/:type/:id', scenario.getById);
 router.delete('/scenario/:type/remove/:id', scenario.remove);
 router.get('/action/:name', scenario.getActionByName);
+
+var approach = require("./api/approach");
+router.get('/approach/', approach.getOrCreate);
 
 var user = require("./api/user");
 router.get('/user', user.getList);

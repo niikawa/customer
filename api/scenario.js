@@ -72,6 +72,27 @@ exports.getAll = function(req, res)
     });
 };
 
+exports.getValid = function(req, res)
+{
+    var col = "scenario_id, scenario_name, " +
+                "CASE status WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type";
+                "CASE status WHEN 1 THEN N'有効' WHEN 0 THEN N'無効' ELSE N'未設定' END AS status";
+                
+    var where = "delete_flag = 0 AND approach = 1";
+    var order = "priority, scenario_id";
+    var qObj = model.getQueryObject(col, tableName, where, '', order);
+    
+    model.select(qObj, qObj.request, function(err, data)
+    {
+        if (err.length > 0)
+        {
+            console.log(err);
+            res.status(510).send('object not found');
+        }
+        res.json({data: data});
+    });
+};
+
 exports.save = function(req, res)
 {
     console.log('scenario save execute');

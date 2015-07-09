@@ -9,16 +9,24 @@ var approachCtrl = angular.module('approachCtrl',['ApproachServices','ScenarioSe
 approachCtrl.controller('ApproachCtrl',['$scope', '$routeParams','Shared', 'Approach', 'Scenario',
 function ($scope, $routeParams, Shared, Approach, Scenario)
 {
-    /**
-     * scope初期化用
-     */
     function setInitializeScope()
     {
-//        $scope.addPageTitle = Approach.getPageProp($routeParams.scenario).title;
-//        $scope.type = $routeParams.scenario;
-        
+        $scope.approach = [];
         $scope.scenarioList = [];
         $scope.warningMessage = '';
+    }
+    
+    function getInitializeData()
+    {
+        Approach.resource.get().$promise.then(function(approachResponse)
+        {
+            $scope.approach = approachResponse.data;
+            
+            Scenario.resource.valid().$promise.then(function(scenarioResponse)
+            {
+                $scope.scenarioList = scenarioResponse.data;
+            });
+        });
     }
     
     function setEventListeners()
@@ -28,33 +36,27 @@ function ($scope, $routeParams, Shared, Approach, Scenario)
             $scope.scenarioList = data.to;
             $scope.$apply();
         });
-        
     }
     
-    /**
-     * 初期処理
-     * @author niikawa
-     */
     $scope.initialize = function()
     {
         $scope._construct();
         setInitializeScope();
+        getInitializeData();
         setEventListeners();
         
         var data = Scenario.mock();
         $scope.scenarioList = data.priorities;
-
-        /* サーバーサイド実装後に開放
-        Segment.resource.get().$promise.then(function(response)
-        {
-            $scope.segmentList = response.data;
-        });
-        */
     };
     
-    $scope.remove = function()
+    $scope.save = function()
     {
-        
+        console.log($scope.approach);
+    };
+    
+    $scope.savePriority = function()
+    {
+        console.log($scope.scenarioList);
     };
     
 }]);
