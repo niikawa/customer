@@ -127,9 +127,9 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                         return false;
                     }
                 });
+                var condtionString = Scenario.createCondtionString(selectConditionList);
+                $scope.decisionList.push(condtionString);
             });
-            var condtionString = Scenario.createCondtionString(selectConditionList);
-            $scope.decisionList.push(condtionString);
         });
     }
     function setWatchItems()
