@@ -20,6 +20,8 @@ exports.getOrCreate = function(req, res)
 {
     model.getAll(function(err, data)
     {
+        console.log(data);
+        console.log(err);
         if (err.length > 0)
         {
             console.log('approach data get error');
