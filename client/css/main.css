@@ -645,15 +645,10 @@ div .card-cell-right-b {
   min-height: 107px;
 }
 
-.label-l {
+.label {
   margin-right: 5px;
   font-size: 100%;
   line-height:2.5;
-}
-
-.label {
-  margin-right: 5px;
-  line-height:1.5;
 }
 
 .label-close {
