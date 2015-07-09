@@ -16,6 +16,7 @@ function ($scope, Shared, Scenario, Utility)
             
             Scenario.resource.executeplan().$promise.then(function(response)
             {
+                console.log(response.data.length);
                 $scope.isShowExecutePlanScenario = (response.data.length > 0);
                 $scope.executePlanScenario = response.data;
             });
