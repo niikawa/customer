@@ -36,7 +36,7 @@
     <div class="box">
         <h4>シナリオ優先順位</h4>
 
-        <div class="row" >
+        <div class="row vertical-container" >
             <div class="col-md-12 vertical-container">
                 
                 <div ng-if="warningMessage" class="alert alert-warning" role="alert">
@@ -47,7 +47,7 @@
                     
                     <div class="card btn-draggable" ng-repeat="item in scenarioList track by $index" drag-item-directive dragindex="$index" >
                         <span class="badge">{{$index+1}}</span>
-                        <span class="label label-default">{{item.scenario_type}}</span>
+                        <span class="label-m label-default">{{item.scenario_type}}</span>
                         <a ng-href='/#/scenario/{{item.scenario_type}}/control/{{item.scenario_id}}'>{{item.scenario_name}}</a>
                         <div class="btn-group">
                             <label class="btn btn-default" name="status" ng-model="item.status" btn-radio=1 uncheckable>有効</label>
