@@ -131,6 +131,7 @@ exports.getScenarioCount = function(req, res)
     },
     function complete(err, items)
     {
+        console.log(items);
         var list = [];
         var envInfo = items.env[0];
         if (0 === items.count.length)
