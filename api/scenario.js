@@ -72,6 +72,13 @@ exports.getAll = function(req, res)
     });
 };
 
+/**
+ * アプローチ対象のシナリオを取得する
+ * 並び順はpriorityとscenario_idの昇順
+ * 
+ * @param {Object} req 画面からのリクエスト
+ * @param {Object} res 画面へのレスポンス
+ */
 exports.getValid = function(req, res)
 {
     var col = "scenario_id, scenario_name, status, priority, " +
@@ -91,6 +98,91 @@ exports.getValid = function(req, res)
         res.json({data: data});
     });
 };
+
+/**
+ * アプローチ対象のシナリオを取得する
+ * 並び順はpriorityとscenario_idの昇順
+ * 
+ * @param {Object} req 画面からのリクエスト
+ * @param {Object} res 画面へのレスポンス
+ */
+exports.getScenarioCount = function(req, res)
+{
+    model.async.parallel(
+    {
+        //セグメント情報
+        env: function(callback)
+        {
+            var env = require("./environment");
+            env.get(callback);
+        },
+        //count
+        count: function(callback)
+        {
+            var col = "scenario_type, count(1) as regist_num "+
+                "CASE scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key " +
+                "CASE scenario_type WHEN 1 THEN N'スケジュール型シナリオ' WHEN 2 THEN N'トリガー型シナリオ' ELSE N'未設定' END AS scenario_type_name";
+            var where = "delete_flag = 0";
+            var grop = "scenario_type";
+            var qObj = model.getQueryObject(col, tableName, where, grop, '');
+            
+            model.select(qObj, qObj.request, callback);
+        },
+    },
+    function complete(err, items)
+    {
+        var list = [];
+        var envInfo = items.env[0];
+        if (0 === items.count.length)
+        {
+            list.push({scenario_type_key: 'schedule', scenario_name:'スケジュール型シナリオ', regist_num: 0, regist_max: envInfo.schedule_scenario_max});
+            list.push({scenario_type_key: 'trigger', scenario_name:'トリガー型シナリオ', regist_num: 0, regist_max: envInfo.trigger_scenario_max});
+        }
+        else if (1 === items.count.length)
+        {
+            var isSchedule = (1 === items.count[0].scenario_type) ? true : false;
+            if (isSchedule)
+            {
+                items.count[0].regist_max = envInfo.schedule_scenario_max;
+                list.push(items.count[0]);
+                list.push({scenario_type_key: 'trigger', scenario_name:'トリガー型シナリオ', regist_num: 0, regist_max: envInfo.trigger_scenario_max});
+            }
+            else
+            {
+                list.push({scenario_type_key: 'schedule', scenario_name:'スケジュール型シナリオ', regist_num: 0, regist_max: envInfo.schedule_scenario_max});
+                items.count[0].regist_max = envInfo.trigger_scenario_max;
+                list.push(items.count[0]);
+            }
+        }
+        else
+        {
+            var num = items.count.length;
+            for(var index = 0; index < num; index++)
+            {
+                if (1 === items.count[index].scenario_type)
+                {
+                    items.count[index].regist_max = envInfo.schedule_scenario_max;
+                }
+                else if (2 === items.count[index].scenario_type)
+                {
+                    items.count[index].regist_max = envInfo.trigger_scenario_max;
+                }
+            }
+            list = items.count;
+        }
+        
+        res.json({data: list});
+    });
+};
+
+
+
+/**
+ * priorityとstatusを更新する
+ * 
+ * @param {Object} req 画面からのリクエスト
+ * @param {Object} res 画面へのレスポンス
+ */
 exports.savePriority = function(req, res)
 {
     console.log('scenario save priority execute');
@@ -103,7 +195,6 @@ exports.savePriority = function(req, res)
         delete item.scenario_type;
         
         var updateData = model.merge(item, commonColumns);
-//        updateData.scenario_id = item.scenario_id;
         console.log(updateData);
 
         var request = model.getRequest();
@@ -128,6 +219,13 @@ exports.savePriority = function(req, res)
     });    
 };
 
+/**
+ * シナリオを保存する
+ * パラメータにPKが存在するか否かで登録するか更新するかを決定する
+ * 
+ * @param {Object} req 画面からのリクエスト
+ * @param {Object} res 画面へのレスポンス
+ */
 exports.save = function(req, res)
 {
     console.log('scenario save execute');
@@ -145,6 +243,12 @@ exports.save = function(req, res)
     }
 };
 
+/**
+ * シナリオを登録する
+ * 
+ * @param {Object} req 画面からのリクエスト
+ * @param {Object} res 画面へのレスポンス
+ */
 function create(req, res)
 {
     scenariodoc.saveItemForWeb(true, req.body.doc, function(err, doc)
@@ -249,6 +353,12 @@ function create(req, res)
     });
 }
 
+/**
+ * シナリオを更新する
+ * 
+ * @param {Object} req 画面からのリクエスト
+ * @param {Object} res 画面へのレスポンス
+ */
 function update(req, res)
 {
     console.log('scenario update start');

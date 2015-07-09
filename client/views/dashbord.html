@@ -17,8 +17,8 @@
                     </thead>
                     <!--  ここデータでとるところ -->
                     <tbody>
-                        <tr ng-repeat="item in scenario">
-                            <td data-th="タイプ"><a ng-href='/#/scenario/{{item.scenario_type}}'>{{item.scenario_name}}</a></td>
+                        <tr ng-repeat="item in scenarioList">
+                            <td data-th="タイプ"><a ng-href='/#/scenario/{{item.scenario_type_key}}'>{{item.scenario_type_name}}</a></td>
                             <td data-th="数">{{item.regist_num}}</td>
                             <td data-th="上限">{{item.regist_max}}</td>
                         </tr>

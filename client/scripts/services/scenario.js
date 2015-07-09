@@ -53,6 +53,11 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
                 method: 'POST',
                 url: 'scenario/priority',
             },
+            typeCount:
+            {
+                method: 'GET',
+                url: 'scenario/typecount',
+            },
         });
         
         scenarioServices.getPageProp = function(type, id)

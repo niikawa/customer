@@ -2,28 +2,29 @@ var mainCtrl = angular.module('dashbordCtrl',['ScenarioServices']);
 mainCtrl.controller('DashbordCtrl',['$scope', 'Shared', 'Scenario', 'Utility',
 function ($scope, Shared, Scenario, Utility)
 {
-    /**
-     * scope初期化用
-     */
     function setInitializeScope()
     {
         $scope.scenario = [];
         $scope.executePlanScenario = [];
     }
     
-    /**
-     * 初期処理
-     * @author niikawa
-     */
+    function getInitializeData()
+    {
+        Scenario.resource.typeCount().$promise.then(function(response)
+        {
+            $scope.scenarioList = response.data;
+        });
+    }
+    
     $scope.initialize = function()
     {
         $scope.$emit('requestStart');
         
         $scope._construct();
         setInitializeScope();
-
+        getInitializeData();
+        
         var data= Scenario.mock();
-        $scope.scenario = data.scenario;
         $scope.executePlanScenario = data.executePlanScenario;
         
         $scope.$emit('requestEnd');
