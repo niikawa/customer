@@ -115,10 +115,13 @@ exports.savePriority = function(req, res)
     function (err) 
     {
         console.log(err);
-        console.log("end");
+        if (err.length > 0)
+        {
+            console.log('scenario priority update faild');
+            console.log(err);
+        }
+        res.status(200).send('scenario priority update ok');
     });    
-    
-    
 };
 
 exports.save = function(req, res)

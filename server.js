@@ -81,6 +81,7 @@ router.get('/segment/download/:id', segment.download);
 var scenario = require("./api/scenario");
 router.post('/scenario/save', scenario.save);
 router.post('/scenario/name', scenario.isSameName);
+router.post('/scenario/priority', scenario.savePriority);
 router.get('/scenario/initialize/:type', scenario.initializeData);
 router.get('/scenario/initialize/:type/:id', scenario.initializeData);
 router.get('/scenario/valid', scenario.getValid);
