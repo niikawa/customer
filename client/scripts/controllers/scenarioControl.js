@@ -192,17 +192,16 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         var push = {};
         angular.copy(item, push);
         $scope.conditions.push(push);
-        selectConditionList.push(push);
     };
 
     $scope.removeItem = function(index)
     {
         $scope.conditions.splice(index, 1);
-        selectConditionList.splice(index, 1);
     };
     
     $scope.decision = function()
     {
+        selectConditionList.push([$scope.conditions]);
         var condtionString = Scenario.createCondtionString($scope.conditions);
         $scope.decisionList.push(condtionString);
         $scope.conditions = [];
