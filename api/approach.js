@@ -22,54 +22,54 @@ exports.getOrCreate = function(req, res)
     {
         console.log(data);
         console.log(err);
-        if (err.length > 0)
+        if (null !== err)
         {
-            console.log('approach data get error');
-            console.log(err);
-            res.status(510).send('data get faild');
+            if (err.length > 0)
+            {
+                console.log('approach data get error');
+                console.log(err);
+                res.status(510).send('data get faild');
+            }
         }
-        else
-        {
-            var approachData = data[0];
-            
-            model.async.waterfall(
-            [
-                function(callback)
+        var approachData = data[0];
+        
+        model.async.waterfall(
+        [
+            function(callback)
+            {
+                if (0 === data.length)
                 {
-                    if (0 === data.length)
-                    {
-                        approachData = {daily_limit_num: 0, weekly_limit_num: 0};
-                        //データが存在しない場合は作る
-                        var commonColumns = model.getInsCommonColumns();
-                        var request = model.getRequest();
-                        request.input('delete_flag', model.db.SmallInt, commonColumns.delete_flag);
-                        request.input('create_by', model.db.Int, req.session.userId);
-                        request.input('create_date', model.db.NVarChar, commonColumns.create_date);
-                        request.input('update_by', model.db.Int, req.session.userId);
-                        request.input('update_date', model.db.NVarChar, commonColumns.update_date);
-                        model.insert(tableName, commonColumns, request, callback);
-                    }
-                    else
-                    {
-                        callback(null);
-                    }
-                },
-            ], function(err)
+                    approachData = {daily_limit_num: 0, weekly_limit_num: 0};
+                    //データが存在しない場合は作る
+                    var commonColumns = model.getInsCommonColumns();
+                    var request = model.getRequest();
+                    request.input('delete_flag', model.db.SmallInt, commonColumns.delete_flag);
+                    request.input('create_by', model.db.Int, req.session.userId);
+                    request.input('create_date', model.db.NVarChar, commonColumns.create_date);
+                    request.input('update_by', model.db.Int, req.session.userId);
+                    request.input('update_date', model.db.NVarChar, commonColumns.update_date);
+                    model.insert(tableName, commonColumns, request, callback);
+                }
+                else
+                {
+                    callback(null);
+                }
+            },
+        ], function(err)
+        {
+            console.log(err);
+            if (err.length > 0)
             {
                 console.log(err);
-                if (err.length > 0)
-                {
-                    console.log(err);
-                    res.status(510).send('object not found');
-                }
-                
-                var ret = {daily_limit_num: 0, weekly_limit_num: 0};
-                ret.daily_limit_num = approachData.daily_limit_num;
-                ret.weekly_limit_num = approachData.weekly_limit_num;
-                
-                res.json({data: ret});
-            });
-        }
+                res.status(510).send('object not found');
+            }
+            
+            var ret = {daily_limit_num: 0, weekly_limit_num: 0};
+            ret.daily_limit_num = approachData.daily_limit_num;
+            ret.weekly_limit_num = approachData.weekly_limit_num;
+            
+            res.json({data: ret});
+        });
     });
 };
 
