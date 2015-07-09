@@ -13,12 +13,12 @@
                     作成しているシナリオはありません。
                 </div>
                 
-                <div ng-if="showInfo" class="panel panel-default">
+                <div ng-if="isScenarioShow" class="panel panel-default">
                     <div class="panel-heading">
                         <input type="text" class="form-control" placeholder="シナリオを絞り込みます" ng-model="scenarioSearch" 
                             refine-directive refine-item="scenarioList" keyword="scenarioSearch" name-propertie="scenario_name" >
                     </div>
-                    <table ng-if="isScenarioShow" class="table table-hover">
+                    <table class="table table-hover">
                         <thead>
                             <tr class="info">
                                 <th>シナリオ名</th>
