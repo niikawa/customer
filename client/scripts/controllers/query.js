@@ -97,7 +97,7 @@ function ($scope, Shared, Query, Location, Utility)
     
     $scope.next = function()
     {
-        console.log($scope.selectColumns);
+        console.log($scope.querySetForm.$invalid);
         if (Query.validation.require($scope.selectColumns)) Location.querySave();
     };
     
@@ -115,7 +115,6 @@ function ($scope, Shared, Query, Location, Utility)
                 if (1 === v.length) v.isJoin = false;
             });
         });
-        
     }
 
     $scope.saveInitialize = function()
