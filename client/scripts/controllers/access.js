@@ -4,6 +4,7 @@ function ($scope, $routeParams, Shared, Access, Utility)
 {
     function setInitializeScope()
     {
+        $scope.showDate = '';
     }
     
     function getInitializeData()
@@ -26,12 +27,19 @@ function ($scope, $routeParams, Shared, Access, Utility)
         $scope.$emit('requestEnd');
     };
     
-    
+    //time line functions 
     function getTimeInitializeData()
     {
         var today = Utility.today('YYYY/MM/DD');
-        Access.resource.day({day: today, id: $routeParams.id}).$promise.then(function(response)
+        getTimeLine(today);
+    }
+    
+    function getTimeLine(day)
+    {
+        Access.resource.day({day: day, id: $routeParams.id}).$promise.then(function(response)
         {
+            $scope.targetName = response.data[0].name;
+            $scope.showDate = day;
             $scope.timelineList = response.data;
         });
     }
