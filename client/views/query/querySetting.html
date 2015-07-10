@@ -7,6 +7,11 @@
 
         <from name="nikawaForm" novalidate>
 
+        <div>
+            <input type="text" class="form-control" placeholder="ユーザー名" name="name" ng-model="user.name" ng-maxlength=30 ng-required="true"/>
+        </div>
+
+
             <div class="row">
                 <div class="col-md-12 break-all label-box">
                     <h3>選択しているカラム</h3>
@@ -25,10 +30,10 @@
             </div>
     
             <div class="row" >
-                <pre>{{nikawa.$invalid}}</pre>
+                <pre>{{nikawaForm.$invalid}}</pre>
                 <div class="col-md-12 center" >
                     <a class="btn btn-default" ng-href="#/query" >戻る</a>
-                    <button class="btn btn-default" ng-disabled="nikawa.$invalid" ng-click="next()">次へ</button>
+                    <button class="btn btn-default" ng-disabled="nikawaForm.$invalid" ng-click="next()">次へ</button>
                 </div>
             </div>
         </from>
