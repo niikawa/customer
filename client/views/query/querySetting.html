@@ -6,6 +6,11 @@
         <h4>選択したカラムに対する条件を設定してください</h4>
 
         <from name="querySetForm" novalidate>
+            
+                    <div>
+                        <input type="text" class="form-control" placeholder="ユーザー名" name="name" ng-model="user.name" ng-maxlength=30 ng-required="true"/>
+                    </div>
+            
             <div class="row">
                 <div class="col-md-12 break-all label-box">
                     <h3>選択しているカラム</h3>
