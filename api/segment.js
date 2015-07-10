@@ -40,6 +40,7 @@ exports.getById = function(req, res)
     });
 };
 
+/** misiyou */
 exports.getAll = function(req, res)
 {
     model.getAll(function(err, data)
@@ -52,31 +53,7 @@ exports.getAll = function(req, res)
         }
         else
         {
-            console.log('get segment used');
-            console.log(data);
-            
-            //セグメントの利用状況を設定する
-            var scenario = require("./scenario");
-            async.forEach(data, function(segment, callback)
-            {
-                scenario.getBySegmentId(segment.segment_id, function(err, data)
-                {
-                    console.log(data);
-                    segment.isUsed = (data.length > 0);
-                    callback(null);
-                });
-            },
-            function (err) 
-            {
-                console.log(err);
-                if (err.length > 0)
-                {
-                    console.log('get segment data faild');
-                    console.log(err);
-                    res.status(510).send('get segment data faild');
-                }
-                res.json({data: data});
-            });    
+            res.json({data: data});
         }
     });
 };
