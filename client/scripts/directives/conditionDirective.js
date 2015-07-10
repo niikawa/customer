@@ -108,7 +108,8 @@ myApp.directive('conditionDirective', function(Utility){
                 }
                 else if ('date' === type)
                 {
-                    console.log(Utility.moment(val).isValid());
+                    var m = Utility.moment(val);
+                    console.log(m.isValid());
                 }
             };
         }

@@ -125,8 +125,11 @@ utilsServices.service("Utility", ['$rootScope', function($rootScope)
     //http://momentjs.com/
     //--------------------------------------------------------------------------
     //momentオブジェクトを取得する
-    this.moment = function() {
+    this.momentDefault = function() {
         return moment();
+    };
+    this.moment = function(d) {
+        return moment(d);
     };
     //本日の日付けを文字列で取得する
     this.today = function(format) {
