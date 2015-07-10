@@ -6,20 +6,15 @@ myApp.directive('conditionDirective', function(){
     return {
         restrict: 'EA',
         scope:{
-            form: '=',
             conditionAppend: '=',
         },
         template: 
                 '指定した値' +
                 '<select ng-model="mySlected" class="form-control" ng-options="item as item.name for item in selectItems" ng-required="true"></select>'+
                 'ものを条件とする'+
-                '<div ng-if="isOneInput">'+
-                
-                    '<input type="text" my-validators="validators.{{conditionAppend.column.inputType}}" name={{elName}} class="form-control" ng-model="conditionAppend.condition.value1" ng-keyup="check()" ng-required="true">'+
+                '<div ng-if="isOneInput"><input type="text" name="{{conditionAppend.column.physicalname}}" class="form-control" ng-model="conditionAppend.condition.value1" ng-keyup="check()" ng-required="true">'+
 
-                        '<div ng-messages="conditionForm.{{conditionAppend.column.physicalname}}.$dirty && conditionForm.{{conditionAppend.column.physicalname}}.$error">'+
-                            '<p class="item-error" ng-message="check">だめよ</p>'+
-                        '</div>'+
+                '<div><p ng-if="conditionAppend.error" class="item-error">{{conditionAppend.message}}</p></div>'+
 
                 '</div>'+
                 '<div ng-if="isTextArea"><textarea class="form-control" ng-model="conditionAppend.condition.value1" ng-required="true"></textarea></div>'+
@@ -27,7 +22,6 @@ myApp.directive('conditionDirective', function(){
                   ,
         link: function (scope, element, attrs) 
         {
-            scope.elName = scope.conditionAppend.column.physicalname;
             scope.conditionAppend.selectedCondition = {name: '', value: '', symbol: ''};
             scope.conditionAppend.condition = {value1: '', value2: '', where: 'AND'};
 
@@ -82,46 +76,8 @@ myApp.directive('conditionDirective', function(){
                 });
             });
             
-            scope.validators = 
-            {
-                number:
-                {
-                    check: function (modelValue, viewValue)
-                    {
-                        var val = modelValue || viewValue;
-
-                        if (void 0 == val) return true;
-
-                        if (!isFinite(parseInt(val, 10)))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                }
-            };
-            
-            scope.$watch('scope.conditionAppend.condition.value1', function()
-            {
-                // var a = scope.conditionAppend.column.physicalname;
-                // console.log(a);
-                // console.log(scope.form);
-                // console.log(scope.form[a]);
-                // scope.form.id.$validate();
-            });
-
             scope.check = function(event)
             {
-                var a = scope.conditionAppend.column.physicalname;
-                console.log(a);
-                console.log(scope.form);
-                console.log(scope.form[a]);
-                scope.form.id.$validate();
-                
-                
                 console.log(scope.conditionAppend);
                 var type = scope.conditionAppend.column.inputType;
                 var val = scope.conditionAppend.condition.value1;
@@ -136,6 +92,8 @@ myApp.directive('conditionDirective', function(){
                     }
                     else
                     {
+                        
+                    }
                         if (!isFinite(parseInt(val, 10)))
                         {
                             scope.conditionAppend.error = true;
@@ -146,7 +104,6 @@ myApp.directive('conditionDirective', function(){
                             scope.conditionAppend.error = false;
                             scope.conditionAppend.message = '';
                         }
-                    }
                 }
                 else if ('date' === type)
                 {
