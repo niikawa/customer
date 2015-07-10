@@ -52,6 +52,9 @@ exports.getAll = function(req, res)
         }
         else
         {
+            console.log('get segment used');
+            console.log(data);
+            
             //セグメントの利用状況を設定する
             var scenario = require("./scenario");
             async.forEach(data, function(segment, callback)
@@ -60,7 +63,7 @@ exports.getAll = function(req, res)
                 {
                     console.log(data);
                     segment.isUsed = (data.length > 0);
-                    callback(err);
+                    callback(null);
                 });
             },
             function (err) 
