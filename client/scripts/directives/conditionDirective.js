@@ -72,25 +72,24 @@ myApp.directive('conditionDirective', function(){
                 });
             });
             
-            scope.check = function(conditionAppend)
+            scope.check = function()
             {
                 console.log(scope.conditionAppend);
-                console.log(conditionAppend);
                 var type = scope.conditionAppend.column.inputType;
+                var val = scope.conditionAppend.condition.value1;
                 console.log(type);
                 if ('number' === type)
                 {
-                    
-                }
-                else if ('text' === type)
-                {
-                    
+                    if (!isFinite(parseInt(val, 10)))
+                    {
+                        console.log(parseInt(val, 10));
+                    }
                 }
                 else if ('date' === type)
                 {
                     
                 }
-            }
+            };
         }
     };
 });
