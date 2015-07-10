@@ -12,9 +12,13 @@ myApp.directive('conditionDirective', function(){
                 '指定した値' +
                 '<select ng-model="mySlected" class="form-control" ng-options="item as item.name for item in selectItems" ng-required="true"></select>'+
                 'ものを条件とする'+
-                '<div ng-if="isOneInput"><input type="text" name="{{conditionAppend.column.physicalname}}" class="form-control" ng-model="conditionAppend.condition.value1" ng-keyup="check()" ng-required="true">'+
+                '<div ng-if="isOneInput">'+
+                
+                    '<input type="text" my-validators="validators.{{conditionAppend.column.inputType}}" name="{{conditionAppend.column.physicalname}}" class="form-control" ng-model="conditionAppend.condition.value1" ng-keyup="check()" ng-required="true">'+
 
-                '<div><p ng-if="conditionAppend.error" class="item-error">{{conditionAppend.message}}</p></div>'+
+                        '<div ng-messages="conditionForm.{{conditionAppend.column.physicalname}}.$dirty && conditionForm.{{conditionAppend.column.physicalname}}.$error">'+
+                            '<p class="item-error" ng-message="check">だめよ</p>'+
+                        '</div>'+
 
                 '</div>'+
                 '<div ng-if="isTextArea"><textarea class="form-control" ng-model="conditionAppend.condition.value1" ng-required="true"></textarea></div>'+
@@ -76,6 +80,34 @@ myApp.directive('conditionDirective', function(){
                 });
             });
             
+            scope.validators = 
+            {
+                number:
+                {
+                    check: function (modelValue, viewValue)
+                    {
+                        var val = modelValue || viewValue;
+
+                        if (void 0 == val) return true;
+
+                        if (!isFinite(parseInt(val, 10)))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+
+                }
+            };
+            
+            scope.$watch('scope.conditionAppend.condition.value1', function()
+            {
+                scope.conditionForm[scope.conditionAppend.column.physicalname].$validate();
+            });
+
             scope.check = function(event)
             {
                 console.log(scope.conditionAppend);
@@ -90,16 +122,18 @@ myApp.directive('conditionDirective', function(){
                         scope.conditionAppend.error = false;
                         scope.conditionAppend.message = '';
                     }
-                    
-                    if (!isFinite(parseInt(val, 10)))
-                    {
-                        scope.conditionAppend.error = true;
-                        scope.conditionAppend.message = '数値で入力してください';
-                    }
                     else
                     {
-                        scope.conditionAppend.error = false;
-                        scope.conditionAppend.message = '';
+                        if (!isFinite(parseInt(val, 10)))
+                        {
+                            scope.conditionAppend.error = true;
+                            scope.conditionAppend.message = '数値で入力してください';
+                        }
+                        else
+                        {
+                            scope.conditionAppend.error = false;
+                            scope.conditionAppend.message = '';
+                        }
                     }
                 }
                 else if ('date' === type)
