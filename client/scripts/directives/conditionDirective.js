@@ -10,7 +10,7 @@ myApp.directive('conditionDirective', function(){
         },
         template: 
                 '指定した値' +
-                '<select ng-model="mySlected" class="form-control" ng-options="item as item.name for item in selectItems" required></select>'+
+                '<select ng-model="mySlected" class="form-control" ng-options="item as item.name for item in selectItems" ng-required="true"></select>'+
                 'ものを条件とする'+
                 '<div ng-if="isOneInput"><input type="text" class="form-control" ng-model="conditionAppend.condition.value1" ng-required="true">'+
                 '<p class="item-error" ng-if="queryForm.name.$dirty && queryForm.name.$invalid">値を入力してください</p>'+
