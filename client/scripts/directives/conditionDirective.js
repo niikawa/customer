@@ -2,7 +2,7 @@
  * 
  */
 var myApp = angular.module('myApp');
-myApp.directive('conditionDirective', function(){
+myApp.directive('conditionDirective', function($scope){
     return {
         restrict: 'EA',
         scope:{
@@ -109,7 +109,8 @@ myApp.directive('conditionDirective', function(){
                 var a = scope.conditionAppend.column.physicalname;
                 console.log(a);
                 console.log(scope.form);
-                console.log(scope.form[a]);
+                console.log($scope.conditionForm.id);
+                $scope.conditionForm.id.$validate();
                 scope.form.id.$validate();
             });
 
