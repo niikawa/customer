@@ -71,7 +71,7 @@ var segmentdoc = require("./api/segmentdoc");
 router.post('/segment/savedoc', segmentdoc.saveItem);
 
 var segment = require("./api/segment");
-router.get('/segment', segment.getAll);
+router.get('/segment', segment.getList);
 router.get('/segment/:id', segment.getById);
 router.post('/segment/save', segment.save);
 router.post('/segment/execute', segment.execute);
