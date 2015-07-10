@@ -72,10 +72,10 @@ myApp.directive('conditionDirective', function(){
                 });
             });
             
-            element.find('input').on('keyup', function()
+            element.find('div').children('input').on('keyup', function()
             {
                 console.log(scope.conditionAppend);
-                var type = scope.conditionAppend.column.inputType
+                var type = scope.conditionAppend.column.inputType;
                 console.log(type);
             });
             
