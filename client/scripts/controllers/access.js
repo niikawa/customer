@@ -32,13 +32,18 @@ function ($scope, $routeParams, Shared, Access, Utility)
         var today = Utility.today('YYYY/MM/DD');
         Access.resource.day({day: today, id: $routeParams.id}).$promise.then(function(response)
         {
-            $scope.logList = response.data;
+            $scope.timelineList = response.data;
         });
     }
     
     $scope.timeLineInitialize = function()
     {
         getTimeInitializeData();
+    };
+    
+    $scope.setPosition = function(index)
+    {
+        return index % 2 == 0;
     };
     
 }]);

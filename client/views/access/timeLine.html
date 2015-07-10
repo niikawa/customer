@@ -13,21 +13,12 @@
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <ul class="timeline">
-                            <li>
+                            <li ng-repeat="(i, item) in timelineList" ng-class="{timeline-inverted: setPosition(i)}">
                                 <div class="timeline-badge"><i class="fa fa-check"></i>
                                 </div>
                                 <div class="timeline-panel">
                                     <div class="timeline-body">
-                                        <p></p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="timeline-inverted">
-                                <div class="timeline-badge"><i class="fa fa-check"></i>
-                                </div>
-                                <div class="timeline-panel">
-                                    <div class="timeline-body">
-                                        <p></p>
+                                        <p>{{item.detail}}</p>
                                     </div>
                                 </div>
                             </li>
