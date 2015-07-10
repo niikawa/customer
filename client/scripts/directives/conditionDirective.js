@@ -72,7 +72,7 @@ myApp.directive('conditionDirective', function(){
                 });
             });
             
-            function check(conditionAppend)
+            scope.check = function(conditionAppend)
             {
                 console.log(scope.conditionAppend);
                 console.log(conditionAppend);
@@ -90,7 +90,7 @@ myApp.directive('conditionDirective', function(){
                 {
                     
                 }
-            });
+            }
         }
     };
 });
