@@ -108,24 +108,29 @@ myApp.directive('conditionDirective', function(Utility){
                 }
                 else if ('date' === type)
                 {
-                    var m = Utility.moment(val);
-                    
-                    
-                    console.log(Utility.formatString(val));
-                    
-                    if (!m.isValid())
+                    var valL = val.split('-');
+                    console.log();
+                    if (3 !== valL.length)
                     {
                         scope.conditionAppend.error = true;
-                        scope.conditionAppend.message = '日付はYYYY/MM/DDかYYYY-MM-DDで入力してください';
+                        scope.conditionAppend.message = '日付はYYYY-MM-DDで入力してください';
+                        
                     }
                     else
                     {
+                        var m = Utility.moment(val);
                         
-                        
-                        scope.conditionAppend.error = false;
-                        scope.conditionAppend.message = '';
+                        if (!m.isValid())
+                        {
+                            scope.conditionAppend.error = true;
+                            scope.conditionAppend.message = '日付はYYYY-MM-DDで入力してください';
+                        }
+                        else
+                        {
+                            scope.conditionAppend.error = false;
+                            scope.conditionAppend.message = '';
+                        }
                     }
-                    
                 }
             };
         }
