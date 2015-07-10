@@ -99,7 +99,6 @@ function ($scope, Shared, Query, Location, Utility)
     {
         console.log($scope.selectColumns);
         if (Query.validation.require($scope.selectColumns)) Location.querySave();
-//        if (isNext) Location.querySave();
     };
     
     /*****************************************/

@@ -222,7 +222,6 @@ exports.savePriority = function(req, res)
         delete item.scenario_type;
         
         var updateData = model.merge(item, commonColumns);
-        console.log(updateData);
 
         var request = model.getRequest();
         request.input('update_by', model.db.Int, req.session.userId);
@@ -244,6 +243,15 @@ exports.savePriority = function(req, res)
         }
         res.status(200).send('scenario priority update ok');
     });    
+};
+
+exports.getBySegmentId = function(segment_id, callback)
+{
+    var col = "scenario_id, scenario_name";
+    var where = "delete_flag = 0 AND segment_id = @segment_id";
+    var qObj = model.getQueryObject(col, tableName, where, '', '');
+    qObj.request.input('segment_id', model.db.Int, segment_id);
+    model.select(qObj, qObj.request, callback);
 };
 
 /**

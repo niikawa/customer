@@ -52,7 +52,28 @@ exports.getAll = function(req, res)
         }
         else
         {
-            res.json({data: data});
+            //セグメントの利用状況を設定する
+            var scenario = require("./scenario");
+            async.forEach(data, function(segment, callback)
+            {
+                scenario.getBySegmentId(segment.segment_id, function(err, data)
+                {
+                    console.log(data);
+                    segment.isUsed = (data.length > 0);
+                    callback(err);
+                });
+            },
+            function (err) 
+            {
+                console.log(err);
+                if (err.length > 0)
+                {
+                    console.log('get segment data faild');
+                    console.log(err);
+                    res.status(510).send('get segment data faild');
+                }
+                res.json({data: data});
+            });    
         }
     });
 };
@@ -66,9 +87,6 @@ exports.execute = function(req, res)
     
     querydoc.getItemByIdsForWeb(req.body.qIds, colmunList, function(err, docs)
     {
-        console.log('query docs');
-        console.log(docs);
-
         if (err)
         {
             console.log(err);
