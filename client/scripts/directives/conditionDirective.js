@@ -71,10 +71,10 @@ myApp.directive('conditionDirective', function(){
             ];
             element.find('select').on('change', function()
             {
-                scope.conditionAppend.selectedCondition.name = scope.mySlected.name;
-                scope.conditionAppend.selectedCondition.value = scope.mySlected.value;
-                scope.conditionAppend.selectedCondition.symbol = scope.mySlected.symbol;
-                console.log(scope.conditionAppend);
+                attrs.conditionAppend.selectedCondition.name = scope.mySlected.name;
+                attrs.conditionAppend.selectedCondition.value = scope.mySlected.value;
+                attrs.conditionAppend.selectedCondition.symbol = scope.mySlected.symbol;
+                console.log(attrs.conditionAppend);
                 scope.$apply(function()
                 {
                     scope.mySlected.execute();
