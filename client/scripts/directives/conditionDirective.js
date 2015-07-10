@@ -15,7 +15,7 @@ myApp.directive('conditionDirective', function(){
                 'ものを条件とする'+
                 '<div ng-if="isOneInput">'+
                 
-                    '<input type="text" my-validators="validators.{{conditionAppend.column.inputType}}" name="elName" class="form-control" ng-model="conditionAppend.condition.value1" ng-keyup="check()" ng-required="true">'+
+                    '<input type="text" my-validators="validators.{{conditionAppend.column.inputType}}" name={{elName}} class="form-control" ng-model="conditionAppend.condition.value1" ng-keyup="check()" ng-required="true">'+
 
                         '<div ng-messages="conditionForm.{{conditionAppend.column.physicalname}}.$dirty && conditionForm.{{conditionAppend.column.physicalname}}.$error">'+
                             '<p class="item-error" ng-message="check">だめよ</p>'+
