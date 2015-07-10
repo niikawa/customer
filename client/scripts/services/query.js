@@ -34,23 +34,36 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
         {
             require: function(list)
             {
+                var isNext = false;
                 angular.forEach(list, function(v, k)
                 {
-                    
                     var isValue1 = v.condition.hasOwnProperty('value1');
                     var isValue2 = v.condition.hasOwnProperty('value2');
-                    if (!isValue1) return false;
+                    if (!isValue1)
+                    {
+                        isNext = false;
+                        return false;
+                    }
+                    
                     if (isValue1)
                     {
-                        if (0 === v.condition.value1.trim.length) return false;
+                        if (0 === v.condition.value1.trim.length)
+                        {
+                            isNext = false;
+                            return false;
+                        }
                     }
                     
                     if (isValue2)
                     {
-                        if (0 === v.condition.value2.trim.length) return false;
+                        if (0 === v.condition.value2.trim.length)
+                        {
+                            isNext = false;
+                            return false;
+                        }
                     }
                 });
-                return true;
+                return isNext;
             }
         };
         
