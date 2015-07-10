@@ -5,9 +5,10 @@ var myApp = angular.module('myApp');
 myApp.directive('conditionDirective', function(){
     return {
         restrict: 'EA',
-        scope:{
-            conditionAppend: '=',
-        },
+        scope:true,
+        // scope:{
+        //     conditionAppend: '=',
+        // },
         template: 
                 '指定した値' +
                 '<select ng-model="mySlected" class="form-control" ng-options="item as item.name for item in selectItems" ng-required="true"></select>'+
@@ -26,8 +27,8 @@ myApp.directive('conditionDirective', function(){
                   ,
         link: function (scope, element, attrs) 
         {
-            scope.conditionAppend.selectedCondition = {name: '', value: '', symbol: ''};
-            scope.conditionAppend.condition = {value1: '', value2: '', where: 'AND'};
+            attrs.conditionAppend.selectedCondition = {name: '', value: '', symbol: ''};
+            attrs.conditionAppend.condition = {value1: '', value2: '', where: 'AND'};
 
             scope.isOneInput = false;
             scope.isTextArea = false;
@@ -103,7 +104,7 @@ myApp.directive('conditionDirective', function(){
                 }
             };
             
-            scope.$watch('scope.conditionAppend.condition.value1', function()
+            scope.$watch('attrs.conditionAppend.condition.value1', function()
             {
                 scope.conditionForm[scope.conditionAppend.column.physicalname].$validate();
             });
