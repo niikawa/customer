@@ -5,10 +5,10 @@ var myApp = angular.module('myApp');
 myApp.directive('conditionDirective', function(){
     return {
         restrict: 'EA',
-        scope:true,
-        // scope:{
-        //     conditionAppend: '=',
-        // },
+        scope:{
+            form: '=',
+            conditionAppend: '=',
+        },
         template: 
                 '指定した値' +
                 '<select ng-model="mySlected" class="form-control" ng-options="item as item.name for item in selectItems" ng-required="true"></select>'+
@@ -27,8 +27,8 @@ myApp.directive('conditionDirective', function(){
                   ,
         link: function (scope, element, attrs) 
         {
-            attrs.conditionAppend.selectedCondition = {name: '', value: '', symbol: ''};
-            attrs.conditionAppend.condition = {value1: '', value2: '', where: 'AND'};
+            scope.conditionAppend.selectedCondition = {name: '', value: '', symbol: ''};
+            scope.conditionAppend.condition = {value1: '', value2: '', where: 'AND'};
 
             scope.isOneInput = false;
             scope.isTextArea = false;
@@ -71,10 +71,10 @@ myApp.directive('conditionDirective', function(){
             ];
             element.find('select').on('change', function()
             {
-                attrs.conditionAppend.selectedCondition.name = scope.mySlected.name;
-                attrs.conditionAppend.selectedCondition.value = scope.mySlected.value;
-                attrs.conditionAppend.selectedCondition.symbol = scope.mySlected.symbol;
-                console.log(attrs.conditionAppend);
+                scope.conditionAppend.selectedCondition.name = scope.mySlected.name;
+                scope.conditionAppend.selectedCondition.value = scope.mySlected.value;
+                scope.conditionAppend.selectedCondition.symbol = scope.mySlected.symbol;
+                console.log(scope.conditionAppend);
                 scope.$apply(function()
                 {
                     scope.mySlected.execute();
@@ -104,9 +104,9 @@ myApp.directive('conditionDirective', function(){
                 }
             };
             
-            scope.$watch('attrs.conditionAppend.condition.value1', function()
+            scope.$watch('scope.conditionAppend.condition.value1', function()
             {
-                scope.conditionForm[scope.conditionAppend.column.physicalname].$validate();
+                scope.form[scope.conditionAppend.column.physicalname].$validate();
             });
 
             scope.check = function(event)
