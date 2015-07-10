@@ -79,11 +79,8 @@ function ($scope, Shared, Query, Location, Utility)
     $scope.nextValidation = function()
     {
         $scope.selectColumns = Shared.get('queryColumns');
-        if (void 0 === $scope.selectColumns)
-        {
-            Location.query();
-        }
-        
+        if (void 0 === $scope.selectColumns) Location.query();
+
         angular.forEach($scope.selectColumns, function(v, k)
         {
             v.column.inputType = Query.getContentsByColumsType(v.column.type);
@@ -93,6 +90,7 @@ function ($scope, Shared, Query, Location, Utility)
     $scope.removeItem = function(index)
     {
         $scope.selectColumns.splice(index, 1);
+        if (0 === $scope.selectColumns.length) Location.query();
     };
     
     $scope.next = function()
