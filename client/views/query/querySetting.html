@@ -5,13 +5,8 @@
     <div class="box">
         <h4>選択したカラムに対する条件を設定してください</h4>
 
-        <from name="querySetForm" novalidate>
+        <from name="nikawa" novalidate>
             
-                    <div>
-                        <input type="text" class="form-control" placeholder="ユーザー名" name="name" ng-model="user.name" ng-maxlength=30 ng-required="true"/>
-                    </div>
-            
-            <div class="row">
                 <div class="col-md-12 break-all label-box">
                     <h3>選択しているカラム</h3>
                     <div class="col-md-4" ng-repeat="item in selectColumns">
@@ -29,10 +24,10 @@
             </div>
     
             <div class="row" >
-                <pre>{{querySetForm.$invalid}}</pre>
+                <pre>{{nikawa.$invalid}}</pre>
                 <div class="col-md-12 center" >
                     <a class="btn btn-default" ng-href="#/query" >戻る</a>
-                    <button class="btn btn-default" ng-disabled="querySetForm.$invalid" ng-click="next()">次へ</button>
+                    <button class="btn btn-default" ng-disabled="nikawa.$invalid" ng-click="next()">次へ</button>
                 </div>
             </div>
         </from>
