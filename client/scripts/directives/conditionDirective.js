@@ -83,7 +83,7 @@ myApp.directive('conditionDirective', function(){
                     if (!isFinite(parseInt(val, 10)))
                     {
                         console.log(parseInt(val, 10));
-                        scope.conditionAppend.error = "ng-dirty ng-invalid-required";
+                        scope.conditionAppend.error = "ng-dirty ng-invalid";
                     }
                 }
                 else if ('date' === type)
