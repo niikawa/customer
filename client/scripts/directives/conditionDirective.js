@@ -2,7 +2,7 @@
  * 
  */
 var myApp = angular.module('myApp');
-myApp.directive('conditionDirective', function($scope){
+myApp.directive('conditionDirective', function(){
     return {
         restrict: 'EA',
         scope:{
@@ -100,22 +100,27 @@ myApp.directive('conditionDirective', function($scope){
                             return false;
                         }
                     }
-
                 }
             };
             
             scope.$watch('scope.conditionAppend.condition.value1', function()
             {
-                var a = scope.conditionAppend.column.physicalname;
-                console.log(a);
-                console.log(scope.form);
-                console.log($scope.conditionForm.id);
-                $scope.conditionForm.id.$validate();
-                scope.form.id.$validate();
+                // var a = scope.conditionAppend.column.physicalname;
+                // console.log(a);
+                // console.log(scope.form);
+                // console.log(scope.form[a]);
+                // scope.form.id.$validate();
             });
 
             scope.check = function(event)
             {
+                var a = scope.conditionAppend.column.physicalname;
+                console.log(a);
+                console.log(scope.form);
+                console.log(scope.form[a]);
+                scope.form.id.$validate();
+                
+                
                 console.log(scope.conditionAppend);
                 var type = scope.conditionAppend.column.inputType;
                 var val = scope.conditionAppend.condition.value1;
