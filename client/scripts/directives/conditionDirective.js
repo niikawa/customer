@@ -106,8 +106,11 @@ myApp.directive('conditionDirective', function(){
             
             scope.$watch('scope.conditionAppend.condition.value1', function()
             {
+                var a = scope.conditionAppend.column.physicalname;
+                console.log(a);
                 console.log(scope.form);
-                scope.form[scope.conditionAppend.column.physicalname].$validate();
+                console.log(scope.form[a]);
+                scope.form.id.$validate();
             });
 
             scope.check = function(event)
