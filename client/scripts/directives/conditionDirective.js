@@ -85,15 +85,13 @@ myApp.directive('conditionDirective', function(){
                 console.log(val);
                 if ('number' === type)
                 {
-                    if (void 0 == val)
+                    if (void 0 === val)
                     {
                         scope.conditionAppend.error = false;
                         scope.conditionAppend.message = '';
                     }
                     else
                     {
-                        
-                    }
                         if (!isFinite(parseInt(val, 10)))
                         {
                             scope.conditionAppend.error = true;
@@ -104,6 +102,7 @@ myApp.directive('conditionDirective', function(){
                             scope.conditionAppend.error = false;
                             scope.conditionAppend.message = '';
                         }
+                    }
                 }
                 else if ('date' === type)
                 {
