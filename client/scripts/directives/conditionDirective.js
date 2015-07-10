@@ -12,7 +12,7 @@ myApp.directive('conditionDirective', function(){
                 '指定した値' +
                 '<select ng-model="mySlected" class="form-control" ng-options="item as item.name for item in selectItems" ng-required="true"></select>'+
                 'ものを条件とする'+
-                '<div ng-if="isOneInput"><input type="text" class="form-control" ng-model="conditionAppend.condition.value1" ng-keyup="check()" ng-required="true">'+
+                '<div ng-if="isOneInput"><input type="text" name="conditionAppend[column][physicalname]" class="form-control" ng-model="conditionAppend.condition.value1" ng-keyup="check()" ng-required="true">'+
 
                 '<div><p ng-if="conditionAppend.error" class="item-error">{{conditionAppend.message}}</p></div>'+
 
@@ -81,6 +81,7 @@ myApp.directive('conditionDirective', function(){
                 var type = scope.conditionAppend.column.inputType;
                 var val = scope.conditionAppend.condition.value1;
                 console.log(type);
+                console.log(val);
                 if ('number' === type)
                 {
                     if ('' == val)
