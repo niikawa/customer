@@ -2,10 +2,11 @@
  * 
  */
 var myApp = angular.module('myApp');
-myApp.directive('conditionDirective', function(){
+myApp.directive('conditionDirective', function(Utility){
     return {
         restrict: 'EA',
         scope:{
+            
             conditionAppend: '=',
         },
         template: 
@@ -14,11 +15,12 @@ myApp.directive('conditionDirective', function(){
                 'ものを条件とする'+
                 '<div ng-if="isOneInput"><input type="text" name="{{conditionAppend.column.physicalname}}" class="form-control" ng-model="conditionAppend.condition.value1" ng-keyup="check()" ng-required="true">'+
 
-                '<div><p ng-if="conditionAppend.error" class="item-error">{{conditionAppend.message}}</p></div>'+
+                '<p ng-if="conditionAppend.error" class="item-error">{{conditionAppend.message}}</p>'+
 
                 '</div>'+
                 '<div ng-if="isTextArea"><textarea class="form-control" ng-model="conditionAppend.condition.value1" ng-required="true"></textarea></div>'+
-                '<div ng-if="isTwoInput"><input type="text" class="form-control" ng-model="conditionAppend.condition.value1" ng-required="true">～<input type="text" class="form-control" ng-model="conditionAppend.condition.value2" ng-required="true"></div>'
+                
+                '<div ng-if="isTwoInput"><input type="text" class="form-control" ng-model="conditionAppend.condition.value1" ng-keyup="check()" ng-required="true">～<input type="text" class="form-control" ng-model="conditionAppend.condition.value2" ng-keyup="check()" ng-required="true"></div>'
                   ,
         link: function (scope, element, attrs) 
         {
@@ -106,7 +108,7 @@ myApp.directive('conditionDirective', function(){
                 }
                 else if ('date' === type)
                 {
-                    
+                    console.log(Utility.moment(val));
                 }
             };
         }
