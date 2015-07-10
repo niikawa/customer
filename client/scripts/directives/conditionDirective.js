@@ -109,6 +109,10 @@ myApp.directive('conditionDirective', function(Utility){
                 else if ('date' === type)
                 {
                     var m = Utility.moment(val);
+                    
+                    
+                    console.log(Utility.formatString(val));
+                    
                     if (!m.isValid())
                     {
                         scope.conditionAppend.error = true;
@@ -116,6 +120,8 @@ myApp.directive('conditionDirective', function(Utility){
                     }
                     else
                     {
+                        
+                        
                         scope.conditionAppend.error = false;
                         scope.conditionAppend.message = '';
                     }
