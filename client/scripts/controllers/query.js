@@ -97,8 +97,7 @@ function ($scope, Shared, Query, Location, Utility)
     
     $scope.next = function()
     {
-        console.log($scope.querySetForm.$invalid);
-        if (Query.validation.require($scope.selectColumns)) Location.querySave();
+        Location.querySave();
     };
     
     /*****************************************/
