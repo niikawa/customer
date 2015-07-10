@@ -22,8 +22,8 @@ exports.getDayAll = function(req, res)
     var where = "T1.create_date BETWEEN @start AND @end AND T1.delete_flag = 0 AND T2.delete_flag = 0";
     var order = "T1.log_id DESC";
     var qObj = model.getQueryObject(col, table, where, '', order);
-    var start = req.body.day + '00:00:00';
-    var end = req.body.day + '23:59:59';
+    var start = req.body.day + ' 00:00:00';
+    var end = req.body.day + ' 23:59:59';
     console.log(start);
     qObj.request.input('start', model.db.DateTime, start);
     qObj.request.input('end', model.db.DateTime, end);
@@ -47,8 +47,8 @@ exports.getDayAllByUserId = function(req, res)
     var where = "T1.create_date BETWEEN @start AND @end AND T1.user_id = @userId AND T1.delete_flag = 0 AND T2.delete_flag = 0";
     var order = "T1.log_id DESC";
     var qObj = model.getQueryObject(col, table, where, '', order);
-    var start = req.body.day + '00:00:00';
-    var end = req.body.day + '23:59:59';
+    var start = req.body.day + ' 00:00:00';
+    var end = req.body.day + ' 23:59:59';
     console.log(start);
     qObj.request.input('start', model.db.DateTime, start);
     qObj.request.input('end', model.db.DateTime, end);
