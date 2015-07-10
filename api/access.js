@@ -24,8 +24,9 @@ exports.getDayAll = function(req, res)
     var qObj = model.getQueryObject(col, table, where, '', order);
     var start = req.body.day + '00:00:00';
     var end = req.body.day + '23:59:59';
-    qObj.request.input('start', model.db.NVarChar, start);
-    qObj.request.input('end', model.db.NVarChar, end);
+    console.log(start);
+    qObj.request.input('start', model.db.DateTime, start);
+    qObj.request.input('end', model.db.DateTime, end);
     
     model.select(qObj, qObj.request, function(err, data)
     {
@@ -48,8 +49,9 @@ exports.getDayAllByUserId = function(req, res)
     var qObj = model.getQueryObject(col, table, where, '', order);
     var start = req.body.day + '00:00:00';
     var end = req.body.day + '23:59:59';
-    qObj.request.input('start', model.db.NVarChar, start);
-    qObj.request.input('end', model.db.NVarChar, end);
+    console.log(start);
+    qObj.request.input('start', model.db.DateTime, start);
+    qObj.request.input('end', model.db.DateTime, end);
     qObj.request.input('userId', model.db.Int, req.body.id);
     
     model.select(qObj, qObj.request, function(err, data)

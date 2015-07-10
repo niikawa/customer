@@ -1,6 +1,6 @@
 var accessCtrl = angular.module('accessCtrl',['AccessServices']);
-accessCtrl.controller('AccessCtrl',['$scope', 'Shared', 'Access', 'Utility',
-function ($scope, Shared, Access, Utility)
+accessCtrl.controller('AccessCtrl',['$scope', '$routeParams', 'Shared', 'Access', 'Utility',
+function ($scope, $routeParams, Shared, Access, Utility)
 {
     function setInitializeScope()
     {
@@ -29,12 +29,16 @@ function ($scope, Shared, Access, Utility)
     
     function getTimeInitializeData()
     {
-        
-    };
+        var today = Utility.today('YYYY/MM/DD');
+        Access.resource.day({day: today, id: $routeParams.id}).$promise.then(function(response)
+        {
+            $scope.logList = response.data;
+        });
+    }
     
     $scope.timeLineInitialize = function()
     {
-        getInitializeData();
+        getTimeInitializeData();
     };
     
 }]);
