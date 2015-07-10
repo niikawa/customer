@@ -109,7 +109,17 @@ myApp.directive('conditionDirective', function(Utility){
                 else if ('date' === type)
                 {
                     var m = Utility.moment(val);
-                    console.log(m.isValid());
+                    if (!m.isValid())
+                    {
+                        scope.conditionAppend.error = true;
+                        scope.conditionAppend.message = '日付はYYYY/MM/DDかYYYY-MM-DDで入力してください';
+                    }
+                    else
+                    {
+                        scope.conditionAppend.error = false;
+                        scope.conditionAppend.message = '';
+                    }
+                    
                 }
             };
         }
