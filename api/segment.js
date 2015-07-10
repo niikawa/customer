@@ -88,16 +88,13 @@ exports.getList = function(req, res)
     var qObj = model.getQueryObject(col, tableName, where, '', '');
     model.select(qObj, qObj.request, function(err, data)
     {
-        
-        console.log('get segment used');
-        console.log(data);
-        
         //セグメントの利用状況を設定する
         var scenario = require("./scenario");
         async.forEach(data, function(segment, callback)
         {
             scenario.getBySegmentId(segment.segment_id, function(err, data)
             {
+                console.log(err);
                 console.log(data);
                 segment.isUsed = (data.length > 0);
                 callback(null);
