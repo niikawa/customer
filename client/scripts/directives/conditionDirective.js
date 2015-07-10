@@ -14,7 +14,7 @@ myApp.directive('conditionDirective', function(){
                 'ものを条件とする'+
                 '<div ng-if="isOneInput"><input type="text" class="form-control" ng-model="conditionAppend.condition.value1" ng-keyup="check()" ng-required="true">'+
 
-                '<p ng-if="conditionAppend.error" class="item-error">{{conditionAppend.message}}</p>'+
+                '<div><p ng-if="conditionAppend.error" class="item-error">{{conditionAppend.message}}</p></div>'+
 
                 '</div>'+
                 '<div ng-if="isTextArea"><textarea class="form-control" ng-model="conditionAppend.condition.value1" ng-required="true"></textarea></div>'+
@@ -83,7 +83,12 @@ myApp.directive('conditionDirective', function(){
                 console.log(type);
                 if ('number' === type)
                 {
-                    if ('' === val) return;
+                    if ('' === val)
+                    {
+                        scope.conditionAppend.error = false;
+                        scope.conditionAppend.message = '';
+                    }
+                    
                     if (!isFinite(parseInt(val, 10)))
                     {
                         scope.conditionAppend.error = true;
