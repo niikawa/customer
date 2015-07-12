@@ -11,7 +11,8 @@ myApp.directive('conditionDirective', function(Utility){
         },
         template: 
                 '指定した値' +
-                '<select ng-model="mySlected" class="form-control" ng-options="item as item.name for item in selectItems" ng-required="true"></select>'+
+                '<select ng-model="mySlected" class="form-control"' +
+                    ' ng-options="item as item.name for item in selectItems" ng-required="true"></select>'+
                 'ものを条件とする'+
                 '<div ng-if="isOneInput"><input type="text" name="{{conditionAppend.column.physicalname}}" class="form-control" ng-model="conditionAppend.condition.value1" ng-keyup="check()" ng-required="true">'+
 
@@ -24,14 +25,20 @@ myApp.directive('conditionDirective', function(Utility){
                   ,
         link: function (scope, element, attrs) 
         {
-            scope.conditionAppend.selectedCondition = {name: '', value: '', symbol: ''};
-            scope.conditionAppend.condition = {value1: '', value2: '', where: 'AND'};
+            if (void 0 === scope.conditionAppend.selectedCondition)
+            {
+                scope.conditionAppend.selectedCondition = {name: '', value: '', symbol: ''};
+                scope.conditionAppend.condition = {value1: '', value2: '', where: 'AND'};
+            }
+            else
+            {
+                scope.mySlected = scope.conditionAppend.selectedCondition;
+            }
 
             scope.isOneInput = false;
             scope.isTextArea = false;
             scope.isTwoInput = false;
-            //conditionAppend.column.physicalname
-            
+
             var showOneInput = function()
             {
                 scope.isOneInput = true;
@@ -71,7 +78,6 @@ myApp.directive('conditionDirective', function(Utility){
                 scope.conditionAppend.selectedCondition.name = scope.mySlected.name;
                 scope.conditionAppend.selectedCondition.value = scope.mySlected.value;
                 scope.conditionAppend.selectedCondition.symbol = scope.mySlected.symbol;
-                console.log(scope.conditionAppend);
                 scope.$apply(function()
                 {
                     scope.mySlected.execute();
@@ -83,8 +89,6 @@ myApp.directive('conditionDirective', function(Utility){
                 console.log(scope.conditionAppend);
                 var type = scope.conditionAppend.column.inputType;
                 var val = scope.conditionAppend.condition.value1;
-                console.log(type);
-                console.log(val);
                 if ('number' === type)
                 {
                     if (void 0 === val)
