@@ -99,7 +99,7 @@ exports.save = function(req, res)
     {
         if (err.length > 0)
         {
-            model.insertLog(req.session.userId, 8, Message.Common.I_003, functionName);
+            model.insertLog(req.session.userId, 8, Message.Common.E_002, functionName);
             console.log('approach update faild');
             console.log(err);
         }

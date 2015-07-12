@@ -1,11 +1,14 @@
-var async = require('async');
 var DocumentDBClient = require('documentdb').DocumentClient;
 var query = require('../collection/query');
 var Creator = require("./common/createSql");
+var Core = require('./core');
+var Message = require('../config/message.json');
+var functionName = 'クエリー管理';
 
 var docDbClient = new DocumentDBClient('https://ixcpm.documents.azure.com:443/', {
     masterKey: 'BAVJ6Lb3xefcLJVh7iShAAngAHrYC08mtTj2ieVIVXuoBkftXwxKSCJaOcNrvctBwhi6oFoG6GlDVrDiDyXOzg=='
 });
+
 var Query = new query(docDbClient, 'ixcpm', 'query');
 Query.init();
 
@@ -29,12 +32,14 @@ exports.getAllItem = function(req, res)
     var query = 'SELECT doc.id ,doc.query_name, doc.tables FROM doc';
     Query.find(query, function(err, doc)
     {
-        if (err) {
-            
+        if (err)
+        {
+            Core.insertLog(req.session.userId, 8, Message.Common.E_004, functionName);
             res.status(511).send('access ng');
-            
-        } else {
-            
+        }
+        else
+        {
+            Core.insertLog(req.session.userId, 8, Message.Common.I_004, functionName);
             res.json({data: doc});
         }
     });
@@ -69,12 +74,14 @@ exports.addItem = function(req, res)
 
     Query.addItem(parameters, function(err, doc)
     {
-        if (err) {
-            
+        if (err)
+        {
+            Core.insertLog(req.session.userId, 8, Message.Common.E_001, parameters.query_name);
             res.status(511).send('access ng');
             
-        } else {
-            
+        } else
+        {
+            Core.insertLog(req.session.userId, 8, Message.Common.I_001, parameters.query_name);
             res.status(200).send('create query succsess');
         }
     });
@@ -94,12 +101,15 @@ exports.removeItem = function(req, res)
 
     Query.removeItem(req.params.id, function(err, doc)
     {
-        if (err) {
-            
+        if (err)
+        {
+            Core.insertLog(req.session.userId, 8, Message.Common.I_001, doc.query_name);
             res.status(511).send('access ng');
             
-        } else {
-            
+        }
+        else
+        {
+            Core.insertLog(req.session.userId, 8, Message.Common.I_001, doc.query_name);
             res.json({data: doc});
         }
     });
