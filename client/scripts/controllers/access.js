@@ -1,6 +1,6 @@
 var accessCtrl = angular.module('accessCtrl',['AccessServices']);
-accessCtrl.controller('AccessCtrl',['$scope', '$routeParams', 'Shared', 'Access', 'Utility',
-function ($scope, $routeParams, Shared, Access, Utility)
+accessCtrl.controller('AccessCtrl',['$scope', '$sce', '$routeParams', 'Shared', 'Access', 'Utility',
+function ($scope, $sce, $routeParams, Shared, Access, Utility)
 {
     function setInitializeScope()
     {
