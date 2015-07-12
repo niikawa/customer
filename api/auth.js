@@ -81,3 +81,20 @@ exports.login = function(req, res)
         }
     });
 };
+
+/**
+ * セッションを破棄してログアウト状態を作り出す
+ * 
+ * @author niikawa
+ * @method login
+ * @param {Object} req 画面からのリクエスト
+ * @param {Object} res 画面へのレスポンス
+ */
+exports.logout = function(req, res)
+{
+    model.insertLog(req.session.userId, 2);
+    delete req.session.isLogin;
+    delete req.session.userId;
+    delete req.session.userName;
+    res.status(200).send('ログアウトしました');
+};

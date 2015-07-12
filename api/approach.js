@@ -1,9 +1,12 @@
-var async = require('async');
 var Core = require('./core');
+var Message = require('../config/message.json');
 
 /** テーブル名 */
 var tableName = 'M_APPROACH_SETTING';
+/** PK */
 var pk = 'approach_setting_id';
+/** 機能名 */
+var functionName = 'アプローチ管理';
 
 var approach = function approachsegment()
 {
@@ -18,6 +21,7 @@ var model = new approach();
 
 exports.getOrCreate = function(req, res)
 {
+    model.insertLog(req.session.userId, 8, Message.Common.I_004, functionName);
     model.getAll(function(err, data)
     {
         if (err.length > 0)
@@ -98,6 +102,8 @@ exports.save = function(req, res)
             console.log('approach update faild');
             console.log(err);
         }
+        
+        model.insertLog(req.session.userId, 8, Message.Common.I_002, functionName);
         res.status(200).send('update ok');
     });
 };
@@ -118,6 +124,8 @@ exports.remove = function(req, res)
                 console.log(err);
                 res.status(510).send('object not found');
            }
+           
+            model.insertLog(req.session.userId, 8, Message.Common.I_003, functionName);
            res.status(200).send('delete ok');
         });
     });

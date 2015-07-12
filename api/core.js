@@ -252,13 +252,25 @@ core.prototype.execute = function(sql, request, callback)
     });
 };
 
-core.prototype.insertLog = function(userId, controlType, appendString, callback)
+core.prototype.insertLog = function(userId, controlType, appendString, replace, data, callback)
 {
-    console.log('insertLog');
-    console.log(logInfo);
     var logData = logInfo.get(controlType);
-    console.log(logData);
-    var detail = (void 0 !== appendString) ? logData.detail + appendString : logData.detail;
+    var detail = logData.detail;
+    if ((void 0 !== appendString))
+    {
+        var repString = appendString.replace("$1", replace);
+        detail += 'NCHAR(13) + NCHAR(10)' + repString;
+    }
+    
+    if (void 0 !== data)
+    {
+//        detail += 'NCHAR(13) + NCHAR(10)' ;
+        Object.keys(data).forEach(function(key)
+        {
+            
+        });
+    }
+    
     var sql = "INSERT INTO T_LOG (delete_flag, create_by, create_date, update_by, update_date, user_id, show_flag, control_type, detail)";
     sql += " VALUES (@delete_flag, @create_by, @create_date, @update_by, @update_date, @user_id, @show_flag, @control_type, @detail)";
     var request = this.getRequest();
