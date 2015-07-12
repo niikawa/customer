@@ -66,21 +66,16 @@ myApp.directive('conditionDirective', function(Utility){
 
             if (void 0 === scope.conditionAppend.selectedCondition)
             {
-                console.log('syokika');
                 scope.conditionAppend.selectedCondition = {name: '', value: '', symbol: ''};
                 scope.conditionAppend.condition = {value1: '', value2: '', where: 'AND'};
             }
             else
             {
-                console.log('setting');
                 angular.forEach(scope.selectItems, function(item)
                 {
                     if (item.value === scope.conditionAppend.selectedCondition.value)
                     {
-                console.log('data set');
-                console.log(item);
-                        scope.mySlected = scope.conditionAppend.selectedCondition;
-                        scope.mySlected.execute = item.execute;
+                        scope.mySlected = item;
                         item.execute();
                         return false;
                     }
