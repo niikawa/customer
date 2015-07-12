@@ -1,5 +1,6 @@
 var Core = require('./core');
-var Message = require('../config/message.json');
+//var Message = require('../config/message.json');
+var Message = '';
 
 /** テーブル名 */
 var tableName = 'M_APPROACH_SETTING';
@@ -99,6 +100,7 @@ exports.save = function(req, res)
     {
         if (err.length > 0)
         {
+            model.insertLog(req.session.userId, 8, Message.Common.I_003, functionName);
             console.log('approach update faild');
             console.log(err);
         }

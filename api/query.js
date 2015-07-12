@@ -9,6 +9,9 @@ var tableName = '';
 /** pk */
 var pk = '';
 
+/** 機能名 */
+var functionName = 'クエリー管理';
+
 var query = function query()
 {
     Core.call(this, tableName, pk);
@@ -27,6 +30,7 @@ exports.execute = function(req, res)
     var sql = creator.getCountSql(req.body.tables);
     model.execute(sql, request, function(err, data)
     {
+        
         if (err.length > 0)
         {
             console.log(err);

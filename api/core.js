@@ -258,7 +258,11 @@ core.prototype.insertLog = function(userId, controlType, appendString, replace, 
     var detail = logData.detail;
     if ((void 0 !== appendString))
     {
-        var repString = appendString.replace("$1", replace);
+        var repString = appendString;
+        if (void 0 !== replace)
+        {
+            repString = appendString.replace("$1", replace);
+        }
         detail += 'NCHAR(13) + NCHAR(10)' + repString;
     }
     
