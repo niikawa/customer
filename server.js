@@ -46,6 +46,7 @@ router.use(express.methodOverride());
 var auth = require('./api/auth');
 router.post('/auth/login', auth.login);
 router.post('/auth/isLogin', auth.isLogin);
+router.post('/auth/logout', auth.logout);
 
 var customer = require('./api/customer');
 router.get('/customer', customer.getAll);
