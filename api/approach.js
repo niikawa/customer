@@ -99,12 +99,12 @@ exports.save = function(req, res)
     {
         if (err.length > 0)
         {
-            model.insertLog(req.session.userId, 8, Message.Common.E_002, functionName);
+            model.insertLog(req.session.userId, 8, Message.COMMON.E_002, functionName);
             console.log('approach update faild');
             console.log(err);
         }
         
-        model.insertLog(req.session.userId, 8, Message.Common.I_002, functionName);
+        model.insertLog(req.session.userId, 8, Message.COMMON.I_002, functionName);
         res.status(200).send('update ok');
     });
 };
@@ -126,7 +126,7 @@ exports.remove = function(req, res)
                 res.status(510).send('object not found');
            }
            
-            model.insertLog(req.session.userId, 8, Message.Common.I_003, functionName);
+            model.insertLog(req.session.userId, 8, Message.COMMON.I_003, functionName);
             res.status(200).send('delete ok');
         });
     });

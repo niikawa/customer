@@ -39,7 +39,7 @@ exports.getById = function(req, res)
         }
         else
         {
-            model.insertLog(req.session.userId, 6, Message.Common.I_004, data[0].scenario_name);
+            model.insertLog(req.session.userId, 6, Message.COMMON.I_004, data[0].scenario_name);
             res.json({data: data});
         }
     });
@@ -62,16 +62,30 @@ exports.getAll = function(req, res)
     var order = "scenario_id";
     var qObj = model.getQueryObject(col, tableName, where, '', order);
     
-    var scenarioType = ('trigger' == req.params.type) ? 2 : 1;
+    var functionName = '';
+    var scenarioType = ''; 
+    if ('trigger' == req.params.type) 
+    {
+        functionName = 'トリガーシナリオ管理';
+        scenarioType = 2;
+    }
+    else
+    {
+        functionName = 'スケジュールシナリオ管理'; 
+        scenarioType = 1;
+    }
     qObj.request.input('scenario_type', model.db.SmallInt, scenarioType);
 
     model.select(qObj, qObj.request, function(err, data)
     {
         if (err.length > 0)
         {
+            model.insertLog(req.session.userId, 6, Message.COMMON.E_004, functionName);
             console.log(err);
             res.status(510).send('object not found');
         }
+        
+        model.insertLog(req.session.userId, 6, Message.COMMON.I_004, functionName);
         res.json({data: data});
     });
 };
@@ -203,10 +217,10 @@ exports.getExecutePlanScenario = function(req, res)
             console.log(err);
             res.status(510).send('scenario crate faild');
         }
+        
         res.json({data: data});
     });
 };
-
 
 /**
  * priorityとstatusを更新する
@@ -245,6 +259,8 @@ exports.savePriority = function(req, res)
             console.log(err);
             res.status(510).send('scenario crate faild');
         }
+        
+        model.insertLog(req.session.userId, 8, Message.SCENARIO.I_001);
         res.status(200).send('scenario priority update ok');
     });    
 };
