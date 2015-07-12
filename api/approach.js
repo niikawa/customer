@@ -1,6 +1,5 @@
 var Core = require('./core');
-//var Message = require('../config/message.json');
-var Message = '';
+var Message = require('../config/message.json');
 
 /** テーブル名 */
 var tableName = 'M_APPROACH_SETTING';
