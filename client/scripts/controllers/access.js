@@ -5,6 +5,7 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
     function setInitializeScope()
     {
         $scope.showDate = '';
+        $scope.serchDay = '';
     }
     
     function getInitializeData()
@@ -46,7 +47,7 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
     function getTimeInitializeData()
     {
         var today = Utility.today('YYYY/MM/DD');
-        getTimeLine(today);
+        getTimeLine($scope.serchDay);
     }
     
     function getTimeLine(day)
