@@ -43,25 +43,6 @@ myApp.directive('conditionDirective', function(Utility){
             scope.isTextArea = false;
             scope.isTwoInput = false;
 
-            if (void 0 === scope.conditionAppend.selectedCondition)
-            {
-                scope.conditionAppend.selectedCondition = {name: '', value: '', symbol: ''};
-                scope.conditionAppend.condition = {value1: '', value2: '', where: 'AND'};
-            }
-            else
-            {
-                angular.forEach(scope.selectItems, function(item)
-                {
-                    if (item.value === scope.conditionAppend.selectedCondition.value)
-                    {
-                        scope.mySlected = scope.conditionAppend.selectedCondition;
-                        scope.mySlected.execute = item.execute;
-                        scope.mySlected.execute();
-                        return false;
-                    }
-                });
-            }
-
             var showOneInput = function()
             {
                 scope.isOneInput = true;
@@ -82,6 +63,29 @@ myApp.directive('conditionDirective', function(Utility){
                 scope.isTextArea = false;
                 scope.isTwoInput = true;
             };
+            
+            if (void 0 === scope.conditionAppend.selectedCondition)
+            {
+                console.log('syokika');
+                scope.conditionAppend.selectedCondition = {name: '', value: '', symbol: ''};
+                scope.conditionAppend.condition = {value1: '', value2: '', where: 'AND'};
+            }
+            else
+            {
+                console.log('setting');
+                angular.forEach(scope.selectItems, function(item)
+                {
+                    if (item.value === scope.conditionAppend.selectedCondition.value)
+                    {
+                console.log('data set');
+                console.log(item);
+                        scope.mySlected = scope.conditionAppend.selectedCondition;
+                        scope.mySlected.execute = item.execute;
+                        item.execute();
+                        return false;
+                    }
+                });
+            }
             
             element.find('select').on('change', function()
             {
