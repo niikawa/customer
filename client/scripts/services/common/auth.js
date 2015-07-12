@@ -48,7 +48,7 @@ authServices.factory("Auth", ['$resource', '$http', '$location', '$cookies','Uti
         
         authServices.logout = function()
         {
-            var promise = $http.post('api/logout', {
+            var promise = $http.post('auth/logout', {
             }).success(function(data, status, headers, config)
             {
                 $location.path('/login');

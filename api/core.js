@@ -263,7 +263,7 @@ core.prototype.insertLog = function(userId, controlType, appendString, replace, 
         {
             repString = appendString.replace("$1", replace);
         }
-        detail += "\\n" + repString;
+        detail += "<br>" + repString;
     }
     
     if (void 0 !== data)

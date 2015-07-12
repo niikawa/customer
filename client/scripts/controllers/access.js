@@ -27,6 +27,11 @@ function ($scope, $routeParams, Shared, Access, Utility)
         $scope.$emit('requestEnd');
     };
     
+    $scope.serchByDay = function()
+    {
+        
+    };
+    
     //time line functions 
     function getTimeInitializeData()
     {
@@ -43,7 +48,7 @@ function ($scope, $routeParams, Shared, Access, Utility)
             $scope.timelineList = response.data;
         });
     }
-    
+
     $scope.timeLineInitialize = function()
     {
         getTimeInitializeData();
