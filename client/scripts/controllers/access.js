@@ -30,6 +30,7 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
     
     $scope.serchByDay = function()
     {
+        console.log($scope.serchDay);
         var days = $scope.serchDay.split('-');
         if (3 !== days.length) return false;
         
