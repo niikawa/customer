@@ -1,9 +1,12 @@
-var async = require('async');
+//本APIはquery作成時に実行ボタンが押下された場合に実行されるもののため
+//特定のテーブル情報はもたない
+
 var Core = require('./core');
 var Creator = require("./common/createSql");
 
 /** テーブル名 */
 var tableName = '';
+/** pk */
 var pk = '';
 
 var query = function query()
