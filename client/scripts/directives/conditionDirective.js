@@ -25,6 +25,24 @@ myApp.directive('conditionDirective', function(Utility){
                   ,
         link: function (scope, element, attrs) 
         {
+            scope.selectItems = [
+                {name: 'に等しい', value: 1, execute: showOneInput, 'symbol': '='},
+                {name: '以上', value: 2, execute: showOneInput, 'symbol': '>='},
+                {name: '以下', value: 3, execute: showOneInput, 'symbol': '<='},
+                {name: 'を超える', value: 4, execute: showOneInput, 'symbol': '>'},
+                {name: '未満', value: 5, execute: showOneInput, 'symbol': '<'},
+                {name: 'の間', value: 6, execute: showTwoInput, 'symbol': 'BETWEEN'},
+                {name: 'を含む', value: 7, execute: showTextArea, 'symbol': 'IN'},
+                {name: 'を含まない', value: 8, execute: showTextArea, 'symbol': 'NOT IN'},
+                {name: 'から始まる', value: 9, execute: showOneInput, 'symbol': 'LIKE'},
+                {name: 'で終わる', value: 10, execute: showOneInput, 'symbol': 'LIKE'},
+                {name: 'を一部に持つ', value: 11, execute: showOneInput, 'symbol': 'LIKE'},
+            ];
+
+            scope.isOneInput = false;
+            scope.isTextArea = false;
+            scope.isTwoInput = false;
+
             if (void 0 === scope.conditionAppend.selectedCondition)
             {
                 scope.conditionAppend.selectedCondition = {name: '', value: '', symbol: ''};
@@ -32,13 +50,17 @@ myApp.directive('conditionDirective', function(Utility){
             }
             else
             {
-                scope.mySlected = scope.conditionAppend.selectedCondition;
-                console.log(scope.mySlected);
+                angular.forEach(scope.selectItems, function(item)
+                {
+                    if (item.value === scope.conditionAppend.selectedCondition.value)
+                    {
+                        scope.mySlected = scope.conditionAppend.selectedCondition;
+                        scope.mySlected.execute = item.execute;
+                        scope.mySlected.execute();
+                        return false;
+                    }
+                });
             }
-
-            scope.isOneInput = false;
-            scope.isTextArea = false;
-            scope.isTwoInput = false;
 
             var showOneInput = function()
             {
@@ -61,19 +83,6 @@ myApp.directive('conditionDirective', function(Utility){
                 scope.isTwoInput = true;
             };
             
-            scope.selectItems = [
-                {name: 'に等しい', value: 1, execute: showOneInput, 'symbol': '='},
-                {name: '以上', value: 2, execute: showOneInput, 'symbol': '>='},
-                {name: '以下', value: 3, execute: showOneInput, 'symbol': '<='},
-                {name: 'を超える', value: 4, execute: showOneInput, 'symbol': '>'},
-                {name: '未満', value: 5, execute: showOneInput, 'symbol': '<'},
-                {name: 'の間', value: 6, execute: showTwoInput, 'symbol': 'BETWEEN'},
-                {name: 'を含む', value: 7, execute: showTextArea, 'symbol': 'IN'},
-                {name: 'を含まない', value: 8, execute: showTextArea, 'symbol': 'NOT IN'},
-                {name: 'から始まる', value: 9, execute: showOneInput, 'symbol': 'LIKE'},
-                {name: 'で終わる', value: 10, execute: showOneInput, 'symbol': 'LIKE'},
-                {name: 'を一部に持つ', value: 11, execute: showOneInput, 'symbol': 'LIKE'},
-            ];
             element.find('select').on('change', function()
             {
                 scope.conditionAppend.selectedCondition.name = scope.mySlected.name;
