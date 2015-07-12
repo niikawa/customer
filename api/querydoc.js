@@ -16,12 +16,13 @@ exports.getItem = function(req, res)
 {
     Query.getItem(req.params.id, function(err, doc)
     {
-        if (err) {
-            
+        if (err)
+        {
             res.status(511).send('access ng');
             
-        } else {
-            
+        }
+        else
+        {
             res.json({data: doc});
         }
     });
@@ -34,12 +35,12 @@ exports.getAllItem = function(req, res)
     {
         if (err)
         {
-            Core.insertLog(req.session.userId, 8, Message.Common.E_004, functionName);
+            Core.insertLog(req.session.userId, 8, Message.COMMON.E_004, functionName);
             res.status(511).send('access ng');
         }
         else
         {
-            Core.insertLog(req.session.userId, 8, Message.Common.I_004, functionName);
+            Core.insertLog(req.session.userId, 8, Message.COMMON.I_004, functionName);
             res.json({data: doc});
         }
     });
@@ -76,12 +77,12 @@ exports.addItem = function(req, res)
     {
         if (err)
         {
-            Core.insertLog(req.session.userId, 8, Message.Common.E_001, parameters.query_name);
+            Core.insertLog(req.session.userId, 8, Message.COMMON.E_001, parameters.query_name);
             res.status(511).send('access ng');
             
         } else
         {
-            Core.insertLog(req.session.userId, 8, Message.Common.I_001, parameters.query_name);
+            Core.insertLog(req.session.userId, 8, Message.COMMON.I_001, parameters.query_name);
             res.status(200).send('create query succsess');
         }
     });
@@ -103,13 +104,13 @@ exports.removeItem = function(req, res)
     {
         if (err)
         {
-            Core.insertLog(req.session.userId, 8, Message.Common.I_001, doc.query_name);
+            Core.insertLog(req.session.userId, 8, Message.COMMON.I_001, doc.query_name);
             res.status(511).send('access ng');
             
         }
         else
         {
-            Core.insertLog(req.session.userId, 8, Message.Common.I_001, doc.query_name);
+            Core.insertLog(req.session.userId, 8, Message.COMMON.I_001, doc.query_name);
             res.json({data: doc});
         }
     });

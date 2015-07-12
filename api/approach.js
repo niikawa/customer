@@ -21,7 +21,7 @@ var model = new approach();
 
 exports.getOrCreate = function(req, res)
 {
-    model.insertLog(req.session.userId, 8, Message.Common.I_004, functionName);
+    model.insertLog(req.session.userId, 8, Message.COMMON.I_004, functionName);
     model.getAll(function(err, data)
     {
         if (err.length > 0)
@@ -127,7 +127,7 @@ exports.remove = function(req, res)
            }
            
             model.insertLog(req.session.userId, 8, Message.Common.I_003, functionName);
-           res.status(200).send('delete ok');
+            res.status(200).send('delete ok');
         });
     });
 };

@@ -1,11 +1,14 @@
-var crypto = require('crypto');
 var async = require('async');
 var Core = require('./core');
+var Message = require('../config/message.json');
 var scenariodoc = require("./scenariodoc");
 
 /** テーブル名 */
 var tableName = 'M_SCENARIO';
+/** PK */
 var pk = 'scenario_id';
+/** 機能名 */
+var functionName = 'シナリオ管理';
 
 var scenario = function scenario()
 {
@@ -36,6 +39,7 @@ exports.getById = function(req, res)
         }
         else
         {
+            model.insertLog(req.session.userId, 6, Message.Common.I_004, data[0].scenario_name);
             res.json({data: data});
         }
     });

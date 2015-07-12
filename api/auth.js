@@ -1,7 +1,6 @@
 var crypto = require('crypto');
-var async = require('async');
 var Core = require('./core');
-var moment = require("moment");
+
 /** テーブル名 */
 var tableName = 'M_USER';
 var pk = 'user_id';
