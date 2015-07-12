@@ -32,7 +32,7 @@
                             <tr ng-repeat="item in logList">
                                 <td data-th="内容">{{item.date}}</td>
                                 <td data-th="名"><a ng-href='/#/access/{{item.user_id}}'>{{item.name}}</a></td>
-                                <td data-th="内容">{{item.detail}}</td>
+                                <td data-th="内容"><span ng-bind-html="item.detail"></span></td>
                             </tr>
                         </tbody>
                     </table>
