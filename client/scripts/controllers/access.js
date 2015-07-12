@@ -29,7 +29,17 @@ function ($scope, $routeParams, Shared, Access, Utility)
     
     $scope.serchByDay = function()
     {
+        var days = $scope.serchDay.split('-');
+        if (3 !== days.length) return false;
         
+        var m = Utility.moment($scope.serchDay);
+        if (m.isValid())
+        {
+            Access.resource.day({day: $scope.serchDay}).$promise.then(function(response)
+            {
+                $scope.logList = response.data;
+            });
+        }
     };
     
     //time line functions 
