@@ -39,7 +39,7 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
         {
             Access.resource.day({day: $scope.serchDay}).$promise.then(function(response)
             {
-                $scope.logList = response.data;
+                $scope.logList = $sce.trustAsHtml(response.data);
                 Shared.set('serchDay', $scope.serchDay);
             });
         }
