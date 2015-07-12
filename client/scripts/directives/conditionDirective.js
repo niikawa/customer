@@ -33,6 +33,7 @@ myApp.directive('conditionDirective', function(Utility){
             else
             {
                 scope.mySlected = scope.conditionAppend.selectedCondition;
+                console.log(scope.mySlected);
             }
 
             scope.isOneInput = false;
