@@ -1,6 +1,7 @@
 var async = require('async');
 var Core = require('./core');
 var Creator = require("./common/createSql");
+var Message = require('../config/message.json');
 
 /** テーブル名 */
 var tableName = 'M_SEGMENT';
@@ -30,6 +31,7 @@ exports.getById = function(req, res)
         segmentdoc.getItemByIdForWeb(data[0].segment_document_id, function(err, doc)
         {
             if (err) res.status(510).send('document is not found');
+            
             res.json({
                 segment_name: data[0].segment_name, 
                 segment_document_id: data[0].segment_document_id,
@@ -77,13 +79,14 @@ exports.getList = function(req, res)
         },
         function (err) 
         {
-            console.log(err);
             if (err.length > 0)
             {
+                model.insertLog(req.session.userId, 5, Message.COMMON.E_004);
                 console.log('get segment data faild');
                 console.log(err);
                 res.status(510).send('get segment data faild');
             }
+            model.insertLog(req.session.userId, 5, Message.COMMON.I_004);
             res.json({data: data});
         });    
     });
@@ -117,6 +120,7 @@ exports.execute = function(req, res)
                 console.log(err);
                 res.status(510).send('data not found');
             }
+            model.insertLog(req.session.userId, 5, Message.SEGMENT.I_004);
             res.json({result: data[0].count});
         });
     });
@@ -181,9 +185,11 @@ function create(req, res)
     {
         if (err.length > 0)
         {
+            model.insertLog(req.session.userId, 5, Message.COMMON.E_001, insertData.segment_name);
             console.log(err);
             res.status(510).send('object not found');
         }
+        model.insertLog(req.session.userId, 5, Message.COMMON.I_001, insertData.segment_name);
         res.status(200).send('insert ok');
     });
 }
@@ -202,9 +208,11 @@ function update(req, res)
     {
         if (err.length > 0)
         {
+            model.insertLog(req.session.userId, 5, Message.COMMON.E_002, updateData.segment_name);
             console.log(err);
             res.status(510).send('object not found');
         }
+        model.insertLog(req.session.userId, 5, Message.COMMON.I_002, updateData.segment_name);
         res.status(200).send('update ok');
     });
 }

@@ -1,10 +1,13 @@
 var crypto = require('crypto');
-var async = require('async');
 var Core = require('./core');
+var Message = require('../config/message.json');
 
 /** テーブル名 */
 var tableName = 'M_USER';
+/** PK */
 var pk = 'user_id';
+/** 機能名 */
+var functionName = 'ユーザー管理';
 
 var user = function user()
 {
@@ -31,11 +34,13 @@ exports.getById = function(req, res)
         if (err.length > 0)
         {
             console.log(err);
+            model.insertLog(req.session.userId, 3, Message.COMMON.E_001);
             res.status(510).send('data not found');
             res.json({data: []});
         }
         else
         {
+            model.insertLog(req.session.userId, 3, Message.COMMON.I_001, data[0].name);
             res.json({data: data});
         }
     });
@@ -79,9 +84,11 @@ exports.getList = function(req, res)
     {
         if (err.length > 0)
         {
+            model.insertLog(req.session.userId, 3, Message.COMMON.E_004, functionName);
             console.log(err);
             res.status(510).send('object not found');
         }
+        model.insertLog(req.session.userId, 3, Message.COMMON.I_004, functionName);
         res.json({data: data});
     });
 };
@@ -99,7 +106,8 @@ exports.craete = function(req, res)
     request.input('update_by', model.db.Int, insertData.update_by);
     request.input('update_date', model.db.NVarChar, insertData.update_date);
     request.input('mailaddress', model.db.VarChar, insertData.mailaddress);
-    request.input('password', model.db.NVarChar, crypto.createHash('md5').update(insertData.password).digest("hex"));
+//    request.input('password', model.db.NVarChar, crypto.createHash('md5').update(insertData.password).digest("hex"));
+    request.input('password', model.db.NVarChar, insertData.password);
     request.input('role_id', model.db.Int, insertData.role_id);
     request.input('name', model.db.NVarChar, insertData.name);
     
@@ -107,9 +115,11 @@ exports.craete = function(req, res)
     {
         if (err.length > 0)
         {
+            model.insertLog(req.session.userId, 3, Message.COMMON.E_001, insertData.name);
             console.log(err);
             res.status(510).send('object not found');
         }
+        model.insertLog(req.session.userId, 3, Message.COMMON.I_001, insertData.name);
         res.status(200).send('insert ok');
     });
 };
@@ -141,9 +151,11 @@ exports.update = function(req, res)
     {
         if (err.length > 0)
         {
+            model.insertLog(req.session.userId, 3, Message.COMMON.E_002, updateData.name);
             console.log(err);
             res.status(510).send('object not found');
         }
+        model.insertLog(req.session.userId, 3, Message.COMMON.I_002, updateData.name);
         res.status(200).send('update ok');
     });
 };
