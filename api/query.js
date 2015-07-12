@@ -3,6 +3,7 @@
 
 var Core = require('./core');
 var Creator = require("./common/createSql");
+var Message = require('../config/message.json');
 
 /** テーブル名 */
 var tableName = '';
@@ -30,12 +31,13 @@ exports.execute = function(req, res)
     var sql = creator.getCountSql(req.body.tables);
     model.execute(sql, request, function(err, data)
     {
-        
         if (err.length > 0)
         {
             console.log(err);
             res.status(510).send('data not found');
         }
+        
+        model.insertLog(req.session.userId, 8, Message.QUERY.I_001);
         res.json({result: data[0].count});
     });
 };
