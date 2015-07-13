@@ -78,21 +78,22 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             {
                 isDateValid: function(modelValue, viewValue)
                 {
-                    var date = $scope.specificInfo.expiration_start_date || {};
-                    return Utility.isDateValid(date);
+                    var val = modelValue || viewValue;
+                    console.log(val);
+                    return Utility.isDateValid(val);
                 }
             },
             expiration_end_date:
             {
                 isDateValid: function(modelValue, viewValue)
                 {
-                    var date = $scope.specificInfo.expiration_end_date || {};
-                    return Utility.isDateValid(date);
+                    var val = modelValue || viewValue;
+                    return Utility.isDateValid(val);
                 },
                 isAfter: function(modelValue, viewValue)
                 {
-                    var date = $scope.specificInfo.expiration_end_date || {};
-                    return Utility.isAfter(date, $scope.specificInfo.expiration_start_date);
+                    var val = modelValue || viewValue;
+                    return Utility.isAfter(val, $scope.specificInfo.expiration_start_date);
                 }
             },
         };
