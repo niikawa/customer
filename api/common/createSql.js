@@ -167,9 +167,10 @@ function createValuePartBySymbol(item, name, request)
     
     var type = getColType(item.column.type);
     
-    if ('IN' !== symbol &&  'NOT IN' !== symbol)
+    if ('IN' === symbol || 'NOT IN' === symbol)
     {
         var bindValueList = item.condition.value1.split(/\r\n|\r|\n/);
+        console.log(bindValueList);
         var bindValueNum = bindValueList.length;
         for (var index = 0; index < bindValueNum; index++)
         {
