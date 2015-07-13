@@ -160,6 +160,12 @@ angular
         reloadOnSearch: false, //ページ内リンクを可能にする
         resolve: {isLogin: autoCheck}
       })
+      .when('/release', {
+        templateUrl: 'views/note/releaseNotes.html',
+        controller: 'AccessCtrl',
+        reloadOnSearch: false, //ページ内リンクを可能にする
+        resolve: {isLogin: autoCheck}
+      })
 
 //       .when('/map', {
 //         templateUrl: 'views/map.html',
