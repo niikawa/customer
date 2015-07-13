@@ -31,11 +31,7 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
     
     $scope.serchByDay = function()
     {
-        var days = $scope.serchDay.split('-');
-        if (3 !== days.length) return false;
-        
-        var m = Utility.moment($scope.serchDay);
-        if (m.isValid())
+        if (Utility.isDateValid($scope.serchDay))
         {
             Access.resource.day({day: $scope.serchDay}).$promise.then(function(response)
             {

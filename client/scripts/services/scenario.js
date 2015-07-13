@@ -87,7 +87,7 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
                     }
                     return false;
                 });
-            }
+            },
         };
         
         scenarioServices.setActivePushItem = function(items, propertie, bindObj)

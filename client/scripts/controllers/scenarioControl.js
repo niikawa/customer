@@ -74,6 +74,27 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                     return isSelect;
                 }
             },
+            expiration_start_date:
+            {
+                isDateValid: function(modelValue, viewValue)
+                {
+                    var date = $scope.specificInfo.expiration_start_date || {};
+                    return Utility.isDateValid(date);
+                }
+            },
+            expiration_end_date:
+            {
+                isDateValid: function(modelValue, viewValue)
+                {
+                    var date = $scope.specificInfo.expiration_end_date || {};
+                    return Utility.isDateValid(date);
+                },
+                isAfter: function(modelValue, viewValue)
+                {
+                    var date = $scope.specificInfo.expiration_end_date || {};
+                    return Utility.isAfter(date, $scope.specificInfo.expiration_start_date);
+                }
+            },
         };
         $scope.asyncValidators = 
         {
@@ -127,8 +148,6 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             
             angular.forEach(initData.specificInfo.doc.conditionList, function(conditionItems)
             {
-                console.log('conditionItems');
-                console.log(conditionItems);
                 var restoration = [];
                 angular.forEach(conditionItems, function(items)
                 {
@@ -165,6 +184,19 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         {
             $scope.scenarioForm.ifLayout.$validate();
         },true);
+        
+        if (1 === pageProp.type)
+        {
+            $scope.$watch('specificInfo.expiration_start_date', function()
+            {
+                $scope.scenarioForm.expiration_start_date.$validate();
+            });
+            
+            $scope.$watch('specificInfo.expiration_end_date', function()
+            {
+                $scope.scenarioForm.expiration_end_date.$validate();
+            });
+        }
         
     }
     function setEventListeners()

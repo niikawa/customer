@@ -5,11 +5,29 @@
             <label class="btn btn-default" ng-model="specificInfo.repeat_flag" btn-radio=2 uncheckable>繰り返し実行</label>
         </div>
     </div>
-
+    
+    <div ng-if="specificInfo.repeat_flag==1" >
+        <div class="col-md-12">
+            <div class="btn-group">
+                <input type="text" class="form-control" name="expiration_start_date" 
+                    ng-model="specificInfo.expiration_start_date" placeholder="" ng-required="true"
+                    my-validators="validators.expiration_start_date">
+                <div ng-messages="scenarioForm.expiration_start_date.$dirty && scenarioForm.expiration_start_date.$error">
+                    <p class="item-error" ng-message="isDateValid">有効な日付ではありません。YYYY-MM-DD形式で入力してください</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div ng-if="specificInfo.repeat_flag==2" >
         <div class="col-md-3">
             <div ng-if="specificInfo.repeat_flag==2" class="btn-group">
-                <input type="text" class="form-control" name="specificInfo.expiration_start_date" placeholder="" >
+                <input type="text" class="form-control" name="expiration_start_date" 
+                    ng-model="specificInfo.expiration_start_date" placeholder="" ng-required="true"
+                    my-validators="validators.expiration_start_date">
+                <div ng-messages="scenarioForm.expiration_start_date.$dirty && scenarioForm.expiration_start_date.$error">
+                    <p class="item-error" ng-message="isDateValid">有効な日付ではありません。YYYY-MM-DD形式で入力してください</p>
+                </div>
             </div>
         </div>
         <div class="col-md-1">
@@ -17,7 +35,15 @@
         </div>
         <div class="col-md-3">
             <div class="btn-group">
-                <input type="text" class="form-control" name="specificInfo.expiration_end_date" placeholder="" >
+                <input type="text" class="form-control" name="expiration_end_date" 
+                    ng-model="specificInfo.expiration_end_date" placeholder="" ng-required="true"
+                    my-validators="validators.expiration_end_date">
+                <div ng-messages="scenarioForm.expiration_end_date.$dirty && scenarioForm.expiration_end_date.$error">
+                    <p class="item-error" ng-message="isDateValid">有効な日付ではありません。YYYY-MM-DD形式で入力してください</p>
+                </div>
+                <div ng-messages="scenarioForm.expiration_end_date.$dirty && scenarioForm.expiration_end_date.$error">
+                    <p class="item-error" ng-message="isAfter">有効な日付ではありません。YYYY-MM-DD形式で入力してください</p>
+                </div>
             </div>
         </div>
         
