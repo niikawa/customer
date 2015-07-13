@@ -365,12 +365,44 @@ function create(req, res)
             },
             function(data, callback)
             {
-                var commonColumns = model.getInsCommonColumns();
-                var insertData = model.merge(req.body.specificInfo, commonColumns);
-                insertData.scenario_id = data.scenario_id;
-                insertData.scenario_action_document_id = (null === doc) ? null : doc.id;
                 
                 var request = model.getRequest();
+                var childTabelName = '';
+                
+                var specificInfo = {};
+                
+                if (1 === req.body.scenario.scenario_type)
+                {
+                    specificInfo = 
+                    {
+                        repeat_flag: req.body.specificInfo.repeat_flag,
+                        expiration_start_date: req.body.specificInfo.expiration_start_date,
+                        expiration_end_date: req.body.specificInfo.expiration_end_date
+                    };
+                    
+                    childTabelName = 'M_SCHEDULE_SCENARIO';
+                    request.input('repeat_flag', model.db.Int, specificInfo.repeat_flag);
+                    request.input('expiration_start_date', model.db.NVarChar, specificInfo.expiration_start_date);
+                    request.input('expiration_end_date', model.db.NVarChar, specificInfo.expiration_end_date);
+                }
+                else if (2 === req.body.scenario.scenario_type)
+                {
+                    specificInfo = 
+                    {
+                        repeat_flag: req.body.specificInfo.after_event_occurs_num,
+                        expiration_start_date: req.body.specificInfo.inoperative_num
+                    };
+                    
+                    childTabelName = 'M_TRIGGER_SCENARIO';
+                    request.input('after_event_occurs_num', model.db.Int, insertData.after_event_occurs_num);
+                    request.input('inoperative_num', model.db.Int, insertData.inoperative_num);
+                }
+                
+                var commonColumns = model.getInsCommonColumns();
+                var insertData = model.merge(specificInfo, commonColumns);
+                insertData.scenario_id = data.scenario_id;
+                insertData.scenario_action_document_id = (null === doc) ? null : doc.id;
+
                 request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
                 request.input('create_by', model.db.Int, req.session.userId);
                 request.input('create_date', model.db.NVarChar, insertData.create_date);
@@ -378,21 +410,6 @@ function create(req, res)
                 request.input('update_date', model.db.NVarChar, insertData.update_date);
                 request.input('scenario_id', model.db.Int, insertData.scenario_id);
                 request.input('scenario_action_document_id', model.db.NVarChar, insertData.scenario_action_document_id);
-                
-                var childTabelName = '';
-                if (1 === req.body.scenario.scenario_type)
-                {
-                    childTabelName = 'M_SCHEDULE_SCENARIO';
-                    request.input('repeat_flag', model.db.Int, insertData.repeat_flag);
-                    request.input('expiration_start_date', model.db.NVarChar, insertData.expiration_start_date);
-                    request.input('expiration_end_date', model.db.NVarChar, insertData.expiration_end_date);
-                }
-                else if (2 === req.body.scenario.scenario_type)
-                {
-                    childTabelName = 'M_TRIGGER_SCENARIO';
-                    request.input('after_event_occurs_num', model.db.Int, insertData.after_event_occurs_num);
-                    request.input('inoperative_num', model.db.Int, insertData.inoperative_num);
-                }
                 
                 model.insert(childTabelName, insertData, request, function(err, date)
                 {
