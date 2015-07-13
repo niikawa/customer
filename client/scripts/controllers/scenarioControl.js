@@ -193,7 +193,9 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             });
         }
     };
-    
+    //---------------------------------
+    //trigger
+    //---------------------------------
     $scope.moveCondition = function(item)
     {
         var push = {};
@@ -255,5 +257,9 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             }
         });
     };
+    
+    //---------------------------------
+    //schedule
+    //---------------------------------
 
 }]);
