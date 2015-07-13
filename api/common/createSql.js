@@ -176,14 +176,15 @@ function createValuePartBySymbol(item, name, request)
             var inputName = name + index;
             request.input(inputName, type, bindValueList[index]);
             values[inputName] = bindValueList[index];
+            colTypes[inputName] = item.column.type;
         }
     }
     else
     {
         request.input(name, type, item.condition.value1);
         values[name] = item.condition.value1;
+        colTypes[name] = item.column.type;
     }
-    colTypes[name] = item.column.type;
     if (isMultiple)
     {
         request.input(name2, type, item.condition.value2);
