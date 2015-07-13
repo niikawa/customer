@@ -192,10 +192,13 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 $scope.scenarioForm.expiration_start_date.$validate();
             });
             
-            $scope.$watch('specificInfo.expiration_end_date', function()
+            if (1 === $scope.specificInfo.repeat_flag)
             {
-                $scope.scenarioForm.expiration_end_date.$validate();
-            });
+                $scope.$watch('specificInfo.expiration_end_date', function()
+                {
+                    $scope.scenarioForm.expiration_end_date.$validate();
+                });
+            }
         }
         
     }
