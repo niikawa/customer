@@ -278,7 +278,6 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     $scope.save = function()
     {
         var doc;
-        $scope.scenario.scenario_type = pageProp.type;
         if (1 === pageProp.type)
         {
             if (1 === $scope.scenario.repeat_flag)
@@ -291,9 +290,6 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             //ベータ版のための制御
             if (0 === selectConditionList.length) return false;
             
-            Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
-            Scenario.setActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
-        
             doc = 
             {
                 actionName: actionName,
@@ -304,7 +300,11 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         {
             return false;
         }
-        
+
+        $scope.scenario.scenario_type = pageProp.type;
+        Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
+        Scenario.setActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
+
         var params = {scenario: $scope.scenario, specificInfo: $scope.specificInfo, doc: doc};
 
         Scenario.resource.save(params).$promise.then(function(response)
