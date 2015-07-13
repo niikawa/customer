@@ -125,11 +125,23 @@ function createValuePartBySymbol(item, name, request)
     var bindName = '@' + name;
     var name2 = name + '2';
     var bindName2 = '@' + name2;
+    
     switch (symbol)
     {
         case 'IN':
         case 'NOT IN':
-            part = ' (@' + bindName + ')';
+            
+            var valueList = item.condition.value1.split(/\r\n|\r|\n/);
+            var valueNum = valueList.length;
+            var last = valueNum -1;
+            part += ' (';
+            for (var index = 0; index < valueNum; index++)
+            {
+                part += bindName + index;
+                if (index !== last) part += ', ';
+            }
+            part += ' )';
+            
             break;
         case 'BETWEEN':
             part = '' + bindName + ' AND ' + bindName2;
@@ -154,8 +166,22 @@ function createValuePartBySymbol(item, name, request)
     }
     
     var type = getColType(item.column.type);
-    request.input(name, type, item.condition.value1);
-    values[name] = item.condition.value1;
+    
+    if ('IN' !== symbol &&  'NOT IN' !== symbol)
+    {
+        var bindValueList = item.condition.value1.split(/\r\n|\r|\n/);
+        var bindValueNum = bindValueList.length;
+        for (var index = 0; index < bindValueNum; index++)
+        {
+            var inputName = name + index;
+            request.input(inputName, type, bindValueList[index]);
+        }
+    }
+    else
+    {
+        request.input(name, type, item.condition.value1);
+        values[name] = item.condition.value1;
+    }
     colTypes[name] = item.column.type;
     if (isMultiple)
     {
