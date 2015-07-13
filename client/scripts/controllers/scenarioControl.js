@@ -24,14 +24,24 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.type = $routeParams.scenario;
         $scope.template = pageProp.template;
 
-        $scope.roop;
-        $scope.interval;
-        $scope.intervalCondition;
-        $scope.intervalConditionList = Scenario.intervalConditionList;
-        
-        $scope.conditions = [];
-        $scope.specificInfo = {};
-        $scope.decisionList = [];
+        if (1 === pageProp.type)
+        {
+            $scope.specificInfo = 
+            {
+                repeat_flag: '', 
+                expiration_start_date: '', 
+                expiration_end_date: '', 
+                interval: '', 
+                intervalCondition: '', 
+                intervalConditionList: []
+            };
+        }
+        else if (2 === pageProp.type)
+        {
+            $scope.conditions = [];
+            $scope.specificInfo = {};
+            $scope.decisionList = [];
+        }
     }
     
     function setValidation()

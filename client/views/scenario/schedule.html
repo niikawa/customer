@@ -1,36 +1,47 @@
 
     <div class="col-md-12">
         <div class="btn-group">
-            <label class="btn btn-default" ng-model="roop" btn-radio=1 uncheckable>一度だけ実行</label>
-            <label class="btn btn-default" ng-model="roop" btn-radio=2 uncheckable>繰り返し実行</label>
+            <label class="btn btn-default" ng-model="specificInfo.repeat_flag" btn-radio=1 uncheckable>一度だけ実行</label>
+            <label class="btn btn-default" ng-model="specificInfo.repeat_flag" btn-radio=2 uncheckable>繰り返し実行</label>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div ng-if="specificInfo.repeat_flag==2" class="btn-group">
+            <input type="text" class="form-control" name="specificInfo.expiration_start_date" placeholder="" >
+        </div>
+    </div>
+    ～
+    <div class="col-md-6">
+        <div ng-if="specificInfo.repeat_flag==2" class="btn-group">
+            <input type="text" class="form-control" name="specificInfo.expiration_end_date" placeholder="" >
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div ng-if="specificInfo.repeat_flag==2" class="btn-group">
+            <label class="btn btn-default" ng-model="$parent.specificInfo.interval" btn-radio=1 uncheckable>毎日</label>
+            <label class="btn btn-default" ng-model="$parent.specificInfo.interval" btn-radio=2 uncheckable>毎週</label>
+            <label class="btn btn-default" ng-model="$parent.specificInfo.interval" btn-radio=3 uncheckable>毎月</label>
         </div>
     </div>
     
     <div class="col-md-12">
-        <div ng-if="roop==2" class="btn-group">
-            <label class="btn btn-default" ng-model="$parent.interval" btn-radio=1 uncheckable>毎日</label>
-            <label class="btn btn-default" ng-model="$parent.interval" btn-radio=2 uncheckable>毎週</label>
-            <label class="btn btn-default" ng-model="$parent.interval" btn-radio=3 uncheckable>毎月</label>
+        <div ng-if="specificInfo.repeat_flag==2" class="btn-group">
+            <label class="btn btn-default" ng-model="$parent.specificInfo.intervalCondition" btn-radio=1 uncheckable>日付指定</label>
+            <label class="btn btn-default" ng-model="$parent.specificInfo.intervalCondition" btn-radio=2 uncheckable>曜日指定</label>
         </div>
     </div>
     
     <div class="col-md-12">
-        <div ng-if="roop==2" class="btn-group">
-            <label class="btn btn-default" ng-model="$parent.intervalCondition" btn-radio=1 uncheckable>日付指定</label>
-            <label class="btn btn-default" ng-model="$parent.intervalCondition" btn-radio=2 uncheckable>曜日指定</label>
+        <div ng-if="specificInfo.repeat_flagroop==2 && intervalCondition==1" class="btn-group">
+            <label ng-repeat="item in $parent.specificInfo.intervalConditionList track by $index" 
+                class="btn btn-default" ng-model="intervalConditionNumber" btn-checkbox=1 uncheckable>{{$index+1}}</label>
         </div>
     </div>
     
     <div class="col-md-12">
-        <div ng-if="roop==2 && intervalCondition==1" class="btn-group">
-            
-            <label ng-repeat="item in $parent.intervalConditionList track by $index" class="btn btn-default" ng-model="intervalConditionNumber" btn-checkbox=1 uncheckable>{{$index+1}}</label>
-    
-        </div>
-    </div>
-    
-    <div class="col-md-12row">
-        <div ng-if="roop==2 && intervalCondition==2" class="btn-group">
+        <div ng-if="specificInfo.repeat_flag==2 && intervalCondition==2" class="btn-group">
             <label class="btn btn-default" ng-model="weekCondition.mon" btn-checkbox=1 uncheckable>月</label>
             <label class="btn btn-default" ng-model="weekCondition.tue" btn-checkbox=2 uncheckable>火</label>
             <label class="btn btn-default" ng-model="weekCondition.wed" btn-checkbox=3 uncheckable>水</label>
