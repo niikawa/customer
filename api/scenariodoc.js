@@ -84,17 +84,20 @@ exports.getItemByIdForWeb = function(id, callback)
 
 exports.saveItemForWeb = function(isCrate ,parameters, callback)
 {
-    console.log(parameters);
-    if (void 0 === parameters) callback(null, null);
-    console.log('kta');
-    
-    if (isCrate)
+    if (void 0 === parameters)
     {
-        Scenario.addItem(parameters, callback);
+        callback(null, null);
     }
     else
     {
-        Scenario.updateItem(parameters, callback);
+        if (isCrate)
+        {
+            Scenario.addItem(parameters, callback);
+        }
+        else
+        {
+            Scenario.updateItem(parameters, callback);
+        }
     }
 };
 
