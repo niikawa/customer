@@ -96,7 +96,15 @@ myApp.directive('conditionDirective', function(Utility){
             scope.check = function(event)
             {
                 console.log(scope.conditionAppend);
-                var type = scope.conditionAppend.column.inputType;
+                var type = '';
+                if (void 0 === scope.conditionAppend.column)
+                {
+                    type = scope.conditionAppend.column.inputType;
+                }
+                else
+                {
+                    type = scope.conditionAppend.type;
+                }
                 var val = scope.conditionAppend.condition.value1;
                 if ('number' === type)
                 {
