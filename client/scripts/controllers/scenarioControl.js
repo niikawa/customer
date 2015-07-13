@@ -189,14 +189,14 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         
         if (1 === pageProp.type)
         {
-            if ('' !== $scope.specificInfo.repeat_flag)
+            if ('' !== $scope.scenario.repeat_flag)
             {
                 $scope.$watch('specificInfo.expiration_start_date', function()
                 {
                     $scope.scenarioForm.expiration_start_date.$validate();
                 });
             }
-            if (1 === $scope.specificInfo.repeat_flag)
+            if (1 === $scope.scenario.repeat_flag)
             {
                 $scope.$watch('specificInfo.expiration_end_date', function()
                 {
