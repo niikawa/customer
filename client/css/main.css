@@ -842,7 +842,10 @@ ul.release-note > li {
   border-bottom: 1px dashed;
   margin-top:10px;
   padding: 5px 10px;
-  font-size: 1.5em;
+  font-size: 1.2em;
+}
+ul.release-note > li > div {
+  display: table-cell;
 }
 /*-----------------------------------------------*/
 /* Other
