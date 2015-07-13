@@ -386,8 +386,8 @@ function create(req, res)
                 {
                     specificInfo = 
                     {
-                        repeat_flag: req.body.specificInfo.after_event_occurs_num,
-                        expiration_start_date: req.body.specificInfo.inoperative_num
+                        after_event_occurs_num: req.body.specificInfo.after_event_occurs_num,
+                        inoperative_num: req.body.specificInfo.inoperative_num
                     };
                     
                     childTabelName = 'M_TRIGGER_SCENARIO';
