@@ -42,7 +42,7 @@
                     <p class="item-error" ng-message="isDateValid">有効な日付ではありません。YYYY-MM-DD形式で入力してください</p>
                 </div>
                 <div ng-messages="scenarioForm.expiration_end_date.$dirty && scenarioForm.expiration_end_date.$error">
-                    <p class="item-error" ng-message="isAfter">有効な日付ではありません。YYYY-MM-DD形式で入力してください</p>
+                    <p class="item-error" ng-message="isAfter">開始日より未来の日付を入力してください。</p>
                 </div>
             </div>
         </div>
@@ -63,14 +63,14 @@
         </div>
         
         <div class="col-md-12">
-            <div ng-if="intervalCondition==1" class="btn-group">
+            <div ng-if="specificInfo.intervalCondition==1" class="btn-group">
                 <label ng-repeat="item in $parent.specificInfo.intervalConditionList track by $index" 
                     class="btn btn-default" ng-model="intervalConditionNumber" btn-checkbox=1 uncheckable>{{$index+1}}</label>
             </div>
         </div>
 
         <div class="col-md-12">
-            <div ng-if="intervalCondition==2" class="btn-group">
+            <div ng-if="$parent.specificInfo.intervalCondition==2" class="btn-group">
                 <label class="btn btn-default" ng-model="weekCondition.mon" btn-checkbox=1 uncheckable>月</label>
                 <label class="btn btn-default" ng-model="weekCondition.tue" btn-checkbox=2 uncheckable>火</label>
                 <label class="btn btn-default" ng-model="weekCondition.wed" btn-checkbox=3 uncheckable>水</label>
