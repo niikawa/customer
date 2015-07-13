@@ -851,7 +851,7 @@ ul.release-note > li:last-child {
   font-size: 1em;
 }
 ul.release-note > li > div {
-  display: table-cell;
+  margin-bottom:10px;
 }
 ul.release-note > li > div > p {
   padding-left: 10px;
