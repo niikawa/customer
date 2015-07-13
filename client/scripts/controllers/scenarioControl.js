@@ -29,7 +29,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             $scope.specificInfo = 
             {
                 repeat_flag: '0', 
-                expiration_start_date: '', 
+                expiration_start_date: Utility.today('YYYY-MM-DD'), 
                 expiration_end_date: '', 
                 interval: '', 
                 intervalCondition: '', 
