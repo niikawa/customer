@@ -854,9 +854,6 @@ ul.release-note > li > div {
   margin-bottom:10px;
 }
 
-ul.release-note > li > div > i{
-  font-weight:bold;
-}
 ul.release-note > li > div > p {
   margin:0;
   padding-left: 15px;
