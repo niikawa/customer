@@ -99,14 +99,14 @@ myApp.directive('conditionDirective', function(Utility){
                 var type = '';
                 if (void 0 === scope.conditionAppend.column)
                 {
-                    type = scope.conditionAppend.column.inputType;
+                    type = scope.conditionAppend.type;
                 }
                 else
                 {
-                    type = scope.conditionAppend.type;
+                    type = scope.conditionAppend.column.inputType;
                 }
                 var val = scope.conditionAppend.condition.value1;
-                if ('number' === type)
+                if ('number' === type || 'INT' === type)
                 {
                     if (void 0 === val)
                     {
