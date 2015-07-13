@@ -5,7 +5,10 @@ var Message = require('../config/message.json');
 
 /** テーブル名 */
 var tableName = 'M_SEGMENT';
+/** PK */
 var pk = 'segment_id';
+/** 機能名 */
+var functionName = 'セグメント管理';
 
 var segment = function segment()
 {
@@ -81,12 +84,12 @@ exports.getList = function(req, res)
         {
             if (err.length > 0)
             {
-                model.insertLog(req.session.userId, 5, Message.COMMON.E_004);
+                model.insertLog(req.session.userId, 5, Message.COMMON.E_004, functionName);
                 console.log('get segment data faild');
                 console.log(err);
                 res.status(510).send('get segment data faild');
             }
-            model.insertLog(req.session.userId, 5, Message.COMMON.I_004);
+            model.insertLog(req.session.userId, 5, Message.COMMON.I_004, functionName);
             res.json({data: data});
         });    
     });
@@ -120,7 +123,7 @@ exports.execute = function(req, res)
                 console.log(err);
                 res.status(510).send('data not found');
             }
-            model.insertLog(req.session.userId, 5, Message.SEGMENT.I_004);
+            model.insertLog(req.session.userId, 5, Message.SEGMENT.I_001);
             res.json({result: data[0].count});
         });
     });

@@ -2,6 +2,7 @@ var DocumentDBClient = require('documentdb').DocumentClient;
 var query = require('../collection/query');
 var Creator = require("./common/createSql");
 var Core = require('./core');
+var core = new Core();
 var Message = require('../config/message.json');
 var functionName = 'クエリー管理';
 
@@ -35,12 +36,12 @@ exports.getAllItem = function(req, res)
     {
         if (err)
         {
-            Core.insertLog(req.session.userId, 8, Message.COMMON.E_004, functionName);
+            core.insertLog(req.session.userId, 8, Message.COMMON.E_004, functionName);
             res.status(511).send('access ng');
         }
         else
         {
-            Core.insertLog(req.session.userId, 8, Message.COMMON.I_004, functionName);
+            core.insertLog(req.session.userId, 8, Message.COMMON.I_004, functionName);
             res.json({data: doc});
         }
     });
@@ -77,15 +78,12 @@ exports.addItem = function(req, res)
     {
         if (err)
         {
-            Core.insertLog(req.session.userId, 8, Message.COMMON.E_001, parameters.query_name);
+            core.insertLog(req.session.userId, 8, Message.COMMON.E_001, parameters.query_name);
             res.status(511).send('access ng');
             
         } else
         {
-            console.log(req.session.userId);
-            console.log(parameters.query_name);
-            console.log(Message.COMMON.I_001);
-            Core.insertLog(req.session.userId, 8, Message.COMMON.I_001, parameters.query_name);
+            core.insertLog(req.session.userId, 8, Message.COMMON.I_001, parameters.query_name);
             res.status(200).send('create query succsess');
         }
     });
@@ -107,13 +105,13 @@ exports.removeItem = function(req, res)
     {
         if (err)
         {
-            Core.insertLog(req.session.userId, 8, Message.COMMON.I_001, doc.query_name);
+            core.insertLog(req.session.userId, 8, Message.COMMON.I_001, doc.query_name);
             res.status(511).send('access ng');
             
         }
         else
         {
-            Core.insertLog(req.session.userId, 8, Message.COMMON.I_001, doc.query_name);
+            core.insertLog(req.session.userId, 8, Message.COMMON.I_001, doc.query_name);
             res.json({data: doc});
         }
     });
