@@ -287,8 +287,7 @@ exports.save = function(req, res)
     console.log('scenario save execute');
     console.log(req.body);
     if (!req.body.hasOwnProperty('scenario')) res.status(510).send('param is not found');
-//    if (void 0 === req.body.doc) res.status(510).send('param is not found');
-    
+
     if (req.body.scenario.hasOwnProperty('scenario_id'))
     {
         update(req, res);
@@ -538,12 +537,25 @@ function update(req, res)
 exports.remove = function(req, res)
 {
     console.log('scenario remove exexute');
-    var id = req.params.id;
     
-    var TriigerScenario = require("./triggerscenario");
-    TriigerScenario.getByScenarioId(id, function(err, triggerData)
+    if (!req.params.hasOwnProperty('id')) res.status(510).send('scenario remove faild');
+    if (!req.params.hasOwnProperty('type')) res.status(510).send('scenario remove faild');
+
+    var id = req.params.id;
+    var type = req.params.type;
+    var scenarioTypeObject = ''; 
+    if ('trigger' === type)
     {
-        console.log(triggerData);
+        scenarioTypeObject = require("./triggerscenario");
+    }
+    else
+    {
+        scenarioTypeObject = require("./schedulescenario");
+    }
+    
+    scenarioTypeObject.getByScenarioId(id, function(err, typeData)
+    {
+        console.log(typeData);
         if (err.length > 0)
         {
             console.log('scenario remove faild');
@@ -551,12 +563,12 @@ exports.remove = function(req, res)
             console.log(err);
         }
         
-        var exsitsTrriger = true;
-        if (0 === triggerData.length)
+        var exsitsData = true;
+        if (0 === typeData.length)
         {
-            console.log('scenario trigger data not found');
+            console.log('scenario type data not found');
             console.log(id);
-            exsitsTrriger = false;
+            exsitsData = false;
         }
         
         model.async.parallel(
@@ -564,10 +576,18 @@ exports.remove = function(req, res)
             //トリガー情報削除
             function(callback)
             {
-                if (exsitsTrriger)
+                if (exsitsData)
                 {
-                    TriigerScenario.remove(
-                        triggerData[0].trigger_scenario_id , callback);
+                    if ('trigger' === type)
+                    {
+                        scenarioTypeObject.remove(
+                            typeData[0].trigger_scenario_id , callback);
+                    }
+                    else if ('schedule' === type)
+                    {
+                        scenarioTypeObject.remove(
+                            typeData[0].schedule_scenario_id , callback);
+                    }
                 }
                 else
                 {
@@ -584,11 +604,11 @@ exports.remove = function(req, res)
             //シナリオdox削除
             function(callback)
             {
-                if (exsitsTrriger)
+                if (exsitsData && null !== typeData[0].scenario_action_document_id)
                 {
                     var scenariodoc = require("./scenariodoc");
                     scenariodoc.removeItemForWeb(
-                        triggerData[0].scenario_action_document_id, callback);
+                        typeData[0].scenario_action_document_id, callback);
                 }
                 else
                 {

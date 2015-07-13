@@ -47,7 +47,7 @@ function ($scope, $routeParams, Shared, Utility, Scenario)
         var name = $scope.scenarioList[index].scenario_name;
         var params = 
         {
-            type:$routeParams.scenario,
+            type: $routeParams.scenario,
             id: id,
         };
 
