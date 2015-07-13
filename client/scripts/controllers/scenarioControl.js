@@ -26,11 +26,12 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
 
         if (1 === pageProp.type)
         {
+            $scope.scenario.repeat_flag = '';
+            $scope.scenario.expiration_start_date = Utility.today('YYYY-MM-DD');
+            $scope.scenario.expiration_end_date = '';
+            
             $scope.specificInfo = 
             {
-                repeat_flag: '', 
-                expiration_start_date: Utility.today('YYYY-MM-DD'), 
-                expiration_end_date: '', 
                 interval: '', 
                 intervalCondition: '', 
                 intervalConditionList: []
@@ -93,7 +94,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 isAfter: function(modelValue, viewValue)
                 {
                     var val = modelValue || viewValue;
-                    return Utility.isAfter(val, $scope.specificInfo.expiration_start_date);
+                    return Utility.isAfter(val, $scope.scenario.expiration_start_date);
                 }
             },
         };
@@ -277,17 +278,23 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     
     $scope.save = function()
     {
-        var doc = {};
-        //ベータ版のための制御
+        var doc;
+        $scope.scenario.scenario_type = pageProp.type;
         if (1 === pageProp.type)
         {
-            console.log($scope.specificInfo);
-            return false;
+            if (1 === $scope.scenario.repeat_flag)
+            {
+                //doc
+            }
         }
         else if (2 === pageProp.type)
         {
+            //ベータ版のための制御
             if (0 === selectConditionList.length) return false;
             
+            Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
+            Scenario.setActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
+        
             doc = 
             {
                 actionName: actionName,
@@ -298,10 +305,6 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         {
             return false;
         }
-        
-        $scope.scenario.scenario_type = pageProp.type;
-        Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
-        Scenario.setActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
         
         var params = {scenario: $scope.scenario, specificInfo: $scope.specificInfo, doc: doc};
 

@@ -368,7 +368,7 @@ function create(req, res)
                 var commonColumns = model.getInsCommonColumns();
                 var insertData = model.merge(req.body.specificInfo, commonColumns);
                 insertData.scenario_id = data.scenario_id;
-                insertData.scenario_action_document_id = doc.id;
+                insertData.scenario_action_document_id = (null === doc) ? null : doc.id;
                 
                 var request = model.getRequest();
                 request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
@@ -376,15 +376,25 @@ function create(req, res)
                 request.input('create_date', model.db.NVarChar, insertData.create_date);
                 request.input('update_by', model.db.Int, req.session.userId);
                 request.input('update_date', model.db.NVarChar, insertData.update_date);
-                
                 request.input('scenario_id', model.db.Int, insertData.scenario_id);
-                request.input('after_event_occurs_num', model.db.Int, insertData.after_event_occurs_num);
-                request.input('inoperative_num', model.db.Int, insertData.inoperative_num);
                 request.input('scenario_action_document_id', model.db.NVarChar, insertData.scenario_action_document_id);
                 
-                console.log(insertData);
+                var childTabelName = '';
+                if (1 === req.body.scenario.scenario_type)
+                {
+                    childTabelName = 'M_SCHEDULE_SCENARIO';
+                    request.input('repeat_flag', model.db.Int, insertData.repeat_flag);
+                    request.input('expiration_start_date', model.db.NVarChar, insertData.expiration_start_date);
+                    request.input('expiration_end_date', model.db.NVarChar, insertData.expiration_end_date);
+                }
+                else if (2 === req.body.scenario.scenario_type)
+                {
+                    childTabelName = 'M_TRIGGER_SCENARIO';
+                    request.input('after_event_occurs_num', model.db.Int, insertData.after_event_occurs_num);
+                    request.input('inoperative_num', model.db.Int, insertData.inoperative_num);
+                }
                 
-                model.insert('M_TRIGGER_SCENARIO', insertData, request, function(err, date)
+                model.insert(childTabelName, insertData, request, function(err, date)
                 {
                     if (err.length > 0)
                     {
