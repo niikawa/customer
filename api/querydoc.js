@@ -82,6 +82,9 @@ exports.addItem = function(req, res)
             
         } else
         {
+            console.log(req.session.userId);
+            console.log(parameters.query_name);
+            console.log(Message.COMMON.I_001);
             Core.insertLog(req.session.userId, 8, Message.COMMON.I_001, parameters.query_name);
             res.status(200).send('create query succsess');
         }
