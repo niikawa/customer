@@ -28,7 +28,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         {
             $scope.specificInfo = 
             {
-                repeat_flag: '0', 
+                repeat_flag: '', 
                 expiration_start_date: Utility.today('YYYY-MM-DD'), 
                 expiration_end_date: '', 
                 interval: '', 
@@ -187,11 +187,13 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         
         if (1 === pageProp.type)
         {
-            $scope.$watch('specificInfo.expiration_start_date', function()
+            if ('' !== $scope.specificInfo.repeat_flag)
             {
-                $scope.scenarioForm.expiration_start_date.$validate();
-            });
-            
+                $scope.$watch('specificInfo.expiration_start_date', function()
+                {
+                    $scope.scenarioForm.expiration_start_date.$validate();
+                });
+            }
             if (1 === $scope.specificInfo.repeat_flag)
             {
                 $scope.$watch('specificInfo.expiration_end_date', function()
