@@ -65,7 +65,7 @@
         <div class="col-md-12">
             <div ng-if="$parent.specificInfo.intervalCondition==1" class="btn-group">
                 <label ng-repeat="item in $parent.specificInfo.intervalConditionList track by $index" 
-                    class="btn btn-default" ng-model="intervalConditionNumber" btn-checkbox=1 uncheckable>{{$index+1}}</label>
+                    class="btn btn-default" ng-model="$parent.specificInfo.intervalConditionNumber" btn-checkbox=1 uncheckable>{{$index+1}}</label>
             </div>
         </div>
 

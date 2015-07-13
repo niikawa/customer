@@ -282,7 +282,8 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         {
             if (1 === $scope.scenario.repeat_flag)
             {
-                //doc
+                console.log($scope.specificInfo.intervalConditionNumber);
+                return false;
             }
         }
         else if (2 === pageProp.type)
