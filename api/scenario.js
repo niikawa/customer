@@ -286,8 +286,8 @@ exports.save = function(req, res)
 {
     console.log('scenario save execute');
     console.log(req.body);
-    if (void 0 === req.body.scenario) res.status(510).send('param is not found');
-    if (void 0 === req.body.doc) res.status(510).send('param is not found');
+    if (!req.body.hasOwnProperty('scenario')) res.status(510).send('param is not found');
+//    if (void 0 === req.body.doc) res.status(510).send('param is not found');
     
     if (req.body.scenario.hasOwnProperty('scenario_id'))
     {
