@@ -391,8 +391,8 @@ function create(req, res)
                     };
                     
                     childTabelName = 'M_TRIGGER_SCENARIO';
-                    request.input('after_event_occurs_num', model.db.Int, insertData.after_event_occurs_num);
-                    request.input('inoperative_num', model.db.Int, insertData.inoperative_num);
+                    request.input('after_event_occurs_num', model.db.Int, specificInfo.after_event_occurs_num);
+                    request.input('inoperative_num', model.db.Int, specificInfo.inoperative_num);
                 }
                 
                 var commonColumns = model.getInsCommonColumns();

@@ -106,7 +106,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                     var val = modelValue || viewValue;
                     if (void 0 === val || val.length === 0) return true;
                     
-                    return Scenario.validators.isSameName(id, $scope.scenario.segment_name, val);
+                    return Scenario.validators.isSameName(id, val);
                 }
             }
         };
