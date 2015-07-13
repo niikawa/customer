@@ -84,7 +84,7 @@ exports.getItemByIdForWeb = function(id, callback)
 
 exports.saveItemForWeb = function(isCrate ,parameters, callback)
 {
-    if (void 0 === parameters) callback(null , null);
+    if (void 0 === parameters) callback(null);
     
     if (isCrate)
     {

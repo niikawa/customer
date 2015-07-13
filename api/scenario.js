@@ -309,7 +309,7 @@ function create(req, res)
 {
     scenariodoc.saveItemForWeb(true, req.body.doc, function(err, doc)
     {
-        if (err)
+        if (null !== err)
         {
             console.log('scenario create doc faild');
             console.log(err);
@@ -430,6 +430,7 @@ function create(req, res)
                 res.status(510).send('object not found');
             }
             model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
+            console.log(res);
             res.status(200).send('insert ok');
         });
     });
