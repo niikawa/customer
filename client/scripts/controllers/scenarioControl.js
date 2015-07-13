@@ -26,12 +26,11 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
 
         if (1 === pageProp.type)
         {
-            $scope.scenario.repeat_flag = '';
-            $scope.scenario.expiration_start_date = Utility.today('YYYY-MM-DD');
-            $scope.scenario.expiration_end_date = '';
-            
             $scope.specificInfo = 
             {
+                repeat_flag: '',
+                expiration_start_date: Utility.today('YYYY-MM-DD'),
+                expiration_end_date: '',
                 interval: '', 
                 intervalCondition: '', 
                 intervalConditionList: []
