@@ -356,9 +356,6 @@ function create(req, res)
                             console.log(err);
                             res.status(510).send('object not found');
                         }
-                        
-                        console.log(data);
-                        
                         callback(null, data[0]);
                     });
                 });
@@ -413,26 +410,30 @@ function create(req, res)
                 
                 model.insert(childTabelName, insertData, request, function(err, date)
                 {
+                    console.log('insert child table');
+                    console.log(err);
                     if (err.length > 0)
                     {
                         console.log(err);
                         res.status(510).send('object not found');
                     }
-                    
+
                     callback(null, data);
                 });
             }
         ],
         function(err)
         {
+            console.log('last function');
             if (null != err)
             {
+                model.insertLog(req.session.userId, 8, Message.SCENARIO.E_001, req.body.scenario.scenario_name);
                 console.log(err);
                 res.status(510).send('object not found');
             }
+            model.insertLog(req.session.userId, 8, Message.SCENARIO.I_001, req.body.scenario.scenario_name);
             res.status(200).send('insert ok');
         });
-        
     });
 }
 
