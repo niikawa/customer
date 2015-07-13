@@ -839,7 +839,9 @@ ul.release-note {
 }
 ul.release-note > li {
   border-top: 1px dashed;
-  margin:10px;
+  border-bottom: 1px dashed;
+  margin-top:10px;
+  padding: 5px 10px;
 }
 /*-----------------------------------------------*/
 /* Other
