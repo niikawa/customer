@@ -832,8 +832,14 @@ div .card-cell-right-b {
     margin-top: 5px;
 }
 /*-----------------------------------------------*/
+ul.release-note {
+  padding: 0;
+  margin: 0;
+  list-style-type:none;
+}
 ul.release-note > li {
-  border: 1px dashed;
+  border-top: 1px dashed;
+  margin:10px;
 }
 /*-----------------------------------------------*/
 /* Other
