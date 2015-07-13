@@ -105,13 +105,13 @@ exports.removeItem = function(req, res)
     {
         if (err)
         {
-            core.insertLog(req.session.userId, 8, Message.COMMON.I_001, doc.query_name);
+            core.insertLog(req.session.userId, 8, Message.COMMON.I_001, 'クエリー');
             res.status(511).send('access ng');
             
         }
         else
         {
-            core.insertLog(req.session.userId, 8, Message.COMMON.I_001, doc.query_name);
+            core.insertLog(req.session.userId, 8, Message.COMMON.I_001, 'クエリー');
             res.json({data: doc});
         }
     });
