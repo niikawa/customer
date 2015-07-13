@@ -170,12 +170,12 @@ function createValuePartBySymbol(item, name, request)
     if ('IN' === symbol || 'NOT IN' === symbol)
     {
         var bindValueList = item.condition.value1.split(/\r\n|\r|\n/);
-        console.log(bindValueList);
         var bindValueNum = bindValueList.length;
         for (var index = 0; index < bindValueNum; index++)
         {
             var inputName = name + index;
             request.input(inputName, type, bindValueList[index]);
+            values[inputName] = bindValueList[index];
         }
     }
     else
