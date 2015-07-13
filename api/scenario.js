@@ -8,7 +8,7 @@ var tableName = 'M_SCENARIO';
 /** PK */
 var pk = 'scenario_id';
 /** 機能名 */
-var functionName = 'シナリオ管理';
+//var functionName = 'シナリオ管理';
 
 var scenario = function scenario()
 {
