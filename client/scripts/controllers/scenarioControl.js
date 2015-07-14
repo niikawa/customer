@@ -156,24 +156,40 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         {
             $scope.segmentList = response.segment;
             $scope.ifList = response.ifLayout;
+            $scope.scenario = response.target;
             if (1 === pageProp.type)
             {
-                console.log(response.specific);
+                if (isEdit) editScheduleInitialize(response);
             }
             else if (2 === pageProp.type)
             {
                 $scope.actionList =  response.specific;
-                if (isEdit) editInitialize(response);
+                if (isEdit) editTriggerInitialize(response);
             }
         });
     }
-    
-    function editInitialize(initData)
+    function editScheduleInitialize(initData)
     {
-        $scope.scenario = initData.target;
+        $scope.specificInfo.repeat_flag = initData.specificInfo.specific.repeat_flag;
+        $scope.specificInfo.expiration_start_date = initData.specificInfo.specific.expiration_start_date;
+        $scope.specificInfo.expiration_end_date = initData.specificInfo.specific.expiration_end_date;
         
-        $scope.specificInfo = initData.specificInfo.specific;
         console.log(initData.specificInfo.doc);
+        
+        $scope.specificInfo.interval = initData.specificInfo.doc.interval;
+        if (2 === $scope.specificInfo.interval)
+        {
+           $scope.specificInfo.weekCondition = initData.specificInfo.doc.weekCondition;
+        }
+        else if (3 === $scope.specificInfo.interval)
+        {
+           $scope.specificInfo.daysCondition = initData.specificInfo.doc.daysCondition;
+        }
+    }
+    
+    function editTriggerInitialize(initData)
+    {
+        $scope.specificInfo = initData.specificInfo.specific;
         Scenario.resource.action({name: initData.specificInfo.doc.actionName}).$promise.then(function(response)
         {
             actionName = $scope.activeName;
