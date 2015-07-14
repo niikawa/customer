@@ -27,14 +27,6 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
       $scope.modalParam = 
       {
           header: 'タスクを追加します', 
-          contents: '',
-          progress: 0,
-          userId: null,
-          status: 1,
-          comments: '',
-          max: 10,
-          isCollapsed: false,
-          index: index,
       };
       $scope.modalInstance = Modal.open($scope, "partials/modal/send.html");
     };
