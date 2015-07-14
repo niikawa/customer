@@ -39,15 +39,18 @@
                                 <label class="label label-primary">{{item.resolve_name}}</label>
                                 <div class="pull-right">
                                     <i class="fa fa-clock-o fa-fw"></i>{{item.create_date}}
-                                </div>
-                                <div ng-if="1==item.role_id" class="pull-right">
-                                    <button class="btn btn-primary" ng-click="resolve(i)">解決</button>
+                                    {{item.name}}
                                 </div>
                             </div>
-                            <div>
+                            <div class="cell">
                                 <p class="title">{{item.title}}</p>
                                 <hr class="line">
                                 <p>{{item.contents}}</p>
+                            </div>
+                            <div class="cell">
+                            </div>
+                            <div ng-if="1==item.role_id" class="pull-right cell">
+                                <button class="btn btn-primary" ng-click="resolve(i)">解決</button>
                             </div>
                         </li>
                       </ul>
