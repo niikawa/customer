@@ -241,15 +241,15 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 {
                     $scope.scenarioForm.expiration_end_date.$validate();
                 });
-                $scope.$watch('specificInfo.specificInfo.interval', function()
+                $scope.$watch('specificInfo.interval', function()
                 {
                     $scope.scenarioForm.interval.$validate();
                 });
-                $scope.$watch('specificInfo.specificInfo.weekCondition', function()
+                $scope.$watch('specificInfo.weekCondition', function()
                 {
                     $scope.scenarioForm.weekCondition.$validate();
                 }, true);
-                $scope.$watch('specificInfo.specificInfo.daysCondition', function()
+                $scope.$watch('specificInfo.daysCondition', function()
                 {
                     $scope.scenarioForm.daysCondition.$validate();
                 }, true);
