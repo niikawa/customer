@@ -58,7 +58,7 @@
         <div ng-if="3==$parent.specificInfo.interval">
             <div class="col-md-12">
                 <div class="btn-group" name="daysCondition" ng-model="specificInfo.daysCondition" my-validators="validators.daysCondition">
-                    <label ng-repeat="item in $parent.specificInfo.daysCondition track by $index" 
+                    <label ng-repeat="item in $parent.specificInfo.daysCondition" 
                         class="btn btn-default" ng-model="item.check" btn-checkbox=1 uncheckable>{{item.name}}</label>
                 </div>
             </div>
