@@ -860,10 +860,11 @@ ul.release-note > li > div > p {
 }
 
 p.title {
+  margin-top:5px;
   margin-bottom:5px;
 }
 hr.line {
-  margin:1;
+  margin:1px;
 }
 div.cell{
   display:table-cell;
