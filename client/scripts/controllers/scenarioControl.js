@@ -174,7 +174,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.specificInfo.expiration_start_date = Utility.formatString(initData.specificInfo.specific.expiration_start_date);
         $scope.specificInfo.expiration_end_date = Utility.formatString(initData.specificInfo.specific.expiration_end_date);
         
-        if (initData.specificInfo.doc.hasOwnProperty('interval'))
+        if (null !== initData.specificInfo.doc)
         {
             $scope.specificInfo.interval = initData.specificInfo.doc.interval;
         
