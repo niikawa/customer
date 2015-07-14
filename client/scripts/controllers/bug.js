@@ -9,7 +9,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
     
     function getInitializeData()
     {
-        Bug.resource.get().$promise.then(function(response)
+        Bug.resource.getByConditon().$promise.then(function(response)
         {
             $scope.bugList = response.data;
         });

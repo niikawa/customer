@@ -1,10 +1,24 @@
 <div class="" ng-controller="BugCtrl" ng-init="initialize()">
-    <div class="page-title"><h2>障害報告ボード</h2></div>
+    <div class="page-title"><h2>報告ボード</h2></div>
     
     <div class="box">
-        <h4>現在の把握している障害と状況について <a class="btn btn-default" ng-click="show()">障害・要望を送る</a></h4>
+        <h4>状況を報告します <a class="btn btn-default" ng-click="show()">バグ・要望を送る</a></h4>
 
         <div class="row" >
+            <div class="col-md-12">
+                
+                <div class="btn-group" ng-click="getByCondition()">
+                    <label class="btn btn-default" ng-model="bug.status" btn-radio=1 uncheckable>未解決</label>
+                    <label class="btn btn-default" ng-model="bug.status" btn-radio=0 uncheckable>解決済み</label>
+                </div>
+                
+                <div class="btn-group" ng-click="getByCondition()">
+                    <label class="btn btn-default" ng-model="bug.type" btn-radio=1 uncheckable>バグ</label>
+                    <label class="btn btn-default" ng-model="bug.type" btn-radio=2 uncheckable>要望</label>
+                </div>
+                
+            </div>
+            
             <div class="col-md-12">
                 
                 <ul class="release-note" ng-repeat="(i, item) in bugList">
