@@ -171,8 +171,8 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     function editScheduleInitialize(initData)
     {
         $scope.specificInfo.repeat_flag = initData.specificInfo.specific.repeat_flag;
-        $scope.specificInfo.expiration_start_date = initData.specificInfo.specific.expiration_start_date;
-        $scope.specificInfo.expiration_end_date = initData.specificInfo.specific.expiration_end_date;
+        $scope.specificInfo.expiration_start_date = Utility.formatString(initData.specificInfo.specific.expiration_start_date);
+        $scope.specificInfo.expiration_end_date = Utility.formatString(initData.specificInfo.specific.expiration_end_date);
         
         console.log(initData.specificInfo.doc);
         
