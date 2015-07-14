@@ -248,11 +248,11 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 $scope.$watch('specificInfo.specificInfo.weekCondition', function()
                 {
                     $scope.scenarioForm.weekCondition.$validate();
-                });
+                }, true);
                 $scope.$watch('specificInfo.specificInfo.daysCondition', function()
                 {
                     $scope.scenarioForm.daysCondition.$validate();
-                }, false);
+                }, true);
             }
         }
         
