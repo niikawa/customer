@@ -174,14 +174,18 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.specificInfo.expiration_start_date = Utility.formatString(initData.specificInfo.specific.expiration_start_date);
         $scope.specificInfo.expiration_end_date = Utility.formatString(initData.specificInfo.specific.expiration_end_date);
         
-        $scope.specificInfo.interval = initData.specificInfo.doc.interval;
-        if (2 === $scope.specificInfo.interval)
+        if (initData.specificInfo.doc.hasOwnProperty('interval'))
         {
-           $scope.specificInfo.weekCondition = initData.specificInfo.doc.weekCondition;
-        }
-        else if (3 === $scope.specificInfo.interval)
-        {
-           $scope.specificInfo.daysCondition = initData.specificInfo.doc.daysCondition;
+            $scope.specificInfo.interval = initData.specificInfo.doc.interval;
+        
+            if (2 === $scope.specificInfo.interval)
+            {
+               $scope.specificInfo.weekCondition = initData.specificInfo.doc.weekCondition;
+            }
+            else if (3 === $scope.specificInfo.interval)
+            {
+               $scope.specificInfo.daysCondition = initData.specificInfo.doc.daysCondition;
+            }
         }
     }
     
