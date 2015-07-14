@@ -48,16 +48,40 @@ Scenario.prototype = {
         });
     },
 
-    addItem: function (item, callback) {
+    addItem: function (data, callback) {
         var self = this;
         
-        var data = item;
+        var doc;
+        if (data.hasOwnProperty('actionName'))
+        {
+            doc.action_name = data.actionName;
+            doc.conditionList = data.conditionList;
+        }
+        else if (data.hasOwnProperty('interval'))
+        {
+            doc.interval = data.interval;
+            if (data.hasOwnProperty('daysCondition'))
+            {
+                doc.daysCondition = data.daysCondition;
+            }
+            else if (data.hasOwnProperty('weekCondition'))
+            {
+                doc.weekCondition = data.weekCondition;
+            }
+            else
+            {
+                callback('コレクションを作るためのデータが足りません', null);
+            }
+        }
 
-        self.client.createDocument(self.collection._self, data, function (err, doc) {
-            if (err) {
+        self.client.createDocument(self.collection._self, doc, function (err, doc) 
+        {
+            if (err)
+            {
                 callback(err);
-
-            } else {
+            }
+            else
+            {
                 callback(null, doc);
             }
         });
@@ -67,14 +91,38 @@ Scenario.prototype = {
     {
         var self = this;
 
-        self.getItem(data.id, function (err, doc) {
-            if (err) {
+        self.getItem(data.id, function (err, doc)
+        {
+            if (err)
+            {
                 callback(err);
-
-            } else {
-                
-                doc.action_name = data.actionName;
-                doc.conditionList = data.conditionList;
+            }
+            else
+            {
+                if (data.hasOwnProperty('actionName'))
+                {
+                    doc.action_name = data.actionName;
+                    doc.conditionList = data.conditionList;
+                }
+                else if (data.hasOwnProperty('interval'))
+                {
+                    doc.action_name = data.interval;
+                    
+                    if (data.hasOwnProperty('daysCondition'))
+                    {
+                        doc.daysCondition = data.daysCondition;
+                        delete doc.weekCondition;
+                    }
+                    else if (data.hasOwnProperty('weekCondition'))
+                    {
+                        doc.weekCondition = data.weekCondition;
+                        delete doc.daysCondition;
+                    }
+                    else
+                    {
+                        callback('コレクションを作るためのデータが足りません', null);
+                    }
+                }
 
                 self.client.replaceDocument(doc._self, doc, function (err, replaced) {
                     if (err) {

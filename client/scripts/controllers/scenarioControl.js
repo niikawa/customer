@@ -174,8 +174,6 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.specificInfo.expiration_start_date = Utility.formatString(initData.specificInfo.specific.expiration_start_date);
         $scope.specificInfo.expiration_end_date = Utility.formatString(initData.specificInfo.specific.expiration_end_date);
         
-        console.log(initData.specificInfo.doc);
-        
         $scope.specificInfo.interval = initData.specificInfo.doc.interval;
         if (2 === $scope.specificInfo.interval)
         {
@@ -336,12 +334,15 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         {
             if (1 == $scope.specificInfo.repeat_flag)
             {
-                doc =
+                doc = {interval: $scope.specificInfo.interval};
+                if (2 === $scope.specificInfo.interval)
                 {
-                    interval: $scope.specificInfo.interval,
-                    daysCondition: $scope.specificInfo.daysCondition,
-                    weekCondition: $scope.specificInfo.weekCondition
-                };
+                    doc.weekCondition = $scope.specificInfo.weekCondition;
+                }
+                else if (3 === $scope.specificInfo.interval)
+                {
+                    doc.daysCondition = $scope.specificInfo.daysCondition;
+                }
             }
         }
         else if (2 === pageProp.type)
