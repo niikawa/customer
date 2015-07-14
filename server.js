@@ -113,8 +113,8 @@ var access = require("./api/access");
 router.post('/access', access.getDayAll);
 
 var bug = require("./api/bug");
-router.post('/bug/save', access.save);
-router.post('/bug', access.getByConditon);
+router.post('/bug/save', bug.save);
+router.post('/bug', bug.getByConditon);
 
 //
 // ## SimpleServer `SimpleServer(obj)`
