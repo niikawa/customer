@@ -36,13 +36,13 @@
                             <label class="label label-primary">{{item.type_name}}</label>
                             <label class="label label-success">{{item.category_name}}</label>
                             <label class="label label-primary">{{item.resolve_name}}</label>
+                            <div class="pull-right">
+                                <i class="fa fa-clock-o fa-fw"></i>{{item.create_date}}
+                            </div>
                             <div>
-                                <p>{{item.title}}</p>
+                                <h5>{{item.title}}</h5>
                                 <hr>
                                 <p>{{item.contents}}</p>
-                                <div class="pull-right">
-                                    <i class="fa fa-clock-o fa-fw"></i>{{item.create_date}}
-                                </div>
                             </div>
                             <div ng-if="1==item.role_id" class="pull-right">
                                 <button class="btn btn-primary" ng-click="resolve(i)">解決</button>
