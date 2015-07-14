@@ -44,7 +44,7 @@
         </div>
     
         <div ng-if="2==$parent.specificInfo.interval" class="col-md-12">
-            <div class="btn-group" name="weekCondition" ng-click="weekConditionValidation()" >
+            <div class="btn-group" name="weekCondition" ng-click="weekConditionValidation()" ng-model="specificInfo.weekCondition" >
                 <label class="btn btn-default" ng-model="specificInfo.weekCondition.mon" btn-checkbox=1 uncheckable>月</label>
                 <label class="btn btn-default" ng-model="specificInfo.weekCondition.tue" btn-checkbox=2 uncheckable>火</label>
                 <label class="btn btn-default" ng-model="specificInfo.weekCondition.wed" btn-checkbox=3 uncheckable>水</label>
