@@ -33,7 +33,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 expiration_end_date: '',
                 interval: '', 
                 intervalCondition: '', 
-                intervalConditionList: Scenario.intervalConditionList
+                intervalConditionList: Scenario.intervalConditionList()
             };
         }
         else if (2 === pageProp.type)

@@ -8,11 +8,17 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
                 schedule: {type: 1, mode: 0, title: 'スケジュール型', addTitle: '', template: 'views/scenario/schedule.html'}, 
                 trigger: {type: 2, mode: 0, title: 'トリガー型', addTitle: '', template: 'views/scenario/trigger.html'}
         };
-        
-        scenarioServices.intervalConditionList = [
-            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
-            21,22,23,24,25,26,27,28,28,30,31, '最終日'
-            ];
+        scenarioServices.intervalConditionList = function()
+        {
+            var data = [];
+            var num = 31;
+            for (var index = 1; num <= index ; index++)
+            {
+                data.push({name: 1, check:false});
+            }
+            data.push({name: '最終日', check:false});
+            return data;
+        };
 
         scenarioServices.resource = $resource('/scenario/:type/:id/', {id: '@id'},
         {
