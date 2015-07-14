@@ -84,14 +84,15 @@ exports.save = function(req, res)
 
 exports.resolve = function(req, res)
 {
-    if (!req.params.hasOwnProperty('resolve')) res.status(510).send('parameter not found');
+    if (!req.params.hasOwnProperty('id')) res.status(510).send('parameter not found');
     
     var commonColumns = model.getUpdCommonColumns();
     var updateData = model.merge(req.body.params, commonColumns);
     var request = model.getRequest();
     request.input('update_by', model.db.Int, req.session.userId);
     request.input('update_date', model.db.NVarChar, updateData.update_date);
-    request.input('resolve', model.db.SmallInt, updateData.resolve);
+    request.input('resolve', model.db.SmallInt, 1);
+    request.input('resolve', model.db.SmallInt, updateData.id);
 
     model.updateById(updateData, request, function(err, date)
     {

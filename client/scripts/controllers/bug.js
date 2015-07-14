@@ -61,8 +61,6 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
 
     $scope.save = function()
     {
-        console.log($scope.modalParam);
-        
         var params = 
         {
             type: $scope.modalParam.type,
@@ -73,7 +71,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
         Bug.resource.save(params).$promise.then(function(response)
         {
             Utility.info('ありがとございました。');
-            Modal.$dismiss();
+            Modal.close();
         });
     };
     

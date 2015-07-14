@@ -10,6 +10,6 @@ modalService.service("Modal", ["$modal" ,　function($modal)
                 }
             );
         };
-        return {open: open};
+        return {open: open, close: $modal.$dismiss()};
     }]
 );

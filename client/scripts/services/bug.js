@@ -26,8 +26,8 @@ bugServices.factory("Bug", ['$resource','Utility',
             },
             resolve:
             {
-                method:"POST",
-                url: "/bug/resolve"
+                method:"GET",
+                url: "/bug/resolve/:id"
             },
             save: 
             {
