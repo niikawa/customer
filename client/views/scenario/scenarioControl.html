@@ -29,13 +29,13 @@
                             ng-model="scenario.output_name" ng-maxlength=50 ng-required="true">
                         
                         <div class="btn-group">
-                            <label class="btn btn-default" name="approach" ng-model="scenario.approach" btn-radio=1 uncheckable>アプローチ対象</label>
-                            <label class="btn btn-default" name="approach" ng-model="scenario.approach" btn-radio=0 uncheckable>アプローチ対象外</label>
+                            <label class="btn btn-default" name="approach" ng-model="scenario.approach" ng-required="true" btn-radio=1 uncheckable>アプローチ対象</label>
+                            <label class="btn btn-default" name="approach" ng-model="scenario.approach" ng-required="true" btn-radio=0 uncheckable>アプローチ対象外</label>
                         </div>
     
                         <div class="btn-group">
-                            <label class="btn btn-default" name="status" ng-model="scenario.status" btn-radio=1 uncheckable>有効</label>
-                            <label class="btn btn-default" name="status" ng-model="scenario.status" btn-radio=0 uncheckable>無効</label>
+                            <label class="btn btn-default" name="status" ng-model="scenario.status" ng-required="true" btn-radio=1 uncheckable>有効</label>
+                            <label class="btn btn-default" name="status" ng-model="scenario.status" ng-required="true" btn-radio=0 uncheckable>無効</label>
                         </div>
     
                         <div class="panel panel-default">

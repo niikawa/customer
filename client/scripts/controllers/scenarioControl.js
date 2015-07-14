@@ -253,11 +253,6 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     {
     }
     
-    $scope.weekConditionValidation = function()
-    {
-        $scope.scenarioForm.weekCondition.$validate();
-    };
-    
     /**
      * 初期処理
      * @author niikawa
@@ -378,5 +373,15 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     //---------------------------------
     //schedule
     //---------------------------------
+    $scope.weekConditionValidation = function()
+    {
+        $scope.scenarioForm.weekCondition.$validate();
+    };
+    
+    $scope.daysConditionValidation = function()
+    {
+        $scope.scenarioForm.daysCondition.$validate();
+    };
+    
 
 }]);
