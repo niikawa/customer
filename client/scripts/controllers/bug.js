@@ -4,7 +4,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
 {
     function setInitializeScope()
     {
-        $scope.bug = [];
+        $scope.bug = {};
     }
     
     function getInitializeData()
@@ -43,7 +43,11 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
     
     $scope.getByCondition = function()
     {
-        console.log($scope.bug);
+        Bug.resource.getByConditon($scope.bug).$promise.then(function(response)
+        {
+            $scope.isBugShow = response.data.length > 0;
+            $scope.bugList = response.data;
+        });
     };
 
     $scope.resolve = function(index)

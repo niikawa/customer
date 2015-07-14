@@ -56,7 +56,7 @@ exports.getByConditon = function(req, res)
 exports.save = function(req, res)
 {
     var commonColumns = model.getInsCommonColumns();
-    var insertData = model.merge(req.body.scenario, commonColumns);
+    var insertData = model.merge(req.body, commonColumns);
     var request = model.getRequest();
     request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
     request.input('create_by', model.db.Int, req.session.userId);
