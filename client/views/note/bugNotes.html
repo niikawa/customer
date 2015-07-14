@@ -21,13 +21,17 @@
             
             <div class="col-md-12">
                 
-                <ul class="release-note" ng-repeat="(i, item) in bugList">
+                <div ng-if="!isBugShow" class="alert alert-info" role="alert">
+                    作成しているシナリオはありません。
+                </div>
+
+                <ul  ng-if="isBugShow" class="release-note" ng-repeat="(i, item) in bugList">
                     <li>
                         <div class="pull-right">
                             <i class="fa fa-clock-o fa-fw"></i>{{item.create_date}}
                         </div>
                         <div ng-if="1==item.role_id" class="pull-left">
-                            <button class="btn btn-primary" ng-click="resolve()">解決しました</button>
+                            <button class="btn btn-primary" ng-click="resolve(i)">解決</button>
                         </div>
                         <div>
                             <p>{{item.title}}</p>

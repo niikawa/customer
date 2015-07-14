@@ -11,6 +11,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
     {
         Bug.resource.getByConditon().$promise.then(function(response)
         {
+            $scope.isBugShow = response.data.length > 0;
             $scope.bugList = response.data;
         });
     }
@@ -42,17 +43,19 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
     
     $scope.getByConditon = function()
     {
-        
+        console.log($scope.bug);
     };
 
-    $scope.resolve = function()
+    $scope.resolve = function(index)
     {
-        
+        console.log(index);
     };
 
     $scope.save = function()
     {
-        Bug.resource.save($scope.bug).$promise.then(function(response)
+        console.log($scope.modalParam);
+        
+        Bug.resource.save($scope.modalParam).$promise.then(function(response)
         {
             $scope.bugList = response.data;
         });
