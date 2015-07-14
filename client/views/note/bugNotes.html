@@ -25,20 +25,26 @@
                     条件に合うものはありません。
                 </div>
 
-                <ul  ng-if="isBugShow" class="release-note" ng-repeat="(i, item) in bugList">
-                    <li>
-                        <div class="pull-right">
+                <div ng-if="isBugShow" class="col-md-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                          <input type="text" class="form-control" placeholder="絞り込みます" ng-model="bugSearch" 
+                            refine-directive refine-item="bugList" keyword="bugSearch" name-propertie="title|contents" >
+                      </div>
+                      <ul class="list-group" >
+                        <li class="list-group-item" ng-repeat="(i, item) in bugList" >
                             <i class="fa fa-clock-o fa-fw"></i>{{item.create_date}}
-                        </div>
-                        <div ng-if="1==item.role_id" class="pull-left">
-                            <button class="btn btn-primary" ng-click="resolve(i)">解決</button>
-                        </div>
-                        <div>
-                            <p>{{item.title}}</p>
-                            <p>{{item.contents}}</p>
-                        </div>
-                    </li>
-                </ul>
+                            <div ng-if="1==item.role_id" class="pull-left">
+                                <button class="btn btn-primary" ng-click="resolve(i)">解決</button>
+                            </div>
+                            <div>
+                                <p>{{item.title}}</p>
+                                <p>{{item.contents}}</p>
+                            </div>
+                        </li>
+                      </ul>
+                    </div>     
+                </div>
             </div>
         </div>
     </div>
