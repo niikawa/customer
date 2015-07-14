@@ -162,7 +162,11 @@ angular
       })
       .when('/release', {
         templateUrl: 'views/note/releaseNotes.html',
-        controller: 'AccessCtrl',
+        reloadOnSearch: false, //ページ内リンクを可能にする
+        resolve: {isLogin: autoCheck}
+      })
+      .when('/release/bug', {
+        templateUrl: 'views/note/bugNotes.html',
         reloadOnSearch: false, //ページ内リンクを可能にする
         resolve: {isLogin: autoCheck}
       })
