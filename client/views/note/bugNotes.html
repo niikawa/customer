@@ -2,36 +2,19 @@
     <div class="page-title"><h2>障害報告ボード</h2></div>
     
     <div class="box">
-        <h4>現在の把握している障害と状況について</h4>
+        <h4>現在の把握している障害と状況について <a class="btn btn-default">障害・要望を送る</a></h4>
 
         <div class="row" >
             <div class="col-md-12">
                 
-                <ul class="release-note">
+                <ul class="release-note" ng-repeat="(i, item) in bugList">
                     <li>
                         <div>
-                            <i class="fa fa-clock-o fa-fw"></i>2015-07-14 12:00
+                            <i class="fa fa-clock-o fa-fw"></i>{{item.create_date}}
                         </div>
                         <div>
-                            <p>スケジュール型シナリオをリリースしました。</p>
-                            <p>また軽微なバグを修正しました。</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <i class="fa fa-clock-o fa-fw"></i>2015-07-13 17:00
-                        </div>
-                        <div>
-                            <p>ログイン画目のremenberを削除しました。</p>
-                            <p>これにともない、セッションタイムアウト時間を長くする予定です。</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <i class="fa fa-clock-o fa-fw"></i>2015-07-13 11:00
-                        </div>
-                        <div>
-                            <p>ベータ版リリースしました！</p>
+                            <p>{{item.title}}</p>
+                            <p>{{item.contents}}</p>
                         </div>
                     </li>
                 </ul>

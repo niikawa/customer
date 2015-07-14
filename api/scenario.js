@@ -345,7 +345,7 @@ function create(req, res)
                         console.log(err);
                         res.status(510).send('object not found');
                     }
-                            
+                    
                     var col = "MAX(scenario_id) as scenario_id";
                     var where = "delete_flag = 0 ";
                     var qObj = model.getQueryObject(col, tableName, where, '', '');
