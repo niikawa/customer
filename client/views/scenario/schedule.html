@@ -12,6 +12,7 @@
                 <input type="text" class="form-control" name="expiration_start_date" 
                     ng-model="specificInfo.expiration_start_date" placeholder="" ng-required="true"
                     my-validators="validators.expiration_start_date">
+                <section>実行日をYYYY-MM-DD形式で入力してください</section>
                 <div ng-messages="scenarioForm.expiration_start_date.$dirty && scenarioForm.expiration_start_date.$error">
                     <p class="item-error" ng-message="isDateValid">有効な日付ではありません。YYYY-MM-DD形式で入力してください</p>
                 </div>
@@ -67,9 +68,9 @@
             </div>
         </div>
 
-        <div ng-if="3==$parent.specificInfo.interval" class="col-md-12">
+        <div ng-if="3==$parent.specificInfo.interval">
             <div class="col-md-12">
-                <div ng-if="$parent.specificInfo.intervalCondition==1" class="btn-group">
+                <div class="btn-group">
                     <label ng-repeat="item in $parent.specificInfo.intervalConditionList track by $index" 
                         class="btn btn-default" ng-model="item.check" btn-checkbox=1 uncheckable>{{item.name}}</label>
                 </div>
