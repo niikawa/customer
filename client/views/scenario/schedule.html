@@ -6,7 +6,7 @@
         </div>
     </div>
     
-    <div ng-if="specificInfo.repeat_flag==0" >
+    <div ng-if="specificInfo.repeat_flag!=1" >
         <div class="col-md-12">
             <div class="btn-group">
                 <input type="text" class="form-control" name="expiration_start_date" 
@@ -65,7 +65,7 @@
         <div class="col-md-12">
             <div ng-if="$parent.specificInfo.intervalCondition==1" class="btn-group">
                 <label ng-repeat="item in $parent.specificInfo.intervalConditionList track by $index" 
-                    class="btn btn-default" ng-model="$parent.specificInfo.intervalConditionNumber" btn-checkbox=1 uncheckable>{{$index+1}}</label>
+                    class="btn btn-default" ng-model="$parent.specificInfo.intervalConditionNumber[]" btn-checkbox=1 uncheckable>{{item}}</label>
             </div>
         </div>
 

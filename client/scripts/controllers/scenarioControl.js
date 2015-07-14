@@ -280,7 +280,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         var doc;
         if (1 === pageProp.type)
         {
-            if (1 === $scope.scenario.repeat_flag)
+            if (1 == $scope.scenario.repeat_flag)
             {
                 console.log($scope.specificInfo.intervalConditionNumber);
                 return false;
