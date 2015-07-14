@@ -336,6 +336,7 @@ function create(req, res)
                 request.input('scenario_type', model.db.SmallInt, insertData.scenario_type);
                 request.input('status', model.db.SmallInt, insertData.status);
                 request.input('approach', model.db.SmallInt, insertData.approach);
+                request.input('priority', model.db.SmallInt, 999999);
 
                 model.insert(tableName, insertData, request, function(err, date)
                 {
