@@ -773,7 +773,7 @@ exports.initializeData = function(req, res)
  */
 exports.isSameName = function(req, res)
 {
-    var scenarioId = req.body.scenario_id;
+    var scenarioId = req.body.id;
     if (void 0 === scenarioId)
     {
         model.isSameItem('scenario_name', req.body.scenario_name, model.db.NVarChar, function(err, result)
