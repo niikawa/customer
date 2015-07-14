@@ -112,6 +112,9 @@ router.get('/role/:id', role.getById);
 var access = require("./api/access");
 router.post('/access', access.getDayAll);
 
+var bug = require("./api/bug");
+router.post('/bug/save', access.save);
+router.post('/bug', access.getByConditon);
 
 //
 // ## SimpleServer `SimpleServer(obj)`

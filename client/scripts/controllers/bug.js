@@ -37,7 +37,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
     
     $scope.apology = function()
     {
-        Utility.info('障害ですか。。すみません！');
+        Utility.info('障害ですか。。。<br>すみません！');
     };
     
     $scope.save = function()

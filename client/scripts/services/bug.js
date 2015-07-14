@@ -19,10 +19,15 @@ bugServices.factory("Bug", ['$resource','Utility',
 
         bugServices.resource = $resource('/bug/', {}, 
         {
-            save: 
+            getByConditon:
             {
                 method:"POST",
                 url: "/bug"
+            },
+            save: 
+            {
+                method:"POST",
+                url: "/bug/save"
             },
         });
 
