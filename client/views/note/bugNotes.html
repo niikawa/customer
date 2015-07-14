@@ -33,19 +33,21 @@
                       </div>
                       <ul class="list-group" >
                         <li class="list-group-item" ng-repeat="(i, item) in bugList" >
-                            <label class="label label-primary">{{item.type_name}}</label>
-                            <label class="label label-success">{{item.category_name}}</label>
-                            <label class="label label-primary">{{item.resolve_name}}</label>
-                            <div class="pull-right">
-                                <i class="fa fa-clock-o fa-fw"></i>{{item.create_date}}
+                            <div>
+                                <label class="label label-primary">{{item.type_name}}</label>
+                                <label class="label label-success">{{item.category_name}}</label>
+                                <label class="label label-primary">{{item.resolve_name}}</label>
+                                <div class="pull-right">
+                                    <i class="fa fa-clock-o fa-fw"></i>{{item.create_date}}
+                                </div>
+                                <div ng-if="1==item.role_id" class="pull-right">
+                                    <button class="btn btn-primary" ng-click="resolve(i)">解決</button>
+                                </div>
                             </div>
                             <div>
-                                <h5>{{item.title}}</h5>
-                                <hr>
+                                <p class="title">{{item.title}}</p>
+                                <hr class="line">
                                 <p>{{item.contents}}</p>
-                            </div>
-                            <div ng-if="1==item.role_id" class="pull-right">
-                                <button class="btn btn-primary" ng-click="resolve(i)">解決</button>
                             </div>
                         </li>
                       </ul>
