@@ -11,19 +11,27 @@
                 <div class="form-group">
                     <div class="btn-group">
                         <label class="btn btn-default" name="approach" ng-model="modalParam.type" ng-required="true" btn-radio=1 uncheckable>要望</label>
-                        <label class="btn btn-default" name="approach" ng-model="modalParam.type" ng-required="true" btn-radio=0 uncheckable>障害報告</label>
+                        <label class="btn btn-default" name="approach" ng-model="modalParam.type" ng-required="true" btn-radio=0  ng-click="apology()" uncheckable>障害報告</label>
                     </div>
                 </div>
         
                 <div class="form-group">
-                    <input type="text" placeholder="タイトルを入力してください" ng-model="modalParam.title"/>
+                    <select ng-model="modalParam.category" ng-options="item as item.name for item in categoryList" ng-required="true">
+                    </select>
                 </div>
+
                 <div class="form-group">
                     <input type="text" placeholder="タイトルを入力してください" ng-model="modalParam.title"/>
                 </div>
+
+                <div class="form-group">
+                    <input type="text" placeholder="タイトルを入力してください" ng-model="modalParam.title"/>
+                </div>
+
                 <div class="form-group">
                     <textarea placeholder="コメントを入力してください" ng-model="modalParam.contents"/>
                 </div>
+
             </div>
         </div>
     </div>

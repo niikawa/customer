@@ -26,9 +26,17 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
     {
       $scope.modalParam = 
       {
-          header: 'タスクを追加します', 
+          type: '',
+          title: '',
+          contents: '',
+          category: '',
       };
       $scope.modalInstance = Modal.open($scope, "partials/modal/send.html");
+    };
+    
+    $scope.apology = function()
+    {
+        Utility.info('障害ですか。。すみません！');
     };
     
     $scope.save = function()

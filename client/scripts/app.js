@@ -31,6 +31,7 @@ angular
     'userCtrl',
     'userControlCtrl',
     'accessCtrl',
+    'bugCtrl',
     'mapCtrl',
   ])
   .config(function ($routeProvider) {
@@ -167,6 +168,7 @@ angular
       })
       .when('/release/bug', {
         templateUrl: 'views/note/bugNotes.html',
+        controller: 'BugCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
         resolve: {isLogin: autoCheck}
       })
