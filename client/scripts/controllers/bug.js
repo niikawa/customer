@@ -71,7 +71,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
         Bug.resource.save(params).$promise.then(function(response)
         {
             Utility.info('ありがとございました。');
-            Modal.close();
+            $scope.modalInstance.$dismiss();
         });
     };
     
