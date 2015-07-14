@@ -81,3 +81,27 @@ exports.save = function(req, res)
         res.status(200).send('inset ok');
     });
 };
+
+exports.resolve = function(req, res)
+{
+    if (!req.params.hasOwnProperty('resolve')) res.status(510).send('parameter not found');
+    
+    var commonColumns = model.getUpdCommonColumns();
+    var updateData = model.merge(req.body.params, commonColumns);
+    var request = model.getRequest();
+    request.input('update_by', model.db.Int, req.session.userId);
+    request.input('update_date', model.db.NVarChar, updateData.update_date);
+    request.input('resolve', model.db.SmallInt, updateData.resolve);
+
+    model.updateById(updateData, request, function(err, date)
+    {
+        if (err.length > 0)
+        {
+            model.insertLog(req.session.userId, 5, Message.COMMON.E_002, updateData.segment_name);
+            console.log(err);
+            res.status(510).send('object not found');
+        }
+        model.insertLog(req.session.userId, 5, Message.COMMON.I_002, updateData.segment_name);
+        res.status(200).send('update ok');
+    });
+};
