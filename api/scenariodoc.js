@@ -76,10 +76,17 @@ exports.saveItem = function(req, res)
 
 exports.getItemByIdForWeb = function(id, callback)
 {
-    Scenario.getItem(id, function(err, doc)
+    if (null === id)
     {
-        callback(err, doc);
-    });
+        callback(null, null);
+    }
+    else
+    {
+        Scenario.getItem(id, function(err, doc)
+        {
+            callback(err, doc);
+        });
+    }
 };
 
 exports.saveItemForWeb = function(isCrate ,parameters, callback)
