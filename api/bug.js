@@ -1,7 +1,7 @@
 var Core = require('./core');
 
 /** テーブル名 */
-var tableName = 'M_DEMAND_BUG';
+var tableName = 'T_DEMAND_BUG';
 var pk = 'id';
 
 var bug = function bug()
@@ -19,7 +19,9 @@ exports.getByConditon = function(req, res)
 {
     var request = model.getRequest();
     
-    var col = "id, FORMAT(create_by, yyyy-MM-dd hh:mm:ss) as create_by, status, type, category, title, contents";
+    var col = "T1.id, FORMAT(T1.create_by, 'yyyy-MM-dd hh:mm:ss') as create_by, T1.status, T1.type, T1.category, T1.title, T1.contents";
+    col += " T2.name, T2.role_id";
+    var tableName = "T_DEMAND_BUG T1 INNER JOIN M_USER T2 ON T1.create_by = T2.user_id";
     var where = '';
     if (req.body.hasOwnProperty('status')) 
     {
@@ -33,7 +35,7 @@ exports.getByConditon = function(req, res)
         request.input('type', model.db.Int, req.body.type);
     }
 
-    where = " T1.delete_flag = 0";
+    where = " delete_flag = 0";
 
     var order = "id DESC";
     var qObj = model.getQueryObject(col, tableName, where, '', order);
