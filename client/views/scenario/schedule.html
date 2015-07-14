@@ -57,11 +57,14 @@
 
         <div ng-if="3==$parent.specificInfo.interval">
             <div class="col-md-12">
-                <div class="btn-toolbar" role="toolbar" name="daysCondition" 
-                    ng-model="$parent.specificInfo.daysCondition" my-validators="validators.daysCondition">
-                    
-                    <div class="btn-group" role="group"  ng-repeat="item in $parent.specificInfo.daysCondition track by $index" 
-                        class="btn btn-default" ng-model="item.check">{{item.name}}</div>
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group" role="group" name="daysCondition" 
+                        ng-model="$parent.specificInfo.daysCondition" my-validators="validators.daysCondition">
+                        <button class="btn btn-default" ng-repeat="item in $parent.specificInfo.daysCondition track by $index" 
+                            push-directive list="$parent.specificInfo.daysCondition" info="item" active="item.check" activekey="check">
+                            {{item.name}}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
