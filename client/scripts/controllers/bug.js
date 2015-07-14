@@ -41,23 +41,34 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
         Utility.info('障害ですか。。。<br>すみません！');
     };
     
-    $scope.getByConditon = function()
+    $scope.getByCondition = function()
     {
         console.log($scope.bug);
     };
 
     $scope.resolve = function(index)
     {
-        console.log(index);
+        var name = $scope.bugList[index].title;
+        Bug.resource.resolve({id: $scope.bugList[index].id}).$promise.then(function(response)
+        {
+            Utility.info(name + '<br>を解決しました。');
+        });
     };
 
     $scope.save = function()
     {
         console.log($scope.modalParam);
         
-        Bug.resource.save($scope.modalParam).$promise.then(function(response)
+        var params = 
         {
-            $scope.bugList = response.data;
+            type: $scope.modalParam.type,
+            title: $scope.modalParam.title,
+            contents: $scope.modalParam.contents,
+            category: $scope.modalParam.category.type,
+        };
+        Bug.resource.save(params).$promise.then(function(response)
+        {
+            Utility.info('ありがとございました。');
         });
     };
     

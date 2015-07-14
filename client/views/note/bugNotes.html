@@ -4,7 +4,7 @@
     <div class="box">
         <h4>状況を報告します <a class="btn btn-default" ng-click="show()">バグ・要望を送る</a></h4>
 
-        <div class="row" >
+        <div class="row v" >
             <div class="col-md-12">
                 
                 <div class="btn-group" ng-click="getByCondition()">
@@ -22,7 +22,7 @@
             <div class="col-md-12">
                 
                 <div ng-if="!isBugShow" class="alert alert-info" role="alert">
-                    作成しているシナリオはありません。
+                    条件に合うものはありません。
                 </div>
 
                 <ul  ng-if="isBugShow" class="release-note" ng-repeat="(i, item) in bugList">

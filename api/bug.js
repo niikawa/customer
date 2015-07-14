@@ -1,4 +1,5 @@
 var Core = require('./core');
+var Message = require('../config/message.json');
 
 /** テーブル名 */
 var tableName = 'T_DEMAND_BUG';
@@ -54,5 +55,29 @@ exports.getByConditon = function(req, res)
 
 exports.save = function(req, res)
 {
-    
-}
+    var commonColumns = model.getInsCommonColumns();
+    var insertData = model.merge(req.body.scenario, commonColumns);
+    var request = model.getRequest();
+    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+    request.input('create_by', model.db.Int, req.session.userId);
+    request.input('create_date', model.db.NVarChar, insertData.create_date);
+    request.input('update_by', model.db.Int, req.session.userId);
+    request.input('update_date', model.db.NVarChar, insertData.update_date);
+
+    request.input('resolve', model.db.SmallInt, 0);
+    request.input('type', model.db.SmallInt, insertData.type);
+    request.input('category', model.db.SmallInt, insertData.category);
+    request.input('title', model.db.NVarChar, insertData.title);
+    request.input('contents', model.db.NVarChar, insertData.contents);
+
+    model.insert(tableName, insertData, request, function(err, date)
+    {
+        if (err.length > 0)
+        {
+            console.log(err);
+            res.status(510).send('object not found');
+        }
+        model.insertLog(req.session.userId, 99, Message.COMMON.I_001, insertData.title);
+        res.status(200).send('inset ok');
+    });
+};
