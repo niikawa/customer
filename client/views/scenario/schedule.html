@@ -6,7 +6,7 @@
         </div>
     </div>
     
-    <div ng-if="specificInfo.repeat_flag!=''" class="col-md-3">
+    <div ng-if="null!=specificInfo.repeat_flag" class="col-md-3">
         <div class="btn-group">
             <input type="text" class="form-control" name="expiration_start_date" 
                 ng-model="specificInfo.expiration_start_date" placeholder="" ng-required="true"
