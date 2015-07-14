@@ -28,7 +28,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         {
             $scope.specificInfo = 
             {
-                repeat_flag: 0,
+                repeat_flag: '',
                 expiration_start_date: Utility.today('YYYY-MM-DD'),
                 expiration_end_date: '',
                 interval: '', 
@@ -80,7 +80,6 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 isDateValid: function(modelValue, viewValue)
                 {
                     var val = modelValue || viewValue;
-                    console.log(val);
                     return Utility.isDateValid(val);
                 }
             },
