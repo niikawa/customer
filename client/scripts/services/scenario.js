@@ -14,7 +14,7 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
             var num = 31;
             for (var index = 1; index <= num ; index++)
             {
-                data.push({name: 1, check:false});
+                data.push({name: index, check:false});
             }
             data.push({name: '最終日', check:false});
             return data;

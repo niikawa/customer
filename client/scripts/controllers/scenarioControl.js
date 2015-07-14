@@ -33,7 +33,8 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 expiration_end_date: '',
                 interval: '', 
                 intervalCondition: '', 
-                intervalConditionList: Scenario.intervalConditionList()
+                intervalConditionList: Scenario.intervalConditionList(),
+                weekCondition: {}
             };
         }
         else if (2 === pageProp.type)
@@ -280,9 +281,10 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         var doc;
         if (1 === pageProp.type)
         {
-            if (1 == $scope.scenario.repeat_flag)
+            if (1 == $scope.specificInfo.repeat_flag)
             {
-                console.log($scope.specificInfo.intervalConditionNumber);
+                console.log($scope.specificInfo.intervalConditionList);
+                console.log($scope.specificInfo.weekCondition);
                 return false;
             }
         }
