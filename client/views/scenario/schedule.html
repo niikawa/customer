@@ -36,7 +36,7 @@
         </div>
         
         <div class="col-md-12">
-            <div class="btn-group" name="interval" my-validators="validators.interval">
+            <div class="btn-group" name="interval" ng-model="$parent.specificInfo" my-validators="validators.interval">
                 <label class="btn btn-default" ng-model="$parent.specificInfo.interval" btn-radio=1 uncheckable>毎日</label>
                 <label class="btn btn-default" ng-model="$parent.specificInfo.interval" btn-radio=2 uncheckable>毎週</label>
                 <label class="btn btn-default" ng-model="$parent.specificInfo.interval" btn-radio=3 uncheckable>毎月</label>
@@ -44,7 +44,7 @@
         </div>
     
         <div ng-if="2==$parent.specificInfo.interval" class="col-md-12">
-            <div class="btn-group" name="weekCondition" my-validators="validators.weekCondition">
+            <div class="btn-group" name="weekCondition" ng-model="$parent.specificInfo.weekCondition" my-validators="validators.weekCondition">
                 <label class="btn btn-default" ng-model="$parent.specificInfo.weekCondition.mon" btn-checkbox=1 uncheckable>月</label>
                 <label class="btn btn-default" ng-model="$parent.specificInfo.weekCondition.tue" btn-checkbox=2 uncheckable>火</label>
                 <label class="btn btn-default" ng-model="$parent.specificInfo.weekCondition.wed" btn-checkbox=3 uncheckable>水</label>
@@ -57,7 +57,7 @@
 
         <div ng-if="3==$parent.specificInfo.interval">
             <div class="col-md-12">
-                <div class="btn-group" name="daysCondition" my-validators="validators.daysCondition">
+                <div class="btn-group" name="daysCondition" ng-model="$parent.specificInfo.daysCondition" my-validators="validators.daysCondition">
                     <label ng-repeat="item in $parent.specificInfo.daysCondition track by $index" 
                         class="btn btn-default" ng-model="item.check" btn-checkbox=1 uncheckable>{{item.name}}</label>
                 </div>
