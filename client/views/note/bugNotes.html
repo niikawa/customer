@@ -34,6 +34,7 @@
                       <ul class="list-group" >
                         <li class="list-group-item" ng-repeat="(i, item) in bugList" >
                             <i class="fa fa-clock-o fa-fw"></i>{{item.create_date}}
+                            <p>{{item.category_name}}</p>
                             <div ng-if="1==item.role_id" class="pull-left">
                                 <button class="btn btn-primary" ng-click="resolve(i)">解決</button>
                             </div>

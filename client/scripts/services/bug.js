@@ -35,6 +35,41 @@ bugServices.factory("Bug", ['$resource','Utility',
                 url: "/bug/save"
             },
         });
+        
+        bugServices.addViewInfo = function(list)
+        {
+            angular.forEach(list, function(item)
+            {
+                switch (item.category) {
+                    case 1:
+                        item.category_name = 'ダッシュボード';
+                        break;
+                    case 2:
+                        item.category_name = 'トリガーシナリオ管理';
+                        break;
+                    case 3:
+                        item.category_name = 'スケジュールシナリオ管理';
+                        break;
+                    case 4:
+                        item.category_name = 'セグメント管理';
+                        break;
+                    case 5:
+                        item.category_name = 'クエリー管理';
+                        break;
+                    case 6:
+                        item.category_name = 'アプローチ管理';
+                        break;
+                    case 7:
+                        item.category_name = 'ユーザー管理';
+                        break;
+                    case 8:
+                        item.category_name = '操作履歴';
+                        break;
+                    default:
+                        item.category_name = 'その他';
+                }
+            });
+        }
 
         return bugServices;
     }

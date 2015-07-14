@@ -17,7 +17,11 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
         Bug.resource.getByConditon($scope.bug).$promise.then(function(response)
         {
             $scope.isBugShow = response.data.length > 0;
-            $scope.bugList = response.data;
+            if ($scope.isBugShow)
+            {
+                Bug.addViewInfo(response.data);
+                $scope.bugList = response.data;
+            }
         });
     }
     
