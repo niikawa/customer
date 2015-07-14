@@ -34,7 +34,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 interval: '', 
                 intervalCondition: '', 
                 intervalConditionList: Scenario.intervalConditionList(),
-                weekCondition: {}
+                weekCondition: {mon: false, tue: false, wed: false, thu: false, fri: false, sat: false, sun: false}
             };
         }
         else if (2 === pageProp.type)

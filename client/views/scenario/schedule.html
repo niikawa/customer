@@ -55,22 +55,8 @@
             </div>
         </div>
     
-        <div class="col-md-12">
+        <div ng-if="2==$parent.specificInfo.interval" class="col-md-12">
             <div class="btn-group">
-                <label class="btn btn-default" ng-model="$parent.specificInfo.intervalCondition" btn-radio=1 uncheckable>日付指定</label>
-                <label class="btn btn-default" ng-model="$parent.specificInfo.intervalCondition" btn-radio=2 uncheckable>曜日指定</label>
-            </div>
-        </div>
-        
-        <div class="col-md-12">
-            <div ng-if="$parent.specificInfo.intervalCondition==1" class="btn-group">
-                <label ng-repeat="item in $parent.specificInfo.intervalConditionList track by $index" 
-                    class="btn btn-default" ng-model="item.check" btn-checkbox=1 uncheckable>{{item.name}}</label>
-            </div>
-        </div>
-
-        <div class="col-md-12">
-            <div ng-if="$parent.specificInfo.intervalCondition==2" class="btn-group">
                 <label class="btn btn-default" ng-model="$parent.specificInfo.weekCondition.mon" btn-checkbox=1 uncheckable>月</label>
                 <label class="btn btn-default" ng-model="$parent.specificInfo.weekCondition.tue" btn-checkbox=2 uncheckable>火</label>
                 <label class="btn btn-default" ng-model="$parent.specificInfo.weekCondition.wed" btn-checkbox=3 uncheckable>水</label>
@@ -78,6 +64,15 @@
                 <label class="btn btn-default" ng-model="$parent.specificInfo.weekCondition.fri" btn-checkbox=5 uncheckable>金</label>
                 <label class="btn btn-default" ng-model="$parent.specificInfo.weekCondition.sat" btn-checkbox=6 uncheckable>土</label>
                 <label class="btn btn-default" ng-model="$parent.specificInfo.weekCondition.sun" btn-checkbox=7 uncheckable>日</label>
+            </div>
+        </div>
+
+        <div ng-if="3==$parent.specificInfo.interval" class="col-md-12">
+            <div class="col-md-12">
+                <div ng-if="$parent.specificInfo.intervalCondition==1" class="btn-group">
+                    <label ng-repeat="item in $parent.specificInfo.intervalConditionList track by $index" 
+                        class="btn btn-default" ng-model="item.check" btn-checkbox=1 uncheckable>{{item.name}}</label>
+                </div>
             </div>
         </div>
     </div>
