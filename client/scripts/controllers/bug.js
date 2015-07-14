@@ -1,4 +1,4 @@
-var bugCtrl = angular.module('bugCtrl',['BugServices', 'modalService']);
+var bugCtrl = angular.module('bugCtrl',['BugServices']);
 bugCtrl.controller('BugCtrl',['$scope', '$sce', 'Shared', 'Bug', 'Modal','Utility',
 function ($scope, $sce, Shared, Bug, Modal, Utility)
 {
