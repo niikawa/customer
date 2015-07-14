@@ -9,7 +9,12 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
     
     function getInitializeData()
     {
-        Bug.resource.getByConditon().$promise.then(function(response)
+        getInfo();
+    }
+    
+    function getInfo()
+    {
+        Bug.resource.getByConditon($scope.bug).$promise.then(function(response)
         {
             $scope.isBugShow = response.data.length > 0;
             $scope.bugList = response.data;
@@ -43,11 +48,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
     
     $scope.getByCondition = function()
     {
-        Bug.resource.getByConditon($scope.bug).$promise.then(function(response)
-        {
-            $scope.isBugShow = response.data.length > 0;
-            $scope.bugList = response.data;
-        });
+        getInfo();
     };
 
     $scope.resolve = function(index)
@@ -71,7 +72,8 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
         Bug.resource.save(params).$promise.then(function(response)
         {
             Utility.info('ありがとございました。');
-            $scope.modalInstance.$dismiss();
+            $scope.modalInstance.close();
+            getInfo();
         });
     };
     
