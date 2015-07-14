@@ -12,7 +12,7 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
         {
             var data = [];
             var num = 31;
-            for (var index = 1; num <= index ; index++)
+            for (var index = 1; index <= num ; index++)
             {
                 data.push({name: 1, check:false});
             }
