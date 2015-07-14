@@ -31,9 +31,9 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 repeat_flag: null,
                 expiration_start_date: Utility.today('YYYY-MM-DD'),
                 expiration_end_date: '',
-                interval: '', 
+                interval: 0, 
                 intervalCondition: '', 
-                intervalConditionList: Scenario.intervalConditionList(),
+                daysCondition: Scenario.daysCondition(),
                 weekCondition: {mon: false, tue: false, wed: false, thu: false, fri: false, sat: false, sun: false}
             };
         }
@@ -94,6 +94,40 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 {
                     var val = modelValue || viewValue;
                     return Utility.isAfter(val, $scope.scenario.expiration_start_date);
+                }
+            },
+            interval:
+            {
+                isSelect: function (modelValue, viewValue)
+                {
+                    var val = modelValue || viewValue;
+                    return 0 !== val;
+                }
+            },
+            weekCondition:
+            {
+                isSelect: function (modelValue, viewValue)
+                {
+                    var weekCondition = $scope.specificInfo.weekCondition || {};
+                    var isSelect = false;
+                    angular.forEach(weekCondition, function(item, key)
+                    {
+                        if (item) isSelect = true;
+                    });
+                    return isSelect;
+                }
+            },
+            daysCondition:
+            {
+                isSelect: function (modelValue, viewValue)
+                {
+                    var daysCondition = $scope.specificInfo.daysCondition || {};
+                    var isSelect = false;
+                    angular.forEach(daysCondition, function(item, key)
+                    {
+                        if (item.check) isSelect = true;
+                    });
+                    return isSelect;
                 }
             },
         };
@@ -201,6 +235,18 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 {
                     $scope.scenarioForm.expiration_end_date.$validate();
                 });
+                $scope.$watch('specificInfo.specificInfo.interval', function()
+                {
+                    $scope.scenarioForm.interval.$validate();
+                });
+                $scope.$watch('specificInfo.specificInfo.weekCondition', function()
+                {
+                    $scope.scenarioForm.weekCondition.$validate();
+                });
+                $scope.$watch('specificInfo.specificInfo.daysCondition', function()
+                {
+                    $scope.scenarioForm.daysCondition.$validate();
+                }, false);
             }
         }
         
@@ -285,7 +331,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 doc =
                 {
                     interval: $scope.specificInfo.interval,
-                    intervalConditionList: $scope.specificInfo.intervalConditionList,
+                    daysCondition: $scope.specificInfo.daysCondition,
                     weekCondition: $scope.specificInfo.weekCondition
                 };
             }

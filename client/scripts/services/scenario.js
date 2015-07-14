@@ -8,7 +8,7 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
                 schedule: {type: 1, mode: 0, title: 'スケジュール型', addTitle: '', template: 'views/scenario/schedule.html'}, 
                 trigger: {type: 2, mode: 0, title: 'トリガー型', addTitle: '', template: 'views/scenario/trigger.html'}
         };
-        scenarioServices.intervalConditionList = function()
+        scenarioServices.daysCondition = function()
         {
             var data = [];
             var num = 31;
