@@ -245,14 +245,6 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 {
                     $scope.scenarioForm.interval.$validate();
                 });
-                $scope.$watch('specificInfo.weekCondition', function()
-                {
-                    $scope.scenarioForm.weekCondition.$validate();
-                }, true);
-                $scope.$watch('specificInfo.daysCondition', function()
-                {
-                    $scope.scenarioForm.daysCondition.$validate();
-                }, true);
             }
         }
         
@@ -260,6 +252,11 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     function setEventListeners()
     {
     }
+    
+    $scope.weekConditionValidation = function()
+    {
+        $scope.scenarioForm.weekCondition.$validate();
+    };
     
     /**
      * 初期処理

@@ -44,14 +44,14 @@
         </div>
     
         <div ng-if="2==$parent.specificInfo.interval" class="col-md-12">
-            <div class="btn-group" name="weekCondition" ng-model="$parent.specificInfo.weekCondition" my-validators="validators.weekCondition">
-                <label class="btn btn-default" ng-model="$parent.specificInfo.weekCondition.mon" btn-checkbox=1 uncheckable>月</label>
-                <label class="btn btn-default" ng-model="$parent.specificInfo.weekCondition.tue" btn-checkbox=2 uncheckable>火</label>
-                <label class="btn btn-default" ng-model="$parent.specificInfo.weekCondition.wed" btn-checkbox=3 uncheckable>水</label>
-                <label class="btn btn-default" ng-model="$parent.specificInfo.weekCondition.thu" btn-checkbox=4 uncheckable>木</label>
-                <label class="btn btn-default" ng-model="$parent.specificInfo.weekCondition.fri" btn-checkbox=5 uncheckable>金</label>
-                <label class="btn btn-default" ng-model="$parent.specificInfo.weekCondition.sat" btn-checkbox=6 uncheckable>土</label>
-                <label class="btn btn-default" ng-model="$parent.specificInfo.weekCondition.sun" btn-checkbox=7 uncheckable>日</label>
+            <div class="btn-group" name="weekCondition" ng-click="weekConditionValidation()" >
+                <label class="btn btn-default" ng-model="specificInfo.weekCondition.mon" btn-checkbox=1 uncheckable>月</label>
+                <label class="btn btn-default" ng-model="specificInfo.weekCondition.tue" btn-checkbox=2 uncheckable>火</label>
+                <label class="btn btn-default" ng-model="specificInfo.weekCondition.wed" btn-checkbox=3 uncheckable>水</label>
+                <label class="btn btn-default" ng-model="specificInfo.weekCondition.thu" btn-checkbox=4 uncheckable>木</label>
+                <label class="btn btn-default" ng-model="specificInfo.weekCondition.fri" btn-checkbox=5 uncheckable>金</label>
+                <label class="btn btn-default" ng-model="specificInfo.weekCondition.sat" btn-checkbox=6 uncheckable>土</label>
+                <label class="btn btn-default" ng-model="specificInfo.weekCondition.sun" btn-checkbox=7 uncheckable>日</label>
             </div>
         </div>
 
