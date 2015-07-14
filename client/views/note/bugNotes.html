@@ -42,15 +42,13 @@
                                     {{item.name}}
                                 </div>
                             </div>
-                            <div class="cell">
+                            <div>
                                 <p class="title">{{item.title}}</p>
                                 <hr class="line">
                                 <p>{{item.contents}}</p>
-                            </div>
-                            <div class="cell">
-                            </div>
-                            <div ng-if="1==item.role_id" class="pull-right cell">
-                                <button class="btn btn-primary" ng-click="resolve(i)">解決</button>
+                                <div ng-if="1==item.role_id" class="pull-right">
+                                    <button class="btn btn-primary" ng-click="resolve(i)">解決</button>
+                                </div>
                             </div>
                         </li>
                       </ul>
