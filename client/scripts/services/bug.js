@@ -40,7 +40,8 @@ bugServices.factory("Bug", ['$resource','Utility',
         {
             angular.forEach(list, function(item)
             {
-                switch (item.category) {
+                switch (item.category)
+                {
                     case 1:
                         item.category_name = 'ダッシュボード';
                         break;
@@ -68,6 +69,8 @@ bugServices.factory("Bug", ['$resource','Utility',
                     default:
                         item.category_name = 'その他';
                 }
+                item.type_name = (1 === item.type) ? '要望' : 'バグ';
+                item.resolve_name = (1 === item.resolve) ? '解決' : '未解決';
             });
         }
 

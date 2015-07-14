@@ -33,7 +33,9 @@
                       </div>
                       <ul class="list-group" >
                         <li class="list-group-item" ng-repeat="(i, item) in bugList" >
+                            <label class="label label-primary">{{item.type_name}}</label>
                             <label class="label label-success">{{item.category_name}}</label>
+                            <label class="label label-primary">{{item.resolve_name}}</label>
                             <div>
                                 <p>{{item.title}}</p>
                                 <hr>
