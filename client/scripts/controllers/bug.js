@@ -30,6 +30,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
           title: '',
           contents: '',
           category: '',
+          categoryList: Bug.categoryList,
       };
       $scope.modalInstance = Modal.open($scope, "partials/modal/send.html");
     };
