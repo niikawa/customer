@@ -19,7 +19,7 @@ exports.getByConditon = function(req, res)
 {
     var request = model.getRequest();
     
-    var col = "id, create_by, status, type, category, title, contents";
+    var col = "id, FORMAT(create_by, yyyy-MM-dd hh:mm:ss) as create_by, status, type, category, title, contents";
     var where = '';
     if (req.body.hasOwnProperty('status')) 
     {

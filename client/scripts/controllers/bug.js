@@ -40,6 +40,16 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
         Utility.info('障害ですか。。。<br>すみません！');
     };
     
+    $scope.getByConditon = function()
+    {
+        
+    };
+
+    $scope.resolve = function()
+    {
+        
+    };
+
     $scope.save = function()
     {
         Bug.resource.save($scope.bug).$promise.then(function(response)
