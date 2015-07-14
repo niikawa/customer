@@ -101,6 +101,8 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 isSelect: function (modelValue, viewValue)
                 {
                     var val = modelValue || viewValue;
+                    console.log('interval');
+                    console.log(val);
                     return 0 !== val;
                 }
             },
@@ -114,6 +116,8 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                     {
                         if (item) isSelect = true;
                     });
+                    console.log('weekCondition');
+                    console.log(isSelect);
                     return isSelect;
                 }
             },
@@ -127,6 +131,8 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                     {
                         if (item.check) isSelect = true;
                     });
+                    console.log('daysCondition');
+                    console.log(isSelect);
                     return isSelect;
                 }
             },
