@@ -31,7 +31,10 @@
                         <tbody>
                             <tr ng-repeat="(i, item) in queryList">
                                 <td data-th="名称"><a ng-href='/#/scenario/{{type}}/control/{{item.scenario_id}}'>{{item.query_name}}</a></td>
-                                <td ng-if="item.isUse" data-th="利用状況">利用されています。</td>
+                                <td ng-if="item.isUse" data-th="利用状況">
+                                    {{item.useNum}}件のセグメントで利用されています。
+                                    <button class="btn btn-default">詳細を見る</button>
+                                </td>
                                 <td ng-if="!item.isUse" data-th="利用状況">利用されていません。</td>
                                 <td data-th="更新日">{{item.update_date}}</td>
                                 <td><button class="close-button" ng-click="remove(i)"><i class="fa fa-times"></i></button></td>

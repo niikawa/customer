@@ -44,6 +44,7 @@ exports.getAll = function(req, res)
             segmentdoc.useSegmentByQueryIdForWeb(item.id, function(err, num)
             {
                 item.isUse = (0 < num);
+                item.useNum = num;
                 callback(err);
             });
         },
