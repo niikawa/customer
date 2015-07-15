@@ -67,19 +67,17 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     
     function setEdtInitializeScope(data)
     {
-        console.log(setEdtInitializeScope);
         angular.forEach(data.tables, function(columnList, tableName)
         {
             angular.forEach(columnList, function(columnInfo)
             {
-                console.log(columnInfo);
                 angular.forEach($scope.tableList[tableName].column, function(columnData)
                 {
                     if (columnInfo.column === columnData.physicalname)
                     {
                         $scope.selectColumns.push({
                             table: {logicalname: $scope.tableList[tableName].logicalname, physicalname:  $scope.tableList[tableName].physicalname}, 
-                            column: columnInfo,
+                            column: columnData.logicalname,
                             selectedCondition: {name: '', value: columnInfo.conditionType, symbol: ''},
                             condition: columnInfo.values
                         });
@@ -92,7 +90,6 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         $scope.showSelectedColumnsBox = $scope.selectColumns.length > 0;
 
         Shared.set('queryColumns', $scope.selectColumns);
-        
     }
     
     $scope.initialize = function()
@@ -104,8 +101,12 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         {
             Query.resource.getControlInit({id: $routeParams.id}).$promise.then(function(response)
             {
+                Shared.destloyByName('updateQueryDocumentId');
                 $scope.tableList = response.table;
-                setEdtInitializeScope(response.data);
+                if (0 === $scope.selectColumns.length)
+                {
+                    setEdtInitializeScope(response.data);
+                }
                 Shared.set('updateQueryDocumentId', $routeParams.id);
             });
         }
@@ -259,7 +260,14 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     {
         var queryColumns = Shared.get('queryColumns');
         var tables = Query.getTables(queryColumns);
-        var parameters =  {query_name: $scope.query.query_name, conditionList: $scope.showConditions, tables: tables};
+
+        var parameters = 
+        {
+            segment_document_id: Shared.get('updateQueryDocumentId'),
+            query_name: $scope.query.query_name, 
+            conditionList: $scope.showConditions, 
+            tables: tables
+        };
         Query.resource.create(parameters).$promise.then(function(response, err)
         {
             Shared.destloyByName('queryColumns');
