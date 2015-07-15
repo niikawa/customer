@@ -41,9 +41,9 @@ exports.getAllItem = function(req, res, callback)
         }
         else
         {
-            core.insertLog(req.session.userId, 8, Message.COMMON.I_004, functionName);
             if (void 0 === callback)
             {
+                core.insertLog(req.session.userId, 8, Message.COMMON.I_004, functionName);
                 res.json({data: doc});
             }
             else
