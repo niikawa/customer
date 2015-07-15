@@ -41,7 +41,8 @@ function ($scope, Shared, Query, Modal, Location, Utility)
             title: $scope.queryList[index].query_name+"を利用しているセグメント",
             list: $scope.queryList[index].useSegment,
             hrefBase: '#/segment/control',
-            dynamicParamKey: 'id'
+            dynamicParamKey: 'id',
+            close: closeModal
         };
         $scope.modalInstance = Modal.open($scope, "partials/modal/list.html");
     };

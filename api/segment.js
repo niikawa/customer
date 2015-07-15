@@ -24,24 +24,65 @@ var model = new segment();
 exports.getById = function(req, res)
 {
     if (void 0 === req.params.id) return res.status(510).send('Invalid parameter');
-    model.getById(req.params.id, function(err, data)
-    {
-        if (err.length > 0)
+
+    var segmentdoc = require("./segmentdoc");
+    model.async.waterfall
+    ([
+        function(callback)
         {
-            return res.status(510).send('data not found');
+            if (isFinite(parseInt(req.params.id, 10)))
+            {
+                model.getById(req.params.id, function(err, data)
+                {
+                    if (err.length > 0)
+                    {
+                        res.status(510).send('該当するセグメント情報はありません');
+                        return;
+                    }
+                    callback(null, data[0]);
+                });
+            }
+            else
+            {
+                var col = "*";
+                var where = "delete_flag = 0 AND segment_document_id = @segment_document_id";
+                var qObj = model.getQueryObject(col, tableName, where, '', '');
+                qObj.request.input('segment_document_id', model.db.NVarChar, req.params.id);
+                model.select(qObj, qObj.request, function(err, data)
+                {
+                    if (err.length > 0)
+                    {
+                        console.log(err);
+                        res.status(510).send('object not found');
+                        return;
+                    }
+                    callback(null, data[0]);
+                });
+            }
         }
-        var segmentdoc = require("./segmentdoc");
+    ],
+    function(err, data)
+    {
         segmentdoc.getItemByIdForWeb(data[0].segment_document_id, function(err, doc)
         {
             if (err) res.status(510).send('document is not found');
             
             res.json({
-                segment_name: data[0].segment_name, 
-                segment_document_id: data[0].segment_document_id,
+                segment_name: data.segment_name, 
+                segment_document_id: data.segment_document_id,
                 whereList: doc.whereList,
                 qIds: doc.qIds
             });
         });
+    });
+
+    
+    model.getById(req.params.id, function(err, data)
+    {
+        if (err.length > 0)
+        {
+            return res.status(510).send('該当するセグメント情報はありません');
+        }
     });
 };
 
