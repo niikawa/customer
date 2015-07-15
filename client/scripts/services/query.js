@@ -87,8 +87,9 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
             {
                 if (void 0 === tables[v.table.physicalname])
                 {
-                    tables[v.table.physicalname] = v.table.logicalname;
+                    tables[v.table.physicalname] = [];
                 }
+                tables[v.table.physicalname].push(v.column.physicalname);
             });
             return tables;
         };

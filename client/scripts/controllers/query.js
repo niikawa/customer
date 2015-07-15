@@ -76,6 +76,9 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
             Query.resource.getControlInit({id: $routeParams.id}).$promise.then(function(response)
             {
                 $scope.tableList = response.table;
+                console.log(response.data);
+                //$scope.selectColumns = 
+
             });
         }
         else
