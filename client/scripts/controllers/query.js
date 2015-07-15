@@ -38,7 +38,7 @@ function ($scope, Shared, Query, Modal, Location, Utility)
         
         $scope.modalParam = 
         {
-            title: $scope.queryList[index].name+"を利用しているセグメント",
+            title: $scope.queryList[index].query_name+"を利用しているセグメント",
             list: $scope.queryList[index].useSegment,
             hrefBase: '#/segment/control',
             dynamicParamKey: 'id'
