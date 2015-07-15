@@ -25,6 +25,7 @@ var model = new query();
 
 exports.getAll = function(req, res)
 {
+    console.log('query getAll start');
     QueryDoc.getAllItemForWeb(function(err, doc)
     {
         if (err)
@@ -43,7 +44,6 @@ exports.getAll = function(req, res)
         {
             segmentdoc.getByQueryIdForWeb(item.id, function(err, docs)
             {
-                console.log(item.id);
                 if (err)
                 {
                     console.log('query getByQueryIdForWeb error');
@@ -63,6 +63,8 @@ exports.getAll = function(req, res)
                 console.log('query get all error');
                 console.log(err);
             }
+
+            console.log('query getAll end');
             res.json({data: doc});
         });
     });
