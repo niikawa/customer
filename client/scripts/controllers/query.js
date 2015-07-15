@@ -100,7 +100,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         $scope._construct();
         setInitializeScope();
         
-        if ($routeParams.hasOwnProperty('id') && isFinite(parseInt($routeParams.id, 10)))
+        if ($routeParams.hasOwnProperty('id'))
         {
             Query.resource.getControlInit({id: $routeParams.id}).$promise.then(function(response)
             {
