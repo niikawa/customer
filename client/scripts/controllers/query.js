@@ -89,6 +89,8 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
             });
         });
         $scope.showSelectedColumnsBox = $scope.selectColumns.length > 0;
+        Shared.set('queryColumns', $scope.selectColumns);
+        
     }
     
     $scope.initialize = function()
