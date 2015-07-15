@@ -30,6 +30,9 @@ exports.getById = function(req, res)
     ([
         function(callback)
         {
+            console.log(req.params.id);
+            console.log(isFinite(parseInt(req.params.id, 10)));
+            
             if (isFinite(parseInt(req.params.id, 10)))
             {
                 model.getById(req.params.id, function(err, data)
