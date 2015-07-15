@@ -68,8 +68,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     
     function setEdtInitializeScope(data)
     {
-        console.log(data);
-        angular.forEach(data.table, function(columnList, tableName)
+        angular.forEach(data.tables, function(columnList, tableName)
         {
             console.log(tableName);
             console.log(columnList);
