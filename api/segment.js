@@ -63,7 +63,7 @@ exports.getById = function(req, res)
     ],
     function(err, data)
     {
-        segmentdoc.getItemByIdForWeb(data[0].segment_document_id, function(err, doc)
+        segmentdoc.getItemByIdForWeb(data.segment_document_id, function(err, doc)
         {
             if (err) res.status(510).send('document is not found');
             

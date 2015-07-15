@@ -38,6 +38,11 @@ locationServices.service("Location", ['$location',function($location)
         $location.path('/segment');
     };
 
+    locationServices.segmentControl = function(id)
+    {
+        $location.path('/segment/control/'+id);
+    };
+
     locationServices.trigger = function()
     {
         $location.path('/scenario/trigger');

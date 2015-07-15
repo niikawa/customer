@@ -30,7 +30,11 @@ function ($scope, Shared, Query, Modal, Location, Utility)
             list: $scope.queryList[index].useSegment,
             hrefBase: '#/segment/control',
             dynamicParamKey: 'id',
-            close: function(){console.log('close'); $scope.modalInstance.close();}
+            close: function(id)
+            {
+                $scope.modalInstance.close();
+                Location.segmentControl(id);
+            }
         };
         $scope.modalInstance = Modal.open($scope, "partials/modal/list.html");
     };
