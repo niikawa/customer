@@ -41,17 +41,15 @@ exports.getAllItem = function(req, res)
         }
         else
         {
-            if (void 0 === callback)
-            {
-                res.json({data: doc});
-            }
-            else
-            {
-                core.insertLog(req.session.userId, 8, Message.COMMON.I_004, 'クエリー一覧');
-                callback(err, doc);
-            }
+            res.json({data: doc});
         }
     });
+};
+
+exports.getAllItemForWeb = function(callback)
+{
+    var query = 'SELECT doc.id ,doc.query_name, doc.tables FROM doc';
+    Query.find(query, callback);
 };
 
 exports.addItem = function(req, res)

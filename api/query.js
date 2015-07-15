@@ -25,9 +25,14 @@ var model = new query();
 
 exports.getAll = function(req, res)
 {
-    QueryDoc.getAllItem(req, res, function(err, doc)
+    QueryDoc.getAllItemForWeb(function(err, doc)
     {
-        //errは呼び出し元で判定しているためここでは行わない
+        if (err)
+        {
+            console.log('query get all error');
+            console.log(err);
+        }
+        
         if (null === doc || 0 === doc.length) 
         {
             res.json({data: []});
@@ -46,7 +51,7 @@ exports.getAll = function(req, res)
         {
             if (err)
             {
-                console.log('query getAll error');
+                console.log('query get all error');
                 console.log(err);
             }
             res.json({data: doc});
