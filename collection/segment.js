@@ -128,13 +128,13 @@ Segment.prototype = {
                 value: itemId
             }]
         };
-
+        
         self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
             if (err) {
                 callback(err);
 
             } else {
-                callback(null, results[0]);
+                callback(null, results);
             }
         });
     },
