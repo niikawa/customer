@@ -28,6 +28,11 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
                 method: 'DELETE',
                 url: '/query/:id',
             },
+            getUseSegment:
+            {
+                method: 'GET',
+                url: '/query/use/segment/:id',
+            },
             executeQuery:
             {
                 method: 'POST',

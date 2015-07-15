@@ -26,6 +26,23 @@ function ($scope, Shared, Query, Location, Utility)
             $scope.isQueryShow = $scope.queryList.length > 0;
         });
     };
+    $scope.showSegment = function(index)
+    {
+        if (void 0 === $scope.queryList[index].id) return;
+        console.log($scope.queryList[index].useSegment);
+    };
+    
+    $scope.deleteItem = function(index)
+    {
+        if (void 0 === $scope.queryList[index]) return;
+        var name = $scope.queryList[index].query_name;
+        Query.resource.remove({id: $scope.queryList[index].id}).$promise.then(function(response)
+        {
+            Utility.info(name + '<br>を削除しました。');
+            $scope.queryList.splice(index,1);
+        });
+    };
+
 }]);
 
 var queryCtrl = angular.module('queryCtrl',['QueryServices']);

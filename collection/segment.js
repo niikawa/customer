@@ -96,13 +96,33 @@ Segment.prototype = {
             }
         });
     },
-
     getItem: function (itemId, callback)
     {
         var self = this;
 
         var querySpec = {
             query: 'SELECT * FROM root r WHERE r.id=@id',
+            parameters: [{
+                name: '@id',
+                value: itemId
+            }]
+        };
+
+        self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
+            if (err) {
+                callback(err);
+
+            } else {
+                callback(null, results[0]);
+            }
+        });
+    },
+    getItemByQueryId: function (itemId, callback)
+    {
+        var self = this;
+
+        var querySpec = {
+            query: 'SELECT c.id, c.segment_name FROM c WHERE c.qIds IN ([@id])',
             parameters: [{
                 name: '@id',
                 value: itemId

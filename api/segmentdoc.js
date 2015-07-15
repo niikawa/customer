@@ -25,32 +25,32 @@ exports.getItem = function(req, res)
     });
 };
 
-exports.useSegmentByQueryIdForWeb = function(id, callback)
+exports.getByQueryId = function(req, res)
 {
-    var query = 'SELECT * FROM c IN segment.qIds where c IN ("';
-    query += id + '")';
-    Segment.find(query, function(err, doc)
+    if (!req.params.hasOwnProperty('id'))
+    {
+        res.status(511).send('parameters not found');
+    }
+    
+    Segment.getItemByQueryId(req.params.id, function(err, docs)
     {
         if (err)
         {
-            console.log('useSegmentByQueryIdForWeb');
-            console.log(err);
-            callback(err, 0);
+            console.log('segment doc getByQueryId error');
+            res.status(511).send('document error');
         }
-        else
-        {
-            callback(err, doc.length);
-        }
+        res.json({data: docs});
     });
 };
 
+exports.getByQueryIdForWeb = function(id, callback)
+{
+    Segment.getItemByQueryId(id, callback);
+};
+
+
 exports.saveItem = function(req, res)
 {
-    if (!req.session.isLogin) {
-        
-        res.status(511).send('authentication faild');
-    }
-    
     if (void 0 === req.body.data)
     {
         res.status(511).send('parameters not found');

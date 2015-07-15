@@ -41,10 +41,12 @@ exports.getAll = function(req, res)
         var segmentdoc = require("./segmentdoc");
         model.async.forEach(doc, function(item, callback)
         {
-            segmentdoc.useSegmentByQueryIdForWeb(item.id, function(err, num)
+            segmentdoc.getByQueryIdForWeb(item.id, function(err, docs)
             {
+                var num = docs.length;
                 item.isUse = (0 < num);
                 item.useNum = num;
+                item.useSegment = docs;
                 callback(err);
             });
         },
