@@ -25,6 +25,25 @@ exports.getItem = function(req, res)
     });
 };
 
+exports.useSegmentByQueryIdForWeb = function(id, callback)
+{
+    var query = 'SELECT * FROM c IN segment.qIds where c IN ("';
+    query += id + '")';
+    Segment.find(query, function(err, doc)
+    {
+        if (err)
+        {
+            console.log('useSegmentByQueryIdForWeb');
+            console.log(err);
+            callback(err, 0);
+        }
+        else
+        {
+            callback(err, doc.length);
+        }
+    });
+}
+
 exports.saveItem = function(req, res)
 {
     if (!req.session.isLogin) {
@@ -88,4 +107,3 @@ exports.removeItemForWeb = function(id, callback)
         callback(err, doc);
     });
 };
-

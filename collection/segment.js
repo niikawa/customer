@@ -13,7 +13,8 @@ function Segment(documentDBClient, databaseId, collectionId) {
 module.exports = Segment;
 
 Segment.prototype = {
-    init: function (callback) {
+    init: function (callback)
+    {
         var self = this;
 
         docdbUtils.getOrCreateDatabase(self.client, self.databaseId, function (err, db) {
@@ -34,7 +35,8 @@ Segment.prototype = {
         });
     },
 
-    find: function (querySpec, callback) {
+    find: function (querySpec, callback)
+    {
         var self = this;
 
         self.client.queryDocuments(self.collection._self, querySpec).toArray(function (err, results) {
@@ -47,7 +49,8 @@ Segment.prototype = {
         });
     },
 
-    addItem: function (item, callback) {
+    addItem: function (item, callback)
+    {
         var self = this;
         
         var data = {
@@ -67,7 +70,8 @@ Segment.prototype = {
         });
     },
 
-    updateItem: function (data, callback) {
+    updateItem: function (data, callback)
+    {
         var self = this;
 
         self.getItem(data.segment_document_id, function (err, doc) {
@@ -93,7 +97,8 @@ Segment.prototype = {
         });
     },
 
-    getItem: function (itemId, callback) {
+    getItem: function (itemId, callback)
+    {
         var self = this;
 
         var querySpec = {

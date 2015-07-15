@@ -1,10 +1,33 @@
-/**
- * @ngdoc function
- * @name workspaceApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the workspaceApp
- */
+var queryListCtrl = angular.module('queryListCtrl',['QueryServices']);
+queryListCtrl.controller('QueryListCtrl',['$scope', 'Shared', 'Query', 'Location', 'Utility',
+function ($scope, Shared, Query, Location, Utility)
+{
+    /**
+     * scope初期化用
+     */
+    function setInitializeScope()
+    {
+        $scope.queryList = [];
+        $scope.isQueryShow = false;
+    }
+    
+    /**
+     * 初期処理
+     * @author niikawa
+     */
+    $scope.initialize = function()
+    {
+        $scope._construct();
+        setInitializeScope();
+
+        Query.resource.getList().$promise.then(function(response)
+        {
+            $scope.queryList = response.data;
+            $scope.isQueryShow = $scope.queryList.length > 0;
+        });
+    };
+}]);
+
 var queryCtrl = angular.module('queryCtrl',['QueryServices']);
 queryCtrl.controller('QueryCtrl',['$scope', 'Shared', 'Query', 'Location', 'Utility',
 function ($scope, Shared, Query, Location, Utility)

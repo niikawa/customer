@@ -66,6 +66,7 @@ router.post('/query/create', querydoc.addItem);
 router.delete('/query/:id', querydoc.removeItem);
 
 var query = require('./api/query');
+router.get('/query/list', query.getAll);
 router.post('/query/execute', query.execute);
 
 var segmentdoc = require("./api/segmentdoc");

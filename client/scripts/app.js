@@ -25,6 +25,7 @@ angular
     'segmentCtrl',
     'segmentControlCtrl',
     'queryCtrl',
+    'queryListCtrl',
     'scenarioCtrl',
     'scenarioControlCtrl',
     'approachCtrl',
@@ -86,6 +87,12 @@ angular
       .when('/segment/control/:id', {
         templateUrl: 'views/segment/segmentControl.html',
         controller: 'SegmentControlCtrl',
+        reloadOnSearch: false, //ページ内リンクを可能にする
+        resolve: {isLogin: autoCheck}
+      })
+      .when('/querylist', {
+        templateUrl: 'views/query/queryList.html',
+        controller: 'QueryListCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
         resolve: {isLogin: autoCheck}
       })

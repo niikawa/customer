@@ -1,4 +1,3 @@
-var async = require('async');
 var Core = require('./core');
 var Message = require('../config/message.json');
 var scenariodoc = require("./scenariodoc");
@@ -235,7 +234,7 @@ exports.savePriority = function(req, res)
     console.log(req.body);
     var commonColumns = model.getUpdCommonColumns();
 
-    async.forEach(req.body.data, function(item, callback)
+    model.async.forEach(req.body.data, function(item, callback)
     {
         delete item.scenario_name;
         delete item.scenario_type;

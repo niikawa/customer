@@ -1,10 +1,9 @@
-//本APIはquery作成時に実行ボタンが押下された場合に実行されるもののため
-//特定のテーブル情報はもたない
-
 var Core = require('./core');
 var Creator = require("./common/createSql");
 var Message = require('../config/message.json');
+var QueryDoc = require("./querydoc");
 
+//特定のテーブル情報はもたない
 /** テーブル名 */
 var tableName = '';
 /** pk */
@@ -23,6 +22,36 @@ var util = require('util');
 util.inherits(query, Core);
 
 var model = new query();
+
+exports.getAll = function(req, res)
+{
+    QueryDoc.getAllItem(req, res, function(err, doc)
+    {
+        //errは呼び出し元で判定しているためここでは行わない
+        if (null === doc || 0 === doc.length) 
+        {
+            res.json({data: []});
+        }
+        var segmentdoc = require("");
+        model.async.forEach(doc, function(item, callback)
+        {
+            segmentdoc.useSegmentByQueryIdForWeb(item.id, function(err, num)
+            {
+                item.isUse = (0 < num);
+                callback(err);
+            });
+        },
+        function (err) 
+        {
+            if (err)
+            {
+                console.log('query getAll error');
+                console.log(err);
+            }
+            res.json({data: doc});
+        });
+    });
+};
 
 exports.execute = function(req, res)
 {

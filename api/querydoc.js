@@ -29,7 +29,7 @@ exports.getItem = function(req, res)
     });
 };
 
-exports.getAllItem = function(req, res)
+exports.getAllItem = function(req, res, callback)
 {
     var query = 'SELECT doc.id ,doc.query_name, doc.tables FROM doc';
     Query.find(query, function(err, doc)
@@ -42,7 +42,14 @@ exports.getAllItem = function(req, res)
         else
         {
             core.insertLog(req.session.userId, 8, Message.COMMON.I_004, functionName);
-            res.json({data: doc});
+            if (void 0 === callback)
+            {
+                res.json({data: doc});
+            }
+            else
+            {
+                callback(err, doc);
+            }
         }
     });
 };
@@ -114,6 +121,14 @@ exports.removeItem = function(req, res)
             core.insertLog(req.session.userId, 8, Message.COMMON.I_001, 'クエリー');
             res.json({data: doc});
         }
+    });
+};
+
+exports.getItemByIdForWeb = function(id, callback)
+{
+    Query.getItem(id, function(err, doc)
+    {
+        callback(err,doc);
     });
 };
 

@@ -13,6 +13,11 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
                 method: 'GET',
                 url: '/query/get',
             },
+            getList:
+            {
+                method: 'GET',
+                url: '/query/list',
+            },
             create:
             {
                 method: 'POST',
