@@ -43,6 +43,8 @@ exports.getAll = function(req, res)
         {
             segmentdoc.getByQueryIdForWeb(item.id, function(err, docs)
             {
+                console.log(err);
+                console.log(docs);
                 var num = (null === docs)? 0 : docs.length;
                 item.isUse = (0 < num);
                 item.useNum = num;
