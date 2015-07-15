@@ -75,9 +75,10 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
                 {
                     if (columnInfo.column === columnData.physicalname)
                     {
-                        $scope.selectColumns.push({
+                        $scope.selectColumns.push(
+                        {
                             table: {logicalname: $scope.tableList[tableName].logicalname, physicalname:  $scope.tableList[tableName].physicalname}, 
-                            column: columnData.logicalname,
+                            column: columnData,
                             selectedCondition: {name: '', value: columnInfo.conditionType, symbol: ''},
                             condition: columnInfo.values
                         });
@@ -141,7 +142,8 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         });
         if (!isSame)
         {
-            $scope.selectColumns.push({
+            $scope.selectColumns.push(
+            {
                 table: {logicalname: target.logicalname, physicalname:  target.physicalname}, 
                 column: target.column[index]
             });
