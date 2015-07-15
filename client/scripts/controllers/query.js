@@ -71,18 +71,18 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         $scope._construct();
         setInitializeScope();
         
-        if ($routeParams.hasOwnProperty('id'))
+        if ($routeParams.hasOwnProperty('id') && isFinite(parseInt($routeParams.id, 10)))
         {
-            Query.resource.getControlInit({id: $routeParams.hasOwnProperty('id')}).$promise.then(function(response)
+            Query.resource.getControlInit({id: $routeParams.id}).$promise.then(function(response)
             {
-                $scope.tableList = response.data;
+                $scope.tableList = response.table;
             });
         }
         else
         {
             Query.resource.get().$promise.then(function(response)
             {
-                $scope.tableList = response.data;
+                $scope.tableList = response.table;
             });
         }
 
