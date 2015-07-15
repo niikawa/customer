@@ -30,15 +30,13 @@ exports.getById = function(req, res)
     ([
         function(callback)
         {
-            console.log(req.params.id);
-            console.log(isFinite(parseInt(req.params.id, 10)));
-            
             if (isFinite(parseInt(req.params.id, 10)))
             {
                 model.getById(req.params.id, function(err, data)
                 {
                     if (err.length > 0)
                     {
+                        console.log(err);
                         res.status(510).send('該当するセグメント情報はありません');
                         return;
                     }
@@ -53,6 +51,10 @@ exports.getById = function(req, res)
                 qObj.request.input('segment_document_id', model.db.NVarChar, req.params.id);
                 model.select(qObj, qObj.request, function(err, data)
                 {
+                    console.log('dockarasyutoku');
+                    console.log(err);
+                    console.log(data);
+                    
                     if (err.length > 0)
                     {
                         console.log(err);
