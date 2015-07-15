@@ -52,13 +52,11 @@ function ($scope, Shared, Query, Modal, Location, Utility)
 }]);
 
 var queryCtrl = angular.module('queryCtrl',['QueryServices']);
-queryCtrl.controller('QueryCtrl',['$scope', 'Shared', 'Query', 'Location', 'Utility',
-function ($scope, Shared, Query, Location, Utility)
+queryCtrl.controller('QueryCtrl',['$scope', '$routeParams', 'Shared', 'Query', 'Location', 'Utility',
+function ($scope, $routeParams, Shared, Query, Location, Utility)
 {
     var selectTable = '';
-    /**
-     * scope初期化用
-     */
+    
     function setInitializeScope()
     {
         $scope.tableList = [];
@@ -68,19 +66,26 @@ function ($scope, Shared, Query, Location, Utility)
         $scope.conditions = [];
     }
     
-    /**
-     * 初期処理
-     * @author niikawa
-     */
     $scope.initialize = function()
     {
         $scope._construct();
         setInitializeScope();
-
-        Query.resource.get().$promise.then(function(response)
+        
+        if ($routeParams.hasOwnProperty('id'))
         {
-            $scope.tableList = response.data;
-        });
+            Query.resource.get({id: $routeParams.hasOwnProperty('id')}).$promise.then(function(response)
+            {
+                $scope.tableList = response.data;
+            });
+        }
+        else
+        {
+            Query.resource.get().$promise.then(function(response)
+            {
+                $scope.tableList = response.data;
+            });
+        }
+
     };
     
     $scope.showColumns = function(table)

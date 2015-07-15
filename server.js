@@ -62,6 +62,7 @@ router.get('/query', table.getTables);
 
 var querydoc = require('./api/querydoc');
 router.get('/query/get', querydoc.getAllItem);
+router.get('/query/:id', querydoc.getByIdForInit);
 router.post('/query/create', querydoc.addItem);
 router.delete('/query/:id', querydoc.removeItem);
 

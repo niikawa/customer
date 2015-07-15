@@ -13,6 +13,25 @@ var docDbClient = new DocumentDBClient('https://ixcpm.documents.azure.com:443/',
 var Query = new query(docDbClient, 'ixcpm', 'query');
 Query.init();
 
+exports.getByIdForInit = function(req, res)
+{
+    Query.getItem(req.params.id, function(err, doc)
+    {
+        if (err)
+        {
+            console.log('query doc getByIdForInit error');
+            console.log(err);
+            res.status(511).send('クエリー情報の取得に失敗しました');
+            core.insertLog(req.session.userId, 8, Message.COMMON.E_004, functionName);
+        }
+
+        core.insertLog(req.session.userId, 8, Message.COMMON.I_004, doc.query_name);
+        var table = require('../config/table.json');
+        res.json({table: table, data: doc});
+    });
+};
+
+
 exports.getItem = function(req, res)
 {
     Query.getItem(req.params.id, function(err, doc)

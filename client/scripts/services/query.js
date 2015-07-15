@@ -6,7 +6,7 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
         
         queryServices.sql = '';
         
-        queryServices.resource = $resource('/query',{},
+        queryServices.resource = $resource('/query', {id: '@id'},
         {
             getQuery:
             {

@@ -10,7 +10,7 @@
         <div class="row" >
             <div class="col-md-12">
                 
-                <div ng-if="!isQueryShow" class="alert alert-info" role="alert">
+                <div ng-if="false === isQueryShow" class="alert alert-info" role="alert">
                     作成しているクエリーはありません。
                 </div>
                 
@@ -30,7 +30,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="(i, item) in queryList">
-                                <td data-th="名称"><a ng-href='/#/query/{{type}}/control/{{item.scenario_id}}'>{{item.query_name}}</a></td>
+                                <td data-th="名称"><a ng-href='/#/query/control/{{item.id}}'>{{item.query_name}}</a></td>
                                 <td ng-if="item.isUse" data-th="利用状況">
                                     <a ng-href="" ng-click="showSegment(i)">{{item.useNum}}件</a>のセグメントで利用されています。
                                 </td>

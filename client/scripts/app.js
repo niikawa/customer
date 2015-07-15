@@ -102,6 +102,12 @@ angular
         reloadOnSearch: false, //ページ内リンクを可能にする
         resolve: {isLogin: autoCheck}
       })
+      .when('/query/control/:id', {
+        templateUrl: 'views/query/query.html',
+        controller: 'QueryCtrl',
+        reloadOnSearch: false, //ページ内リンクを可能にする
+        resolve: {isLogin: autoCheck}
+      })
       .when('/query/set', {
         templateUrl: 'views/query/querySetting.html',
         controller: 'QueryCtrl',
