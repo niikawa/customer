@@ -1,6 +1,6 @@
 var queryListCtrl = angular.module('queryListCtrl',['QueryServices']);
-queryListCtrl.controller('QueryListCtrl',['$scope', 'Shared', 'Query', 'Location', 'Utility',
-function ($scope, Shared, Query, Location, Utility)
+queryListCtrl.controller('QueryListCtrl',['$scope', 'Shared', 'Query', 'Modal','Location', 'Utility',
+function ($scope, Shared, Query, Modal, Location, Utility)
 {
     /**
      * scope初期化用
@@ -9,6 +9,11 @@ function ($scope, Shared, Query, Location, Utility)
     {
         $scope.queryList = [];
         $scope.isQueryShow = false;
+    }
+    
+    function closeModal()
+    {
+        $scope.modalInstance.close();
     }
     
     /**
@@ -26,10 +31,18 @@ function ($scope, Shared, Query, Location, Utility)
             $scope.isQueryShow = $scope.queryList.length > 0;
         });
     };
+    
     $scope.showSegment = function(index)
     {
         if (void 0 === $scope.queryList[index].id) return;
-        console.log($scope.queryList[index].useSegment);
+        
+        $scope.modalParam = 
+        {
+            list: $scope.queryList[index].useSegment,
+            hrefBase: '#/segment/control',
+            dynamicParamKey: 'id'
+        };
+        $scope.modalInstance = Modal.open($scope, "partials/modal/list.html");
     };
     
     $scope.deleteItem = function(index)
