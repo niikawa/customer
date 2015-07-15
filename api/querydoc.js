@@ -36,14 +36,14 @@ exports.getAllItem = function(req, res, callback)
     {
         if (err)
         {
-            core.insertLog(req.session.userId, 8, Message.COMMON.E_004, functionName);
+//            core.insertLog(req.session.userId, 8, Message.COMMON.E_004, functionName);
             res.status(511).send('access ng');
         }
         else
         {
             if (void 0 === callback)
             {
-                core.insertLog(req.session.userId, 8, Message.COMMON.I_004, functionName);
+//                core.insertLog(req.session.userId, 8, Message.COMMON.I_004, functionName);
                 res.json({data: doc});
             }
             else
