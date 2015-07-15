@@ -70,14 +70,12 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     {
         angular.forEach(data.tables, function(columnList, tableName)
         {
-            console.log(tableName);
-            console.log(columnList);
             angular.forEach(columnList, function(column)
             {
                 console.log(column);
                 angular.forEach($scope.tableList[tableName].column, function(columnInfo)
                 {
-                    console.log(columnInfo);
+                    console.log(columnInfo.physicalname);
                     if (column === columnInfo.physicalname)
                     {
                         $scope.selectColumns.push({
@@ -85,7 +83,6 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
                             column: columnInfo
                         });
                         
-                        $scope.selectColumns.push();
                         return false;
                     }
                 });
