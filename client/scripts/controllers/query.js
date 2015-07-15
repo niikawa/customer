@@ -101,6 +101,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         {
             Query.resource.getControlInit({id: $routeParams.id}).$promise.then(function(response)
             {
+                $scope.queryName = response.data.query_name;
                 Shared.destloyByName('updateQueryDocumentId');
                 $scope.tableList = response.table;
                 if (0 === $scope.selectColumns.length)
