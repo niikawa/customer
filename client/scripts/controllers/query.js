@@ -2,24 +2,12 @@ var queryListCtrl = angular.module('queryListCtrl',['QueryServices']);
 queryListCtrl.controller('QueryListCtrl',['$scope', 'Shared', 'Query', 'Modal','Location', 'Utility',
 function ($scope, Shared, Query, Modal, Location, Utility)
 {
-    /**
-     * scope初期化用
-     */
     function setInitializeScope()
     {
         $scope.queryList = [];
         $scope.isQueryShow = false;
     }
     
-    function closeModal()
-    {
-        $scope.modalInstance.close();
-    }
-    
-    /**
-     * 初期処理
-     * @author niikawa
-     */
     $scope.initialize = function()
     {
         $scope._construct();
