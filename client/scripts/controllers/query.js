@@ -5,7 +5,6 @@ function ($scope, Shared, Query, Modal, Location, Utility)
     function setInitializeScope()
     {
         $scope.queryList = [];
-        $scope.isQueryShow = false;
     }
     
     $scope.initialize = function()

@@ -51,10 +51,6 @@ exports.getById = function(req, res)
                 qObj.request.input('segment_document_id', model.db.NVarChar, req.params.id);
                 model.select(qObj, qObj.request, function(err, data)
                 {
-                    console.log('dockarasyutoku');
-                    console.log(err);
-                    console.log(data);
-                    
                     if (err.length > 0)
                     {
                         console.log(err);
@@ -79,15 +75,6 @@ exports.getById = function(req, res)
                 qIds: doc.qIds
             });
         });
-    });
-
-    
-    model.getById(req.params.id, function(err, data)
-    {
-        if (err.length > 0)
-        {
-            return res.status(510).send('該当するセグメント情報はありません');
-        }
     });
 };
 

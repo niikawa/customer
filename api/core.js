@@ -119,7 +119,7 @@ core.prototype.getById = function(id, callback)
 {
     var request = this.getRequest();
     request.input(this.pk, this.db.Int, id);
-    var sql = 'select * from ' + this.modelName + ' WHERE ' + this.pk + ' = @' + this.pk;
+    var sql = 'select * from ' + this.modelName + ' WHERE ' + this.pk + ' = @' + this.pk + ' AND delete_flag = 0';
     this.execute(sql, request, callback);
 };
 
