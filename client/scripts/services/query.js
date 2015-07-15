@@ -89,10 +89,22 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
                 {
                     tables[v.table.physicalname] = [];
                 }
-                tables[v.table.physicalname].push(v.column.physicalname);
+                var info = 
+                {
+                    column: v.column.physicalname,
+                    conditionType: v.selectedCondition.value,
+                    values: v.condition
+                };
+                tables[v.table.physicalname].push(info);
             });
             return tables;
         };
+        
+        queryServices.setEdtInitialize = function(setScope, data)
+        {
+            
+        };
+        
 
         return queryServices;
     }

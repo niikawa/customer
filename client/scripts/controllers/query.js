@@ -48,7 +48,6 @@ function ($scope, Shared, Query, Modal, Location, Utility)
             $scope.queryList.splice(index,1);
         });
     };
-
 }]);
 
 var queryCtrl = angular.module('queryCtrl',['QueryServices']);
@@ -70,17 +69,18 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     {
         angular.forEach(data.tables, function(columnList, tableName)
         {
-            angular.forEach(columnList, function(column)
+            angular.forEach(columnList, function(columnInfo, columnName)
             {
-                console.log(column);
-                angular.forEach($scope.tableList[tableName].column, function(columnInfo)
+                console.log(columnName);
+                angular.forEach($scope.tableList[tableName].column, function(columnData)
                 {
-                    console.log(columnInfo.physicalname);
-                    if (column === columnInfo.physicalname)
+                    if (columnName === columnData.physicalname)
                     {
                         $scope.selectColumns.push({
                             table: {logicalname: $scope.tableList[tableName].logicalname, physicalname:  $scope.tableList[tableName].physicalname}, 
-                            column: columnInfo
+                            column: columnInfo,
+                            selectedCondition: {name: '', value: columnInfo.conditionType, symbol: ''},
+                            condition: columnInfo.values
                         });
                         
                         return false;
@@ -89,6 +89,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
             });
         });
         $scope.showSelectedColumnsBox = $scope.selectColumns.length > 0;
+
         Shared.set('queryColumns', $scope.selectColumns);
         
     }
@@ -104,6 +105,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
             {
                 $scope.tableList = response.table;
                 setEdtInitializeScope(response.data);
+                Shared.set('updateQueryDocumentId', $routeParams.id);
             });
         }
         else
