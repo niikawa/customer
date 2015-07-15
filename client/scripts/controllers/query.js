@@ -67,14 +67,15 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     
     function setEdtInitializeScope(data)
     {
+        console.log(setEdtInitializeScope);
         angular.forEach(data.tables, function(columnList, tableName)
         {
-            angular.forEach(columnList, function(columnInfo, columnName)
+            angular.forEach(columnList, function(columnInfo)
             {
-                console.log(columnName);
+                console.log(columnInfo);
                 angular.forEach($scope.tableList[tableName].column, function(columnData)
                 {
-                    if (columnName === columnData.physicalname)
+                    if (columnInfo.column === columnData.physicalname)
                     {
                         $scope.selectColumns.push({
                             table: {logicalname: $scope.tableList[tableName].logicalname, physicalname:  $scope.tableList[tableName].physicalname}, 
