@@ -29,7 +29,7 @@ exports.getItem = function(req, res)
     });
 };
 
-exports.getAllItem = function(req, res, callback)
+exports.getAllItem = function(req, res)
 {
     var query = 'SELECT doc.id ,doc.query_name, doc.tables FROM doc';
     Query.find(query, function(err, doc)
