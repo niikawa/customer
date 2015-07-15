@@ -73,7 +73,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         
         if ($routeParams.hasOwnProperty('id'))
         {
-            Query.resource.get({id: $routeParams.hasOwnProperty('id')}).$promise.then(function(response)
+            Query.resource.getControlInit({id: $routeParams.hasOwnProperty('id')}).$promise.then(function(response)
             {
                 $scope.tableList = response.data;
             });

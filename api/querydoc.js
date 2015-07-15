@@ -15,6 +15,7 @@ Query.init();
 
 exports.getByIdForInit = function(req, res)
 {
+    console.log('query doc getByIdForInit start');
     Query.getItem(req.params.id, function(err, doc)
     {
         if (err)

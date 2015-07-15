@@ -60,15 +60,15 @@ router.get('/azure/recomender/:id', azure.recommenderItem);
 var table = require('./api/table');
 router.get('/query', table.getTables);
 
-var querydoc = require('./api/querydoc');
-router.get('/query/get', querydoc.getAllItem);
-router.get('/query/:id', querydoc.getByIdForInit);
-router.post('/query/create', querydoc.addItem);
-router.delete('/query/:id', querydoc.removeItem);
-
 var query = require('./api/query');
 router.get('/query/list', query.getAll);
 router.post('/query/execute', query.execute);
+
+var querydoc = require('./api/querydoc');
+router.get('/query/get', querydoc.getAllItem);
+router.get('/query/control/:id', querydoc.getByIdForInit);
+router.post('/query/create', querydoc.addItem);
+router.delete('/query/:id', querydoc.removeItem);
 
 var segmentdoc = require("./api/segmentdoc");
 router.post('/segment/savedoc', segmentdoc.saveItem);
