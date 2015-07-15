@@ -66,6 +66,29 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         $scope.conditions = [];
     }
     
+    function setEdtInitializeScope(data)
+    {
+        angular.forEach(data.table, function(columnList, tableName)
+        {
+            angular.forEach(columnList, function(column)
+            {
+                angular.forEach($scope.tableList[tableName].column, function(columnInfo)
+                {
+                    if (column === columnInfo.physicalname)
+                    {
+                        $scope.selectColumns.push({
+                            table: {logicalname: $scope.tableList[tableName].logicalname, physicalname:  $scope.tableList[tableName].physicalname}, 
+                            column: columnInfo
+                        });
+                        
+                        $scope.selectColumns.push();
+                        return false;
+                    }
+                });
+            });
+        });
+    }
+    
     $scope.initialize = function()
     {
         $scope._construct();
@@ -76,9 +99,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
             Query.resource.getControlInit({id: $routeParams.id}).$promise.then(function(response)
             {
                 $scope.tableList = response.table;
-                console.log(response.data);
-                //$scope.selectColumns = 
-
+                setEdtInitializeScope(response.data);
             });
         }
         else
