@@ -8,8 +8,8 @@
     <div class="row">
         <div class="col-sm-12">
             <ul class="list-group overflow-box-l" >
-                <li class="list-group-item" ng-repeat="(i, item) in modalParam.list" ng-click="modalParam.close">
-                    <a ng-href="{{modalParam.hrefBase}}/{{item[modalParam.dynamicParamKey]}}">{{item.segment_name}}</a>
+                <li class="list-group-item" ng-repeat="(i, item) in modalParam.list" >
+                    <a ng-click="modalParam.close">{{item.segment_name}}</a>
                 </li>
             </ul>
         </div>
