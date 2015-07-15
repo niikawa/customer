@@ -32,7 +32,8 @@ exports.getAll = function(req, res)
         {
             res.json({data: []});
         }
-        var segmentdoc = require("");
+
+        var segmentdoc = require("./segmentdoc");
         model.async.forEach(doc, function(item, callback)
         {
             segmentdoc.useSegmentByQueryIdForWeb(item.id, function(err, num)

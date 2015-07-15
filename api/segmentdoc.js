@@ -42,7 +42,7 @@ exports.useSegmentByQueryIdForWeb = function(id, callback)
             callback(err, doc.length);
         }
     });
-}
+};
 
 exports.saveItem = function(req, res)
 {
