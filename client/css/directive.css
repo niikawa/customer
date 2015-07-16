@@ -7,6 +7,12 @@
   padding-left: 240px;
 }
 
+.view-animate-container-wide {
+  position:relative;
+  padding-top: 60px;
+  padding-left: 0px;
+}
+
 .view-animate {
 }
 
