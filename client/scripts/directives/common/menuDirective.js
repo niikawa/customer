@@ -38,13 +38,16 @@ myApp.directive('myHeader', function(){
         link: function (scope, element, attrs, ctrl) 
         {
             scope.isOpenMenu = true;
+            $('#view').removeClass('view-animate-container-wide');
+            $('#view').addClass('view-animate-container');
+
             scope.openClose = function()
             {
                 scope.isOpenMenu = !scope.isOpenMenu;
                 if (scope.isOpenMenu)
                 {
-                    $('#view').addClass('view-animate-container');
                     $('#view').removeClass('view-animate-container-wide');
+                    $('#view').addClass('view-animate-container');
                 }
                 else
                 {
