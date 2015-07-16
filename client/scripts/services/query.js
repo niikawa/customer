@@ -123,7 +123,7 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
                         url = '/query/list';
                         break;
                     }
-                    else if ('query list' === root[num])
+                    else if ('segment control' === root[num])
                     {
                         url = '/segment/control';
                         break;
