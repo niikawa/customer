@@ -44,6 +44,7 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario)
         setInitializeScope();
         getInitializeData();
         setEventListeners();
+        Shared.setRoot('approach');
     };
     
     $scope.save = function()

@@ -6,14 +6,11 @@
  * Controller of the workspaceApp
  */
 var userControlCtrl = angular.module('userControlCtrl',['UesrServices','RoleServices']);
-userControlCtrl.controller('UserControlCtrl',['$scope', '$routeParams', 'User', 'Role', 'Utility', 'Location',
-function ($scope, $routeParams, User, Role, Utility, Location)
+userControlCtrl.controller('UserControlCtrl',['$scope', '$routeParams', 'User', 'Role', 'Utility', 'Shared','Location',
+function ($scope, $routeParams, User, Role, Utility, Shared, Location)
 {
     var pageProp = User.getPageProp($routeParams.id);
     
-    /**
-     * scope初期化用
-     */
     function setInitializeScope()
     {
         $scope.user = {};
@@ -103,11 +100,9 @@ function ($scope, $routeParams, User, Role, Utility, Location)
         });
     }
     
-    /**
-     * 初期処理
-     */
     $scope.initialize = function()
     {
+        Shared.setRoot('user control');
         $scope._construct();
         setInitializeScope();
         setValidation();

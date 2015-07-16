@@ -4,8 +4,22 @@ sharedServices.service('Shared', function()
     var sharedServices = {};
     var data = {};
     
-    sharedServices.set = function(name, value) {
+    sharedServices.set = function(name, value)
+    {
         data[name] = value;
+    };
+    
+    sharedServices.setRoot = function(value)
+    {
+        if (!data.hasOwnProperty('applicationAccsessRoot'))
+        {
+            data['applicationAccsessRoot'] = [];
+        }
+        data['applicationAccsessRoot'].push(value);
+    };
+    sharedServices.getRoot = function(value)
+    {
+        return data['applicationAccsessRoot'];
     };
     
     sharedServices.get = function(name) {

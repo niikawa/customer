@@ -9,20 +9,14 @@ var userCtrl = angular.module('userCtrl',['UesrServices']);
 userCtrl.controller('UserCtrl',['$scope', '$routeParams','Shared', 'User', 'Utility',
 function ($scope, $routeParams, Shared, User, Utility)
 {
-    /**
-     * scope初期化用
-     */
     function setInitializeScope()
     {
         $scope.userList = [];
     }
     
-    /**
-     * 初期処理
-     * @author niikawa
-     */
     $scope.initialize = function()
     {
+        Shared.setRoot('user');
         $scope._construct();
         setInitializeScope();
 

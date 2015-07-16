@@ -29,6 +29,7 @@ function ($scope, Shared, Scenario, Utility)
         $scope._construct();
         setInitializeScope();
         getInitializeData();
+        Shared.setRoot('dashbord');
         
         $scope.$emit('requestEnd');
     };

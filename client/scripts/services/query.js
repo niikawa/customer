@@ -105,6 +105,37 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
             
         };
         
+        queryServices.setReturnURL = function(setScope)
+        {
+            var root = Shared.getRoot();
+            var num = root.length;
+            var before = root[root.length-1];
+            setScope = '';
+            if ('query list' === before)
+            {
+                setScope = '/query/list';
+            }
+            else if ('query list' === before)
+            {
+                setScope = '/segment/control';
+            }
+            else
+            {
+                for (num; 0 < num; num--)
+                {
+                    if ('query list' === root[num])
+                    {
+                        setScope = '/query/list';
+                        break;
+                    }
+                    else if ('query list' === root[num])
+                    {
+                        setScope = '/segment/control';
+                        break;
+                    }
+                }
+            }
+        };
 
         return queryServices;
     }

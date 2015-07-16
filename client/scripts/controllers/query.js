@@ -5,6 +5,7 @@ function ($scope, Shared, Query, Modal, Location, Utility)
     function setInitializeScope()
     {
         $scope.queryList = [];
+        Shared.setRoot('query list');
     }
     
     $scope.initialize = function()
@@ -70,6 +71,9 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         $scope.showSelectedColumnsBox = $scope.selectColumns.length > 0;
         $scope.conditions = [];
         $scope.isShowEditMessage = false;
+        Query.setReturnUrl($scope.returnUrl);
+        Shared.setRoot('query');
+        
     }
     
     function setEdtInitializeScope(data)
@@ -184,6 +188,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     
     $scope.nextValidation = function()
     {
+        Shared.setRoot('query set');
         $scope.selectColumns = Shared.get('queryColumns');
         if (void 0 === $scope.selectColumns) Location.query();
 
@@ -236,6 +241,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
 
     $scope.saveInitialize = function()
     {
+        Shared.setRoot('query save');
         setEventListeners();
         editSetInitializeScope();
         $scope.query = {query_name: Shared.get('updateQueryName')};

@@ -26,6 +26,7 @@ function ($scope, $routeParams, Shared, Utility, Scenario)
      */
     $scope.initialize = function()
     {
+        Shared.setRoot('scenario');
         $scope._construct();
         setInitializeScope();
 

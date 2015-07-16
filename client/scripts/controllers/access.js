@@ -7,6 +7,7 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
         $scope.showDate = '';
         $scope.serchDay = '';
         Shared.destloy('serchDay');
+        Shared.setRoot('accsess');
     }
     
     function getInitializeData()

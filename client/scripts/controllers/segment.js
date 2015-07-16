@@ -14,6 +14,7 @@ function ($scope, Shared, Segment, Utility)
      */
     function setInitializeScope()
     {
+        Shared.setRoot('segment');
         $scope.segmentList = [];
     }
     

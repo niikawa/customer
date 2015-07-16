@@ -2,9 +2,6 @@ var segmentControlCtrl = angular.module('segmentControlCtrl',['SegmentServices',
 segmentControlCtrl.controller('SegmentControlCtrl',['$scope', '$routeParams', 'Modal','Shared', 'Segment', 'Query', 'Utility','Location',
 function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location)
 {
-    /**
-     * scope初期化用
-     */
     function setInitializeScope()
     {
         $scope.pageTitle = Segment.pageProp($routeParams.id).pageTitle;
@@ -27,16 +24,12 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         });
     }
 
-    /**
-     * 初期処理
-     * @author niikawa
-     */
     $scope.initialize = function()
     {
         $scope._construct();
         setInitializeScope();
         setEvntListeners();
-        Shared.destloyByName('queryColumns');
+        Shared.setRoot('segment control');
         
         Query.resource.getQuery().$promise.then(function(doc)
         {

@@ -24,8 +24,10 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.type = $routeParams.scenario;
         $scope.template = pageProp.template;
 
+        Shared.setRoot($scope.type +' scenario');
         if (1 === pageProp.type)
         {
+            
             $scope.specificInfo = 
             {
                 repeat_flag: null,
