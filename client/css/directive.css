@@ -4,6 +4,7 @@
 .view-animate-container {
   position:relative;
   padding-top: 60px;
+  padding-left: 150px;
 }
 
 .view-animate {
@@ -18,7 +19,7 @@
 
   position:absolute;
   top:60px;
-  left:0;
+  left:150px;
   right:0;
   bottom:0;
 }

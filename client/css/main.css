@@ -108,7 +108,7 @@ ul > li > a > i {cursor: pointer;}
   position: fixed;
   top: 60px;
   width: 200px;
-  background-color: #e7e7e7;
+  background-color: #f8f8f8;
 /*  opacity: 0.8;*/
   position: absolute;
   z-index: 1000000;
