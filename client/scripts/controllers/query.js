@@ -284,7 +284,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
 
         var parameters = 
         {
-            segment_document_id: Shared.get('updateQueryDocumentId'),
+            query_document_id: Shared.get('updateQueryDocumentId'),
             query_name: $scope.query.query_name, 
             conditionList: $scope.showConditions, 
             tables: tables

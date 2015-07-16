@@ -88,7 +88,7 @@ exports.addItem = function(req, res)
     var sql = creator.getConstionString(req.body.tables);
     var values = creator.getValueList();
     var colTypes = creator.getColTypeList();
-
+    
     var parameters =
     {
         query_name: req.body.query_name,
@@ -98,20 +98,41 @@ exports.addItem = function(req, res)
         bindInfo: values,
         columnTypeList: colTypes
     };
-
-    Query.addItem(parameters, function(err, doc)
+    var isUpdate = (req.body.hasOwnProperty('query_document_id'));
+    if (isUpdate)
     {
-        if (err)
+        parameters.id = req.body.query_document_id;
+        
+        Query.updateItem(parameters, function(err, doc)
         {
-            core.insertLog(req.session.userId, 8, Message.COMMON.E_001, parameters.query_name);
-            res.status(511).send('access ng');
-            
-        } else
+            if (err)
+            {
+                core.insertLog(req.session.userId, 8, Message.COMMON.E_002, parameters.query_name);
+                res.status(511).send('access ng');
+                
+            } else
+            {
+                core.insertLog(req.session.userId, 8, Message.COMMON.I_002, parameters.query_name);
+                res.status(200).send('create query succsess');
+            }
+        });
+    }
+    else
+    {
+        Query.addItem(parameters, function(err, doc)
         {
-            core.insertLog(req.session.userId, 8, Message.COMMON.I_001, parameters.query_name);
-            res.status(200).send('create query succsess');
-        }
-    });
+            if (err)
+            {
+                core.insertLog(req.session.userId, 8, Message.COMMON.E_001, parameters.query_name);
+                res.status(511).send('access ng');
+                
+            } else
+            {
+                core.insertLog(req.session.userId, 8, Message.COMMON.I_001, parameters.query_name);
+                res.status(200).send('create query succsess');
+            }
+        });
+    }
 };
 
 exports.removeItem = function(req, res)

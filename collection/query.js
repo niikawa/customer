@@ -85,11 +85,11 @@ Query.prototype =
             }
         });
     },
-    updateItem: function (itemId, callback)
+    updateItem: function (data, callback)
     {
         var self = this;
 
-        self.getItem(itemId, function (err, doc)
+        self.getItem(data.id, function (err, doc)
         {
             if (err)
             {
@@ -98,6 +98,12 @@ Query.prototype =
             else
             {
                 //ここに更新する値を入れるはず
+                doc.query_name = data.query_name;
+                doc.sql = data.sql;
+                doc.tables = data.tables,
+                doc.whereList = data.whereList,
+                doc.bindInfo = data.bindInfo,
+                doc.columnTypeList = data.columnTypeList;
 
                 self.client.replaceDocument(doc._self, doc, function (err, replaced)
                 {
