@@ -71,7 +71,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         $scope.showSelectedColumnsBox = $scope.selectColumns.length > 0;
         $scope.conditions = [];
         $scope.isShowEditMessage = false;
-        Query.setReturnUrl($scope.returnUrl);
+        Query.setReturnURL($scope.returnUrl);
         Shared.setRoot('query');
     }
     
