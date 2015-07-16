@@ -15,8 +15,8 @@
 .view-animate {
 }
 
-.view-animate-container.view-animate.ng-enter, .view-animate.ng-leave,
-.view-animate-container-wide.view-animate.ng-enter, .view-animate.ng-leave {
+.view-animate-container.view-animate.ng-enter, .view-animate-container.view-animate.ng-leave,
+.view-animate-container-wide.view-animate.ng-enter, .view-animate-container-wide.view-animate.ng-leave {
   -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
   transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
   display:block;
@@ -27,10 +27,11 @@
   right:0;
   bottom:0;
 }
-.view-animate-container.view-animate.ng-enter, .view-animate.ng-leave {
-  left:0px;
+
+.view-animate-container.view-animate.ng-enter, .view-animate-container.view-animate.ng-leave {
+  left:0;
 }
-.view-animate-container-wide.view-animate.ng-enter, .view-animate.ng-leave {
+.view-animate-container-wide.view-animate.ng-enter, .view-animate-container-wide.view-animate.ng-leave {
   left:240px;
 }
 
@@ -43,9 +44,8 @@
   left:240px;
   opacity: 0.5;
 }
-
 .view-animate-container.view-animate.ng-enter.ng-enter-active {
-  left:0px;
+  left:0;
   opacity: 0.5;
 }
 
