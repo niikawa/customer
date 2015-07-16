@@ -188,6 +188,7 @@ h5.title {
   position: fixed;
   width: 100%;
 }
+
 ng-view {
   margin-top: 50px;
 }
