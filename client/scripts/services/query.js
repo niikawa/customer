@@ -135,6 +135,7 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
                     }
                 }
             }
+            console.log(setScope);
         };
 
         return queryServices;
