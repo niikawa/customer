@@ -108,12 +108,11 @@ ul > li > a > i {cursor: pointer;}
 .sidebar {
   position: fixed;
   height:100%;
-  top: 60px;
+  top: 50px;
   width: 200px;
   background-color: #f8f8f8;
 /*  opacity: 0.8;*/
-  position: absolute;
-  z-index: 1000000;
+  z-index: 9999;
 }
 .sidebar {
     padding-right: 0;
