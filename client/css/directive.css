@@ -32,8 +32,14 @@
   opacity: 1;
 }
 
-.view-animate.ng-enter.ng-enter-active {
+.view-animate-container-wide > .view-animate.ng-enter.ng-enter-active {
   left:240px;
+  opacity: 0.5;
+}
+
+
+.view-animate-container-wide > .view-animate.ng-enter.ng-enter-active {
+  left:0;
   opacity: 0.5;
 }
 
