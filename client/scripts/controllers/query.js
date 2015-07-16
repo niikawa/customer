@@ -233,7 +233,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     {
         setEventListeners();
         editSetInitializeScope();
-        $scope.query = {query_name: ''};
+        $scope.query = {query_name: Shared.get('updateQueryName')};
         $scope.conditions = [];
         var selectColumns = Shared.get('queryColumns');
 
