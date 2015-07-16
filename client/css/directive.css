@@ -44,32 +44,32 @@
 /*  opacity: 1;*/
 /*}*/
 
-.view-animate-container-wide .view-animate.ng-enter.ng-enter-active {
+.view-animate-container-wide > .view-animate.ng-enter.ng-enter-active {
   left:0;
   opacity: 0.5;
 }
 
-.view-animate-container .view-animate.ng-enter.ng-enter-active {
+.view-animate-container > .view-animate.ng-enter.ng-enter-active {
   left:240px;
   opacity: 0.5;
 }
 
-.view-animate.ng-leave.ng-leave-active {
+.view-animate-container > .view-animate.ng-leave.ng-leave-active {
   left:-100%;
   opacity: 0.5;
 }
 
-.menu-animate.ng-enter {
+.view-animate-container > .menu-animate.ng-enter {
   left:100%;
   opacity: 1;
 }
 
-.menu-animate.ng-enter.ng-enter-active {
+.view-animate-container > .menu-animate.ng-enter.ng-enter-active {
   left:0;
   opacity: 0.5;
 }
 
-.menu-animate.ng-leave.ng-leave-active {
+.view-animate-container > .menu-animate.ng-leave.ng-leave-active {
   left:-100%;
   opacity: 0.5;
 }
