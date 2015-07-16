@@ -111,6 +111,7 @@ ul > li > a > i {cursor: pointer;}
   top: 50px;
   width: 200px;
   background-color: #f8f8f8;
+  border-color: #e7e7e7;
 /*  opacity: 0.8;*/
   z-index: 9999;
 }
