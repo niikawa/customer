@@ -64,6 +64,8 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         $scope.showSelectedColumnsBox = $scope.selectColumns.length > 0;
         $scope.conditions = [];
         $scope.isShowEditMessage = false;
+        Shared.destloyByName('queryName');
+        Shared.destloyByName('updateQueryDocumentId');
     }
     
     function setEdtInitializeScope(data)
@@ -104,7 +106,6 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
             Query.resource.getControlInit({id: $routeParams.id}).$promise.then(function(response)
             {
                 $scope.queryName = response.data.query_name;
-                Shared.destloyByName('updateQueryDocumentId');
                 $scope.tableList = response.table;
                 if (0 === $scope.selectColumns.length)
                 {
@@ -112,6 +113,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
                 }
                 $scope.isShowEditMessage = true;
                 Shared.set('updateQueryDocumentId', $routeParams.id);
+                Shared.set('updateQueryName', response.data.query_name);
             });
         }
         else
@@ -171,6 +173,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         {
             $scope.docId = docId;
             $scope.isShowEditMessage = true;
+            $scope.queryName = Shared.get('updateQueryName');
         }
     }
     
@@ -229,6 +232,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     $scope.saveInitialize = function()
     {
         setEventListeners();
+        editSetInitializeScope();
         $scope.query = {query_name: ''};
         $scope.conditions = [];
         var selectColumns = Shared.get('queryColumns');
