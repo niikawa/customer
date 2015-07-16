@@ -163,12 +163,14 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     /****************************************/
     /*                  set                 */
     /****************************************/
-    function editSetInitialize()
+    function editSetInitializeScope()
     {
+        $scope.docId = '';
         var docId = Shared.get('updateQueryDocumentId');
         if (void 0 !== docId)
         {
             $scope.docId = docId;
+            $scope.isShowEditMessage = true;
         }
     }
     
@@ -182,7 +184,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
             v.column.inputType = Query.getContentsByColumsType(v.column.type);
         });
         
-        editSetInitialize();
+        editSetInitializeScope();
     };
     
     $scope.removeItem = function(index)
