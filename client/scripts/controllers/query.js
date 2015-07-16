@@ -72,6 +72,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         $scope.conditions = [];
         $scope.isShowEditMessage = false;
         $scope.returnUrl = Query.getReturnURL();
+        console.log($scope.returnUrl);
         Shared.setRoot('query');
     }
     
