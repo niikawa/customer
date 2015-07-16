@@ -43,13 +43,13 @@ myApp.directive('myHeader', function(){
                 scope.isOpenMenu = !scope.isOpenMenu;
                 if (scope.isOpenMenu)
                 {
-                    $('#view').removeClass('view-animate-container');
-                    $('#view').addClass('view-animate-container-wide');
+                    $('#view').addClass('view-animate-container');
+                    $('#view').removeClass('view-animate-container-wide');
                 }
                 else
                 {
-                    $('#view').addClass('view-animate-container');
-                    $('#view').removeClass('view-animate-container-wide');
+                    $('#view').removeClass('view-animate-container');
+                    $('#view').addClass('view-animate-container-wide');
                 }
             };
             
