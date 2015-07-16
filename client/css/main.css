@@ -189,8 +189,8 @@ h5.title {
   width: 100%;
 }
 
-ng-view {
-  margin-top: 50px;
+.view-conteiner {
+  margin-top: 100px;
 }
 /*-----------------------------------------------*/
 /* error
