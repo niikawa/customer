@@ -6,8 +6,8 @@
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 body {
-  background-color: #f8f8f8;
-/*  background-color: #489494;*/
+  /*background-color: #f8f8f8;*/
+  background-color: #489494;
   font-family:'Lucida Grande','Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
 }
 #body [ng-cloak],
@@ -187,6 +187,12 @@ li > a {
 
 h5.title {
   font-size: 1.5em;
+}
+.header-fixed {
+  position: fixed;
+  top: 0;
+  left:50%;  
+  z-index: 9999;
 }
 .fixed,
 .fixed-100 {
