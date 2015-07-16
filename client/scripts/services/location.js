@@ -23,6 +23,11 @@ locationServices.service("Location", ['$location',function($location)
         $location.path('/query');
     };
 
+    locationServices.query = function()
+    {
+        $location.path('/query/list');
+    };
+
     locationServices.querySet = function()
     {
         $location.path('/query/set');

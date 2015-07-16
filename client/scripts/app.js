@@ -90,7 +90,7 @@ angular
         reloadOnSearch: false, //ページ内リンクを可能にする
         resolve: {isLogin: autoCheck}
       })
-      .when('/querylist', {
+      .when('/query/list', {
         templateUrl: 'views/query/queryList.html',
         controller: 'QueryListCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする

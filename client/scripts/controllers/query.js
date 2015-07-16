@@ -171,7 +171,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         var docId = Shared.get('updateQueryDocumentId');
         if (void 0 !== docId)
         {
-            $scope.docIdUrl = '/'+docId;
+            $scope.docIdUrl = '/control/'+docId;
             $scope.isShowEditMessage = true;
             $scope.queryName = Shared.get('updateQueryName');
         }
