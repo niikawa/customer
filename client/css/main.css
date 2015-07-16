@@ -105,9 +105,11 @@ button.close-button-left {
 ul > li > a > i {cursor: pointer;}
 
 .sidebar {
+  position: fixed;
+  top: 60px;
   width: 200px;
   background-color: #e7e7e7;
-  opacity: 0.8;
+/*  opacity: 0.8;*/
   position: absolute;
   z-index: 1000000;
 }
@@ -184,14 +186,16 @@ li > a {
 h5.title {
   font-size: 1.5em;
 }
-.fixed {
+.fixed,
+.fixed-100 {
   position: fixed;
-  width: 100%;
   top: 0;
   left:0;  
   z-index: 9999;
 }
-
+.fixed-100 {
+  width: 100%;
+}
 /*-----------------------------------------------*/
 /* error
 /*-----------------------------------------------*/
