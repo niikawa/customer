@@ -100,19 +100,19 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
             return tables;
         };
         
-        queryServices.setReturnURL = function(setScope)
+        queryServices.getReturnURL = function()
         {
             var root = Shared.getRoot();
             var num = root.length;
             var before = root[root.length-1];
-            setScope = '';
+            var url = '';
             if ('query list' === before)
             {
-                setScope = '/query/list';
+                url = '/query/list';
             }
             else if ('query list' === before)
             {
-                setScope = '/segment/control';
+                url = '/segment/control';
             }
             else
             {
@@ -120,17 +120,17 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
                 {
                     if ('query list' === root[num])
                     {
-                        setScope = '/query/list';
+                        url = '/query/list';
                         break;
                     }
                     else if ('query list' === root[num])
                     {
-                        setScope = '/segment/control';
+                        url = '/segment/control';
                         break;
                     }
                 }
             }
-            console.log(setScope);
+            return url;
         };
 
         return queryServices;
