@@ -637,7 +637,7 @@ div .card-cell-right-b {
 /* modal bootstrap orverride
 /*-----------------------------------------------*/
 .modal-content {
-  padding-top: 20px;
+  margin-top: 120px;
 }
 .modal-header{
   padding: 0 15px;

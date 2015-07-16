@@ -86,7 +86,7 @@ exports.resolve = function(req, res)
 {
     if (!req.params.hasOwnProperty('id')) res.status(510).send('parameter not found');
     
-    var commonColumns = model.getUpdCommonColumns();
+    var commonColumns = model.getUpdCommonColumns(req.session.userId);
     var updateData = model.merge(req.body.params, commonColumns);
     var request = model.getRequest();
     request.input('update_by', model.db.Int, req.session.userId);
