@@ -76,6 +76,9 @@ myApp.directive('conditionDirective', function(Utility){
                     if (item.value === scope.conditionAppend.selectedCondition.value)
                     {
                         scope.mySlected = item;
+                        scope.conditionAppend.selectedCondition.name = scope.mySlected.name;
+                        scope.conditionAppend.selectedCondition.value = scope.mySlected.value;
+                        scope.conditionAppend.selectedCondition.symbol = scope.mySlected.symbol;
                         item.execute();
                         return false;
                     }
