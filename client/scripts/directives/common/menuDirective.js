@@ -37,7 +37,7 @@ myApp.directive('myHeader', function(){
         templateUrl: 'partials/common/header.html',
         link: function (scope, element, attrs, ctrl) 
         {
-            scope.isOpenMenu = false;
+            scope.isOpenMenu = true;
             scope.openClose = function()
             {
                 scope.isOpenMenu = !scope.isOpenMenu;

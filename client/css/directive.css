@@ -30,7 +30,7 @@
 }
 
 .view-animate.ng-enter.ng-enter-active {
-  left:0;
+  left:240px;
   opacity: 0.5;
 }
 
@@ -54,9 +54,6 @@
   opacity: 0.5;
 }
 
-my-header {
-	left: 50%;
-}
 /*-----------------------------------------------
  * directive用のCSS
 /*-----------------------------------------------
