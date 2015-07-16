@@ -347,7 +347,7 @@ h4 > input {
 /* menu
 /*-----------------------------------------------*/
 /* bootstrap orverride */
-.nabvar {
+.navbar {
   border-radius: 0px !important;
 }
 .nav > li > a {
