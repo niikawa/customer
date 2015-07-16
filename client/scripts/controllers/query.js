@@ -167,11 +167,11 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     /****************************************/
     function editSetInitializeScope()
     {
-        $scope.docId = '';
+        $scope.docIdUrl = '';
         var docId = Shared.get('updateQueryDocumentId');
         if (void 0 !== docId)
         {
-            $scope.docId = docId;
+            $scope.docId = '/'+docId;
             $scope.isShowEditMessage = true;
             $scope.queryName = Shared.get('updateQueryName');
         }
