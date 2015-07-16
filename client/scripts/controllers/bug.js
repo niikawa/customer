@@ -61,6 +61,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
         Bug.resource.resolve({id: $scope.bugList[index].id}).$promise.then(function(response)
         {
             Utility.info(name + '<br>を解決しました。');
+            $scope.bugList[index].resolve_name = '解決';
         });
     };
 
