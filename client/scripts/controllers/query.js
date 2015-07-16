@@ -56,16 +56,20 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
 {
     var selectTable = '';
     
-    function setInitializeScope()
+    function setInitializeScope(isEdit)
     {
+        Shared.destloyByName('queryName');
+        Shared.destloyByName('updateQueryDocumentId');
         $scope.tableList = [];
         $scope.columnNum = 0;
-        $scope.selectColumns = Shared.get('queryColumns') || [];
+        $scope.selectColumns = [];
+        if (!isEdit)
+        {
+            $scope.selectColumns = Shared.get('queryColumns') || [];
+        }
         $scope.showSelectedColumnsBox = $scope.selectColumns.length > 0;
         $scope.conditions = [];
         $scope.isShowEditMessage = false;
-        Shared.destloyByName('queryName');
-        Shared.destloyByName('updateQueryDocumentId');
     }
     
     function setEdtInitializeScope(data)
@@ -98,10 +102,11 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     
     $scope.initialize = function()
     {
+        var isEdit = $routeParams.hasOwnProperty('id');
         $scope._construct();
-        setInitializeScope();
+        setInitializeScope(isEdit);
         
-        if ($routeParams.hasOwnProperty('id'))
+        if (isEdit)
         {
             Query.resource.getControlInit({id: $routeParams.id}).$promise.then(function(response)
             {
