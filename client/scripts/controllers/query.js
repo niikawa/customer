@@ -63,6 +63,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         $scope.selectColumns = Shared.get('queryColumns') || [];
         $scope.showSelectedColumnsBox = $scope.selectColumns.length > 0;
         $scope.conditions = [];
+        $scope.isShowEditMessage = false;
     }
     
     function setEdtInitializeScope(data)
@@ -109,6 +110,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
                 {
                     setEdtInitializeScope(response.data);
                 }
+                $scope.isShowEditMessage = true;
                 Shared.set('updateQueryDocumentId', $routeParams.id);
             });
         }
@@ -119,7 +121,6 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
                 $scope.tableList = response.table;
             });
         }
-
     };
     
     $scope.showColumns = function(table)
@@ -162,6 +163,15 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     /****************************************/
     /*                  set                 */
     /****************************************/
+    function editSetInitialize()
+    {
+        var docId = Shared.get('updateQueryDocumentId');
+        if (void 0 !== docId)
+        {
+            $scope.docId = docId;
+        }
+    }
+    
     $scope.nextValidation = function()
     {
         $scope.selectColumns = Shared.get('queryColumns');
@@ -171,6 +181,8 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         {
             v.column.inputType = Query.getContentsByColumsType(v.column.type);
         });
+        
+        editSetInitialize();
     };
     
     $scope.removeItem = function(index)

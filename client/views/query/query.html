@@ -6,7 +6,7 @@
         
         <h4>対象のカラムを選択してください</h4>
 
-        <div ng-if="''!=queryName" class="alert alert-warning center" role="alert">
+        <div ng-if="isShowEditMessage" class="alert alert-info center" role="alert">
             {{queryName}}を更新します。
         </div>
         
