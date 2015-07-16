@@ -186,6 +186,10 @@ h5.title {
 }
 .fixed {
   position: fixed;
+  width: 100%;
+}
+ng-view {
+  margin-top: 50px;
 }
 /*-----------------------------------------------*/
 /* error
