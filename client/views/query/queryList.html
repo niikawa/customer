@@ -24,7 +24,6 @@
                             <tr class="info">
                                 <th>クエリー名</th>
                                 <th>利用状況</th>
-                                <th>最終更新日</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -35,7 +34,6 @@
                                     <a ng-href="" ng-click="showSegment(i)">{{item.useNum}}件</a>のセグメントで利用されています。
                                 </td>
                                 <td ng-if="!item.isUse" data-th="利用状況">利用されていません。</td>
-                                <td data-th="更新日">{{item.update_date}}</td>
                                 <td><button class="close-button" ng-click="deleteItem(i)"><i class="fa fa-times"></i></button></td>
                             </tr>
                         </tbody>
