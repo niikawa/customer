@@ -26,8 +26,6 @@ core.prototype.merge = function(source, add)
     {
         if (add.hasOwnProperty(attrname))
         {
-            console.log(add);
-            console.log(attrname);
             source[attrname] = add[attrname];
         }
     }
