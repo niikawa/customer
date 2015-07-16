@@ -181,7 +181,7 @@ li > a {
   cursor: pointer;
 }
 
-h5 .title {
+h5.title {
   font-size: 1.5em;
 }
 /*-----------------------------------------------*/
