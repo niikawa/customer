@@ -88,10 +88,11 @@ exports.resolve = function(req, res)
     
     var commonColumns = model.getUpdCommonColumns(req.session.userId);
     var updateData = model.merge(req.params, commonColumns);
+    updateData.resolve = 1;
     var request = model.getRequest();
     request.input('update_by', model.db.Int, req.session.userId);
     request.input('update_date', model.db.NVarChar, updateData.update_date);
-    request.input('resolve', model.db.SmallInt, 1);
+    request.input('resolve', model.db.SmallInt, updateData.resolve);
     request.input('id', model.db.SmallInt, updateData.id);
 
     model.updateById(updateData, request, function(err, date)
