@@ -73,7 +73,6 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         $scope.isShowEditMessage = false;
         Query.setReturnUrl($scope.returnUrl);
         Shared.setRoot('query');
-        
     }
     
     function setEdtInitializeScope(data)

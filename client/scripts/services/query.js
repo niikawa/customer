@@ -100,11 +100,6 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
             return tables;
         };
         
-        queryServices.setEdtInitialize = function(setScope, data)
-        {
-            
-        };
-        
         queryServices.setReturnURL = function(setScope)
         {
             var root = Shared.getRoot();
