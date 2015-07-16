@@ -6,7 +6,8 @@
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 body {
-  background-color: #489494;
+  background-color: #f8f8f8;
+/*  background-color: #489494;*/
   font-family:'Lucida Grande','Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
 }
 #body [ng-cloak],
