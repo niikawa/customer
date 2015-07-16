@@ -292,6 +292,8 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         Query.resource.create(parameters).$promise.then(function(response, err)
         {
             Shared.destloyByName('queryColumns');
+            Shared.destloyByName('updateQueryName');
+            Shared.destloyByName('updateQueryDocumentId');
             Utility.info('クエリを保存しました');
             Location.query();
         });
