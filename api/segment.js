@@ -199,7 +199,7 @@ exports.remove = function(req, res)
 
 exports.download = function(req, res)
 {
-   res.status(200).send('download ok');
+    res.json(req.params.id);
 };
 
 function create(req, res)
