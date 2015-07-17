@@ -1,6 +1,6 @@
 var segmentServices = angular.module("SegmentServices", ["ngResource"]);
-segmentServices.factory("Segment", ['$resource','Utility',
-    function($resource, Utility) 
+segmentServices.factory("Segment", ['$resource', '$http','Utility',
+    function($resource, $http, Utility) 
     {
         var segmentServices = {};
         
@@ -37,6 +37,11 @@ segmentServices.factory("Segment", ['$resource','Utility',
                 url: 'segment/execute',
             },
         });
+        
+        segmentServices.download = function(id)
+        {
+            $http.get('segment/:id/download', {id: id});
+        };
         
         segmentServices.pageProp = function(id)
         {
