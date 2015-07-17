@@ -83,7 +83,7 @@ router.get('/segment/:id', segment.getById);
 router.post('/segment/save', segment.save);
 router.post('/segment/execute', segment.execute);
 router.delete('/segment/remove/:id/:segment_document_id', segment.remove);
-router.get('/segment/download/:id', segment.download);
+router.get('/segment/:id/download', segment.download);
 
 var scenario = require("./api/scenario");
 router.post('/scenario/save', scenario.save);

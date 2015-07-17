@@ -24,7 +24,7 @@ segmentServices.factory("Segment", ['$resource','Utility',
             download:
             {
                 method: 'GET',
-                url: 'segment/download/:id',
+                url: 'segment/:id/download',
             },
             remove:
             {
