@@ -190,19 +190,22 @@ exports.remove = function(req, res)
            if (err.length > 0)
            {
                 console.log(err);
-                res.status(510).send('object not found');
+                res.status(510).send('object not found').end();
            }
-           res.status(200).send('delete ok');
+           res.status(200).send('delete ok').end();
         });
     });
 };
 
 exports.download = function(req, res)
 {
-    res.set("Content-Type", "application/download");
-    res.set("Content-Disposition", 'attachment; filename="test.csv"');
-    res.body = ['"name","age"','"Yoshiki","33"'].join('\n');    
-    res.send();
+    res.download('../files/test.csv', 'test.csv', function(err)
+    {
+        if (err)
+        {
+            res.status(err.status).end();
+        }
+    });
 };
 
 function create(req, res)
