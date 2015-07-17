@@ -36,12 +36,7 @@ function ($scope, Shared, Segment, Utility)
     
     $scope.download = function(id)
     {
-        // Segment.resource.download({id: id}).$promise.then(function(response)
-        // {
-        //     console.log(response);
-        // });
         Segment.download(id);
-        
     };
 
     $scope.remove = function(index)

@@ -37,12 +37,7 @@ segmentServices.factory("Segment", ['$resource', '$http','Utility',
                 url: 'segment/execute',
             },
         });
-        
-        segmentServices.download = function(id)
-        {
-            $http.get('segment/:id/download', {id: id});
-        };
-        
+
         segmentServices.pageProp = function(id)
         {
             if (void 0 === id)
