@@ -3,6 +3,7 @@ var Core = require('./core');
 var Creator = require("./common/createSql");
 var Message = require('../config/message.json');
 var querydoc = require("./querydoc");
+var segmentdoc = require("./segmentdoc");
 
 /** テーブル名 */
 var tableName = 'M_SEGMENT';
@@ -26,7 +27,6 @@ exports.getById = function(req, res)
 {
     if (void 0 === req.params.id) return res.status(510).send('Invalid parameter');
 
-    var segmentdoc = require("./segmentdoc");
     model.async.waterfall
     ([
         function(callback)
@@ -99,7 +99,7 @@ exports.getAll = function(req, res)
 
 exports.getList = function(req, res)
 {
-    var col = "segment_id, segment_name, FORMAT(update_date, 'yyyy/MM/dd') AS update_date";
+    var col = "segment_id, segment_name, FORMAT(update_date, 'yyyy/MM/dd') AS update_date, segment_document_id";
     var where = "delete_flag = 0";
     var qObj = model.getQueryObject(col, tableName, where, '', '');
     model.select(qObj, qObj.request, function(err, data)
@@ -180,7 +180,6 @@ exports.remove = function(req, res)
 {
     if (void 0 === req.params.id || void 0 === req.params.segment_document_id) res.status(510).send('parameters not found');
     
-    var segmentdoc = require("./segmentdoc");
     segmentdoc.removeItemForWeb(req.params.segment_document_id, function(err, doc)
     {
         if (err) res.status(510).send('document is not found');
@@ -201,6 +200,84 @@ exports.download = function(req, res)
 {
     if (!req.params.hasOwnProperty('id')) res.status(510).send('パラメータが不正です');
     console.log('segment download start');
+    
+    model.async.waterfall
+    ([
+        function(callback)
+        {
+            if (isFinite(parseInt(req.params.id, 10)))
+            {
+                model.getById(req.params.id, function(err, data)
+                {
+                    if (err.length > 0)
+                    {
+                        console.log(err);
+                        res.status(510).send('該当するセグメント情報はありません');
+                        return;
+                    }
+                    callback(null, data[0]);
+                });
+            }
+            else
+            {
+                var col = "*";
+                var where = "delete_flag = 0 AND segment_document_id = @segment_document_id";
+                var qObj = model.getQueryObject(col, tableName, where, '', '');
+                qObj.request.input('segment_document_id', model.db.NVarChar, req.params.id);
+                model.select(qObj, qObj.request, function(err, data)
+                {
+                    if (err.length > 0)
+                    {
+                        console.log(err);
+                        res.status(510).send('object not found');
+                        return;
+                    }
+                    callback(null, data[0]);
+                });
+            }
+        }
+    ],
+    function(err, data)
+    {
+        segmentdoc.getItemByIdForWeb(data.segment_document_id, function(err, doc)
+        {
+            if (err) res.status(510).send('document is not found');
+            
+            res.json({
+                segment_name: data.segment_name, 
+                segment_document_id: data.segment_document_id,
+                whereList: doc.whereList,
+                qIds: doc.qIds
+            });
+            
+            querydoc.getItemByIdsForWeb(doc.qIds, '*', function(err, docs)
+            {
+                if (err)
+                {
+                    console.log(err);
+                    console.log(doc.qIds);
+                    res.status(510).send('docs not found');
+                }
+                
+                var request = model.getRequest();
+                var params = {docs: docs, conditionMap: req.body.conditionMap};
+                var creator = new Creator('segment', params, request);
+                var sql = creator.getCountSql(req.body.tables);
+        
+                model.execute(sql, request, function(err, data)
+                {
+                    if (err.length > 0)
+                    {
+                        console.log(err);
+                        res.status(510).send('data not found');
+                    }
+                    model.insertLog(req.session.userId, 5, Message.SEGMENT.I_001);
+                    res.json({result: data[0].count});
+                });
+            });
+        });
+    });
+    
     res.download('files/test.csv', 'aaaaa.csv', function(err)
     {
         if (err)
@@ -210,82 +287,6 @@ exports.download = function(req, res)
         }
     });
 
-    // model.async.waterfall
-    // ([
-    //     function(callback)
-    //     {
-    //         if (isFinite(parseInt(req.params.id, 10)))
-    //         {
-    //             model.getById(req.params.id, function(err, data)
-    //             {
-    //                 if (err.length > 0)
-    //                 {
-    //                     console.log(err);
-    //                     res.status(510).send('該当するセグメント情報はありません');
-    //                     return;
-    //                 }
-    //                 callback(null, data[0]);
-    //             });
-    //         }
-    //         else
-    //         {
-    //             var col = "*";
-    //             var where = "delete_flag = 0 AND segment_document_id = @segment_document_id";
-    //             var qObj = model.getQueryObject(col, tableName, where, '', '');
-    //             qObj.request.input('segment_document_id', model.db.NVarChar, req.params.id);
-    //             model.select(qObj, qObj.request, function(err, data)
-    //             {
-    //                 if (err.length > 0)
-    //                 {
-    //                     console.log(err);
-    //                     res.status(510).send('object not found');
-    //                     return;
-    //                 }
-    //                 callback(null, data[0]);
-    //             });
-    //         }
-    //     }
-    // ],
-    // function(err, data)
-    // {
-    //     segmentdoc.getItemByIdForWeb(data.segment_document_id, function(err, doc)
-    //     {
-    //         if (err) res.status(510).send('document is not found');
-            
-    //         res.json({
-    //             segment_name: data.segment_name, 
-    //             segment_document_id: data.segment_document_id,
-    //             whereList: doc.whereList,
-    //             qIds: doc.qIds
-    //         });
-            
-    //         querydoc.getItemByIdsForWeb(doc.qIds, '*', function(err, docs)
-    //         {
-    //             if (err)
-    //             {
-    //                 console.log(err);
-    //                 console.log(doc.qIds);
-    //                 res.status(510).send('docs not found');
-    //             }
-                
-    //             var request = model.getRequest();
-    //             var params = {docs: docs, conditionMap: req.body.conditionMap};
-    //             var creator = new Creator('segment', params, request);
-    //             var sql = creator.getCountSql(req.body.tables);
-        
-    //             model.execute(sql, request, function(err, data)
-    //             {
-    //                 if (err.length > 0)
-    //                 {
-    //                     console.log(err);
-    //                     res.status(510).send('data not found');
-    //                 }
-    //                 model.insertLog(req.session.userId, 5, Message.SEGMENT.I_001);
-    //                 res.json({result: data[0].count});
-    //             });
-    //         });
-    //     });
-    // });
 };
 
 function create(req, res)
