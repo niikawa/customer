@@ -46,6 +46,7 @@ router.use(session({
 }));
 
 router.use(express.static(path.resolve(__dirname, 'client')));
+router.use(express.static(path.resolve(__dirname, 'files')));
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded());
 
