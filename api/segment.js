@@ -202,7 +202,16 @@ exports.download = function(req, res)
     if (!req.params.hasOwnProperty('id')) res.status(510).send('パラメータが不正です');
     
     console.log('segment download start');
-    res.download('files/test.csv', 'test.csv', function(err)
+    
+    var options = {
+        root: __dirname + '/files/',
+        dotfiles: 'deny',
+        headers: {
+            'x-timestamp': Date.now(),
+            'x-sent': true
+        }
+    };
+    res.sendFile('test.csv', options, function (err)
     {
         if (err)
         {
