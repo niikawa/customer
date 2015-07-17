@@ -199,10 +199,12 @@ exports.remove = function(req, res)
 
 exports.download = function(req, res)
 {
+    console.log('segment download start');
     res.download('../files/test.csv', 'test.csv', function(err)
     {
         if (err)
         {
+            console.log(err);
             res.status(err.status).end();
         }
     });
