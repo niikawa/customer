@@ -189,6 +189,7 @@ function createValuePartBySymbol(item, name, request)
     {
         request.input(name2, type, item.condition.value2);
         values[name2] = item.condition.value2;
+        colTypes[name2] = item.column.type;
     }
 
     return part;

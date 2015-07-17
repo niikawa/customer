@@ -3,6 +3,10 @@ var Core = require('./core');
 var Creator = require("./common/createSql");
 var Message = require('../config/message.json');
 var querydoc = require("./querydoc");
+<<<<<<< HEAD
+=======
+var segmentdoc = require("./segmentdoc");
+>>>>>>> developV2
 
 /** テーブル名 */
 var tableName = 'M_SEGMENT';
@@ -26,7 +30,6 @@ exports.getById = function(req, res)
 {
     if (void 0 === req.params.id) return res.status(510).send('Invalid parameter');
 
-    var segmentdoc = require("./segmentdoc");
     model.async.waterfall
     ([
         function(callback)
@@ -99,7 +102,7 @@ exports.getAll = function(req, res)
 
 exports.getList = function(req, res)
 {
-    var col = "segment_id, segment_name, FORMAT(update_date, 'yyyy/MM/dd') AS update_date";
+    var col = "segment_id, segment_name, FORMAT(update_date, 'yyyy/MM/dd') AS update_date, segment_document_id";
     var where = "delete_flag = 0";
     var qObj = model.getQueryObject(col, tableName, where, '', '');
     model.select(qObj, qObj.request, function(err, data)
@@ -180,7 +183,6 @@ exports.remove = function(req, res)
 {
     if (void 0 === req.params.id || void 0 === req.params.segment_document_id) res.status(510).send('parameters not found');
     
-    var segmentdoc = require("./segmentdoc");
     segmentdoc.removeItemForWeb(req.params.segment_document_id, function(err, doc)
     {
         if (err) res.status(510).send('document is not found');
@@ -201,6 +203,7 @@ exports.download = function(req, res)
 {
     if (!req.params.hasOwnProperty('id')) res.status(510).send('パラメータが不正です');
     console.log('segment download start');
+<<<<<<< HEAD
     res.download('files/test.csv', 'aaaaa.csv', function(err)
     {
         if (err)
@@ -210,6 +213,9 @@ exports.download = function(req, res)
         }
     });
 
+=======
+    
+>>>>>>> developV2
     // model.async.waterfall
     // ([
     //     function(callback)
@@ -286,6 +292,19 @@ exports.download = function(req, res)
     //         });
     //     });
     // });
+<<<<<<< HEAD
+=======
+    
+    res.download('files/test.csv', 'aaaaa.csv', function(err)
+    {
+        if (err)
+        {
+            console.log(err);
+            res.status(err.status).end();
+        }
+    });
+
+>>>>>>> developV2
 };
 
 function create(req, res)
