@@ -204,7 +204,7 @@ exports.download = function(req, res)
     console.log('segment download start');
     
     var options = {
-        root: __dirname + '/files/',
+        root: '/files/',
         dotfiles: 'deny',
         headers: {
             'x-timestamp': Date.now(),
