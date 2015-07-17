@@ -202,7 +202,7 @@ exports.download = function(req, res)
     if (!req.params.hasOwnProperty('id')) res.status(510).send('パラメータが不正です');
     
     console.log('segment download start');
-    res.download('../files/test.csv', 'test.csv', function(err)
+    res.download('../config/message.json', 'message.csv', function(err)
     {
         if (err)
         {
