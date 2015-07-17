@@ -32,9 +32,11 @@ mssql.connect(config, function(err) {
 });
 
 var router = express();
+var cookieParser = require('cookie-parser');
+
 router.set('secretKey', 'ix-cpm-forazure');
 router.set('cookieSessionKey', 'sid');
-router.use(express.cookieParser(router.get('secretKey')));
+router.use(cookieParser(router.get('secretKey')));
 router.use(express.session({secret: router.get('secretKey')}));
 
 router.use(express.static(path.resolve(__dirname, 'client')));
