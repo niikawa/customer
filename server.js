@@ -5,10 +5,7 @@
 //
 var http = require('http');
 var path = require('path');
-
-var async = require('async');
 var express = require('express');
-
 var mssql = require('mssql');
 var config = {
   user: 'vxc-databese-master',
@@ -32,16 +29,23 @@ mssql.connect(config, function(err) {
 });
 
 var router = express();
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var bodyParser = require('body-parser');
+
 router.set('secretKey', 'ix-cpm-forazure');
 router.set('cookieSessionKey', 'sid');
-router.use(express.cookieParser(router.get('secretKey')));
-router.use(express.session({secret: router.get('secretKey')}));
+router.use(cookieParser(router.get('secretKey')));
+router.use(session({
+     secret : router.get('secretKey'),
+     resave : true,
+     saveUninitialized : true,
+}));
 
 router.use(express.static(path.resolve(__dirname, 'client')));
-router.use(express.bodyParser());
-router.use(express.json());
-router.use(express.urlencoded());
-router.use(express.methodOverride());
+router.use(express.static(path.resolve(__dirname, 'files')));
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded());
 
 var auth = require('./api/auth');
 router.post('/auth/login', auth.login);
@@ -79,7 +83,7 @@ router.get('/segment/:id', segment.getById);
 router.post('/segment/save', segment.save);
 router.post('/segment/execute', segment.execute);
 router.delete('/segment/remove/:id/:segment_document_id', segment.remove);
-router.get('/segment/download/:id', segment.download);
+router.get('/segment/:id/download', segment.download);
 
 var scenario = require("./api/scenario");
 router.post('/scenario/save', scenario.save);

@@ -32,7 +32,7 @@
   opacity: 1;
 }
 
-.view-animate-container-wide > .view-animate.ng-enter.ng-enter-active {
+.view-animate-container > .view-animate.ng-enter.ng-enter-active {
   left:240px;
   opacity: 0.5;
 }
