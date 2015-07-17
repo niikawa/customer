@@ -199,7 +199,10 @@ exports.remove = function(req, res)
 
 exports.download = function(req, res)
 {
-    res.json(req.params.id);
+    res.set("Content-Type", "application/download");
+    res.set("Content-Disposition", 'attachment; filename="test.csv"');
+    res.body = ['"name","age"','"Yoshiki","33"'].join('\n');    
+    res.send();
 };
 
 function create(req, res)
