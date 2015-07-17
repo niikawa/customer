@@ -9,7 +9,7 @@
     "async": "~0.2.8",
     "connect-mongo": "^0.7.0",
     "documentdb": "^1.0.3",
-    "express": "~3.2.4",
+    "express": "^4.8.8",
     "install": "^0.1.8",
     "jade": "^1.9.2",
     "log4js": "^0.6.22",
