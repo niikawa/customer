@@ -5,10 +5,7 @@
 //
 var http = require('http');
 var path = require('path');
-
-var async = require('async');
 var express = require('express');
-
 var mssql = require('mssql');
 var config = {
   user: 'vxc-databese-master',
