@@ -287,6 +287,7 @@ exports.download = function(req, res)
                     }
                     
                     var fileHelper = require("../helper/fileHelper");
+                    console.log(fileHelper);
                     var option = {path: "files/", outputCol: {id: "id"}};
                     fileHelper.write(data, option, function(err, fileInfo)
                     {
