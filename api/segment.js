@@ -253,6 +253,9 @@ exports.download = function(req, res)
             //     whereList: doc.whereList,
             //     qIds: doc.qIds
             // });
+            console.log('query getItemByIdsForWeb');
+            console.log(err);
+            console.log(doc);
             
             querydoc.getItemByIdsForWeb(doc.qIds, '*', function(err, docs)
             {
