@@ -255,6 +255,7 @@ function createSegment(data, request)
     {
         var doc = docs[index];
         sql += '('+ doc.sql + ')';
+        console.log(conditionMap[docs[index].id]);
         if (last !== index) sql += conditionMap[docs[index].id];
 
         Object.keys(doc.columnTypeList).forEach(function(key)
@@ -263,5 +264,6 @@ function createSegment(data, request)
             request.input(key, type, doc.bindInfo[key]);
         });
     }
+    console.log(sql);
     return sql;
 }
