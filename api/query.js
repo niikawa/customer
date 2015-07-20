@@ -1,5 +1,5 @@
 var Core = require('./core');
-var Creator = require("./common/createSql");
+var Creator = require("../helper/createSql");
 var Message = require('../config/message.json');
 var QueryDoc = require("./querydoc");
 

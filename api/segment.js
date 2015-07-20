@@ -1,6 +1,6 @@
 var async = require('async');
 var Core = require('./core');
-var Creator = require("./common/createSql");
+var Creator = require("../helper/createSql");
 var Message = require('../config/message.json');
 var querydoc = require("./querydoc");
 var segmentdoc = require("./segmentdoc");
@@ -259,8 +259,7 @@ exports.download = function(req, res)
             {
                 conditionMap[doc.qIds[index]] = doc.whereList[index];
             }
-            console.log(conditionMap);
-            
+
             //segment情報からquery情報をdocumentDBから取得する
             querydoc.getItemByIdsForWeb(doc.qIds, ['*'], function(err, docs)
             {
@@ -272,31 +271,40 @@ exports.download = function(req, res)
                     res.status(510).send('セグメントするためのクエリが取得できませんでした。');
                 }
                 
-                //セグメント結果を取得するためのSQLを生成する
+                //セグメント結果を取得するためのSQLを生成し実行する
                 var request = model.getRequest();
                 var params = {docs: docs, conditionMap: conditionMap};
                 var creator = new Creator('segment', params, request);
                 var tables = creator.mergeTablesToQueryDocInfo(docs);
                 var sql = creator.getSql(tables);
-
                 model.execute(sql, request, function(err, data)
                 {
-                    console.log(err);
-                    console.log(data);
-                    
                     if (err.length > 0)
                     {
+                        console.log('セグメント情報取得時にエラーが発生しました。');
                         console.log(err);
-                        res.status(510).send('data not found');
+                        res.status(510).send('セグメント情報取得時にエラーが発生しました。');
                     }
                     
-                    res.download('files/test.csv', 'aaaaa.csv', function(err)
+                    var fileHelper = require("../helper/fileHelper");
+                    var option = {path: "files/", outputCol: {id: "id"}};
+                    fileHelper.write(data, option, function(err, fileInfo)
                     {
-                        if (err)
+
+                        if (null !== err)
                         {
                             console.log(err);
                             res.status(err.status).end();
                         }
+                        console.log(fileInfo);
+                        res.download(fileInfo.output, fileInfo.fileName, function(err)
+                        {
+                            if (err)
+                            {
+                                console.log(err);
+                                res.status(err.status).end();
+                            }
+                        });
                     });
                 });
             });
