@@ -95,6 +95,7 @@ exports.saveItem = function(req, res)
 exports.getItemByIdForWeb = function(id, callback)
 {
     console.log('Segmetn getItemByIdForWeb');
+    console.log(Segment);
     Segment.getItem(id, function(err, doc)
     {
         callback(err, doc);
