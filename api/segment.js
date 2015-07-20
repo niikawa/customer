@@ -254,10 +254,9 @@ exports.download = function(req, res)
             //     qIds: doc.qIds
             // });
             console.log('query getItemByIdsForWeb');
-            console.log(err);
-            console.log(doc);
+            console.log(querydoc);
             
-            querydoc.getItemByIdsForWeb(doc.qIds, '*', function(err, docs)
+            querydoc.getItemByIdsForWeb(doc.qIds, ['*'], function(err, docs)
             {
                 
                 console.log('segment download getItemByIdsForWeb');

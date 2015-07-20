@@ -173,6 +173,7 @@ exports.getItemByIdForWeb = function(id, callback)
 
 exports.getItemByIdsForWeb = function(idList, columnList, callback)
 {
+    console.log('Query getItemByIdsForWeb');
     Query.getItemByIds(idList, columnList, function(err, doc)
     {
         callback(err,doc);
