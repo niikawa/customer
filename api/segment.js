@@ -297,7 +297,6 @@ exports.download = function(req, res)
                             console.log(err);
                             res.status(err.status).end();
                         }
-                        console.log(fileInfo);
                         res.download(fileInfo.output, fileInfo.fileName, function(err)
                         {
                             if (err)

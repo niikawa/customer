@@ -133,8 +133,8 @@ var moment = require("moment");
                 fs.appendFileSync(this.output, rowString, 'utf8');
             // }
         }
-        callback(null, {output: this.output, fileName: fileName});
-    }    
+        callback(null, {output: this.output, fileName: fileName+this.separator});
+    };
     
     fileHelper.setSeparator = function(s)
     {
