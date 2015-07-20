@@ -242,8 +242,8 @@ exports.download = function(req, res)
     function(err, data)
     {
         console.log('segment download getItemByIdForWeb');
-        console.log(err);
-        console.log(data);
+        console.log(data.segment_document_id);
+        console.log(segmentdoc);
         
         segmentdoc.getItemByIdForWeb(data.segment_document_id, function(err, doc)
         {
