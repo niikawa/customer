@@ -1,6 +1,6 @@
 var async = require('async');
 var Core = require('./core');
-var Creator = require("./common/createSql");
+var Creator = require("../helper/createSql");
 var Message = require('../config/message.json');
 var querydoc = require("./querydoc");
 <<<<<<< HEAD
@@ -215,6 +215,7 @@ exports.download = function(req, res)
 
 =======
     
+<<<<<<< HEAD
 >>>>>>> developV2
     // model.async.waterfall
     // ([
@@ -298,12 +299,121 @@ exports.download = function(req, res)
     res.download('files/test.csv', 'aaaaa.csv', function(err)
     {
         if (err)
+=======
+    //現状、segmentテーブルのIDしかパラメータとしてわたってこないが、拡張の可能性を考慮し
+    //segment_document_idでも取得できるようにしておく
+    model.async.waterfall
+    ([
+        function(callback)
+>>>>>>> developV2
         {
-            console.log(err);
-            res.status(err.status).end();
+            if (isFinite(parseInt(req.params.id, 10)))
+            {
+                model.getById(req.params.id, function(err, data)
+                {
+                    if (err.length > 0)
+                    {
+                        console.log(err);
+                        res.status(510).send('該当するセグメント情報はありません');
+                        return;
+                    }
+                    callback(null, data[0]);
+                });
+            }
+            else
+            {
+                var col = "*";
+                var where = "delete_flag = 0 AND segment_document_id = @segment_document_id";
+                var qObj = model.getQueryObject(col, tableName, where, '', '');
+                qObj.request.input('segment_document_id', model.db.NVarChar, req.params.id);
+                model.select(qObj, qObj.request, function(err, data)
+                {
+                    if (err.length > 0)
+                    {
+                        console.log(err);
+                        res.status(510).send('該当するセグメント情報はありません');
+                        return;
+                    }
+                    callback(null, data[0]);
+                });
+            }
         }
-    });
+    ],
+    function(err, data)
+    {
+        //segment_document_idからsegment情報をdocumentDBから取得する
+        segmentdoc.getItemByIdForWeb(data.segment_document_id, function(err, doc)
+        {
+            if (err) 
+            {
+                console.log(err);
+                console.log('セグメント情報を取得できませんでした。');
+                res.status(510).send('セグメント情報を取得できませんでした。');
+            }
+            
+            //queryを組み立てるための情報を生成
+            //docのwhereListにはqIdsの順番に条件句が格納されている
+            var num = doc.whereList.length;
+            var conditionMap = {};
+            for (var index = 0; index < num; index++)
+            {
+                conditionMap[doc.qIds[index]] = doc.whereList[index];
+            }
 
+<<<<<<< HEAD
+>>>>>>> developV2
+=======
+            //segment情報からquery情報をdocumentDBから取得する
+            querydoc.getItemByIdsForWeb(doc.qIds, ['*'], function(err, docs)
+            {
+                console.log('segment download getItemByIdsForWeb');
+                if (err)
+                {
+                    console.log(err);
+                    console.log('セグメントするためのクエリが取得できませんでした。');
+                    res.status(510).send('セグメントするためのクエリが取得できませんでした。');
+                }
+                
+                //セグメント結果を取得するためのSQLを生成し実行する
+                var request = model.getRequest();
+                var params = {docs: docs, conditionMap: conditionMap};
+                var creator = new Creator('segment', params, request);
+                var tables = creator.mergeTablesToQueryDocInfo(docs);
+                var sql = creator.getSql(tables);
+                model.execute(sql, request, function(err, data)
+                {
+                    if (err.length > 0)
+                    {
+                        console.log('セグメント情報取得時にエラーが発生しました。');
+                        console.log(err);
+                        res.status(510).send('セグメント情報取得時にエラーが発生しました。');
+                    }
+                    
+                    var fileHelper = require("../helper/fileHelper");
+                    console.log(fileHelper);
+                    var option = {path: "files/", outputCol: {id: "id"}};
+                    fileHelper.write(data, option, function(err, fileInfo)
+                    {
+
+                        if (null !== err)
+                        {
+                            console.log(err);
+                            res.status(err.status).end();
+                        }
+                        res.download(fileInfo.output, fileInfo.fileName, function(err)
+                        {
+                            if (err)
+                            {
+                                console.log(err);
+                                res.status(err.status).end();
+                            }
+                        });
+                    });
+                });
+            });
+        });
+    });
+    
 >>>>>>> developV2
 };
 
