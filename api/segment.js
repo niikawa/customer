@@ -215,6 +215,8 @@ exports.download = function(req, res)
                         res.status(510).send('該当するセグメント情報はありません');
                         return;
                     }
+                    console.log('segment download get by id ');
+                    console.log(data[0]);
                     callback(null, data[0]);
                 });
             }
@@ -239,6 +241,7 @@ exports.download = function(req, res)
     ],
     function(err, data)
     {
+        console.log('segment download getItemByIdForWeb');
         segmentdoc.getItemByIdForWeb(data.segment_document_id, function(err, doc)
         {
             if (err) res.status(510).send('document is not found');
