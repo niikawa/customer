@@ -1,27 +1,25 @@
 var fs = require("fs");
 var moment = require("moment");
 
-/**
- * 出力先
- */
-var output = "";
-
-/**
- * セパレータ
- */
-var separator = ",";
-
-/**
- * 拡張子
- */
-var extension = ".csv";
-
-/**
- * 1つの配列に格納される要素の最大数
- */
-var maxListNum = 100000;
-
-var fileHelper = {};
+var fileHelper = 
+{
+    /**
+     * 出力先
+     */
+    output: "",
+    /**
+     * セパレータ
+     */
+    separator: ",",
+    /**
+     * 拡張子
+     */
+    extension: ".csv",
+    /**
+     * 1つの配列に格納される要素の最大数
+     */
+    maxListNum: 100000
+};
 
 function createHeaderList(row)
 {
@@ -107,8 +105,8 @@ fileHelper.prototype.read = function()
  */
 fileHelper.prototype.write = function(dbData, option, callback)
 {
-    if (option.hasOwnProperty("separator")) this.setSeparator(separator);
-    if (option.hasOwnProperty("extension")) this.setExtension(extension);
+    if (option.hasOwnProperty("separator")) this.setSeparator(option.separator);
+    if (option.hasOwnProperty("extension")) this.setExtension(option.extension);
     
     var isHeader = true;
     if (option.hasOwnProperty('isHeader'))
