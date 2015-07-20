@@ -201,6 +201,8 @@ exports.download = function(req, res)
     if (!req.params.hasOwnProperty('id')) res.status(510).send('パラメータが不正です');
     console.log('segment download start');
     
+    //現状、segmentテーブルのIDしかパラメータとしてわたってこないが、拡張の可能性を考慮し
+    //segment_document_idでも取得できるようにしておく
     model.async.waterfall
     ([
         function(callback)
@@ -215,8 +217,6 @@ exports.download = function(req, res)
                         res.status(510).send('該当するセグメント情報はありません');
                         return;
                     }
-                    console.log('segment download get by id ');
-                    console.log(data[0]);
                     callback(null, data[0]);
                 });
             }
@@ -231,7 +231,7 @@ exports.download = function(req, res)
                     if (err.length > 0)
                     {
                         console.log(err);
-                        res.status(510).send('object not found');
+                        res.status(510).send('該当するセグメント情報はありません');
                         return;
                     }
                     callback(null, data[0]);
@@ -241,64 +241,65 @@ exports.download = function(req, res)
     ],
     function(err, data)
     {
-        console.log('segment download getItemByIdForWeb');
-        console.log(data.segment_document_id);
+        //segment_document_idからsegment情報をdocumentDBから取得する
         segmentdoc.getItemByIdForWeb(data.segment_document_id, function(err, doc)
         {
-            if (err) res.status(510).send('document is not found');
+            if (err) 
+            {
+                console.log(err);
+                console.log('セグメント情報を取得できませんでした。');
+                res.status(510).send('セグメント情報を取得できませんでした。');
+            }
             
-            // res.json({
-            //     segment_name: data.segment_name, 
-            //     segment_document_id: data.segment_document_id,
-            //     whereList: doc.whereList,
-            //     qIds: doc.qIds
-            // });
-            console.log('query getItemByIdsForWeb');
-            console.log(querydoc);
+            //queryを組み立てるための情報を生成
+            //docのwhereListにはqIdsの順番に条件句が格納されている
+            var num = doc.whereList;
+            var conditionMap = {};
+            for (var index = 0; index < num; index++)
+            {
+                conditionMap[doc.qIds[index]] = doc.whereList[index];
+            }
             
+            //segment情報からquery情報をdocumentDBから取得する
             querydoc.getItemByIdsForWeb(doc.qIds, ['*'], function(err, docs)
             {
-                
                 console.log('segment download getItemByIdsForWeb');
-                console.log(docs);
-                
-                
-                
                 if (err)
                 {
                     console.log(err);
-                    console.log(doc.qIds);
-                    res.status(510).send('docs not found');
+                    console.log('セグメントするためのクエリが取得できませんでした。');
+                    res.status(510).send('セグメントするためのクエリが取得できませんでした。');
                 }
                 
-                // var request = model.getRequest();
-                // var params = {docs: docs, conditionMap: req.body.conditionMap};
-                // var creator = new Creator('segment', params, request);
-                // var sql = creator.getCountSql(req.body.tables);
+                //セグメント結果を取得するためのSQLを生成する
+                var request = model.getRequest();
+                var params = {docs: docs, conditionMap: conditionMap};
+                var creator = new Creator('segment', params, request);
+                var tables = creator.mergeTablesToQueryDocInfo(docs);
+                var sql = creator.getSql(tables);
                 
-                // console.log();
+                console.log(sql);
         
-                // model.execute(sql, request, function(err, data)
-                // {
-                //     if (err.length > 0)
-                //     {
-                //         console.log(err);
-                //         res.status(510).send('data not found');
-                //     }
-                //     model.insertLog(req.session.userId, 5, Message.SEGMENT.I_001);
-                //     res.json({result: data[0].count});
-                // });
-                
-                res.download('files/test.csv', 'aaaaa.csv', function(err)
+                model.execute(sql, request, function(err, data)
                 {
-                    if (err)
+                    console.log(err);
+                    console.log(data);
+                    
+                    if (err.length > 0)
                     {
                         console.log(err);
-                        res.status(err.status).end();
+                        res.status(510).send('data not found');
                     }
+                    
+                    res.download('files/test.csv', 'aaaaa.csv', function(err)
+                    {
+                        if (err)
+                        {
+                            console.log(err);
+                            res.status(err.status).end();
+                        }
+                    });
                 });
-        
-                
             });
         });
     });

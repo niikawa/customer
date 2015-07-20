@@ -1,5 +1,13 @@
 var values = {};
 var colTypes = {};
+/**
+ * sql creater class
+ * 
+ * @author niikawa
+ * @param string createType query or segment
+ * @param array return query document data
+ * @param object request object or undfined
+ */
 function CreateSQL(createType, list, request)
 {
     this.values = {};
@@ -38,22 +46,27 @@ CreateSQL.prototype =
     },
     getSql: function(tableList)
     {
-        var work = [];
-        Object.keys(tableList).forEach(function(key)
-        {
-            work.push(key);
-        });
+        var tables = this.getTableListByTableInfoObject(tableList);
+        // var work = [];
+        // Object.keys(tableList).forEach(function(key)
+        // {
+        //     work.push(key);
+        // });
         
-        return "SELECT * FROM " + work.join(',') + ' WHERE ' + this.conditions;
+        return "SELECT * FROM " + tables.join(',') + ' WHERE ' + this.conditions;
     },
     getCountSql: function(tableList)
     {
-        var work = [];
-        Object.keys(tableList).forEach(function(key)
-        {
-            work.push(key);
-        });
-        return "SELECT count(1) AS count FROM " + work.join(',') + ' WHERE ' + this.conditions;
+        var tables = this.getTableListByTableInfoObject(tableList);
+        // Object.keys(tableList).forEach(function(tableName)
+        // {
+        //     if (!workObj.hasOwnProperty(tableName))
+        //     {
+        //         work.push(tableName);
+        //         workObj[tableName] = workObj;
+        //     }
+        // });
+        return "SELECT count(1) AS count FROM " + tables.join(',') + ' WHERE ' + this.conditions;
     },
     getValueList: function()
     {
@@ -62,6 +75,38 @@ CreateSQL.prototype =
     getColTypeList: function()
     {
         return this.colTypeList;
+    },
+    getTableListByTableInfoObject: function(tables)
+    {
+        var workObj = {};
+        var tableList = [];
+        Object.keys(tables).forEach(function(tableName)
+        {
+            if (!workObj.hasOwnProperty(tableName))
+            {
+                tableList.push(tableName);
+                workObj[tableName] = workObj;
+            }
+        });
+        return tableList;
+    },
+    mergeTablesToQueryDocInfo: function(queryDocs)
+    {
+        
+        var num = queryDocs.length;
+        var tableListObject = [];
+        for (var index = 0; index < num; index++)
+        {
+            var target = queryDocs[index];
+            Object.keys(target.tables).forEach(function(tableName)
+            {
+                if (!tableListObject.hasOwnProperty(tableName))
+                {
+                    tableListObject[tableName] = tableName;
+                }
+            });
+        }
+        return tableListObject;
     }
 };
 
