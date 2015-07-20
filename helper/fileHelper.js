@@ -21,7 +21,7 @@ var extension = ".csv";
  */
 var maxListNum = 100000;
 
-var fileHelper = function(){};
+var fileHelper = {};
 
 function createHeaderList(row)
 {
@@ -198,5 +198,3 @@ fileHelper.prototype.write = function(dbData, option, callback)
     
     return {output: this.output, fileName: fileName};
 };
-
-module.exports = fileHelper;
