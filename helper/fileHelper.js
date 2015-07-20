@@ -67,18 +67,18 @@ function createSpecifiedRowList(row, outputList)
     return rowList;
 }
 
-fileHelper.prototype.setSeparator = function(s)
+fileHelper.setSeparator = function(s)
 {
     this.separator = s;
 };
 
-fileHelper.prototype.setExtension = function(ex)
+fileHelper.setExtension = function(ex)
 {
     this.extension = ex;
 };
 
 
-fileHelper.prototype.read = function()
+fileHelper.read = function()
 {
     
 };
@@ -103,8 +103,10 @@ fileHelper.prototype.read = function()
  *                      max : 指定しない場合は制限なし
  *                      outputCol : 出力対象を指定する
  */
-fileHelper.prototype.write = function(dbData, option, callback)
+fileHelper.write = function(dbData, option, callback)
 {
+    console.log(dbData);
+    console.log(option);
     if (option.hasOwnProperty("separator")) this.setSeparator(option.separator);
     if (option.hasOwnProperty("extension")) this.setExtension(option.extension);
     
@@ -163,7 +165,7 @@ fileHelper.prototype.write = function(dbData, option, callback)
     }
     
     var dataNum = dbData.length;
-    var splitNum = (dataNum < maxListNum) ? 0 : Math.ceil(dataNum / maxListNum);
+    var splitNum = (dataNum < this.maxListNum) ? 0 : Math.ceil(dataNum / this.maxListNum);
     var row = {};
     var rowList = [];
     var rowString = "\n";
@@ -175,7 +177,7 @@ fileHelper.prototype.write = function(dbData, option, callback)
             {
                 row = dbData[rowNum];
                 rowList = createSpecifiedRowList(row, option.outputCol);
-                rowString += rowList.join(separator) + "\n";
+                rowString += rowList.join(this.separator) + "\n";
             }
             fs.appendFileSync(this.output, rowString, 'utf8');
         // }
@@ -188,11 +190,10 @@ fileHelper.prototype.write = function(dbData, option, callback)
             {
                 row = dbData[rowNum];
                 rowList = createRowList(row);
-                rowString += rowList.join(separator) + "\n";
+                rowString += rowList.join(this.separator) + "\n";
             }
             fs.appendFileSync(this.output, rowString, 'utf8');
         // }
     }
-    
-    return {output: this.output, fileName: fileName};
+    callback(null, {output: this.output, fileName: fileName});
 };
