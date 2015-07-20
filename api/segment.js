@@ -253,12 +253,13 @@ exports.download = function(req, res)
             
             //queryを組み立てるための情報を生成
             //docのwhereListにはqIdsの順番に条件句が格納されている
-            var num = doc.whereList;
+            var num = doc.whereList.length;
             var conditionMap = {};
             for (var index = 0; index < num; index++)
             {
                 conditionMap[doc.qIds[index]] = doc.whereList[index];
             }
+            console.log(conditionMap);
             
             //segment情報からquery情報をdocumentDBから取得する
             querydoc.getItemByIdsForWeb(doc.qIds, ['*'], function(err, docs)
@@ -277,9 +278,7 @@ exports.download = function(req, res)
                 var creator = new Creator('segment', params, request);
                 var tables = creator.mergeTablesToQueryDocInfo(docs);
                 var sql = creator.getSql(tables);
-                
-                console.log(sql);
-        
+
                 model.execute(sql, request, function(err, data)
                 {
                     console.log(err);
