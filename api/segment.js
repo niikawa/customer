@@ -201,92 +201,102 @@ exports.download = function(req, res)
     if (!req.params.hasOwnProperty('id')) res.status(510).send('パラメータが不正です');
     console.log('segment download start');
     
-    // model.async.waterfall
-    // ([
-    //     function(callback)
-    //     {
-    //         if (isFinite(parseInt(req.params.id, 10)))
-    //         {
-    //             model.getById(req.params.id, function(err, data)
-    //             {
-    //                 if (err.length > 0)
-    //                 {
-    //                     console.log(err);
-    //                     res.status(510).send('該当するセグメント情報はありません');
-    //                     return;
-    //                 }
-    //                 callback(null, data[0]);
-    //             });
-    //         }
-    //         else
-    //         {
-    //             var col = "*";
-    //             var where = "delete_flag = 0 AND segment_document_id = @segment_document_id";
-    //             var qObj = model.getQueryObject(col, tableName, where, '', '');
-    //             qObj.request.input('segment_document_id', model.db.NVarChar, req.params.id);
-    //             model.select(qObj, qObj.request, function(err, data)
-    //             {
-    //                 if (err.length > 0)
-    //                 {
-    //                     console.log(err);
-    //                     res.status(510).send('object not found');
-    //                     return;
-    //                 }
-    //                 callback(null, data[0]);
-    //             });
-    //         }
-    //     }
-    // ],
-    // function(err, data)
-    // {
-    //     segmentdoc.getItemByIdForWeb(data.segment_document_id, function(err, doc)
-    //     {
-    //         if (err) res.status(510).send('document is not found');
-            
-    //         res.json({
-    //             segment_name: data.segment_name, 
-    //             segment_document_id: data.segment_document_id,
-    //             whereList: doc.whereList,
-    //             qIds: doc.qIds
-    //         });
-            
-    //         querydoc.getItemByIdsForWeb(doc.qIds, '*', function(err, docs)
-    //         {
-    //             if (err)
-    //             {
-    //                 console.log(err);
-    //                 console.log(doc.qIds);
-    //                 res.status(510).send('docs not found');
-    //             }
-                
-    //             var request = model.getRequest();
-    //             var params = {docs: docs, conditionMap: req.body.conditionMap};
-    //             var creator = new Creator('segment', params, request);
-    //             var sql = creator.getCountSql(req.body.tables);
-        
-    //             model.execute(sql, request, function(err, data)
-    //             {
-    //                 if (err.length > 0)
-    //                 {
-    //                     console.log(err);
-    //                     res.status(510).send('data not found');
-    //                 }
-    //                 model.insertLog(req.session.userId, 5, Message.SEGMENT.I_001);
-    //                 res.json({result: data[0].count});
-    //             });
-    //         });
-    //     });
-    // });
-    
-    res.download('files/test.csv', 'aaaaa.csv', function(err)
-    {
-        if (err)
+    model.async.waterfall
+    ([
+        function(callback)
         {
-            console.log(err);
-            res.status(err.status).end();
+            if (isFinite(parseInt(req.params.id, 10)))
+            {
+                model.getById(req.params.id, function(err, data)
+                {
+                    if (err.length > 0)
+                    {
+                        console.log(err);
+                        res.status(510).send('該当するセグメント情報はありません');
+                        return;
+                    }
+                    callback(null, data[0]);
+                });
+            }
+            else
+            {
+                var col = "*";
+                var where = "delete_flag = 0 AND segment_document_id = @segment_document_id";
+                var qObj = model.getQueryObject(col, tableName, where, '', '');
+                qObj.request.input('segment_document_id', model.db.NVarChar, req.params.id);
+                model.select(qObj, qObj.request, function(err, data)
+                {
+                    if (err.length > 0)
+                    {
+                        console.log(err);
+                        res.status(510).send('object not found');
+                        return;
+                    }
+                    callback(null, data[0]);
+                });
+            }
         }
+    ],
+    function(err, data)
+    {
+        segmentdoc.getItemByIdForWeb(data.segment_document_id, function(err, doc)
+        {
+            if (err) res.status(510).send('document is not found');
+            
+            // res.json({
+            //     segment_name: data.segment_name, 
+            //     segment_document_id: data.segment_document_id,
+            //     whereList: doc.whereList,
+            //     qIds: doc.qIds
+            // });
+            
+            querydoc.getItemByIdsForWeb(doc.qIds, '*', function(err, docs)
+            {
+                
+                console.log('segment download getItemByIdsForWeb');
+                console.log(docs);
+                
+                
+                
+                if (err)
+                {
+                    console.log(err);
+                    console.log(doc.qIds);
+                    res.status(510).send('docs not found');
+                }
+                
+                // var request = model.getRequest();
+                // var params = {docs: docs, conditionMap: req.body.conditionMap};
+                // var creator = new Creator('segment', params, request);
+                // var sql = creator.getCountSql(req.body.tables);
+                
+                // console.log();
+        
+                // model.execute(sql, request, function(err, data)
+                // {
+                //     if (err.length > 0)
+                //     {
+                //         console.log(err);
+                //         res.status(510).send('data not found');
+                //     }
+                //     model.insertLog(req.session.userId, 5, Message.SEGMENT.I_001);
+                //     res.json({result: data[0].count});
+                // });
+                
+                res.download('files/test.csv', 'aaaaa.csv', function(err)
+                {
+                    if (err)
+                    {
+                        console.log(err);
+                        res.status(err.status).end();
+                    }
+                });
+        
+                
+            });
+        });
     });
-
+    
 };
 
 function create(req, res)
