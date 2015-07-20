@@ -191,5 +191,6 @@ var moment = require("moment");
         });
         return rowList;
     }
-
+    
+    module.exports = fileHelper;
 }());
