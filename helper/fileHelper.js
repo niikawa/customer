@@ -1,83 +1,25 @@
 var fs = require("fs");
 var moment = require("moment");
-
-function createHeaderList(row)
+(function()
 {
-    var headerRowList = [];
-    Object.keys(row).forEach(function(colName)
-    {
-        headerRowList.push(colName);
-    });
-    return headerRowList;
-}
-
-function createSpecifiedHeaderList(row, outputList)
-{
-    var headerRowList = [];
-    Object.keys(row).forEach(function(colName)
-    {
-        if (outputList.hasOwnProperty(colName))
-        {
-            headerRowList.push(colName);
-        }
-    });
-    return headerRowList;
-}
-
-function createRowList(row)
-{
-    var rowList = [];
-    Object.keys(row).forEach(function(colName)
-    {
-        rowList.push(row[colName]);
-    });
-    return rowList;
-}
-
-function createSpecifiedRowList(row, outputList)
-{
-    var rowList = [];
-    Object.keys(row).forEach(function(colName)
-    {
-        if (outputList.hasOwnProperty(colName))
-        {
-            rowList.push(row[colName]);
-        }
-    });
-    return rowList;
-}
-
-var fileHelper = 
-{
+    var fileHelper = {};
+    
     /**
      * 出力先
      */
-    output: "",
+    fileHelper.output = "";
     /**
      * セパレータ
      */
-    separator: ",",
+    fileHelper.separator = ",";
     /**
      * 拡張子
      */
-    extension: ".csv",
+    fileHelper.extension = ".csv";
     /**
      * 1つの配列に格納される要素の最大数
      */
-    maxListNum: 100000,
-    
-    /**
-     * 
-     */
-     setSeparator: function(s)
-     {
-        this.separator = s;
-     },
-
-    setExtension: function(ex)
-    {
-        this.extension = ex;
-    },
+    fileHelper.maxListNum = 100000;
 
     /**
      * Example:
@@ -99,7 +41,7 @@ var fileHelper =
      *                      max : 指定しない場合は制限なし
      *                      outputCol : 出力対象を指定する
      */
-    write: function(dbData, option, callback)
+    fileHelper.write = function(dbData, option, callback)
     {
         console.log(dbData);
         console.log(option);
@@ -193,4 +135,61 @@ var fileHelper =
         }
         callback(null, {output: this.output, fileName: fileName});
     }    
-};
+    
+    fileHelper.setSeparator = function(s)
+    {
+        this.separator = s;
+    };
+
+    fileHelper.setExtension = function(ex)
+    {
+        this.extension = ex;
+    };
+
+    function createHeaderList(row)
+    {
+        var headerRowList = [];
+        Object.keys(row).forEach(function(colName)
+        {
+            headerRowList.push(colName);
+        });
+        return headerRowList;
+    }
+    
+    function createSpecifiedHeaderList(row, outputList)
+    {
+        var headerRowList = [];
+        Object.keys(row).forEach(function(colName)
+        {
+            if (outputList.hasOwnProperty(colName))
+            {
+                headerRowList.push(colName);
+            }
+        });
+        return headerRowList;
+    }
+    
+    function createRowList(row)
+    {
+        var rowList = [];
+        Object.keys(row).forEach(function(colName)
+        {
+            rowList.push(row[colName]);
+        });
+        return rowList;
+    }
+    
+    function createSpecifiedRowList(row, outputList)
+    {
+        var rowList = [];
+        Object.keys(row).forEach(function(colName)
+        {
+            if (outputList.hasOwnProperty(colName))
+            {
+                rowList.push(row[colName]);
+            }
+        });
+        return rowList;
+    }
+
+}());
