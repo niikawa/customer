@@ -65,7 +65,6 @@ exports.getById = function(req, res)
     ],
     function(err, data)
     {
-        var segmentdoc = require("./segmentdoc");
         segmentdoc.getItemByIdForWeb(data.segment_document_id, function(err, doc)
         {
             if (err) res.status(510).send('document is not found');
@@ -243,6 +242,9 @@ exports.download = function(req, res)
     function(err, data)
     {
         console.log('segment download getItemByIdForWeb');
+        console.log(err);
+        console.log(data);
+        
         segmentdoc.getItemByIdForWeb(data.segment_document_id, function(err, doc)
         {
             if (err) res.status(510).send('document is not found');
