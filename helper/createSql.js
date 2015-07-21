@@ -260,11 +260,12 @@ function createSegment(data, request)
     var count = 0;
     Object.keys(conditionMap).forEach(function(qId)
     {
-        count++;
         var doc = docs[qId];
         sql += '('+ doc.sql + ')';
         if (last !== count) sql += conditionMap[qId];
-
+        console.log(last);
+        console.log(count);
+        count++;
         Object.keys(doc.columnTypeList).forEach(function(key)
         {
             var type = getColType(doc.columnTypeList[key]);
