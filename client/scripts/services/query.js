@@ -100,6 +100,16 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
             return tables;
         };
         
+        queryServices.getRefTabels = function(tables)
+        {
+            var tableList = [];
+            angular.forEach(tables, function(table)
+            {
+                tableList.push(table);
+            });
+            return tableList;
+        };
+        
         queryServices.getReturnURL = function()
         {
             var root = Shared.getRoot();

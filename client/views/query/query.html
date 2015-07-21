@@ -37,7 +37,7 @@
                         refine-directive refine-item="tableList" keyword="tableSearch" name-propertie="logicalname|description" >
                   </div>
                   <ul class="list-group" >
-                    <li class="list-group-item" ng-repeat="item in tableList" push-directive list="tableList" info="item" ng-click="showColumns(item.physicalname)">
+                    <li class="list-group-item" ng-repeat="item in tableListRef" push-directive list="tableList" info="item" ng-click="showColumns(item.physicalname)">
                         {{item.logicalname}}({{item.physicalname}})
                         <section>{{item.description}}</section>
                     </li>

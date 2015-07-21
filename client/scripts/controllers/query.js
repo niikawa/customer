@@ -62,6 +62,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         Shared.destloyByName('queryName');
         Shared.destloyByName('updateQueryDocumentId');
         $scope.tableList = [];
+        $scope.tableListRef = [];
         $scope.columnNum = 0;
         $scope.selectColumns = [];
         if (!isEdit)
@@ -115,6 +116,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
             {
                 $scope.queryName = response.data.query_name;
                 $scope.tableList = response.table;
+                $scope.tableListRef = Query.getRefTabels(response.table);
                 if (0 === $scope.selectColumns.length)
                 {
                     setEdtInitializeScope(response.data);
@@ -129,6 +131,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
             Query.resource.get().$promise.then(function(response)
             {
                 $scope.tableList = response.table;
+                $scope.tableListRef = Query.getRefTabels(response.table);
             });
         }
     };
