@@ -144,7 +144,7 @@ function ($scope, $routeParams, User, Role, Utility, Shared, Location)
         if (2 === pageProp.type)
         {
             Utility.deleteCommonInfo($scope.user);
-            if (0 === $scope.passwordEdit.show)
+            if ('1' !== $scope.passwordEdit.show)
             {
                 delete $scope.user.password_confirm;
                 delete $scope.user.password;
