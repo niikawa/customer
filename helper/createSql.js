@@ -67,7 +67,7 @@ CreateSQL.prototype =
         //         workObj[tableName] = workObj;
         //     }
         // });
-        return "SELECT count(1) AS count FROM " + tables.join(',') + ' WHERE ' + this.conditions;
+        return "SELECT count( distinct("+ keyColumnName + ") ) AS count FROM " + tables.join(',') + ' WHERE ' + this.conditions;
     },
     getValueList: function()
     {
@@ -244,24 +244,44 @@ function createValuePartBySymbol(item, name, request)
 function createSegment(data, request)
 {
     console.log('createSegment start');
-    console.log(data);
-    var docs = data.docs;
+
     var conditionMap = data.conditionMap;
-    
-    var num = docs.length;
-    var last = num - 1;
-    var sql = '';
+    var num = data.docs.length;
+    //document DB から取得した結果は、順序が保障されていない
+    //おそらくデフォルトでは_tsの照準っぽい
+    var docs = {};
     for (var index = 0; index < num; index++)
     {
-        var doc = docs[index];
+        docs[data.docs[index].id] = data.docs[index];
+    }
+    var sql = '';
+    var last = num - 1;
+    var count = 0;
+    Object.keys(conditionMap).forEach(function(qId)
+    {
+        var doc = docs[qId];
         sql += '('+ doc.sql + ')';
-        if (last !== index) sql += conditionMap[docs[index].id];
-
+        if (last !== count) sql += conditionMap[qId];
+        count++;
         Object.keys(doc.columnTypeList).forEach(function(key)
         {
             var type = getColType(doc.columnTypeList[key]);
             request.input(key, type, doc.bindInfo[key]);
         });
-    }
+    });
+
+    // for (var index = 0; index < num; index++)
+    // {
+    //     var doc = docs[index];
+    //     sql += '('+ doc.sql + ')';
+    //     if (last !== index) sql += conditionMap[docs[index].id];
+
+    //     Object.keys(doc.columnTypeList).forEach(function(key)
+    //     {
+    //         var type = getColType(doc.columnTypeList[key]);
+    //         request.input(key, type, doc.bindInfo[key]);
+    //     });
+    // }
+    console.log(sql);
     return sql;
 }

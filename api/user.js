@@ -106,7 +106,7 @@ exports.craete = function(req, res)
     request.input('update_by', model.db.Int, insertData.update_by);
     request.input('update_date', model.db.NVarChar, insertData.update_date);
     request.input('mailaddress', model.db.VarChar, insertData.mailaddress);
-//    request.input('password', model.db.NVarChar, crypto.createHash('md5').update(insertData.password).digest("hex"));
+    request.input('password', model.db.NVarChar, crypto.createHash('md5').update(insertData.password).digest("hex"));
     request.input('password', model.db.NVarChar, insertData.password);
     request.input('role_id', model.db.Int, insertData.role_id);
     request.input('name', model.db.NVarChar, insertData.name);

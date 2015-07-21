@@ -170,15 +170,15 @@ input[type="number"] {
   max-width: 100px;
 }
 */
-@media screen and (min-width: 767px) {
-  .vertical-container > form > div > input,
-  .vertical-container > form > div > div >input {
-    width: 70%;
-  }
-  .vertical-container > form > div  > ul {
-    width: 70%;
-  }
-}
+/*@media screen and (min-width: 767px) {*/
+/*  .vertical-container > form > div > input,*/
+/*  .vertical-container > form > div > div >input {*/
+/*    width: 70%;*/
+/*  }*/
+/*  .vertical-container > form > div  > ul {*/
+/*    width: 70%;*/
+/*  }*/
+/*}*/
 
 td > a,
 li > a {
