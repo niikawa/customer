@@ -24,21 +24,21 @@ exports.getByConditon = function(req, res)
     col += "T2.name, T2.role_id";
     var tableName = "T_DEMAND_BUG T1 INNER JOIN M_USER T2 ON T1.create_by = T2.user_id";
     var where = '';
-    if (req.body.hasOwnProperty('resolve')) 
+    if (req.body.hasOwnProperty('resolve') && null !== req.body.resolve) 
     {
-        where += "T1.resolve = @resolve AND";
+        where += "T1.resolve = @resolve AND ";
         request.input('resolve', model.db.Int, req.body.resolve);
     }
     
-    if (req.body.hasOwnProperty('type')) 
+    if (req.body.hasOwnProperty('type') && null !== req.body.type) 
     {
-        where += "T1.type = @type AND";
+        where += "T1.type = @type AND ";
         request.input('type', model.db.Int, req.body.type);
     }
 
     where = " T1.delete_flag = 0";
 
-    var order = "id DESC";
+    var order = "T1.id DESC";
     var qObj = model.getQueryObject(col, tableName, where, '', order);
 
     model.select(qObj, request, function(err, data)

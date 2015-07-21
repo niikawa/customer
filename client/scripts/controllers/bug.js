@@ -4,7 +4,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
 {
     function setInitializeScope()
     {
-        $scope.bug = {};
+        $scope.bug = {resolve: '', type: ''};
     }
     
     function getInitializeData()
@@ -61,6 +61,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
         Bug.resource.resolve({id: $scope.bugList[index].id}).$promise.then(function(response)
         {
             Utility.info(name + '<br>を解決しました。');
+            getInfo();
         });
     };
 
