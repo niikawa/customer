@@ -252,7 +252,7 @@ function createSegment(data, request)
     var docs = {};
     for (var index = 0; index < num; index++)
     {
-        docs[data.docs[index]._id] = data.docs[index];
+        docs[data.docs[index].id] = data.docs[index];
     }
     console.log(docs);
     var sql = '';
