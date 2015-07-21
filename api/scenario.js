@@ -344,8 +344,11 @@ function create(req, res)
                     {
                         if (err.length > 0)
                         {
-                            console.log(err);
-                            res.status(510).send('object not found');
+                            transaction.rollback(function(err)
+                            {
+                                console.log(err);
+                                res.status(510).send('シナリオの登録に失敗しました');
+                            });
                         }
                         
                         var col = "MAX(scenario_id) as scenario_id";
@@ -355,8 +358,11 @@ function create(req, res)
                         {
                             if (err.length > 0)
                             {
-                                console.log(err);
-                                res.status(510).send('object not found');
+                                transaction.rollback(function(err)
+                                {
+                                    console.log(err);
+                                    res.status(510).send('シナリオの登録に失敗しました');
+                                });
                             }
                             callback(null, data[0]);
                         });
@@ -413,14 +419,16 @@ function create(req, res)
                     {
                         if (err.length > 0)
                         {
-                            console.log(err);
-                            res.status(510).send('object not found');
+                            transaction.rollback(function(err)
+                            {
+                                console.log(err);
+                                res.status(510).send('シナリオの登録に失敗しました');
+                            });
                         }
     
                         callback(null, data);
                     });
                 }
-                
             ],
             function(err)
             {
