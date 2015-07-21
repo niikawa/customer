@@ -67,7 +67,7 @@ CreateSQL.prototype =
         //         workObj[tableName] = workObj;
         //     }
         // });
-        return "SELECT count(1) AS count FROM " + tables.join(',') + ' WHERE ' + this.conditions;
+        return "SELECT count( distinct("+ keyColumnName + ") ) AS count FROM " + tables.join(',') + ' WHERE ' + this.conditions;
     },
     getValueList: function()
     {
