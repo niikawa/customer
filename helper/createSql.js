@@ -246,7 +246,7 @@ function createSegment(data, request)
     console.log('createSegment start');
 
     var conditionMap = data.conditionMap;
-    var num = docs.length;
+    var num = data.docs.length;
     //document DB から取得した結果は、順序が保障されていない
     //おそらくデフォルトでは_tsの照準っぽい
     var docs = {};
