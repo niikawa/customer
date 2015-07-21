@@ -314,123 +314,139 @@ function create(req, res)
             console.log(req.body);
             res.status(510).send('scenario crate faild');
         }
-        
-        model.async.waterfall(
-        [
-            function(callback)
-            {
-                var commonColumns = model.getInsCommonColumns();
-                var insertData = model.merge(req.body.scenario, commonColumns);
-                var request = model.getRequest();
-                request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
-                request.input('create_by', model.db.Int, req.session.userId);
-                request.input('create_date', model.db.NVarChar, insertData.create_date);
-                request.input('update_by', model.db.Int, req.session.userId);
-                request.input('update_date', model.db.NVarChar, insertData.update_date);
-                
-                request.input('segment_id', model.db.Int, insertData.segment_id);
-                request.input('if_layout_id', model.db.Int, insertData.if_layout_id);
-                request.input('scenario_name', model.db.NVarChar, insertData.scenario_name);
-                request.input('output_name', model.db.NVarChar, insertData.output_name);
-                request.input('scenario_type', model.db.SmallInt, insertData.scenario_type);
-                request.input('status', model.db.SmallInt, insertData.status);
-                request.input('approach', model.db.SmallInt, insertData.approach);
-                request.input('priority', model.db.SmallInt, 999999);
 
-                model.insert(tableName, insertData, request, function(err, date)
+        model.tranBegin(function(err, transaction)
+        {
+            model.async.waterfall(
+            [
+                function(callback)
                 {
-                    if (err.length > 0)
-                    {
-                        console.log(err);
-                        res.status(510).send('object not found');
-                    }
+                    var commonColumns = model.getInsCommonColumns();
+                    var insertData = model.merge(req.body.scenario, commonColumns);
+                    var request = model.getRequest(transaction);
+    
+                    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+                    request.input('create_by', model.db.Int, req.session.userId);
+                    request.input('create_date', model.db.NVarChar, insertData.create_date);
+                    request.input('update_by', model.db.Int, req.session.userId);
+                    request.input('update_date', model.db.NVarChar, insertData.update_date);
                     
-                    var col = "MAX(scenario_id) as scenario_id";
-                    var where = "delete_flag = 0 ";
-                    var qObj = model.getQueryObject(col, tableName, where, '', '');
-                    model.select(qObj, qObj.request, function(err, data)
+                    request.input('segment_id', model.db.Int, insertData.segment_id);
+                    request.input('if_layout_id', model.db.Int, insertData.if_layout_id);
+                    request.input('scenario_name', model.db.NVarChar, insertData.scenario_name);
+                    request.input('output_name', model.db.NVarChar, insertData.output_name);
+                    request.input('scenario_type', model.db.SmallInt, insertData.scenario_type);
+                    request.input('status', model.db.SmallInt, insertData.status);
+                    request.input('approach', model.db.SmallInt, insertData.approach);
+                    request.input('priority', model.db.SmallInt, 999999);
+    
+                    model.insert(tableName, insertData, request, function(err, date)
                     {
                         if (err.length > 0)
                         {
                             console.log(err);
                             res.status(510).send('object not found');
                         }
-                        callback(null, data[0]);
+                        
+                        var col = "MAX(scenario_id) as scenario_id";
+                        var where = "delete_flag = 0 ";
+                        var qObj = model.getQueryObject(col, tableName, where, '', '');
+                        model.select(qObj, qObj.request, function(err, data)
+                        {
+                            if (err.length > 0)
+                            {
+                                console.log(err);
+                                res.status(510).send('object not found');
+                            }
+                            callback(null, data[0]);
+                        });
                     });
-                });
-            },
-            function(data, callback)
-            {
-                
-                var request = model.getRequest();
-                var childTabelName = '';
-                
-                var specificInfo = {};
-                
-                if (1 === req.body.scenario.scenario_type)
+                },
+                function(data, callback)
                 {
-                    specificInfo = 
-                    {
-                        repeat_flag: req.body.specificInfo.repeat_flag,
-                        expiration_start_date: req.body.specificInfo.expiration_start_date,
-                        expiration_end_date: req.body.specificInfo.expiration_end_date
-                    };
+                    var request = model.getRequest(transaction);
+                    var childTabelName = '';
                     
-                    childTabelName = 'M_SCHEDULE_SCENARIO';
-                    request.input('repeat_flag', model.db.Int, specificInfo.repeat_flag);
-                    request.input('expiration_start_date', model.db.NVarChar, specificInfo.expiration_start_date);
-                    request.input('expiration_end_date', model.db.NVarChar, specificInfo.expiration_end_date);
-                }
-                else if (2 === req.body.scenario.scenario_type)
-                {
-                    specificInfo = 
-                    {
-                        after_event_occurs_num: req.body.specificInfo.after_event_occurs_num,
-                        inoperative_num: req.body.specificInfo.inoperative_num
-                    };
+                    var specificInfo = {};
                     
-                    childTabelName = 'M_TRIGGER_SCENARIO';
-                    request.input('after_event_occurs_num', model.db.Int, specificInfo.after_event_occurs_num);
-                    request.input('inoperative_num', model.db.Int, specificInfo.inoperative_num);
-                }
-                
-                var commonColumns = model.getInsCommonColumns();
-                var insertData = model.merge(specificInfo, commonColumns);
-                insertData.scenario_id = data.scenario_id;
-                insertData.scenario_action_document_id = (null === doc) ? null : doc.id;
-
-                request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
-                request.input('create_by', model.db.Int, req.session.userId);
-                request.input('create_date', model.db.NVarChar, insertData.create_date);
-                request.input('update_by', model.db.Int, req.session.userId);
-                request.input('update_date', model.db.NVarChar, insertData.update_date);
-                request.input('scenario_id', model.db.Int, insertData.scenario_id);
-                request.input('scenario_action_document_id', model.db.NVarChar, insertData.scenario_action_document_id);
-                
-                model.insert(childTabelName, insertData, request, function(err, date)
-                {
-                    if (err.length > 0)
+                    if (1 === req.body.scenario.scenario_type)
                     {
-                        console.log(err);
-                        res.status(510).send('object not found');
+                        specificInfo = 
+                        {
+                            repeat_flag: req.body.specificInfo.repeat_flag,
+                            expiration_start_date: req.body.specificInfo.expiration_start_date,
+                            expiration_end_date: req.body.specificInfo.expiration_end_date
+                        };
+                        
+                        childTabelName = 'M_SCHEDULE_SCENARIO';
+                        request.input('repeat_flag', model.db.Int, specificInfo.repeat_flag);
+                        request.input('expiration_start_date', model.db.NVarChar, specificInfo.expiration_start_date);
+                        request.input('expiration_end_date', model.db.NVarChar, specificInfo.expiration_end_date);
                     }
-
-                    callback(null, data);
-                });
-            }
-        ],
-        function(err)
-        {
-            console.log('last function');
-            if (null != err)
+                    else if (2 === req.body.scenario.scenario_type)
+                    {
+                        specificInfo = 
+                        {
+                            after_event_occurs_num: req.body.specificInfo.after_event_occurs_num,
+                            inoperative_num: req.body.specificInfo.inoperative_num
+                        };
+                        
+                        childTabelName = 'M_TRIGGER_SCENARIO';
+                        request.input('after_event_occurs_num', model.db.Int, specificInfo.after_event_occurs_num);
+                        request.input('inoperative_num', model.db.Int, specificInfo.inoperative_num);
+                    }
+                    
+                    var commonColumns = model.getInsCommonColumns();
+                    var insertData = model.merge(specificInfo, commonColumns);
+                    insertData.scenario_id = data.scenario_id;
+                    insertData.scenario_action_document_id = (null === doc) ? null : doc.id;
+    
+                    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+                    request.input('create_by', model.db.Int, req.session.userId);
+                    request.input('create_date', model.db.NVarChar, insertData.create_date);
+                    request.input('update_by', model.db.Int, req.session.userId);
+                    request.input('update_date', model.db.NVarChar, insertData.update_date);
+                    request.input('scenario_id', model.db.Int, insertData.scenario_id);
+                    request.input('scenario_action_document_id', model.db.NVarChar, insertData.scenario_action_document_id);
+                    
+                    model.insert(childTabelName, insertData, request, function(err, date)
+                    {
+                        if (err.length > 0)
+                        {
+                            console.log(err);
+                            res.status(510).send('object not found');
+                        }
+    
+                        callback(null, data);
+                    });
+                }
+                
+            ],
+            function(err)
             {
-                model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
+                
+            transaction.rollback(function(err)
+            {
+                console.log('rollback test');
                 console.log(err);
-                res.status(510).send('object not found');
-            }
-            model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
-            console.log(res);
-            res.status(200).send('insert ok');
+                res.status(510).send('rollback ok');
+            });
+
+                if (null != err)
+                {
+                    console.log(err);
+                    transaction.rollback(function(err)
+                    {
+                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
+                        res.status(510).send('object not found');
+                    });
+                }
+                transaction.commit(function()
+                {
+                    model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
+                    res.status(200).send('insert ok');
+                });
+            });
         });
     });
 }
