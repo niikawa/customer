@@ -257,11 +257,13 @@ function createSegment(data, request)
     console.log(docs);
     var sql = '';
     var last = conditionMap.length - 1;
-    Object.keys(conditionMap).forEach(function(qId, index)
+    var count = 0;
+    Object.keys(conditionMap).forEach(function(qId)
     {
+        count++;
         var doc = docs[qId];
         sql += '('+ doc.sql + ')';
-        if (last !== index) sql += conditionMap[qId];
+        if (last !== count) sql += conditionMap[qId];
 
         Object.keys(doc.columnTypeList).forEach(function(key)
         {
