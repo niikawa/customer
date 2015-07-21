@@ -252,9 +252,9 @@ function createSegment(data, request)
     var docs = {};
     for (var index = 0; index < num; index++)
     {
-        data.docs[data.docs[index]._id] = data.docs[index];
+        docs[data.docs[index]._id] = data.docs[index];
     }
-    
+    console.log(docs);
     var sql = '';
     var last = conditionMap.length - 1;
     Object.keys(conditionMap).forEach(function(qId, index)
