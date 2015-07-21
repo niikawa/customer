@@ -9,6 +9,7 @@ body {
   /*background-color: #f8f8f8;*/
   background-color: #489494;
   font-family:'Lucida Grande','Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+  font-size: 15px !important;
 }
 #body [ng-cloak],
 #body .ng-hide {
