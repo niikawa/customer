@@ -60,7 +60,6 @@ exports.login = function(req, res)
     
     qObj.request.input('mailaddress', model.db.VarChar, req.body.mailAddress);
     qObj.request.input('password', model.db.NVarChar, crypto.createHash('md5').update(req.body.password).digest("hex"));
-//    qObj.request.input('password', model.db.NVarChar, req.body.password);
 
     model.select(qObj, qObj.request,  function(err, data)
     {

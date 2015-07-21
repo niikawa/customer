@@ -129,12 +129,20 @@ exports.update = function(req, res)
     var commonColumns = model.getUpdCommonColumns(req.session.userId);
     var updateData = model.merge(req.body.data, commonColumns);
     
-    if (updateData.hasOwnProperty('password_confirm')) delete updateData.password_confirm;
-
     var request = model.getRequest();
+    
     if (updateData.hasOwnProperty("password"))
     {
-        request.input('password', model.db.NVarChar, crypto.createHash('md5').update(updateData.password).digest("hex"));
+        if (updateData.hasOwnProperty('password_confirm'))
+        {
+            delete updateData.password_confirm;
+            request.input('password', model.db.NVarChar, crypto.createHash('md5').update(updateData.password).digest("hex"));
+        }
+        else
+        {
+            //不正更新防止のため
+            delete updateData.password;
+        }
     }
 
     request.input('update_by', model.db.Int, updateData.update_by);
