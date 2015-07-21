@@ -3,10 +3,7 @@ var Core = require('./core');
 var Creator = require("../helper/createSql");
 var Message = require('../config/message.json');
 var querydoc = require("./querydoc");
-<<<<<<< HEAD
-=======
 var segmentdoc = require("./segmentdoc");
->>>>>>> developV2
 
 /** テーブル名 */
 var tableName = 'M_SEGMENT';
