@@ -244,26 +244,44 @@ function createValuePartBySymbol(item, name, request)
 function createSegment(data, request)
 {
     console.log('createSegment start');
-    console.log(data);
-    var docs = data.docs;
+
     var conditionMap = data.conditionMap;
-    
     var num = docs.length;
-    var last = num - 1;
-    var sql = '';
+    //document DB から取得した結果は、順序が保障されていない
+    //おそらくデフォルトでは_tsの照準っぽい
+    var docs = {};
     for (var index = 0; index < num; index++)
     {
-        var doc = docs[index];
+        data.docs[data.docs[index]._id] = data.docs[index];
+    }
+    
+    var sql = '';
+    var last = conditionMap.length - 1;
+    Object.keys(conditionMap).forEach(function(qId, index)
+    {
+        var doc = docs[qId];
         sql += '('+ doc.sql + ')';
-        console.log(conditionMap[docs[index].id]);
-        if (last !== index) sql += conditionMap[docs[index].id];
+        if (last !== index) sql += conditionMap[qId];
 
         Object.keys(doc.columnTypeList).forEach(function(key)
         {
             var type = getColType(doc.columnTypeList[key]);
             request.input(key, type, doc.bindInfo[key]);
         });
-    }
+    });
+
+    // for (var index = 0; index < num; index++)
+    // {
+    //     var doc = docs[index];
+    //     sql += '('+ doc.sql + ')';
+    //     if (last !== index) sql += conditionMap[docs[index].id];
+
+    //     Object.keys(doc.columnTypeList).forEach(function(key)
+    //     {
+    //         var type = getColType(doc.columnTypeList[key]);
+    //         request.input(key, type, doc.bindInfo[key]);
+    //     });
+    // }
     console.log(sql);
     return sql;
 }
