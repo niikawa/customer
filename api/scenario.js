@@ -432,6 +432,8 @@ function create(req, res)
             ],
             function(err)
             {
+                console.log("last function");
+                console.log(err);
                 
             transaction.rollback(function(err)
             {
@@ -440,20 +442,20 @@ function create(req, res)
                 res.status(510).send('rollback ok');
             });
 
-                if (null != err)
-                {
-                    console.log(err);
-                    transaction.rollback(function(err)
-                    {
-                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
-                        res.status(510).send('object not found');
-                    });
-                }
-                transaction.commit(function()
-                {
-                    model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
-                    res.status(200).send('insert ok');
-                });
+                // if (null != err)
+                // {
+                //     transaction.rollback(function(err)
+                //     {
+                //         model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
+                //         res.status(510).send('object not found');
+                //     });
+                // }
+                // transaction.commit(function(err)
+                // {
+                //     console.log("commit");
+                //     model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
+                //     res.status(200).send('insert ok');
+                // });
             });
         });
     });
