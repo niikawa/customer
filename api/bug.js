@@ -19,13 +19,10 @@ var model = new bug();
 exports.getByConditon = function(req, res)
 {
     var request = model.getRequest();
-    console.log(req.body);
     var col = "T1.id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, ";
     col += "T2.name, T2.role_id";
     var tableName = "T_DEMAND_BUG T1 INNER JOIN M_USER T2 ON T1.create_by = T2.user_id";
     var where = '';
-    console.log(req.body.hasOwnProperty('resolve'));
-    console.log(req.body.resolve);
     if (req.body.hasOwnProperty('resolve') && null !== req.body.resolve) 
     {
         where += "T1.resolve = @resolve AND ";
@@ -38,7 +35,7 @@ exports.getByConditon = function(req, res)
         request.input('type', model.db.Int, req.body.type);
     }
 
-    where = " T1.delete_flag = 0";
+    where += " T1.delete_flag = 0";
 
     var order = "T1.id DESC";
     var qObj = model.getQueryObject(col, tableName, where, '', order);
