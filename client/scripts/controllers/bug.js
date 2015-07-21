@@ -4,7 +4,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
 {
     function setInitializeScope()
     {
-        $scope.bug = {resolve: '', type: ''};
+        $scope.bug = {resolve: null, type: null};
     }
     
     function getInitializeData()
