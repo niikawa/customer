@@ -56,6 +56,7 @@ exports.save = function(req, res)
 {
     var commonColumns = model.getInsCommonColumns();
     var insertData = model.merge(req.body, commonColumns);
+    insertData.resolve = 0;
     var request = model.getRequest();
     request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
     request.input('create_by', model.db.Int, req.session.userId);
@@ -63,7 +64,7 @@ exports.save = function(req, res)
     request.input('update_by', model.db.Int, req.session.userId);
     request.input('update_date', model.db.NVarChar, insertData.update_date);
 
-    request.input('resolve', model.db.SmallInt, 0);
+    request.input('resolve', model.db.SmallInt, insertData.resolve);
     request.input('type', model.db.SmallInt, insertData.type);
     request.input('category', model.db.SmallInt, insertData.category);
     request.input('title', model.db.NVarChar, insertData.title);
