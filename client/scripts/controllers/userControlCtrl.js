@@ -140,13 +140,15 @@ function ($scope, $routeParams, User, Role, Utility, Shared, Location)
     {
         setRole($scope.roleList);
         
-        console.log($scope.user);
-        
-        var message = '';
+        var message = $scope.user.name + 'さんの情報を保存しました';
         if (2 === pageProp.type)
         {
             Utility.deleteCommonInfo($scope.user);
-            message = $scope.user.name + 'の情報を更新しました';
+            if (!$scope.showPassword)
+            {
+                delete $scope.user.password_confirm;
+                delete $scope.user.password;
+            }
             User.resource.save({id: $scope.user.user_id, data: $scope.user}).$promise.then(function(response)
             {
                 Utility.successSticky(message);
@@ -155,7 +157,6 @@ function ($scope, $routeParams, User, Role, Utility, Shared, Location)
         }
         else
         {
-            message = '新しくユーザーを登録しました';
             User.resource.create({data: $scope.user}).$promise.then(function(response)
             {
                 Utility.successSticky(message);
