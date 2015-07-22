@@ -321,8 +321,6 @@ function create(req, res)
             [
                 function(callback)
                 {
-                    console.log('first function');
-                    
                     var commonColumns = model.getInsCommonColumns();
                     var insertData = model.merge(req.body.scenario, commonColumns);
                     var request = model.getRequest(transaction);
@@ -349,11 +347,14 @@ function create(req, res)
                         e.push('err');
                         callback(e, {});
                         return;
+                        
                         if (err.length > 0)
                         {
                             console.log('insert faild M_SCENARIO');
                             console.log(err);
                             callback(err, {});
+//                            res.status(510).send('シナリオの登録に失敗しました');
+                            return;
                         }
                         
                         var col = "MAX(scenario_id) as scenario_id";
@@ -361,7 +362,6 @@ function create(req, res)
                         var qObj = model.getQueryObject(col, tableName, where, '', '');
                         model.select(qObj, qObj.request, function(err, data)
                         {
-                            console.log('select scenario data');
                             if (err.length > 0)
                             {
                                 console.log('scenario_id select faild');
@@ -377,9 +377,6 @@ function create(req, res)
                 },
                 function(data, callback)
                 {
-                    console.log('second');
-                    console.log(data);
-                    
                     var request = model.getRequest(transaction);
                     var childTabelName = '';
                     
@@ -445,6 +442,7 @@ function create(req, res)
             function(err)
             {
                 console.log('last function');
+                console.log(err);
                 if (null != err)
                 {
                     //documentを削除しなくちゃ
