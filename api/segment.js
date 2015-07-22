@@ -101,7 +101,9 @@ exports.getByQueryDocId = function(req, res)
     {
         if (err)
         {
-            
+            console.log('select segment document faild');
+            console.log(err);
+            res.status(510).send('セグメント情報の取得に失敗しました。');
         }
         var num = docs.length;
         var findCount = 0;
