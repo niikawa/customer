@@ -44,6 +44,9 @@ exports.getAll = function(req, res)
         {
             segmentdoc.getByQueryIdForWeb(item.id, function(err, docs)
             {
+                console.log(item.id);
+                console.log(docs);
+                
                 if (err)
                 {
                     console.log('query getByQueryIdForWeb error');
