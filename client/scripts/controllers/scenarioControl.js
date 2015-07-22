@@ -193,6 +193,8 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     function editTriggerInitialize(initData)
     {
         $scope.specificInfo = initData.specificInfo.specific;
+        console.log(initData.specificInfo);
+        
         Scenario.resource.action({name: initData.specificInfo.doc.actionName}).$promise.then(function(response)
         {
             actionName = $scope.activeName;
