@@ -342,18 +342,11 @@ function create(req, res)
     
                     model.insert(tableName, insertData, request, function(err, date)
                     {
-                        console.log('call callback');
-                        var e = [];
-                        e.push('err');
-                        callback(e, {});
-                        return;
-                        
                         if (err.length > 0)
                         {
                             console.log('insert faild M_SCENARIO');
                             console.log(err);
                             callback(err, {});
-//                            res.status(510).send('シナリオの登録に失敗しました');
                             return;
                         }
                         
@@ -367,6 +360,7 @@ function create(req, res)
                                 console.log('scenario_id select faild');
                                 console.log(err);
                                 callback(err, {});
+                                return;
                             }
                             else
                             {
@@ -426,11 +420,9 @@ function create(req, res)
                     {
                         if (err.length > 0)
                         {
-                            transaction.rollback(function(err)
-                            {
-                                console.log(err);
-                                res.status(510).send('シナリオの登録に失敗しました');
-                            });
+                            console.log(childTabelName + ' insert faild');
+                            console.log(err);
+                            callback(err, {});
                         }
                         else
                         {
@@ -441,24 +433,54 @@ function create(req, res)
             ],
             function(err)
             {
-                console.log('last function');
-                console.log(err);
                 if (null != err)
                 {
+                    console.log('scenario insert faild');
+                    console.log(err);
+                    
                     //documentを削除しなくちゃ
-                    transaction.rollback(function(err)
+                    if (null !== doc)
                     {
-                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
-                        res.status(510).send('object not found');
-                    });
+                        scenariodoc.removeItemForWeb(doc.id, function(err, doc)
+                        {
+                            if (err)
+                            {
+                                console.log('scenario document remove faild');
+                                console.log(err);
+                                console.log(doc);
+                            }
+                            transaction.rollback(function(err)
+                            {
+                                if (err)
+                                {
+                                    console.log('scenario data rollback faild');
+                                    console.log(err);
+                                    res.status(510).send("システムエラーが発生しました。");
+                                }
+                                else
+                                {
+                                    model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
+                                    res.status(510).send("シナリオの登録に失敗しました。");
+                                }
+                            });
+                        });
+                    }
                 }
                 else
                 {
                     transaction.commit(function(err)
                     {
-                        console.log("commit");
-                        model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
-                        res.status(200).send('insert ok');
+                        if (err)
+                        {
+                            console.log('scenario data commit faild');
+                            console.log(err);
+                            res.status(510).send("システムエラーが発生しました。");
+                        }
+                        else
+                        {
+                            model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
+                            res.status(200).send('insert ok');
+                        }
                     });
                 }
             });
