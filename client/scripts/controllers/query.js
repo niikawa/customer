@@ -24,12 +24,9 @@ function ($scope, Shared, Query, Segment, Modal, Location, Utility)
     {
         if (void 0 === $scope.queryList[index].id) return;
         var target = $scope.queryList[index];
-        console.log($scope.queryList[index]);
-        return;
         var params = {qId: target.id, count: target.useNum};
-        Segment.resource.useSegment().$promise.then(function(response)
+        Segment.resource.useSegment(params).$promise.then(function(response)
         {
-        
             $scope.modalParam = 
             {
                 title: $scope.queryList[index].query_name+"を利用しているセグメント",

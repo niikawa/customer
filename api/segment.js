@@ -79,6 +79,51 @@ exports.getById = function(req, res)
     });
 };
 
+exports.getByQueryDocId = function(req, res)
+{
+    if (!req.body.hasOwnProperty('qid')) return res.status(510).send('Invalid parameter');
+    if (req.body.hasOwnProperty('count'))
+    {
+        if (!isFinite(parseInt(req.body.count, 10)))
+        {
+            return res.status(510).send('Invalid parameter');
+        }
+    }
+    else
+    {
+        return res.status(510).send('Invalid parameter');
+    }
+    
+    
+    var query = "SELECT doc.id, doc.segment_name, doc.qIds FROM doc";
+    segmentdoc.getItemByQuery(query, function(err, docs)
+    {
+        if (err)
+        {
+            
+        }
+        var num = docs.length;
+        var findCount = 0;
+        var useSegmentList = [];
+        for (var docIndex = 0; docIndex < num; docIndex++)
+        {
+            var targetDoc = docs[docIndex];
+            var qNum = targetDoc.qIds.length;
+            for (var qIndex = 0; qIndex < qNum; qIndex++)
+            {
+                console.log(targetDoc.qIds[qIndex]);
+                if (targetDoc.qIds[qIndex] == req.body.qId)
+                {
+                    useSegmentList.push({id: targetDoc.id, segment_name: targetDoc.segment_name});
+                    findCount++;
+                    if (req.body.count == findCount) break;
+                }
+            }
+        }
+        res.json({data: useSegmentList});
+    });
+};
+
 /** misiyou */
 exports.getAll = function(req, res)
 {

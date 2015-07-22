@@ -82,7 +82,7 @@ router.get('/segment', segment.getList);
 router.get('/segment/:id', segment.getById);
 router.post('/segment/save', segment.save);
 router.post('/segment/execute', segment.execute);
-router.post('/segment/query/use', segmentdoc.saveItem);
+router.post('/segment/query/use', segment.getByQueryDocId);
 router.delete('/segment/remove/:id/:segment_document_id', segment.remove);
 router.get('/segment/:id/download', segment.download);
 
