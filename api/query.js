@@ -42,20 +42,16 @@ exports.getAll = function(req, res)
         var segmentdoc = require("./segmentdoc");
         model.async.forEach(doc, function(item, callback)
         {
-            segmentdoc.getByQueryIdForWeb(item.id, function(err, docs)
+            segmentdoc.countByQueryId(item.id, function(err, docs)
             {
-                console.log(item.id);
-                console.log(docs);
-                
                 if (err)
                 {
-                    console.log('query getByQueryIdForWeb error');
+                    console.log('query countByQueryId error');
                     console.log(err);
                 }
                 var num = (void 0 === docs)? 0 : docs.length;
                 item.isUse = (0 < num);
                 item.useNum = num;
-                item.useSegment = docs;
                 callback(err);
             });
         },

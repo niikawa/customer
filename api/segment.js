@@ -310,7 +310,6 @@ exports.download = function(req, res)
             });
         });
     });
-    
 };
 
 function create(req, res)

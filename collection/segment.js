@@ -117,7 +117,7 @@ Segment.prototype = {
             }
         });
     },
-    getItemByQueryId: function (itemId, callback)
+    countByQueryId: function (itemId, callback)
     {
         var self = this;
 

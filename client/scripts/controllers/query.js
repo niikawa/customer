@@ -1,6 +1,6 @@
 var queryListCtrl = angular.module('queryListCtrl',['QueryServices']);
-queryListCtrl.controller('QueryListCtrl',['$scope', 'Shared', 'Query', 'Modal','Location', 'Utility',
-function ($scope, Shared, Query, Modal, Location, Utility)
+queryListCtrl.controller('QueryListCtrl',['$scope', 'Shared', 'Query', 'Segment','Modal','Location', 'Utility',
+function ($scope, Shared, Query, Segment, Modal, Location, Utility)
 {
     function setInitializeScope()
     {
@@ -23,20 +23,28 @@ function ($scope, Shared, Query, Modal, Location, Utility)
     $scope.showSegment = function(index)
     {
         if (void 0 === $scope.queryList[index].id) return;
-        
-        $scope.modalParam = 
+        var target = $scope.queryList[index];
+        console.log($scope.queryList[index]);
+        return;
+        var params = {qId: target.id, count: target.useNum};
+        Segment.resource.useSegment().$promise.then(function(response)
         {
-            title: $scope.queryList[index].query_name+"を利用しているセグメント",
-            list: $scope.queryList[index].useSegment,
-            hrefBase: '#/segment/control',
-            dynamicParamKey: 'id',
-            close: function(id)
+        
+            $scope.modalParam = 
             {
-                $scope.modalInstance.close();
-                Location.segmentControl(id);
-            }
-        };
-        $scope.modalInstance = Modal.open($scope, "partials/modal/list.html");
+                title: $scope.queryList[index].query_name+"を利用しているセグメント",
+                list: $scope.queryList[index].useSegment,
+                hrefBase: '#/segment/control',
+                dynamicParamKey: 'id',
+                close: function(id)
+                {
+                    $scope.modalInstance.close();
+                    Location.segmentControl(id);
+                }
+            };
+            $scope.modalInstance = Modal.open($scope, "partials/modal/list.html");
+            
+        });
     };
     
     $scope.deleteItem = function(index)

@@ -43,9 +43,9 @@ exports.getByQueryId = function(req, res)
     });
 };
 
-exports.getByQueryIdForWeb = function(id, callback)
+exports.countByQueryId = function(id, callback)
 {
-    Segment.getItemByQueryId(id, callback);
+    Segment.countByQueryId(id, callback);
 };
 
 
