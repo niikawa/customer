@@ -301,7 +301,7 @@ exports.save = function(req, res)
             },
             count: function(callback)
             {
-                var col = "scenario_type, count(1) as count";
+                var col = "count(1) as count";
                 var where = "delete_flag = 0 and scenario_type = @scenario_type";
                 var qObj = model.getQueryObject(col, tableName, where, '', '');
                 qObj.request.input('scenario_type', model.db.SmallInt, req.body.scenario.scenario_type);
@@ -310,9 +310,7 @@ exports.save = function(req, res)
         },
         function complete(err, items)
         {
-            console.log(err);
-            console.log(items);
-            if (null === err)
+            if (null !== err)
             {
                 console.log('scenario initialize data select faild');
                 console.log(err);
@@ -321,9 +319,7 @@ exports.save = function(req, res)
             var envInfo = items.env[0];
             var max = (1 == req.body.scenario.scenario_type) 
                 ? envInfo.schedule_scenario_max : envInfo.trigger_scenario_max;
-            console.log(max);
-            console.log(items.count);
-            if (max <= items.count.coun)
+            if (max <= items.count[0].coun)
             {
                 res.status(510).send('これ以上登録できません。<br>不要なシナリオを削除してください。');
             }
