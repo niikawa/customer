@@ -32,6 +32,7 @@ exports.getById = function(req, res)
     ([
         function(callback)
         {
+            console.log(parseInt(req.params.id, 10));
             if (isFinite(parseInt(req.params.id, 10)))
             {
                 console.log('koko1');
