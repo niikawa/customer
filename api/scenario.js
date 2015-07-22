@@ -348,7 +348,7 @@ function create(req, res)
                         var e = [];
                         e.push('err');
                         callback(e, {});
-                        
+                        return;
                         if (err.length > 0)
                         {
                             console.log('insert faild M_SCENARIO');
@@ -448,7 +448,6 @@ function create(req, res)
                 if (null != err)
                 {
                     //documentを削除しなくちゃ
-                    
                     transaction.rollback(function(err)
                     {
                         model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
