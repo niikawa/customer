@@ -310,9 +310,8 @@ exports.save = function(req, res)
         },
         function complete(err, items)
         {
-            console.log(err);
             console.log(items);
-            if (null !== err)
+            if (0 < err.length)
             {
                 console.log('scenario initialize data select faild');
                 console.log(err);
