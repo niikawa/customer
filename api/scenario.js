@@ -351,8 +351,7 @@ function create(req, res)
                         }
                         
                         var col = "MAX(scenario_id) as scenario_id";
-                        var where = "delete_flag = 0 ";
-                        var qObj = model.getQueryObject(col, tableName, where, '', '');
+                        var qObj = model.getQueryObject(col, tableName, '', '', '');
                         model.select(qObj, qObj.request, function(err, data)
                         {
                             if (err.length > 0)
@@ -371,9 +370,6 @@ function create(req, res)
                 },
                 function(data, callback)
                 {
-                    console.log('max scenario id');
-                    console.log(data);
-                    
                     var request = model.getRequest(transaction);
                     var childTabelName = '';
                     
