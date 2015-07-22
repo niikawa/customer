@@ -117,12 +117,13 @@ Segment.prototype = {
             }
         });
     },
-    getItemByQueryId: function (itemId, callback)
+    countByQueryId: function (itemId, callback)
     {
         var self = this;
 
         var querySpec = {
-            query: 'SELECT c.id, c.segment_name FROM c WHERE c.qIds IN ([@id])',
+//            query: 'SELECT c.id, c.segment_name FROM c WHERE c.qIds IN ([@id])',
+            query: "SELECT c.id FROM c IN segment.qIds where c = @id",
             parameters: [{
                 name: '@id',
                 value: itemId

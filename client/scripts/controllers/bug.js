@@ -4,7 +4,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
 {
     function setInitializeScope()
     {
-        $scope.bug = {};
+        $scope.bug = {resolve: null, type: null};
     }
     
     function getInitializeData()
@@ -62,6 +62,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
         {
             Utility.info(name + '<br>を解決しました。');
             $scope.bugList[index].resolve_name = '解決';
+            getInfo();
         });
     };
 

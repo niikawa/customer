@@ -32,20 +32,26 @@ core.prototype.merge = function(source, add)
     return source;
 };
 
-core.prototype.getRequest = function()
+core.prototype.getRequest = function(transaction)
 {
     var ms = require('mssql');
-    return new ms.Request();
+    if (void 0 === transaction)
+    {
+        return new ms.Request();
+    }
+    else
+    {
+        return new ms.Request(transaction);
+    }
 };
 
-core.prototype.tran = function(callback)
+core.prototype.tranBegin = function(callback)
 {
-    var ms = require('mssql');
-    var tran = new ms.Transaction();
-
-    var request = new ms.Request();
-    
-    
+    var tran = new this.db.Transaction();
+    tran.begin(function(err)
+    {
+        callback(err, tran);
+    });
 };
 
 core.prototype.getInsCommonColumns = function()

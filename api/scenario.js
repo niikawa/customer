@@ -148,7 +148,6 @@ exports.getScenarioCount = function(req, res)
     },
     function complete(err, items)
     {
-        console.log(items);
         var list = [];
         var envInfo = items.env[0];
         if (0 === items.count.length)
@@ -293,7 +292,43 @@ exports.save = function(req, res)
     }
     else
     {
-        create(req, res);
+        model.async.parallel(
+        {
+            env: function(callback)
+            {
+                var env = require("./environment");
+                env.get(callback);
+            },
+            count: function(callback)
+            {
+                var col = "count(1) as count";
+                var where = "delete_flag = 0 and scenario_type = @scenario_type";
+                var qObj = model.getQueryObject(col, tableName, where, '', '');
+                qObj.request.input('scenario_type', model.db.SmallInt, req.body.scenario.scenario_type);
+                model.select(qObj, qObj.request, callback);
+            },
+        },
+        function complete(err, items)
+        {
+            if (0 < err.length)
+            {
+                console.log('scenario initialize data select faild');
+                console.log(err);
+                return res.status(510).send('システムエラーが発生しました。');
+            }
+            var envInfo = items.env[0];
+            var max = (1 == req.body.scenario.scenario_type) 
+                ? envInfo.schedule_scenario_max : envInfo.trigger_scenario_max;
+                
+            if (max <= items.count[0].count)
+            {
+                res.status(510).send('これ以上登録できません。<br>不要なシナリオを削除してください。');
+            }
+            else
+            {
+                create(req, res);
+            }
+        });
     }
 };
 
@@ -314,123 +349,175 @@ function create(req, res)
             console.log(req.body);
             res.status(510).send('scenario crate faild');
         }
-        
-        model.async.waterfall(
-        [
-            function(callback)
-            {
-                var commonColumns = model.getInsCommonColumns();
-                var insertData = model.merge(req.body.scenario, commonColumns);
-                var request = model.getRequest();
-                request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
-                request.input('create_by', model.db.Int, req.session.userId);
-                request.input('create_date', model.db.NVarChar, insertData.create_date);
-                request.input('update_by', model.db.Int, req.session.userId);
-                request.input('update_date', model.db.NVarChar, insertData.update_date);
-                
-                request.input('segment_id', model.db.Int, insertData.segment_id);
-                request.input('if_layout_id', model.db.Int, insertData.if_layout_id);
-                request.input('scenario_name', model.db.NVarChar, insertData.scenario_name);
-                request.input('output_name', model.db.NVarChar, insertData.output_name);
-                request.input('scenario_type', model.db.SmallInt, insertData.scenario_type);
-                request.input('status', model.db.SmallInt, insertData.status);
-                request.input('approach', model.db.SmallInt, insertData.approach);
-                request.input('priority', model.db.SmallInt, 999999);
 
-                model.insert(tableName, insertData, request, function(err, date)
+        model.tranBegin(function(err, transaction)
+        {
+            model.async.waterfall(
+            [
+                function(callback)
                 {
-                    if (err.length > 0)
-                    {
-                        console.log(err);
-                        res.status(510).send('object not found');
-                    }
+                    var commonColumns = model.getInsCommonColumns();
+                    var insertData = model.merge(req.body.scenario, commonColumns);
+                    var request = model.getRequest(transaction);
+    
+                    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+                    request.input('create_by', model.db.Int, req.session.userId);
+                    request.input('create_date', model.db.NVarChar, insertData.create_date);
+                    request.input('update_by', model.db.Int, req.session.userId);
+                    request.input('update_date', model.db.NVarChar, insertData.update_date);
                     
-                    var col = "MAX(scenario_id) as scenario_id";
-                    var where = "delete_flag = 0 ";
-                    var qObj = model.getQueryObject(col, tableName, where, '', '');
-                    model.select(qObj, qObj.request, function(err, data)
+                    request.input('segment_id', model.db.Int, insertData.segment_id);
+                    request.input('if_layout_id', model.db.Int, insertData.if_layout_id);
+                    request.input('scenario_name', model.db.NVarChar, insertData.scenario_name);
+                    request.input('output_name', model.db.NVarChar, insertData.output_name);
+                    request.input('scenario_type', model.db.SmallInt, insertData.scenario_type);
+                    request.input('status', model.db.SmallInt, insertData.status);
+                    request.input('approach', model.db.SmallInt, insertData.approach);
+                    request.input('priority', model.db.Int, 32767);
+    
+                    model.insert(tableName, insertData, request, function(err, date)
                     {
                         if (err.length > 0)
                         {
+                            console.log('insert faild M_SCENARIO');
                             console.log(err);
-                            res.status(510).send('object not found');
+                            callback(err, {});
+                            return;
                         }
-                        callback(null, data[0]);
+                        
+                        var col = "MAX(scenario_id) as scenario_id";
+                        var qObj = model.getQueryObject(col, tableName, '', '', '');
+                        model.select(qObj, qObj.request, function(err, data)
+                        {
+                            if (err.length > 0)
+                            {
+                                console.log('scenario_id select faild');
+                                console.log(err);
+                                callback(err, {});
+                                return;
+                            }
+                            else
+                            {
+                                callback(null, data[0]);
+                            }
+                        });
                     });
-                });
-            },
-            function(data, callback)
-            {
-                
-                var request = model.getRequest();
-                var childTabelName = '';
-                
-                var specificInfo = {};
-                
-                if (1 === req.body.scenario.scenario_type)
+                },
+                function(data, callback)
                 {
-                    specificInfo = 
-                    {
-                        repeat_flag: req.body.specificInfo.repeat_flag,
-                        expiration_start_date: req.body.specificInfo.expiration_start_date,
-                        expiration_end_date: req.body.specificInfo.expiration_end_date
-                    };
+                    var request = model.getRequest(transaction);
+                    var childTabelName = '';
                     
-                    childTabelName = 'M_SCHEDULE_SCENARIO';
-                    request.input('repeat_flag', model.db.Int, specificInfo.repeat_flag);
-                    request.input('expiration_start_date', model.db.NVarChar, specificInfo.expiration_start_date);
-                    request.input('expiration_end_date', model.db.NVarChar, specificInfo.expiration_end_date);
-                }
-                else if (2 === req.body.scenario.scenario_type)
-                {
-                    specificInfo = 
-                    {
-                        after_event_occurs_num: req.body.specificInfo.after_event_occurs_num,
-                        inoperative_num: req.body.specificInfo.inoperative_num
-                    };
+                    var specificInfo = {};
                     
-                    childTabelName = 'M_TRIGGER_SCENARIO';
-                    request.input('after_event_occurs_num', model.db.Int, specificInfo.after_event_occurs_num);
-                    request.input('inoperative_num', model.db.Int, specificInfo.inoperative_num);
-                }
-                
-                var commonColumns = model.getInsCommonColumns();
-                var insertData = model.merge(specificInfo, commonColumns);
-                insertData.scenario_id = data.scenario_id;
-                insertData.scenario_action_document_id = (null === doc) ? null : doc.id;
-
-                request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
-                request.input('create_by', model.db.Int, req.session.userId);
-                request.input('create_date', model.db.NVarChar, insertData.create_date);
-                request.input('update_by', model.db.Int, req.session.userId);
-                request.input('update_date', model.db.NVarChar, insertData.update_date);
-                request.input('scenario_id', model.db.Int, insertData.scenario_id);
-                request.input('scenario_action_document_id', model.db.NVarChar, insertData.scenario_action_document_id);
-                
-                model.insert(childTabelName, insertData, request, function(err, date)
-                {
-                    if (err.length > 0)
+                    if (1 === req.body.scenario.scenario_type)
                     {
-                        console.log(err);
-                        res.status(510).send('object not found');
+                        specificInfo = 
+                        {
+                            repeat_flag: req.body.specificInfo.repeat_flag,
+                            expiration_start_date: req.body.specificInfo.expiration_start_date,
+                            expiration_end_date: req.body.specificInfo.expiration_end_date
+                        };
+                        
+                        childTabelName = 'M_SCHEDULE_SCENARIO';
+                        request.input('repeat_flag', model.db.Int, specificInfo.repeat_flag);
+                        request.input('expiration_start_date', model.db.NVarChar, specificInfo.expiration_start_date);
+                        request.input('expiration_end_date', model.db.NVarChar, specificInfo.expiration_end_date);
                     }
-
-                    callback(null, data);
-                });
-            }
-        ],
-        function(err)
-        {
-            console.log('last function');
-            if (null != err)
+                    else if (2 === req.body.scenario.scenario_type)
+                    {
+                        specificInfo = 
+                        {
+                            after_event_occurs_num: req.body.specificInfo.after_event_occurs_num,
+                            inoperative_num: req.body.specificInfo.inoperative_num
+                        };
+                        
+                        childTabelName = 'M_TRIGGER_SCENARIO';
+                        request.input('after_event_occurs_num', model.db.Int, specificInfo.after_event_occurs_num);
+                        request.input('inoperative_num', model.db.Int, specificInfo.inoperative_num);
+                    }
+                    
+                    var commonColumns = model.getInsCommonColumns();
+                    var insertData = model.merge(specificInfo, commonColumns);
+                    insertData.scenario_id = data.scenario_id;
+                    insertData.scenario_action_document_id = (null === doc) ? null : doc.id;
+    
+                    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+                    request.input('create_by', model.db.Int, req.session.userId);
+                    request.input('create_date', model.db.NVarChar, insertData.create_date);
+                    request.input('update_by', model.db.Int, req.session.userId);
+                    request.input('update_date', model.db.NVarChar, insertData.update_date);
+                    request.input('scenario_id', model.db.Int, insertData.scenario_id);
+                    request.input('scenario_action_document_id', model.db.NVarChar, insertData.scenario_action_document_id);
+                    
+                    model.insert(childTabelName, insertData, request, function(err, date)
+                    {
+                        if (err.length > 0)
+                        {
+                            console.log(childTabelName + ' insert faild');
+                            console.log(err);
+                            callback(err, {});
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    });
+                }
+            ],
+            function(err)
             {
-                model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
-                console.log(err);
-                res.status(510).send('object not found');
-            }
-            model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
-            console.log(res);
-            res.status(200).send('insert ok');
+                if (null != err)
+                {
+                    console.log('scenario insert faild');
+                    console.log(err);
+                    
+                    //documentを削除しなくちゃ
+                    if (null !== doc)
+                    {
+                        scenariodoc.removeItemForWeb(doc.id, function(err, doc)
+                        {
+                            if (err)
+                            {
+                                console.log('scenario document remove faild');
+                                console.log(err);
+                                console.log(doc);
+                            }
+                            transaction.rollback(function(err)
+                            {
+                                if (err)
+                                {
+                                    console.log('scenario data rollback faild');
+                                    console.log(err);
+                                    res.status(510).send("システムエラーが発生しました。");
+                                }
+                                else
+                                {
+                                    model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
+                                    res.status(510).send("シナリオの登録に失敗しました。");
+                                }
+                            });
+                        });
+                    }
+                }
+                else
+                {
+                    transaction.commit(function(err)
+                    {
+                        if (err)
+                        {
+                            console.log('scenario data commit faild');
+                            console.log(err);
+                            res.status(510).send("システムエラーが発生しました。");
+                        }
+                        else
+                        {
+                            model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
+                            res.status(200).send('insert ok');
+                        }
+                    });
+                }
+            });
         });
     });
 }
@@ -618,8 +705,6 @@ exports.remove = function(req, res)
             
         ], function complete(err, items)
             {
-                console.log('complete');
-                
                 if (null === err)
                 {
                     console.log(err);

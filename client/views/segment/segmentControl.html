@@ -24,7 +24,6 @@
                           <ul class="list-group" >
                             <li class="list-group-item" ng-repeat="item in queryList track by $index" ng-model="queryList" drag-item-directive dragindex="$index">
                                 {{item.query_name}}
-                                <button type="button" class="close-button-right" ng-click="deleteItem($index)"><i class="fa fa-times"></i></button>
                             </li>
                           </ul>
                         </div>                        

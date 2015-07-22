@@ -16,6 +16,8 @@ myApp.controller('HeadCtrl',['$scope', 'Auth', 'Modal', 'Shared', 'Mail', functi
         Shared.destloy();
         Auth.logout().then(function()
         {
+            $('#view').addClass('view-animate-container-wide');
+            $('#view').removeClass('view-animate-container');
             $scope.$emit('logoutConplete');
         });
     };

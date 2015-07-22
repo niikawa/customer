@@ -25,14 +25,16 @@ var model = new segment();
 
 exports.getById = function(req, res)
 {
+    console.log('segment getById start');
     if (void 0 === req.params.id) return res.status(510).send('Invalid parameter');
 
     model.async.waterfall
     ([
         function(callback)
         {
-            if (isFinite(parseInt(req.params.id, 10)))
+            if (isFinite(req.params.id, 10))
             {
+                console.log('koko1');
                 model.getById(req.params.id, function(err, data)
                 {
                     if (err.length > 0)
@@ -46,6 +48,7 @@ exports.getById = function(req, res)
             }
             else
             {
+                console.log('koko2');
                 var col = "*";
                 var where = "delete_flag = 0 AND segment_document_id = @segment_document_id";
                 var qObj = model.getQueryObject(col, tableName, where, '', '');
@@ -76,6 +79,53 @@ exports.getById = function(req, res)
                 qIds: doc.qIds
             });
         });
+    });
+};
+
+exports.getByQueryDocId = function(req, res)
+{
+    console.log('getByQueryDocId');
+    if (!req.body.hasOwnProperty('qId')) res.status(510).send('Invalid parameter');
+    if (req.body.hasOwnProperty('count'))
+    {
+        if (!isFinite(req.body.count, 10))
+        {
+            res.status(510).send('Invalid parameter');
+        }
+    }
+    else
+    {
+        res.status(510).send('Invalid parameter');
+    }
+    
+    
+    var query = "SELECT doc.id, doc.segment_name, doc.qIds FROM doc";
+    segmentdoc.getItemByQuery(query, function(err, docs)
+    {
+        if (err)
+        {
+            console.log('select segment document faild');
+            console.log(err);
+            res.status(510).send('セグメント情報の取得に失敗しました。');
+        }
+        var num = docs.length;
+        var findCount = 0;
+        var useSegmentList = [];
+        for (var docIndex = 0; docIndex < num; docIndex++)
+        {
+            var targetDoc = docs[docIndex];
+            var qNum = targetDoc.qIds.length;
+            for (var qIndex = 0; qIndex < qNum; qIndex++)
+            {
+                if (targetDoc.qIds[qIndex] == req.body.qId)
+                {
+                    useSegmentList.push({id: targetDoc.id, segment_name: targetDoc.segment_name});
+                    findCount++;
+                    if (req.body.count == findCount) break;
+                }
+            }
+        }
+        res.json({data: useSegmentList});
     });
 };
 
@@ -207,7 +257,7 @@ exports.download = function(req, res)
     ([
         function(callback)
         {
-            if (isFinite(parseInt(req.params.id, 10)))
+            if (isFinite(req.params.id, 10))
             {
                 model.getById(req.params.id, function(err, data)
                 {
@@ -310,7 +360,6 @@ exports.download = function(req, res)
             });
         });
     });
-    
 };
 
 function create(req, res)

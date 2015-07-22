@@ -25,27 +25,14 @@ exports.getItem = function(req, res)
     });
 };
 
-exports.getByQueryId = function(req, res)
+exports.getItemByQuery = function(query, callback)
 {
-    if (!req.params.hasOwnProperty('id'))
-    {
-        res.status(511).send('parameters not found');
-    }
-    
-    Segment.getItemByQueryId(req.params.id, function(err, docs)
-    {
-        if (err)
-        {
-            console.log('segment doc getByQueryId error');
-            res.status(511).send('document error');
-        }
-        res.json({data: docs});
-    });
+    Segment.find(query, callback);
 };
 
-exports.getByQueryIdForWeb = function(id, callback)
+exports.countByQueryId = function(id, callback)
 {
-    Segment.getItemByQueryId(id, callback);
+    Segment.countByQueryId(id, callback);
 };
 
 

@@ -19,26 +19,25 @@ var model = new bug();
 exports.getByConditon = function(req, res)
 {
     var request = model.getRequest();
-    
     var col = "T1.id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, ";
     col += "T2.name, T2.role_id";
     var tableName = "T_DEMAND_BUG T1 INNER JOIN M_USER T2 ON T1.create_by = T2.user_id";
     var where = '';
-    if (req.body.hasOwnProperty('resolve')) 
+    if (req.body.hasOwnProperty('resolve') && null !== req.body.resolve) 
     {
-        where += "T1.resolve = @resolve AND";
+        where += "T1.resolve = @resolve AND ";
         request.input('resolve', model.db.Int, req.body.resolve);
     }
     
-    if (req.body.hasOwnProperty('type')) 
+    if (req.body.hasOwnProperty('type') && null !== req.body.type) 
     {
-        where += "T1.type = @type AND";
+        where += "T1.type = @type AND ";
         request.input('type', model.db.Int, req.body.type);
     }
 
-    where = " T1.delete_flag = 0";
+    where += " T1.delete_flag = 0";
 
-    var order = "id DESC";
+    var order = "T1.id DESC";
     var qObj = model.getQueryObject(col, tableName, where, '', order);
 
     model.select(qObj, request, function(err, data)
@@ -57,6 +56,7 @@ exports.save = function(req, res)
 {
     var commonColumns = model.getInsCommonColumns();
     var insertData = model.merge(req.body, commonColumns);
+    insertData.resolve = 0;
     var request = model.getRequest();
     request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
     request.input('create_by', model.db.Int, req.session.userId);
@@ -64,7 +64,7 @@ exports.save = function(req, res)
     request.input('update_by', model.db.Int, req.session.userId);
     request.input('update_date', model.db.NVarChar, insertData.update_date);
 
-    request.input('resolve', model.db.SmallInt, 0);
+    request.input('resolve', model.db.SmallInt, insertData.resolve);
     request.input('type', model.db.SmallInt, insertData.type);
     request.input('category', model.db.SmallInt, insertData.category);
     request.input('title', model.db.NVarChar, insertData.title);

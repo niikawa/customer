@@ -51,7 +51,7 @@ Scenario.prototype = {
     addItem: function (data, callback) {
         var self = this;
         
-        var doc;
+        var doc = {};
         if (data.hasOwnProperty('actionName'))
         {
             doc.action_name = data.actionName;

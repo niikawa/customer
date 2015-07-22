@@ -36,6 +36,11 @@ segmentServices.factory("Segment", ['$resource', '$http','Utility',
                 method: 'POST',
                 url: 'segment/execute',
             },
+            useSegment:
+            {
+                method: 'POST',
+                url: '/segment/query/use',
+            }
         });
 
         segmentServices.pageProp = function(id)

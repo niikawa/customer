@@ -193,12 +193,14 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     function editTriggerInitialize(initData)
     {
         $scope.specificInfo = initData.specificInfo.specific;
-        Scenario.resource.action({name: initData.specificInfo.doc.actionName}).$promise.then(function(response)
+        console.log(initData.specificInfo);
+        
+        Scenario.resource.action({name: initData.specificInfo.doc.action_name}).$promise.then(function(response)
         {
             actionName = $scope.activeName;
             $scope.isShowExtraction = true;
             $scope.columnList = response.data.column;
-            $scope.activeName = initData.specificInfo.doc.actionName;
+            $scope.activeName = initData.specificInfo.doc.action_name;
             
             angular.forEach(initData.specificInfo.doc.conditionList, function(conditionItems)
             {

@@ -107,7 +107,6 @@ exports.craete = function(req, res)
     request.input('update_date', model.db.NVarChar, insertData.update_date);
     request.input('mailaddress', model.db.VarChar, insertData.mailaddress);
     request.input('password', model.db.NVarChar, crypto.createHash('md5').update(insertData.password).digest("hex"));
-    request.input('password', model.db.NVarChar, insertData.password);
     request.input('role_id', model.db.Int, insertData.role_id);
     request.input('name', model.db.NVarChar, insertData.name);
     
@@ -126,37 +125,49 @@ exports.craete = function(req, res)
 
 exports.update = function(req, res)
 {
-    var commonColumns = model.getUpdCommonColumns(req.session.userId);
-    var updateData = model.merge(req.body.data, commonColumns);
-    
-    if (void 0 !== updateData.password_confirm) delete updateData.password_confirm;
-    
-    var request = model.getRequest();
-    if (void 0 !== updateData.password)
+    model.getById(req.body.data.user_id, function(err, data)
     {
-        delete updateData.password;
-    }
-    else
-    {
-        request.input('password', model.db.NVarChar, crypto.createHash('md5').update(updateData.password).digest("hex"));
-    }
-    
-    request.input('update_by', model.db.Int, updateData.update_by);
-    request.input('update_date', model.db.NVarChar, updateData.update_date);
-    request.input('mailaddress', model.db.VarChar, updateData.mailaddress);
-    request.input('role_id', model.db.Int, updateData.role_id);
-    request.input('name', model.db.NVarChar, updateData.name);
-
-    model.updateById(updateData, request, function(err, date)
-    {
-        if (err.length > 0)
+        var commonColumns = model.getUpdCommonColumns(req.session.userId);
+        var updateData = model.merge(req.body.data, commonColumns);
+        
+        var request = model.getRequest();
+        if (updateData.hasOwnProperty("password"))
         {
-            model.insertLog(req.session.userId, 3, Message.COMMON.E_002, updateData.name);
-            console.log(err);
-            res.status(510).send('object not found');
+            if (updateData.hasOwnProperty('password_confirm'))
+            {
+                if (data[0].password === updateData.password)
+                {
+                    delete updateData.password;
+                }
+                else
+                {
+                    request.input('password', model.db.NVarChar, crypto.createHash('md5').update(updateData.password).digest("hex"));
+                }
+                delete updateData.password_confirm;
+            }
+            else
+            {
+                //不正更新防止のため
+                delete updateData.password;
+            }
         }
-        model.insertLog(req.session.userId, 3, Message.COMMON.I_002, updateData.name);
-        res.status(200).send('update ok');
+        request.input('update_by', model.db.Int, updateData.update_by);
+        request.input('update_date', model.db.NVarChar, updateData.update_date);
+        request.input('mailaddress', model.db.VarChar, updateData.mailaddress);
+        request.input('role_id', model.db.Int, updateData.role_id);
+        request.input('name', model.db.NVarChar, updateData.name);
+    
+        model.updateById(updateData, request, function(err)
+        {
+            if (err.length > 0)
+            {
+                model.insertLog(req.session.userId, 3, Message.COMMON.E_002, updateData.name);
+                console.log(err);
+                res.status(510).send('object not found');
+            }
+            model.insertLog(req.session.userId, 3, Message.COMMON.I_002, updateData.name);
+            res.status(200).send('update ok');
+        });
     });
 };
 
