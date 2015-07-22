@@ -81,11 +81,15 @@ exports.getById = function(req, res)
 
 exports.getByQueryDocId = function(req, res)
 {
+    console.log(req.body.qId);
+    console.log(req.body.count);
     if (!req.body.hasOwnProperty('qId')) return res.status(510).send('Invalid parameter');
     if (req.body.hasOwnProperty('count'))
     {
         if (isFinite(parseInt(req.body.count, 10)))
         {
+            console.log('koko');
+            console.log(parseInt(req.body.count, 10));
             return res.status(510).send('Invalid parameter');
         }
     }
