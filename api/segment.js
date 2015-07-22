@@ -32,8 +32,7 @@ exports.getById = function(req, res)
     ([
         function(callback)
         {
-            console.log(parseInt(req.params.id, 10));
-            if (isFinite(parseInt(req.params.id, 10)))
+            if (isFinite(req.params.id, 10))
             {
                 console.log('koko1');
                 model.getById(req.params.id, function(err, data)
@@ -89,7 +88,7 @@ exports.getByQueryDocId = function(req, res)
     if (!req.body.hasOwnProperty('qId')) res.status(510).send('Invalid parameter');
     if (req.body.hasOwnProperty('count'))
     {
-        if (!isFinite(parseInt(req.body.count, 10)))
+        if (!isFinite(req.body.count, 10))
         {
             res.status(510).send('Invalid parameter');
         }
@@ -258,7 +257,7 @@ exports.download = function(req, res)
     ([
         function(callback)
         {
-            if (isFinite(parseInt(req.params.id, 10)))
+            if (isFinite(req.params.id, 10))
             {
                 model.getById(req.params.id, function(err, data)
                 {
