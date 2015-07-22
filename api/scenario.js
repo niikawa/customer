@@ -311,11 +311,12 @@ exports.save = function(req, res)
         function complete(err, items)
         {
             console.log(err);
+            console.log(items);
             if (null !== err)
             {
                 console.log('scenario initialize data select faild');
                 console.log(err);
-                res.status(510).send('システムエラーが発生しました。');
+                return res.status(510).send('システムエラーが発生しました。');
             }
             var envInfo = items.env[0];
             var max = (1 == req.body.scenario.scenario_type) 
