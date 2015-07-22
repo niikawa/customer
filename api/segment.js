@@ -84,7 +84,7 @@ exports.getByQueryDocId = function(req, res)
     if (!req.body.hasOwnProperty('qid')) return res.status(510).send('Invalid parameter');
     if (req.body.hasOwnProperty('count'))
     {
-        if (!isFinite(parseInt(req.body.count, 10)))
+        if (isFinite(parseInt(req.body.count, 10)))
         {
             return res.status(510).send('Invalid parameter');
         }
