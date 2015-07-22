@@ -320,7 +320,7 @@ exports.save = function(req, res)
             var max = (1 == req.body.scenario.scenario_type) 
                 ? envInfo.schedule_scenario_max : envInfo.trigger_scenario_max;
             console.log(max);
-            console.log(items.count[0].count);
+            console.log(items.count);
             if (max <= items.count[0].count)
             {
                 res.status(510).send('これ以上登録できません。<br>不要なシナリオを削除してください。');
