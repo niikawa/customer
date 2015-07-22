@@ -148,7 +148,6 @@ exports.getScenarioCount = function(req, res)
     },
     function complete(err, items)
     {
-        console.log(items);
         var list = [];
         var envInfo = items.env[0];
         if (0 === items.count.length)
@@ -293,7 +292,44 @@ exports.save = function(req, res)
     }
     else
     {
-        create(req, res);
+        model.async.parallel(
+        {
+            env: function(callback)
+            {
+                var env = require("./environment");
+                env.get(callback);
+            },
+            count: function(callback)
+            {
+                var col = "scenario_type, count(1) as count";
+                var where = "delete_flag = 0 and scenario_type = @scenario_type";
+                var qObj = model.getQueryObject(col, tableName, where, '', '');
+                qObj.request.input('scenario_type', model.db.SmallInt, req.body.scenario.scenario_type);
+                model.select(qObj, qObj.request, callback);
+            },
+        },
+        function complete(err, items)
+        {
+            if (null === err)
+            {
+                console.log('scenario initialize data select faild');
+                console.log(err);
+                res.status(510).send('システムエラーが発生しました。');
+            }
+            var envInfo = items.env[0];
+            var max = (1 == req.body.scenario.scenario_type) 
+                ? envInfo.schedule_scenario_max : envInfo.trigger_scenario_max;
+            console.log(max);
+            console.log(items.count[0].count);
+            if (max <= items.count[0].count)
+            {
+                res.status(510).send('これ以上登録できません。<br>不要なシナリオを削除してください。');
+            }
+            else
+            {
+                create(req, res);
+            }
+        });
     }
 };
 
@@ -670,8 +706,6 @@ exports.remove = function(req, res)
             
         ], function complete(err, items)
             {
-                console.log('complete');
-                
                 if (null === err)
                 {
                     console.log(err);
