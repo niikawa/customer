@@ -310,7 +310,6 @@ exports.save = function(req, res)
         },
         function complete(err, items)
         {
-            console.log(items);
             if (0 < err.length)
             {
                 console.log('scenario initialize data select faild');
@@ -320,7 +319,11 @@ exports.save = function(req, res)
             var envInfo = items.env[0];
             var max = (1 == req.body.scenario.scenario_type) 
                 ? envInfo.schedule_scenario_max : envInfo.trigger_scenario_max;
-            if (max <= items.count[0].coun)
+                
+            console.log(max);
+            console.log(items.count[0].count);
+            
+            if (max <= items.count[0].count)
             {
                 res.status(510).send('これ以上登録できません。<br>不要なシナリオを削除してください。');
             }
