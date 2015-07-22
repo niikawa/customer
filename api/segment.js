@@ -25,6 +25,7 @@ var model = new segment();
 
 exports.getById = function(req, res)
 {
+    console.log('segment getById start');
     if (void 0 === req.params.id) return res.status(510).send('Invalid parameter');
 
     model.async.waterfall
@@ -33,6 +34,7 @@ exports.getById = function(req, res)
         {
             if (isFinite(parseInt(req.params.id, 10)))
             {
+                console.log('koko1');
                 model.getById(req.params.id, function(err, data)
                 {
                     if (err.length > 0)
@@ -46,6 +48,7 @@ exports.getById = function(req, res)
             }
             else
             {
+                console.log('koko2');
                 var col = "*";
                 var where = "delete_flag = 0 AND segment_document_id = @segment_document_id";
                 var qObj = model.getQueryObject(col, tableName, where, '', '');
@@ -114,7 +117,6 @@ exports.getByQueryDocId = function(req, res)
             var qNum = targetDoc.qIds.length;
             for (var qIndex = 0; qIndex < qNum; qIndex++)
             {
-                console.log(targetDoc.qIds[qIndex]);
                 if (targetDoc.qIds[qIndex] == req.body.qId)
                 {
                     useSegmentList.push({id: targetDoc.id, segment_name: targetDoc.segment_name});
