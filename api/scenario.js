@@ -321,6 +321,8 @@ function create(req, res)
             [
                 function(callback)
                 {
+                    console.log('first function');
+                    
                     var commonColumns = model.getInsCommonColumns();
                     var insertData = model.merge(req.body.scenario, commonColumns);
                     var request = model.getRequest(transaction);
@@ -342,13 +344,16 @@ function create(req, res)
     
                     model.insert(tableName, insertData, request, function(err, date)
                     {
+                        console.log('call callback');
+                        var e = [];
+                        e.push('err');
+                        callback(e, {});
+                        
                         if (err.length > 0)
                         {
-                            transaction.rollback(function(err)
-                            {
-                                console.log(err);
-                                res.status(510).send('シナリオの登録に失敗しました');
-                            });
+                            console.log('insert faild M_SCENARIO');
+                            console.log(err);
+                            callback(err, {});
                         }
                         
                         var col = "MAX(scenario_id) as scenario_id";
@@ -356,20 +361,25 @@ function create(req, res)
                         var qObj = model.getQueryObject(col, tableName, where, '', '');
                         model.select(qObj, qObj.request, function(err, data)
                         {
+                            console.log('select scenario data');
                             if (err.length > 0)
                             {
-                                transaction.rollback(function(err)
-                                {
-                                    console.log(err);
-                                    res.status(510).send('シナリオの登録に失敗しました');
-                                });
+                                console.log('scenario_id select faild');
+                                console.log(err);
+                                callback(err, {});
                             }
-                            callback(null, data[0]);
+                            else
+                            {
+                                callback(null, data[0]);
+                            }
                         });
                     });
                 },
                 function(data, callback)
                 {
+                    console.log('second');
+                    console.log(data);
+                    
                     var request = model.getRequest(transaction);
                     var childTabelName = '';
                     
@@ -425,37 +435,35 @@ function create(req, res)
                                 res.status(510).send('シナリオの登録に失敗しました');
                             });
                         }
-    
-                        callback(null, data);
+                        else
+                        {
+                            callback(null);
+                        }
                     });
                 }
             ],
             function(err)
             {
-                console.log("last function");
-                console.log(err);
-                
-            transaction.rollback(function(err)
-            {
-                console.log('rollback test');
-                console.log(err);
-                res.status(510).send('rollback ok');
-            });
-
-                // if (null != err)
-                // {
-                //     transaction.rollback(function(err)
-                //     {
-                //         model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
-                //         res.status(510).send('object not found');
-                //     });
-                // }
-                // transaction.commit(function(err)
-                // {
-                //     console.log("commit");
-                //     model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
-                //     res.status(200).send('insert ok');
-                // });
+                console.log('last function');
+                if (null != err)
+                {
+                    //documentを削除しなくちゃ
+                    
+                    transaction.rollback(function(err)
+                    {
+                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
+                        res.status(510).send('object not found');
+                    });
+                }
+                else
+                {
+                    transaction.commit(function(err)
+                    {
+                        console.log("commit");
+                        model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
+                        res.status(200).send('insert ok');
+                    });
+                }
             });
         });
     });
