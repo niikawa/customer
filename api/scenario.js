@@ -371,6 +371,9 @@ function create(req, res)
                 },
                 function(data, callback)
                 {
+                    console.log('max scenario id');
+                    console.log(data);
+                    
                     var request = model.getRequest(transaction);
                     var childTabelName = '';
                     
