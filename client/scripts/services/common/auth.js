@@ -13,8 +13,8 @@ authServices.factory("Auth", ['$resource', '$http', '$location', '$cookies','Uti
                     //クッキーに入れる
                     $cookies.remembertkn = data.remembertkn;
                 }
-                Shared.set('id', data.user_id);
-                Shared.set('userName', data.name);
+                Shared.set('id', data[0].user_id);
+                Shared.set('userName', data[0].name);
                 console.log(Shared.get('id'));
                 console.log(Shared.get('userName'));
             });
