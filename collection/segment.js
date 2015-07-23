@@ -153,7 +153,7 @@ Segment.prototype = {
             else
             {
                 // if (doc)
-                if (doc.hasOwnProperty("_self"))
+                if (void 0 === doc)
                 {
 
                     self.client.deleteDocument(doc._self, doc, function (err, result) {
