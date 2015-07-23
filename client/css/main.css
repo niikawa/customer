@@ -212,7 +212,7 @@ h5.title {
   margin-top: 10px;
   color: #FE2E2E;
 }
-
+.list-error i {margin-right: 10px;}
 input.ng-invalid.ng-dirty {
   border: solid 1px red;
 }
