@@ -47,7 +47,7 @@
                     <li class="list-group-item" ng-repeat="(i, item) in executePlanScenario">
                         <span class="label-m label-default">{{item.scenario_type}}</span>
                         <a ng-href='/#/scenario/{{item.scenario_type_key}}/control/{{item.scenario_id}}'>{{item.scenario_name}}</a>
-                        <span ng-if="0 == item.valid_flag" class="error"><br><i class="glyphicon glyphicon-alert"></i>設定していたセグメントが削除されています。</span>
+                        <span ng-if="0 == item.valid_flag" class="list-error"><br><i class="glyphicon glyphicon-alert"></i>設定していたセグメントが削除されています。</span>
                     </li>
                   </ul>
                 </div>
