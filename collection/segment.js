@@ -145,6 +145,8 @@ Segment.prototype = {
         console.log("segment collection removeItem");
 
         self.getItem(itemId, function (err, doc) {
+            
+            console.log(doc);
             if (err) {
                 callback(err);
 
@@ -155,7 +157,6 @@ Segment.prototype = {
                 console.log("segment collection removeItem execute");
                 self.client.deleteDocument(doc._self, doc, function (err, result) {
                     
-                    console.log(err);
                     if (err) {
                         callback(err);
 
