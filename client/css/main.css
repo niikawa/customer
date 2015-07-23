@@ -205,6 +205,8 @@ h5.title {
 .fixed-100 {
   width: 100%;
 }
+
+.list-group-item > a {margin-right:10px;}
 /*-----------------------------------------------*/
 /* error
 /*-----------------------------------------------*/
@@ -212,7 +214,7 @@ h5.title {
   margin-top: 10px;
   color: #FE2E2E;
 }
-.list-error i {margin-right: 10px;}
+.list-error i {margin-right: 7px;}
 input.ng-invalid.ng-dirty {
   border: solid 1px red;
 }
