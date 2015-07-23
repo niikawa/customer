@@ -7,12 +7,14 @@ authServices.factory("Auth", ['$resource', '$http', '$location', '$cookies','Uti
         authServices.login = function(data)
         {
             var promise = $http.post('/auth/login', {mailAddress: data.mailAddress, password: data.password
-            }).success(function(data, status, headers, config)
+            }).success(function(response, status, headers, config)
             {
                 if (data.remember) {
                     //クッキーに入れる
                     $cookies.remembertkn = data.remembertkn;
                 }
+                Shared.set('id', response.data[0].user_id);
+                Shared.set('userName', response.data[0].name);
             });
             return promise;
         };
@@ -36,7 +38,6 @@ authServices.factory("Auth", ['$resource', '$http', '$location', '$cookies','Uti
             var promise = $http.post('api/isLogin', {
             }).success(function(data, status, headers, config)
             {
-                Shared.set('id', data.id);
                 return true;
             }
             ).error(function(data)

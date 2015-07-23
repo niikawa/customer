@@ -163,7 +163,7 @@ exports.update = function(req, res)
             {
                 model.insertLog(req.session.userId, 3, Message.COMMON.E_002, updateData.name);
                 console.log(err);
-                res.status(510).send('object not found');
+                return res.status(510).send('object not found');
             }
             model.insertLog(req.session.userId, 3, Message.COMMON.I_002, updateData.name);
             res.status(200).send('update ok');

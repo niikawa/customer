@@ -98,7 +98,7 @@ exports.getAll = function(req, res)
  */
 exports.getValid = function(req, res)
 {
-    var col = "scenario_id, scenario_name, status, priority, " +
+    var col = "scenario_id, scenario_name, status, priority, valid_flag," +
                 "CASE scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type";
 
     var where = "delete_flag = 0 AND approach = 1";
@@ -201,7 +201,7 @@ exports.getScenarioCount = function(req, res)
  */
 exports.getExecutePlanScenario = function(req, res)
 {
-    var col = "scenario_id, scenario_name, "+
+    var col = "scenario_id, scenario_name, valid_flag, "+
         "CASE scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type, "+
         "CASE scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key";
     var where = "delete_flag = 0 AND approach = 1 AND status = 1";
@@ -283,7 +283,6 @@ exports.getBySegmentId = function(segment_id, callback)
 exports.save = function(req, res)
 {
     console.log('scenario save execute');
-    console.log(req.body);
     if (!req.body.hasOwnProperty('scenario')) res.status(510).send('param is not found');
 
     if (req.body.scenario.hasOwnProperty('scenario_id'))

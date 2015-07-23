@@ -149,7 +149,7 @@ exports.getAll = function(req, res)
 
 exports.getList = function(req, res)
 {
-    var col = "segment_id, segment_name, FORMAT(update_date, 'yyyy/MM/dd') AS update_date, segment_document_id";
+    var col = "segment_id, segment_name, FORMAT(update_date, 'yyyy/MM/dd') AS update_date, valid_flag, segment_document_id";
     var where = "delete_flag = 0";
     var qObj = model.getQueryObject(col, tableName, where, '', '');
     model.select(qObj, qObj.request, function(err, data)
@@ -228,20 +228,104 @@ exports.save = function(req, res)
 
 exports.remove = function(req, res)
 {
+    console.log('segment remove start');
     if (void 0 === req.params.id || void 0 === req.params.segment_document_id) res.status(510).send('parameters not found');
     
     segmentdoc.removeItemForWeb(req.params.segment_document_id, function(err, doc)
     {
-        if (err) res.status(510).send('document is not found');
-        
-        model.removeById(req.params.id, function(err, data)
+        if (err) 
         {
-           if (err.length > 0)
-           {
+            return res.status(510).send('document is not found');
+        }
+        console.log('segment doc removeItemForWeb ok');
+        console.log(doc);
+        
+        model.tranBegin(function(err, transaction)
+        {
+            if (err)
+            {
                 console.log(err);
-                res.status(510).send('object not found');
-           }
-           res.status(200).send('delete ok').end();
+                
+            }
+            model.async.waterfall(
+            [
+                function(callback)
+                {
+                    model.removeByIdAndTran(req.params.id, transaction, function(err, data)
+                    {
+                        if (err.length > 0)
+                        {
+                            console.log("segment remove faild: segment_id="+req.params.id);
+                            console.log(err);
+                            callback(err, {});
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    });
+                },
+                function(callback)
+                {
+                    //削除したセグメントを利用しているシナリオの有効フラグを0にする
+                    var sql = "UPDATE M_SCENARIO SET valid_flag = 0 WHERE segment_id = @segment_id";
+                    var request = model.getRequest(transaction);
+                    request.input("segment_id", model.db.Int, req.params.id);
+                    model.execute(sql, request, function(err, data)
+                    {
+                        if (err.length > 0)
+                        {
+                            console.log("scenario.valid_flag update faild: segment_id="+req.params.id);
+                            console.log(err);
+                            callback(err, {});
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    });
+                }
+            ],
+            function(err)
+            {
+                if (null !== err)
+                {
+                    console.log('scenario remove faild');
+                    console.log(err);
+                    
+                    transaction.rollback(function(err)
+                    {
+                        if (err)
+                        {
+                            console.log('scenario remove rollback faild');
+                            console.log(err);
+                            res.status(510).send("システムエラーが発生しました。");
+                        }
+                        else
+                        {
+                            //model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
+                            res.status(510).send("シナリオの削除に失敗しました。");
+                        }
+                    });
+                }
+                else
+                {
+                    transaction.commit(function(err)
+                    {
+                        if (err)
+                        {
+                            console.log('scenario remove commit faild');
+                            console.log(err);
+                            res.status(510).send("システムエラーが発生しました。");
+                        }
+                        else
+                        {
+                            //model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
+                            res.status(200).send('segment remove ok');
+                        }
+                    });
+                }
+            });
         });
     });
 };

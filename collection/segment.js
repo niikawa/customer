@@ -139,26 +139,37 @@ Segment.prototype = {
             }
         });
     },
-    removeItem: function(itemId, callback) {
-        
+    removeItem: function(itemId, callback)
+    {
         var self = this;
 
-        self.getItem(itemId, function (err, doc) {
-            if (err) {
+        self.getItem(itemId, function (err, doc)
+        {
+            if (err)
+            {
                 callback(err);
-
-            } else {
-                
-                if (doc )
-
-                self.client.deleteDocument(doc._self, doc, function (err, result) {
-                    if (err) {
-                        callback(err);
-
-                    } else {
-                        callback(null, result);
-                    }
-                });
+            }
+            else
+            {
+                // if (doc)
+                if (void 0 !== doc)
+                {
+                    self.client.deleteDocument(doc._self, doc, function (err, result)
+                    {
+                        if (err)
+                        {
+                            callback(err);
+    
+                        } else
+                        {
+                            callback(null, doc);
+                        }
+                    });
+                }
+                else
+                {
+                    callback(err);
+                }
             }
         });
     }
