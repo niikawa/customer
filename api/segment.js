@@ -149,7 +149,7 @@ exports.getAll = function(req, res)
 
 exports.getList = function(req, res)
 {
-    var col = "segment_id, segment_name, FORMAT(update_date, 'yyyy/MM/dd') AS update_date, segment_document_id";
+    var col = "segment_id, segment_name, FORMAT(update_date, 'yyyy/MM/dd') AS update_date, valid_flag, segment_document_id";
     var where = "delete_flag = 0";
     var qObj = model.getQueryObject(col, tableName, where, '', '');
     model.select(qObj, qObj.request, function(err, data)

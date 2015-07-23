@@ -31,7 +31,9 @@
                         <tbody>
                             <tr ng-repeat="(i, item) in scenarioList">
                                 <td data-th="名称"><a ng-href='/#/scenario/{{type}}/control/{{item.scenario_id}}'>{{item.scenario_name}}</a></td>
-                                <td data-th="利用状況">{{item.status}}</td>
+                                <td data-th="利用状況">{{item.status}}
+                                <span ng-if="0 == item.valid_flag" class="list-error"><i class="glyphicon glyphicon-alert"></i>設定していたセグメントが削除されています。</span>
+                                </td>
                                 <td data-th="アプローチ">{{item.approach}}</td>
                                 <td data-th="更新日">{{item.update_date}}</td>
                                 <td><button class="close-button" ng-click="remove(i)"><i class="fa fa-times"></i></button></td>
