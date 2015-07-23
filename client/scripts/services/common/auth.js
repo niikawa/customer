@@ -15,8 +15,6 @@ authServices.factory("Auth", ['$resource', '$http', '$location', '$cookies','Uti
                 }
                 Shared.set('id', response.data[0].user_id);
                 Shared.set('userName', response.data[0].name);
-                console.log(Shared.get('id'));
-                console.log(Shared.get('userName'));
             });
             return promise;
         };
@@ -40,8 +38,6 @@ authServices.factory("Auth", ['$resource', '$http', '$location', '$cookies','Uti
             var promise = $http.post('api/isLogin', {
             }).success(function(data, status, headers, config)
             {
-                console.log(Shared.get('id'));
-//                Shared.set('id', data.id);
                 return true;
             }
             ).error(function(data)

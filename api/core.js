@@ -195,6 +195,15 @@ core.prototype.removeById = function(idValue, callback)
     this.execute(sql, request, callback);
 };
 
+core.prototype.removeByIdAndTran = function(idValue, transaction, callback)
+{
+    var request = this.getRequest(transaction);
+    request.input(this.pk, this.db.Int, idValue);
+    var sql = 'UPDATE ' + this.modelName + ' SET delete_flag = 1' + ' WHERE ' + this.pk + ' = @' + this.pk;
+    this.execute(sql, request, callback);
+};
+
+
 core.prototype.deleteById = function(idValue, callback)
 {
     var request = this.getRequest();
