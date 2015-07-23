@@ -241,7 +241,6 @@ exports.remove = function(req, res)
             if (err)
             {
                 console.log(err);
-                
             }
             model.async.waterfall(
             [
