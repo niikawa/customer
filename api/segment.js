@@ -238,6 +238,7 @@ exports.remove = function(req, res)
             return res.status(510).send('document is not found');
         }
         console.log('segment doc removeItemForWeb ok');
+        console.log(doc);
         
         model.tranBegin(function(err, transaction)
         {

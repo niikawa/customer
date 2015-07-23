@@ -139,30 +139,37 @@ Segment.prototype = {
             }
         });
     },
-    removeItem: function(itemId, callback) {
-        
+    removeItem: function(itemId, callback)
+    {
         var self = this;
-        console.log("segment collection removeItem");
 
-        self.getItem(itemId, function (err, doc) {
-            
-            if (err) {
+        self.getItem(itemId, function (err, doc)
+        {
+            if (err)
+            {
                 callback(err);
 
-            } else {
-                
-                if (doc)
+            }
+            else
+            {
+                // if (doc)
+                if (doc.hasOwnProperty("_self"))
+                {
 
-                console.log("segment collection removeItem execute");
-                self.client.deleteDocument(doc._self, doc, function (err, result) {
-                    
-                    if (err) {
-                        callback(err);
-
-                    } else {
-                        callback(null, result);
-                    }
-                });
+                    self.client.deleteDocument(doc._self, doc, function (err, result) {
+                        
+                        if (err) {
+                            callback(err);
+    
+                        } else {
+                            callback(null, result);
+                        }
+                    });
+                }
+                else
+                {
+                    callback(err);
+                }
             }
         });
     }
