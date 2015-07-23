@@ -148,20 +148,20 @@ Segment.prototype = {
             if (err)
             {
                 callback(err);
-
             }
             else
             {
                 // if (doc)
                 if (void 0 !== doc)
                 {
-
-                    self.client.deleteDocument(doc._self, doc, function (err, result) {
-                        
-                        if (err) {
+                    self.client.deleteDocument(doc._self, doc, function (err, result)
+                    {
+                        if (err)
+                        {
                             callback(err);
     
-                        } else {
+                        } else
+                        {
                             callback(null, doc);
                         }
                     });
