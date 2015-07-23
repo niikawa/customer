@@ -209,7 +209,7 @@ h5.title {
 /* error
 /*-----------------------------------------------*/
 .error {
-  color: #FF000;
+  color: #FE2E2E;
 }
 
 input.ng-invalid.ng-dirty {
