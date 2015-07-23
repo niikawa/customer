@@ -234,9 +234,15 @@ exports.remove = function(req, res)
     segmentdoc.removeItemForWeb(req.params.segment_document_id, function(err, doc)
     {
         if (err) res.status(510).send('document is not found');
+        console.log('segment doc removeItemForWeb ok');
         
         model.tranBegin(function(err, transaction)
         {
+            if (err)
+            {
+                console.log(err);
+                
+            }
             model.async.waterfall(
             [
                 function(callback)
