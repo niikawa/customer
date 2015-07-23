@@ -20,6 +20,7 @@ coreCtrl.controller('CoreCtrl', ['$scope', 'Shared', function($scope, Shared)
     $scope.$on('loginComplete', function(event)
     {
         $scope.isHeader = true;
+        $scope.userName = Shared.get('userName');
     });
 
     $scope.$on('loginInit', function(event)
