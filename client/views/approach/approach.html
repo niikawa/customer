@@ -53,6 +53,7 @@
                             <label class="btn btn-default" name="status" ng-model="item.status" btn-radio=1 uncheckable>有効</label>
                             <label class="btn btn-default" name="status" ng-model="item.status" btn-radio=0 uncheckable>無効</label>
                         </div>
+                        <span ng-if="0 == item.valid_flag" class="list-error"><i class="glyphicon glyphicon-alert"></i>設定していたセグメントが削除されています。</span>
                     </div>
                 </div>
             </div>
