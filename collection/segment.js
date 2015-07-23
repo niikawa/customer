@@ -146,7 +146,6 @@ Segment.prototype = {
 
         self.getItem(itemId, function (err, doc) {
             
-            console.log(doc);
             if (err) {
                 callback(err);
 
