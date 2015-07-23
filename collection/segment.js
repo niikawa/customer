@@ -162,7 +162,7 @@ Segment.prototype = {
                             callback(err);
     
                         } else {
-                            callback(null, result);
+                            callback(null, doc);
                         }
                     });
                 }

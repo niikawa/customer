@@ -288,7 +288,7 @@ exports.remove = function(req, res)
             ],
             function(err)
             {
-                if (null === err)
+                if (null !== err)
                 {
                     console.log('scenario remove faild');
                     console.log(err);
