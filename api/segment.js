@@ -166,6 +166,7 @@ exports.getList = function(req, res)
         },
         function (err) 
         {
+            console.log(err);
             if (err.length > 0)
             {
                 model.insertLog(req.session.userId, 5, Message.COMMON.E_004, functionName);
