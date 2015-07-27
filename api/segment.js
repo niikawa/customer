@@ -161,12 +161,19 @@ exports.getList = function(req, res)
             scenario.getBySegmentId(segment.segment_id, function(err, data)
             {
                 segment.isUsed = (data.length > 0);
-                callback(err);
+                if (void 0 === err)
+                {
+                    callback([]);
+                    
+                }
+                else
+                {
+                    callback(err);
+                }
             });
         },
         function (err) 
         {
-            console.log(err);
             if (err.length > 0)
             {
                 model.insertLog(req.session.userId, 5, Message.COMMON.E_004, functionName);
