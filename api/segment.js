@@ -168,16 +168,15 @@ exports.getList = function(req, res)
         },
         function (err) 
         {
-            console.log('scenario.getBySegmentId last');
-            console.log(err);
-            console.log(data);
-            
-            if (void 0 !== err || err.length > 0)
+            if (void 0 !== err)
             {
-                model.insertLog(req.session.userId, 5, Message.COMMON.E_004, functionName);
-                console.log('get segment data faild');
-                console.log(err);
-                res.status(510).send('get segment data faild');
+                if (err.length > 0)
+                {
+                    model.insertLog(req.session.userId, 5, Message.COMMON.E_004, functionName);
+                    console.log('get segment data faild');
+                    console.log(err);
+                    res.status(510).send('get segment data faild');
+                }
             }
             model.insertLog(req.session.userId, 5, Message.COMMON.I_004, functionName);
             res.json({data: data});
