@@ -149,13 +149,15 @@ exports.getAll = function(req, res)
 
 exports.getList = function(req, res)
 {
-    var col = "segment_id, segment_name, FORMAT(update_date, 'yyyy/MM/dd') AS update_date, valid_flag, segment_document_id";
+    var col = "segment_id, segment_name, FORMAT(update_date, 'yyyy/MM/dd') AS update_date, segment_document_id";
     var where = "delete_flag = 0";
     var qObj = model.getQueryObject(col, tableName, where, '', '');
     model.select(qObj, qObj.request, function(err, data)
     {
         //セグメントの利用状況を設定する
         var scenario = require("./scenario");
+        console.log('scenario.getBySegmentId for');
+        console.log(data);
         async.forEach(data, function(segment, callback)
         {
             scenario.getBySegmentId(segment.segment_id, function(err, data)
@@ -166,12 +168,15 @@ exports.getList = function(req, res)
         },
         function (err) 
         {
-            if (err.length > 0)
+            if (void 0 !== err)
             {
-                model.insertLog(req.session.userId, 5, Message.COMMON.E_004, functionName);
-                console.log('get segment data faild');
-                console.log(err);
-                res.status(510).send('get segment data faild');
+                if (err.length > 0)
+                {
+                    model.insertLog(req.session.userId, 5, Message.COMMON.E_004, functionName);
+                    console.log('get segment data faild');
+                    console.log(err);
+                    res.status(510).send('get segment data faild');
+                }
             }
             model.insertLog(req.session.userId, 5, Message.COMMON.I_004, functionName);
             res.json({data: data});
