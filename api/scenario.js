@@ -266,7 +266,7 @@ exports.savePriority = function(req, res)
 
 exports.getBySegmentId = function(segment_id, callback)
 {
-    var col = "scenario_id, scenario_name";
+    var col = "scenario_id, scenario_name, valid_flag";
     var where = "delete_flag = 0 AND segment_id = @segment_id";
     var qObj = model.getQueryObject(col, tableName, where, '', '');
     qObj.request.input('segment_id', model.db.Int, segment_id);
