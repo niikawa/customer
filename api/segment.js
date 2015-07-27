@@ -160,6 +160,8 @@ exports.getList = function(req, res)
         {
             scenario.getBySegmentId(segment.segment_id, function(err, data)
             {
+                console.log('scenario.getBySegmentId');
+                console.log(err);
                 console.log(data);
                 segment.isUsed = (data.length > 0);
                 callback(err);
