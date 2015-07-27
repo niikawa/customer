@@ -156,6 +156,8 @@ exports.getList = function(req, res)
     {
         //セグメントの利用状況を設定する
         var scenario = require("./scenario");
+        console.log('scenario.getBySegmentId for');
+        console.log(data);
         async.forEach(data, function(segment, callback)
         {
             scenario.getBySegmentId(segment.segment_id, function(err, data)
@@ -166,6 +168,10 @@ exports.getList = function(req, res)
         },
         function (err) 
         {
+            console.log('scenario.getBySegmentId last');
+            console.log(err);
+            console.log(data);
+            
             if (void 0 !== err || err.length > 0)
             {
                 model.insertLog(req.session.userId, 5, Message.COMMON.E_004, functionName);
