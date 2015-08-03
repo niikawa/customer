@@ -1,6 +1,8 @@
 var values = {};
 var colTypes = {};
 var keyColumnName = 'customer_id';
+
+
 /**
  * sql creater class
  * 
@@ -48,25 +50,16 @@ CreateSQL.prototype =
     getSql: function(tableList)
     {
         var tables = this.getTableListByTableInfoObject(tableList);
-        // var work = [];
-        // Object.keys(tableList).forEach(function(key)
-        // {
-        //     work.push(key);
-        // });
-        return "SELECT distinct("+ tables[0] +"."+ keyColumnName +") FROM " + tables.join(',') + ' WHERE ' + this.conditions;
+        var tableJoin = getJoinTable(tables);
+        
+        return "SELECT distinct("+ tables[0] +"."+ keyColumnName +") FROM " + tableJoin + ' WHERE ' + this.conditions;
     },
     getCountSql: function(tableList)
     {
         var tables = this.getTableListByTableInfoObject(tableList);
-        // Object.keys(tableList).forEach(function(tableName)
-        // {
-        //     if (!workObj.hasOwnProperty(tableName))
-        //     {
-        //         work.push(tableName);
-        //         workObj[tableName] = workObj;
-        //     }
-        // });
-        return "SELECT count( distinct("+ tables[0] + '.' +keyColumnName + ") ) AS count FROM " + tables.join(',') + ' WHERE ' + this.conditions;
+        var tableJoin = getJoinTable(tables);
+        
+        return "SELECT count( distinct("+ tables[0] + '.' +keyColumnName + ") ) AS count FROM " + tableJoin + ' WHERE ' + this.conditions;
     },
     getValueList: function()
     {
@@ -109,6 +102,31 @@ CreateSQL.prototype =
         return tableListObject;
     }
 };
+
+function getJoinTable(tables)
+{
+    var tableJoin = '';
+    var tableNum = tables.length;
+    var last = tableNum - 1;
+    if (tableNum > 1)
+    {
+        for (var index = 0; index < tableNum; index++)
+        {
+            var next = index + 1;
+            var defore = tables[index];
+            if (next !== last)
+            {
+                tableJoin = defore + ' INNER JOIN ' ;
+                tableJoin += tables[next] + ' ON ' + defore + '.' + keyColumnName + ' = ' + tables[next] + '.' + keyColumnName;
+            }
+        }
+    }
+    else
+    {
+        tableJoin = tables.join(',');
+    }
+    return tableJoin;
+}
 
 function getColType(type)
 {
