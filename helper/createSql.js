@@ -53,9 +53,7 @@ CreateSQL.prototype =
         // {
         //     work.push(key);
         // });
-        var keyTable = tables[0];
-        console.log(keyTable);
-        return "SELECT distinct("+ keyTable +"."+keyColumnName +") FROM " + tables.join(',') + ' WHERE ' + this.conditions;
+        return "SELECT distinct("+ tables[0] +"."+ keyColumnName +") FROM " + tables.join(',') + ' WHERE ' + this.conditions;
     },
     getCountSql: function(tableList)
     {
@@ -68,7 +66,7 @@ CreateSQL.prototype =
         //         workObj[tableName] = workObj;
         //     }
         // });
-        return "SELECT count( distinct("+ keyColumnName + ") ) AS count FROM " + tables.join(',') + ' WHERE ' + this.conditions;
+        return "SELECT count( distinct("+ tables[0] + '.' +keyColumnName + ") ) AS count FROM " + tables.join(',') + ' WHERE ' + this.conditions;
     },
     getValueList: function()
     {
