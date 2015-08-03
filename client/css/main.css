@@ -432,7 +432,7 @@ div .break-all {
 }
 
 div .drop-join {
-  left: 100%;
+  left: 20%;
   display: table-cell;
   border: 2px dotted;
   width: 60px;
