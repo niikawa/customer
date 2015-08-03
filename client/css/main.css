@@ -597,8 +597,7 @@ div .card-cell-right-b {
   margin-bottom: 5px;
   border: 1px solid #d4d4d4;
   border-radius: 2px;
-  -webkit-box-shadow: 0 1px 6px rgba(0,0,0,0.175);
-  box-shadow: 0 1px 6px rgba(0,0,0,0.175);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24), 0 0 2px rgba(0, 0, 0, 0.12);
   display: block;
   cursor: move;
 }
@@ -608,9 +607,12 @@ div .card-cell-right-b {
 
 .card:hover {
 /* box-shadow */
-box-shadow:rgba(113, 135, 164, 0.65098) 0px 0px 6px 3px;
--webkit-box-shadow:rgba(113, 135, 164, 0.65098) 0px 0px 6px 3px;
--moz-box-shadow:rgba(113, 135, 164, 0.65098) 0px 0px 6px 3px;  
+/*box-shadow:rgba(113, 135, 164, 0.65098) 0px 0px 6px 3px;*/
+/*-webkit-box-shadow:rgba(113, 135, 164, 0.65098) 0px 0px 6px 3px;*/
+/*-moz-box-shadow:rgba(113, 135, 164, 0.65098) 0px 0px 6px 3px;  */
+    border: 1px solid rgba(2, 98, 194, 0.56);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.24), 0 0 4px rgba(0, 0, 0, 0.12), 0 6px 18px rgba(2, 98, 194, 0.12);
+    transform: translate3d(0px, -2px, 0px);
 }
 .card-info:hover {
   background-color: #ddd 
