@@ -114,8 +114,10 @@ function getJoinTable(tables)
     {
         for (var index = 0; index < tableNum; index++)
         {
-            var next = index + 1;
+            console.log(index);
+            console.log(tables[index]);
             var defore = tables[index];
+            var next = index + 1;
             if (next !== last)
             {
                 tableJoin = defore + ' INNER JOIN ' ;
