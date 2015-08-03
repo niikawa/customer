@@ -143,7 +143,10 @@ ul > li > a > i {cursor: pointer;}
 table {
   font-size:15px;
 }
-table > thead > tr > th {background-color:#b5cdd9;}
+table > thead > tr > th {
+  background-color:#b5cdd9;
+  border-color: #b5cdd9;
+}
 table caption {text-align:center;}
 @media screen and (max-width: 767px) {
   table thead {display: none;}
