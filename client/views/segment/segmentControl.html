@@ -23,9 +23,10 @@
                           </div>
                           <ul class="list-group" >
                             <li class="list-group-item" ng-repeat="item in queryList track by $index" ng-model="queryList" >
-                                <div class="card-cell-left">
-                                    {{item.query_name}}
-                                </div>
+{{item.query_name}}
+                                <!--<div class="card-cell-left">-->
+                                    
+                                <!--</div>-->
                                 <div class="card-cell-right">
                                     <button class="btn-clear" ng-click="moveQuery($index)"><i class="fa fa-plus-square fa-2x"></i></button>
                                 </div>

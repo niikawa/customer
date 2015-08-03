@@ -57,7 +57,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
     
     $scope.moveQuery = function(index)
     {
-        $scope.conditions.push($scope.queryList[index],1);
+        $scope.conditions.push($scope.queryList[index]);
         $scope.queryList.splice(index,1);
     };
     
