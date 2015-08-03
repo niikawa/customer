@@ -22,8 +22,13 @@
                                 refine-directive refine-item="queryList" keyword="segmentSearch" name-propertie="query_name" >
                           </div>
                           <ul class="list-group" >
-                            <li class="list-group-item" ng-repeat="item in queryList track by $index" ng-model="queryList" drag-item-directive dragindex="$index">
-                                {{item.query_name}}
+                            <li class="list-group-item" ng-repeat="item in queryList track by $index" ng-model="queryList" >
+                                <div class="card-cell-left">
+                                    {{item.query_name}}
+                                </div>
+                                <div class="card-cell-right">
+                                    <button class="btn-clear" ng-click="moveQuery($index)"><i class="fa fa-plus-square fa-2x"></i></button>
+                                </div>
                             </li>
                           </ul>
                         </div>                        

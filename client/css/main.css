@@ -610,7 +610,7 @@ div .card-cell-right-b {
 /*box-shadow:rgba(113, 135, 164, 0.65098) 0px 0px 6px 3px;*/
 /*-webkit-box-shadow:rgba(113, 135, 164, 0.65098) 0px 0px 6px 3px;*/
 /*-moz-box-shadow:rgba(113, 135, 164, 0.65098) 0px 0px 6px 3px;  */
-    border: 1px solid rgba(2, 98, 194, 0.56);
+    border: 1px solid rgba(113, 135, 164, 0.65098);
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.24), 0 0 4px rgba(0, 0, 0, 0.12), 0 6px 18px rgba(2, 98, 194, 0.12);
     transform: translate3d(0px, -2px, 0px);
 }

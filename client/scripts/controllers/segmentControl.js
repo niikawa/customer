@@ -55,6 +55,12 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         });
     };
     
+    $scope.moveQuery = function(index)
+    {
+        $scope.queryList.splice(index,1);
+        $scope.conditions.push(index,1);
+    };
+    
     $scope.removeItem = function(index)
     {
         $scope.queryList.push($scope.conditions[index]);
