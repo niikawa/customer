@@ -15,20 +15,20 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         $scope.isExecte = false;
     }
     
-    function setEvntListeners()
-    {
-        $scope.$on('dropItemComplete', function(event, data)
-        {
-            event.stopPropagation();
-            $scope.isExecte = true;
-        });
-    }
+    // function setEvntListeners()
+    // {
+    //     $scope.$on('dropItemComplete', function(event, data)
+    //     {
+    //         event.stopPropagation();
+    //         $scope.isExecte = true;
+    //     });
+    // }
 
     $scope.initialize = function()
     {
         $scope._construct();
         setInitializeScope();
-        setEvntListeners();
+        // setEvntListeners();
         Shared.setRoot('segment control');
         
         Query.resource.getQuery().$promise.then(function(doc)
@@ -59,6 +59,7 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
     {
         $scope.conditions.push($scope.queryList[index]);
         $scope.queryList.splice(index,1);
+        $scope.isExecte = true;
     };
     
     $scope.removeItem = function(index)
