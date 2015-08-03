@@ -57,15 +57,14 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
     
     $scope.moveQuery = function(index)
     {
+        $scope.conditions.push($scope.queryList[index],1);
         $scope.queryList.splice(index,1);
-        $scope.conditions.push(index,1);
     };
     
     $scope.removeItem = function(index)
     {
         $scope.queryList.push($scope.conditions[index]);
         $scope.conditions.splice(index,1);
-        console.log($scope.conditions.length);
         if (0 === $scope.conditions.length) $scope.isExecte = false;
     };
     
