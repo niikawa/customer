@@ -54,7 +54,8 @@ CreateSQL.prototype =
         //     work.push(key);
         // });
         var keyTable = tables[0];
-        return "SELECT distinct("+ keyTable+"."+keyColumnName +") FROM " + tables.join(',') + ' WHERE ' + this.conditions;
+        console.log(keyTable);
+        return "SELECT distinct("+ keyTable +"."+keyColumnName +") FROM " + tables.join(',') + ' WHERE ' + this.conditions;
     },
     getCountSql: function(tableList)
     {
