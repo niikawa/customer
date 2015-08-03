@@ -105,8 +105,6 @@ CreateSQL.prototype =
 
 function getJoinTable(tables)
 {
-    console.log(tables);
-
     var tableJoin = '';
     var tableNum = tables.length;
     var last = tableNum - 1;
@@ -114,11 +112,9 @@ function getJoinTable(tables)
     {
         for (var index = 0; index < tableNum; index++)
         {
-            console.log(index);
-            console.log(tables[index]);
             var defore = tables[index];
             var next = index + 1;
-            if (next !== last)
+            if (0 === index || next < last)
             {
                 tableJoin = defore + ' INNER JOIN ' ;
                 tableJoin += tables[next] + ' ON ' + defore + '.' + keyColumnName + ' = ' + tables[next] + '.' + keyColumnName;
