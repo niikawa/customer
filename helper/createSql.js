@@ -105,6 +105,8 @@ CreateSQL.prototype =
 
 function getJoinTable(tables)
 {
+    console.log(tables);
+
     var tableJoin = '';
     var tableNum = tables.length;
     var last = tableNum - 1;
