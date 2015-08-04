@@ -15,20 +15,20 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         $scope.isExecte = false;
     }
     
-    function setEvntListeners()
-    {
-        $scope.$on('dropItemComplete', function(event, data)
-        {
-            event.stopPropagation();
-            $scope.isExecte = true;
-        });
-    }
+    // function setEvntListeners()
+    // {
+    //     $scope.$on('dropItemComplete', function(event, data)
+    //     {
+    //         event.stopPropagation();
+    //         $scope.isExecte = true;
+    //     });
+    // }
 
     $scope.initialize = function()
     {
         $scope._construct();
         setInitializeScope();
-        setEvntListeners();
+        // setEvntListeners();
         Shared.setRoot('segment control');
         
         Query.resource.getQuery().$promise.then(function(doc)
@@ -55,11 +55,17 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         });
     };
     
+    $scope.moveQuery = function(index)
+    {
+        $scope.conditions.push($scope.queryList[index]);
+        $scope.queryList.splice(index,1);
+        $scope.isExecte = true;
+    };
+    
     $scope.removeItem = function(index)
     {
         $scope.queryList.push($scope.conditions[index]);
         $scope.conditions.splice(index,1);
-        console.log($scope.conditions.length);
         if (0 === $scope.conditions.length) $scope.isExecte = false;
     };
     

@@ -1,6 +1,8 @@
 var values = {};
 var colTypes = {};
 var keyColumnName = 'customer_id';
+
+
 /**
  * sql creater class
  * 
@@ -48,26 +50,16 @@ CreateSQL.prototype =
     getSql: function(tableList)
     {
         var tables = this.getTableListByTableInfoObject(tableList);
-        // var work = [];
-        // Object.keys(tableList).forEach(function(key)
-        // {
-        //     work.push(key);
-        // });
+        var tableJoin = getJoinTable(tables);
         
-        return "SELECT distinct("+ keyColumnName +") FROM " + tables.join(',') + ' WHERE ' + this.conditions;
+        return "SELECT distinct("+ tables[0] +"."+ keyColumnName +") FROM " + tableJoin + ' WHERE ' + this.conditions;
     },
     getCountSql: function(tableList)
     {
         var tables = this.getTableListByTableInfoObject(tableList);
-        // Object.keys(tableList).forEach(function(tableName)
-        // {
-        //     if (!workObj.hasOwnProperty(tableName))
-        //     {
-        //         work.push(tableName);
-        //         workObj[tableName] = workObj;
-        //     }
-        // });
-        return "SELECT count( distinct("+ keyColumnName + ") ) AS count FROM " + tables.join(',') + ' WHERE ' + this.conditions;
+        var tableJoin = getJoinTable(tables);
+        
+        return "SELECT count( distinct("+ tables[0] + '.' +keyColumnName + ") ) AS count FROM " + tableJoin + ' WHERE ' + this.conditions;
     },
     getValueList: function()
     {
@@ -110,6 +102,31 @@ CreateSQL.prototype =
         return tableListObject;
     }
 };
+
+function getJoinTable(tables)
+{
+    var tableJoin = '';
+    var tableNum = tables.length;
+    var last = tableNum - 1;
+    if (tableNum > 1)
+    {
+        for (var index = 0; index < tableNum; index++)
+        {
+            var defore = tables[index];
+            var next = index + 1;
+            if (0 === index || next < last)
+            {
+                tableJoin = defore + ' INNER JOIN ' ;
+                tableJoin += tables[next] + ' ON ' + defore + '.' + keyColumnName + ' = ' + tables[next] + '.' + keyColumnName;
+            }
+        }
+    }
+    else
+    {
+        tableJoin = tables.join(',');
+    }
+    return tableJoin;
+}
 
 function getColType(type)
 {
@@ -246,6 +263,7 @@ function createSegment(data, request)
     console.log('createSegment start');
 
     var conditionMap = data.conditionMap;
+    console.log(conditionMap);
     var num = data.docs.length;
     //document DB から取得した結果は、順序が保障されていない
     //おそらくデフォルトでは_tsの照準っぽい
@@ -265,23 +283,11 @@ function createSegment(data, request)
         count++;
         Object.keys(doc.columnTypeList).forEach(function(key)
         {
+            console.log(doc.bindInfo[key]);
             var type = getColType(doc.columnTypeList[key]);
             request.input(key, type, doc.bindInfo[key]);
         });
     });
-
-    // for (var index = 0; index < num; index++)
-    // {
-    //     var doc = docs[index];
-    //     sql += '('+ doc.sql + ')';
-    //     if (last !== index) sql += conditionMap[docs[index].id];
-
-    //     Object.keys(doc.columnTypeList).forEach(function(key)
-    //     {
-    //         var type = getColType(doc.columnTypeList[key]);
-    //         request.input(key, type, doc.bindInfo[key]);
-    //     });
-    // }
     console.log(sql);
     return sql;
 }
