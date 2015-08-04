@@ -108,7 +108,7 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
             executeLabel: '一括で有効にする',
             execute: function()
             {
-                Scenario.resource.bulkInvalid().$promise.then(function(response)
+                Scenario.resource.bulkEnable().$promise.then(function(response)
                 {
                     $scope.modalInstance.close();
                     Utility.info('アプローチ対象シナリオをすべて有効しました。');
