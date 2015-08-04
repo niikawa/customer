@@ -1,6 +1,6 @@
 var mainCtrl = angular.module('dashbordCtrl',['ScenarioServices']);
-mainCtrl.controller('DashbordCtrl',['$scope', 'Shared', 'Scenario', 'Utility',
-function ($scope, Shared, Scenario, Utility)
+mainCtrl.controller('DashbordCtrl',['$scope', 'Shared', 'Scenario', 'Utility', 'Modal',
+function ($scope, Shared, Scenario, Utility, Modal)
 {
     function setInitializeScope()
     {
@@ -33,4 +33,21 @@ function ($scope, Shared, Scenario, Utility)
         
         $scope.$emit('requestEnd');
     };
+    
+    $scope.bulkInvalid = function()
+    {
+        $scope.modalParam = 
+        {
+            title: '',
+            message: '実行予定のシナリオをすべて無効にしますがよろしいですか？<br>再度有効にする場合はアプローチ管理画面から有効にできます。',
+            isExecute: true,
+            executeLabel: '一括で無効にする',
+            execute: function()
+            {
+                this.initialize();
+            }
+        };
+        $scope.modalInstance = Modal.open($scope, "partials/modal/message.html");
+    };
+    
 }]);
