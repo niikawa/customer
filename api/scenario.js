@@ -234,7 +234,7 @@ exports.bulkInvalid = function(req, res)
         {
             var updateCol = {
                 scenario_id: item.scenario_id,
-                status: item.status
+                status: 0
             };
             var updateData = model.merge(updateCol, commonColumns);
     
