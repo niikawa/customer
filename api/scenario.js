@@ -230,7 +230,6 @@ exports.bulkInvalid = function(req, res)
         if (0 === data.length) return res.status(200).send('scenario status bulk invalid target none');
         
         var commonColumns = model.getUpdCommonColumns();
-        var request = model.getRequest();
         model.async.forEach(data, function(item, callback)
         {
             var updateCol = {
@@ -239,15 +238,13 @@ exports.bulkInvalid = function(req, res)
             };
             var updateData = model.merge(updateCol, commonColumns);
     
+            var request = model.getRequest();
             request.input('update_by', model.db.Int, req.session.userId);
             request.input('update_date', model.db.NVarChar, updateData.update_date);
             request.input('scenario_id', model.db.Int, updateData.scenario_id);
             request.input('status', model.db.Int, updateData.status);
     
-            model.updateById(updateData, request, function(err, data)
-            {
-                callback();
-            });
+            model.updateById(updateData, request, callback);
         });
 
         res.status(200).send('scenario status bulk invalid ok');
