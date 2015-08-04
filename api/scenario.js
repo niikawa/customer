@@ -201,13 +201,7 @@ exports.getScenarioCount = function(req, res)
  */
 exports.getExecutePlanScenario = function(req, res)
 {
-    var col = "scenario_id, scenario_name, valid_flag, "+
-        "CASE scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type, "+
-        "CASE scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key";
-    var where = "delete_flag = 0 AND approach = 1 AND status = 1";
-    var order = "priority, scenario_id";
-    var qObj = model.getQueryObject(col, tableName, where, '', order);
-    
+    var qObj = getExecutePlanScenarioObject();
     model.select(qObj, qObj.request, function(err, data)
     {
         if (err.length > 0)
@@ -221,16 +215,6 @@ exports.getExecutePlanScenario = function(req, res)
     });
 };
 
-function getExecutePlanScenarioObject()
-{
-    var col = "scenario_id, scenario_name, valid_flag, "+
-        "CASE scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type, "+
-        "CASE scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key";
-    var where = "delete_flag = 0 AND approach = 1 AND status = 1";
-    var order = "priority, scenario_id";
-    return model.getQueryObject(col, tableName, where, '', order);
-}
-
 exports.bulkInvalid = function(req, res)
 {
     var qObj = getExecutePlanScenarioObject();
@@ -243,7 +227,7 @@ exports.bulkInvalid = function(req, res)
             res.status(510).send('scenario crate faild');
         }
         
-        if (0 === data.length) return res.status(200).send('scenario status bulk invalid ok');
+        if (0 === data.length) return res.status(200).send('scenario status bulk invalid target none');
         
         var commonColumns = model.getUpdCommonColumns();
         var request = model.getRequest();
@@ -954,3 +938,12 @@ exports.getActionByName = function(req, res)
     }
 };
 
+function getExecutePlanScenarioObject()
+{
+    var col = "scenario_id, scenario_name, valid_flag, "+
+        "CASE scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type, "+
+        "CASE scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key";
+    var where = "delete_flag = 0 AND approach = 1 AND status = 1";
+    var order = "priority, scenario_id";
+    return model.getQueryObject(col, tableName, where, '', order);
+}
