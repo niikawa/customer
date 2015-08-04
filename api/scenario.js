@@ -243,9 +243,8 @@ exports.bulkInvalid = function(req, res)
             res.status(510).send('scenario crate faild');
         }
         
-        if (data.length > 0) return res.status(200).send('scenario status bulk invalid ok');
+        if (0 === data.length) return res.status(200).send('scenario status bulk invalid ok');
         
-
         var commonColumns = model.getUpdCommonColumns();
         var request = model.getRequest();
         model.async.forEach(data, function(item, callback)

@@ -47,7 +47,7 @@ function ($scope, Shared, Scenario, Utility, Modal)
                 Scenario.resource.bulkInvalid().$promise.then(function(response)
                 {
                     Utility.info('シナリオを一括無効しました。');
-                    this.initialize();
+                    $scope.initialize();
                 });
             }
         };
