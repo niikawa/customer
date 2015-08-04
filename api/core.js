@@ -183,7 +183,7 @@ core.prototype.updateById = function(data, request, callback)
         dataList.push(item);
     }
     
-    var sql = 'UPDATE ' + this.modelName + ' SET ' + dataList.join(',') + ' WHERE ' + this.pk + ' = @' + this.pk;
+    var sql = 'UPDATE ' + this.modelName + ' SET ' + dataList.join(',') + ' WHERE ' + this.pk + ' = @' + this.pk + ' AND delete_flag = 0';
     this.execute(sql, request, callback);
 };
 

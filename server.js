@@ -96,6 +96,7 @@ router.get('/scenario/valid', scenario.getValid);
 router.get('/scenario/typecount', scenario.getScenarioCount);
 router.get('/scenario/execute/plan', scenario.getExecutePlanScenario);
 router.get('/scenario/bulkInvalid', scenario.bulkInvalid);
+router.get('/scenario/bulkEnable', scenario.bulkEnable);
 router.get('/scenario/:type', scenario.getAll);
 router.get('/scenario/:type/:id', scenario.getById);
 router.delete('/scenario/:type/remove/:id', scenario.remove);

@@ -201,7 +201,13 @@ exports.getScenarioCount = function(req, res)
  */
 exports.getExecutePlanScenario = function(req, res)
 {
-    var qObj = getExecutePlanScenarioObject();
+    var col = "scenario_id, scenario_name, valid_flag, "+
+        "CASE scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type, "+
+        "CASE scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key";
+    var where = "delete_flag = 0 AND approach = 1 AND status = 1";
+    var order = "priority, scenario_id";
+    var qObj =  model.getQueryObject(col, tableName, where, '', order);
+
     model.select(qObj, qObj.request, function(err, data)
     {
         if (err.length > 0)
@@ -215,39 +221,59 @@ exports.getExecutePlanScenario = function(req, res)
     });
 };
 
+/**
+ * アプローチ対象のシナリオを無効にする
+ * 
+ * @param {Object} req 画面からのリクエスト
+ * @param {Object} res 画面へのレスポンス
+ */
 exports.bulkInvalid = function(req, res)
 {
-    var qObj = getExecutePlanScenarioObject();
-    model.select(qObj, qObj.request, function(err, data)
+    var commonColumns = model.getUpdCommonColumns();
+    var sql = 'UPDATE ' + tableName + ' SET status = @status, update_by = @update_by,  update_date = @update_date WHERE delete_flag = 0 AND approach = 1'; 
+    var request = model.getRequest();
+    request.input('update_by', model.db.Int, req.session.userId);
+    request.input('update_date', model.db.NVarChar, commonColumns.update_date);
+    request.input('status', model.db.Int, 0);
+
+    model.execute(sql, request, function(err, data)
     {
         if (err.length > 0)
         {
-            console.log('get execute plan scenario faild');
+            console.log('execute plan scenario bulk invalid faild');
             console.log(err);
-            res.status(510).send('scenario crate faild');
+            return res.status(510).send('無効化に失敗しました。');
         }
-        
-        if (0 === data.length) return res.status(200).send('scenario status bulk invalid target none');
-        
-        var commonColumns = model.getUpdCommonColumns();
-        model.async.forEach(data, function(item, callback)
-        {
-            var updateCol = {
-                scenario_id: item.scenario_id,
-                status: 0
-            };
-            var updateData = model.merge(updateCol, commonColumns);
-    
-            var request = model.getRequest();
-            request.input('update_by', model.db.Int, req.session.userId);
-            request.input('update_date', model.db.NVarChar, updateData.update_date);
-            request.input('scenario_id', model.db.Int, updateData.scenario_id);
-            request.input('status', model.db.Int, updateData.status);
-    
-            model.updateById(updateData, request, callback);
-        });
-
+        model.insertLog(req.session.userId, 8, Message.SCENARIO.I_003);
         res.status(200).send('scenario status bulk invalid ok');
+    });
+};
+
+/**
+ * アプローチ対象の無効なシナリオを有効にする
+ * 
+ * @param {Object} req 画面からのリクエスト
+ * @param {Object} res 画面へのレスポンス
+ */
+exports.bulkEnable = function(req, res)
+{
+    var commonColumns = model.getUpdCommonColumns();
+    var sql = 'UPDATE ' + tableName + ' SET status = @status, update_by = @update_by,  update_date = @update_date WHERE delete_flag = 0 AND approach = 1'; 
+    var request = model.getRequest();
+    request.input('update_by', model.db.Int, req.session.userId);
+    request.input('update_date', model.db.NVarChar, commonColumns.update_date);
+    request.input('status', model.db.Int, 1);
+
+    model.execute(sql, request, function(err, data)
+    {
+        if (err.length > 0)
+        {
+            console.log('execute plan scenario bulk enable faild');
+            console.log(err);
+            return res.status(510).send('有効化に失敗しました。');
+        }
+        model.insertLog(req.session.userId, 8, Message.SCENARIO.I_002);
+        res.status(200).send('scenario status bulk enable ok');
     });
 };
 
@@ -934,13 +960,3 @@ exports.getActionByName = function(req, res)
         res.status(510).send('action is not found');
     }
 };
-
-function getExecutePlanScenarioObject()
-{
-    var col = "scenario_id, scenario_name, valid_flag, "+
-        "CASE scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type, "+
-        "CASE scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key";
-    var where = "delete_flag = 0 AND approach = 1 AND status = 1";
-    var order = "priority, scenario_id";
-    return model.getQueryObject(col, tableName, where, '', order);
-}
