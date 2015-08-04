@@ -263,6 +263,7 @@ function createSegment(data, request)
     console.log('createSegment start');
 
     var conditionMap = data.conditionMap;
+    console.log(conditionMap);
     var num = data.docs.length;
     //document DB から取得した結果は、順序が保障されていない
     //おそらくデフォルトでは_tsの照準っぽい
@@ -286,19 +287,6 @@ function createSegment(data, request)
             request.input(key, type, doc.bindInfo[key]);
         });
     });
-
-    // for (var index = 0; index < num; index++)
-    // {
-    //     var doc = docs[index];
-    //     sql += '('+ doc.sql + ')';
-    //     if (last !== index) sql += conditionMap[docs[index].id];
-
-    //     Object.keys(doc.columnTypeList).forEach(function(key)
-    //     {
-    //         var type = getColType(doc.columnTypeList[key]);
-    //         request.input(key, type, doc.bindInfo[key]);
-    //     });
-    // }
     console.log(sql);
     return sql;
 }
