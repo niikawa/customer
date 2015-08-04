@@ -39,7 +39,7 @@ function ($scope, Shared, Scenario, Utility, Modal)
         $scope.modalParam = 
         {
             title: 'シナリオの一括無効について',
-            message: '実行予定のシナリオをすべて無効にしますがよろしいですか？\n再度有効にする場合はアプローチ管理画面から有効にできます。',
+            message: '実行予定のシナリオをすべて無効にしますがよろしいですか？<br>再度有効にする場合はアプローチ管理画面から有効にできます。',
             isExecute: true,
             executeLabel: '一括で無効にする',
             execute: function()
