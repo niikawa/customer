@@ -141,6 +141,7 @@ ul > li > a > i {cursor: pointer;}
   background-color: #FFF;
   border: none;
 }
+.question > i {pointer:cursor;}
 
 .form-control-add-fa2 {
   height:40px;

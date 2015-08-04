@@ -6,8 +6,8 @@
  * Controller of the workspaceApp
  */
 var approachCtrl = angular.module('approachCtrl',['ApproachServices','ScenarioServices']);
-approachCtrl.controller('ApproachCtrl',['$scope', '$routeParams','Shared', 'Utility', 'Approach', 'Scenario',
-function ($scope, $routeParams, Shared, Utility, Approach, Scenario)
+approachCtrl.controller('ApproachCtrl',['$scope', '$routeParams','Shared', 'Utility', 'Approach', 'Scenario', 'Modal',
+function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
 {
     function setInitializeScope()
     {
@@ -63,6 +63,18 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario)
         {
             Utility.info('優先順位を更新しました');
         });
+    };
+    
+    $scope.showDiscription = function(id)
+    {
+        var info = Approach.getInfomation(id);
+        $scope.modalParam = 
+        {
+            title: info.title,
+            message: info.message,
+            isExecute: false,
+        };
+        $scope.modalInstance = Modal.open($scope, "partials/modal/message.html");
     };
     
 }]);
