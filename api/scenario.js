@@ -260,7 +260,10 @@ exports.bulkInvalid = function(req, res)
             request.input('scenario_id', model.db.Int, updateData.scenario_id);
             request.input('status', model.db.Int, updateData.status);
     
-            model.updateById(updateData, request, callback);
+            model.updateById(updateData, request, function(err, data)
+            {
+                callback();
+            });
         });
 
         res.status(200).send('scenario status bulk invalid ok');
