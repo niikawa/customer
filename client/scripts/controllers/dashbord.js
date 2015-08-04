@@ -44,7 +44,11 @@ function ($scope, Shared, Scenario, Utility, Modal)
             executeLabel: '一括で無効にする',
             execute: function()
             {
-                this.initialize();
+                Scenario.resource.bulkInvalid().$promise.then(function(response)
+                {
+                    Utility.info('シナリオを一括無効しました。');
+                    this.initialize();
+                });
             }
         };
         $scope.modalInstance = Modal.open($scope, "partials/modal/message.html");
