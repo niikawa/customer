@@ -283,6 +283,7 @@ function createSegment(data, request)
         count++;
         Object.keys(doc.columnTypeList).forEach(function(key)
         {
+            console.log(doc.bindInfo[key]);
             var type = getColType(doc.columnTypeList[key]);
             request.input(key, type, doc.bindInfo[key]);
         });
