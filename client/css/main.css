@@ -137,6 +137,10 @@ ul > li > a > i {cursor: pointer;}
     background-color: #eee;
 }
 
+.question {
+  background-color: #FFF;
+  border: none;
+}
 /*-----------------------------------------------*/
 /* table
 /*-----------------------------------------------*/
