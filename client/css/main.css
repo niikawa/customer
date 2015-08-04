@@ -141,6 +141,10 @@ ul > li > a > i {cursor: pointer;}
   background-color: #FFF;
   border: none;
 }
+
+.form-control-add-fa2 {
+  height:40px;
+}
 /*-----------------------------------------------*/
 /* table
 /*-----------------------------------------------*/
