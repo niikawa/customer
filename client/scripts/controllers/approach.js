@@ -76,5 +76,47 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
         };
         $scope.modalInstance = Modal.open($scope, "partials/modal/message.html");
     };
+
+    $scope.bulkInvalid = function()
+    {
+        $scope.modalParam = 
+        {
+            title: 'シナリオの一括無効について',
+            message: '有効なシナリオをすべて無効にしますがよろしいですか？<br>実行した場合、実行予定シナリオはなくなります。',
+            isExecute: true,
+            executeLabel: '一括で無効にする',
+            execute: function()
+            {
+                Scenario.resource.bulkInvalid().$promise.then(function(response)
+                {
+                    $scope.modalInstance.close();
+                    Utility.info('アプローチ対象シナリオをすべて無効しました。');
+                    $scope.initialize();
+                });
+            }
+        };
+        $scope.modalInstance = Modal.open($scope, "partials/modal/message.html");
+    };
+    
+    $scope.bulkEnable = function()
+    {
+        $scope.modalParam = 
+        {
+            title: 'シナリオの一括有効について',
+            message: '無効なシナリオをすべて有効にしますがよろしいですか？<br>実行した場合、実行予定シナリオとしてダッシュボード画面に表示されます。',
+            isExecute: true,
+            executeLabel: '一括で有効にする',
+            execute: function()
+            {
+                Scenario.resource.bulkInvalid().$promise.then(function(response)
+                {
+                    $scope.modalInstance.close();
+                    Utility.info('アプローチ対象シナリオをすべて有効しました。');
+                    $scope.initialize();
+                });
+            }
+        };
+        $scope.modalInstance = Modal.open($scope, "partials/modal/message.html");
+    };
     
 }]);
