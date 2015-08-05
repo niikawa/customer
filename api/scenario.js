@@ -633,6 +633,7 @@ function update(req, res)
             delete req.body.scenario.create_by;
             delete req.body.scenario.create_date;
             delete req.body.scenario.priority;  //優先順位はここで更新したくないため削除
+            delete req.body.scenario.valid_flag;
             
             var updateData = model.merge(req.body.scenario, commonColumns);
             var request = model.getRequest();
