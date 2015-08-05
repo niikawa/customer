@@ -445,23 +445,6 @@ function create(req, res)
                         }
                         
                         callback(null, id);
-                        
-                        // var col = "MAX(scenario_id) as scenario_id";
-                        // var qObj = model.getQueryObject(col, tableName, '', '', '');
-                        // model.select(qObj, qObj.request, function(err, data)
-                        // {
-                        //     if (err.length > 0)
-                        //     {
-                        //         console.log('scenario_id select faild');
-                        //         console.log(err);
-                        //         callback(err, {});
-                        //         return;
-                        //     }
-                        //     else
-                        //     {
-                        //         callback(null, data[0]);
-                        //     }
-                        // });
                     });
                 },
                 function(id, callback)
@@ -594,15 +577,26 @@ function create(req, res)
 function update(req, res)
 {
     console.log('scenario update start');
+    var childTabelObject = '';
+    var childTabelName = '';
+    var isSchedule = (1 === req.body.scenario.scenario_type);
+    if (isSchedule)
+    {
+        childTabelObject = require("./schedulescenario");
+        childTabelName = 'M_SCHEDULE_SCENARIO';
+    }
+    else
+    {
+        childTabelObject = require("./triggerscenario");
+        childTabelName = 'M_TRIGGER_SCENARIO';
+    }
     
-    var TriigerScenario = require("./triggerscenario");
-
     var commonColumns = model.getUpdCommonColumns();
     model.async.waterfall(
     [
         function(callback)
         {
-            TriigerScenario.getByScenarioId(req.body.scenario.scenario_id, function(err, data)
+            childTabelObject.getByScenarioId(req.body.scenario.scenario_id, function(err, data)
             {
                 if (err.length > 0)
                 {
@@ -614,17 +608,24 @@ function update(req, res)
                 callback(null, data);
             });
         },
-        function(trigger, callback)
+        function(data, callback)
         {
             var doc = req.body.doc;
-            doc.id = trigger[0].scenario_action_document_id;
-            scenariodoc.saveItemForWeb(false, doc, function(err, doc)
+            doc.id = data[0].scenario_action_document_id;
+            if (null === doc.id)
             {
-                console.log('scenario doc update');
-                console.log(err);
-                console.log(doc);
-                callback(err);
-            });
+                callback(null);
+            }
+            else
+            {
+                scenariodoc.saveItemForWeb(false, doc, function(err, doc)
+                {
+                    console.log('scenario doc update');
+                    console.log(err);
+                    console.log(doc);
+                    callback(err);
+                });
+            }
         },
         function(callback)
         {
@@ -660,11 +661,20 @@ function update(req, res)
             request.input('update_by', model.db.Int, req.session.userId);
             request.input('update_date', model.db.NVarChar, updateData.update_date);
             
-            request.input('scenario_id', model.db.Int, updateData.scenario_id);
-            request.input('after_event_occurs_num', model.db.Int, updateData.after_event_occurs_num);
-            request.input('inoperative_num', model.db.Int, updateData.inoperative_num);
+            if (isSchedule)
+            {
+                request.input('repeat_flag', model.db.Int, updateData.repeat_flag);
+                request.input('expiration_start_date', model.db.NVarChar, updateData.expiration_start_date);
+                request.input('expiration_end_date', model.db.NVarChar, updateData.expiration_end_date);
+            }
+            else
+            {
+                request.input('scenario_id', model.db.Int, updateData.scenario_id);
+                request.input('after_event_occurs_num', model.db.Int, updateData.after_event_occurs_num);
+                request.input('inoperative_num', model.db.Int, updateData.inoperative_num);
+            }
 
-            TriigerScenario.updateById(updateData, request, callback);
+            childTabelObject.updateById(updateData, request, callback);
         }
         
     ], function(err)
