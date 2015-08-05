@@ -16,6 +16,12 @@ var core = function core(modelName, pk, seqName)
     this.seqName = seqName;
 };
 
+core.prototype.getPk = function()
+{
+    return this.pk;
+};
+
+
 core.prototype.async = require('async');
 
 core.prototype.db = require('mssql');
@@ -178,11 +184,10 @@ core.prototype.insert = function(table, data, request, callback)
             var dataList = [];
         
             //SEQを設定
-            dataList.push('@' + this.pk);
-            console.log(this.pk);
-            var prop = {};
-            prop[this.pk] = seqInfo[0].id;
-            this.merge(data, prop);
+            var pk = this.getPk();
+            dataList.push('@' + pk);
+            data[pk] = seqInfo[0].id;
+//            this.merge(data, prop);
             console.log(data);
             console.log(dataList);
 
