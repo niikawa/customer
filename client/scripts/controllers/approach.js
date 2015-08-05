@@ -25,7 +25,7 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
             Scenario.resource.valid().$promise.then(function(scenarioResponse)
             {
                 $scope.scenarioList = scenarioResponse.data;
-                $scope.showScenarioList (0 < $scope.scenarioList.length);
+                $scope.showScenarioList = (0 < $scope.scenarioList.length);
             });
         });
     }
