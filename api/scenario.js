@@ -597,53 +597,53 @@ function update(req, res)
     {
         model.async.waterfall(
         [
-            // function(callback)
-            // {
-            //     console.log('get scenario by id');
-            //     console.log(req.body.scenario.scenario_id);
-            //     childTabelObject.getByScenarioId(req.body.scenario.scenario_id, function(err, data)
-            //     {
-            //         console.log(data);
-            //         if (err.length > 0)
-            //         {
-            //             console.log('trigger scenario is not found');
-            //             console.log(err);
-            //             res.status(510).send('scenario update faild');
+            function(callback)
+            {
+                console.log('get scenario by id');
+                console.log(req.body.scenario.scenario_id);
+                childTabelObject.getByScenarioId(req.body.scenario.scenario_id, function(err, data)
+                {
+                    console.log(data);
+                    if (err.length > 0)
+                    {
+                        console.log('trigger scenario is not found');
+                        console.log(err);
+                        res.status(510).send('scenario update faild');
                         
-            //         }
-            //         callback(null, data);
-            //     });
-            // },
-            // function(data, callback)
-            // {
-            //     if (req.body.hasOwnProperty('doc'))
-            //     {
-            //         console.log('update scenario doc');
-            //         var doc = req.body.doc;
-            //         doc.id = data[0].scenario_action_document_id;
-            //         console.log(doc);
-            //         if (null === doc.id)
-            //         {
-            //             console.log('no update scenario doc');
-            //             callback(null);
-            //         }
-            //         else
-            //         {
-            //             scenariodoc.saveItemForWeb(false, doc, function(err, doc)
-            //             {
-            //                 console.log('scenario doc update');
-            //                 console.log(err);
-            //                 console.log(doc);
-            //                 callback(err);
-            //             });
-            //         }
-            //     }
-            //     else
-            //     {
-            //         console.log('no update scenario doc');
-            //         callback(null);
-            //     }
-            // },
+                    }
+                    callback(null, data);
+                });
+            },
+            function(data, callback)
+            {
+                if (req.body.hasOwnProperty('doc'))
+                {
+                    console.log('update scenario doc');
+                    var doc = req.body.doc;
+                    doc.id = data[0].scenario_action_document_id;
+                    console.log(doc);
+                    if (null === doc.id)
+                    {
+                        console.log('no update scenario doc');
+                        callback(null);
+                    }
+                    else
+                    {
+                        scenariodoc.saveItemForWeb(false, doc, function(err, doc)
+                        {
+                            console.log('scenario doc update');
+                            console.log(err);
+                            console.log(doc);
+                            callback(err);
+                        });
+                    }
+                }
+                else
+                {
+                    console.log('no update scenario doc');
+                    callback(null);
+                }
+            },
             function(callback)
             {
                 //scenarioマスタを更新
@@ -675,8 +675,6 @@ function update(req, res)
             },
             function(callback)
             {
-                console.log('update ' + childTabelName);
-
                 //トリガーscenarioマスタを更新
                 var updateData = model.merge(req.body.specificInfo, commonColumns);
                 updateData.scenario_id = req.body.scenario.scenario_id;
@@ -700,6 +698,7 @@ function update(req, res)
     
                 console.log('update ' + childTabelName);
                 console.log(updateData);
+                console.log(childTabelObject);
                 childTabelObject.updateById(updateData, request, callback);
             }
         ], 
