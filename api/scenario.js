@@ -878,6 +878,7 @@ exports.initializeData = function(req, res)
                     }
                     typeObject.getByScenarioId(req.params.id, function(err, data)
                     {
+                        console.log(data);
                         scenariodoc.getItemByIdForWeb(data[0].scenario_action_document_id, function(err, doc)
                         {
                             callback(null, {specific: data[0], doc: doc});
