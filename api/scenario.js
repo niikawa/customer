@@ -668,7 +668,10 @@ function update(req, res)
     
                 console.log('update scenario info');
                 console.log(updateData);
-                model.updateById(updateData, request, callback);
+                model.updateById(updateData, request, function(err, data)
+                {
+                    callback(null);
+                });
             },
             function(callback)
             {
