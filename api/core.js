@@ -173,10 +173,9 @@ core.prototype.select = function(queryObject, request, callback)
 
 core.prototype.insert = function(table, data, request, callback)
 {
-    console.log(this.getPk);
+    //callbackからはprototypeを参照できないので一度変数に入れておく
     var p = this.getPk();
-    console.log(p);
-
+    var exe = this.execute;
     this.getNextSeq(function(err, seqInfo)
     {
         if (0 < err.length)
@@ -188,10 +187,7 @@ core.prototype.insert = function(table, data, request, callback)
             var dataList = [];
         
             //SEQを設定
-            console.log(this.getPk);
-            dataList.push('@' + p);
             data[p] = seqInfo[0].id;
-//            this.merge(data, prop);
             console.log(data);
             console.log(dataList);
 
@@ -203,7 +199,7 @@ core.prototype.insert = function(table, data, request, callback)
                 dataList.push(item);
             }
             var sql = 'INSERT INTO ' + table + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
-            this.execute(sql, request, function(errList, resultList)
+            exe(sql, request, function(errList, resultList)
             {
                 callback(errList, seqInfo[0].id);
             });
