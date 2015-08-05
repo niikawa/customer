@@ -176,6 +176,8 @@ core.prototype.insert = function(table, data, request, callback)
     //callbackからはprototypeを参照できないので一度変数に入れておく
     var p = this.getPk();
     var exe = this.execute;
+    var type = this.db.Int;
+    
     this.getNextSeq(function(err, seqInfo)
     {
         if (0 < err.length)
@@ -196,7 +198,7 @@ core.prototype.insert = function(table, data, request, callback)
                 var item = '@' + columns[i];
                 dataList.push(item);
             }
-            request.input(p, this.db.Int, seqInfo[0].id);
+            request.input(p, type, seqInfo[0].id);
             
             var sql = 'INSERT INTO ' + table + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
             exe(sql, request, function(errList, resultList)
