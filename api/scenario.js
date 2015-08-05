@@ -597,23 +597,23 @@ function update(req, res)
     {
         model.async.waterfall(
         [
-            function(callback)
-            {
-                console.log('get scenario by id');
-                console.log(req.body.scenario.scenario_id);
-                childTabelObject.getByScenarioId(req.body.scenario.scenario_id, function(err, data)
-                {
-                    console.log(data);
-                    if (err.length > 0)
-                    {
-                        console.log('trigger scenario is not found');
-                        console.log(err);
-                        res.status(510).send('scenario update faild');
+            // function(callback)
+            // {
+            //     console.log('get scenario by id');
+            //     console.log(req.body.scenario.scenario_id);
+            //     childTabelObject.getByScenarioId(req.body.scenario.scenario_id, function(err, data)
+            //     {
+            //         console.log(data);
+            //         if (err.length > 0)
+            //         {
+            //             console.log('trigger scenario is not found');
+            //             console.log(err);
+            //             res.status(510).send('scenario update faild');
                         
-                    }
-                    callback(null, data);
-                });
-            },
+            //         }
+            //         callback(null, data);
+            //     });
+            // },
             // function(data, callback)
             // {
             //     if (req.body.hasOwnProperty('doc'))
@@ -644,7 +644,7 @@ function update(req, res)
             //         callback(null);
             //     }
             // },
-            function(data, callback)
+            function(callback)
             {
                 //scenarioマスタを更新
                 delete req.body.scenario.delete_flag;
@@ -699,7 +699,6 @@ function update(req, res)
                 console.log(updateData);
                 childTabelObject.updateById(updateData, request, callback);
             }
-            
         ], 
         function(err)
         {
