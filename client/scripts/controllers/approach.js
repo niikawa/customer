@@ -13,7 +13,7 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
     {
         $scope.approach = [];
         $scope.scenarioList = [];
-        $scope.warningMessage = '';
+        $scope.showScenarioList = false;
     }
     
     function getInitializeData()
@@ -25,6 +25,7 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
             Scenario.resource.valid().$promise.then(function(scenarioResponse)
             {
                 $scope.scenarioList = scenarioResponse.data;
+                $scope.showScenarioList (0 < $scope.scenarioList.length);
             });
         });
     }

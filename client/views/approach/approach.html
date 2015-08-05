@@ -38,15 +38,15 @@
 
     <div class="box">
         <h4>シナリオ優先順位
-            <button class="btn btn-default" ng-click="bulkInvalid()">一括無効</button>
-            <button class="btn btn-default" ng-click="bulkEnable()">一括有効</button>
+            <button ng-if="showScenarioList" class="btn btn-default" ng-click="bulkInvalid()">一括無効</button>
+            <button ng-if="showScenarioList" class="btn btn-default" ng-click="bulkEnable()">一括有効</button>
         </h4>
 
         <div class="row vertical-container" >
             <div class="col-md-12">
                 
-                <div ng-if="warningMessage" class="alert alert-warning" role="alert">
-                    {{warningMessage}}
+                <div ng-if="!showScenarioList" class="alert alert-warning" role="alert">
+                    アプローチ対象のシナリオはありません。
                 </div>
                 
                 <div class="card-container" ng-model='scenarioList' drop-directive drop-line-name="priority" drop-area-key="1">
