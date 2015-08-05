@@ -185,11 +185,9 @@ core.prototype.insert = function(table, data, request, callback)
         else
         {
             var dataList = [];
-        
             //SEQを設定
             data[p] = seqInfo[0].id;
             console.log(data);
-            console.log(dataList);
 
             var columns = Object.keys(data);
             var len = columns.length;
@@ -198,6 +196,8 @@ core.prototype.insert = function(table, data, request, callback)
                 var item = '@' + columns[i];
                 dataList.push(item);
             }
+            request.input(p, this.db.Int, seqInfo[0].id);
+            
             var sql = 'INSERT INTO ' + table + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
             exe(sql, request, function(errList, resultList)
             {
