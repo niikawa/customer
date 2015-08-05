@@ -173,6 +173,10 @@ core.prototype.select = function(queryObject, request, callback)
 
 core.prototype.insert = function(table, data, request, callback)
 {
+    console.log(this.getPk);
+    var p = this.getPk();
+    console.log(p);
+
     this.getNextSeq(function(err, seqInfo)
     {
         if (0 < err.length)
@@ -185,9 +189,8 @@ core.prototype.insert = function(table, data, request, callback)
         
             //SEQを設定
             console.log(this.getPk);
-            var pk = this.getPk();
-            dataList.push('@' + pk);
-            data[pk] = seqInfo[0].id;
+            dataList.push('@' + p);
+            data[p] = seqInfo[0].id;
 //            this.merge(data, prop);
             console.log(data);
             console.log(dataList);
