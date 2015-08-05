@@ -704,7 +704,7 @@ function update(req, res)
         function(err)
         {
             console.log('execute last function');
-            if (null !== err || 0 !== err.length)
+            if (null !== err && 0 !== err.length)
             {
                 
                 console.log(err);
