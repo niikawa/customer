@@ -179,8 +179,12 @@ core.prototype.insert = function(table, data, request, callback)
         
             //SEQを設定
             dataList.push('@' + this.pk);
-            data[this.pk] = seqInfo[0].id;
+            console.log(this.pk);
+            var prop = {};
+            prop[this.pk] = seqInfo[0].id;
+            this.merge(data, prop);
             console.log(data);
+            console.log(dataList);
 
             var columns = Object.keys(data);
             var len = columns.length;
