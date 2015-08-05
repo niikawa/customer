@@ -614,37 +614,37 @@ function update(req, res)
                     callback(null, data);
                 });
             },
+            // function(data, callback)
+            // {
+            //     if (req.body.hasOwnProperty('doc'))
+            //     {
+            //         console.log('update scenario doc');
+            //         var doc = req.body.doc;
+            //         doc.id = data[0].scenario_action_document_id;
+            //         console.log(doc);
+            //         if (null === doc.id)
+            //         {
+            //             console.log('no update scenario doc');
+            //             callback(null);
+            //         }
+            //         else
+            //         {
+            //             scenariodoc.saveItemForWeb(false, doc, function(err, doc)
+            //             {
+            //                 console.log('scenario doc update');
+            //                 console.log(err);
+            //                 console.log(doc);
+            //                 callback(err);
+            //             });
+            //         }
+            //     }
+            //     else
+            //     {
+            //         console.log('no update scenario doc');
+            //         callback(null);
+            //     }
+            // },
             function(data, callback)
-            {
-                if (req.body.hasOwnProperty('doc'))
-                {
-                    console.log('update scenario doc');
-                    var doc = req.body.doc;
-                    doc.id = data[0].scenario_action_document_id;
-                    console.log(doc);
-                    if (null === doc.id)
-                    {
-                        console.log('no update scenario doc');
-                        callback(null);
-                    }
-                    else
-                    {
-                        scenariodoc.saveItemForWeb(false, doc, function(err, doc)
-                        {
-                            console.log('scenario doc update');
-                            console.log(err);
-                            console.log(doc);
-                            callback(err);
-                        });
-                    }
-                }
-                else
-                {
-                    console.log('no update scenario doc');
-                    callback(null);
-                }
-            },
-            function(callback)
             {
                 //scenarioマスタを更新
                 delete req.body.scenario.delete_flag;
