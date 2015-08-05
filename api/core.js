@@ -184,6 +184,7 @@ core.prototype.insert = function(table, data, request, callback)
             var dataList = [];
         
             //SEQを設定
+            console.log(this.getPk);
             var pk = this.getPk();
             dataList.push('@' + pk);
             data[pk] = seqInfo[0].id;
