@@ -672,6 +672,8 @@ function update(req, res)
             },
             function(callback)
             {
+                console.log('update ' + childTabelName);
+
                 //トリガーscenarioマスタを更新
                 var updateData = model.merge(req.body.specificInfo, commonColumns);
                 updateData.scenario_id = req.body.scenario.scenario_id;
@@ -702,10 +704,11 @@ function update(req, res)
         function(err)
         {
             console.log('execute last function');
-            if (null !== err)
+            if (null !== err || 0 !== err.length)
             {
                 
                 console.log(err);
+                res.status(510).send("システムエラーが発生しました。");
             }
             else
             {
