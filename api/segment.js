@@ -9,12 +9,14 @@ var segmentdoc = require("./segmentdoc");
 var tableName = 'M_SEGMENT';
 /** PK */
 var pk = 'segment_id';
+/** SEQ */
+var seqName = 'seq_segment';
 /** 機能名 */
 var functionName = 'セグメント管理';
 
 var segment = function segment()
 {
-    Core.call(this, tableName, pk);
+    Core.call(this, tableName, pk, seqName);
 };
 
 //coreModelを継承する

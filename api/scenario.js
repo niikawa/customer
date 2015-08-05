@@ -6,12 +6,15 @@ var scenariodoc = require("./scenariodoc");
 var tableName = 'M_SCENARIO';
 /** PK */
 var pk = 'scenario_id';
+/** SEQ */
+var seqName = 'seq_scenario';
+
 /** 機能名 */
 //var functionName = 'シナリオ管理';
 
 var scenario = function scenario()
 {
-    Core.call(this, tableName, pk);
+    Core.call(this, tableName, pk, seqName);
 };
 
 //coreModelを継承する
@@ -431,7 +434,7 @@ function create(req, res)
                     request.input('approach', model.db.SmallInt, insertData.approach);
                     request.input('priority', model.db.Int, 32767);
     
-                    model.insert(tableName, insertData, request, function(err, date)
+                    model.insert(tableName, insertData, request, function(err, id)
                     {
                         if (err.length > 0)
                         {
@@ -441,29 +444,31 @@ function create(req, res)
                             return;
                         }
                         
-                        var col = "MAX(scenario_id) as scenario_id";
-                        var qObj = model.getQueryObject(col, tableName, '', '', '');
-                        model.select(qObj, qObj.request, function(err, data)
-                        {
-                            if (err.length > 0)
-                            {
-                                console.log('scenario_id select faild');
-                                console.log(err);
-                                callback(err, {});
-                                return;
-                            }
-                            else
-                            {
-                                callback(null, data[0]);
-                            }
-                        });
+                        callback(null, id);
+                        
+                        // var col = "MAX(scenario_id) as scenario_id";
+                        // var qObj = model.getQueryObject(col, tableName, '', '', '');
+                        // model.select(qObj, qObj.request, function(err, data)
+                        // {
+                        //     if (err.length > 0)
+                        //     {
+                        //         console.log('scenario_id select faild');
+                        //         console.log(err);
+                        //         callback(err, {});
+                        //         return;
+                        //     }
+                        //     else
+                        //     {
+                        //         callback(null, data[0]);
+                        //     }
+                        // });
                     });
                 },
-                function(data, callback)
+                function(id, callback)
                 {
                     var request = model.getRequest(transaction);
+                    var childTabelObject = '';
                     var childTabelName = '';
-                    
                     var specificInfo = {};
                     
                     if (1 === req.body.scenario.scenario_type)
@@ -475,6 +480,7 @@ function create(req, res)
                             expiration_end_date: req.body.specificInfo.expiration_end_date
                         };
                         
+                        childTabelObject = require("./schedulescenario");
                         childTabelName = 'M_SCHEDULE_SCENARIO';
                         request.input('repeat_flag', model.db.Int, specificInfo.repeat_flag);
                         request.input('expiration_start_date', model.db.NVarChar, specificInfo.expiration_start_date);
@@ -488,6 +494,7 @@ function create(req, res)
                             inoperative_num: req.body.specificInfo.inoperative_num
                         };
                         
+                        childTabelObject = require("./triggerscenario");
                         childTabelName = 'M_TRIGGER_SCENARIO';
                         request.input('after_event_occurs_num', model.db.Int, specificInfo.after_event_occurs_num);
                         request.input('inoperative_num', model.db.Int, specificInfo.inoperative_num);
@@ -495,7 +502,7 @@ function create(req, res)
                     
                     var commonColumns = model.getInsCommonColumns();
                     var insertData = model.merge(specificInfo, commonColumns);
-                    insertData.scenario_id = data.scenario_id;
+                    insertData.scenario_id = id;
                     insertData.scenario_action_document_id = (null === doc) ? null : doc.id;
     
                     request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
@@ -506,7 +513,7 @@ function create(req, res)
                     request.input('scenario_id', model.db.Int, insertData.scenario_id);
                     request.input('scenario_action_document_id', model.db.NVarChar, insertData.scenario_action_document_id);
                     
-                    model.insert(childTabelName, insertData, request, function(err, date)
+                    childTabelObject.saveForParent(insertData, request, function(err, date)
                     {
                         if (err.length > 0)
                         {

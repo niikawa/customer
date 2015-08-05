@@ -8,24 +8,6 @@
         <form name="scenarioForm" novalidate>
             <div class="row" >
                 
-                
-                <div class="col-md-12 vertical-container">
-
-                    <h3 class="pointer" ng-click="isTagCollapse = !isTagCollapse">
-                        <i ng-if="!isTagCollapse" class="fa fa-caret-square-o-up"></i>
-                        <i ng-if="isTagCollapse" class="fa fa-caret-square-o-down"></i>
-                        タグ設定</h3>
-                    <div collapse="isTagCollapse">
-                        
-                        <div class="label label-success" >
-                            tag
-                            <span type="button" class="label-close" ng-click="removeColumn($index)">&times;</span>
-                        </div>
-
-                    </div>
-                    
-                </div>
-                
                 <div class="col-md-12 vertical-container">
                     
                     <h3 class="pointer" ng-click="isBaseCollapse = !isBaseCollapse">
@@ -86,6 +68,23 @@
                             <div ng-messages="scenarioForm.ifLayout.$dirty && scenarioForm.ifLayout.$error">
                                 <p class="item-error" ng-message="isSelect">IFレイアウトを選択してください</p>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row" >
+                <div class="col-md-12 vertical-container">
+
+                    <h3 class="pointer" ng-click="isTagCollapse = !isTagCollapse">
+                        <i ng-if="!isTagCollapse" class="fa fa-caret-square-o-up"></i>
+                        <i ng-if="isTagCollapse" class="fa fa-caret-square-o-down"></i>
+                        タグ設定</h3>
+                    <div collapse="isTagCollapse">
+                        
+                        <div class="label label-success" >
+                            tag
+                            <span type="button" class="label-close" ng-click="removeColumn($index)">&times;</span>
                         </div>
                     </div>
                 </div>

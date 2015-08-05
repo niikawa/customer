@@ -6,12 +6,14 @@ var Message = require('../config/message.json');
 var tableName = 'M_USER';
 /** PK */
 var pk = 'user_id';
+/** SEQ */
+var seqName = 'seq_user';
 /** 機能名 */
 var functionName = 'ユーザー管理';
 
 var user = function user()
 {
-    Core.call(this, tableName, pk);
+    Core.call(this, tableName, pk, seqName);
 };
 
 //coreModelを継承する

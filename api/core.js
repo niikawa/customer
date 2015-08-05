@@ -9,10 +9,11 @@ var logInfo = require('../config/controlLog');
  * @class core
  * @constructor
  */
-var core = function core(modelName, pk)
+var core = function core(modelName, pk, seqName)
 {
     this.modelName = modelName;
     this.pk = pk;
+    this.seqName = seqName;
 };
 
 core.prototype.async = require('async');
@@ -77,6 +78,19 @@ core.prototype.getQueryObject = function(col, table, where, groupby, orderby)
         groupby: groupby,
         orderby: orderby,
         request: this.getRequest()};
+};
+
+/**
+ * シーケンス値を取得する.
+ * 
+ * @author niikawa
+ * @method getNextSeq
+ * @param {Function} callback
+ */
+core.prototype.getNextSeq = function(callback)
+{
+    var sql = "SELECT NEXT VALUE FOR " + this.seqName + " AS id";
+    return this.execute(sql, this.getRequest(), callback);
 };
 
 /**
@@ -153,18 +167,35 @@ core.prototype.select = function(queryObject, request, callback)
 
 core.prototype.insert = function(table, data, request, callback)
 {
-    var dataList = [];
-    var columns = Object.keys(data);
-    var len = columns.length;
-    for (var i = 0; i < len; i ++)
+    this.getNextSeq(function(err, seqInfo)
     {
-        var item = '@' + columns[i];
-        dataList.push(item);
-    }
+        if (0 < err.length)
+        {
+            callback(err);
+        }
+        else
+        {
+            var dataList = [];
+        
+            //SEQを設定
+            dataList.push('@' + this.pk);
+            data[this.pk] = seqInfo[0].id;
+            console.log(data);
 
-    var sql = 'INSERT INTO ' + table + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
-    
-    this.execute(sql, request, callback);
+            var columns = Object.keys(data);
+            var len = columns.length;
+            for (var i = 0; i < len; i ++)
+            {
+                var item = '@' + columns[i];
+                dataList.push(item);
+            }
+            var sql = 'INSERT INTO ' + table + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
+            this.execute(sql, request, function(errList, resultList)
+            {
+                callback(errList, seqInfo[0].id);
+            });
+        }
+    });
 };
 
 core.prototype.updateById = function(data, request, callback)

@@ -6,11 +6,14 @@ var Core = require('./core');
 
 /** テーブル名 */
 var tableName = 'M_SCHEDULE_SCENARIO';
+/** PK */
 var pk = 'schedule_scenario_id';
+/** SEQ */
+var seqName = 'seq_schedule_scenario';
 
 var scheduleScenario = function scheduleScenario()
 {
-    Core.call(this, tableName, pk);
+    Core.call(this, tableName, pk, seqName);
 };
 
 //coreModelを継承する
@@ -53,6 +56,11 @@ exports.getByScenarioId = function(scenario_id, callback)
     {
         callback(err, data);
     });
+};
+
+exports.saveForParent = function(insertData, request, callback)
+{
+    model.insert(tableName, insertData, request, callback);
 };
 
 exports.update = function(id, callback)
