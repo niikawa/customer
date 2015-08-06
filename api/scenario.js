@@ -699,8 +699,10 @@ function update(req, res)
             }
             else
             {
+                console.log('commit execute');
                 transaction.commit(function(err)
                 {
+                    console.log(err);
                     if (err)
                     {
                         console.log('scenario data commit faild');
