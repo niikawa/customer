@@ -23,6 +23,9 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         
         $scope.type = $routeParams.scenario;
         $scope.template = pageProp.template;
+        
+        $scope.inputTag = '';
+        $scope.tagList = [];
 
         Shared.setRoot($scope.type +' scenario');
         if (1 === pageProp.type)
@@ -300,6 +303,12 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             });
         }
     };
+    
+    $scope.addTag = function()
+    {
+        $scope.tagList.push($scope.inputTag);
+    };
+    
     //---------------------------------
     //trigger
     //---------------------------------
