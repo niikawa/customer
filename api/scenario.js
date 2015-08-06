@@ -671,7 +671,7 @@ function update(req, res)
                 console.log(updateData);
                 model.updateById(updateData, request, function(err, data)
                 {
-                    callback(null);
+                    callback(err);
                 });
             },
             function(callback)
@@ -685,8 +685,7 @@ function update(req, res)
                 request.input('update_by', model.db.Int, req.session.userId);
                 childTabelObject.updateByScenarioId(updateData, request, function(err, data)
                 {
-                    console.log(err);
-                    callback(null);
+                    callback(err);
                 });
             }
         ], 

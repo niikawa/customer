@@ -265,7 +265,7 @@ core.prototype.updateByForeignKey = function(data, foreignKey, request, callback
         dataList.push(item);
     }
     
-    var sql = 'UPDATE ' + this.modelName + ' SET ' + dataList.join(',') + ' WHERE ' + foreignKey + ' = @' + this.pk + ' AND delete_flag = 0';
+    var sql = 'UPDATE ' + this.modelName + ' SET ' + dataList.join(',') + ' WHERE ' + foreignKey + ' = @' + foreignKey + ' AND delete_flag = 0';
     this.execute(sql, request, callback);
 };
 
