@@ -591,8 +591,6 @@ function update(req, res)
         childTabelName = 'M_TRIGGER_SCENARIO';
     }
     
-    var commonColumns = model.getUpdCommonColumns();
-    
     model.tranBegin(function(err, transaction)
     {
         model.async.waterfall(
@@ -653,6 +651,7 @@ function update(req, res)
                 delete req.body.scenario.priority;  //優先順位はここで更新したくないため削除
                 delete req.body.scenario.valid_flag;
                 
+                var commonColumns = model.getUpdCommonColumns();
                 var updateData = model.merge(commonColumns, req.body.scenario);
                 var request = model.getRequest(transaction);
                 request.input('update_by', model.db.Int, req.session.userId);
@@ -677,14 +676,17 @@ function update(req, res)
             function(callback)
             {
                 //トリガーscenarioマスタを更新
-                var updateData = model.merge(req.body.specificInfo, commonColumns);
+                var commonColumns = model.getUpdCommonColumns();
+                var updateData = model.merge(commonColumns, req.body.specificInfo);
                 updateData.scenario_id = req.body.scenario.scenario_id;
                 console.log('update ' + childTabelName);
-                console.log(req.body.scenario);
                 console.log(updateData);
                 var request = model.getRequest(transaction);
                 request.input('update_by', model.db.Int, req.session.userId);
-                childTabelObject.updateByScenarioId(updateData, request, callback);
+                childTabelObject.updateByScenarioId(updateData, request, function(err, data)
+                {
+                    callback(null);
+                });
             }
         ], 
         function(err)
@@ -692,7 +694,6 @@ function update(req, res)
             console.log('execute last function');
             if (null !== err && 0 !== err.length)
             {
-                
                 console.log(err);
                 res.status(510).send("システムエラーが発生しました。");
             }
