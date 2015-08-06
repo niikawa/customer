@@ -652,8 +652,10 @@ function update(req, res)
                 delete req.body.scenario.create_date;
                 delete req.body.scenario.priority;  //優先順位はここで更新したくないため削除
                 delete req.body.scenario.valid_flag;
-                
+                console.log(commonColumns);
                 var updateData = model.merge(commonColumns, req.body.scenario, true);
+                console.log(updateData);
+                
                 var request = model.getRequest(transaction);
                 request.input('update_by', model.db.Int, req.session.userId);
                 request.input('update_date', model.db.NVarChar, updateData.update_date);
@@ -667,8 +669,6 @@ function update(req, res)
                 request.input('approach', model.db.SmallInt, updateData.approach);
     
                 console.log('update scenario info');
-                console.log(req.body.scenario);
-                console.log(updateData);
                 model.updateById(updateData, request, function(err, data)
                 {
                     var nextErr = (0 < err.length) ? err.length: null;
@@ -680,10 +680,9 @@ function update(req, res)
                 //トリガーscenarioマスタを更新
                 var updateData = model.merge(commonColumns, req.body.specificInfo, true);
                 updateData.scenario_id = req.body.scenario.scenario_id;
-                console.log('update ' + childTabelName);
-                console.log(updateData);
                 var request = model.getRequest(transaction);
                 request.input('update_by', model.db.Int, req.session.userId);
+                console.log('update ' + childTabelName);
                 childTabelObject.updateByScenarioId(updateData, request, function(err, data)
                 {
                     var nextErr = (0 < err.length) ? err.length: null;
