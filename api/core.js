@@ -26,17 +26,37 @@ core.prototype.async = require('async');
 
 core.prototype.db = require('mssql');
 
-core.prototype.merge = function(source, add)
+core.prototype.merge = function(source, add,isNew)
 {
     if (!add) add = {};
-    for (var attrname in add)
+    if (void 0 === isNew || false === isNew)
     {
-        if (add.hasOwnProperty(attrname))
+        for (var attrname in add)
         {
-            source[attrname] = add[attrname];
+            if (add.hasOwnProperty(attrname))
+            {
+                source[attrname] = add[attrname];
+            }
         }
+        return source;
     }
-    return source;
+    else
+    {
+        var newObj = {};
+        Object.keys(source).forEach(function(name)
+        {
+            newObj[name] = source[name];
+        });
+        for (var attrname in add)
+        {
+            if (add.hasOwnProperty(attrname))
+            {
+                newObj[attrname] = add[attrname];
+            }
+        }
+        return newObj;
+        
+    }
 };
 
 core.prototype.getRequest = function(transaction)

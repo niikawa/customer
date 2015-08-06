@@ -591,6 +591,8 @@ function update(req, res)
         childTabelName = 'M_TRIGGER_SCENARIO';
     }
     
+    var commonColumns = model.getUpdCommonColumns();
+    
     model.tranBegin(function(err, transaction)
     {
         model.async.waterfall(
@@ -651,8 +653,7 @@ function update(req, res)
                 delete req.body.scenario.priority;  //優先順位はここで更新したくないため削除
                 delete req.body.scenario.valid_flag;
                 
-                var commonColumns = model.getUpdCommonColumns();
-                var updateData = model.merge(commonColumns, req.body.scenario);
+                var updateData = model.merge(commonColumns, req.body.scenario, true);
                 var request = model.getRequest(transaction);
                 request.input('update_by', model.db.Int, req.session.userId);
                 request.input('update_date', model.db.NVarChar, updateData.update_date);
@@ -676,8 +677,7 @@ function update(req, res)
             function(callback)
             {
                 //トリガーscenarioマスタを更新
-                var commonColumns = model.getUpdCommonColumns();
-                var updateData = model.merge(commonColumns, req.body.specificInfo);
+                var updateData = model.merge(commonColumns, req.body.specificInfo, true);
                 updateData.scenario_id = req.body.scenario.scenario_id;
                 console.log('update ' + childTabelName);
                 console.log(updateData);
