@@ -309,6 +309,11 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.tagList.push($scope.inputTag);
     };
     
+    $scope.removeTag = function(index)
+    {
+        $scope.tagList.splice(index, 1);
+    };
+    
     //---------------------------------
     //trigger
     //---------------------------------
