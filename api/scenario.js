@@ -678,6 +678,8 @@ function update(req, res)
                 //トリガーscenarioマスタを更新
                 var updateData = model.merge(req.body.specificInfo, commonColumns);
                 updateData.scenario_id = req.body.scenario.scenario_id;
+                console.log(req.body.scenario.scenario_id);
+                console.log(updateData);
                 var request = model.getRequest(transaction);
                 request.input('update_by', model.db.Int, req.session.userId);
                 console.log('update ' + childTabelName);
