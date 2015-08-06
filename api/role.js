@@ -3,11 +3,14 @@ var Core = require('./core');
 
 /** テーブル名 */
 var tableName = 'M_ROLE';
+/** PK */
 var pk = 'role_id';
+/** SEQ */
+var seqName = 'seq_role';
 
 var role = function role()
 {
-    Core.call(this, tableName, pk);
+    Core.call(this, tableName, pk, seqName);
 };
 
 //coreModelを継承する

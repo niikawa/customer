@@ -6,12 +6,15 @@ var scenariodoc = require("./scenariodoc");
 var tableName = 'M_SCENARIO';
 /** PK */
 var pk = 'scenario_id';
+/** SEQ */
+var seqName = 'seq_scenario';
+
 /** 機能名 */
 //var functionName = 'シナリオ管理';
 
 var scenario = function scenario()
 {
-    Core.call(this, tableName, pk);
+    Core.call(this, tableName, pk, seqName);
 };
 
 //coreModelを継承する
@@ -206,8 +209,8 @@ exports.getExecutePlanScenario = function(req, res)
         "CASE scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key";
     var where = "delete_flag = 0 AND approach = 1 AND status = 1";
     var order = "priority, scenario_id";
-    var qObj = model.getQueryObject(col, tableName, where, '', order);
-    
+    var qObj =  model.getQueryObject(col, tableName, where, '', order);
+
     model.select(qObj, qObj.request, function(err, data)
     {
         if (err.length > 0)
@@ -218,6 +221,62 @@ exports.getExecutePlanScenario = function(req, res)
         }
         
         res.json({data: data});
+    });
+};
+
+/**
+ * アプローチ対象のシナリオを無効にする
+ * 
+ * @param {Object} req 画面からのリクエスト
+ * @param {Object} res 画面へのレスポンス
+ */
+exports.bulkInvalid = function(req, res)
+{
+    var commonColumns = model.getUpdCommonColumns();
+    var sql = 'UPDATE ' + tableName + ' SET status = @status, update_by = @update_by,  update_date = @update_date WHERE delete_flag = 0 AND approach = 1'; 
+    var request = model.getRequest();
+    request.input('update_by', model.db.Int, req.session.userId);
+    request.input('update_date', model.db.NVarChar, commonColumns.update_date);
+    request.input('status', model.db.Int, 0);
+
+    model.execute(sql, request, function(err, data)
+    {
+        if (err.length > 0)
+        {
+            console.log('execute plan scenario bulk invalid faild');
+            console.log(err);
+            return res.status(510).send('無効化に失敗しました。');
+        }
+        model.insertLog(req.session.userId, 8, Message.SCENARIO.I_003);
+        res.status(200).send('scenario status bulk invalid ok');
+    });
+};
+
+/**
+ * アプローチ対象の無効なシナリオを有効にする
+ * 
+ * @param {Object} req 画面からのリクエスト
+ * @param {Object} res 画面へのレスポンス
+ */
+exports.bulkEnable = function(req, res)
+{
+    var commonColumns = model.getUpdCommonColumns();
+    var sql = 'UPDATE ' + tableName + ' SET status = @status, update_by = @update_by,  update_date = @update_date WHERE delete_flag = 0 AND approach = 1'; 
+    var request = model.getRequest();
+    request.input('update_by', model.db.Int, req.session.userId);
+    request.input('update_date', model.db.NVarChar, commonColumns.update_date);
+    request.input('status', model.db.Int, 1);
+
+    model.execute(sql, request, function(err, data)
+    {
+        if (err.length > 0)
+        {
+            console.log('execute plan scenario bulk enable faild');
+            console.log(err);
+            return res.status(510).send('有効化に失敗しました。');
+        }
+        model.insertLog(req.session.userId, 8, Message.SCENARIO.I_002);
+        res.status(200).send('scenario status bulk enable ok');
     });
 };
 
@@ -237,6 +296,7 @@ exports.savePriority = function(req, res)
     {
         delete item.scenario_name;
         delete item.scenario_type;
+        delete item.valid_flag;
         
         var updateData = model.merge(item, commonColumns);
 
@@ -374,7 +434,7 @@ function create(req, res)
                     request.input('approach', model.db.SmallInt, insertData.approach);
                     request.input('priority', model.db.Int, 32767);
     
-                    model.insert(tableName, insertData, request, function(err, date)
+                    model.insert(tableName, insertData, request, function(err, id)
                     {
                         if (err.length > 0)
                         {
@@ -384,29 +444,14 @@ function create(req, res)
                             return;
                         }
                         
-                        var col = "MAX(scenario_id) as scenario_id";
-                        var qObj = model.getQueryObject(col, tableName, '', '', '');
-                        model.select(qObj, qObj.request, function(err, data)
-                        {
-                            if (err.length > 0)
-                            {
-                                console.log('scenario_id select faild');
-                                console.log(err);
-                                callback(err, {});
-                                return;
-                            }
-                            else
-                            {
-                                callback(null, data[0]);
-                            }
-                        });
+                        callback(null, id);
                     });
                 },
-                function(data, callback)
+                function(id, callback)
                 {
                     var request = model.getRequest(transaction);
+                    var childTabelObject = '';
                     var childTabelName = '';
-                    
                     var specificInfo = {};
                     
                     if (1 === req.body.scenario.scenario_type)
@@ -418,6 +463,7 @@ function create(req, res)
                             expiration_end_date: req.body.specificInfo.expiration_end_date
                         };
                         
+                        childTabelObject = require("./schedulescenario");
                         childTabelName = 'M_SCHEDULE_SCENARIO';
                         request.input('repeat_flag', model.db.Int, specificInfo.repeat_flag);
                         request.input('expiration_start_date', model.db.NVarChar, specificInfo.expiration_start_date);
@@ -431,6 +477,7 @@ function create(req, res)
                             inoperative_num: req.body.specificInfo.inoperative_num
                         };
                         
+                        childTabelObject = require("./triggerscenario");
                         childTabelName = 'M_TRIGGER_SCENARIO';
                         request.input('after_event_occurs_num', model.db.Int, specificInfo.after_event_occurs_num);
                         request.input('inoperative_num', model.db.Int, specificInfo.inoperative_num);
@@ -438,7 +485,7 @@ function create(req, res)
                     
                     var commonColumns = model.getInsCommonColumns();
                     var insertData = model.merge(specificInfo, commonColumns);
-                    insertData.scenario_id = data.scenario_id;
+                    insertData.scenario_id = id;
                     insertData.scenario_action_document_id = (null === doc) ? null : doc.id;
     
                     request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
@@ -449,7 +496,7 @@ function create(req, res)
                     request.input('scenario_id', model.db.Int, insertData.scenario_id);
                     request.input('scenario_action_document_id', model.db.NVarChar, insertData.scenario_action_document_id);
                     
-                    model.insert(childTabelName, insertData, request, function(err, date)
+                    childTabelObject.saveForParent(insertData, request, function(err, date)
                     {
                         if (err.length > 0)
                         {
@@ -530,87 +577,147 @@ function create(req, res)
 function update(req, res)
 {
     console.log('scenario update start');
-    
-    var TriigerScenario = require("./triggerscenario");
-
-    var commonColumns = model.getUpdCommonColumns();
-    model.async.waterfall(
-    [
-        function(callback)
-        {
-            TriigerScenario.getByScenarioId(req.body.scenario.scenario_id, function(err, data)
-            {
-                if (err.length > 0)
-                {
-                    console.log('trigger scenario is not found');
-                    console.log(err);
-                    res.status(510).send('scenario update faild');
-                    
-                }
-                callback(null, data);
-            });
-        },
-        function(trigger, callback)
-        {
-            var doc = req.body.doc;
-            doc.id = trigger[0].scenario_action_document_id;
-            scenariodoc.saveItemForWeb(false, doc, function(err, doc)
-            {
-                console.log('scenario doc update');
-                console.log(err);
-                console.log(doc);
-                callback(err);
-            });
-        },
-        function(callback)
-        {
-            //scenarioマスタを更新
-            delete req.body.scenario.delete_flag;
-            delete req.body.scenario.create_by;
-            delete req.body.scenario.create_date;
-            delete req.body.scenario.priority;  //優先順位はここで更新したくないため削除
-            
-            var updateData = model.merge(req.body.scenario, commonColumns);
-            var request = model.getRequest();
-            request.input('update_by', model.db.Int, req.session.userId);
-            request.input('update_date', model.db.NVarChar, updateData.update_date);
-            
-            request.input('segment_id', model.db.Int, updateData.segment_id);
-            request.input('if_layout_id', model.db.Int, updateData.if_layout_id);
-            request.input('scenario_name', model.db.NVarChar, updateData.scenario_name);
-            request.input('output_name', model.db.NVarChar, updateData.output_name);
-            request.input('scenario_type', model.db.SmallInt, updateData.scenario_type);
-            request.input('status', model.db.SmallInt, updateData.status);
-            request.input('approach', model.db.SmallInt, updateData.approach);
-
-            model.updateById(updateData, request, callback);
-        },
-        function(callback)
-        {
-            //トリガーscenarioマスタを更新
-            var updateData = model.merge(req.body.specificInfo, commonColumns);
-            updateData.scenario_id = req.body.scenario.scenario_id;
-
-            var request = model.getRequest();
-            request.input('update_by', model.db.Int, req.session.userId);
-            request.input('update_date', model.db.NVarChar, updateData.update_date);
-            
-            request.input('scenario_id', model.db.Int, updateData.scenario_id);
-            request.input('after_event_occurs_num', model.db.Int, updateData.after_event_occurs_num);
-            request.input('inoperative_num', model.db.Int, updateData.inoperative_num);
-
-            TriigerScenario.updateById(updateData, request, callback);
-        }
-        
-    ], function(err)
+    var childTabelObject = '';
+    var childTabelName = '';
+    var isSchedule = (1 === req.body.scenario.scenario_type);
+    if (isSchedule)
     {
-        console.log(err);
-        if (err.length > 0)
+        childTabelObject = require("./schedulescenario");
+        childTabelName = 'M_SCHEDULE_SCENARIO';
+    }
+    else
+    {
+        childTabelObject = require("./triggerscenario");
+        childTabelName = 'M_TRIGGER_SCENARIO';
+    }
+    
+    var commonColumns = model.getUpdCommonColumns();
+    
+    model.tranBegin(function(err, transaction)
+    {
+        model.async.waterfall(
+        [
+            function(callback)
+            {
+                console.log('get scenario by id');
+                console.log(req.body.scenario.scenario_id);
+                childTabelObject.getByScenarioId(req.body.scenario.scenario_id, function(err, data)
+                {
+                    console.log(data);
+                    if (err.length > 0)
+                    {
+                        console.log('trigger scenario is not found');
+                        console.log(err);
+                        res.status(510).send('scenario update faild');
+                        
+                    }
+                    callback(null, data);
+                });
+            },
+            function(data, callback)
+            {
+                if (req.body.hasOwnProperty('doc'))
+                {
+                    console.log('update scenario doc');
+                    var doc = req.body.doc;
+                    doc.id = data[0].scenario_action_document_id;
+                    console.log(doc);
+                    if (null === doc.id)
+                    {
+                        console.log('no update scenario doc');
+                        callback(null);
+                    }
+                    else
+                    {
+                        scenariodoc.saveItemForWeb(false, doc, function(err, doc)
+                        {
+                            console.log('scenario doc update');
+                            console.log(err);
+                            console.log(doc);
+                            callback(err);
+                        });
+                    }
+                }
+                else
+                {
+                    console.log('no update scenario doc');
+                    callback(null);
+                }
+            },
+            function(callback)
+            {
+                //scenarioマスタを更新
+                delete req.body.scenario.delete_flag;
+                delete req.body.scenario.create_by;
+                delete req.body.scenario.create_date;
+                delete req.body.scenario.priority;  //優先順位はここで更新したくないため削除
+                delete req.body.scenario.valid_flag;
+                console.log(commonColumns);
+                var updateData = model.merge(commonColumns, req.body.scenario, true);
+                console.log(updateData);
+                
+                var request = model.getRequest(transaction);
+                request.input('update_by', model.db.Int, req.session.userId);
+                request.input('update_date', model.db.NVarChar, updateData.update_date);
+                
+                request.input('segment_id', model.db.Int, updateData.segment_id);
+                request.input('if_layout_id', model.db.Int, updateData.if_layout_id);
+                request.input('scenario_name', model.db.NVarChar, updateData.scenario_name);
+                request.input('output_name', model.db.NVarChar, updateData.output_name);
+                request.input('scenario_type', model.db.SmallInt, updateData.scenario_type);
+                request.input('status', model.db.SmallInt, updateData.status);
+                request.input('approach', model.db.SmallInt, updateData.approach);
+    
+                console.log('update scenario info');
+                model.updateById(updateData, request, function(err, data)
+                {
+                    var nextErr = (0 < err.length) ? err.length: null;
+                    callback(nextErr);
+                });
+            },
+            function(callback)
+            {
+                //トリガーscenarioマスタを更新
+                var updateData = model.merge(commonColumns, req.body.specificInfo, true);
+                updateData.scenario_id = req.body.scenario.scenario_id;
+                var request = model.getRequest(transaction);
+                request.input('update_by', model.db.Int, req.session.userId);
+                console.log('update ' + childTabelName);
+                childTabelObject.updateByScenarioId(updateData, request, function(err, data)
+                {
+                    var nextErr = (0 < err.length) ? err.length: null;
+                    callback(nextErr);
+                });
+            }
+        ], 
+        function(err)
         {
-            console.log(err);
-            res.status(510).send('object not found');
-        }
-        res.status(200).send('update ok');
+            console.log('execute last function');
+            if (null !== err && 0 !== err.length)
+            {
+                console.log(err);
+                res.status(510).send("システムエラーが発生しました。");
+            }
+            else
+            {
+                console.log('commit execute');
+                transaction.commit(function(err)
+                {
+                    console.log(err);
+                    if (err)
+                    {
+                        console.log('scenario data commit faild');
+                        console.log(err);
+                        res.status(510).send("システムエラーが発生しました。");
+                    }
+                    else
+                    {
+//                        model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
+                        res.status(200).send('insert ok');
+                    }
+                });
+            }
+        });
     });
 }
 
@@ -821,6 +928,7 @@ exports.initializeData = function(req, res)
                     }
                     typeObject.getByScenarioId(req.params.id, function(err, data)
                     {
+                        console.log(data);
                         scenariodoc.getItemByIdForWeb(data[0].scenario_action_document_id, function(err, doc)
                         {
                             callback(null, {specific: data[0], doc: doc});
@@ -903,4 +1011,3 @@ exports.getActionByName = function(req, res)
         res.status(510).send('action is not found');
     }
 };
-

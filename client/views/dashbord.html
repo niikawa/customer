@@ -29,7 +29,9 @@
     </div>
     
     <div class="box">
-        <h4>実行予定のシナリオ</h4>
+        <h4>実行予定のシナリオ
+            <button ng-if="isShowExecutePlanScenario" class="btn btn-default" ng-click="bulkInvalid()">一括無効</button>
+        </h4>
 
         <div class="row" >
             <div class="col-md-12">

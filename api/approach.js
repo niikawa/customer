@@ -5,12 +5,14 @@ var Message = require('../config/message.json');
 var tableName = 'M_APPROACH_SETTING';
 /** PK */
 var pk = 'approach_setting_id';
+/** SEQ */
+var seqName = 'seq_approach';
 /** 機能名 */
 var functionName = 'アプローチ管理';
 
 var approach = function approachsegment()
 {
-    Core.call(this, tableName, pk);
+    Core.call(this, tableName, pk, seqName);
 };
 
 //coreModelを継承する

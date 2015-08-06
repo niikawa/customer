@@ -6,11 +6,14 @@ var Core = require('./core');
 
 /** テーブル名 */
 var tableName = 'M_SCHEDULE_SCENARIO';
+/** PK */
 var pk = 'schedule_scenario_id';
+/** SEQ */
+var seqName = 'seq_schedule_scenario';
 
 var scheduleScenario = function scheduleScenario()
 {
-    Core.call(this, tableName, pk);
+    Core.call(this, tableName, pk, seqName);
 };
 
 //coreModelを継承する
@@ -55,9 +58,22 @@ exports.getByScenarioId = function(scenario_id, callback)
     });
 };
 
-exports.update = function(id, callback)
+exports.saveForParent = function(insertData, request, callback)
 {
-    model.updateById(id, callback);
+    model.insert(tableName, insertData, request, callback);
+};
+
+exports.updateByScenarioId = function(updateData, request, callback)
+{
+    request.input('update_date', model.db.NVarChar, updateData.update_date);
+    request.input('repeat_flag', model.db.Int, updateData.repeat_flag);
+    request.input('expiration_start_date', model.db.NVarChar, updateData.expiration_start_date);
+    request.input('expiration_end_date', model.db.NVarChar, updateData.expiration_end_date);
+    request.input('scenario_id', model.db.Int, updateData.scenario_id);
+
+console.log(updateData);
+
+    model.updateByForeignKey(updateData, 'scenario_id', request, callback);
 };
 
 exports.remove = function(id, callback)

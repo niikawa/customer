@@ -69,6 +69,16 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
                 method: 'GET',
                 url: 'scenario/execute/plan',
             },
+            bulkInvalid:
+            {
+                method: 'GET',
+                url: 'scenario/bulkInvalid',
+            },
+            bulkEnable:
+            {
+                method: 'GET',
+                url: 'scenario/bulkEnable',
+            },
         });
         
         scenarioServices.getPageProp = function(type, id)

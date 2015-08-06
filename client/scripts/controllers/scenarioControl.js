@@ -337,8 +337,16 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     $scope.save = function()
     {
         var doc;
+        var specificInfo;
         if (1 === pageProp.type)
         {
+            specificInfo = 
+            {
+                repeat_flag: $scope.specificInfo.repeat_flag,
+                expiration_start_date: $scope.specificInfo.expiration_start_date,
+                expiration_end_date: $scope.specificInfo.expiration_end_date,
+            };
+            
             if (1 == $scope.specificInfo.repeat_flag)
             {
                 doc = {interval: $scope.specificInfo.interval};
@@ -362,6 +370,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 actionName: actionName,
                 conditionList: Scenario.getConditionDoc(selectConditionList)
             };
+            specificInfo = $scope.specificInfo;
         }
         else
         {
@@ -372,7 +381,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
         Scenario.setActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
 
-        var params = {scenario: $scope.scenario, specificInfo: $scope.specificInfo, doc: doc};
+        var params = {scenario: $scope.scenario, specificInfo: specificInfo, doc: doc};
 
         Scenario.resource.save(params).$promise.then(function(response)
         {

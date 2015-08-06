@@ -9,27 +9,54 @@ var logInfo = require('../config/controlLog');
  * @class core
  * @constructor
  */
-var core = function core(modelName, pk)
+var core = function core(modelName, pk, seqName)
 {
     this.modelName = modelName;
     this.pk = pk;
+    this.seqName = seqName;
 };
+
+core.prototype.getPk = function()
+{
+    return this.pk;
+};
+
 
 core.prototype.async = require('async');
 
 core.prototype.db = require('mssql');
 
-core.prototype.merge = function(source, add)
+core.prototype.merge = function(source, add,isNew)
 {
     if (!add) add = {};
-    for (var attrname in add)
+    if (void 0 === isNew || false === isNew)
     {
-        if (add.hasOwnProperty(attrname))
+        for (var attrname in add)
         {
-            source[attrname] = add[attrname];
+            if (add.hasOwnProperty(attrname))
+            {
+                source[attrname] = add[attrname];
+            }
         }
+        return source;
     }
-    return source;
+    else
+    {
+        var newObj = {};
+        Object.keys(source).forEach(function(name)
+        {
+            newObj[name] = source[name];
+        });
+        for (var attrname in add)
+        {
+            if (add.hasOwnProperty(attrname))
+            {
+                newObj[attrname] = add[attrname];
+            }
+        }
+        return newObj;
+        
+    }
 };
 
 core.prototype.getRequest = function(transaction)
@@ -77,6 +104,19 @@ core.prototype.getQueryObject = function(col, table, where, groupby, orderby)
         groupby: groupby,
         orderby: orderby,
         request: this.getRequest()};
+};
+
+/**
+ * シーケンス値を取得する.
+ * 
+ * @author niikawa
+ * @method getNextSeq
+ * @param {Function} callback
+ */
+core.prototype.getNextSeq = function(callback)
+{
+    var sql = "SELECT NEXT VALUE FOR " + this.seqName + " AS id";
+    return this.execute(sql, this.getRequest(), callback);
 };
 
 /**
@@ -153,18 +193,40 @@ core.prototype.select = function(queryObject, request, callback)
 
 core.prototype.insert = function(table, data, request, callback)
 {
-    var dataList = [];
-    var columns = Object.keys(data);
-    var len = columns.length;
-    for (var i = 0; i < len; i ++)
-    {
-        var item = '@' + columns[i];
-        dataList.push(item);
-    }
-
-    var sql = 'INSERT INTO ' + table + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
+    //callbackからはprototypeを参照できないので一度変数に入れておく
+    var p = this.getPk();
+    var exe = this.execute;
+    var type = this.db.Int;
     
-    this.execute(sql, request, callback);
+    this.getNextSeq(function(err, seqInfo)
+    {
+        if (0 < err.length)
+        {
+            callback(err);
+        }
+        else
+        {
+            var dataList = [];
+            //SEQを設定
+            data[p] = seqInfo[0].id;
+            console.log(data);
+
+            var columns = Object.keys(data);
+            var len = columns.length;
+            for (var i = 0; i < len; i ++)
+            {
+                var item = '@' + columns[i];
+                dataList.push(item);
+            }
+            request.input(p, type, seqInfo[0].id);
+            
+            var sql = 'INSERT INTO ' + table + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
+            exe(sql, request, function(errList, resultList)
+            {
+                callback(errList, seqInfo[0].id);
+            });
+        }
+    });
 };
 
 core.prototype.updateById = function(data, request, callback)
@@ -183,7 +245,27 @@ core.prototype.updateById = function(data, request, callback)
         dataList.push(item);
     }
     
-    var sql = 'UPDATE ' + this.modelName + ' SET ' + dataList.join(',') + ' WHERE ' + this.pk + ' = @' + this.pk;
+    var sql = 'UPDATE ' + this.modelName + ' SET ' + dataList.join(',') + ' WHERE ' + this.pk + ' = @' + this.pk + ' AND delete_flag = 0';
+    this.execute(sql, request, callback);
+};
+
+core.prototype.updateByForeignKey = function(data, foreignKey, request, callback)
+{
+    var id = data[foreignKey];
+    if (void 0 === id) { console.log('fk is undefined'); return;}
+    request.input(foreignKey, this.db.Int, id);
+    delete data[foreignKey];
+
+    var dataList = [];
+    var columns = Object.keys(data);
+    var len = columns.length;
+    for (var i = 0; i < len; i ++)
+    {
+        var item = columns[i] + ' =@' + columns[i];
+        dataList.push(item);
+    }
+    
+    var sql = 'UPDATE ' + this.modelName + ' SET ' + dataList.join(',') + ' WHERE ' + foreignKey + ' = @' + foreignKey + ' AND delete_flag = 0';
     this.execute(sql, request, callback);
 };
 

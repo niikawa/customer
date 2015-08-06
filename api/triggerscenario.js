@@ -6,11 +6,14 @@ var Core = require('./core');
 
 /** テーブル名 */
 var tableName = 'M_TRIGGER_SCENARIO';
+/** PK */
 var pk = 'trigger_scenario_id';
+/** SEQ */
+var seqName = 'seq_trigger_scenario';
 
 var triggerScenario = function triggerScenario()
 {
-    Core.call(this, tableName, pk);
+    Core.call(this, tableName, pk, seqName);
 };
 
 //coreModelを継承する
@@ -55,9 +58,19 @@ exports.getByScenarioId = function(scenario_id, callback)
     });
 };
 
-exports.update = function(id, callback)
+exports.saveForParent = function(insertData, request, callback)
 {
-    model.updateById(id, callback);
+    model.insert(tableName, insertData, request, callback);
+};
+
+exports.updateByScenarioId = function(updateData, request, callback)
+{
+    request.input('update_date', model.db.NVarChar, updateData.update_date);
+    request.input('scenario_id', model.db.Int, updateData.scenario_id);
+    request.input('after_event_occurs_num', model.db.Int, updateData.after_event_occurs_num);
+    request.input('inoperative_num', model.db.Int, updateData.inoperative_num);
+    
+    model.updateByForeignKey(updateData, 'scenario_id', request, callback);
 };
 
 exports.remove = function(id, callback)

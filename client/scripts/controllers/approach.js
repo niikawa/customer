@@ -6,14 +6,14 @@
  * Controller of the workspaceApp
  */
 var approachCtrl = angular.module('approachCtrl',['ApproachServices','ScenarioServices']);
-approachCtrl.controller('ApproachCtrl',['$scope', '$routeParams','Shared', 'Utility', 'Approach', 'Scenario',
-function ($scope, $routeParams, Shared, Utility, Approach, Scenario)
+approachCtrl.controller('ApproachCtrl',['$scope', '$routeParams','Shared', 'Utility', 'Approach', 'Scenario', 'Modal',
+function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
 {
     function setInitializeScope()
     {
         $scope.approach = [];
         $scope.scenarioList = [];
-        $scope.warningMessage = '';
+        $scope.showScenarioList = false;
     }
     
     function getInitializeData()
@@ -25,6 +25,7 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario)
             Scenario.resource.valid().$promise.then(function(scenarioResponse)
             {
                 $scope.scenarioList = scenarioResponse.data;
+                $scope.showScenarioList = (0 < $scope.scenarioList.length);
             });
         });
     }
@@ -63,6 +64,60 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario)
         {
             Utility.info('優先順位を更新しました');
         });
+    };
+    
+    $scope.showDiscription = function(id)
+    {
+        var info = Approach.getInfomation(id);
+        $scope.modalParam = 
+        {
+            title: info.title,
+            message: info.message,
+            isExecute: false,
+        };
+        $scope.modalInstance = Modal.open($scope, "partials/modal/message.html");
+    };
+
+    $scope.bulkInvalid = function()
+    {
+        $scope.modalParam = 
+        {
+            title: 'シナリオの一括無効について',
+            message: '有効なシナリオをすべて無効にしますがよろしいですか？<br>実行した場合、実行予定シナリオはなくなります。',
+            isExecute: true,
+            executeLabel: '一括で無効にする',
+            execute: function()
+            {
+                Scenario.resource.bulkInvalid().$promise.then(function(response)
+                {
+                    $scope.modalInstance.close();
+                    Utility.info('アプローチ対象シナリオをすべて無効しました。');
+                    $scope.initialize();
+                });
+            }
+        };
+        $scope.modalInstance = Modal.open($scope, "partials/modal/message.html");
+    };
+    
+    $scope.bulkEnable = function()
+    {
+        $scope.modalParam = 
+        {
+            title: 'シナリオの一括有効について',
+            message: '無効なシナリオをすべて有効にしますがよろしいですか？<br>実行した場合、実行予定シナリオとしてダッシュボード画面に表示されます。',
+            isExecute: true,
+            executeLabel: '一括で有効にする',
+            execute: function()
+            {
+                Scenario.resource.bulkEnable().$promise.then(function(response)
+                {
+                    $scope.modalInstance.close();
+                    Utility.info('アプローチ対象シナリオをすべて有効しました。');
+                    $scope.initialize();
+                });
+            }
+        };
+        $scope.modalInstance = Modal.open($scope, "partials/modal/message.html");
     };
     
 }]);

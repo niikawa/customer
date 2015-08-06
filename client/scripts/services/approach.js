@@ -25,6 +25,22 @@ approachServices.factory("Approach", ['$resource','Utility',
             }
         };
 
+        approachServices.getInfomation = function(id)
+        {
+            var info = {};
+            if (1 === id)
+            {
+                info.title = '1日の制限回数について';
+                info.message = '対象の顧客に対して1日に抽出対象とする回数になります。<br>複数のシナリオで抽出対象となる顧客の場合この回数以上は抽出されなくなります。';
+            }
+            else if (2 === id)
+            {
+                info.title = '1週間の制限回数について';
+                info.message = '対象の顧客に対して1週間に抽出対象とする回数';
+            }
+            return info;
+        };
+        
         return approachServices;
     }
 ]);
