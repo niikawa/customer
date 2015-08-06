@@ -63,9 +63,14 @@ exports.saveForParent = function(insertData, request, callback)
     model.insert(tableName, insertData, request, callback);
 };
 
-exports.update = function(id, callback)
+exports.updateByScenarioId = function(updateData, request, callback)
 {
-    model.updateById(id, callback);
+    request.input('update_date', model.db.NVarChar, updateData.update_date);
+    request.input('scenario_id', model.db.Int, updateData.scenario_id);
+    request.input('after_event_occurs_num', model.db.Int, updateData.after_event_occurs_num);
+    request.input('inoperative_num', model.db.Int, updateData.inoperative_num);
+    
+    model.updateByForeignKey(updateData, 'scenario_id', request, callback);
 };
 
 exports.remove = function(id, callback)

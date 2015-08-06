@@ -678,28 +678,10 @@ function update(req, res)
                 //トリガーscenarioマスタを更新
                 var updateData = model.merge(req.body.specificInfo, commonColumns);
                 updateData.scenario_id = req.body.scenario.scenario_id;
-    
                 var request = model.getRequest(transaction);
                 request.input('update_by', model.db.Int, req.session.userId);
-                request.input('update_date', model.db.NVarChar, updateData.update_date);
-                
-                if (isSchedule)
-                {
-                    request.input('repeat_flag', model.db.Int, updateData.repeat_flag);
-                    request.input('expiration_start_date', model.db.NVarChar, updateData.expiration_start_date);
-                    request.input('expiration_end_date', model.db.NVarChar, updateData.expiration_end_date);
-                }
-                else
-                {
-                    request.input('scenario_id', model.db.Int, updateData.scenario_id);
-                    request.input('after_event_occurs_num', model.db.Int, updateData.after_event_occurs_num);
-                    request.input('inoperative_num', model.db.Int, updateData.inoperative_num);
-                }
-    
                 console.log('update ' + childTabelName);
-                console.log(updateData);
-                console.log(childTabelObject);
-                childTabelObject.updateById(updateData, request, callback);
+                childTabelObject.updateByScenarioId(updateData, request, callback);
             }
         ], 
         function(err)

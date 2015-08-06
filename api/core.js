@@ -229,6 +229,26 @@ core.prototype.updateById = function(data, request, callback)
     this.execute(sql, request, callback);
 };
 
+core.prototype.updateByForeignKey = function(data, foreignKey, request, callback)
+{
+    var id = data[foreignKey];
+    if (void 0 === id) { console.log('fk is undefined'); return;}
+    request.input(foreignKey, this.db.Int, id);
+    delete data[foreignKey];
+
+    var dataList = [];
+    var columns = Object.keys(data);
+    var len = columns.length;
+    for (var i = 0; i < len; i ++)
+    {
+        var item = columns[i] + ' =@' + columns[i];
+        dataList.push(item);
+    }
+    
+    var sql = 'UPDATE ' + this.modelName + ' SET ' + dataList.join(',') + ' WHERE ' + foreignKey + ' = @' + this.pk + ' AND delete_flag = 0';
+    this.execute(sql, request, callback);
+};
+
 core.prototype.removeById = function(idValue, callback)
 {
     var request = this.getRequest();
