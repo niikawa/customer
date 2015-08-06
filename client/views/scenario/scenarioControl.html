@@ -86,7 +86,7 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">つけたいタグを入力してください</span>
-                                    <input type="number" class="form-control form-control-add-fa2" placeholder="" 
+                                    <input class="form-control form-control-add-fa2" placeholder="" 
                                         ng-model="inputTag" ng-required="true">
                                     <span class="input-group-addon question"><i class="fa fa-plus fa-2x" ng-click="addTag()"></i></span>
                                 </div>
@@ -94,7 +94,7 @@
                         </div>
 
                         <div class="label label-success" ng-repeat="tag in tagList">
-                            <i class="fa fa-tag fa-2x"></i>{{tag}}
+                            <i class="fa fa-tag"></i>{{tag}}
                             <span type="button" class="label-close" ng-click="removeColumn($index)">&times;</span>
                         </div>
                     </div>
