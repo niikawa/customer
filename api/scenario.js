@@ -667,6 +667,7 @@ function update(req, res)
                 request.input('approach', model.db.SmallInt, updateData.approach);
     
                 console.log('update scenario info');
+                console.log(req.body.scenario);
                 console.log(updateData);
                 model.updateById(updateData, request, function(err, data)
                 {
@@ -678,11 +679,11 @@ function update(req, res)
                 //トリガーscenarioマスタを更新
                 var updateData = model.merge(req.body.specificInfo, commonColumns);
                 updateData.scenario_id = req.body.scenario.scenario_id;
+                console.log('update ' + childTabelName);
                 console.log(req.body.scenario);
                 console.log(updateData);
                 var request = model.getRequest(transaction);
                 request.input('update_by', model.db.Int, req.session.userId);
-                console.log('update ' + childTabelName);
                 childTabelObject.updateByScenarioId(updateData, request, callback);
             }
         ], 
