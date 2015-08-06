@@ -685,6 +685,7 @@ function update(req, res)
                 request.input('update_by', model.db.Int, req.session.userId);
                 childTabelObject.updateByScenarioId(updateData, request, function(err, data)
                 {
+                    console.log(err);
                     callback(null);
                 });
             }
