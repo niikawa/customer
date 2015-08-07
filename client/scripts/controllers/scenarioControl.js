@@ -314,10 +314,12 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         {
             if ($scope.inputTag === tag)
             {
+                console.log('atta');
                 isAddTag = false;
                 return false;
             }
         });
+        console.log(isAddTag);
         if (isAddTag)
         {
             $scope.tagList.push($scope.inputTag);
