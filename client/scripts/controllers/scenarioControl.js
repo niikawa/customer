@@ -312,7 +312,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         var isAddTag = true;
         angular.forEach($scope.tagList, function(tag)
         {
-            if ($scope.inputTag === tag)
+            if ($scope.inputTag === tag.name)
             {
                 isAddTag = false;
                 return false;
@@ -320,7 +320,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         });
         if (isAddTag)
         {
-            $scope.tagList.push($scope.inputTag);
+            $scope.tagList.push({name: $scope.inputTag});
             $scope.inputTag = '';
         }
     };
