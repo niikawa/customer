@@ -39,6 +39,7 @@ exports.save = function(transaction, tagList, userId, callback)
                 var qObj = model.getQueryObject(col, tableName, where, '', '');
                 model.select(qObj, request, function(err, data)
                 {
+                    console.log("select result");
                     console.log(err);
                     console.log(data);
                     
