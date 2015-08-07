@@ -309,15 +309,20 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     {
         if (0 >= $scope.inputTag.length) return;
         
+        var isAddTag = true;
         angular.forEach($scope.inputTag, function(tag)
         {
             if ($scope.inputTag === tag)
             {
+                isAddTag = false;
                 return false;
             }
         });
-        $scope.tagList.push($scope.inputTag);
-        $scope.inputTag = '';
+        if (isAddTag)
+        {
+            $scope.tagList.push($scope.inputTag);
+            $scope.inputTag = '';
+        }
     };
     
     $scope.removeTag = function(index)
