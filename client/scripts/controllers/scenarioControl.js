@@ -321,7 +321,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         });
         if (isAddTag)
         {
-            $scope.selectTagList.push({name: $scope.inputTag});
+            $scope.selectTagList.push({tag_name: $scope.inputTag});
             $scope.inputTag = '';
         }
     };
