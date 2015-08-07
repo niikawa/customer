@@ -308,6 +308,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     
     $scope.addTag = function()
     {
+        console.log($scope.inputTag);
         if (0 >= $scope.inputTag.length) return;
         
         var isAddTag = true;
