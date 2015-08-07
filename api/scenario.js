@@ -416,7 +416,7 @@ function create(req, res)
                 function(callback)
                 {
                     var commonColumns = model.getInsCommonColumns(req.session.userId);
-                    var insertData = model.merge(scenario, commonColumns);
+                    var insertData = model.merge(req.body.scenario, commonColumns);
                     insertMine(transaction, insertData, function(err, id)
                     {
                         if (err.length > 0)
