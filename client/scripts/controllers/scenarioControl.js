@@ -312,9 +312,10 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         var isAddTag = true;
         angular.forEach($scope.inputTag, function(tag)
         {
+            console.log(tag);
             if ($scope.inputTag === tag)
             {
-                console.log('atta');
+                console.log('att');
                 isAddTag = false;
                 return false;
             }
