@@ -311,7 +311,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         if (0 >= $scope.inputTag.length) return;
         
         var isAddTag = true;
-        angular.forEach($scope.tagList, function(tag)
+        angular.forEach($scope.selectTagList, function(tag)
         {
             if ($scope.inputTag === tag.name)
             {
@@ -321,7 +321,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         });
         if (isAddTag)
         {
-            $scope.tagList.push({name: $scope.inputTag});
+            $scope.selectTagList.push({name: $scope.inputTag});
             $scope.inputTag = '';
         }
     };
@@ -329,7 +329,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     $scope.removeTag = function(index)
     {
         console.log(index);
-        $scope.tagList.splice(index, 1);
+        $scope.selectTagList.splice(index, 1);
     };
     
     //---------------------------------
