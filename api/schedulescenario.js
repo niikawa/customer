@@ -71,8 +71,6 @@ exports.updateByScenarioId = function(updateData, request, callback)
     request.input('expiration_end_date', model.db.NVarChar, updateData.expiration_end_date);
     request.input('scenario_id', model.db.Int, updateData.scenario_id);
 
-console.log(updateData);
-
     model.updateByForeignKey(updateData, 'scenario_id', request, callback);
 };
 
