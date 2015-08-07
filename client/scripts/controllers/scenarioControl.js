@@ -307,6 +307,15 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     
     $scope.addTag = function()
     {
+        if (0 >= $scope.inputTag.length) return;
+        
+        angular.forEach($scope.inputTag, function(tag)
+        {
+            if ($scope.inputTag === tag)
+            {
+                return false;
+            }
+        });
         $scope.tagList.push($scope.inputTag);
         $scope.inputTag = '';
     };
