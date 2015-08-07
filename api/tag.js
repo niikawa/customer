@@ -27,10 +27,12 @@ exports.save = function(transaction, tagList, userId, callback)
 
     model.async.forEach(tagList, function(item, callback)
     {
+        console.log(item);
         if (!item.hasOwnProperty('tag_id'))
         {
             if (item.hasOwnProperty('tag_name'))
             {
+                console.log(item.tag_name);
                 var tagName = item.tag_name.trim();
                 request.input('tag_name', model.db.NVarChar, tagName);
                 

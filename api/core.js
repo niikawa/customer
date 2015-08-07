@@ -28,9 +28,6 @@ core.prototype.db = require('mssql');
 
 core.prototype.merge = function(source, add, isNew)
 {
-    
-    console.log(source);
-    console.log(add);
     if (!add) add = {};
     if (void 0 === isNew || false === isNew)
     {
