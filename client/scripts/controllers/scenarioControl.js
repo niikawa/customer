@@ -310,17 +310,14 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         if (0 >= $scope.inputTag.length) return;
         
         var isAddTag = true;
-        angular.forEach($scope.inputTag, function(tag)
+        angular.forEach($scope.tagList, function(tag)
         {
-            console.log(tag);
             if ($scope.inputTag === tag)
             {
-                console.log('att');
                 isAddTag = false;
                 return false;
             }
         });
-        console.log(isAddTag);
         if (isAddTag)
         {
             $scope.tagList.push($scope.inputTag);
