@@ -440,7 +440,7 @@ function create(req, res)
                             callback(err, {});
                             return;
                         }
-                        callback(id, null);
+                        callback(null, id);
                     });
                 },
                 function(id, callback)
