@@ -27,7 +27,7 @@ exports.save = function(transaction, tagList, userId, callback)
 
     model.async.forEach(tagList, function(item, callback)
     {
-        console.log(callback);
+        console.log(item);
         if (!item.hasOwnProperty('tag_id'))
         {
             if (item.hasOwnProperty('tag_name'))
@@ -40,6 +40,7 @@ exports.save = function(transaction, tagList, userId, callback)
                 var qObj = model.getQueryObject(col, tableName, where, '', '');
                 model.select(qObj, request, function(err, data)
                 {
+                    console.log(err);
                     if (0 < data.length)
                     {
                         item.tag_id = data[0].tag_id;
@@ -58,11 +59,12 @@ exports.save = function(transaction, tagList, userId, callback)
                     }
                 });
            }
-           callback({});
+           callback(null);
        }
     },
     function(err)
     {
+        console.log(err);
         callback(err, tagList);
     });
 };
