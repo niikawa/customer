@@ -26,6 +26,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         
         $scope.inputTag = '';
         $scope.tagList = [];
+        $scope.isTagCollapse = false;
 
         Shared.setRoot($scope.type +' scenario');
         if (1 === pageProp.type)
