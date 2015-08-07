@@ -25,7 +25,8 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.template = pageProp.template;
         
         $scope.inputTag = '';
-        $scope.tagList = [];
+        $scope.tagList = [{name:'tag1'},{name:'tag2'}];
+        $scope.selectTagList = [];
         $scope.isTagCollapse = false;
 
         Shared.setRoot($scope.type +' scenario');

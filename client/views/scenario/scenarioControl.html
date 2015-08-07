@@ -86,7 +86,7 @@
                             <div class="col-md-6 col-sm-6">
                                 <div class="input-group">
                                     <span class="input-group-addon">つけたいタグを入力してください</span>
-                                    <auto-complete-directive class="form-control-add-fa2" item-list="tagList" 
+                                    <auto-complete-directive item-list="tagList" 
                                         name-propertie="name" show-Label=false select-by-list=false select-name="inputTag">
                                     </auto-complete-directive>
                                     <!--<input class="form-control form-control-add-fa2" placeholder="" -->
@@ -96,7 +96,7 @@
                             </div>
                             
                             <div class="col-md-12 break-all">
-                                <div class="label label-success" ng-repeat="(i, tag) in tagList">
+                                <div class="label label-success" ng-repeat="(i, tag) in selectTagList">
                                     {{tag.name}}
                                     <!--<i class="fa fa-tag"></i><span></span>-->
                                     <span type="button" class="label-close" ng-click="removeTag(i)">&times;</span>

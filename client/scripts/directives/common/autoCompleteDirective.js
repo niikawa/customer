@@ -127,7 +127,10 @@ myApp.directive('autoCompleteDirective', function()
                 }
                 var createList = [];
 
-                scope.isFocus = true;
+                if (0 < scope.itemList.length)
+                {
+                    scope.isFocus = true;
+                }
                 if (scope.selectName.length === 0)
                 {
                     angular.copy(originList, createList);
