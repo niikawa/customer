@@ -27,7 +27,6 @@ exports.save = function(transaction, tagList, userId, callback)
 
     model.async.forEach(tagList, function(item, callback)
     {
-        console.log(item);
         if (!item.hasOwnProperty('tag_id'))
         {
             if (item.hasOwnProperty('tag_name'))
@@ -41,6 +40,8 @@ exports.save = function(transaction, tagList, userId, callback)
                 model.select(qObj, request, function(err, data)
                 {
                     console.log(err);
+                    console.log(data);
+                    
                     if (0 < data.length)
                     {
                         item.tag_id = data[0].tag_id;
@@ -50,6 +51,7 @@ exports.save = function(transaction, tagList, userId, callback)
                     else
                     {
                         var insertData = model.merge(commonColumns, {tag_name: tagName});
+                        console.log("go insert");
                         console.log(insertData);
                         model.insert(tableName, insertData, request, function(err, id)
                         {
