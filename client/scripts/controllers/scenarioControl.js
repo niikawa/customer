@@ -307,10 +307,12 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     $scope.addTag = function()
     {
         $scope.tagList.push($scope.inputTag);
+        $scope.inputTag = '';
     };
     
     $scope.removeTag = function(index)
     {
+        console.log(index);
         $scope.tagList.splice(index, 1);
     };
     
