@@ -5,7 +5,7 @@ var Message = require('../config/message.json');
 var tableName = 'T_TAG';
 var pk = 'tag_id';
 /** SEQ */
-var seqName = 'seq_segment';
+var seqName = 'seq_tag';
 
 var tag = function tag()
 {
