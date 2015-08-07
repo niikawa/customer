@@ -417,6 +417,7 @@ function create(req, res)
                 {
                     var commonColumns = model.getInsCommonColumns(req.session.userId);
                     var insertData = model.merge(scenario, commonColumns);
+                    console.log(insertData);
                     insertMine(transaction, insertData, function(err, id)
                     {
                         if (err.length > 0)
@@ -533,6 +534,8 @@ function insertMine(transaction, insertData, callback)
     request.input('status', model.db.SmallInt, insertData.status);
     request.input('approach', model.db.SmallInt, insertData.approach);
     request.input('priority', model.db.Int, 32767);
+
+    console.log(insertData);
 
     model.insert(tableName, insertData, request, function(err, id)
     {
