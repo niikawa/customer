@@ -81,11 +81,11 @@ core.prototype.tranBegin = function(callback)
     });
 };
 
-core.prototype.getInsCommonColumns = function()
+core.prototype.getInsCommonColumns = function(userId)
 {
     var date =  moment().format("YYYY/MM/DD HH:mm:ss");
     return {
-        delete_flag: 0, create_by: 1, create_date: date, update_by: 1, update_date: date
+        delete_flag: 0, create_by: userId, create_date: date, update_by: userId, update_date: date
     };
 };
 

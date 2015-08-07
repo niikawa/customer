@@ -369,6 +369,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     $scope.save = function()
     {
         var doc;
+        var tags;
         var specificInfo;
         if (1 === pageProp.type)
         {
@@ -413,7 +414,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
         Scenario.setActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
 
-        var params = {scenario: $scope.scenario, specificInfo: specificInfo, doc: doc};
+        var params = {scenario: $scope.scenario, specificInfo: specificInfo, doc: doc, tags: $scope.selectTagList};
 
         Scenario.resource.save(params).$promise.then(function(response)
         {

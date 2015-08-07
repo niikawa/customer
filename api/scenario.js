@@ -415,26 +415,9 @@ function create(req, res)
             [
                 function(callback)
                 {
-                    var commonColumns = model.getInsCommonColumns();
-                    var insertData = model.merge(req.body.scenario, commonColumns);
-                    var request = model.getRequest(transaction);
-    
-                    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
-                    request.input('create_by', model.db.Int, req.session.userId);
-                    request.input('create_date', model.db.NVarChar, insertData.create_date);
-                    request.input('update_by', model.db.Int, req.session.userId);
-                    request.input('update_date', model.db.NVarChar, insertData.update_date);
-                    
-                    request.input('segment_id', model.db.Int, insertData.segment_id);
-                    request.input('if_layout_id', model.db.Int, insertData.if_layout_id);
-                    request.input('scenario_name', model.db.NVarChar, insertData.scenario_name);
-                    request.input('output_name', model.db.NVarChar, insertData.output_name);
-                    request.input('scenario_type', model.db.SmallInt, insertData.scenario_type);
-                    request.input('status', model.db.SmallInt, insertData.status);
-                    request.input('approach', model.db.SmallInt, insertData.approach);
-                    request.input('priority', model.db.Int, 32767);
-    
-                    model.insert(tableName, insertData, request, function(err, id)
+                    var commonColumns = model.getInsCommonColumns(req.session.userId);
+                    var insertData = model.merge(scenario, commonColumns);
+                    insertMine(transaction, insertData, function(err, id)
                     {
                         if (err.length > 0)
                         {
@@ -443,71 +426,35 @@ function create(req, res)
                             callback(err, {});
                             return;
                         }
-                        
                         callback(null, id);
                     });
                 },
                 function(id, callback)
                 {
-                    var request = model.getRequest(transaction);
-                    var childTabelObject = '';
-                    var childTabelName = '';
-                    var specificInfo = {};
-                    
-                    if (1 === req.body.scenario.scenario_type)
-                    {
-                        specificInfo = 
-                        {
-                            repeat_flag: req.body.specificInfo.repeat_flag,
-                            expiration_start_date: req.body.specificInfo.expiration_start_date,
-                            expiration_end_date: req.body.specificInfo.expiration_end_date
-                        };
-                        
-                        childTabelObject = require("./schedulescenario");
-                        childTabelName = 'M_SCHEDULE_SCENARIO';
-                        request.input('repeat_flag', model.db.Int, specificInfo.repeat_flag);
-                        request.input('expiration_start_date', model.db.NVarChar, specificInfo.expiration_start_date);
-                        request.input('expiration_end_date', model.db.NVarChar, specificInfo.expiration_end_date);
-                    }
-                    else if (2 === req.body.scenario.scenario_type)
-                    {
-                        specificInfo = 
-                        {
-                            after_event_occurs_num: req.body.specificInfo.after_event_occurs_num,
-                            inoperative_num: req.body.specificInfo.inoperative_num
-                        };
-                        
-                        childTabelObject = require("./triggerscenario");
-                        childTabelName = 'M_TRIGGER_SCENARIO';
-                        request.input('after_event_occurs_num', model.db.Int, specificInfo.after_event_occurs_num);
-                        request.input('inoperative_num', model.db.Int, specificInfo.inoperative_num);
-                    }
-                    
-                    var commonColumns = model.getInsCommonColumns();
-                    var insertData = model.merge(specificInfo, commonColumns);
-                    insertData.scenario_id = id;
-                    insertData.scenario_action_document_id = (null === doc) ? null : doc.id;
-    
-                    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
-                    request.input('create_by', model.db.Int, req.session.userId);
-                    request.input('create_date', model.db.NVarChar, insertData.create_date);
-                    request.input('update_by', model.db.Int, req.session.userId);
-                    request.input('update_date', model.db.NVarChar, insertData.update_date);
-                    request.input('scenario_id', model.db.Int, insertData.scenario_id);
-                    request.input('scenario_action_document_id', model.db.NVarChar, insertData.scenario_action_document_id);
-                    
-                    childTabelObject.saveForParent(insertData, request, function(err, date)
+                    insertChildren(transaction, req, id, doc, function(err, childTabelName)
                     {
                         if (err.length > 0)
                         {
                             console.log(childTabelName + ' insert faild');
                             console.log(err);
                             callback(err, {});
+                            return;
                         }
-                        else
+                        callback(id, null);
+                    });
+                },
+                function(id, callback)
+                {
+                    insertTags(transaction, id, req.body.tags, function(err, tagList)
+                    {
+                        if (err.length > 0)
                         {
-                            callback(null);
+                            console.log("insert tags faild");
+                            console.log(err);
+                            callback(err, {});
+                            return;
                         }
+                        callback(err);
                     });
                 }
             ],
@@ -565,6 +512,102 @@ function create(req, res)
                 }
             });
         });
+    });
+}
+
+function insertMine(transaction, insertData, callback)
+{
+    var request = model.getRequest(transaction);
+
+    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+    request.input('create_by', model.db.Int, insertData.create_by);
+    request.input('create_date', model.db.NVarChar, insertData.create_date);
+    request.input('update_by', model.db.Int, insertData.update_by);
+    request.input('update_date', model.db.NVarChar, insertData.update_date);
+    
+    request.input('segment_id', model.db.Int, insertData.segment_id);
+    request.input('if_layout_id', model.db.Int, insertData.if_layout_id);
+    request.input('scenario_name', model.db.NVarChar, insertData.scenario_name);
+    request.input('output_name', model.db.NVarChar, insertData.output_name);
+    request.input('scenario_type', model.db.SmallInt, insertData.scenario_type);
+    request.input('status', model.db.SmallInt, insertData.status);
+    request.input('approach', model.db.SmallInt, insertData.approach);
+    request.input('priority', model.db.Int, 32767);
+
+    model.insert(tableName, insertData, request, function(err, id)
+    {
+        callback(err, id);
+    });
+}
+
+function insertChildren(transaction, req, id, doc, callback)
+{
+    var request = model.getRequest(transaction);
+    var childTabelObject = '';
+    var childTabelName = '';
+    var specificInfo = {};
+    
+    if (1 === req.body.scenario.scenario_type)
+    {
+        specificInfo = 
+        {
+            repeat_flag: req.body.specificInfo.repeat_flag,
+            expiration_start_date: req.body.specificInfo.expiration_start_date,
+            expiration_end_date: req.body.specificInfo.expiration_end_date
+        };
+        
+        childTabelObject = require("./schedulescenario");
+        childTabelName = 'M_SCHEDULE_SCENARIO';
+        request.input('repeat_flag', model.db.Int, specificInfo.repeat_flag);
+        request.input('expiration_start_date', model.db.NVarChar, specificInfo.expiration_start_date);
+        request.input('expiration_end_date', model.db.NVarChar, specificInfo.expiration_end_date);
+    }
+    else if (2 === req.body.scenario.scenario_type)
+    {
+        specificInfo = 
+        {
+            after_event_occurs_num: req.body.specificInfo.after_event_occurs_num,
+            inoperative_num: req.body.specificInfo.inoperative_num
+        };
+        
+        childTabelObject = require("./triggerscenario");
+        childTabelName = 'M_TRIGGER_SCENARIO';
+        request.input('after_event_occurs_num', model.db.Int, specificInfo.after_event_occurs_num);
+        request.input('inoperative_num', model.db.Int, specificInfo.inoperative_num);
+    }
+    
+    var commonColumns = model.getInsCommonColumns(req.session.userId);
+    var insertData = model.merge(specificInfo, commonColumns);
+    insertData.scenario_id = id;
+    insertData.scenario_action_document_id = (null === doc) ? null : doc.id;
+
+    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+    request.input('create_by', model.db.Int, insertData.create_by);
+    request.input('create_date', model.db.NVarChar, insertData.create_date);
+    request.input('update_by', model.db.Int, insertData.update_by);
+    request.input('update_date', model.db.NVarChar, insertData.update_date);
+    request.input('scenario_id', model.db.Int, insertData.scenario_id);
+    request.input('scenario_action_document_id', model.db.NVarChar, insertData.scenario_action_document_id);
+    
+    childTabelObject.saveForParent(insertData, request, function(err, data)
+    {
+        callback(err, childTabelName);
+    });
+}
+
+/**
+ * シナリオにタグを設定する
+ * パラメータのtagsにidのプロパティがなければそれは新規作成となり
+ * T_TAGに登録される。
+ * ただし、同一名称のものが存在した場合は、登録しない。
+ * 
+ */
+function insertTags(transaction, id, tags, callback)
+{
+    var tag = require("./tag");
+    tag.save(transaction, tags, id, function(err, tagList)
+    {
+        callback(err, tagList);
     });
 }
 
