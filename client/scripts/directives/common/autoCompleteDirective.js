@@ -16,7 +16,7 @@ myApp.directive('autoCompleteDirective', function()
 {
     return {
         restrict: 'E',
-        scope: {selectedItem: '=', itemList: '=', execute: '&', namePropertie: '@', appendString: '@'},
+        scope: {selectedItem: '=', itemList: '=', execute: '&', namePropertie: '@', appendString: '@', showLabel: '='},
         template:   '<form class="navbar-form navbar-left"><input ng-show="!isLabel" class="form-control d-complete-input" ng-model="selectName">' +
                     '<span ng-show="isLabel && selectName.length != 0" ng-click="changeElement()">{{appendString}}{{selectName}}</span>' +
                     '<ul class="complete-list" ng-show="isFocus">' +
@@ -165,7 +165,7 @@ myApp.directive('autoCompleteDirective', function()
                 {
                     scope.execute();
                 }
-                scope.isLabel = true;
+                if (scope.showLabel) scope.isLabel = true;
                 scope.selectName = item[scope.namePropertie]; 
             };
             
