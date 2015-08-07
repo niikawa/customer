@@ -16,7 +16,7 @@ myApp.directive('autoCompleteDirective', function()
 {
     return {
         restrict: 'E',
-        scope: {selectedItem: '=', itemList: '=', execute: '&', namePropertie: '@', appendString: '@', showLabel: '='},
+        scope: {selectedItem: '=', itemList: '=', execute: '&', namePropertie: '@', appendString: '@', showLabel: '=', selectByList: '='},
         template:   '<form class="navbar-form navbar-left"><input ng-show="!isLabel" class="form-control d-complete-input" ng-model="selectName">' +
                     '<span ng-show="isLabel && selectName.length != 0" ng-click="changeElement()">{{appendString}}{{selectName}}</span>' +
                     '<ul class="complete-list" ng-show="isFocus">' +
@@ -83,26 +83,29 @@ myApp.directive('autoCompleteDirective', function()
                 {
                     scope.$apply(function ()
                     {
-                        var num = originList.length;
-                        var isExist = scope.selectName.length === 0 ? true : false;
-                        for (var i = 0; i < num; i++)
+                        if (scope.selectByList)
                         {
-                            if (scope.selectName === originList[i][scope.namePropertie])
+                            var num = originList.length;
+                            var isExist = scope.selectName.length === 0 ? true : false;
+                            for (var i = 0; i < num; i++)
                             {
-                                isExist = true;
-                                break;
+                                if (scope.selectName === originList[i][scope.namePropertie])
+                                {
+                                    isExist = true;
+                                    break;
+                                }
                             }
+                            
+                            if (isExist)
+                            {
+                                element.find('input').removeClass('auto-complete-item-error');
+                            }
+                            else
+                            {
+                                element.find('input').addClass('auto-complete-item-error');
+                            }
+                            scope.isFocus = false;
                         }
-                        
-                        if (isExist)
-                        {
-                            element.find('input').removeClass('auto-complete-item-error');
-                        }
-                        else
-                        {
-                            element.find('input').addClass('auto-complete-item-error');
-                        }
-                        scope.isFocus = false;
                     });
                     clearInterval(hide);
                 }, 300);
