@@ -447,6 +447,8 @@ function create(req, res)
                 {
                     console.log("insert tag execute");
                     console.log(id);
+                    callback(null);
+                    return;
                     insertTags(transaction, id, req.body.tags, function(err, tagList)
                     {
                         if (err.length > 0)
