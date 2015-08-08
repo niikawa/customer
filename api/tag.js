@@ -67,7 +67,10 @@ exports.save = function(transaction, tagList, userId, callback)
                     }
                 });
            }
-           callback(null);
+           else
+           {
+               callback(null);
+           }
        }
     },
     function(err)
