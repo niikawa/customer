@@ -26,6 +26,9 @@ exports.save = function(transaction, tagList, userId, callback)
     var commonColumns = model.getInsCommonColumns(userId);
 
     console.log("foreach");
+    
+    callback([], []);
+    return ;
     model.async.forEach(tagList, function(item, callback)
     {
         console.log(item);
