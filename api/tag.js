@@ -30,48 +30,50 @@ exports.save = function(transaction, tagList, userId, callback)
     model.async.forEach(tagList, function(item, callback)
     {
         console.log(item);
-        if (!item.hasOwnProperty('tag_id'))
-        {
-            console.log("this item is no props");
-            if (item.hasOwnProperty('tag_name'))
-            {
-                console.log(item.tag_name);
-                var tagName = item.tag_name.trim();
-                request.input('tag_name', model.db.NVarChar, tagName);
+        callback();
+        
+        // if (!item.hasOwnProperty('tag_id'))
+        // {
+        //     console.log("this item is no props");
+        //     if (item.hasOwnProperty('tag_name'))
+        //     {
+        //         console.log(item.tag_name);
+        //         var tagName = item.tag_name.trim();
+        //         request.input('tag_name', model.db.NVarChar, tagName);
                 
-                var col = "tag_id";
-                var where = "tag_name = @tag_name AND delete_flag = 0";
-                var qObj = model.getQueryObject(col, tableName, where, '', '');
-                model.select(qObj, request, function(err, data)
-                {
-                    console.log("select result");
-                    console.log(err);
-                    console.log(data);
+        //         var col = "tag_id";
+        //         var where = "tag_name = @tag_name AND delete_flag = 0";
+        //         var qObj = model.getQueryObject(col, tableName, where, '', '');
+        //         model.select(qObj, request, function(err, data)
+        //         {
+        //             console.log("select result");
+        //             console.log(err);
+        //             console.log(data);
                     
-                    if (0 < data.length)
-                    {
-                        item.tag_id = data[0].tag_id;
-                        callback(err);
-                        return;
-                    }
-                    else
-                    {
-                        var insertData = model.merge(commonColumns, {tag_name: tagName});
-                        console.log("go insert");
-                        console.log(insertData);
-                        model.insert(tableName, insertData, request, function(err, id)
-                        {
-                            item.tag_id = id;
-                            callback(err);
-                        });
-                    }
-                });
-           }
-           else
-           {
-               callback(null);
-           }
-       }
+        //             if (0 < data.length)
+        //             {
+        //                 item.tag_id = data[0].tag_id;
+        //                 callback(err);
+        //                 return;
+        //             }
+        //             else
+        //             {
+        //                 var insertData = model.merge(commonColumns, {tag_name: tagName});
+        //                 console.log("go insert");
+        //                 console.log(insertData);
+        //                 model.insert(tableName, insertData, request, function(err, id)
+        //                 {
+        //                     item.tag_id = id;
+        //                     callback(err);
+        //                 });
+        //             }
+        //         });
+        //   }
+        //   else
+        //   {
+        //       callback(null);
+        //   }
+        // }
     },
     function(err)
     {
