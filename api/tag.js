@@ -27,13 +27,12 @@ exports.save = function(transaction, tagList, userId, callback)
 
     console.log("foreach");
     
-    callback([], []);
-    return ;
     model.async.forEach(tagList, function(item, callback)
     {
         console.log(item);
         if (!item.hasOwnProperty('tag_id'))
         {
+            console.log("this item is no props");
             if (item.hasOwnProperty('tag_name'))
             {
                 console.log(item.tag_name);
@@ -73,6 +72,7 @@ exports.save = function(transaction, tagList, userId, callback)
     },
     function(err)
     {
+        console.log("last function for tags.js");
         console.log(err);
         callback(err, tagList);
     });

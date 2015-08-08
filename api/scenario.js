@@ -610,6 +610,7 @@ function insertTags(transaction, id, tags, callback)
     var tag = require("./tag");
     tag.save(transaction, tags, id, function(err, tagList)
     {
+        console.log("insert tags end");
         callback(err, tagList);
     });
 }
