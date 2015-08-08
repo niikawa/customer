@@ -447,8 +447,6 @@ function create(req, res)
                 {
                     console.log("insert tag execute");
                     console.log(id);
-                    callback(null);
-                    return;
                     insertTags(transaction, id, req.body.tags, function(err, tagList)
                     {
                         if (err.length > 0)
@@ -608,6 +606,7 @@ function insertChildren(transaction, req, id, doc, callback)
  */
 function insertTags(transaction, id, tags, callback)
 {
+    console.log("insert tags");
     var tag = require("./tag");
     tag.save(transaction, tags, id, function(err, tagList)
     {

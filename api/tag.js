@@ -21,10 +21,11 @@ var model = new tag();
 exports.save = function(transaction, tagList, userId, callback)
 {
     console.log("tag save start");
-    
+    console.log(tagList);
     var request = model.getRequest(transaction);
     var commonColumns = model.getInsCommonColumns(userId);
 
+    console.log("foreach");
     model.async.forEach(tagList, function(item, callback)
     {
         console.log(item);
