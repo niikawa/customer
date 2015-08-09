@@ -870,7 +870,11 @@ exports.remove = function(req, res)
                 //シナリオ情報削除
                 function(callback)
                 {
-                    model.removeByIdAndTran(id, transaction, callback);
+                    model.removeByIdAndTran(id, transaction, function(err)
+                    {
+                        var errInfo = (0 < err.length) ? err : null;
+                        callback(errInfo);
+                    });
                 },
                 function(callback)
                 {
@@ -878,9 +882,11 @@ exports.remove = function(req, res)
                     scenarioTtag.removeByScenarioId(transaction, id, callback);
                 },
             ], 
-            function complete(err, items)
+            function(err)
             {
-                if (0 < err.length)
+                console.log(err);
+                
+                if (null != err.length)
                 {
                     console.log(err);
                     transaction.rollback(function(err)

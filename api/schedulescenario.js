@@ -76,5 +76,9 @@ exports.updateByScenarioId = function(updateData, request, callback)
 
 exports.remove = function(id, transaction, callback)
 {
-    model.removeByIdAndTran(id, transaction, callback);
+    model.removeByIdAndTran(id, transaction, function(err)
+    {
+        var errInfo = (0 < err.length) ? err : null;
+        callback(errInfo);
+    });
 };
