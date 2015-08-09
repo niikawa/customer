@@ -102,6 +102,9 @@ exports.deleteInsert = function(params, callback)
 {
     this.removeByScenarioId(params.transaction, params.scenarioId, function(err)
     {
+        console.log(err);
+        console.log(params);
+            
         if (null === err)
         {
             if (void 0 !== params.tagList)
