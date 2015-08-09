@@ -24,7 +24,7 @@ myApp.directive('autoCompleteFaDirective', function()
                     '{{item[namePropertie]}}' +
                     '</li>' +
                     '</ul></form>',
-        replace: true,
+        replace: false,
         link: function (scope, element, attrs) 
         {
             scope.selectName = '';
