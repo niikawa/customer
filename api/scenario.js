@@ -821,28 +821,27 @@ exports.remove = function(req, res)
     {
         scenarioTypeObject = require("./schedulescenario");
     }
-    
-    scenarioTypeObject.getByScenarioId(id, function(err, typeData)
+    model.tranBegin(function(err, transaction)
     {
-        console.log(typeData);
-        
-        if (err.length > 0)
+        scenarioTypeObject.getByScenarioId(transaction, id, function(err, typeData)
         {
-            console.log('scenario remove faild');
-            console.log(id);
-            console.log(err);
-        }
+            console.log(typeData);
+            
+            if (err.length > 0)
+            {
+                console.log('scenario remove faild');
+                console.log(id);
+                console.log(err);
+            }
+            
+            var exsitsData = true;
+            if (0 === typeData.length)
+            {
+                console.log('scenario type data not found');
+                console.log(id);
+                exsitsData = false;
+            }
         
-        var exsitsData = true;
-        if (0 === typeData.length)
-        {
-            console.log('scenario type data not found');
-            console.log(id);
-            exsitsData = false;
-        }
-        
-        model.tranBegin(function(err, transaction)
-        {
             model.async.parallel(
             [
                 //トリガー情報削除
