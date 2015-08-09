@@ -61,7 +61,7 @@ exports.save = function(transaction, userId, tagList, mainCallback)
                         else
                         {
                             var insertData = model.merge(commonColumns, {tag_name: tagName});
-                            console.log("go insert tagss");
+                            console.log("go insert tags");
                             console.log(insertData);
                             
                             request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
@@ -75,6 +75,8 @@ exports.save = function(transaction, userId, tagList, mainCallback)
                             {
                                 item.tag_id = id;
                                 var errInfo = (0 < err.length) ? err: null;
+                                console.log(id);
+                                console.log(err);
                                 callback(errInfo);
                             });
                         }
@@ -82,12 +84,12 @@ exports.save = function(transaction, userId, tagList, mainCallback)
                 ],
                 function(err)
                 {
-                    callback(null);
+                    callback(err);
                 });
           }
           else
           {
-              callback(null);
+              callback({});
           }
         }
     },
