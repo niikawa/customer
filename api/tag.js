@@ -71,6 +71,7 @@ exports.save = function(transaction, tagList, userId, callback)
                             request.input('create_date', model.db.NVarChar, insertData.create_date);
                             request.input('update_by', model.db.Int, insertData.update_by);
                             request.input('update_date', model.db.NVarChar, insertData.update_date);
+                            request.input('tag_name', model.db.NVarChar, insertData.tag_name);
                             
                             model.insert(tableName, insertData, request, function(err, id)
                             {
