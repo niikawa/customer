@@ -100,13 +100,16 @@ exports.removeByScenarioId = function(transaction, scenarioId, callback)
 
 exports.deleteInsert = function(params, callback)
 {
+    var save = this.save;
     this.removeByScenarioId(params.transaction, params.scenarioId, function(err)
     {
         if (null === err)
         {
             if (void 0 !== params.tagList)
             {
-                this.save(params.transaction, params.userId, params.scenarioId, params.tagList, function(err, tagList)
+                console.log(this.save);
+                
+                save(params.transaction, params.userId, params.scenarioId, params.tagList, function(err, tagList)
                 {
                     callback(err);
                 });
