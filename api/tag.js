@@ -18,7 +18,7 @@ util.inherits(tag, Core);
 
 var model = new tag();
 
-exports.save = function(transaction, tagList, userId, callback)
+exports.save = function(transaction, userId, tagList, mainCallback)
 {
     console.log("tag save start");
     console.log(tagList);
@@ -84,7 +84,6 @@ exports.save = function(transaction, tagList, userId, callback)
                 ],
                 function(err)
                 {
-//                    var errInfo = (0 < err.length) ? err : null;
                     callback(null);
                 });
           }
@@ -98,6 +97,6 @@ exports.save = function(transaction, tagList, userId, callback)
     {
         console.log("last function for tags.js");
         console.log(err);
-        callback(err, tagList);
+        mainCallback(err, tagList);
     });
 };

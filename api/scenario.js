@@ -417,7 +417,7 @@ function create(req, res)
                 {
                     var commonColumns = model.getInsCommonColumns(req.session.userId);
                     var insertData = model.merge(req.body.scenario, commonColumns);
-                    insertMine(transaction, insertData, function(err, id)
+                    insertMine(transaction, insertData, function(err, scenarioId)
                     {
                         if (err.length > 0)
                         {
@@ -426,12 +426,12 @@ function create(req, res)
                             callback(err, {});
                             return;
                         }
-                        callback(null, id);
+                        callback(null, scenarioId);
                     });
                 },
-                function(id, callback)
+                function(scenarioId, callback)
                 {
-                    insertChildren(transaction, req, id, doc, function(err, childTabelName)
+                    insertChildren(transaction, req, scenarioId, doc, function(err, childTabelName)
                     {
                         if (err.length > 0)
                         {
@@ -440,14 +440,14 @@ function create(req, res)
                             callback(err, {});
                             return;
                         }
-                        callback(null, id);
+                        callback(null, scenarioId);
                     });
                 },
-                function(id, callback)
+                function(scenarioId, callback)
                 {
                     console.log("insert tag execute");
-                    console.log(id);
-                    insertTags(transaction, id, req.body.tags, function(err, tagList)
+                    console.log(scenarioId);
+                    insertTags(transaction, req.session.userId, req.body.tags, function(err, tagList)
                     {
                         console.log(err);
                         console.log(tagList);
@@ -455,12 +455,22 @@ function create(req, res)
                         {
                             console.log("insert tags faild");
                             console.log(err);
-                            callback(err, {});
+                            callback(err);
                         }
                         else
                         {
-                            callback(null);
+                            callback(null, scenarioId, tagList);
                         }
+                    });
+                },
+                function(scenarioId, tagList, callback)
+                {
+                    console.log("insert tag execute");
+                    console.log(scenarioId);
+                    console.log(tagList);
+                    insertScnarioTag(transaction, req.session.userId, scenarioId, tagList, function(err, tagList)
+                    {
+                        callback(err);
                     });
                 }
             ],
@@ -603,17 +613,31 @@ function insertChildren(transaction, req, id, doc, callback)
 }
 
 /**
- * シナリオにタグを設定する
  * パラメータのtagsにidのプロパティがなければそれは新規作成となり
  * T_TAGに登録される。
  * ただし、同一名称のものが存在した場合は、登録しない。
  * 
  */
-function insertTags(transaction, id, tags, callback)
+function insertTags(transaction, userid, tags, callback)
 {
     console.log("insert tags");
     var tag = require("./tag");
-    tag.save(transaction, tags, id, function(err, tagList)
+    tag.save(transaction, userid, tags, function(err, tagList)
+    {
+        console.log("insert tags end");
+        callback(err, tagList);
+    });
+}
+
+/**
+ * シナリオにタグを設定する
+ * 
+ */
+function insertScnarioTag(transaction, userid, scenarioId, tags, callback)
+{
+    console.log("insert tags");
+    var scenarioTag = require("./scenariottag");
+    scenarioTag.save(transaction, userid, scenarioId, tags, function(err, tagList)
     {
         console.log("insert tags end");
         callback(err, tagList);
