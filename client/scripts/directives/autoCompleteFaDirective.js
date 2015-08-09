@@ -25,7 +25,7 @@ myApp.directive('autoCompleteFaDirective', function()
                     '{{item[namePropertie]}}' +
                     '</li>' +
                     '</ul>' +
-                    '<span class="input-group-addon question"><i class="fa fa-plus fa-2x" ng-click="click()"></i></span>',
+                    '<span class="input-group-addon question"><i class="fa fa-plus fa-2x" ng-click="clickExecute()"></i></span>',
         replace: true,
         link: function (scope, element, attrs) 
         {
@@ -191,11 +191,6 @@ myApp.directive('autoCompleteFaDirective', function()
                 angular.copy(originList, scope.itemList);
                 scope.isLabel = false;
                 element.find('input').focus();
-            };
-            
-            scope.click = function()
-            {
-                scope.clickExecute();
             };
         }
     };
