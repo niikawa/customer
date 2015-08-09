@@ -753,7 +753,7 @@ function update(req, res)
             },
             function(callback)
             {
-                //トリガーscenarioマスタを更新
+                //子テーブル更新
                 var updateData = model.merge(commonColumns, req.body.specificInfo, true);
                 updateData.scenario_id = req.body.scenario.scenario_id;
                 var request = model.getRequest(transaction);
@@ -763,6 +763,31 @@ function update(req, res)
                 {
                     var nextErr = (0 < err.length) ? err.length: null;
                     callback(nextErr);
+                });
+            },
+            function(callback)
+            {
+                insertTags(transaction, req.session.userId, req.body.tags, function(err, tagList)
+                {
+                    console.log(err);
+                    console.log(tagList);
+                    if (null != err)
+                    {
+                        console.log("insert tags faild");
+                        console.log(err);
+                        callback(err);
+                    }
+                    else
+                    {
+                        //タグ更新
+                        var scenarioTag = require("./scenariotag");
+                        var param = {
+                            userId: req.session.userId,
+                            transaction: transaction, 
+                            scenarioId: req.body.scenario.scenario_id, 
+                            tags: tagList};
+                        scenarioTag.deleteInsert(param, callback);
+                    }
                 });
             }
         ], 

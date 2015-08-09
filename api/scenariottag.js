@@ -97,3 +97,28 @@ exports.removeByScenarioId = function(transaction, scenarioId, callback)
         callback(errInfo);
     });
 };
+
+exports.deleteInsert = function(params, callback)
+{
+    this.removeByScenarioId(params.transaction, params.scenarioId, function(err)
+    {
+        if (null === err)
+        {
+            if (void 0 !== params.tagList)
+            {
+                this.save(params.transaction, params.userId, params.scenarioId, params.tagList, function(err, tagList)
+                {
+                    callback(err);
+                });
+            }
+            else
+            {
+                callback(null);
+            }
+        }
+        else
+        {
+            callback(err);
+        }
+    });
+};
