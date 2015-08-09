@@ -821,28 +821,30 @@ exports.remove = function(req, res)
     {
         scenarioTypeObject = require("./schedulescenario");
     }
-    model.tranBegin(function(err, transaction)
+    
+    scenarioTypeObject.getByScenarioId(id, function(err, typeData)
     {
-        scenarioTypeObject.getByScenarioId(transaction, id, function(err, typeData)
-        {
-            console.log(typeData);
-            
-            if (err.length > 0)
-            {
-                console.log('scenario remove faild');
-                console.log(id);
-                console.log(err);
-            }
-            
-            var exsitsData = true;
-            if (0 === typeData.length)
-            {
-                console.log('scenario type data not found');
-                console.log(id);
-                exsitsData = false;
-            }
+        console.log(typeData);
         
-            model.async.parallel(
+        if (err.length > 0)
+        {
+            console.log('scenario remove faild');
+            console.log(id);
+            console.log(err);
+        }
+        
+        var exsitsData = true;
+        if (0 === typeData.length)
+        {
+            console.log('scenario type data not found');
+            console.log(id);
+            exsitsData = false;
+        }
+        
+        model.tranBegin(function(err, transaction)
+        {
+            //transactionはキューにしなきゃいけないからwaterfallで実効
+            model.async.waterfall(
             [
                 //トリガー情報削除
                 function(callback)

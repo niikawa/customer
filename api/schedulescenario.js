@@ -45,15 +45,14 @@ exports.getById = function(req, res)
     });
 };
 
-exports.getByScenarioId = function(transaction, scenario_id, callback)
+exports.getByScenarioId = function(scenario_id, callback)
 {
     var col = "schedule_scenario_id, scenario_id, repeat_flag, expiration_start_date, expiration_end_date, scenario_action_document_id";
     var where = "delete_flag = 0 AND scenario_id = @scenario_id";
     var qObj = model.getQueryObject(col, tableName, where, '', '');
-    var request = model.getRequest(transaction);
-    request.input('scenario_id', model.db.Int, scenario_id);
+    qObj.request.input('scenario_id', model.db.SmallInt, scenario_id);
 
-    model.select(qObj, request, function(err, data)
+    model.select(qObj, qObj.request, function(err, data)
     {
         callback(err, data);
     });
