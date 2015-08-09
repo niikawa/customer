@@ -22,7 +22,6 @@ exports.save = function(transaction, userId, tagList, mainCallback)
 {
     console.log("tag save start");
     console.log(tagList);
-    var request = model.getRequest(transaction);
     var commonColumns = model.getInsCommonColumns(userId);
 
     model.async.forEach(tagList, function(item, callback)
@@ -38,6 +37,7 @@ exports.save = function(transaction, userId, tagList, mainCallback)
                 [
                     function(callback)
                     {
+                        var request = model.getRequest(transaction);
                         request.input('tag_name', model.db.NVarChar, tagName);
                         
                         var col = "tag_id";
@@ -64,6 +64,7 @@ exports.save = function(transaction, userId, tagList, mainCallback)
                             console.log("go insert tags");
                             console.log(insertData);
                             
+                            var request = model.getRequest(transaction);
                             request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
                             request.input('create_by', model.db.Int, insertData.create_by);
                             request.input('create_date', model.db.NVarChar, insertData.create_date);

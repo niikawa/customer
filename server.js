@@ -45,7 +45,7 @@ router.use(session({
 router.use(express.static(path.resolve(__dirname, 'client')));
 router.use(express.static(path.resolve(__dirname, 'files')));
 router.use(bodyParser.json());
-router.use(bodyParser.urlencoded());
+//router.use(bodyParser.urlencoded());
 
 var auth = require('./api/auth');
 router.post('/auth/login', auth.login);
