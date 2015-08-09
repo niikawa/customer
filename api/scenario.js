@@ -449,7 +449,9 @@ function create(req, res)
                     console.log(id);
                     insertTags(transaction, id, req.body.tags, function(err, tagList)
                     {
-                        if (null != err.length)
+                        console.log(err);
+                        console.log(tagList);
+                        if (null != err)
                         {
                             console.log("insert tags faild");
                             console.log(err);
@@ -464,6 +466,7 @@ function create(req, res)
             ],
             function(err)
             {
+                console.log("main last function");
                 if (null != err)
                 {
                     console.log('scenario insert faild');
