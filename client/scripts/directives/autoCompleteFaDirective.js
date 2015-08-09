@@ -16,7 +16,7 @@ myApp.directive('autoCompleteFaDirective', function()
 {
     return {
         restrict: 'E',
-        scope: {selectedItem: '=', itemList: '=', execute: '&', clickExecute: '&', namePropertie: '@', appendString: '@', showLabel: '=', selectByList: '=', selectName: '=', addonString: '='},
+        scope: {selectedItem: '=', itemList: '=', execute: '&', clickExecute: '&', namePropertie: '@', appendString: '@', showLabel: '=', selectByList: '=', selectName: '=', addonString: '@'},
         template:   '<div class="input-group"><span class="input-group-addon">{{addonString}}</span>'+
                     '<input ng-show="!isLabel" class="form-control form-control-add-fa2 " ng-model="selectName">' +
                     '<span ng-show="isLabel && selectName.length != 0" ng-click="changeElement()">{{appendString}}{{selectName}}</span>' +
