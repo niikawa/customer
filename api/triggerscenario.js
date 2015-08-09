@@ -73,7 +73,7 @@ exports.updateByScenarioId = function(updateData, request, callback)
     model.updateByForeignKey(updateData, 'scenario_id', request, callback);
 };
 
-exports.remove = function(id, callback)
+exports.remove = function(id, transaction, callback)
 {
-    model.removeById(id, callback);
+    model.removeByIdAndTran(id, transaction, callback);
 };

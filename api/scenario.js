@@ -825,6 +825,7 @@ exports.remove = function(req, res)
     scenarioTypeObject.getByScenarioId(id, function(err, typeData)
     {
         console.log(typeData);
+        
         if (err.length > 0)
         {
             console.log('scenario remove faild');
@@ -840,63 +841,109 @@ exports.remove = function(req, res)
             exsitsData = false;
         }
         
-        model.async.parallel(
-        [
-            //トリガー情報削除
-            function(callback)
-            {
-                if (exsitsData)
+        model.tranBegin(function(err, transaction)
+        {
+            model.async.parallel(
+            [
+                //トリガー情報削除
+                function(callback)
                 {
-                    if ('trigger' === type)
+                    if (exsitsData)
                     {
-                        scenarioTypeObject.remove(
-                            typeData[0].trigger_scenario_id , callback);
+                        var pk = 0;
+                        if ('trigger' === type)
+                        {
+                            pk = typeData[0].trigger_scenario_id;
+                        }
+                        else if ('schedule' === type)
+                        {
+                            pk = typeData[0].schedule_scenario_id;
+                        }
+                        scenarioTypeObject.remove(pk, transaction, callback);
                     }
-                    else if ('schedule' === type)
+                    else
                     {
-                        scenarioTypeObject.remove(
-                            typeData[0].schedule_scenario_id , callback);
+                        callback(null);
                     }
-                }
-                else
+                },
+                //シナリオ情報削除
+                function(callback)
                 {
-                    callback(null);
-                }
-            },
-            
-            //シナリオ情報削除
-            function(callback)
-            {
-                model.removeById(id, callback);
-            },
-            
-            //シナリオdox削除
-            function(callback)
-            {
-                if (exsitsData && null !== typeData[0].scenario_action_document_id)
+                    model.removeByIdAndTran(id, transaction, callback);
+                },
+                    
+                ], 
+                function complete(err, items)
                 {
-                    var scenariodoc = require("./scenariodoc");
-                    scenariodoc.removeItemForWeb(
-                        typeData[0].scenario_action_document_id, callback);
+                    if (null === err)
+                    {
+                        console.log(err);
+                        res.status(510).send('scenario remove faild');
+                    }
+                    //シナリオdox削除
+                    if (exsitsData && null !== typeData[0].scenario_action_document_id)
+                    {
+                        var scenariodoc = require("./scenariodoc");
+                        scenariodoc.removeItemForWeb(typeData[0].scenario_action_document_id, function(err)
+                        {
+                            if (err)
+                            {
+                                transaction.rollback(function(err)
+                                {
+                                    if (err)
+                                    {
+                                        console.log('scenario data rollback faild');
+                                        console.log(err);
+                                        res.status(510).send("システムエラーが発生しました。");
+                                    }
+                                    else
+                                    {
+//                                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, typeData[0].);
+                                        return res.status(510).send("シナリオの削除に失敗しました。");
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                transaction.commit(function(err)
+                                {
+                                    if (err)
+                                    {
+                                        console.log('scenario data commit faild');
+                                        console.log(err);
+                                        res.status(510).send("システムエラーが発生しました。");
+                                    }
+                                    else
+                                    {
+        //                                model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
+                                        return res.status(200).send('remove ok');
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    else
+                    {
+                        transaction.commit(function(err)
+                        {
+                            if (err)
+                            {
+                                console.log('scenario data commit faild');
+                                console.log(err);
+                                res.status(510).send("システムエラーが発生しました。");
+                            }
+                            else
+                            {
+//                                model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
+                                return res.status(200).send('remove ok');
+                            }
+                        });
+                    }
+                    res.status(200).send('remove ok');
                 }
-                else
-                {
-                    callback(null);
-                }
-            }
-            
-        ], function complete(err, items)
-            {
-                if (null === err)
-                {
-                    console.log(err);
-                    res.status(510).send('scenario remove faild');
-                }
-                res.status(200).send('remove ok');
-            }
-        );
+            );
+        });
     });
-    
 };
 
 /**

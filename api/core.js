@@ -288,7 +288,6 @@ core.prototype.removeByIdAndTran = function(idValue, transaction, callback)
     this.execute(sql, request, callback);
 };
 
-
 core.prototype.deleteById = function(idValue, callback)
 {
     var request = this.getRequest();

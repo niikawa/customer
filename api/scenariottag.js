@@ -61,3 +61,11 @@ exports.save = function(transaction, userId, scenarioId, tagList, mainCallback)
         mainCallback(err, tagList);
     });
 };
+
+exports.removeByScenarioId = function(transaction, scenarioId, callback)
+{
+    var request = this.getRequest(transaction);
+    request.input("scenario_id", this.db.Int, scenarioId);
+    var sql = 'DELETE FROM ' + tableName + ' WHERE scenario_id = @scenario_id';
+    this.execute(sql, request, callback);
+};
