@@ -3,7 +3,7 @@ var Message = require('../config/message.json');
 
 /** テーブル名 */
 var tableName = 'T_SCENARIO_TAG';
-var pk = 'scenario_tag';
+var pk = 'scenario_tag_id';
 /** SEQ */
 var seqName = 'seq_scenario_tag';
 
