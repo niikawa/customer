@@ -195,6 +195,7 @@ myApp.directive('autoCompleteFaDirective', function()
             
             scope.clickI = function()
             {
+                angular.copy(item, scope.selectedItem);
                 scope.isFocus = false;
                 scope.clickExecute();
             };
