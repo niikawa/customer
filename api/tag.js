@@ -33,7 +33,6 @@ exports.save = function(transaction, tagList, userId, callback)
 
         if (!item.hasOwnProperty('tag_id'))
         {
-            console.log("this item is no props");
             if (item.hasOwnProperty('tag_name'))
             {
                 var tagName = item.tag_name.trim();
