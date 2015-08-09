@@ -879,9 +879,7 @@ exports.remove = function(req, res)
             ], 
             function complete(err, items)
             {
-                console.log(err);
-                
-                if (null === err)
+                if (0 < err.length)
                 {
                     console.log(err);
                     transaction.rollback(function(err)
@@ -902,6 +900,7 @@ exports.remove = function(req, res)
                 //シナリオdox削除
                 if (exsitsData && null !== typeData[0].scenario_action_document_id)
                 {
+                    console.log("doc delete");
                     var scenariodoc = require("./scenariodoc");
                     scenariodoc.removeItemForWeb(typeData[0].scenario_action_document_id, function(err)
                     {
@@ -928,7 +927,7 @@ exports.remove = function(req, res)
                             {
                                 if (err)
                                 {
-                                    console.log('scenario data commit faild');
+                                    console.log('scenario data commit faild 1');
                                     console.log(err);
                                     res.status(510).send("システムエラーが発生しました。");
                                 }
@@ -947,7 +946,7 @@ exports.remove = function(req, res)
                     {
                         if (err)
                         {
-                            console.log('scenario data commit faild');
+                            console.log('scenario data commit faild 2');
                             console.log(err);
                             res.status(510).send("システムエラーが発生しました。");
                         }
