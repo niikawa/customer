@@ -104,7 +104,7 @@ exports.save = function(transaction, userId, tagList, mainCallback)
           }
           else
           {
-              callback({});
+              callback(null);
           }
         }
     },

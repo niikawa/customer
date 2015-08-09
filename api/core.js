@@ -197,10 +197,7 @@ core.prototype.insert = function(table, data, request, callback)
     var p = this.getPk();
     var exe = this.execute;
     var type = this.db.Int;
-    console.log(p);
-    console.log(exe);
-    console.log(type);
-    
+
     this.getNextSeq(function(err, seqInfo)
     {
         if (0 < err.length)

@@ -769,6 +769,7 @@ function update(req, res)
             {
                 insertTags(transaction, req.session.userId, req.body.tags, function(err, tagList)
                 {
+                    console.log("tag insert end next is sc tag");
                     console.log(err);
                     console.log(tagList);
                     if (null != err)
