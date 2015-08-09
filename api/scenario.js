@@ -879,6 +879,8 @@ exports.remove = function(req, res)
             ], 
             function complete(err, items)
             {
+                console.log(err);
+                
                 if (null === err)
                 {
                     console.log(err);
