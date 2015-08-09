@@ -871,77 +871,79 @@ exports.remove = function(req, res)
                 {
                     model.removeByIdAndTran(id, transaction, callback);
                 },
-                    
-                ], 
-                function complete(err, items)
+                function(callback)
                 {
-                    if (null === err)
-                    {
-                        console.log(err);
-                        res.status(510).send('scenario remove faild');
-                    }
-                    //シナリオdox削除
-                    if (exsitsData && null !== typeData[0].scenario_action_document_id)
-                    {
-                        var scenariodoc = require("./scenariodoc");
-                        scenariodoc.removeItemForWeb(typeData[0].scenario_action_document_id, function(err)
-                        {
-                            if (err)
-                            {
-                                transaction.rollback(function(err)
-                                {
-                                    if (err)
-                                    {
-                                        console.log('scenario data rollback faild');
-                                        console.log(err);
-                                        res.status(510).send("システムエラーが発生しました。");
-                                    }
-                                    else
-                                    {
-//                                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, typeData[0].);
-                                        return res.status(510).send("シナリオの削除に失敗しました。");
-                                    }
-                                });
-                            }
-                            else
-                            {
-                                transaction.commit(function(err)
-                                {
-                                    if (err)
-                                    {
-                                        console.log('scenario data commit faild');
-                                        console.log(err);
-                                        res.status(510).send("システムエラーが発生しました。");
-                                    }
-                                    else
-                                    {
-        //                                model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
-                                        return res.status(200).send('remove ok');
-                                    }
-                                });
-                            }
-                        });
-                    }
-                    else
-                    {
-                        transaction.commit(function(err)
-                        {
-                            if (err)
-                            {
-                                console.log('scenario data commit faild');
-                                console.log(err);
-                                res.status(510).send("システムエラーが発生しました。");
-                            }
-                            else
-                            {
-//                                model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
-                                return res.status(200).send('remove ok');
-                            }
-                        });
-                    }
-                    res.status(200).send('remove ok');
+                    var scenarioTtag = require("./scenariottag");
+                    scenarioTtag.removeByScenarioId(transaction, id, callback);
+                },
+            ], 
+            function complete(err, items)
+            {
+                if (null === err)
+                {
+                    console.log(err);
+                    res.status(510).send('scenario remove faild');
                 }
-            );
+                //シナリオdox削除
+                if (exsitsData && null !== typeData[0].scenario_action_document_id)
+                {
+                    var scenariodoc = require("./scenariodoc");
+                    scenariodoc.removeItemForWeb(typeData[0].scenario_action_document_id, function(err)
+                    {
+                        if (err)
+                        {
+                            transaction.rollback(function(err)
+                            {
+                                if (err)
+                                {
+                                    console.log('scenario data rollback faild');
+                                    console.log(err);
+                                    res.status(510).send("システムエラーが発生しました。");
+                                }
+                                else
+                                {
+//                                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, typeData[0].);
+                                    return res.status(510).send("シナリオの削除に失敗しました。");
+                                }
+                            });
+                        }
+                        else
+                        {
+                            transaction.commit(function(err)
+                            {
+                                if (err)
+                                {
+                                    console.log('scenario data commit faild');
+                                    console.log(err);
+                                    res.status(510).send("システムエラーが発生しました。");
+                                }
+                                else
+                                {
+    //                                model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
+                                    return res.status(200).send('remove ok');
+                                }
+                            });
+                        }
+                    });
+                }
+                else
+                {
+                    transaction.commit(function(err)
+                    {
+                        if (err)
+                        {
+                            console.log('scenario data commit faild');
+                            console.log(err);
+                            res.status(510).send("システムエラーが発生しました。");
+                        }
+                        else
+                        {
+//                                model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
+                            return res.status(200).send('remove ok');
+                        }
+                    });
+                }
+            });
         });
     });
 };
