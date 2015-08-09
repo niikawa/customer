@@ -47,11 +47,14 @@ exports.save = function(transaction, tagList, userId, callback)
                         var qObj = model.getQueryObject(col, tableName, where, '', '');
                         model.select(qObj, request, function(err, data)
                         {
-                            callback(err, data);
+                            var errInfo = (0 < err.length) ? err: null;
+                            callback(errInfo, data);
                         });
                     },
                     function(data, callback)
                     {
+                        console.log(data);
+                        
                         if (0 < data.length)
                         {
                             item.tag_id = data[0].tag_id;
@@ -72,7 +75,8 @@ exports.save = function(transaction, tagList, userId, callback)
                             model.insert(tableName, insertData, request, function(err, id)
                             {
                                 item.tag_id = id;
-                                callback(err);
+                                var errInfo = (0 < err.length) ? err: null;
+                                callback(errInfo);
                             });
                         }
                     }
