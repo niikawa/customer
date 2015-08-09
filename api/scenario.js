@@ -886,7 +886,7 @@ exports.remove = function(req, res)
             {
                 console.log(err);
                 
-                if (null != err.length)
+                if (null != err)
                 {
                     console.log(err);
                     transaction.rollback(function(err)
