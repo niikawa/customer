@@ -64,7 +64,16 @@ exports.save = function(transaction, userId, scenarioId, tagList, mainCallback)
 
 exports.removeByScenarioId = function(transaction, scenarioId, callback)
 {
-    var request = this.getRequest(transaction);
+    var request = "";
+    if (null != transaction)
+    {
+        request = model.getRequest(transaction);
+    }
+    else
+    {
+        request = model.getRequest();
+    }
+    
     request.input("scenario_id", this.db.Int, scenarioId);
     var sql = 'DELETE FROM ' + tableName + ' WHERE scenario_id = @scenario_id';
     this.execute(sql, request, callback);

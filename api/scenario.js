@@ -874,8 +874,6 @@ exports.remove = function(req, res)
                 function(callback)
                 {
                     var scenarioTtag = require("./scenariottag");
-                    console.log("remove tag");
-                    console.log(scenarioTtag);
                     scenarioTtag.removeByScenarioId(transaction, id, callback);
                 },
             ], 
@@ -886,7 +884,20 @@ exports.remove = function(req, res)
                 if (null === err)
                 {
                     console.log(err);
-                    res.status(510).send('scenario remove faild');
+                    transaction.rollback(function(err)
+                    {
+                        if (err)
+                        {
+                            console.log('scenario data rollback faild');
+                            console.log(err);
+                            return res.status(510).send("システムエラーが発生しました。");
+                        }
+                        else
+                        {
+//                                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, typeData[0].);
+                            return res.status(510).send("シナリオの削除に失敗しました。");
+                        }
+                    });
                 }
                 //シナリオdox削除
                 if (exsitsData && null !== typeData[0].scenario_action_document_id)
