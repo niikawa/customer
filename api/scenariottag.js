@@ -32,7 +32,6 @@ exports.save = function(transaction, userId, scenarioId, tagList, mainCallback)
         {
             var insertData = model.merge(commonColumns, {tag_id: item.tag_id, scenario_id: scenarioId});
             console.log("go insert scenario tag ");
-            console.log(insertData);
             
             var request = model.getRequest(transaction);
             request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
@@ -40,9 +39,10 @@ exports.save = function(transaction, userId, scenarioId, tagList, mainCallback)
             request.input('create_date', model.db.NVarChar, insertData.create_date);
             request.input('update_by', model.db.Int, insertData.update_by);
             request.input('update_date', model.db.NVarChar, insertData.update_date);
-            request.input('tag_id', model.db.NVarInt, insertData.tag_id);
-            request.input('scenario_id', model.db.NVarInt, insertData.scenario_id);
+            request.input('tag_id', model.db.Int, insertData.tag_id);
+            request.input('scenario_id', model.db.Int, insertData.scenario_id);
             
+            console.log(insertData);
             model.insert(tableName, insertData, request, function(err, id)
             {
                 var errInfo = (0 < err.length) ? err: null;
