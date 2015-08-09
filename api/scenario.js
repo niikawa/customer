@@ -1054,6 +1054,7 @@ exports.initializeData = function(req, res)
     },
     function complete(err, items)
     {
+        console.log("complete fuction start");
         //parallel実行した場合、5こめのfunctionが実行完了前に
         //completeしてしまう。これはたぶんライブラリのバグだと思うけど、
         //どうにもならないのでここでさらに実行させる
@@ -1101,13 +1102,15 @@ exports.initializeData = function(req, res)
             },
             tagList: function(callback)
             {
-                var scenarioTag = require("./tag");
-                scenarioTag.getAll(function(err, data){callback(null, data)});
+                var tag = require("./tag");
+                console.log(tag);
+                tag.getAll(function(err, data){callback(null, data)});
                 
             }
         },
         function complete(err, items2)
         {
+            console.log(err);
             res.json(
                 {
                     segment: items.segment,
