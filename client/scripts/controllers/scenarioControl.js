@@ -315,7 +315,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         var isAddTag = true;
         angular.forEach($scope.selectTagList, function(tag)
         {
-            if ($scope.inputTag === tag.name)
+            if ($scope.inputTag === tag.tag_name)
             {
                 isAddTag = false;
                 return false;
