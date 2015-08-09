@@ -97,7 +97,7 @@ ul.complete-list {
   position: absolute;
   top: 40px;
   z-index: 1000000;
-  min-width: 150px;
+  min-width: 100%;
   background-color: rgba( 0, 0, 0, 0.55);
   color: #FFF;
   overflow-y: auto;
