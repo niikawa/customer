@@ -22,7 +22,6 @@ exports.save = function(transaction, userId, scenarioId, tagList, mainCallback)
 {
     console.log("scenario tag save start");
     console.log(tagList);
-    var request = model.getRequest(transaction);
     var commonColumns = model.getInsCommonColumns(userId);
 
     model.async.forEach(tagList, function(item, callback)
@@ -35,6 +34,7 @@ exports.save = function(transaction, userId, scenarioId, tagList, mainCallback)
             console.log("go insert scenario tag ");
             console.log(insertData);
             
+            var request = model.getRequest(transaction);
             request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
             request.input('create_by', model.db.Int, insertData.create_by);
             request.input('create_date', model.db.NVarChar, insertData.create_date);
