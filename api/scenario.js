@@ -781,7 +781,7 @@ function update(req, res)
                     else
                     {
                         //タグ更新
-                        var scenarioTag = require("./scenariotag");
+                        var scenarioTag = require("./scenariottag");
                         var param = {
                             userId: req.session.userId,
                             transaction: transaction, 

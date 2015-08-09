@@ -90,6 +90,7 @@ exports.save = function(transaction, userId, tagList, mainCallback)
                             {
                                 item.tag_id = id;
                                 var errInfo = (0 < err.length) ? err: null;
+                                console.log("tag insert info");
                                 console.log(id);
                                 console.log(err);
                                 callback(errInfo);
