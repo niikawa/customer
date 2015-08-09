@@ -1054,14 +1054,14 @@ exports.initializeData = function(req, res)
     },
     function complete(err, items)
     {
-        //parallel実行した場合、5米のfunctionが実行完了前に
+        //parallel実行した場合、5こめのfunctionが実行完了前に
         //completeしてしまう。これはたぶんライブラリのバグだと思うけど、
         //どうにもならないのでここでさらに実行させる
         model.async.parallel(
         {
             specificData: function(callback)
             {
-                if (void 0 !== req.params.id)
+                if (req.params.hasOwnProperty("id"))
                 {
                     var typeObject;
                     if ('trigger' === req.params.type)
@@ -1085,6 +1085,24 @@ exports.initializeData = function(req, res)
                 {
                     callback(null, []);
                 }
+            },
+            settinTags: function(callback)
+            {
+                var scenarioTag = require("./scenariottag");
+                if (req.params.hasOwnProperty("id"))
+                {
+                    scenarioTag.getByScenarioId(req.params.id, function(err, data){callback(null, data)});
+                }
+                else
+                {
+                    callback(null, []);
+                }
+                
+            },
+            tagList: function(callback)
+            {
+                var scenarioTag = require("./tag");
+                scenarioTag.getAll(function(err, data){callback(null, data)});
                 
             }
         },
@@ -1096,7 +1114,9 @@ exports.initializeData = function(req, res)
                     ifLayout: items.ifLayout,
                     specific: items.action, 
                     target: items.target[0], 
-                    specificInfo: items2.specificData
+                    specificInfo: items2.specificData,
+                    settinTags: items2.settinTags,
+                    tagList: items2.tagList,
                 });
         });
     });
