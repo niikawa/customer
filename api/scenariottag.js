@@ -32,7 +32,7 @@ exports.save = function(transaction, userId, scenarioId, tagList, mainCallback)
         if (item.hasOwnProperty('tag_id'))
         {
             var insertData = model.merge(commonColumns, {tag_id: item.tag_id, scenario_id: scenarioId});
-            console.log("go insert");
+            console.log("go insert scenario tag ");
             console.log(insertData);
             
             request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
@@ -48,6 +48,10 @@ exports.save = function(transaction, userId, scenarioId, tagList, mainCallback)
                 var errInfo = (0 < err.length) ? err: null;
                 callback(errInfo);
             });
+        }
+        else
+        {
+            callback(null);
         }
     },
     function(err)
