@@ -16,8 +16,8 @@ myApp.directive('autoCompleteFaDirective', function()
 {
     return {
         restrict: 'E',
-        scope: {selectedItem: '=', itemList: '=', execute: '&', namePropertie: '@', appendString: '@', showLabel: '=', selectByList: '=', selectName: '='},
-        template:   '<div class="input-group"><span class="input-group-addon">つけたいタグを入力してください</span>'+
+        scope: {selectedItem: '=', itemList: '=', execute: '&', clickExecute: '&', namePropertie: '@', appendString: '@', showLabel: '=', selectByList: '=', selectName: '=', addonString: '='},
+        template:   '<div class="input-group"><span class="input-group-addon">{{addonString}}</span>'+
                     '<input ng-show="!isLabel" class="form-control form-control-add-fa2 " ng-model="selectName">' +
                     '<span ng-show="isLabel && selectName.length != 0" ng-click="changeElement()">{{appendString}}{{selectName}}</span>' +
                     '<ul class="complete-list" ng-show="isFocus">' +
@@ -25,7 +25,7 @@ myApp.directive('autoCompleteFaDirective', function()
                     '{{item[namePropertie]}}' +
                     '</li>' +
                     '</ul>' +
-                    '<span class="input-group-addon question"><i class="fa fa-plus fa-2x" ng-click="addTag()"></i></span>',
+                    '<span class="input-group-addon question"><i class="fa fa-plus fa-2x" ng-click="clickExecute()"></i></span>',
         replace: true,
         link: function (scope, element, attrs) 
         {
