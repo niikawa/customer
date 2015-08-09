@@ -786,7 +786,7 @@ function update(req, res)
                             userId: req.session.userId,
                             transaction: transaction, 
                             scenarioId: req.body.scenario.scenario_id, 
-                            tags: tagList};
+                            tagList: tagList};
                         scenarioTag.deleteInsert(param, callback);
                     }
                 });
