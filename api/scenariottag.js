@@ -20,7 +20,7 @@ var model = new scenarioTag();
 
 exports.getByScenarioId = function(scenarioId, callback)
 {
-    var col = "T1.tag_id, T1.tag_name";
+    var col = "T2.tag_id, T2.tag_name";
     var where = "T2.delete_flag = 0 AND T1.delete_flag = 0 AND T1.scenario_id = @scenario_id";
     var table = tableName + " T1 INNER JOIN T_TAG T2 ON T1.tag_id = T2.tag_id";
     
