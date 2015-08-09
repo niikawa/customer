@@ -874,6 +874,8 @@ exports.remove = function(req, res)
                 function(callback)
                 {
                     var scenarioTtag = require("./scenariottag");
+                    console.log("remove tag");
+                    console.log(scenarioTtag);
                     scenarioTtag.removeByScenarioId(transaction, id, callback);
                 },
             ], 
