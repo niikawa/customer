@@ -97,12 +97,29 @@ ul.complete-list {
   position: absolute;
   top: 40px;
   z-index: 1000000;
-  min-width: 100%;
+  min-width: 60%;
   background-color: rgba( 0, 0, 0, 0.55);
   color: #FFF;
   overflow-y: auto;
   max-height: 150px;
 }
+@media screen and (max-width: 767px) {
+ul.complete-list {
+  border:1px solid #eee;
+  padding: 5px;
+  position: absolute;
+  top: 40px;
+  z-index: 1000000;
+  min-width: 200px;
+  max-width: 200px;
+  background-color: rgba( 0, 0, 0, 0.55);
+  color: #FFF;
+  overflow-y: auto;
+  max-height: 150px;
+}
+}
+
+
 ul.complete-list > li {
   list-style: none;
   cursor: pointer;
