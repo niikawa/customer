@@ -465,7 +465,7 @@ function create(req, res)
                 },
                 function(scenarioId, tagList, callback)
                 {
-                    console.log("insert tag execute");
+                    console.log("insert scenario tag execute");
                     console.log(scenarioId);
                     console.log(tagList);
                     insertScnarioTag(transaction, req.session.userId, scenarioId, tagList, function(err, tagList)

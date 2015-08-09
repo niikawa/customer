@@ -114,6 +114,7 @@ core.prototype.getQueryObject = function(col, table, where, groupby, orderby)
  */
 core.prototype.getNextSeq = function(callback)
 {
+    console.log(this.seqName);
     var sql = "SELECT NEXT VALUE FOR " + this.seqName + " AS id";
     return this.execute(sql, this.getRequest(), callback);
 };
@@ -199,6 +200,7 @@ core.prototype.insert = function(table, data, request, callback)
     
     this.getNextSeq(function(err, seqInfo)
     {
+        console.log();
         if (0 < err.length)
         {
             callback(err);
