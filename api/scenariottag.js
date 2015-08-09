@@ -74,7 +74,7 @@ exports.removeByScenarioId = function(transaction, scenarioId, callback)
         request = model.getRequest();
     }
     
-    request.input("scenario_id", this.db.Int, scenarioId);
+    request.input("scenario_id", model.db.Int, scenarioId);
     var sql = 'DELETE FROM ' + tableName + ' WHERE scenario_id = @scenario_id';
-    this.execute(sql, request, callback);
+    model.execute(sql, request, callback);
 };
