@@ -99,7 +99,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 isAfter: function(modelValue, viewValue)
                 {
                     var val = modelValue || viewValue;
-                    return Utility.isAfter(val, $scope.scenario.expiration_start_date);
+                    return Utility.isAfter(val, $scope.specificInfo.expiration_start_date);
                 }
             },
             interval:
