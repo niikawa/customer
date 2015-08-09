@@ -95,12 +95,13 @@ ul.complete-list {
   border:1px solid #eee;
   padding: 5px;
   position: absolute;
-  top: -40px;
+  top: 40px;
   z-index: 1000000;
   min-width: 150px;
   background-color: rgba( 0, 0, 0, 0.55);
   color: #FFF;
-  
+  overflow-y: auto;
+  max-height: 300px;
 }
 ul.complete-list > li {
   list-style: none;
