@@ -61,7 +61,7 @@ exports.save = function(transaction, userId, tagList, mainCallback)
                         else
                         {
                             var insertData = model.merge(commonColumns, {tag_name: tagName});
-                            console.log("go insert");
+                            console.log("go insert tagss");
                             console.log(insertData);
                             
                             request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
