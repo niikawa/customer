@@ -25,7 +25,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.template = pageProp.template;
         
         $scope.inputTag = '';
-        $scope.tagList = [{name:'tag1'},{name:'tag2'}];
+        $scope.tagList = [];
         $scope.selectTagList = [];
         $scope.isTagCollapse = false;
 
@@ -163,6 +163,8 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             $scope.segmentList = response.segment;
             $scope.ifList = response.ifLayout;
             $scope.scenario = response.target;
+            $scope.tagList = response.tagList;
+            $scope.selectTagList = response.settinTags;
             if (1 === pageProp.type)
             {
                 if (isEdit) editScheduleInitialize(response);
