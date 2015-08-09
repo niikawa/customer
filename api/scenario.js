@@ -798,7 +798,21 @@ function update(req, res)
             if (null !== err && 0 !== err.length)
             {
                 console.log(err);
-                res.status(510).send("システムエラーが発生しました。");
+                
+                transaction.rollback(function(err)
+                {
+                    if (err)
+                    {
+                        console.log('scenario data rollback faild');
+                        console.log(err);
+                        return res.status(510).send("システムエラーが発生しました。");
+                    }
+                    else
+                    {
+                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
+                        return res.status(510).send("シナリオの更新に失敗しました。");
+                    }
+                });
             }
             else
             {

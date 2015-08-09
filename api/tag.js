@@ -101,11 +101,15 @@ exports.save = function(transaction, userId, tagList, mainCallback)
                 {
                     callback(err);
                 });
-          }
-          else
-          {
+            }
+            else
+            {
               callback(null);
-          }
+            }
+        }
+        else
+        {
+            callback(null);
         }
     },
     function(err)
