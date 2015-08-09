@@ -18,6 +18,20 @@ util.inherits(tag, Core);
 
 var model = new tag();
 
+exports.getAll = function(callback)
+{
+    var request = model.getRequest();
+
+    var col = "tag_id, tag_name";
+    var where = "delete_flag = 0";
+    var qObj = model.getQueryObject(col, tableName, where, '', '');
+    model.select(qObj, request, function(err, data)
+    {
+        var errInfo = (0 < err.length) ? err: null;
+        callback(errInfo, data);
+    });
+};
+
 exports.save = function(transaction, userId, tagList, mainCallback)
 {
     console.log("tag save start");

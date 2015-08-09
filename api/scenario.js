@@ -1103,7 +1103,6 @@ exports.initializeData = function(req, res)
             tagList: function(callback)
             {
                 var tag = require("./tag");
-                console.log(tag);
                 tag.getAll(function(err, data){callback(null, data)});
                 
             }
