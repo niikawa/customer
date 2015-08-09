@@ -449,14 +449,16 @@ function create(req, res)
                     console.log(id);
                     insertTags(transaction, id, req.body.tags, function(err, tagList)
                     {
-                        if (err.length > 0)
+                        if (null != err.length)
                         {
                             console.log("insert tags faild");
                             console.log(err);
                             callback(err, {});
-                            return;
                         }
-                        callback(err);
+                        else
+                        {
+                            callback(null);
+                        }
                     });
                 }
             ],
