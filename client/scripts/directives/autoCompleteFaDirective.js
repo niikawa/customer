@@ -17,13 +17,13 @@ myApp.directive('autoCompleteFaDirective', function()
     return {
         restrict: 'E',
         scope: {selectedItem: '=', itemList: '=', execute: '&', namePropertie: '@', appendString: '@', showLabel: '=', selectByList: '=', selectName: '='},
-        template:   '<input ng-show="!isLabel" class="form-control form-control-add-fa2" ng-model="selectName">' +
+        template:   '<form ><input ng-show="!isLabel" class="form-control form-control-add-fa2 " ng-model="selectName">' +
                     '<span ng-show="isLabel && selectName.length != 0" ng-click="changeElement()">{{appendString}}{{selectName}}</span>' +
                     '<ul class="complete-list" ng-show="isFocus">' +
                     '<li ng-repeat="item in itemList" ng-click="click($event, item)" >' +
                     '{{item[namePropertie]}}' +
                     '</li>' +
-                    '</ul>',
+                    '</ul></form>',
         replace: true,
         link: function (scope, element, attrs) 
         {
