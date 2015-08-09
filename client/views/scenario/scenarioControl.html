@@ -82,9 +82,23 @@
                         タグ設定</h3>
                     <div collapse="isTagCollapse">
                         
-                        <div class="label label-success" >
-                            tag
-                            <span type="button" class="label-close" ng-click="removeColumn($index)">&times;</span>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <auto-complete-fa-directive item-list="tagList" addon-string="つけたいタグを入力してください" click-execute=addTag()
+                                    name-propertie="tag_name" show-Label=false select-by-list=false select-name="inputTag">
+                                </auto-complete-directive>
+                                
+                                <!--<input class="form-control form-control-add-fa2" placeholder="" ng-model="inputTag">-->
+                            </div>
+                            
+                            <div class="col-md-12 break-all">
+                                <div class="label label-success" ng-repeat="(i, tag) in selectTagList">
+                                    {{tag.tag_name}}
+                                    <!--<i class="fa fa-tag"></i><span></span>-->
+                                    <span type="button" class="label-close" ng-click="removeTag(i)">&times;</span>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

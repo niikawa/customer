@@ -71,12 +71,14 @@ exports.updateByScenarioId = function(updateData, request, callback)
     request.input('expiration_end_date', model.db.NVarChar, updateData.expiration_end_date);
     request.input('scenario_id', model.db.Int, updateData.scenario_id);
 
-console.log(updateData);
-
     model.updateByForeignKey(updateData, 'scenario_id', request, callback);
 };
 
-exports.remove = function(id, callback)
+exports.remove = function(id, transaction, callback)
 {
-    model.removeById(id, callback);
+    model.removeByIdAndTran(id, transaction, function(err)
+    {
+        var errInfo = (0 < err.length) ? err : null;
+        callback(errInfo);
+    });
 };

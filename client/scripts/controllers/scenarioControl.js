@@ -23,6 +23,11 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         
         $scope.type = $routeParams.scenario;
         $scope.template = pageProp.template;
+        
+        $scope.inputTag = '';
+        $scope.tagList = [];
+        $scope.selectTagList = [];
+        $scope.isTagCollapse = false;
 
         Shared.setRoot($scope.type +' scenario');
         if (1 === pageProp.type)
@@ -94,7 +99,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 isAfter: function(modelValue, viewValue)
                 {
                     var val = modelValue || viewValue;
-                    return Utility.isAfter(val, $scope.scenario.expiration_start_date);
+                    return Utility.isAfter(val, $scope.specificInfo.expiration_start_date);
                 }
             },
             interval:
@@ -158,6 +163,8 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             $scope.segmentList = response.segment;
             $scope.ifList = response.ifLayout;
             $scope.scenario = response.target;
+            $scope.tagList = response.tagList;
+            $scope.selectTagList = response.settinTags;
             if (1 === pageProp.type)
             {
                 if (isEdit) editScheduleInitialize(response);
@@ -300,6 +307,33 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             });
         }
     };
+    
+    $scope.addTag = function()
+    {
+        if (0 >= $scope.inputTag.length) return;
+        
+        var isAddTag = true;
+        angular.forEach($scope.selectTagList, function(tag)
+        {
+            if ($scope.inputTag === tag.tag_name)
+            {
+                isAddTag = false;
+                return false;
+            }
+        });
+        if (isAddTag)
+        {
+            $scope.selectTagList.push({tag_name: $scope.inputTag});
+            $scope.inputTag = '';
+        }
+    };
+    
+    $scope.removeTag = function(index)
+    {
+        console.log(index);
+        $scope.selectTagList.splice(index, 1);
+    };
+    
     //---------------------------------
     //trigger
     //---------------------------------
@@ -337,6 +371,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     $scope.save = function()
     {
         var doc;
+        var tags;
         var specificInfo;
         if (1 === pageProp.type)
         {
@@ -381,7 +416,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
         Scenario.setActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
 
-        var params = {scenario: $scope.scenario, specificInfo: specificInfo, doc: doc};
+        var params = {scenario: $scope.scenario, specificInfo: specificInfo, doc: doc, tags: $scope.selectTagList};
 
         Scenario.resource.save(params).$promise.then(function(response)
         {

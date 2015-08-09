@@ -26,7 +26,7 @@ core.prototype.async = require('async');
 
 core.prototype.db = require('mssql');
 
-core.prototype.merge = function(source, add,isNew)
+core.prototype.merge = function(source, add, isNew)
 {
     if (!add) add = {};
     if (void 0 === isNew || false === isNew)
@@ -55,7 +55,6 @@ core.prototype.merge = function(source, add,isNew)
             }
         }
         return newObj;
-        
     }
 };
 
@@ -81,11 +80,11 @@ core.prototype.tranBegin = function(callback)
     });
 };
 
-core.prototype.getInsCommonColumns = function()
+core.prototype.getInsCommonColumns = function(userId)
 {
     var date =  moment().format("YYYY/MM/DD HH:mm:ss");
     return {
-        delete_flag: 0, create_by: 1, create_date: date, update_by: 1, update_date: date
+        delete_flag: 0, create_by: userId, create_date: date, update_by: userId, update_date: date
     };
 };
 
@@ -115,6 +114,7 @@ core.prototype.getQueryObject = function(col, table, where, groupby, orderby)
  */
 core.prototype.getNextSeq = function(callback)
 {
+    console.log("SEQ NAME IS " + this.seqName);
     var sql = "SELECT NEXT VALUE FOR " + this.seqName + " AS id";
     return this.execute(sql, this.getRequest(), callback);
 };
@@ -197,7 +197,7 @@ core.prototype.insert = function(table, data, request, callback)
     var p = this.getPk();
     var exe = this.execute;
     var type = this.db.Int;
-    
+
     this.getNextSeq(function(err, seqInfo)
     {
         if (0 < err.length)
@@ -284,7 +284,6 @@ core.prototype.removeByIdAndTran = function(idValue, transaction, callback)
     var sql = 'UPDATE ' + this.modelName + ' SET delete_flag = 1' + ' WHERE ' + this.pk + ' = @' + this.pk;
     this.execute(sql, request, callback);
 };
-
 
 core.prototype.deleteById = function(idValue, callback)
 {

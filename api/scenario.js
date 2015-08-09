@@ -415,26 +415,9 @@ function create(req, res)
             [
                 function(callback)
                 {
-                    var commonColumns = model.getInsCommonColumns();
+                    var commonColumns = model.getInsCommonColumns(req.session.userId);
                     var insertData = model.merge(req.body.scenario, commonColumns);
-                    var request = model.getRequest(transaction);
-    
-                    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
-                    request.input('create_by', model.db.Int, req.session.userId);
-                    request.input('create_date', model.db.NVarChar, insertData.create_date);
-                    request.input('update_by', model.db.Int, req.session.userId);
-                    request.input('update_date', model.db.NVarChar, insertData.update_date);
-                    
-                    request.input('segment_id', model.db.Int, insertData.segment_id);
-                    request.input('if_layout_id', model.db.Int, insertData.if_layout_id);
-                    request.input('scenario_name', model.db.NVarChar, insertData.scenario_name);
-                    request.input('output_name', model.db.NVarChar, insertData.output_name);
-                    request.input('scenario_type', model.db.SmallInt, insertData.scenario_type);
-                    request.input('status', model.db.SmallInt, insertData.status);
-                    request.input('approach', model.db.SmallInt, insertData.approach);
-                    request.input('priority', model.db.Int, 32767);
-    
-                    model.insert(tableName, insertData, request, function(err, id)
+                    insertMine(transaction, insertData, function(err, scenarioId)
                     {
                         if (err.length > 0)
                         {
@@ -443,76 +426,57 @@ function create(req, res)
                             callback(err, {});
                             return;
                         }
-                        
-                        callback(null, id);
+                        callback(null, scenarioId);
                     });
                 },
-                function(id, callback)
+                function(scenarioId, callback)
                 {
-                    var request = model.getRequest(transaction);
-                    var childTabelObject = '';
-                    var childTabelName = '';
-                    var specificInfo = {};
-                    
-                    if (1 === req.body.scenario.scenario_type)
-                    {
-                        specificInfo = 
-                        {
-                            repeat_flag: req.body.specificInfo.repeat_flag,
-                            expiration_start_date: req.body.specificInfo.expiration_start_date,
-                            expiration_end_date: req.body.specificInfo.expiration_end_date
-                        };
-                        
-                        childTabelObject = require("./schedulescenario");
-                        childTabelName = 'M_SCHEDULE_SCENARIO';
-                        request.input('repeat_flag', model.db.Int, specificInfo.repeat_flag);
-                        request.input('expiration_start_date', model.db.NVarChar, specificInfo.expiration_start_date);
-                        request.input('expiration_end_date', model.db.NVarChar, specificInfo.expiration_end_date);
-                    }
-                    else if (2 === req.body.scenario.scenario_type)
-                    {
-                        specificInfo = 
-                        {
-                            after_event_occurs_num: req.body.specificInfo.after_event_occurs_num,
-                            inoperative_num: req.body.specificInfo.inoperative_num
-                        };
-                        
-                        childTabelObject = require("./triggerscenario");
-                        childTabelName = 'M_TRIGGER_SCENARIO';
-                        request.input('after_event_occurs_num', model.db.Int, specificInfo.after_event_occurs_num);
-                        request.input('inoperative_num', model.db.Int, specificInfo.inoperative_num);
-                    }
-                    
-                    var commonColumns = model.getInsCommonColumns();
-                    var insertData = model.merge(specificInfo, commonColumns);
-                    insertData.scenario_id = id;
-                    insertData.scenario_action_document_id = (null === doc) ? null : doc.id;
-    
-                    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
-                    request.input('create_by', model.db.Int, req.session.userId);
-                    request.input('create_date', model.db.NVarChar, insertData.create_date);
-                    request.input('update_by', model.db.Int, req.session.userId);
-                    request.input('update_date', model.db.NVarChar, insertData.update_date);
-                    request.input('scenario_id', model.db.Int, insertData.scenario_id);
-                    request.input('scenario_action_document_id', model.db.NVarChar, insertData.scenario_action_document_id);
-                    
-                    childTabelObject.saveForParent(insertData, request, function(err, date)
+                    insertChildren(transaction, req, scenarioId, doc, function(err, childTabelName)
                     {
                         if (err.length > 0)
                         {
                             console.log(childTabelName + ' insert faild');
                             console.log(err);
                             callback(err, {});
+                            return;
+                        }
+                        callback(null, scenarioId);
+                    });
+                },
+                function(scenarioId, callback)
+                {
+                    console.log("insert tag execute");
+                    console.log(scenarioId);
+                    insertTags(transaction, req.session.userId, req.body.tags, function(err, tagList)
+                    {
+                        console.log(err);
+                        console.log(tagList);
+                        if (null != err)
+                        {
+                            console.log("insert tags faild");
+                            console.log(err);
+                            callback(err);
                         }
                         else
                         {
-                            callback(null);
+                            callback(null, scenarioId, tagList);
                         }
+                    });
+                },
+                function(scenarioId, tagList, callback)
+                {
+                    console.log("insert scenario tag execute");
+                    console.log(scenarioId);
+                    console.log(tagList);
+                    insertScnarioTag(transaction, req.session.userId, scenarioId, tagList, function(err, tagList)
+                    {
+                        callback(err);
                     });
                 }
             ],
             function(err)
             {
+                console.log("main last function");
                 if (null != err)
                 {
                     console.log('scenario insert faild');
@@ -565,6 +529,118 @@ function create(req, res)
                 }
             });
         });
+    });
+}
+
+function insertMine(transaction, insertData, callback)
+{
+    var request = model.getRequest(transaction);
+
+    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+    request.input('create_by', model.db.Int, insertData.create_by);
+    request.input('create_date', model.db.NVarChar, insertData.create_date);
+    request.input('update_by', model.db.Int, insertData.update_by);
+    request.input('update_date', model.db.NVarChar, insertData.update_date);
+    
+    request.input('segment_id', model.db.Int, insertData.segment_id);
+    request.input('if_layout_id', model.db.Int, insertData.if_layout_id);
+    request.input('scenario_name', model.db.NVarChar, insertData.scenario_name);
+    request.input('output_name', model.db.NVarChar, insertData.output_name);
+    request.input('scenario_type', model.db.SmallInt, insertData.scenario_type);
+    request.input('status', model.db.SmallInt, insertData.status);
+    request.input('approach', model.db.SmallInt, insertData.approach);
+    request.input('priority', model.db.Int, 32767);
+
+    model.insert(tableName, insertData, request, function(err, id)
+    {
+        callback(err, id);
+    });
+}
+
+function insertChildren(transaction, req, id, doc, callback)
+{
+    var request = model.getRequest(transaction);
+    var childTabelObject = '';
+    var childTabelName = '';
+    var specificInfo = {};
+    
+    if (1 === req.body.scenario.scenario_type)
+    {
+        specificInfo = 
+        {
+            repeat_flag: req.body.specificInfo.repeat_flag,
+            expiration_start_date: req.body.specificInfo.expiration_start_date,
+            expiration_end_date: req.body.specificInfo.expiration_end_date
+        };
+        
+        childTabelObject = require("./schedulescenario");
+        childTabelName = 'M_SCHEDULE_SCENARIO';
+        request.input('repeat_flag', model.db.Int, specificInfo.repeat_flag);
+        request.input('expiration_start_date', model.db.NVarChar, specificInfo.expiration_start_date);
+        request.input('expiration_end_date', model.db.NVarChar, specificInfo.expiration_end_date);
+    }
+    else if (2 === req.body.scenario.scenario_type)
+    {
+        specificInfo = 
+        {
+            after_event_occurs_num: req.body.specificInfo.after_event_occurs_num,
+            inoperative_num: req.body.specificInfo.inoperative_num
+        };
+        
+        childTabelObject = require("./triggerscenario");
+        childTabelName = 'M_TRIGGER_SCENARIO';
+        request.input('after_event_occurs_num', model.db.Int, specificInfo.after_event_occurs_num);
+        request.input('inoperative_num', model.db.Int, specificInfo.inoperative_num);
+    }
+    
+    var commonColumns = model.getInsCommonColumns(req.session.userId);
+    var insertData = model.merge(specificInfo, commonColumns);
+    insertData.scenario_id = id;
+    insertData.scenario_action_document_id = (null === doc) ? null : doc.id;
+
+    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+    request.input('create_by', model.db.Int, insertData.create_by);
+    request.input('create_date', model.db.NVarChar, insertData.create_date);
+    request.input('update_by', model.db.Int, insertData.update_by);
+    request.input('update_date', model.db.NVarChar, insertData.update_date);
+    request.input('scenario_id', model.db.Int, insertData.scenario_id);
+    request.input('scenario_action_document_id', model.db.NVarChar, insertData.scenario_action_document_id);
+    
+    childTabelObject.saveForParent(insertData, request, function(err, data)
+    {
+        callback(err, childTabelName);
+    });
+}
+
+/**
+ * パラメータのtagsにidのプロパティがなければそれは新規作成となり
+ * T_TAGに登録される。
+ * ただし、同一名称のものが存在した場合は、登録しない。
+ * 
+ */
+function insertTags(transaction, userid, tags, callback)
+{
+    console.log("insert tags");
+    var tag = require("./tag");
+    tag.save(transaction, userid, tags, function(err, tagList)
+    {
+        console.log("insert tags end");
+        callback(err, tagList);
+    });
+}
+
+/**
+ * シナリオにタグを設定する
+ * 
+ */
+function insertScnarioTag(transaction, userid, scenarioId, tags, callback)
+{
+    console.log("insert tags");
+    var scenarioTag = require("./scenariottag");
+    scenarioTag.save(transaction, userid, scenarioId, tags, function(err, tagList)
+    {
+        console.log("insert tags end");
+        callback(err, tagList);
     });
 }
 
@@ -677,7 +753,7 @@ function update(req, res)
             },
             function(callback)
             {
-                //トリガーscenarioマスタを更新
+                //子テーブル更新
                 var updateData = model.merge(commonColumns, req.body.specificInfo, true);
                 updateData.scenario_id = req.body.scenario.scenario_id;
                 var request = model.getRequest(transaction);
@@ -688,6 +764,32 @@ function update(req, res)
                     var nextErr = (0 < err.length) ? err.length: null;
                     callback(nextErr);
                 });
+            },
+            function(callback)
+            {
+                insertTags(transaction, req.session.userId, req.body.tags, function(err, tagList)
+                {
+                    console.log("tag insert end next is sc tag");
+                    console.log(err);
+                    console.log(tagList);
+                    if (null != err)
+                    {
+                        console.log("insert tags faild");
+                        console.log(err);
+                        callback(err);
+                    }
+                    else
+                    {
+                        //タグ更新
+                        var scenarioTag = require("./scenariottag");
+                        var param = {
+                            userId: req.session.userId,
+                            transaction: transaction, 
+                            scenarioId: req.body.scenario.scenario_id, 
+                            tagList: tagList};
+                        scenarioTag.deleteInsert(param, callback);
+                    }
+                });
             }
         ], 
         function(err)
@@ -696,7 +798,21 @@ function update(req, res)
             if (null !== err && 0 !== err.length)
             {
                 console.log(err);
-                res.status(510).send("システムエラーが発生しました。");
+                
+                transaction.rollback(function(err)
+                {
+                    if (err)
+                    {
+                        console.log('scenario data rollback faild');
+                        console.log(err);
+                        return res.status(510).send("システムエラーが発生しました。");
+                    }
+                    else
+                    {
+                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
+                        return res.status(510).send("シナリオの更新に失敗しました。");
+                    }
+                });
             }
             else
             {
@@ -749,6 +865,7 @@ exports.remove = function(req, res)
     scenarioTypeObject.getByScenarioId(id, function(err, typeData)
     {
         console.log(typeData);
+        
         if (err.length > 0)
         {
             console.log('scenario remove faild');
@@ -764,63 +881,132 @@ exports.remove = function(req, res)
             exsitsData = false;
         }
         
-        model.async.parallel(
-        [
-            //トリガー情報削除
-            function(callback)
-            {
-                if (exsitsData)
+        model.tranBegin(function(err, transaction)
+        {
+            //transactionはキューにしなきゃいけないからwaterfallで実効
+            model.async.waterfall(
+            [
+                //トリガー情報削除
+                function(callback)
                 {
-                    if ('trigger' === type)
+                    if (exsitsData)
                     {
-                        scenarioTypeObject.remove(
-                            typeData[0].trigger_scenario_id , callback);
+                        var pk = 0;
+                        if ('trigger' === type)
+                        {
+                            pk = typeData[0].trigger_scenario_id;
+                        }
+                        else if ('schedule' === type)
+                        {
+                            pk = typeData[0].schedule_scenario_id;
+                        }
+                        scenarioTypeObject.remove(pk, transaction, callback);
                     }
-                    else if ('schedule' === type)
+                    else
                     {
-                        scenarioTypeObject.remove(
-                            typeData[0].schedule_scenario_id , callback);
+                        callback(null);
                     }
-                }
-                else
+                },
+                //シナリオ情報削除
+                function(callback)
                 {
-                    callback(null);
-                }
-            },
-            
-            //シナリオ情報削除
-            function(callback)
-            {
-                model.removeById(id, callback);
-            },
-            
-            //シナリオdox削除
-            function(callback)
-            {
-                if (exsitsData && null !== typeData[0].scenario_action_document_id)
+                    model.removeByIdAndTran(id, transaction, function(err)
+                    {
+                        var errInfo = (0 < err.length) ? err : null;
+                        callback(errInfo);
+                    });
+                },
+                function(callback)
                 {
-                    var scenariodoc = require("./scenariodoc");
-                    scenariodoc.removeItemForWeb(
-                        typeData[0].scenario_action_document_id, callback);
-                }
-                else
-                {
-                    callback(null);
-                }
-            }
-            
-        ], function complete(err, items)
+                    var scenarioTtag = require("./scenariottag");
+                    scenarioTtag.removeByScenarioId(transaction, id, callback);
+                },
+            ], 
+            function(err)
             {
-                if (null === err)
+                console.log(err);
+                
+                if (null != err)
                 {
                     console.log(err);
-                    res.status(510).send('scenario remove faild');
+                    transaction.rollback(function(err)
+                    {
+                        if (err)
+                        {
+                            console.log('scenario data rollback faild');
+                            console.log(err);
+                            return res.status(510).send("システムエラーが発生しました。");
+                        }
+                        else
+                        {
+//                                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, typeData[0].);
+                            return res.status(510).send("シナリオの削除に失敗しました。");
+                        }
+                    });
                 }
-                res.status(200).send('remove ok');
-            }
-        );
+                //シナリオdox削除
+                if (exsitsData && null !== typeData[0].scenario_action_document_id)
+                {
+                    console.log("doc delete");
+                    var scenariodoc = require("./scenariodoc");
+                    scenariodoc.removeItemForWeb(typeData[0].scenario_action_document_id, function(err)
+                    {
+                        if (err)
+                        {
+                            transaction.rollback(function(err)
+                            {
+                                if (err)
+                                {
+                                    console.log('scenario data rollback faild');
+                                    console.log(err);
+                                    res.status(510).send("システムエラーが発生しました。");
+                                }
+                                else
+                                {
+//                                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, typeData[0].);
+                                    return res.status(510).send("シナリオの削除に失敗しました。");
+                                }
+                            });
+                        }
+                        else
+                        {
+                            transaction.commit(function(err)
+                            {
+                                if (err)
+                                {
+                                    console.log('scenario data commit faild 1');
+                                    console.log(err);
+                                    res.status(510).send("システムエラーが発生しました。");
+                                }
+                                else
+                                {
+    //                                model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
+                                    return res.status(200).send('remove ok');
+                                }
+                            });
+                        }
+                    });
+                }
+                else
+                {
+                    transaction.commit(function(err)
+                    {
+                        if (err)
+                        {
+                            console.log('scenario data commit faild 2');
+                            console.log(err);
+                            res.status(510).send("システムエラーが発生しました。");
+                        }
+                        else
+                        {
+//                                model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
+                            return res.status(200).send('remove ok');
+                        }
+                    });
+                }
+            });
+        });
     });
-    
 };
 
 /**
@@ -908,14 +1094,15 @@ exports.initializeData = function(req, res)
     },
     function complete(err, items)
     {
-        //parallel実行した場合、5米のfunctionが実行完了前に
+        console.log("complete fuction start");
+        //parallel実行した場合、5こめのfunctionが実行完了前に
         //completeしてしまう。これはたぶんライブラリのバグだと思うけど、
         //どうにもならないのでここでさらに実行させる
         model.async.parallel(
         {
             specificData: function(callback)
             {
-                if (void 0 !== req.params.id)
+                if (req.params.hasOwnProperty("id"))
                 {
                     var typeObject;
                     if ('trigger' === req.params.type)
@@ -939,18 +1126,39 @@ exports.initializeData = function(req, res)
                 {
                     callback(null, []);
                 }
+            },
+            settinTags: function(callback)
+            {
+                var scenarioTag = require("./scenariottag");
+                if (req.params.hasOwnProperty("id"))
+                {
+                    scenarioTag.getByScenarioId(req.params.id, function(err, data){callback(null, data)});
+                }
+                else
+                {
+                    callback(null, []);
+                }
+                
+            },
+            tagList: function(callback)
+            {
+                var tag = require("./tag");
+                tag.getAll(function(err, data){callback(null, data)});
                 
             }
         },
         function complete(err, items2)
         {
+            console.log(err);
             res.json(
                 {
                     segment: items.segment,
                     ifLayout: items.ifLayout,
                     specific: items.action, 
                     target: items.target[0], 
-                    specificInfo: items2.specificData
+                    specificInfo: items2.specificData,
+                    settinTags: items2.settinTags,
+                    tagList: items2.tagList,
                 });
         });
     });

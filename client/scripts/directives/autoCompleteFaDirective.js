@@ -12,18 +12,20 @@
  * @author niikawa
  */
 var myApp = angular.module('myApp');
-myApp.directive('autoCompleteDirective', function()
+myApp.directive('autoCompleteFaDirective', function()
 {
     return {
         restrict: 'E',
-        scope: {selectedItem: '=', itemList: '=', execute: '&', namePropertie: '@', appendString: '@', showLabel: '=', selectByList: '=', selectName: '='},
-        template:   '<form class="navbar-form navbar-left"><input ng-show="!isLabel" class="form-control d-complete-input" ng-model="selectName">' +
+        scope: {selectedItem: '=', itemList: '=', execute: '&', clickExecute: '&', namePropertie: '@', appendString: '@', showLabel: '=', selectByList: '=', selectName: '=', addonString: '@'},
+        template:   '<div class="input-group"><span class="input-group-addon">{{addonString}}</span>'+
+                    '<input ng-show="!isLabel" class="form-control form-control-add-fa2 " ng-model="selectName">' +
                     '<span ng-show="isLabel && selectName.length != 0" ng-click="changeElement()">{{appendString}}{{selectName}}</span>' +
                     '<ul class="complete-list" ng-show="isFocus">' +
                     '<li ng-repeat="item in itemList" ng-click="click($event, item)" >' +
                     '{{item[namePropertie]}}' +
                     '</li>' +
-                    '</ul></form>',
+                    '</ul>' +
+                    '<span class="input-group-addon question"><i class="fa fa-plus fa-2x" ng-click="clickI()"></i></span>',
         replace: true,
         link: function (scope, element, attrs) 
         {
@@ -189,6 +191,13 @@ myApp.directive('autoCompleteDirective', function()
                 angular.copy(originList, scope.itemList);
                 scope.isLabel = false;
                 element.find('input').focus();
+            };
+            
+            scope.clickI = function()
+            {
+                angular.copy(originList, scope.itemList);
+                scope.isFocus = false;
+                scope.clickExecute();
             };
         }
     };
