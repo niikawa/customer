@@ -25,7 +25,7 @@ myApp.directive('autoCompleteFaDirective', function()
                     '{{item[namePropertie]}}' +
                     '</li>' +
                     '</ul>' +
-                    '<span class="input-group-addon question"><i class="fa fa-plus fa-2x" ng-click="clickExecute"></i></span>',
+                    '',
         replace: true,
         link: function (scope, element, attrs) 
         {
