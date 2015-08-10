@@ -30,8 +30,22 @@ mssql.connect(config, function(err) {
 
 
 var router = express();
-console.log(router.get('mode'));
-console.log(process);
+var morgan = require("morgan")
+if (process.env.NODE_ENV == 'develop')
+{
+    // 開発環境のみ
+    router.use(morgan({ format: 'dev', immediate: false }));
+    
+}
+else if (process.env.NODE_ENV == 'stage')
+{
+    // ステージ環境のみ
+}
+else if (process.env.NODE_ENV == 'production')
+{
+    // 本番環境のみ
+  
+}
 
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
