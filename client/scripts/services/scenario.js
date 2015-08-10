@@ -110,7 +110,6 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
         {
             angular.forEach(items, function(item, key)
             {
-                console.log(item[propertie]);
                 if (item.isPush)
                 {
                     bindObj[propertie] = item[propertie];
@@ -142,7 +141,6 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
         
         scenarioServices.getConditionDoc = function(list)
         {
-            console.log(list);
             var doc = [];
             angular.forEach(list, function(items, key)
             {

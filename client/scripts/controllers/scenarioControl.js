@@ -331,7 +331,6 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     
     $scope.removeTag = function(index)
     {
-        console.log(index);
         $scope.selectTagList.splice(index, 1);
     };
     
