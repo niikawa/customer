@@ -801,6 +801,10 @@ function update(req, res)
                 //子テーブル更新
                 var updateData = model.merge(commonColumns, req.body.specificInfo, true);
                 updateData.scenario_id = req.body.scenario.scenario_id;
+                
+                //expiration_end_dateはから文字は許されないのでnullに変換
+                updateData.expiration_end_date = (null === updateData.expiration_end_date || 0 === updateData.expiration_end_date.length) ? null : updateData.expiration_end_date;
+                
                 var request = model.getRequest(transaction);
                 request.input('update_by', model.db.Int, req.session.userId);
                 console.log('update ' + childTabelName);
