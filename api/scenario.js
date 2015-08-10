@@ -90,6 +90,7 @@ exports.getAll = function(req, res)
         
         console.log(data);
         var num = data.length;
+        var last = num - 1;
         var tagList = [];
         var newData = [];
         if (0 < num)
@@ -108,6 +109,12 @@ exports.getAll = function(req, res)
                     tagList = [];
                     tagList.push(data[index].tag_name);
                 }
+                if (last === index)
+                {
+                    data[index].searchTag = tagList.join(" ");
+                    newData.push(data[index]);
+                }
+                
                 defore = data[index].scenario_id;
             }
             
