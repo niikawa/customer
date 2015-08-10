@@ -34,7 +34,7 @@ var morgan = require("morgan")
 if (process.env.NODE_ENV == 'develop')
 {
     // 開発環境のみ
-    router.use(morgan({ format: 'short', immediate: false }));
+    router.use(morgan({ format: 'combined', immediate: false }));
     
 }
 else if (process.env.NODE_ENV == 'stage')
