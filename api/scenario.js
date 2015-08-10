@@ -804,7 +804,7 @@ function update(req, res)
                 
                 //expiration_end_dateはから文字は許されないのでnullに変換
                 updateData.expiration_end_date = (null === updateData.expiration_end_date || 0 === updateData.expiration_end_date.length) ? null : updateData.expiration_end_date;
-                
+                console.log(updateData);
                 var request = model.getRequest(transaction);
                 request.input('update_by', model.db.Int, req.session.userId);
                 console.log('update ' + childTabelName);
