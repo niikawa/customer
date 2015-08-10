@@ -207,7 +207,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         
         Scenario.resource.action({name: initData.specificInfo.doc.action_name}).$promise.then(function(response)
         {
-            actionName = $scope.activeName;
+            actionName = $scope.action_name;
             $scope.isShowExtraction = true;
             $scope.columnList = response.data.column;
             $scope.activeName = initData.specificInfo.doc.action_name;
@@ -402,7 +402,6 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         {
             //ベータ版のための制御
             if (0 === selectConditionList.length) return false;
-            
             doc = 
             {
                 actionName: actionName,
