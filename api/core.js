@@ -26,16 +26,16 @@ var core = function core(modelName, pk, seqName)
     this.modelName = modelName;
     this.pk = pk;
     this.seqName = seqName;
-    this.db.connect(config, function(err)
-    {
-        console.log("core database connect");
-        if (null != err)
-        {
-            console.log('データベースコネクションエラー');
-            console.log(err);
+    // this.db.connect(config, function(err)
+    // {
+    //     console.log("core database connect");
+    //     if (null != err)
+    //     {
+    //         console.log('データベースコネクションエラー');
+    //         console.log(err);
             
-        }
-    });    
+    //     }
+    // });    
 };
 
 core.prototype.getPk = function()
