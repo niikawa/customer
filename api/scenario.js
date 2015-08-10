@@ -246,6 +246,11 @@ exports.getExecutePlanScenario = function(req, res)
     
     var order = "T1.priority, T1.scenario_id";
     var qObj =  model.getQueryObject(col, table, where, '', order);
+    
+    var now = this.moment("YYYY-MM-DD") + " 00:00:00";
+    console.log(now);
+    
+    qObj.request.input('now', model.db.NVarChar, now);
 
     model.select(qObj, qObj.request, function(err, data)
     {
@@ -253,7 +258,7 @@ exports.getExecutePlanScenario = function(req, res)
         {
             console.log('get execute plan scenario faild');
             console.log(err);
-            res.status(510).send('scenario crate faild');
+            res.status(510).send('シナリオ情報の取得に失敗しました');
         }
         
         res.json({data: data});
