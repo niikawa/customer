@@ -1,6 +1,18 @@
 var moment = require('moment');
 var logInfo = require('../config/controlLog');
 
+var config = {
+  user: 'vxc-databese-master',
+  password: 'VirtUaleX001',
+  server: 'oufq8kwys5.database.windows.net',
+  database: 'CustomerReport',
+  stream: true, // You can enable streaming globally
+
+  options: {
+    encrypt: true // Use this if you're on Windows Azure
+  }
+};
+
 /**
  * core collection class
  * 
@@ -14,13 +26,21 @@ var core = function core(modelName, pk, seqName)
     this.modelName = modelName;
     this.pk = pk;
     this.seqName = seqName;
+    this.db.connect(config, function(err)
+    {
+        if (null != err)
+        {
+            console.log('データベースコネクションエラー');
+            console.log(err);
+            
+        }
+    });    
 };
 
 core.prototype.getPk = function()
 {
     return this.pk;
 };
-
 
 core.prototype.async = require('async');
 
