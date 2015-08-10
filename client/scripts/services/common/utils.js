@@ -148,7 +148,7 @@ utilsServices.service("Utility", ['$rootScope', function($rootScope)
     };
     //aがbより未来かを判定する
     this.isAfter = function(a, b) {
-        
+        console.log(b);
         return moment(a).isAfter(moment(b));
     };
     this.getMomemtObject = function(date) {
