@@ -58,8 +58,8 @@ exports.getAll = function(req, res)
 {
     var col = "T1.scenario_id, FORMAT(T1.update_date, 'yyyy/MM/dd') AS update_date, T1.scenario_name, " +
                 "CASE T1.approach WHEN 1 THEN N'対象' WHEN 0 THEN N'対象外' ELSE N'未設定' END AS approach, " +
-                "CASE T1.status WHEN 1 THEN N'有効' WHEN 0 THEN N'無効' ELSE N'未設定' END AS status";
-    var table = tableName + " T1 INNER JOIN T_SCENARIO_TAG T2 ON T1.scenario_id = T2.scenario_id AND T2.delete_flag = 0 INNER JOIN T_TAG T3 ON T2.tag_id = T3.tag_id AND T3.delete_flag = 0";
+                "CASE T1.status WHEN 1 THEN N'有効' WHEN 0 THEN N'無効' ELSE N'未設定' END AS status, T3.tag_name";
+    var table = tableName + " T1 LEFT JOIN T_SCENARIO_TAG T2 ON T1.scenario_id = T2.scenario_id AND T2.delete_flag = 0 INNER JOIN T_TAG T3 ON T2.tag_id = T3.tag_id AND T3.delete_flag = 0";
     var where = "T1.delete_flag = 0 AND T1.scenario_type = @scenario_type";
     var order = "T1.scenario_id";
     var qObj = model.getQueryObject(col, table, where, '', order);
@@ -80,18 +80,39 @@ exports.getAll = function(req, res)
 
     model.select(qObj, qObj.request, function(err, data)
     {
-        console.log(data);
-        
-        
         if (err.length > 0)
         {
             model.insertLog(req.session.userId, 6, Message.COMMON.E_004, functionName);
             console.log(err);
-            res.status(510).send('シナリオデータの取得に失敗しました。');
+            return res.status(510).send('シナリオデータの取得に失敗しました。');
         }
         
+        console.log(data);
+        var num = data.length;
+        var tagList = [];
+        var newData = [];
+        if (0 < num)
+        {
+            var defore = data[0].scenario_id;
+            for (var index = 0; index < num; index++)
+            {
+                if (defore === data[index].scenario_id)
+                {
+                    tagList.push(data[index].tag_name);
+                }
+                else
+                {
+                    data[index-1].searchTag = tagList.join(" ");
+                    newData.push(data[index-1]);
+                    tagList = [];
+                    tagList.push(data[index].tag_name);
+                }
+                defore = data[index].scenario_id;
+            }
+        }
+            
         model.insertLog(req.session.userId, 6, Message.COMMON.I_004, functionName);
-        res.json({data: data});
+        res.json({data: newData});
     });
 };
 
