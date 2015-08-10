@@ -14,6 +14,12 @@ var config = {
 var connection = function connection()
 {
   var connection = new mssql.Connection(config);
-  
+  connection.connect(function(err)
+  {
+    if (err)
+    {
+      
+    }
+  });
   
 };

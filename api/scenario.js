@@ -598,11 +598,14 @@ function insertChildren(transaction, req, id, doc, callback)
     
     if (1 === req.body.scenario.scenario_type)
     {
+        var expiration_end_date = 
+            (null === req.body.specificInfo.expiration_end_date || 0 === req.body.specificInfo.expiration_end_date.length) 
+                ? null : req.body.specificInfo.expiration_end_date;
         specificInfo = 
         {
             repeat_flag: req.body.specificInfo.repeat_flag,
             expiration_start_date: req.body.specificInfo.expiration_start_date,
-            expiration_end_date: req.body.specificInfo.expiration_end_date
+            expiration_end_date: expiration_end_date
         };
         
         childTabelObject = require("./schedulescenario");
