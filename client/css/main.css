@@ -147,6 +147,8 @@ ul > li > a > i {cursor: pointer;}
   height:40px;
 }
 .pointer {cursor: pointer;}
+.tag-column {width: 10%;}
+.fa-td {font-size: 1.5em;}
 /*-----------------------------------------------*/
 /* table
 /*-----------------------------------------------*/
