@@ -236,12 +236,16 @@ exports.getScenarioCount = function(req, res)
  */
 exports.getExecutePlanScenario = function(req, res)
 {
-    var col = "scenario_id, scenario_name, valid_flag, "+
-        "CASE scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type, "+
-        "CASE scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key";
-    var where = "delete_flag = 0 AND approach = 1 AND status = 1";
-    var order = "priority, scenario_id";
-    var qObj =  model.getQueryObject(col, tableName, where, '', order);
+    var col = "T1.scenario_id, T1.scenario_name, T1.valid_flag, "+
+        "CASE T1.scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type, "+
+        "CASE T1.scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key";
+    
+    var table = tableName + " T1 LEFT JOIN M_SCHEDULE_SCENARIO T2 ON T1.scenario_id = T2.scenario_id ";
+    var where = "T1.delete_flag = 0 AND T1.approach = 1 AND T1.status = 1";
+    where += " AND ( T2.expiration_start_date is null OR (T2.expiration_start_date >= @now AND expiration_end_date >= @now) OR T2.expiration_start_date = @now AND T2.expiration_end_date is null)";
+    
+    var order = "T1.priority, T1.scenario_id";
+    var qObj =  model.getQueryObject(col, table, where, '', order);
 
     model.select(qObj, qObj.request, function(err, data)
     {
