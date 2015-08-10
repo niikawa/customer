@@ -96,6 +96,7 @@ Scenario.prototype = {
 
         self.getItem(data.id, function (err, doc)
         {
+            console.log(doc);
             if (err)
             {
                 callback(err);
@@ -109,7 +110,7 @@ Scenario.prototype = {
                 }
                 else if (data.hasOwnProperty('interval'))
                 {
-                    doc.action_name = data.interval;
+                    doc.interval = data.interval;
                     
                     if (data.hasOwnProperty('daysCondition'))
                     {
