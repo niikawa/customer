@@ -74,7 +74,8 @@ exports.save = function(transaction, userId, scenarioId, tagList, mainCallback)
     {
         console.log("last function for scenariotag.js");
         console.log(err);
-        mainCallback(err, tagList);
+        var errInfo = (void 0 === err) ? null : err;
+        mainCallback(errInfo, tagList);
     });
 };
 
