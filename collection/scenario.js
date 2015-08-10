@@ -60,17 +60,20 @@ Scenario.prototype = {
         else if (data.hasOwnProperty('interval'))
         {
             doc.interval = data.interval;
-            if (data.hasOwnProperty('daysCondition'))
+            if (1 != data.interval)
             {
-                doc.daysCondition = data.daysCondition;
-            }
-            else if (data.hasOwnProperty('weekCondition'))
-            {
-                doc.weekCondition = data.weekCondition;
-            }
-            else
-            {
-                callback('コレクションを作るためのデータが足りません', null);
+                if (data.hasOwnProperty('daysCondition'))
+                {
+                    doc.daysCondition = data.daysCondition;
+                }
+                else if (data.hasOwnProperty('weekCondition'))
+                {
+                    doc.weekCondition = data.weekCondition;
+                }
+                else
+                {
+                    callback('コレクションを作るためのデータが足りません', null);
+                }
             }
         }
 

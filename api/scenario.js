@@ -455,130 +455,134 @@ function create(req, res)
             console.log('scenario create doc faild');
             console.log(err);
             console.log(req.body);
-            return res.status(510).send('scenario crate faild');
+            return res.status(510).send('シナリオドキュメントの作成に失敗しました');
         }
-
-        model.tranBegin(function(err, transaction)
+        else
         {
-            model.async.waterfall(
-            [
-                function(callback)
-                {
-                    var commonColumns = model.getInsCommonColumns(req.session.userId);
-                    var insertData = model.merge(req.body.scenario, commonColumns);
-                    insertMine(transaction, insertData, function(err, scenarioId)
-                    {
-                        if (err.length > 0)
-                        {
-                            console.log('insert faild M_SCENARIO');
-                            console.log(err);
-                            callback(err, {});
-                            return;
-                        }
-                        callback(null, scenarioId);
-                    });
-                },
-                function(scenarioId, callback)
-                {
-                    insertChildren(transaction, req, scenarioId, doc, function(err, childTabelName)
-                    {
-                        if (err.length > 0)
-                        {
-                            console.log(childTabelName + ' insert faild');
-                            console.log(err);
-                            callback(err, {});
-                            return;
-                        }
-                        callback(null, scenarioId);
-                    });
-                },
-                function(scenarioId, callback)
-                {
-                    console.log("insert tag execute");
-                    console.log(scenarioId);
-                    insertTags(transaction, req.session.userId, req.body.tags, function(err, tagList)
-                    {
-                        console.log(err);
-                        console.log(tagList);
-                        if (null != err)
-                        {
-                            console.log("insert tags faild");
-                            console.log(err);
-                            callback(err);
-                        }
-                        else
-                        {
-                            callback(null, scenarioId, tagList);
-                        }
-                    });
-                },
-                function(scenarioId, tagList, callback)
-                {
-                    console.log("insert scenario tag execute");
-                    console.log(scenarioId);
-                    console.log(tagList);
-                    insertScnarioTag(transaction, req.session.userId, scenarioId, tagList, function(err, tagList)
-                    {
-                        callback(err);
-                    });
-                }
-            ],
-            function(err)
+
+            model.tranBegin(function(err, transaction)
             {
-                console.log("main last function");
-                console.log(err);
-                if (null != err)
-                {
-                    console.log('scenario insert faild');
-                    console.log(err);
-                    
-                    //documentを削除しなくちゃ
-                    if (null !== doc)
+                model.async.waterfall(
+                [
+                    function(callback)
                     {
-                        scenariodoc.removeItemForWeb(doc.id, function(err, doc)
+                        var commonColumns = model.getInsCommonColumns(req.session.userId);
+                        var insertData = model.merge(req.body.scenario, commonColumns);
+                        insertMine(transaction, insertData, function(err, scenarioId)
                         {
-                            if (err)
+                            if (err.length > 0)
                             {
-                                console.log('scenario document remove faild');
+                                console.log('insert faild M_SCENARIO');
                                 console.log(err);
-                                console.log(doc);
+                                callback(err, {});
+                                return;
                             }
-                            transaction.rollback(function(err)
+                            callback(null, scenarioId);
+                        });
+                    },
+                    function(scenarioId, callback)
+                    {
+                        insertChildren(transaction, req, scenarioId, doc, function(err, childTabelName)
+                        {
+                            if (err.length > 0)
+                            {
+                                console.log(childTabelName + ' insert faild');
+                                console.log(err);
+                                callback(err, {});
+                                return;
+                            }
+                            callback(null, scenarioId);
+                        });
+                    },
+                    function(scenarioId, callback)
+                    {
+                        console.log("insert tag execute");
+                        console.log(scenarioId);
+                        insertTags(transaction, req.session.userId, req.body.tags, function(err, tagList)
+                        {
+                            console.log(err);
+                            console.log(tagList);
+                            if (null != err)
+                            {
+                                console.log("insert tags faild");
+                                console.log(err);
+                                callback(err);
+                            }
+                            else
+                            {
+                                callback(null, scenarioId, tagList);
+                            }
+                        });
+                    },
+                    function(scenarioId, tagList, callback)
+                    {
+                        console.log("insert scenario tag execute");
+                        console.log(scenarioId);
+                        console.log(tagList);
+                        insertScnarioTag(transaction, req.session.userId, scenarioId, tagList, function(err, tagList)
+                        {
+                            callback(err);
+                        });
+                    }
+                ],
+                function(err)
+                {
+                    console.log("main last function");
+                    console.log(err);
+                    if (null != err)
+                    {
+                        console.log('scenario insert faild');
+                        console.log(err);
+                        
+                        //documentを削除しなくちゃ
+                        if (null !== doc)
+                        {
+                            scenariodoc.removeItemForWeb(doc.id, function(err, doc)
                             {
                                 if (err)
                                 {
-                                    console.log('scenario data rollback faild');
+                                    console.log('scenario document remove faild');
                                     console.log(err);
-                                    res.status(510).send("システムエラーが発生しました。");
+                                    console.log(doc);
                                 }
-                                else
+                                transaction.rollback(function(err)
                                 {
-                                    model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
-                                    res.status(510).send("シナリオの登録に失敗しました。");
-                                }
+                                    if (err)
+                                    {
+                                        console.log('scenario data rollback faild');
+                                        console.log(err);
+                                        res.status(510).send("システムエラーが発生しました。");
+                                    }
+                                    else
+                                    {
+                                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
+                                        res.status(510).send("シナリオの登録に失敗しました。");
+                                    }
+                                });
                             });
+                        }
+                    }
+                    else
+                    {
+                        transaction.commit(function(err)
+                        {
+                            if (err)
+                            {
+                                console.log('scenario data commit faild');
+                                console.log(err);
+                                res.status(510).send("システムエラーが発生しました。");
+                            }
+                            else
+                            {
+                                model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
+                                res.status(200).send('insert ok');
+                            }
                         });
                     }
-                }
-                else
-                {
-                    transaction.commit(function(err)
-                    {
-                        if (err)
-                        {
-                            console.log('scenario data commit faild');
-                            console.log(err);
-                            res.status(510).send("システムエラーが発生しました。");
-                        }
-                        else
-                        {
-                            model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
-                            res.status(200).send('insert ok');
-                        }
-                    });
-                }
+                });
             });
-        });
+            
+        }
     });
 }
 
