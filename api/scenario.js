@@ -248,7 +248,7 @@ exports.getExecutePlanScenario = function(req, res)
     var order = "T1.priority, T1.scenario_id";
     var qObj =  model.getQueryObject(col, table, where, '', order);
     
-    var now = moment("YYYY-MM-DD") + " 00:00:00";
+    var now = moment.format("YYYY/MM/DD") + " 00:00:00";
     console.log(now);
     
     qObj.request.input('now', model.db.NVarChar, now);
