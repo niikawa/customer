@@ -113,7 +113,6 @@ exports.getAll = function(req, res)
             //データが1件しかない、またはすべて同じデータだった場合
             if (0 === newData.length)
             {
-                console.log(tagList);
                 data[0].searchTag = tagList.join(" ");
                 newData.push(data[0]);
                 console.log(newData);
