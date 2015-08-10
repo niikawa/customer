@@ -59,7 +59,7 @@ exports.getAll = function(req, res)
     var col = "T1.scenario_id, FORMAT(T1.update_date, 'yyyy/MM/dd') AS update_date, T1.scenario_name, " +
                 "CASE T1.approach WHEN 1 THEN N'対象' WHEN 0 THEN N'対象外' ELSE N'未設定' END AS approach, " +
                 "CASE T1.status WHEN 1 THEN N'有効' WHEN 0 THEN N'無効' ELSE N'未設定' END AS status";
-    var table = tableName + " INNER JOIN T_SCENARIO_TAG T2 ON T1.scenario_id = T2.scenario_id AND T2.delete_flag = 0 INNER JOIN T_TAG T3 ON T2.tag_id = T3.tag_id AND T3.delete_flag = 0";
+    var table = tableName + " T1 INNER JOIN T_SCENARIO_TAG T2 ON T1.scenario_id = T2.scenario_id AND T2.delete_flag = 0 INNER JOIN T_TAG T3 ON T2.tag_id = T3.tag_id AND T3.delete_flag = 0";
     var where = "delete_flag = 0 AND scenario_type = @scenario_type";
     var order = "scenario_id";
     var qObj = model.getQueryObject(col, table, where, '', order);
