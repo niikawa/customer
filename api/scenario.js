@@ -109,6 +109,13 @@ exports.getAll = function(req, res)
                 }
                 defore = data[index].scenario_id;
             }
+            
+            //データが1件しかない、またはすべて同じデータだった場合
+            if (0 === newData.length)
+            {
+                data[0].searchTag = tagList.join(" ");
+                newData.push(data[0]);
+            }
         }
             
         model.insertLog(req.session.userId, 6, Message.COMMON.I_004, functionName);
