@@ -28,6 +28,7 @@ var core = function core(modelName, pk, seqName)
     this.seqName = seqName;
     this.db.connect(config, function(err)
     {
+        console.log("core database connect");
         if (null != err)
         {
             console.log('データベースコネクションエラー');
