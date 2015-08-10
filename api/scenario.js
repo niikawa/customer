@@ -455,7 +455,7 @@ function create(req, res)
             console.log('scenario create doc faild');
             console.log(err);
             console.log(req.body);
-            res.status(510).send('scenario crate faild');
+            return res.status(510).send('scenario crate faild');
         }
 
         model.tranBegin(function(err, transaction)
