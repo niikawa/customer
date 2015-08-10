@@ -69,7 +69,12 @@ exports.updateByScenarioId = function(updateData, request, callback)
     //expiration_end_dateはから文字は許されないのでnullに変換
     if (updateData.hasOwnProperty("expiration_end_date"))
     {
-        updateData.expiration_end_date = (null === updateData.expiration_end_date || 0 === updateData.expiration_end_date.length) ? null : updateData.expiration_end_date;
+        updateData.expiration_end_date = 
+            (null === updateData.expiration_end_date || 0 === updateData.expiration_end_date.length) ? null : updateData.expiration_end_date;
+    }
+    else
+    {
+        updateData.expiration_end_date = null;
     }
     request.input('update_date', model.db.NVarChar, updateData.update_date);
     request.input('repeat_flag', model.db.Int, updateData.repeat_flag);
