@@ -526,6 +526,7 @@ function create(req, res)
             function(err)
             {
                 console.log("main last function");
+                console.log(err);
                 if (null != err)
                 {
                     console.log('scenario insert faild');
