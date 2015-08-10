@@ -1,3 +1,4 @@
+var moment = require('moment');
 var Core = require('./core');
 var Message = require('../config/message.json');
 var scenariodoc = require("./scenariodoc");
@@ -247,7 +248,7 @@ exports.getExecutePlanScenario = function(req, res)
     var order = "T1.priority, T1.scenario_id";
     var qObj =  model.getQueryObject(col, table, where, '', order);
     
-    var now = this.model.moment("YYYY-MM-DD") + " 00:00:00";
+    var now = moment("YYYY-MM-DD") + " 00:00:00";
     console.log(now);
     
     qObj.request.input('now', model.db.NVarChar, now);
