@@ -30,7 +30,7 @@ mssql.connect(config, function(err) {
 
 
 var router = express();
-console.log(router.get('env'));
+console.log(router.get('mode'));
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
