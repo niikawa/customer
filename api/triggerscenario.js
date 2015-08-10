@@ -65,6 +65,7 @@ exports.saveForParent = function(insertData, request, callback)
 
 exports.updateByScenarioId = function(updateData, request, callback)
 {
+    delete updateData.trigger_scenario_id;
     request.input('update_date', model.db.NVarChar, updateData.update_date);
     request.input('scenario_id', model.db.Int, updateData.scenario_id);
     request.input('after_event_occurs_num', model.db.Int, updateData.after_event_occurs_num);
