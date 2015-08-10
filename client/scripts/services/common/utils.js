@@ -245,6 +245,7 @@ utilsServices.service("Utility", ['$rootScope', function($rootScope)
     
     this.isDateValid = function(target, delimiter)
     {
+        if (null === target) return false;
         if (void 0 === delimiter) delimiter = '-';
         var days = target.split(delimiter);
         if (3 !== days.length) return false;
