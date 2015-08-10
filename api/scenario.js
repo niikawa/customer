@@ -806,6 +806,8 @@ function update(req, res)
                 console.log('update ' + childTabelName);
                 childTabelObject.updateByScenarioId(updateData, request, function(err, data)
                 {
+                    console.log(err);
+                    console.log(data);
                     var nextErr = (0 < err.length) ? err.length: null;
                     callback(nextErr);
                 });
