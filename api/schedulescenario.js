@@ -67,7 +67,10 @@ exports.updateByScenarioId = function(updateData, request, callback)
 {
     console.log(updateData);
     //expiration_end_dateはから文字は許されないのでnullに変換
-    updateData.expiration_end_date = (null === updateData.expiration_end_date || 0 === updateData.expiration_end_date.length) ? null : updateData.expiration_end_date;
+    if (updateData.hasOwnProperty("expiration_end_date"))
+    {
+        updateData.expiration_end_date = (null === updateData.expiration_end_date || 0 === updateData.expiration_end_date.length) ? null : updateData.expiration_end_date;
+    }
     request.input('update_date', model.db.NVarChar, updateData.update_date);
     request.input('repeat_flag', model.db.Int, updateData.repeat_flag);
     request.input('expiration_start_date', model.db.NVarChar, updateData.expiration_start_date);
