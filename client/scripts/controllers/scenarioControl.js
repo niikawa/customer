@@ -180,8 +180,11 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     {
         $scope.specificInfo.repeat_flag = initData.specificInfo.specific.repeat_flag;
         $scope.specificInfo.expiration_start_date = Utility.formatString(initData.specificInfo.specific.expiration_start_date);
-        $scope.specificInfo.expiration_end_date = Utility.formatString(initData.specificInfo.specific.expiration_end_date);
-        
+        if (null !== initData.specificInfo.specific.expiration_end_date)
+        {
+            $scope.specificInfo.expiration_end_date = Utility.formatString(initData.specificInfo.specific.expiration_end_date);
+        }
+
         if (null !== initData.specificInfo.doc)
         {
             $scope.specificInfo.interval = initData.specificInfo.doc.interval;
