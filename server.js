@@ -16,7 +16,12 @@ var config = {
 
   options: {
     encrypt: true // Use this if you're on Windows Azure
-  }
+  },
+  pool: {
+        max: 10,
+        min: 0,
+        idleTimeoutMillis: 50000
+    }  
 };
 
 mssql.connect(config, function(err) {

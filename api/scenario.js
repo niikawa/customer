@@ -1006,6 +1006,7 @@ exports.remove = function(req, res)
                     var scenariodoc = require("./scenariodoc");
                     scenariodoc.removeItemForWeb(typeData[0].scenario_action_document_id, function(err)
                     {
+                        console.log("doc delete complete");
                         if (err)
                         {
                             transaction.rollback(function(err)
