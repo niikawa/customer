@@ -65,6 +65,7 @@ exports.saveForParent = function(insertData, request, callback)
 
 exports.updateByScenarioId = function(updateData, request, callback)
 {
+    console.log(updateData);
     //expiration_end_dateはから文字は許されないのでnullに変換
     updateData.expiration_end_date = (null === updateData.expiration_end_date || 0 === updateData.expiration_end_date.length) ? null : updateData.expiration_end_date;
     request.input('update_date', model.db.NVarChar, updateData.update_date);
@@ -72,8 +73,6 @@ exports.updateByScenarioId = function(updateData, request, callback)
     request.input('expiration_start_date', model.db.NVarChar, updateData.expiration_start_date);
     request.input('expiration_end_date', model.db.NVarChar, updateData.expiration_end_date);
     request.input('scenario_id', model.db.Int, updateData.scenario_id);
-
-    console.log(updateData);
 
     model.updateByForeignKey(updateData, 'scenario_id', request, callback);
 };
