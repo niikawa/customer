@@ -35,18 +35,18 @@ mssql.connect(config, function(err) {
 
 
 var router = express();
-var morgan = require("morgan")
-if (process.env.NODE_ENV == 'develop')
+var morgan = require("morgan");
+if (process.env.ENVIRONMENT == 'develop')
 {
     // 開発環境のみ
     router.use(morgan({ format: 'dev', immediate: false }));
     
 }
-else if (process.env.NODE_ENV == 'stage')
+else if (process.env.ENVIRONMENT == 'stage')
 {
     // ステージ環境のみ
 }
-else if (process.env.NODE_ENV == 'production')
+else if (process.env.ENVIRONMENT == 'production')
 {
     // 本番環境のみ
   
