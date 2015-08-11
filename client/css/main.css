@@ -719,20 +719,20 @@ div .card-cell-right-b {
   height: 100%;
   padding-left: 0;
   padding-right: 0;
+  border-left: 1px solid #eee;
 }
+.row-height > div:first-child {
+  border-right: 1px solid #eee;
+}
+.row-height > div:last-child {
+  border-right: 1px solid #eee;
+}
+
 .inside > div {
-  border-left: 2px solid #eee;
   margin-bottom: 10px;
   padding: 0;
   height: 100%;
 }
-.inside > div:first-child {
-  border-right: 2px solid #eee;
-}
-.inside > div:last-child {
-  border-right: 2px solid #eee;
-}
-
 .inside > div > p {
   text-align: center;
   background-color: #b5cdd9;
