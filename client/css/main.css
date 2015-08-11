@@ -687,8 +687,9 @@ div .card-cell-right-b {
   table-layout: fixed;
   height: 100%;
   width: 100%;
-  padding-left:15px;
-  padding-right:15px;
+  margin-left:15px;
+  margin-right:15px;
+  padding: 0;
   background-color: #FFF;
   -webkit-box-shadow: 0 1px 6px rgba(0,0,0,0.175);
   box-shadow: 0 1px 6px rgba(0,0,0,0.175);
