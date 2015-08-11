@@ -694,6 +694,7 @@ div.cal > div > p {
   text-align: center;
   background-color: #b5cdd9;
   border-bottom: 1px dashed;
+  font-weight: bold;
 }
 div.cal > div > div {
   display:block;
