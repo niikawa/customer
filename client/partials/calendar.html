@@ -1,8 +1,6 @@
-    <div class="box" ng-controller="CalendarCtrl" ng-mouseenter="test()">
+    <div class="box" ng-mouseenter="enterCircle()" ng-mouseleave="leaveCircle()">
         <div class="row">
-            <div ng-if="showCircle">
-                <i class="fa fa-chevron-circle-left fa-2x circle"></i>
-            </div>
+            <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-2x circle-right"></i>
             <div class="row-height">
                 <div class="col-xs-3 col-sm-3 col-sm-height">
                     <div class="inside inside-full-height">
@@ -46,6 +44,6 @@
                     </div>
                 </div>
             </div>
-            <i ng-if="showCircle" class="fa fa-chevron-circle-right fa-2x circle"></i>
+            <i ng-if="showCircle" class="fa fa-chevron-circle-right fa-2x circle-left"></i>
         </div>
     </div>

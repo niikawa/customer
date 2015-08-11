@@ -354,7 +354,13 @@ drawer-menu-directive > nav > a {text-align:center;}
 /**
  * /calendar.js
  */
-.circle {
+.circle-right {
   position:relative;
   top: 50%;
+  right: 0;
+}
+.circle-left {
+  position:relative;
+  top: 50%;
+  left: 0;
 }

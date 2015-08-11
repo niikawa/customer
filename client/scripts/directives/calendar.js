@@ -14,21 +14,26 @@ myApp.directive('calendarDirective', function()
         link: function (scope, element, attrs, ctrl) 
         {
             scope.showCircle = false;
-            element.on("mouseenter", function()
-            {
-                console.log("mouseenter");
-                scope.showCircle = true;
-            });
+            // element.on("mouseenter", function()
+            // {
+            //     console.log("mouseenter");
+            //     scope.showCircle = true;
+            // });
             
-            element.on("mouseleave", function()
+            // element.on("mouseleave", function()
+            // {
+            //     console.log("mouseleave");
+            //     scope.showCircle = false;
+            // });
+            
+            scope.enterCircle = function()
             {
-                console.log("mouseleave");
+                scope.showCircle = true;
+            }
+            
+            scope.leaveCircle = function()
+            {
                 scope.showCircle = false;
-            });
-            
-            scope.test = function()
-            {
-                scope.showCircle = true;
             }
         }
     };
