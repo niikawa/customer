@@ -673,6 +673,7 @@ div .card-cell-right-b {
 div.cal {
   padding-left:15px;
   padding-right:15px;
+  display: block;
 }
 div.cal > div {
   padding: 0;
