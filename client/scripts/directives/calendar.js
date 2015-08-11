@@ -1,9 +1,8 @@
 var myApp = angular.module('myApp');
 myApp.controller('CalendarCtrl',['$scope', function ($scope)
 {
-    $scope.showCircle = false;
-    
-    
+    $scope.showCircle = true;
+
 }]);
 myApp.directive('calendarDirective', function()
 {
@@ -11,8 +10,8 @@ myApp.directive('calendarDirective', function()
         restrict: 'E',
         templateUrl: '../../partials/calendar.html',
         controller: 'CalendarCtrl',
-        transclude: true,
-        link: function (scope, element, attrs) 
+        replace: true,
+        link: function (scope, element, attrs, ctrl) 
         {
             scope.showCircle = false;
             element.on("mouseenter", function()
