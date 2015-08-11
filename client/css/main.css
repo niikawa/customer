@@ -689,6 +689,10 @@ div .card-cell-right-b {
   width: 100%;
   padding-left:15px;
   padding-right:15px;
+  border-right: 1px dashed;
+  background-color: #FFF;
+  -webkit-box-shadow: 0 1px 6px rgba(0,0,0,0.175);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.175);
 }
 
 .col-height {
@@ -710,11 +714,6 @@ div .card-cell-right-b {
   padding: 0px;
 }
 .inside > div {
-  padding: 0;
-  border-right: 1px dashed;
-  background-color: #FFF;
-  -webkit-box-shadow: 0 1px 6px rgba(0,0,0,0.175);
-  box-shadow: 0 1px 6px rgba(0,0,0,0.175);
   height: 100%;
 }
 .inside > div:last-child {
