@@ -677,6 +677,7 @@ div.cal > div {
 div.cal > div > p {
   text-align: center;
   background-color: #b5cdd9;
+  border-bottom: 1px;
 }
 /*-----------------------------------------------*/
 /* modal bootstrap orverride
