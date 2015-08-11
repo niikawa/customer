@@ -672,7 +672,7 @@ div.cal {
 }
 div.cal > div {
   padding: 0;
-  display:table-cell;
+  display:block;
 }
 div.cal > div > p {
   text-align: center;
