@@ -681,7 +681,6 @@ div.cal > div {
   background-color: #FFF;
   -webkit-box-shadow: 0 1px 6px rgba(0,0,0,0.175);
   box-shadow: 0 1px 6px rgba(0,0,0,0.175);
-  margin-bottom: 10px;
 }
 div.cal > div:last-child {
   padding: 0;
@@ -696,6 +695,8 @@ div.cal > div > p {
 }
 div.cal > div > div {
   display:block;
+  height: 100%;
+  margin-bottom: 10px;
 }
 
 
