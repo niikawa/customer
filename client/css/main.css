@@ -726,9 +726,9 @@ div .card-cell-right-b {
   padding: 0;
   height: 100%;
 }
-/*.row-height > div:last-child {*/
-/*  border-right: none;*/
-/*}*/
+.inside > div:last-child {
+  border-right: none;
+}
 
 .inside > div > p {
   text-align: center;
