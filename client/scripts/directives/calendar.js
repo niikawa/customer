@@ -11,11 +11,13 @@ myApp.directive('calendarDirective', function()
             scope.showCircle = false;
             element.on("mouseorver", function()
             {
+                console.log("mouseorver");
                 scope.showCircle = true;
             });
             
             element.on("mouseout", function()
             {
+                console.log("mouseout");
                 scope.showCircle = true;
             });
             
