@@ -1,6 +1,9 @@
 var myApp = angular.module('myApp');
 myApp.controller('CalendarCtrl',['$scope', function ($scope)
 {
+    $scope.showCircle = false;
+    
+    
 }]);
 myApp.directive('calendarDirective', function()
 {
