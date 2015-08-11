@@ -666,7 +666,10 @@ div .card-cell-right-b {
   box-shadow: 0 1px 6px rgba(0,0,0,0.175);
   display: block;
 }
-
+div.cal > div {
+  border: solid 1px;
+  padding: 0;
+}
 /*-----------------------------------------------*/
 /* modal bootstrap orverride
 /*-----------------------------------------------*/
