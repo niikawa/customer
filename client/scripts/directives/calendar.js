@@ -26,6 +26,10 @@ myApp.directive('calendarDirective', function()
                 scope.showCircle = false;
             });
             
+            scope.test = function()
+            {
+                alert("hote");
+            }
         }
     };
 });
