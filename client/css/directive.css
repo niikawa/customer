@@ -350,3 +350,10 @@ drawer-menu-directive > nav > a {text-align:center;}
 		opacity: 0;
 	}
 }
+
+/**
+ * /calendar.js
+ */
+calendar-directive .circle{
+	
+}

@@ -8,10 +8,16 @@ myApp.directive('calendarDirective', function()
         transclude: true,
         link: function (scope, element, attrs) 
         {
+            scope.showCircle = false;
             element.on("mouseorver", function()
             {
-                
-            })
+                scope.showCircle = true;
+            });
+            
+            element.on("mouseout", function()
+            {
+                scope.showCircle = true;
+            });
             
         }
     };
