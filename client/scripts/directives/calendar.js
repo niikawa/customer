@@ -3,6 +3,7 @@ myApp.directive('calendarDirective', function()
 {
     return {
         restrict: 'E',
+        scope: {},
         templateUrl: '../../partials/calendar.html',
         transclude: true,
         link: function (scope, element, attrs) 
@@ -11,14 +12,14 @@ myApp.directive('calendarDirective', function()
             element.on("mouseenter", function()
             {
                 console.log("mouseenter");
-                element.find("i").addClass("show");
+                element.children('i').addClass("show");
                 scope.showCircle = true;
             })
             
             element.on("mouseleave", function()
             {
                 console.log("mouseleave");
-                element.find("i").remnoveClass("show");
+//                element.find("i").remnoveClass("show");
                 scope.showCircle = false;
             });
             
