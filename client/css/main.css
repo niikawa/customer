@@ -667,8 +667,8 @@ div .card-cell-right-b {
   display: block;
 }
 div.cal {
-  padding-left:10px;
-  padding-right:10px;
+  padding-left:15px;
+  padding-right:15px;
 }
 div.cal > div {
   border: solid 1px;
