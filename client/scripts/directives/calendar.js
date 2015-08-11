@@ -28,7 +28,7 @@ myApp.directive('calendarDirective', function()
             
             scope.test = function()
             {
-                alert("hote");
+                scope.showCircle = true;
             }
         }
     };
