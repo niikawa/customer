@@ -673,13 +673,18 @@ div .card-cell-right-b {
 div.cal {
   padding-left:15px;
   padding-right:15px;
+  background-color: #FFF;
+  -webkit-box-shadow: 0 1px 6px rgba(0,0,0,0.175);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.175);
 }
 div.cal > div {
   padding: 0;
   display:block;
   border-right: 1px dashed;
 }
-div.cal > div :last-child {
+div.cal > div:last-child {
+  padding: 0;
+  display:block;
   border-right: none;
 }
 
