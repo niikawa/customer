@@ -12,16 +12,16 @@ myApp.directive('calendarDirective', function()
             element.on("mouseenter", function()
             {
                 console.log("mouseenter");
-                element.children('i').addClass("show");
-                element.children('i').removeClass("hide");
+                element.children().children('i').addClass("show");
+                element.children().children('i').removeClass("hide");
                 scope.showCircle = true;
-            })
+            });
             
             element.on("mouseleave", function()
             {
                 console.log("mouseleave");
-                element.children('i').addClass("hide");
-                element.children('i').removeClass("show");
+                element.children().children('i').addClass("hide");
+                element.children().children('i').removeClass("show");
                 scope.showCircle = false;
             });
             
