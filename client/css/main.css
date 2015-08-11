@@ -677,7 +677,12 @@ div.cal {
 div.cal > div {
   padding: 0;
   display:block;
+  border-right: 1px dashed;
 }
+div.cal > div :last-child {
+  border-right: none;
+}
+
 div.cal > div > p {
   text-align: center;
   background-color: #b5cdd9;
@@ -686,6 +691,8 @@ div.cal > div > p {
 div.cal > div > div {
   display:block;
 }
+
+
 /*-----------------------------------------------*/
 /* modal bootstrap orverride
 /*-----------------------------------------------*/
