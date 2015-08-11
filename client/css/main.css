@@ -671,9 +671,11 @@ div.cal {
   padding-right:15px;
 }
 div.cal > div {
+  padding: 0;
   display:table-cell;
 }
-div.cal > div > p{
+div.cal > div > p {
+  text-align: center;
   background-color: #b5cdd9;
 }
 /*-----------------------------------------------*/
