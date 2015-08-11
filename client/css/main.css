@@ -717,12 +717,14 @@ div .card-cell-right-b {
 .row-height > div {
   margin: 10px;
   padding: 0px;
+  height: 100%;
 }
 .inside > div {
   border-right: 1px dashed;
   margin-bottom: 10px;
+  height: 100%;
 }
-.inside > div:last-child {
+.row-height > div:last-child {
   border-right: none;
 }
 
