@@ -721,13 +721,13 @@ div .card-cell-right-b {
   padding-right: 0;
 }
 .inside > div {
-  border-right: 1px dashed;
+  border-left: 1px dashed #eee;
   margin-bottom: 10px;
   padding: 0;
   height: 100%;
 }
 .inside > div:last-child {
-  border-right: none;
+  border-right: 1px dashed #eee;
 }
 
 .inside > div > p {
