@@ -681,6 +681,7 @@ div.cal > div {
   background-color: #FFF;
   -webkit-box-shadow: 0 1px 6px rgba(0,0,0,0.175);
   box-shadow: 0 1px 6px rgba(0,0,0,0.175);
+  height: 100%;
 }
 div.cal > div:last-child {
   padding: 0;
