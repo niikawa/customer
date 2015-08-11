@@ -724,7 +724,7 @@ div .card-cell-right-b {
 }
 .inside > div {
   border-right: 1px dashed;
-  height: 100%;
+  margin-bottom: 10px;
 }
 .inside > div:last-child {
   border-right: none;
@@ -735,10 +735,6 @@ div .card-cell-right-b {
   background-color: #b5cdd9;
   border-bottom: 1px dashed;
   font-weight: bold;
-}
-
-.inside > div {
-  margin-bottom: 10px;
 }
 
 @media (min-width: 480px) {
