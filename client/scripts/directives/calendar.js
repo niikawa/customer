@@ -13,13 +13,15 @@ myApp.directive('calendarDirective', function()
             {
                 console.log("mouseenter");
                 element.children('i').addClass("show");
+                element.children('i').removeClass("hide");
                 scope.showCircle = true;
             })
             
             element.on("mouseleave", function()
             {
                 console.log("mouseleave");
-//                element.children('i').addClass("show");
+                element.children('i').addClass("hide");
+                element.children('i').removeClass("show");
                 scope.showCircle = false;
             });
             
