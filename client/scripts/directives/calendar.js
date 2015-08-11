@@ -15,10 +15,16 @@ myApp.directive('calendarDirective', function()
                 scope.showCircle = true;
             });
             
-            element.on("mouseout", function()
+            element.on("mouseenter", function()
             {
-                console.log("mouseout");
+                console.log("mouseenter");
                 scope.showCircle = true;
+            })
+            
+            element.on("mouseleave", function()
+            {
+                console.log("mouseleave");
+                scope.showCircle = false;
             });
             
         }
