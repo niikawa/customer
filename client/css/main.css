@@ -705,7 +705,10 @@ div .card-cell-right-b {
 .col-bottom {
   vertical-align: bottom;
 }
-
+.row-height > div {
+  margin: 0px;
+  padding: 0px;
+}
 .inside > div {
   padding: 0;
   border-right: 1px dashed;
