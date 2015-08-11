@@ -142,6 +142,7 @@ exports.getAll = function(req, res)
 exports.getValid = function(req, res)
 {
     var col = "scenario_id, scenario_name, status, priority, valid_flag," +
+                "CASE scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key, " +
                 "CASE scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type";
 
     var where = "delete_flag = 0 AND approach = 1";
