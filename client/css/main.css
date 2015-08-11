@@ -675,10 +675,6 @@ div .card-cell-right-b {
 .inside {
   margin-top: 20px;
   margin-bottom: 20px;
-  background: #ededed;
-  background: -webkit-gradient(linear, left top, left bottom,color-stop(0%, #f4f4f4), color-stop(100%, #ededed));
-  background: -moz-linear-gradient(top, #f4f4f4 0%, #ededed 100%);
-  background: -ms-linear-gradient(top, #f4f4f4 0%, #ededed 100%);
 }
 .inside-full-height {
   height: 100%;
