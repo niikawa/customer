@@ -697,7 +697,7 @@ div.cal > div > p {
   font-weight: bold;
 }
 div.cal > div > div {
-  display:block;
+  display:inline-block;
   height: 100%;
   margin-bottom: 10px;
 }
