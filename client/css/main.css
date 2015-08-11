@@ -717,6 +717,8 @@ div .card-cell-right-b {
   height: 100%;
   margin-left: 0;
   margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 .inside > div {
   border-right: 1px dashed;
