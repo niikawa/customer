@@ -1,10 +1,13 @@
 var myApp = angular.module('myApp');
+myApp.controller('CalendarCtrl',['$scope', function ($scope)
+{
+}]);
 myApp.directive('calendarDirective', function()
 {
     return {
         restrict: 'E',
-        scope:{showCircle:"="},
         templateUrl: '../../partials/calendar.html',
+        controller: 'CalendarCtrl',
         transclude: true,
         link: function (scope, element, attrs) 
         {
