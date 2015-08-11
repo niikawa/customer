@@ -218,36 +218,59 @@ core.prototype.insert = function(table, data, request, callback)
     var p = this.getPk();
     var exe = this.execute;
     var type = this.db.Int;
-
-    this.getNextSeq(function(err, seqInfo)
+    
+    if (void 0 === this.seqName)
     {
-        if (0 < err.length)
-        {
-            callback(err);
-        }
-        else
-        {
-            var dataList = [];
-            //SEQを設定
-            data[p] = seqInfo[0].id;
-            console.log(data);
+        var dataList = [];
+        //SEQを設定
+        console.log(data);
 
-            var columns = Object.keys(data);
-            var len = columns.length;
-            for (var i = 0; i < len; i ++)
-            {
-                var item = '@' + columns[i];
-                dataList.push(item);
-            }
-            request.input(p, type, seqInfo[0].id);
-            
-            var sql = 'INSERT INTO ' + table + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
-            exe(sql, request, function(errList, resultList)
-            {
-                callback(errList, seqInfo[0].id);
-            });
+        var columns = Object.keys(data);
+        var len = columns.length;
+        for (var i = 0; i < len; i ++)
+        {
+            var item = '@' + columns[i];
+            dataList.push(item);
         }
-    });
+
+        var sql = 'INSERT INTO ' + table + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
+        exe(sql, request, function(errList, resultList)
+        {
+            callback(errList);
+        });
+    }
+    else
+    {
+        this.getNextSeq(function(err, seqInfo)
+        {
+            if (0 < err.length)
+            {
+                callback(err);
+            }
+            else
+            {
+                var dataList = [];
+                //SEQを設定
+                data[p] = seqInfo[0].id;
+                console.log(data);
+    
+                var columns = Object.keys(data);
+                var len = columns.length;
+                for (var i = 0; i < len; i ++)
+                {
+                    var item = '@' + columns[i];
+                    dataList.push(item);
+                }
+                request.input(p, type, seqInfo[0].id);
+                
+                var sql = 'INSERT INTO ' + table + ' (' + columns.join(',') + ') VALUES ( ' + dataList.join(',') + ' )';
+                exe(sql, request, function(errList, resultList)
+                {
+                    callback(errList, seqInfo[0].id);
+                });
+            }
+        });
+    }
 };
 
 core.prototype.updateById = function(data, request, callback)
