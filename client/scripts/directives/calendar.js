@@ -19,7 +19,7 @@ myApp.directive('calendarDirective', function()
             element.on("mouseleave", function()
             {
                 console.log("mouseleave");
-//                element.find("i").remnoveClass("show");
+//                element.children('i').addClass("show");
                 scope.showCircle = false;
             });
             
