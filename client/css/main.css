@@ -687,6 +687,8 @@ div .card-cell-right-b {
   table-layout: fixed;
   height: 100%;
   width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .row-back {
@@ -715,8 +717,6 @@ div .card-cell-right-b {
 .row-height > div {
   padding: 0px;
   height: 100%;
-  margin-left: 0;
-  margin-right: 0;
   padding-left: 0;
   padding-right: 0;
 }
