@@ -7,7 +7,7 @@
                         <div>
                             <p>{{day}}</p>
                             <span class="label" ng-repeat="item in items">
-                                <i class="fa fa-calendar-o"></i>{{item.scenario_name}}
+                                <i ng-if="1==item.scenario_type_value" class="fa fa-calendar-o"></i>{{item.scenario_name}}
                             </span>
                         </div>
                     </div>

@@ -342,7 +342,11 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
             {
                 if (2 === target.scenario_type_value)
                 {
-                    calendar[key].push({scenario_id: target.scenario_id, scenario_name: target.scenario_name});
+                    calendar[key].push({
+                        scenario_id: target.scenario_id, 
+                        scenario_name: target.scenario_name,
+                        scenario_type_value: target.scenario_type_value
+                    });
                 }
                 else if (null === target.scenario_action_document_id && 1 === target.scenario_type_value)
                 {
@@ -350,7 +354,11 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                     var day = moment(target.expiration_start_date).format("YYYY-MM-DD");
                     if (keyDay === day)
                     {
-                        calendar[key].push({scenario_id: target.scenario_id, scenario_name: target.scenario_name});
+                        calendar[key].push({
+                            scenario_id: target.scenario_id, 
+                            scenario_name: target.scenario_name, 
+                            scenario_type_value: target.scenario_type_value
+                        });
                     }
                 }
                 else
