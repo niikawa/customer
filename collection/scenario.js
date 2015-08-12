@@ -14,20 +14,26 @@ function Scenario(documentDBClient, databaseId, collectionId)
 module.exports = Scenario;
 
 Scenario.prototype = {
-    init: function (callback) {
+    init: function (callback)
+    {
         var self = this;
 
-        docdbUtils.getOrCreateDatabase(self.client, self.databaseId, function (err, db) {
-            if (err) {
+        docdbUtils.getOrCreateDatabase(self.client, self.databaseId, function (err, db)
+        {
+            if (err)
+            {
                 callback(err);
-
-            } else {
+            }
+            else
+            {
                 self.database = db;
                 docdbUtils.getOrCreateCollection(self.client, self.database._self, self.collectionId, function (err, coll) {
-                    if (err) {
+                    if (err)
+                    {
                         callback(err);
-
-                    } else {
+                    }
+                    else
+                    {
                         self.collection = coll;
                     }
                 });

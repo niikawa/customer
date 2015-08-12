@@ -287,7 +287,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
     
     var table = tableName + " T1 LEFT JOIN M_SCHEDULE_SCENARIO T2 ON T1.scenario_id = T2.scenario_id ";
     var where = "T1.delete_flag = 0 AND T1.approach = 1 AND T1.status = 1";
-    where += " AND ( T2.expiration_start_date is null OR (T2.expiration_start_date BETWEEN @start AND @end))";
+    where += " AND ( T2.expiration_start_date is null OR (T2.expiration_start_date BETWEEN @start AND @end) OR (T2.expiration_start_date is not null AND T2.expiration_start_date >= @end))";
     
     var order = "T1.priority, T1.scenario_id";
     var qObj =  model.getQueryObject(col, table, where, '', order);
