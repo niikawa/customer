@@ -366,6 +366,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                     console.log(target);
                     Object.keys(calendar).forEach(function(key)
                     {
+                        var isAdd = false;
                         if (2 === target.scenario_type_value)
                         {
                             //トリガー型の場合
@@ -409,6 +410,10 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                                 //毎月の場合
                                 console.log(doc.daysCondition);
                             }
+                        }
+                        if (isAdd)
+                        {
+                            
                         }
                     });
                 }

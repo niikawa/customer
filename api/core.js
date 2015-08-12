@@ -43,7 +43,7 @@ core.prototype.getPk = function()
     return this.pk;
 };
 
-core.prototype.momoent = moment();
+core.prototype.momoent = require('moment');
 
 core.prototype.async = require('async');
 
