@@ -16,9 +16,10 @@ var seqName = 'seq_scenario';
 var scenario = function scenario()
 {
     Core.call(this, tableName, pk, seqName);
-    moment.lang('ja', {
+    moment.locale('ja', {
         weekdays: ["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
         weekdaysShort: ["日","月","火","水","木","金","土"],
+        weekdaysMin:["sun", "mon", "tue", "wed", "thu", "fri", "sat"],
     });
 };
 
@@ -399,8 +400,16 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                             //以下の条件に合わないものは不正データのため破棄
                             if (2 === doc.interval)
                             {
-                                var shortDay = model.momoent(key).format("ddd");
-                                console.log(shortDay);
+                                var minDay = model.momoent(key).format("dd");
+                                console.log(minDay);
+                                if (doc.weekCondition[minDay])
+                                {
+                                    calendar[key].push({
+                                        scenario_id: target.scenario_id, 
+                                        scenario_name: target.scenario_name, 
+                                        scenario_type_value: target.scenario_type_value
+                                    });
+                                }
                                 //毎週の場合
                                 
 //                                doc.weekCondition.mon;
