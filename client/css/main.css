@@ -744,6 +744,9 @@ div .card-cell-right-b {
   line-height:2;
   margin: 2px 5px;
 }
+.inside > div > span > i {
+  padding-right: 4px;
+}
 @media (min-width: 480px) {
   .row-xs-height {
     display: table;
