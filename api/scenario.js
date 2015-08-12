@@ -16,6 +16,10 @@ var seqName = 'seq_scenario';
 var scenario = function scenario()
 {
     Core.call(this, tableName, pk, seqName);
+    moment.lang('ja', {
+        weekdays: ["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
+        weekdaysShort: ["日","月","火","水","木","金","土"],
+    });
 };
 
 //coreModelを継承する
@@ -300,7 +304,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
     var calendar = {};
     for (var i = 0; i < period; i++)
     {
-        var prop = moment().add(i, 'day').format("YYYY/MM/DD");
+        var prop = moment().add(i, 'day').format("YYYY/MM/DD (ddd)");
         calendar[prop] = [];
     }
     console.log(start);

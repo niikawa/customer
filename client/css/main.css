@@ -741,7 +741,7 @@ div .card-cell-right-b {
 .inside > div > span {
   float:left;
   background-color: #40BFB0;
-  line-height:2;
+  line-height:1.5;
   margin: 2px 5px;
 }
 .inside > div > span > i {
