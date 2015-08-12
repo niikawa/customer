@@ -370,26 +370,14 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                         var isAdd = false;
                         if (2 === target.scenario_type_value)
                         {
-                            //トリガー型の場合
-                            calendar[key].push({
-                                scenario_id: target.scenario_id, 
-                                scenario_name: target.scenario_name,
-                                scenario_type_value: target.scenario_type_value
-                            });
+                            isAdd = true;
                         }
                         else if (null === target.scenario_action_document_id && 1 === target.scenario_type_value)
                         {
                             //スケジュール型 日付指定の場合
                             var keyDay = moment(key).format("YYYY-MM-DD");
                             var day = moment(target.expiration_start_date).format("YYYY-MM-DD");
-                            if (keyDay === day)
-                            {
-                                calendar[key].push({
-                                    scenario_id: target.scenario_id, 
-                                    scenario_name: target.scenario_name, 
-                                    scenario_type_value: target.scenario_type_value
-                                });
-                            }
+                            isAdd = (keyDay === day);
                         }
                         else if (null !== target.scenario_action_document_id && 1 === target.scenario_type_value)
                         {
@@ -401,28 +389,22 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                             if (2 === doc.interval)
                             {
                                 var minDay = model.momoent(key).format("dd");
-                                console.log(minDay);
-                                if (doc.weekCondition[minDay])
-                                {
-                                    calendar[key].push({
-                                        scenario_id: target.scenario_id, 
-                                        scenario_name: target.scenario_name, 
-                                        scenario_type_value: target.scenario_type_value
-                                    });
-                                }
-                                //毎週の場合
-                                
-//                                doc.weekCondition.mon;
+                                isAdd = doc.weekCondition[minDay]
                             }
                             else if (3 === doc.interval)
                             {
-                                //毎月の場合
-                                console.log(doc.daysCondition);
+                                var day = model.momoent(key).format("D");
+                                var datIndex = Number(day) - 1;
+                                isAdd = doc.daysCondition[datIndex].check;
                             }
                         }
                         if (isAdd)
                         {
-                            
+                            calendar[key].push({
+                                scenario_id: target.scenario_id, 
+                                scenario_name: target.scenario_name,
+                                scenario_type_value: target.scenario_type_value
+                            });
                         }
                     });
                 }
