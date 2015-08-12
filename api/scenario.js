@@ -281,7 +281,8 @@ exports.getExecutePlanScenario = function(req, res)
  */
 exports.getExecutePlanScenarioToCalendar = function(req, res)
 {
-    var col = "T1.scenario_id, T1.scenario_name, T2.expiration_start_date, T2.expiration_end_date, "+
+    var col = "T1.scenario_id, T1.scenario_name, T2.scenario_action_document_id, T2.expiration_start_date, T2.expiration_end_date, "+
+        "T1.scenario_type AS scenario_type_value, " +
         "CASE T1.scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type, "+
         "CASE T1.scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key";
     
@@ -292,12 +293,19 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
     var order = "T1.priority, T1.scenario_id";
     var qObj =  model.getQueryObject(col, table, where, '', order);
     
+    var period = 5;
     var start = moment().format("YYYY/MM/DD") + " 00:00:00";
-    var end = moment().add(5, 'day').format("YYYY/MM/DD") + " 00:00:00" ;
-
+    var end = moment().add(period, 'day').format("YYYY/MM/DD") + " 00:00:00" ;
+    
+    var calendar = {};
+    for (var i = 0; i < period; i++)
+    {
+        var prop = moment().format("YYYY-MM-DD").add(period, 'day').format("YYYY/MM/DD");
+        calendar[prop] = [];
+    }
     console.log(start);
     console.log(end);
-    
+
     qObj.request.input('start', model.db.NVarChar, start);
     qObj.request.input('end', model.db.NVarChar, end);
 
@@ -309,8 +317,53 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
             console.log(err);
             res.status(510).send('シナリオ情報の取得に失敗しました');
         }
+
+        //スケジュールの期間指定はdocumentDBにデータが入っているため
+        //データを取得する必要がある
+        var num = data.length;
+        var docIdList = [];
+        var docIndexList = [];
+        for (var index = 0; num < index; index++)
+        {
+            var target = data[index];
+            
+            //スケジュール型期間指定の場合
+            if (null !== target.scenario_action_document_id && 1 === target.scenario_type_value)
+            {
+                docIdList.push(target.scenario_action_document_id);
+                docIndexList.push(index);
+            }
+            
+            //
+            Object.keys(calendar).forEach(function(key)
+            {
+                if (2 === target.scenario_type_value)
+                {
+                    calendar[key].push({scenario_id: target.scenario_id, scenario_name: target.scenario_name});
+                }
+                else if (null === target.scenario_action_document_id && 1 === target.scenario_type_value)
+                {
+                    var keyDay = moment(key).format("YYYY-MM-DD");
+                    var day = moment(target.expiration_start_date).format("YYYY-MM-DD");
+                    if (keyDay === day)
+                    {
+                        calendar[key].push({scenario_id: target.scenario_id, scenario_name: target.scenario_name});
+                    }
+                }
+            });
+        }
         
-        res.json({data: data});
+        res.json({data: calendar});
+        
+        // if (0 < docIdList.length)
+        // {
+        //     //
+        // }
+        // else
+        // {
+        //     res.json({data: calendardata});
+        // }
+
     });
 
 };
