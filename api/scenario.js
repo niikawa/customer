@@ -394,6 +394,8 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                         {
                             //スケジュール型 期間指定の場合
                             var doc = docsObject[target.scenario_action_document_id];
+                            console.log(target.scenario_action_document_id);
+                            console.log(doc);
                             //以下の条件に合わないものは不正データのため破棄
                             if (2 === doc.interval)
                             {
