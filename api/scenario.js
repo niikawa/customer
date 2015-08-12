@@ -326,7 +326,8 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
         for (var index = 0; num < index; index++)
         {
             var target = data[index];
-            
+            console.log(target);
+
             //スケジュール型期間指定の場合
             if (null !== target.scenario_action_document_id && 1 === target.scenario_type_value)
             {
@@ -349,6 +350,10 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                     {
                         calendar[key].push({scenario_id: target.scenario_id, scenario_name: target.scenario_name});
                     }
+                }
+                else
+                {
+                    console.log("nothing!!");
                 }
             });
         }
