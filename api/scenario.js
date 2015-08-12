@@ -358,13 +358,13 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
             function(docs, callback)
             {
                 console.log("calendar crate");
+                var docNum = docs.length;
                 var docsObject = (null === docs) ? {} : createDocsObject(docs);
-                console.log(docsObject);
-                console.log(docsObject);
 
-                for (var index = 0; index < num; index++)
+                for (var index = 0; index < docNum; index++)
                 {
                     var target = data[index];
+                    console.log(target);
                     Object.keys(calendar).forEach(function(key)
                     {
                         if (2 === target.scenario_type_value)
