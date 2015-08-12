@@ -43,6 +43,8 @@ core.prototype.getPk = function()
     return this.pk;
 };
 
+core.prototype.momoent = moment();
+
 core.prototype.async = require('async');
 
 core.prototype.db = require('mssql');

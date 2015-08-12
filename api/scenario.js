@@ -307,8 +307,6 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
         var prop = moment().add(i, 'day').format("YYYY/MM/DD (ddd)");
         calendar[prop] = [];
     }
-    console.log(start);
-    console.log(end);
 
     qObj.request.input('start', model.db.NVarChar, start);
     qObj.request.input('end', model.db.NVarChar, end);
@@ -328,69 +326,104 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
         //データを取得する必要がある
         var num = data.length;
         var docIdList = [];
-        var docIndexList = [];
+
         for (var index = 0; index < num; index++)
         {
             var target = data[index];
-            console.log(target);
-
             //スケジュール型期間指定の場合
             if (null !== target.scenario_action_document_id && 1 === target.scenario_type_value)
             {
                 docIdList.push(target.scenario_action_document_id);
-                docIndexList.push(index);
             }
-            
-            Object.keys(calendar).forEach(function(key)
-            {
-                if (2 === target.scenario_type_value)
-                {
-                    calendar[key].push({
-                        scenario_id: target.scenario_id, 
-                        scenario_name: target.scenario_name,
-                        scenario_type_value: target.scenario_type_value
-                    });
-                }
-                else if (null === target.scenario_action_document_id && 1 === target.scenario_type_value)
-                {
-                    var keyDay = moment(key).format("YYYY-MM-DD");
-                    var day = moment(target.expiration_start_date).format("YYYY-MM-DD");
-                    if (keyDay === day)
-                    {
-                        calendar[key].push({
-                            scenario_id: target.scenario_id, 
-                            scenario_name: target.scenario_name, 
-                            scenario_type_value: target.scenario_type_value
-                        });
-                    }
-                }
-            });
         }
         
-        if (0 < docIdList.length)
-        {
-            scenariodoc.getItemByIdsForWeb(docIdList, ["*"], function(err, docs)
+        model.async.waterfall(
+        [
+            function(callback)
             {
-                if (err)
+                if (0 < docIdList.length)
                 {
-                    console.log(err);
+                    scenariodoc.getItemByIdsForWeb(docIdList, ["*"], callback);
                 }
                 else
                 {
-                    console.log(docs);
-                    
-                    
-                    res.json({data: calendar});
+                    callback(null);
                 }
-            });
-        }
-        else
+            },
+            function(docs, callback)
+            {
+                var docsObject = (null === docs) ? {} : createDocsObject(docs);
+
+                for (var index = 0; index < num; index++)
+                {
+                    var target = data[index];
+                    Object.keys(calendar).forEach(function(key)
+                    {
+                        if (2 === target.scenario_type_value)
+                        {
+                            //トリガー型の場合
+                            calendar[key].push({
+                                scenario_id: target.scenario_id, 
+                                scenario_name: target.scenario_name,
+                                scenario_type_value: target.scenario_type_value
+                            });
+                        }
+                        else if (null === target.scenario_action_document_id && 1 === target.scenario_type_value)
+                        {
+                            //スケジュール型 日付指定の場合
+                            var keyDay = moment(key).format("YYYY-MM-DD");
+                            var day = moment(target.expiration_start_date).format("YYYY-MM-DD");
+                            if (keyDay === day)
+                            {
+                                calendar[key].push({
+                                    scenario_id: target.scenario_id, 
+                                    scenario_name: target.scenario_name, 
+                                    scenario_type_value: target.scenario_type_value
+                                });
+                            }
+                        }
+                        else if (null !== target.scenario_action_document_id && 2 === target.scenario_type_value)
+                        {
+                            //スケジュール型 期間指定の場合
+                            var doc = docsObject[target.scenario_action_document_id];
+                            //以下の条件に合わないものは不正データのため破棄
+                            if (2 === doc.interval)
+                            {
+                                var shortDay = model.momoent(key).format("ddd");
+                                console.log(shortDay);
+                                //毎週の場合
+                                
+//                                doc.weekCondition.mon;
+                            }
+                            else if (3 === doc.interval)
+                            {
+                                //毎月の場合
+                                console.log(doc.daysCondition);
+                            }
+                        }
+                    });
+                }
+            }
+        ], 
+        function(err)
         {
             res.json({data: calendar});
-        }
-    });
-
+        });
+     });
 };
+
+function createDocsObject(docs)
+{
+    var docObject = {};
+    var num = docs.length;
+    for (var index = 0; index < num; index++)
+    {
+        var doc = docs[index];
+        docObject[doc.id] = doc;
+    }
+    
+    return docObject;
+}
 
 /**
  * アプローチ対象のシナリオを無効にする
