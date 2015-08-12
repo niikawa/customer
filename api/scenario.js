@@ -341,9 +341,14 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
         [
             function(callback)
             {
+                console.log(docIdList);
                 if (0 < docIdList.length)
                 {
-                    scenariodoc.getItemByIdsForWeb(docIdList, ["*"], callback);
+                    console.log("scenariodoc.getItemByIdsForWeb");
+                    scenariodoc.getItemByIdsForWeb(docIdList, ["*"], function(err, docs)
+                    {
+                        callback(err, docs);
+                    });
                 }
                 else
                 {
@@ -352,6 +357,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
             },
             function(docs, callback)
             {
+                console.log("calendar crate");
                 var docsObject = (null === docs) ? {} : createDocsObject(docs);
 
                 for (var index = 0; index < num; index++)
