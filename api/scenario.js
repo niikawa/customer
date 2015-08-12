@@ -293,7 +293,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
     var order = "T1.priority, T1.scenario_id";
     var qObj =  model.getQueryObject(col, table, where, '', order);
     
-    var period = 5;
+    var period = 6;
     var start = moment().format("YYYY/MM/DD") + " 00:00:00";
     var end = moment().add(period, 'day').format("YYYY/MM/DD") + " 00:00:00" ;
     
