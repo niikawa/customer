@@ -1,6 +1,8 @@
 var myApp = angular.module('myApp');
 myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scope, Calendar, Utility)
 {
+    $scope.calendarList = [];
+    
     $scope.initialize = function()
     {
         console.log("CalendarCtrl initialize");
