@@ -736,6 +736,7 @@ div .card-cell-right-b {
   background-color: #b5cdd9;
   border-bottom: 2px solid #eee;
   font-weight: bold;
+  line-height: 2;
 }
 
 @media (min-width: 480px) {
