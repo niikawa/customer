@@ -741,6 +741,8 @@ div .card-cell-right-b {
 .inside > div > span {
   float:left;
   background-color: #40BFB0;
+  line-height:2;
+  margin: 2px 5px;
 }
 @media (min-width: 480px) {
   .row-xs-height {
