@@ -1,7 +1,11 @@
 var myApp = angular.module('myApp');
-myApp.controller('CalendarCtrl',['$scope', function ($scope)
+myApp.controller('CalendarCtrl',['$scope','Utility', function ($scope, Utility)
 {
-    $scope.showCircle = true;
+    $scope.initialize = function()
+    {
+        console.log("CalendarCtrl initialize");
+        
+    };
 
 }]);
 myApp.directive('calendarDirective', function()
@@ -14,18 +18,7 @@ myApp.directive('calendarDirective', function()
         link: function (scope, element, attrs, ctrl) 
         {
             scope.showCircle = false;
-            // element.on("mouseenter", function()
-            // {
-            //     console.log("mouseenter");
-            //     scope.showCircle = true;
-            // });
-            
-            // element.on("mouseleave", function()
-            // {
-            //     console.log("mouseleave");
-            //     scope.showCircle = false;
-            // });
-            
+
             scope.enterCircle = function()
             {
                 scope.showCircle = true;
