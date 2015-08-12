@@ -359,11 +359,13 @@ drawer-menu-directive > nav > a {text-align:center;}
   top: 50%;
   right: 0;
   cursor:pointer;
+  z-index: 100;
 }
 .circle-left {
   position:absolute;
   top: 50%;
   left: 0;
   cursor:pointer;
+  z-index: 100;
 }
 .relative {position:relative;}

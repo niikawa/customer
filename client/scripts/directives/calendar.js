@@ -13,7 +13,7 @@ myApp.directive('calendarDirective', function()
         replace: true,
         link: function (scope, element, attrs, ctrl) 
         {
-            scope.showCircle = true;
+            scope.showCircle = false;
             // element.on("mouseenter", function()
             // {
             //     console.log("mouseenter");
@@ -28,13 +28,13 @@ myApp.directive('calendarDirective', function()
             
             scope.enterCircle = function()
             {
-//                scope.showCircle = true;
-            }
+                scope.showCircle = true;
+            };
             
             scope.leaveCircle = function()
             {
-//                scope.showCircle = false;
-            }
+                scope.showCircle = false;
+            };
         }
     };
 });
