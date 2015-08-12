@@ -324,10 +324,10 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
 
         //スケジュールの期間指定はdocumentDBにデータが入っているため
         //データを取得する必要がある
-        var num = data.length;
+        var dataNum = data.length;
         var docIdList = [];
 
-        for (var index = 0; index < num; index++)
+        for (var index = 0; index < dataNum; index++)
         {
             var target = data[index];
             //スケジュール型期間指定の場合
@@ -358,10 +358,9 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
             function(docs, callback)
             {
                 console.log("calendar crate");
-                var docNum = docs.length;
                 var docsObject = (null === docs) ? {} : createDocsObject(docs);
 
-                for (var index = 0; index < docNum; index++)
+                for (var index = 0; index < dataNum; index++)
                 {
                     var target = data[index];
                     console.log(target);
@@ -390,7 +389,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                                 });
                             }
                         }
-                        else if (null !== target.scenario_action_document_id && 2 === target.scenario_type_value)
+                        else if (null !== target.scenario_action_document_id && 1 === target.scenario_type_value)
                         {
                             //スケジュール型 期間指定の場合
                             var doc = docsObject[target.scenario_action_document_id];
