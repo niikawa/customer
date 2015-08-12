@@ -8,7 +8,7 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
         console.log("CalendarCtrl initialize");
         Calendar.resource.get().$promise.then(function(response)
         {
-            console.log(response);
+            $scope.calendarList = response.data;
         });
     };
     
