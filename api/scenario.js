@@ -274,6 +274,48 @@ exports.getExecutePlanScenario = function(req, res)
 };
 
 /**
+ * 実行予定のシナリオをカレンダー表示用に整形した結果を取得する
+ * 
+ * @param {Object} req 画面からのリクエスト
+ * @param {Object} res 画面へのレスポンス
+ */
+exports.getExecutePlanScenarioToCalendar = function(req, res)
+{
+    var col = "T1.scenario_id, T1.scenario_name, T2.expiration_start_date, T2.expiration_end_date "+
+        "CASE T1.scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type, "+
+        "CASE T1.scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key";
+    
+    var table = tableName + " T1 LEFT JOIN M_SCHEDULE_SCENARIO T2 ON T1.scenario_id = T2.scenario_id ";
+    var where = "T1.delete_flag = 0 AND T1.approach = 1 AND T1.status = 1";
+    where += " AND ( T2.expiration_start_date is null OR (T2.expiration_start_date BETWEEN @start AND @end)";
+    
+    var order = "T1.priority, T1.scenario_id";
+    var qObj =  model.getQueryObject(col, table, where, '', order);
+    
+    var start = moment().format("YYYY/MM/DD") + " 00:00:00";
+    var end = moment().add(5, 'day').format("YYYY/MM/DD") + " 00:00:00" ;
+
+    console.log(start);
+    console.log(end);
+    
+    qObj.request.input('start', model.db.NVarChar, start);
+    qObj.request.input('end', model.db.NVarChar, end);
+
+    model.select(qObj, qObj.request, function(err, data)
+    {
+        if (err.length > 0)
+        {
+            console.log('get execute plan scenario faild');
+            console.log(err);
+            res.status(510).send('シナリオ情報の取得に失敗しました');
+        }
+        
+        res.json({data: data});
+    });
+
+};
+
+/**
  * アプローチ対象のシナリオを無効にする
  * 
  * @param {Object} req 画面からのリクエスト
@@ -1265,6 +1307,12 @@ exports.isSameName = function(req, res)
     }
 };
 
+/**
+ * action.jsonからパラメータのnameと合致する情報を取得する
+ * 
+ * @param {Object} req 画面からのリクエスト
+ * @param {Object} res 画面へのレスポンス
+ */
 exports.getActionByName = function(req, res)
 {
     var physicalname = req.params.name;

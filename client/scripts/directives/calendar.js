@@ -4,26 +4,38 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
     $scope.initialize = function()
     {
         console.log("CalendarCtrl initialize");
-//        Calendar.resource()
-        
+        Calendar.resource.get().$promise.then(function(response)
+        {
+            console.log(response);
+        });
+    };
+    
+    $scope.nextDay = function()
+    {
         
     };
+    
+    $scope.deforeDay = function()
+    {
+        
+    };
+    
+    $scope.showMonth = function()
+    {
+        
+    };
+    
 }]);
 myApp.factory("Calendar", ['$resource','Utility', function($resource, Utility) 
 {
     var calendarServices = {};
     
-    calendarServices.resource = $resource('/bug/', {}, 
+    calendarServices.resource = $resource('/calendar/', {}, 
     {
-        getWeek:
+        calendar:
         {
             method:"GET",
-            url: "/bug"
-        },
-        getMonth:
-        {
-            method:"GET",
-            url: "/bug/resolve/:id"
+            url: "calendar"
         },
     });
     
