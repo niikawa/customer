@@ -4,7 +4,7 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
     $scope.initialize = function()
     {
         console.log("CalendarCtrl initialize");
-        Calendar.resource()
+//        Calendar.resource()
         
         
     };
