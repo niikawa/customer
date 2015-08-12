@@ -108,6 +108,14 @@ exports.saveItemForWeb = function(isCrate ,parameters, callback)
     }
 };
 
+exports.getItemByIdsForWeb = function(idList, columnList, callback)
+{
+    Scenario.getItemByIds(idList, columnList, function(err, doc)
+    {
+        callback(err,doc);
+    });
+};
+
 exports.removeItemForWeb = function(id, callback)
 {
     Scenario.removeItem(id, function(err, doc)

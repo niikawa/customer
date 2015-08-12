@@ -341,7 +341,6 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                 docIndexList.push(index);
             }
             
-            //
             Object.keys(calendar).forEach(function(key)
             {
                 if (2 === target.scenario_type_value)
@@ -365,24 +364,30 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                         });
                     }
                 }
-                else
-                {
-                    console.log("nothing!!");
-                }
             });
         }
         
-        res.json({data: calendar});
-        
-        // if (0 < docIdList.length)
-        // {
-        //     //
-        // }
-        // else
-        // {
-        //     res.json({data: calendardata});
-        // }
-
+        if (0 < docIdList.length)
+        {
+            scenariodoc.getItemByIdsForWeb(docIdList, ["*"], function(err, docs)
+            {
+                if (err)
+                {
+                    console.log(err);
+                }
+                else
+                {
+                    console.log(docs);
+                    
+                    
+                    res.json({data: calendar});
+                }
+            });
+        }
+        else
+        {
+            res.json({data: calendar});
+        }
     });
 
 };
