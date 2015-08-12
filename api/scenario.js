@@ -281,7 +281,7 @@ exports.getExecutePlanScenario = function(req, res)
  */
 exports.getExecutePlanScenarioToCalendar = function(req, res)
 {
-    var col = "T1.scenario_id, T1.scenario_name, T2.expiration_start_date, T2.expiration_end_date "+
+    var col = "T1.scenario_id, T1.scenario_name, T2.expiration_start_date, T2.expiration_end_date, "+
         "CASE T1.scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type, "+
         "CASE T1.scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key";
     

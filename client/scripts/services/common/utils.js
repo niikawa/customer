@@ -158,15 +158,15 @@ utilsServices.service("Utility", ['$rootScope', function($rootScope)
     //
     this.addDay = function(a, b) {
 
-        return moment(a).add(moment(b), 'day');
+        return moment(a).add(b, 'day');
     };
     this.addMonth = function(a, b) {
 
-        return moment(a).add(moment(b), 'month');
+        return moment(a).add(b, 'month');
     };
     this.addYear = function(a, b) {
 
-        return moment(a).add(moment(b), 'year');
+        return moment(a).add(b, 'year');
     };
     //
     // subtract
