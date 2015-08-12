@@ -325,7 +325,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
         var num = data.length;
         var docIdList = [];
         var docIndexList = [];
-        for (var index = 0; num < index; index++)
+        for (var index = 0; index < num; index++)
         {
             var target = data[index];
             console.log(target);
