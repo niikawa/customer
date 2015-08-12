@@ -355,12 +355,15 @@ drawer-menu-directive > nav > a {text-align:center;}
  * /calendar.js
  */
 .circle-right {
-  position:relative;
+  position:absolute;
   top: 50%;
   right: 0;
+  cursor:pointer;
 }
 .circle-left {
-  position:relative;
+  position:absolute;
   top: 50%;
   left: 0;
+  cursor:pointer;
 }
+.relative {position:relative;}
