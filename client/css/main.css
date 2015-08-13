@@ -942,6 +942,7 @@ ul.label-item > li > span.sc-single {
   margin: 5px;
   font-weight: bold;
   padding: 5px;
+  font-size: 0.8em;
 }
 ul.label-item > li > span.trigger{
   background-color: #8b90be;
