@@ -416,8 +416,8 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                             else if (3 === doc.interval)
                             {
                                 var day = model.momoent(key).format("D");
-                                var datIndex = Number(day) - 1;
-                                isAdd = doc.daysCondition[datIndex].check;
+                                var dayIndex = Number(day) - 1;
+                                isAdd = doc.daysCondition[dayIndex].check;
                             }
                             target.scenario_type_detail = 3;
                         }
@@ -437,6 +437,19 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
         ], 
         function(err)
         {
+            //月カレンダーの場合はさらに整形する
+            if (req.params.hasOwnProperty("year") && req.params.hasOwnProperty("month"))
+            {
+                //該当日が第N週かを求める
+                Object.keys(calendar).forEach(function(key)
+                {
+                    var day = model.momoent(key).format("D");
+                    var weekday = model.momoent(key).format("e");
+                    var d =Math.floor((day - weekday + 12) / 7);
+                    console.log(day + "is" + weekday + ":" + d);
+                });
+            }
+            
             res.json({data: calendar});
         });
      });
