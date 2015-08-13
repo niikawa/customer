@@ -15,6 +15,8 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
     $scope.nextDay = function()
     {
         var days = Object.keys($scope.calendarList);
+        console.log(days.length);
+        console.log(days[days.length-1]);
         var last = Utility.moment(days[days.length-1]).format("YYYY-MM-DD");
         var next = Utility.addDay(last, 1).format("YYYY-MM-DD");
         
@@ -31,7 +33,19 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
     
     $scope.deforeDay = function()
     {
+        var days = Object.keys($scope.calendarList);
+        var last = Utility.moment(days[0]).format("YYYY-MM-DD");
+        var next = Utility.subtractDay(last, 1).format("YYYY-MM-DD");
         
+        Calendar.resource.oneDay({day: next}).$promise.then(function(response)
+        {
+            console.log($scope.calendarList);
+            console.log(Object.keys($scope.calendarList)[0]);
+            delete $scope.calendarList[Object.keys($scope.calendarList)[0]];
+            var nextKey = Object.keys(response.data);
+            console.log(nextKey);
+            $scope.calendarList[nextKey] = response.data[nextKey];
+        });
     };
     
     $scope.showMonth = function()
