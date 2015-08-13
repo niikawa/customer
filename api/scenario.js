@@ -453,7 +453,6 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                     
                     console.log(day + "is " + weekday + " : " + weekCount);
                     
-                    //0:日 1:月 2:火 3:水 4:木 5:金 6:土
                     if (weekCount !== deforeCount)
                     {
                         calendarOfMonth[deforeCount] = weekList;
