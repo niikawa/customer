@@ -929,6 +929,7 @@ ul.label-item {
 ul.label-item > li {
   padding-left: 5px;
   margin: 5px;
+  line-height:2.2em;
 }
 
 ul.label-item > li > span {
@@ -936,6 +937,8 @@ ul.label-item > li > span {
   border-radius: 8px;
   color: #FFF;
   margin: 5px;
+  font-weight: bold;
+  padding: 5px;
 }
 
 /*-----------------------------------------------*/
