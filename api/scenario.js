@@ -298,9 +298,21 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
     var order = "T1.priority, T1.scenario_id";
     var qObj =  model.getQueryObject(col, table, where, '', order);
     
-    var period = 6;
-    var start = moment().format("YYYY/MM/DD") + " 00:00:00";
-    var end = moment().add(period, 'day').format("YYYY/MM/DD") + " 00:00:00" ;
+    var period = 0;
+    var start ='';
+    var end ='';
+    if (req.params.hasOwnProperty("day"))
+    {
+        start = moment(req.params.day).format("YYYY/MM/DD") + " 00:00:00";
+        end = moment(req.params.day).format("YYYY/MM/DD") + " 23:59:59"; 
+    }
+    else
+    {
+        //初期表示の場合は6を初期値とする
+        period = 6;
+        start = moment().format("YYYY/MM/DD") + " 00:00:00";
+        end = moment().add(period, 'day').format("YYYY/MM/DD") + " 00:00:00" ;
+    }
     
     var calendar = {};
     for (var i = 0; i < period; i++)

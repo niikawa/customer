@@ -14,7 +14,15 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
     
     $scope.nextDay = function()
     {
-        
+        var days = Object.keys($scope.calendarList);
+        var last = Utility.moment(days[days.length]);
+        console.log(last);
+        var next = Utility.add(last, 1).format("YYYY-MM-DD");
+        Calendar.resource.nextDay({day: next}).$promise.then(function(response)
+        {
+            $scope.calendarList.shift();
+            $scope.calendarList.push(response.data);
+        });
     };
     
     $scope.deforeDay = function()
@@ -34,10 +42,15 @@ myApp.factory("Calendar", ['$resource','Utility', function($resource, Utility)
     
     calendarServices.resource = $resource('/calendar/', {}, 
     {
-        calendar:
+        nextDay:
         {
             method:"GET",
-            url: "calendar"
+            url: "calendar/:defore/:day"
+        },
+        deforeDay:
+        {
+            method:"GET",
+            url: "calendar/:defore/:day"
         },
     });
     

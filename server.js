@@ -126,6 +126,7 @@ router.delete('/scenario/:type/remove/:id', scenario.remove);
 router.get('/action/:name', scenario.getActionByName);
 
 router.get('/calendar', scenario.getExecutePlanScenarioToCalendar);
+router.get('/calendar/:action/:day', scenario.getExecutePlanScenarioToCalendar);
 
 
 var approach = require("./api/approach");
