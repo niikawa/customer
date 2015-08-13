@@ -303,11 +303,9 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
     var end ='';
     if (req.params.hasOwnProperty("day"))
     {
-        console.log(req.params.day);
         start = moment(req.params.day).format("YYYY/MM/DD") + " 00:00:00";
         end = moment(req.params.day).format("YYYY/MM/DD") + " 23:59:59"; 
         period = 1;
-        
     }
     else
     {
