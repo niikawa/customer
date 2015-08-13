@@ -18,7 +18,7 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
         var last = Utility.moment(days[days.length]);
         console.log(last);
         var next = Utility.addDay(last, 1).format("YYYY-MM-DD");
-        Calendar.resource.nextDay({day: next}).$promise.then(function(response)
+        Calendar.resource.oneDay({day: next}).$promise.then(function(response)
         {
             $scope.calendarList.shift();
             $scope.calendarList.push(response.data);
@@ -42,15 +42,10 @@ myApp.factory("Calendar", ['$resource','Utility', function($resource, Utility)
     
     calendarServices.resource = $resource('/calendar/', {}, 
     {
-        nextDay:
+        oneDay:
         {
             method:"GET",
-            url: "calendar/:defore/:day"
-        },
-        deforeDay:
-        {
-            method:"GET",
-            url: "calendar/:defore/:day"
+            url: "calendar/one/:day"
         },
     });
     
