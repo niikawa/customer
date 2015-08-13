@@ -12,7 +12,7 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
         });
     };
     
-    $scope.nextDay = function()
+    $scope.nextDa = function()
     {
         var days = Object.keys($scope.calendarList);
         var last = Utility.moment(days[days.length-1]).format("YYYY-MM-DD");
@@ -49,6 +49,12 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
     $scope.showMonth = function()
     {
         
+        var year = Utility.moment(Object.keys($scope.calendarList)[0]).format("YYYY");
+        var month = Utility.moment(Object.keys($scope.calendarList)[0]).format("M");
+        Calendar.resource.month({year:year, month: month}).$promise.then(function(response)
+        {
+            
+        });
     };
     
 }]);
@@ -62,6 +68,11 @@ myApp.factory("Calendar", ['$resource','Utility', function($resource, Utility)
         {
             method:"GET",
             url: "calendar/one/:day"
+        },
+        month:
+        {
+            method:"GET",
+            url: "calendar/:year/:month"
         },
     });
     
@@ -100,6 +111,12 @@ myApp.directive('calendarDirective', function()
             scope.isScSingle = function(type)
             {
                 return  3 === type;
+            };
+            
+            scope.nextDay = function()
+            {
+                console.log("directive nextday");
+                ctrl.nextDa();
             };
         }
     };
