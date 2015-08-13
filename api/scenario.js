@@ -310,7 +310,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
     else
     {
         //初期表示の場合は6を初期値とする
-        period = 6;
+        period = 5;
         start = moment().format("YYYY/MM/DD") + " 00:00:00";
         end = moment().add(period, 'day').format("YYYY/MM/DD") + " 00:00:00" ;
     }

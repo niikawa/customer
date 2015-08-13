@@ -29,6 +29,13 @@
     </div>
     
     <div class="box">
+        <h4>シナリオカレンダー
+            <button ng-if="isShowExecutePlanScenario" class="btn btn-default" ng-click="bulkInvalid()">一括無効</button>
+            <calendar-directive ></calendar-directive>
+        </h4>
+    </div>
+
+    <div class="box">
         <h4>実行予定のシナリオ
             <button ng-if="isShowExecutePlanScenario" class="btn btn-default" ng-click="bulkInvalid()">一括無効</button>
         </h4>
@@ -55,4 +62,5 @@
             </div>
         </div>
     </div>
+
 </div>

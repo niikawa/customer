@@ -953,8 +953,9 @@ ul.label-item > li > span.sc-single {
   background-color: #42AAC7;
 }
 
-ul.legend > li {
+ul.legend > li > span {
   float:left;
+  font-size: 0.8em;
 }
 /*-----------------------------------------------*/
 /* rate
