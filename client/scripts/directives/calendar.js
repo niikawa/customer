@@ -17,7 +17,7 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
         var days = Object.keys($scope.calendarList);
         var last = Utility.moment(days[days.length]);
         console.log(last);
-        var next = Utility.add(last, 1).format("YYYY-MM-DD");
+        var next = Utility.addDay(last, 1).format("YYYY-MM-DD");
         Calendar.resource.nextDay({day: next}).$promise.then(function(response)
         {
             $scope.calendarList.shift();
