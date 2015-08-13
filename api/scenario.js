@@ -459,6 +459,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                         weekList = {sun: {}, mon: {}, tue: {}, wed: {}, thu: {}, fri: {}, sat: {}};
                     }
                     weekList[weekday] = calendar[key];
+                    weekList[weekday].date = key;
                     deforeCount = weekCount;
                 });
                 console.log(calendarOfMonth);
