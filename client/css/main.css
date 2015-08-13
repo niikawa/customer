@@ -916,19 +916,19 @@ div .card-cell-right-b {
     white-space: nowrap;
 }
 
-ul.label {
-    font-size: 100%;
-    line-height: 2.5;
-    margin-right: 5px;  
-    list-style-type: none;
-    text-align:left;
+ul.label-item {
+  font-size: 100%;
+  line-height: 2.5;
+  margin-right: 5px;  
+  list-style-type: none;
+  text-align:left;
 }
-ul.label > li {
+ul.label-item > li {
   padding-left: 5px;
   margin: 5px;
 }
 
-ul.label > li > span {
+ul.label-item > li > span {
   border-radius: 0.25;
   background-color: #1BA466;
 }
