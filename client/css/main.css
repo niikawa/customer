@@ -947,12 +947,15 @@ ul.label-item > li > div.sc-single {
   padding: 5px;
   font-size: 0.8em;
 }
-ul.label-item > li > div.trigger{
+ul.label-item > li > div.trigger,
+ul.label-item > li > span.trigger {
   background-color: #8b90be;
 }
-ul.label-item > li > div.sc-priod{
+ul.label-item > li > div.sc-priod,
+ul.label-item > li > span.sc-priod{
   background-color: #1BA466;
 }
+ul.label-item > li > div.sc-single,
 ul.label-item > li > div.sc-single {
   background-color: #42AAC7;
 }
