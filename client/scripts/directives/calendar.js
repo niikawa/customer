@@ -16,12 +16,13 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
     {
         var days = Object.keys($scope.calendarList);
         var last = Utility.moment(days[days.length]);
-        console.log(last);
         var next = Utility.addDay(last, 1).format("YYYY-MM-DD");
         Calendar.resource.oneDay({day: next}).$promise.then(function(response)
         {
-            $scope.calendarList.shift();
-            $scope.calendarList.push(response.data);
+            console.log($scope.calendarList);
+            delete $scope.calendarList[Object.keys($scope.calendarList)[0]];
+            var nextKey = Object.keys(response.data);
+            $scope.calendarList[nextKey] = response.data[nextKey];
         });
     };
     
