@@ -950,7 +950,11 @@ ul.label-item > li > span.sc-priod{
   background-color: #1BA466;
 }
 ul.label-item > li > span.sc-single {
-  background-color: #1BA466;
+  background-color: #42AAC7;
+}
+
+ul.legend > li {
+  float:left;
 }
 /*-----------------------------------------------*/
 /* rate

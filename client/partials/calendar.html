@@ -1,4 +1,15 @@
     <div class="box" ng-mouseenter="enterCircle()" ng-mouseleave="leaveCircle()" ng-init="initialize()">
+        
+        <div class="row ">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <ul class="label-item legend">
+                    <li><span class="trigger">トリガー型シナリオ</span></li>
+                    <li><span class="sc-priod">スケジュール型シナリオ：期間指定</span></li>
+                    <li><span class="sc-single">スケジュール型シナリオ：日付指定</span></li>
+                </ul>
+            </div>
+        </div>
+        
         <div class="row relative">
             <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left" ng-click="deforeDay()"></i>
             <div class="row-height">
@@ -13,9 +24,6 @@
                                     </span>
                                 </li>
                             </ul>
-                            <!--<span class="label" ng-repeat="item in items">-->
-                            <!--    <i ng-if="1==item.scenario_type_value" class="fa fa-calendar-o"></i>{{item.scenario_name}}-->
-                            <!--</span>-->
                         </div>
                     </div>
                 </div>
