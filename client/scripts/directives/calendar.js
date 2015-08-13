@@ -36,8 +36,9 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
         
         Calendar.resource.oneDay({day: next}).$promise.then(function(response)
         {
-            console.log(Object.keys($scope.calendarList)[$scope.calendarList.length-1]);
-            delete $scope.calendarList[Object.keys($scope.calendarList)[$scope.calendarList.length-1]];
+            var days = Object.keys($scope.calendarList);
+            console.log(days[days.length-1]);
+            delete $scope.calendarList[days[days.length-1]];
             var minKey = Object.keys(response.data);
             var newList = {};
             newList[minKey] = response.data[minKey];
