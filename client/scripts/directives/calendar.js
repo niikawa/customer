@@ -20,11 +20,8 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
         
         Calendar.resource.oneDay({day: next}).$promise.then(function(response)
         {
-            console.log($scope.calendarList);
-            console.log(Object.keys($scope.calendarList)[0]);
             delete $scope.calendarList[Object.keys($scope.calendarList)[0]];
             var nextKey = Object.keys(response.data);
-            console.log(nextKey);
             $scope.calendarList[nextKey] = response.data[nextKey];
         });
     };
@@ -37,8 +34,6 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
         Calendar.resource.oneDay({day: next}).$promise.then(function(response)
         {
             var days = Object.keys($scope.calendarList);
-            console.log(days);
-            console.log(days[days.length-1]);
             delete $scope.calendarList[days[days.length-1]];
             var minKey = Object.keys(response.data);
             var newList = {};
