@@ -12,7 +12,7 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
         });
     };
     
-    $scope.nextDa = function()
+    $scope.nextDay = function()
     {
         var days = Object.keys($scope.calendarList);
         var last = Utility.moment(days[days.length-1]).format("YYYY-MM-DD");
@@ -111,12 +111,6 @@ myApp.directive('calendarDirective', function()
             scope.isScSingle = function(type)
             {
                 return  3 === type;
-            };
-            
-            scope.nextDay = function()
-            {
-                console.log("directive nextday");
-                ctrl.nextDa();
             };
         }
     };

@@ -9,7 +9,7 @@
                 </ul>
             </div>
             <div class="pull-right">
-                <i class="fa fa-expand fa-2x" ng-click="showMonth()"></i>
+                <i class="fa fa-expand fa-2x" ng-click="showMonth()" ng-disabled="{isCircleRight}"></i>
             </div>
         </div>
         
@@ -31,6 +31,6 @@
                     </div>
                 </div>
             </div>
-            <i ng-if="showCircle" class="fa fa-chevron-circle-right fa-3x circle-right" ng-click="nextDay()"></i>
+            <i ng-if="showCircle" class="fa fa-chevron-circle-right fa-3x circle-right" ng-click="nextDay()" ng-disabled="{isCircleRight}"></i>
         </div>
     </div>
