@@ -2,7 +2,7 @@ var myApp = angular.module('myApp');
 myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scope, Calendar, Utility)
 {
     $scope.calendarList = [];
-    $scope.isCircle = true;
+    var isDisabled = false;
     $scope.initialize = function()
     {
         console.log("CalendarCtrl initialize");
@@ -14,7 +14,8 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
     
     $scope.nextDay = function()
     {
-        $scope.isCircle = true;
+        if (isDisabled) return;
+        isDisabled = true;
         var days = Object.keys($scope.calendarList);
         var last = Utility.moment(days[days.length-1]).format("YYYY-MM-DD");
         var next = Utility.addDay(last, 1).format("YYYY-MM-DD");
@@ -24,15 +25,16 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
             delete $scope.calendarList[Object.keys($scope.calendarList)[0]];
             var nextKey = Object.keys(response.data);
             $scope.calendarList[nextKey] = response.data[nextKey];
-            $scope.isCircle = false;
+            isDisabled = false;
         });
     };
     
     $scope.deforeDay = function()
     {
+        if (isDisabled) return;
+        isDisabled = true;
         var last = Utility.moment(Object.keys($scope.calendarList)[0]).format("YYYY-MM-DD");
         var next = Utility.subtractDay(last, 1).format("YYYY-MM-DD");
-        $scope.isCircle = true;
         
         Calendar.resource.oneDay({day: next}).$promise.then(function(response)
         {
@@ -46,18 +48,19 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
                 newList[key] = $scope.calendarList[key];
             });
             $scope.calendarList = newList;
-            $scope.isCircle = false;
+            isDisabled = false;
         });
     };
     
     $scope.showMonth = function()
     {
-        $scope.isCircle = true;
+        if (isDisabled) return;
+        isDisabled = true;
         var year = Utility.moment(Object.keys($scope.calendarList)[0]).format("YYYY");
         var month = Utility.moment(Object.keys($scope.calendarList)[0]).format("M");
         Calendar.resource.month({year:year, month: month}).$promise.then(function(response)
         {
-            $scope.isCircle = false;
+            isDisabled = false;
         });
     };
     
