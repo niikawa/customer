@@ -307,6 +307,13 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
         end = moment(req.params.day).format("YYYY/MM/DD") + " 23:59:59"; 
         period = 1;
     }
+    else if (req.params.hasOwnProperty("year") && req.params.hasOwnProperty("month"))
+    {
+        var yearMonth = req.params.year + '/' + req.params.month;
+        period = moment(yearMonth).daysInMonth();
+        start = moment(yearMonth+"/01").format("YYYY/MM/DD") + " 00:00:00";
+        end = moment(yearMonth+"/"+period).format("YYYY/MM/DD") + " 23:59:59"; 
+    }
     else
     {
         //初期表示の場合は6を初期値とする
