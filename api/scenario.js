@@ -320,7 +320,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
     var calendar = {};
     for (var i = 0; i < period; i++)
     {
-        var prop = moment().add(i, 'day').format("YYYY/MM/DD (ddd)");
+        var prop = moment(start).add(i, 'day').format("YYYY/MM/DD (ddd)");
         calendar[prop] = [];
     }
 
