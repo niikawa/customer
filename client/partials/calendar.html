@@ -1,6 +1,6 @@
     <div class="box" ng-mouseenter="enterCircle()" ng-mouseleave="leaveCircle()" ng-init="initialize()">
         <div class="row relative">
-            <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left"></i>
+            <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left" ng-click="nextDay()"></i>
             <div class="row-height">
                 <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height" ng-repeat="(day, items) in calendarList">
                     <div class="inside inside-full-height">
@@ -13,6 +13,6 @@
                     </div>
                 </div>
             </div>
-            <i ng-if="showCircle" class="fa fa-chevron-circle-right fa-3x circle-right"></i>
+            <i ng-if="showCircle" class="fa fa-chevron-circle-right fa-3x circle-right" ng-click="deforeDay()"></i>
         </div>
     </div>
