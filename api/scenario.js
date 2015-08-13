@@ -437,20 +437,42 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
         ], 
         function(err)
         {
+            var calendarOfMonth = [];
             //月カレンダーの場合はさらに整形する
             if (req.params.hasOwnProperty("year") && req.params.hasOwnProperty("month"))
             {
-                //該当日が第N週かを求める
+                var weekList = {sun: {}, mon: {}, tue: {}, wed: {}, thu: {}, fri: {}, sat: {}};
+                var deforeCount = 1;
                 Object.keys(calendar).forEach(function(key)
                 {
+                    //該当日が第N週かを求める
                     var day = model.momoent(key).format("D");
-                    var weekday = model.momoent(key).format("e");
-                    var d =Math.floor((day - weekday + 12) / 7);
-                    console.log(day + "is" + weekday + ":" + d);
+                    var weekdayNum = model.momoent(key).format("e");
+                    var weekCount =Math.floor((day - weekdayNum + 12) / 7);
+                    
+                    console.log(day + "is" + weekday + ":" + weekCount);
+                    
+                    var weekday = model.momoent(key).format("dd");
+                    
+                    //0:日 1:月 2:火 3:水 4:木 5:金 6:土
+                    if (weekCount === deforeCount)
+                    {
+                        weekList[weekday] = calendar[key];
+                    }
+                    else
+                    {
+                        calendarOfMonth[weekCount] = weekList;
+                        weekList = {sun: {}, mon: {}, tue: {}, wed: {}, thu: {}, fri: {}, sat: {}};
+                    }
+                    deforeCount = weekCount;
                 });
+                
+                res.json({data: calendarOfMonth});
             }
-            
-            res.json({data: calendar});
+            else
+            {
+                res.json({data: calendar});
+            }
         });
      });
 };
