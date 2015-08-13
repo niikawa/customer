@@ -2,6 +2,7 @@ var myApp = angular.module('myApp');
 myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scope, Calendar, Utility)
 {
     $scope.calendarList = [];
+    $scope.calendarofMonthList = [];
     $scope.isWeek = true;
     $scope.isMonth = false;
     var isDisabled = false;
@@ -63,6 +64,9 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
         Calendar.resource.month({year:year, month: month}).$promise.then(function(response)
         {
             isDisabled = false;
+            $scope.isWeek = false;
+            $scope.isMonth = true;
+            $scope.calendarofMonthList = response.data;
         });
     };
     
