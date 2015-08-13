@@ -449,24 +449,20 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                     var day = model.momoent(key).format("D");
                     var weekdayNum = model.momoent(key).format("e");
                     var weekCount =Math.floor((day - weekdayNum + 12) / 7);
-                    
-                    console.log(day + "is" + weekday + ":" + weekCount);
-                    
                     var weekday = model.momoent(key).format("dd");
                     
+                    console.log(day + "is " + weekday + " : " + weekCount);
+                    
                     //0:日 1:月 2:火 3:水 4:木 5:金 6:土
-                    if (weekCount === deforeCount)
+                    if (weekCount !== deforeCount)
                     {
-                        weekList[weekday] = calendar[key];
-                    }
-                    else
-                    {
-                        calendarOfMonth[weekCount] = weekList;
+                        calendarOfMonth[deforeCount] = weekList;
                         weekList = {sun: {}, mon: {}, tue: {}, wed: {}, thu: {}, fri: {}, sat: {}};
                     }
+                    weekList[weekday] = calendar[key];
                     deforeCount = weekCount;
                 });
-                
+                console.log(calendarOfMonth);
                 res.json({data: calendarOfMonth});
             }
             else
