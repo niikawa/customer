@@ -916,13 +916,13 @@ div .card-cell-right-b {
     white-space: nowrap;
 }
 
-ul .label {
+ul.label {
     font-size: 100%;
     line-height: 2.5;
     margin-right: 5px;  
     list-style-type: none
 }
-ul .label > li > span {
+ul.label > li > span {
   background-color: #1BA466;
 }
 
