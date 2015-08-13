@@ -15,7 +15,7 @@
         </div>
         
         <div class="row relative">
-            <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left" ng-click="deforeDay()"  ng-disabled="{isCircle}"></i>
+            <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left" ng-click="deforeDay()"  ng-disabled="isCircle"></i>
             <div class="row-height">
                 <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height" ng-repeat="(day, items) in calendarList">
                     <div class="inside inside-full-height">
@@ -32,6 +32,6 @@
                     </div>
                 </div>
             </div>
-            <i ng-if="showCircle" class="fa fa-chevron-circle-right fa-3x circle-right" ng-click="nextDay()" ng-disabled="{isCircle}"></i>
+            <i ng-if="showCircle" class="fa fa-chevron-circle-right fa-3x circle-right" ng-click="nextDay()" ng-disabled="isCircle"></i>
         </div>
     </div>

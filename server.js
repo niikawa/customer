@@ -127,6 +127,7 @@ router.get('/action/:name', scenario.getActionByName);
 
 router.get('/calendar', scenario.getExecutePlanScenarioToCalendar);
 router.get('/calendar/one/:day', scenario.getExecutePlanScenarioToCalendar);
+router.get('/calendar/:year/:month', scenario.getExecutePlanScenarioToCalendar);
 
 
 var approach = require("./api/approach");
