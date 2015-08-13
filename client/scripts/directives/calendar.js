@@ -88,6 +88,19 @@ myApp.directive('calendarDirective', function()
             {
                 scope.showCircle = false;
             };
+            
+            scope.isTrigger = function(type)
+            {
+                return  1 === type;
+            };
+            scope.isScPriod = function(type)
+            {
+                return  2 === type;
+            };
+            scope.isScSingle = function(type)
+            {
+                return  3 === type;
+            };
         }
     };
 });

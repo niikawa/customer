@@ -384,6 +384,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                         if (2 === target.scenario_type_value)
                         {
                             isAdd = true;
+                            target.scenario_type_detail = 1;
                         }
                         else if (null === target.scenario_action_document_id && 1 === target.scenario_type_value)
                         {
@@ -391,6 +392,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                             var keyDay = moment(key).format("YYYY-MM-DD");
                             var day = moment(target.expiration_start_date).format("YYYY-MM-DD");
                             isAdd = (keyDay === day);
+                            target.scenario_type_detail = 2;
                         }
                         else if (null !== target.scenario_action_document_id && 1 === target.scenario_type_value)
                         {
@@ -410,6 +412,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                                 var datIndex = Number(day) - 1;
                                 isAdd = doc.daysCondition[datIndex].check;
                             }
+                            target.scenario_type_detail = 3;
                         }
                         if (isAdd)
                         {
