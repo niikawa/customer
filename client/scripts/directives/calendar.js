@@ -15,12 +15,7 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
     $scope.nextDay = function()
     {
         var days = Object.keys($scope.calendarList);
-        console.log(days);
-        console.log(days[days.length]);
-        
-        var last = Utility.moment(days[days.length]).format("YYYY-MM-DD");
-        
-        console.log(last);
+        var last = Utility.moment(days[days.length-1]).format("YYYY-MM-DD");
         var next = Utility.addDay(last, 1).format("YYYY-MM-DD");
         
         Calendar.resource.oneDay({day: next}).$promise.then(function(response)
