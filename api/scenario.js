@@ -561,6 +561,7 @@ exports.savePriority = function(req, res)
         delete item.scenario_name;
         delete item.scenario_type;
         delete item.valid_flag;
+        delete item.scenario_type_key;
         
         var updateData = model.merge(item, commonColumns);
 
