@@ -431,8 +431,14 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                                 var dayIndex = Number(model.momoent(key).format("D")) - 1;
                                 isAdd = doc.daysCondition[dayIndex].check;
                                 
-                                //最終日が対象かを判定
-                                
+                                var targetDay = moment(key).format("YYYY-MM-DD");
+                                var targetYearMonth = moment(key).format("YYYY-MM") + "/" + moment(key).daysInMonth();
+                                if (targetDay == targetYearMonth)
+                                {
+                                    //最終日の場合は日付のチェックが優先される
+                                    var lastIndex = doc.daysCondition.length -1;
+                                    isAdd = doc.daysCondition[lastIndex].check || isAdd; 
+                                }
                             }
                             target.scenario_type_detail = 3;
                         }
