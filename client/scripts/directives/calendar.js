@@ -79,6 +79,8 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
             $scope.isWeek = false;
             $scope.isMonth = true;
             $scope.calendarofMonthList = response.data;
+            $scope.year = response.year;
+            $scope.month = response.month;
         });
     };
 

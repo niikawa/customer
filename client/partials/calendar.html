@@ -37,25 +37,30 @@
         </div>
         
         <!-- month -->
-        <div ng-if="isMonth" class="row relative">
-            <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left" ng-click="deforeMonth()" ></i>
-            <div class="row-height"  ng-repeat="(weekCount, weekItem) in calendarofMonthList">
-                <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height" ng-repeat="(dayMin, items) in weekItem">
-                    <div class="inside inside-full-height">
-                        <div>
-                            <p ng-if="items.date">{{items.date}}</p>
-                            <p ng-if="!items.date">&nbsp;</p>
-                            <ul class="label-item">
-                                <li  class="" ng-repeat="item in items.scenario">
-                                    <div ng-class="{'trigger': isTrigger(item.scenario_type_detail), 'sc-priod': isScPriod(item.scenario_type_detail), 'sc-single': isScSingle(item.scenario_type_detail)}">
-                                        <i ng-if="1==item.scenario_type_value" class="fa fa-calendar-o"></i>{{item.scenario_name}}
-                                    </div>
-                                </li>
-                            </ul>
+        <div ng-if="isMonth" >
+            <div class="center">
+                {{year}}{{month}}
+            </div>
+            <div class="row relative">
+                <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left" ng-click="deforeMonth()" ></i>
+                <div class="row-height"  ng-repeat="(weekCount, weekItem) in calendarofMonthList">
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height" ng-repeat="(dayMin, items) in weekItem">
+                        <div class="inside inside-full-height">
+                            <div>
+                                <p ng-if="items.date">{{items.date}}</p>
+                                <p ng-if="!items.date">&nbsp;</p>
+                                <ul class="label-item">
+                                    <li  class="" ng-repeat="item in items.scenario">
+                                        <div ng-class="{'trigger': isTrigger(item.scenario_type_detail), 'sc-priod': isScPriod(item.scenario_type_detail), 'sc-single': isScSingle(item.scenario_type_detail)}">
+                                            <i ng-if="1==item.scenario_type_value" class="fa fa-calendar-o"></i>{{item.scenario_name}}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <i ng-if="showCircle" class="fa fa-chevron-circle-right fa-3x circle-right" ng-click="nextMonth()" ></i>
             </div>
-            <i ng-if="showCircle" class="fa fa-chevron-circle-right fa-3x circle-right" ng-click="nextMonth()" ></i>
         </div>
     </div>
