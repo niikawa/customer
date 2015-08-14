@@ -453,8 +453,6 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                     var weekday = model.momoent(key).format("dd");
                     var weekDayKey = weekdayNum + weekday;
                     
-                    console.log(day + "is " + weekday + " : " + weekCount);
-                    
                     if (weekCount !== deforeCount)
                     {
                         calendarOfMonth.push(weekList);

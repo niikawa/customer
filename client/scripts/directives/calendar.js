@@ -8,7 +8,6 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
     var isDisabled = false;
     $scope.initialize = function()
     {
-        console.log("CalendarCtrl initialize");
         Calendar.resource.get().$promise.then(function(response)
         {
             $scope.calendarList = response.data;
@@ -55,6 +54,19 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
         });
     };
     
+    $scope.showWeek = function()
+    {
+        if (isDisabled) return;
+        isDisabled = true;
+        Calendar.resource.get().$promise.then(function(response)
+        {
+            isDisabled = false;
+            $scope.isWeek = true;
+            $scope.isMonth = false;
+            $scope.calendarList = response.data;
+        });
+    };
+    
     $scope.showMonth = function()
     {
         if (isDisabled) return;
@@ -69,7 +81,7 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
             $scope.calendarofMonthList = response.data;
         });
     };
-    
+
 }]);
 myApp.factory("Calendar", ['$resource','Utility', function($resource, Utility) 
 {

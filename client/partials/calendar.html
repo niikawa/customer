@@ -8,7 +8,8 @@
                     <li><span class="sc-single">スケジュール型シナリオ：日付指定</span></li>
                 </ul>
                 <div class="pull-right">
-                    <i class="fa fa-expand fa-2x pointer" ng-click="showMonth()"></i>
+                    <i ng-if="isWeek" class="fa fa-expand fa-2x pointer" ng-click="showMonth()"></i>
+                    <i ng-if="isMonth" class="fa fa-compress fa-2x pointer" ng-click="showWeek()"></i>
                 </div>
             </div>
         </div>
