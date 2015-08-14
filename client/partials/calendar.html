@@ -38,8 +38,16 @@
         
         <!-- month -->
         <div ng-if="isMonth" >
-            <div class="center">
-                <span class="cal-year">{{year}}</span><span class="cal-month">{{month}}</span><span class="cal-year">月</span>
+            <div class="row">
+                <div class="pull-left">
+                    <span class="cal-month">{{month}}</span><span class="cal-year">月</span>
+                    </div>
+                <div class="center">
+                    <span class="cal-year">{{year}}</span><span class="cal-month">{{month}}</span><span class="cal-year">月</span>
+                </div>
+                <div class="pull-right">
+                    <span class="cal-month">{{month}}</span><span class="cal-year">月</span>
+                </div>
             </div>
             <div class="row relative">
                 <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left" ng-click="deforeMonth()" ></i>
@@ -48,21 +56,33 @@
                         <div class="inside inside-full-height">
                             日
                         </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
                         <div class="inside inside-full-height">
                             月
                         </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
                         <div class="inside inside-full-height">
                             火
                         </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
                         <div class="inside inside-full-height">
                             水
                         </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
                         <div class="inside inside-full-height">
                             木
                         </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
                         <div class="inside inside-full-height">
                             金
                         </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
                         <div class="inside inside-full-height">
                             土
                         </div>
