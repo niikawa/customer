@@ -22,7 +22,7 @@
             refine-directive refine-item="actionList" keyword="actionSearch" name-propertie="logicalname|description" >
         </div>
         <ul class="list-group overflow-box-l" >
-            <li class="list-group-item" ng-repeat="item in actionList" 
+            <li class="list-group-item clearfix" ng-repeat="item in actionList" 
                 push-directive info="item" ng-click="showAction(item.physicalname)" active="activeName" activekey="physicalname">
                 <p>{{item.logicalname}}</p>
                 <section>{{item.description}}</section>
@@ -82,7 +82,7 @@
             
             <div class="col-md-12 col-sm-12">
                 <ul class="list-group">
-                    <li class="list-group-item fixed-60" ng-repeat="(i,item) in decisionList">
+                    <li class="list-group-item clearfix" ng-repeat="(i,item) in decisionList">
                         <span class="label label-success">条件{{i+1}}</span>{{item}}
                         <button type="button" class="close-button-right" ng-click="removeDecisionList(i)"><i class="fa fa-times"></i></button>
                     </li>

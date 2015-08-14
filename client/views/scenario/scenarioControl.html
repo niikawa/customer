@@ -45,7 +45,7 @@
                             </div>
                             <ul class="list-group overflow-box-s" name="segment" 
                                 ng-model="scenario.segment_id" my-validators="validators.segment">
-                                <li class="list-group-item" ng-repeat="item in segmentList" push-directive list="segmentList" info="item" active="scenario.segment_id" activekey="segment_id">
+                                <li class="list-group-item clearfix" ng-repeat="item in segmentList" push-directive list="segmentList" info="item" active="scenario.segment_id" activekey="segment_id">
                                 {{item.segment_name}}
                                 </li>
                             </ul>
@@ -61,7 +61,7 @@
                             </div>
                             <ul class="list-group overflow-box-s" name="ifLayout" 
                                 ng-model="scenario.if_layout_id" my-validators="validators.ifLayout">
-                                <li class="list-group-item" ng-repeat="item in ifList" push-directive list="ifList" info="item" active="scenario.if_layout_id" activekey="if_layout_id">
+                                <li class="list-group-item clearfix" ng-repeat="item in ifList" push-directive list="ifList" info="item" active="scenario.if_layout_id" activekey="if_layout_id">
                                 {{item.if_name}}
                                 </li>
                             </ul>

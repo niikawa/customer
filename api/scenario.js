@@ -432,9 +432,11 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                                 isAdd = doc.daysCondition[dayIndex].check;
                                 
                                 var targetDay = moment(key).format("YYYY-MM-DD");
-                                var targetYearMonth = moment(key).format("YYYY-MM") + "/" + moment(key).daysInMonth();
+                                var targetYearMonth = moment(key).format("YYYY-MM") + "-" + moment(key).daysInMonth();
+                                console.log(targetDay + ":" +targetYearMonth);
                                 if (targetDay == targetYearMonth)
                                 {
+                                    
                                     //最終日のチェックが優先される
                                     var lastIndex = doc.daysCondition.length -1;
                                     isAdd = doc.daysCondition[lastIndex].check; 
