@@ -441,7 +441,8 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
             //月カレンダーの場合はさらに整形する
             if (req.params.hasOwnProperty("year") && req.params.hasOwnProperty("month"))
             {
-                var weekList = {sun: {}, mon: {}, tue: {}, wed: {}, thu: {}, fri: {}, sat: {}};
+                //angulerでリピートするときに、objectのプロパティの昇順になっちゃうから数値を含むキーを生成
+                var weekList = {"0sun": {}, "1mon": {}, "2tue": {}, "3wed": {}, "4thu": {}, "5fri": {}, "6sat": {}};
                 var deforeCount = 1;
                 Object.keys(calendar).forEach(function(key)
                 {
@@ -450,16 +451,17 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                     var weekdayNum = model.momoent(key).format("e");
                     var weekCount =Math.floor((day - weekdayNum + 12) / 7);
                     var weekday = model.momoent(key).format("dd");
+                    var weekDayKey = weekdayNum + weekday;
                     
                     console.log(day + "is " + weekday + " : " + weekCount);
                     
                     if (weekCount !== deforeCount)
                     {
                         calendarOfMonth.push(weekList);
-                        weekList = {sun: {}, mon: {}, tue: {}, wed: {}, thu: {}, fri: {}, sat: {}};
+                        weekList = {"0sun": {}, "1mon": {}, "2tue": {}, "3wed": {}, "4thu": {}, "5fri": {}, "6sat": {}};
                     }
-                    weekList[weekday].scenario = calendar[key];
-                    weekList[weekday].date = key;
+                    weekList[weekDayKey].scenario = calendar[key];
+                    weekList[weekDayKey].date = key;
                     deforeCount = weekCount;
                 });
                 console.log(calendarOfMonth);
