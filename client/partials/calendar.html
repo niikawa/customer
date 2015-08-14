@@ -8,7 +8,7 @@
                     <li><span class="sc-single">スケジュール型シナリオ：日付指定</span></li>
                 </ul>
                 <div class="pull-right">
-                    <i class="fa fa-expand fa-2x" ng-click="showMonth()"></i>
+                    <i class="fa fa-expand fa-2x pointer" ng-click="showMonth()"></i>
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
         
         <!-- month -->
         <div ng-if="isMonth" class="row relative">
-            <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left" ng-click="deforeDay()" ></i>
+            <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left" ng-click="deforeMonth()" ></i>
             <div class="row-height"  ng-repeat="(weekCount, weekItem) in calendarofMonthList">
                 <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height" ng-repeat="(dayMin, items) in weekItem">
                     <div class="inside inside-full-height">
@@ -55,6 +55,6 @@
                     </div>
                 </div>
             </div>
-            <i ng-if="showCircle" class="fa fa-chevron-circle-right fa-3x circle-right" ng-click="nextDay()" ></i>
+            <i ng-if="showCircle" class="fa fa-chevron-circle-right fa-3x circle-right" ng-click="nextMonth()" ></i>
         </div>
     </div>
