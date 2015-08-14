@@ -40,52 +40,47 @@
         <div ng-if="isMonth" >
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="pull-left">
-                        <span class="cal-month">{{month}}</span><span class="cal-year">月</span>
-                    </div>
+                    <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left" ng-click="deforeMonth()" ></i>
                     <div class="center">
                         <span class="cal-year">{{year}}</span><span class="cal-month">{{month}}</span><span class="cal-year">月</span>
                     </div>
-                    <div class="pull-right">
-                        <span class="cal-month">{{month}}</span><span class="cal-year">月</span>
-                    </div>
+                    <i ng-if="showCircle" class="fa fa-chevron-circle-right fa-3x circle-right" ng-click="nextMonth()" ></i>
                 </div>
             </div>
             <div class="row relative">
-                <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left" ng-click="deforeMonth()" ></i>
                 <div class="row-height">
                     <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
-                        <div class="inside inside-full-height">
+                        <div class="inside inside-full-height center">
                             日
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
-                        <div class="inside inside-full-height">
+                        <div class="inside inside-full-height center">
                             月
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
-                        <div class="inside inside-full-height">
+                        <div class="inside inside-full-height center">
                             火
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
-                        <div class="inside inside-full-height">
+                        <div class="inside inside-full-height center">
                             水
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
-                        <div class="inside inside-full-height">
+                        <div class="inside inside-full-height center">
                             木
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
-                        <div class="inside inside-full-height">
+                        <div class="inside inside-full-height center">
                             金
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
-                        <div class="inside inside-full-height">
+                        <div class="inside inside-full-height center">
                             土
                         </div>
                     </div>
@@ -108,7 +103,6 @@
                         </div>
                     </div>
                 </div>
-                <i ng-if="showCircle" class="fa fa-chevron-circle-right fa-3x circle-right" ng-click="nextMonth()" ></i>
             </div>
         </div>
     </div>
