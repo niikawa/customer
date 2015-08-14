@@ -730,7 +730,7 @@ div .card-cell-right-b {
   padding: 0;
   height: 100%;
   word-break: break-all;
-  min-height: 50px;
+  min-height: 100px;
 }
 .inside > div > p {
   text-align: center;
@@ -955,7 +955,7 @@ ul.label-item > li > span.trigger {
 }
 ul.label-item > li > div.sc-priod,
 ul.label-item > li > span.sc-priod{
-  background-color: #1BA466;
+  background-color: #E6855E;
 }
 ul.label-item > li > div.sc-single,
 ul.label-item > li > span.sc-single {
