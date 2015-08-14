@@ -129,15 +129,15 @@ myApp.directive('calendarDirective', function()
             
             scope.isTrigger = function(type)
             {
-                return  1 === type;
-            };
-            scope.isScPriod = function(type)
-            {
-                return  2 === type;
+                return 1 === type;
             };
             scope.isScSingle = function(type)
             {
-                return  3 === type;
+                return 2 === type;
+            };
+            scope.isScPriod = function(type)
+            {
+                return 3 === type;
             };
         }
     };

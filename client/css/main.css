@@ -370,6 +370,7 @@ h4 > input {
   border-radius: 4px;
 }
 
+
 /*-----------------------------------------------*/
 /* menu
 /*-----------------------------------------------*/
@@ -959,7 +960,7 @@ ul.label-item > li > span.sc-priod{
 }
 ul.label-item > li > div.sc-single,
 ul.label-item > li > span.sc-single {
-  background-color: #42AAC7;
+  background-color: #40BFB0;
 }
 
 ul.legend > li > span {
@@ -971,9 +972,6 @@ ul.legend > li > span {
 /* rate
 /*-----------------------------------------------*/
 .rate {cursor: pointer;}
-
-
-
 
 ul.release-note {
   padding: 0;

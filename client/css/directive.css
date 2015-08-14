@@ -377,3 +377,8 @@ drawer-menu-directive > nav > a {text-align:center;}
   font-size: 3em;
   color: #007FB1;
 }
+.cal-week-day {
+  font-weight: bold;
+  text-align: center;
+  background-color: #FFF;
+}
