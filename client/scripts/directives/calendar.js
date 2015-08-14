@@ -179,6 +179,10 @@ myApp.directive('calendarDirective', function()
             {
                 return 3 === type;
             };
+            scope.isHoliday = function(dayMin)
+            {
+                return '0sun' == dayMin;
+            };
         }
     };
 });

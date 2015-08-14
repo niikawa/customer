@@ -50,7 +50,7 @@
             <div class="row relative">
                 <div class="row-height">
                     <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
-                        <div class="inside inside-full-height cal-week-day">
+                        <div class="inside inside-full-height cal-week-day holiday">
                             日
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                     <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height" ng-repeat="(dayMin, items) in weekItem">
                         <div class="inside inside-full-height">
                             <div>
-                                <p ng-if="items.date">{{items.date}}</p>
+                                <p ng-if="items.date" ng-class="{'holiday':isHoliday(dayMin)}">{{items.date}}</p>
                                 <p ng-if="!items.date">&nbsp;</p>
                                 <ul class="label-item">
                                     <li  class="" ng-repeat="item in items.scenario">
