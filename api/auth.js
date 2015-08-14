@@ -54,7 +54,7 @@ exports.isLogin = function(req, res)
 exports.login = function(req, res)
 {
     var table = 'M_USER T1 ';
-    var col = ' T1.user_id, T1.name';
+    var col = ' T1.user_id, T1.name, T1.role_id';
     var where = ' T1.delete_flag = 0 AND mailaddress =@mailaddress AND password =@password';
     var qObj = model.getQueryObject(col, table, where, '', '');
     
@@ -75,6 +75,7 @@ exports.login = function(req, res)
             req.session.isLogin = true;
             req.session.userId = userId;
             req.session.userName = data[0].name;
+            req.session.roleId = data[0].role_id;
             res.json({data: data});
         }
     });

@@ -21,6 +21,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
             {
                 Bug.addViewInfo(response.data);
                 $scope.bugList = response.data;
+                $scope.roleId = response.role;
             }
         });
     }

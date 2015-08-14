@@ -20,7 +20,7 @@ exports.getByConditon = function(req, res)
 {
     var request = model.getRequest();
     var col = "T1.id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, ";
-    col += "T2.name, T2.role_id";
+    col += "T2.name";
     var tableName = "T_DEMAND_BUG T1 INNER JOIN M_USER T2 ON T1.create_by = T2.user_id";
     var where = '';
     if (req.body.hasOwnProperty('resolve') && null !== req.body.resolve) 
@@ -48,7 +48,8 @@ exports.getByConditon = function(req, res)
             console.log(err);
             res.status(510).send('scenario crate faild');
         }
-        res.json({data: data});
+
+        res.json({data: data, role: req.session.roleId});
     });
 };
 
