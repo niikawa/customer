@@ -306,13 +306,15 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
     var period = 0;
     var start ='';
     var end ='';
+    var isCalendar = req.params.hasOwnProperty("year") && req.params.hasOwnProperty("month");
+    
     if (req.params.hasOwnProperty("day"))
     {
         start = moment(req.params.day).format("YYYY/MM/DD") + " 00:00:00";
         end = moment(req.params.day).format("YYYY/MM/DD") + " 23:59:59"; 
         period = 1;
     }
-    else if (req.params.hasOwnProperty("year") && req.params.hasOwnProperty("month"))
+    else if (isCalendar)
     {
         var yearMonth = req.params.year + '/' + req.params.month;
         period = moment(yearMonth).daysInMonth();
@@ -404,9 +406,8 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                         else if (null === target.scenario_action_document_id && 1 === target.scenario_type_value)
                         {
                             //スケジュール型 日付指定の場合
-                            var keyDay = moment(key).format("YYYY-MM-DD");
                             var day = moment(target.expiration_start_date).format("YYYY-MM-DD");
-                            isAdd = (keyDay === day);
+                            isAdd = (moment(key).format("YYYY-MM-DD") === day);
                             target.scenario_type_detail = 2;
                         }
                         else if (null !== target.scenario_action_document_id && 1 === target.scenario_type_value)
@@ -418,13 +419,19 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                             //以下の条件に合わないものは不正データのため破棄
                             if (2 === doc.interval)
                             {
+                                var keyDay = moment(key).format("YYYY-MM-DD");
+                                
+                                //期間内であるかの判定
+                                var isPeriod = (moment(keyDay).isAfter(moment(target.expiration_start_date))
+                                    && moment(moment(target.expiration_end_date)).isAfter(keyDay) );
+
                                 var minDay = model.momoent(key).format("dd");
-                                isAdd = doc.weekCondition[minDay]
+                                isAdd = isPeriod && doc.weekCondition[minDay];
+                                
                             }
                             else if (3 === doc.interval)
                             {
-                                var day = model.momoent(key).format("D");
-                                var dayIndex = Number(day) - 1;
+                                var dayIndex = Number(model.momoent(key).format("D")) - 1;
                                 isAdd = doc.daysCondition[dayIndex].check;
                             }
                             target.scenario_type_detail = 3;
@@ -445,10 +452,10 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
         ], 
         function(err)
         {
-            var calendarOfMonth = [];
             //月カレンダーの場合はさらに整形する
-            if (req.params.hasOwnProperty("year") && req.params.hasOwnProperty("month"))
+            if (isCalendar)
             {
+                var calendarOfMonth = [];
                 //angulerでリピートするときに、objectのプロパティの昇順になっちゃうから数値を含むキーを生成
                 var weekList = {"0sun": {}, "1mon": {}, "2tue": {}, "3wed": {}, "4thu": {}, "5fri": {}, "6sat": {}};
                 var deforeCount = 1;
@@ -466,6 +473,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                         calendarOfMonth.push(weekList);
                         weekList = {"0sun": {}, "1mon": {}, "2tue": {}, "3wed": {}, "4thu": {}, "5fri": {}, "6sat": {}};
                     }
+                    
                     weekList[weekDayKey].scenario = calendar[key];
                     weekList[weekDayKey].date = model.momoent(key).format("DD");
                     deforeCount = weekCount;
