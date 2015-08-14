@@ -86,12 +86,38 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
     
     $scope.nextMonth = function()
     {
-        
+        if (isDisabled) return;
+        isDisabled = true;
+        var now = $scope.year + '/' + $scope.month;
+        var yearMonth = Utility.moment().addMonth(now, 1).format("YYYY-MM");
+        var params = yearMonth.split("/");
+        Calendar.resource.month({year:params[0], month: params[1]}).$promise.then(function(response)
+        {
+            isDisabled = false;
+            $scope.isWeek = false;
+            $scope.isMonth = true;
+            $scope.calendarofMonthList = response.data;
+            $scope.year = response.year;
+            $scope.month = response.month;
+        });
     };
 
     $scope.deforeMonth = function()
     {
-        
+        if (isDisabled) return;
+        isDisabled = true;
+        var now = $scope.year + '/' + $scope.month;
+        var yearMonth = Utility.moment().subtractMonth(now, 1).format("YYYY-MM");
+        var params = yearMonth.split("/");
+        Calendar.resource.month({year:params[0], month: params[1]}).$promise.then(function(response)
+        {
+            isDisabled = false;
+            $scope.isWeek = false;
+            $scope.isMonth = true;
+            $scope.calendarofMonthList = response.data;
+            $scope.year = response.year;
+            $scope.month = response.month;
+        });
     };
 
 }]);
