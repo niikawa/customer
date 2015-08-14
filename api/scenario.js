@@ -558,6 +558,7 @@ exports.savePriority = function(req, res)
 
     model.async.forEach(req.body.data, function(item, callback)
     {
+        //不要項目は削除
         delete item.scenario_name;
         delete item.scenario_type;
         delete item.valid_flag;
