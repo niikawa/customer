@@ -414,32 +414,31 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                         {
                             //スケジュール型 期間指定の場合
                             var doc = docsObject[target.scenario_action_document_id];
+                            //期間内であるかの判定
+                            var isPeriod = (moment(keyDay).isAfter(moment(target.expiration_start_date))
+                                && moment(moment(target.expiration_end_date)).isAfter(keyDay) );
+
                             //以下の条件に合わないものは不正データのため破棄
                             if (2 === doc.interval)
                             {
                                 var keyDay = moment(key).format("YYYY-MM-DD");
                                 
-                                //期間内であるかの判定
-                                var isPeriod = (moment(keyDay).isAfter(moment(target.expiration_start_date))
-                                    && moment(moment(target.expiration_end_date)).isAfter(keyDay) );
-
                                 var minDay = model.momoent(key).format("dd");
                                 isAdd = isPeriod && doc.weekCondition[minDay];
                             }
                             else if (3 === doc.interval)
                             {
                                 var dayIndex = Number(model.momoent(key).format("D")) - 1;
-                                isAdd = doc.daysCondition[dayIndex].check;
+                                isAdd = isPeriod && doc.daysCondition[dayIndex].check;
                                 
                                 var targetDay = moment(key).format("YYYY-MM-DD");
                                 var targetYearMonth = moment(key).format("YYYY-MM") + "-" + moment(key).daysInMonth();
                                 console.log(targetDay + ":" +targetYearMonth);
                                 if (targetDay == targetYearMonth)
                                 {
-                                    
                                     //最終日のチェックが優先される
                                     var lastIndex = doc.daysCondition.length -1;
-                                    isAdd = doc.daysCondition[lastIndex].check; 
+                                    isAdd = isPeriod && doc.daysCondition[lastIndex].check; 
                                 }
                             }
                             target.scenario_type_detail = 3;
