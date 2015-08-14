@@ -369,3 +369,11 @@ drawer-menu-directive > nav > a {text-align:center;}
   z-index: 100;
 }
 .relative {position:relative;}
+.cal-year{
+  color: #99CFE5;
+}
+.cal-month{
+  font-weight:bold;
+  font-size: 3em;
+  color: #007FB1;
+}

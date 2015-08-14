@@ -39,7 +39,7 @@
         <!-- month -->
         <div ng-if="isMonth" >
             <div class="center">
-                {{year}}{{month}}
+                <span class="cal-year">{{year}}</span><span class="cal-month">{{month}}</span>
             </div>
             <div class="row relative">
                 <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left" ng-click="deforeMonth()" ></i>

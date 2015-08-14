@@ -470,8 +470,8 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                 console.log(calendarOfMonth);
                 res.json({
                     data: calendarOfMonth, 
-                    year: req.params.hasOwnProperty("year"),
-                    month: req.params.hasOwnProperty("month"),
+                    year: req.params.year,
+                    month: req.params.month,
                 });
             }
             else
