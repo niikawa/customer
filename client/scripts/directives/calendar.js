@@ -72,8 +72,9 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
     {
         if (isDisabled) return;
         isDisabled = true;
-        var year = Utility.moment(Object.keys($scope.calendarList)[0]).format("YYYY");
-        var month = Utility.moment(Object.keys($scope.calendarList)[0]).format("M");
+        var days = Object.keys($scope.calendarList);
+        var year = Utility.moment(days[days.length-1]).format("YYYY");
+        var month = Utility.moment(days[days.length-1]).format("M");
         Calendar.resource.month({year:year, month: month}).$promise.then(function(response)
         {
             isDisabled = false;
@@ -146,7 +147,7 @@ myApp.factory("Calendar", ['$resource','Utility', function($resource, Utility)
     return calendarServices;
 }]);
 
-myApp.directive('calendarDirective', function()
+myApp.directive('calendarDirective', function(Utility)
 {
     return {
         restrict: 'E',
@@ -182,6 +183,10 @@ myApp.directive('calendarDirective', function()
             scope.isHoliday = function(dayMin)
             {
                 return '0sun' == dayMin;
+            };
+            scope.isHolidayToWeek = function(day)
+            {
+                console.log(Utility.moment(day).format("dd"));
             };
         }
     };
