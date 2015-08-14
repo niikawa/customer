@@ -298,7 +298,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
     //スケジュール型：日付指定を取得する条件
     where += "OR (T2.expiration_start_date BETWEEN @start AND @end AND T2.expiration_end_date is null)";
     //スケジュール型：期間指定を取得する条件
-    where += "OR (T2.expiration_start_date BETWEEN @start AND @end AND T2.expiration_end_date >= @end) )";
+    where += "OR (T2.expiration_start_date is not null AND T2.expiration_end_date BETWEEN @start AND @end AND ) )";
     
     var order = "T1.priority, T1.scenario_id";
     var qObj =  model.getQueryObject(col, table, where, '', order);
