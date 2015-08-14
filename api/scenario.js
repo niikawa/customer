@@ -298,7 +298,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
     //スケジュール型：日付指定を取得する条件
     where += "OR (T2.expiration_start_date BETWEEN @start AND @end AND T2.expiration_end_date is null)";
     //スケジュール型：期間指定を取得する条件
-    where += "OR (T2.expiration_start_date is not null AND T2.expiration_end_date BETWEEN @start AND @end) )";
+    where += "OR (T2.expiration_start_date is not null AND ( T2.expiration_end_date BETWEEN @start AND @end OR T2.expiration_end_date >=  @end) )";
     
     var order = "T1.priority, T1.scenario_id";
     var qObj =  model.getQueryObject(col, table, where, '', order);
@@ -449,8 +449,6 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
             //月カレンダーの場合はさらに整形する
             if (req.params.hasOwnProperty("year") && req.params.hasOwnProperty("month"))
             {
-                var year = req.params.hasOwnProperty("year");
-                
                 //angulerでリピートするときに、objectのプロパティの昇順になっちゃうから数値を含むキーを生成
                 var weekList = {"0sun": {}, "1mon": {}, "2tue": {}, "3wed": {}, "4thu": {}, "5fri": {}, "6sat": {}};
                 var deforeCount = 1;
