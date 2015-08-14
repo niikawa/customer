@@ -387,7 +387,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                 console.log("calendar crate");
                 console.log(docs);
                 
-                let docsObject = (null === docs) ? {} : createDocsObject(docs);
+                var docsObject = (null === docs) ? {} : createDocsObject(docs);
 
                 for (var index = 0; index < dataNum; index++)
                 {
