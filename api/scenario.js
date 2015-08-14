@@ -464,6 +464,9 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                     weekList[weekDayKey].date = key;
                     deforeCount = weekCount;
                 });
+                //最終週をセット
+                calendarOfMonth.push(weekList);
+                
                 console.log(calendarOfMonth);
                 res.json({data: calendarOfMonth});
             }
