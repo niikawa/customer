@@ -3,13 +3,14 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
 {
     $scope.calendarList = [];
     $scope.calendarofMonthList = [];
-    $scope.isWeek = true;
+    $scope.isWeek = false;
     $scope.isMonth = false;
     var isDisabled = false;
     $scope.initialize = function()
     {
         Calendar.resource.get().$promise.then(function(response)
         {
+            $scope.isWeek = true;
             $scope.calendarList = response.data;
         });
     };
