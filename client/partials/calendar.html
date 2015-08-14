@@ -15,7 +15,7 @@
         </div>
         
         <!-- week -->
-        <div ng-if="isWeek" class="row relative">
+        <div ng-if="isWeek" class="row relative animate-if">
             <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left" ng-click="deforeDay()" ></i>
             <div class="row-height">
                 <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height" ng-repeat="(day, items) in calendarList">
@@ -37,7 +37,7 @@
         </div>
         
         <!-- month -->
-        <div ng-if="isMonth" >
+        <div ng-if="isMonth" class="animate-if" >
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left" ng-click="deforeMonth()" ></i>
