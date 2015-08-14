@@ -414,8 +414,6 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                         {
                             //スケジュール型 期間指定の場合
                             var doc = docsObject[target.scenario_action_document_id];
-                            console.log(target.scenario_action_document_id);
-                            console.log(doc);
                             //以下の条件に合わないものは不正データのため破棄
                             if (2 === doc.interval)
                             {
@@ -427,12 +425,14 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
 
                                 var minDay = model.momoent(key).format("dd");
                                 isAdd = isPeriod && doc.weekCondition[minDay];
-                                
                             }
                             else if (3 === doc.interval)
                             {
                                 var dayIndex = Number(model.momoent(key).format("D")) - 1;
                                 isAdd = doc.daysCondition[dayIndex].check;
+                                
+                                //最終日が対象かを判定
+                                
                             }
                             target.scenario_type_detail = 3;
                         }

@@ -186,7 +186,7 @@ myApp.directive('calendarDirective', function(Utility)
             };
             scope.isHolidayToWeek = function(day)
             {
-                console.log(Utility.moment(day).format("dd"));
+                return 0 == Utility.moment(day).format("e");
             };
         }
     };
