@@ -76,8 +76,8 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
         Calendar.resource.month({year:year, month: month}).$promise.then(function(response)
         {
             isDisabled = false;
-            $scope.isWeek = false;
             $scope.isMonth = true;
+            $scope.isWeek = false;
             $scope.calendarofMonthList = response.data;
             $scope.year = response.year;
             $scope.month = response.month;
