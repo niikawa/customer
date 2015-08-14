@@ -734,7 +734,8 @@ div .card-cell-right-b {
 }
 .inside > div > p {
   text-align: center;
-  background-color: #b5cdd9;
+  background-color: #FFF;
+  border-top: 2px solid #eee;
   border-bottom: 2px solid #eee;
   font-weight: bold;
   line-height: 2;
