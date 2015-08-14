@@ -435,9 +435,9 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                                 var targetYearMonth = moment(key).format("YYYY-MM") + "/" + moment(key).daysInMonth();
                                 if (targetDay == targetYearMonth)
                                 {
-                                    //最終日の場合は日付のチェックが優先される
+                                    //最終日のチェックが優先される
                                     var lastIndex = doc.daysCondition.length -1;
-                                    isAdd = doc.daysCondition[lastIndex].check || isAdd; 
+                                    isAdd = doc.daysCondition[lastIndex].check; 
                                 }
                             }
                             target.scenario_type_detail = 3;
