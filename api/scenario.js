@@ -415,14 +415,13 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                             //スケジュール型 期間指定の場合
                             var doc = docsObject[target.scenario_action_document_id];
                             //期間内であるかの判定
+                            var keyDay = moment(key).format("YYYY-MM-DD");
                             var isPeriod = (moment(keyDay).isAfter(moment(target.expiration_start_date))
                                 && moment(moment(target.expiration_end_date)).isAfter(keyDay) );
 
                             //以下の条件に合わないものは不正データのため破棄
                             if (2 === doc.interval)
                             {
-                                var keyDay = moment(key).format("YYYY-MM-DD");
-                                
                                 var minDay = model.momoent(key).format("dd");
                                 isAdd = isPeriod && doc.weekCondition[minDay];
                             }
@@ -489,10 +488,12 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                 calendarOfMonth.push(weekList);
                 
                 console.log(calendarOfMonth);
+                
+                var params = start.split("/");
                 res.json({
                     data: calendarOfMonth, 
-                    year: req.params.year,
-                    month: req.params.month,
+                    year: params[0],
+                    month: params[1],
                 });
             }
             else
