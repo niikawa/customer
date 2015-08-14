@@ -292,8 +292,13 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
         "CASE T1.scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key";
     
     var table = tableName + " T1 LEFT JOIN M_SCHEDULE_SCENARIO T2 ON T1.scenario_id = T2.scenario_id ";
-    var where = "T1.delete_flag = 0 AND T1.approach = 1 AND T1.status = 1";
-    where += " AND ( T2.expiration_start_date is null OR (T2.expiration_start_date BETWEEN @start AND @end) OR (T2.expiration_start_date is not null AND T2.expiration_end_date >= @end))";
+    var where = "T1.delete_flag = 0 AND T1.approach = 1 AND T1.status = 1 AND ";
+    //トリガー型を取得する条件
+    where += "( T2.expiration_start_date is null ";
+    //スケジュール型：日付指定を取得する条件
+    where += "OR (T2.expiration_start_date BETWEEN @start AND @end AND T2.expiration_end_date is null)";
+    //スケジュール型：期間指定を取得する条件
+    where += "OR (T2.expiration_start_date BETWEEN @start AND @end AND T2.expiration_end_date >= @end) )";
     
     var order = "T1.priority, T1.scenario_id";
     var qObj =  model.getQueryObject(col, table, where, '', order);
