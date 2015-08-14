@@ -298,7 +298,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
     //スケジュール型：日付指定を取得する条件
     where += "OR (T2.expiration_start_date BETWEEN @start AND @end AND T2.expiration_end_date is null)";
     //スケジュール型：期間指定を取得する条件
-    where += "OR (T2.expiration_start_date is not null AND ( T2.expiration_end_date BETWEEN @start AND @end OR T2.expiration_end_date >=  @end) )";
+    where += "OR (T2.expiration_start_date is not null AND ( T2.expiration_end_date BETWEEN @start AND @end OR T2.expiration_end_date >=  @end) ) )";
     
     var order = "T1.priority, T1.scenario_id";
     var qObj =  model.getQueryObject(col, table, where, '', order);
@@ -321,7 +321,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
     }
     else
     {
-        //初期表示の場合は6を初期値とする
+        //初期表示の場合
         period = 5;
         start = moment().format("YYYY/MM/DD") + " 00:00:00";
         end = moment().add(period, 'day').format("YYYY/MM/DD") + " 00:00:00" ;
@@ -387,7 +387,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                 console.log("calendar crate");
                 console.log(docs);
                 
-                var docsObject = (null === docs) ? {} : createDocsObject(docs);
+                let docsObject = (null === docs) ? {} : createDocsObject(docs);
 
                 for (var index = 0; index < dataNum; index++)
                 {
