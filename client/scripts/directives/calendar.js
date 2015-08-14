@@ -83,6 +83,16 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
             $scope.month = response.month;
         });
     };
+    
+    $scope.nextMonth = function()
+    {
+        
+    };
+
+    $scope.deforeMonth = function()
+    {
+        
+    };
 
 }]);
 myApp.factory("Calendar", ['$resource','Utility', function($resource, Utility) 

@@ -952,15 +952,15 @@ ul.label-item > li > div.sc-single {
 }
 ul.label-item > li > div.trigger,
 ul.label-item > li > span.trigger {
-  background-color: #8b90be;
+  background-color: #cbe6f3;
 }
 ul.label-item > li > div.sc-priod,
 ul.label-item > li > span.sc-priod{
-  background-color: #E6855E;
+  background-color: #c6eddb;
 }
 ul.label-item > li > div.sc-single,
 ul.label-item > li > span.sc-single {
-  background-color: #40BFB0;
+  background-color: #f3d1e5;
 }
 
 ul.legend > li > span {
