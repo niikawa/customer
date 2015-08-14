@@ -373,7 +373,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                 }
                 else
                 {
-                    callback(null);
+                    callback(null, null);
                 }
             },
             function(docs, callback)
