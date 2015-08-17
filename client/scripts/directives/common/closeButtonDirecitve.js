@@ -18,7 +18,6 @@ myApp.directive('closeButtonDirecitve', function(Shared)
             
             scope.click = function()
             {
-                alert("sakujo");
                 console.log(scope.execute);
                 scope.execute;
             };
