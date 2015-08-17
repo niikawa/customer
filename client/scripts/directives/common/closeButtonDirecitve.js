@@ -14,12 +14,12 @@ myApp.directive('closeButtonDirecitve', function(Shared)
             else
             {
                 scope.isShowMine = false;
-            console.log("だめ");
             }
             
             scope.click = function()
             {
-                
+                alert("sakujo");
+                console.log(scope.execute);
                 scope.execute;
             };
         }
