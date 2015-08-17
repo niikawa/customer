@@ -6,34 +6,6 @@
 var http = require('http');
 var path = require('path');
 var express = require('express');
-var mssql = require('mssql');
-var config = {
-  user: 'vxc-databese-master',
-  password: 'VirtUaleX001',
-  server: 'oufq8kwys5.database.windows.net',
-  database: 'CustomerReport',
-  stream: true, // You can enable streaming globally
-
-  options: {
-    encrypt: true // Use this if you're on Windows Azure
-  },
-  pool: {
-        max: 10,
-        min: 0,
-        idleTimeoutMillis: 50000
-    }  
-};
-
-mssql.connect(config, function(err) {
-  
-  if (null != err)
-  {
-    console.log('データベースコネクションエラー');
-    console.log(err);
-  }
-});
-
-
 var router = express();
 var morgan = require("morgan");
 if (process.env.ENVIRONMENT == 'develop')
@@ -170,6 +142,34 @@ var server = http.createServer(router);
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
   var addr = server.address();
   console.log("server listening at", addr.address + ":" + addr.port);
+  
+    var mssql = require('mssql');
+    var config = {
+      user: 'vxc-databese-master',
+      password: 'VirtUaleX001',
+      server: 'oufq8kwys5.database.windows.net',
+      database: 'CustomerReport',
+      stream: true, // You can enable streaming globally
+    
+      options: {
+        encrypt: true // Use this if you're on Windows Azure
+      },
+      pool: {
+            max: 10,
+            min: 0,
+            idleTimeoutMillis: 50000
+        }  
+    };
+    
+    mssql.connect(config, function(err) {
+      
+      if (null != err)
+      {
+        console.log('データベースコネクションエラー');
+        console.log(err);
+      }
+    });
+
 });
 
 
