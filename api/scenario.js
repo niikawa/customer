@@ -449,7 +449,8 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                                 scenario_id: target.scenario_id, 
                                 scenario_name: target.scenario_name,
                                 scenario_type_value: target.scenario_type_value,
-                                scenario_type_detail: target.scenario_type_detail
+                                scenario_type_detail: target.scenario_type_detail,
+                                scenario_type_key: target.scenario_type_key
                             });
                         }
                     });

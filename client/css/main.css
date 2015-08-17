@@ -950,6 +950,14 @@ ul.label-item > li > div.sc-single {
   padding: 5px;
   font-size: 0.8em;
 }
+
+ul.label-item > li > div.trigger > a,
+ul.label-item > li > div.sc-priod > a,
+ul.label-item > li > div.sc-single > a {
+  background-color: #1BA466;
+}
+
+
 ul.label-item > li > div.trigger,
 ul.label-item > li > span.trigger {
   background-color: #cbe6f3;
