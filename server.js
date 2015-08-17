@@ -101,7 +101,6 @@ router.get('/calendar', scenario.getExecutePlanScenarioToCalendar);
 router.get('/calendar/one/:day', scenario.getExecutePlanScenarioToCalendar);
 router.get('/calendar/:year/:month', scenario.getExecutePlanScenarioToCalendar);
 
-
 var approach = require("./api/approach");
 router.get('/approach', approach.getOrCreate);
 router.post('/approach', approach.save);
@@ -135,7 +134,6 @@ router.post('/bug', bug.getByConditon);
 process.on('uncaughtException', function(err)
 {
     console.log(err);
-    
 });
 
 var server = http.createServer(router);
@@ -169,7 +167,6 @@ server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
         console.log(err);
       }
     });
-
 });
 
 
