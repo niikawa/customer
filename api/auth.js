@@ -28,7 +28,14 @@ exports.isLogin = function(req, res)
 {
     if (req.session.isLogin) {
         
-        res.status(200).send('Authentication Succsess');
+        var data = {
+            user_id: req.session.userId,
+            name: req.session.userName, 
+            role_id: req.session.roleId,
+        };
+        res.json({data: data});
+        
+//        res.status(200).send('Authentication Succsess');
         
     } else {
         

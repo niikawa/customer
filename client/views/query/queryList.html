@@ -34,7 +34,9 @@
                                     <a ng-href="" ng-click="showSegment(i)">{{item.useNum}}件</a>のセグメントで利用されています。
                                 </td>
                                 <td ng-if="!item.isUse" data-th="利用状況">利用されていません。</td>
-                                <td><button class="close-button" ng-click="deleteItem(i)"><i class="fa fa-times"></i></button></td>
+                                <td>
+                                    <close-button-direcitve execute=deleteItem(i)></close-button-direcitve>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
