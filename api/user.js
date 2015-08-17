@@ -97,7 +97,7 @@ exports.getList = function(req, res)
 
 exports.craete = function(req, res)
 {
-    var commonColumns = model.getInsCommonColumns();
+    var commonColumns = model.getInsCommonColumns(req.session.userId);
     var insertData = model.merge(req.body.data, commonColumns);
     delete insertData.password_confirm;
     
