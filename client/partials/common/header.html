@@ -29,7 +29,7 @@
       </div>
     </div>
     
-    <div ng-show="isOpenMenu" class="sidebar menu-animate">
+    <div ng-show="isOpenMenu" class="sidebar menu-animate" ng-controller="HeadCtrl" ng-init="initialize()">
       <ul class="nav in">
         <li><a href="/#/">ダッシュボード</a></li>
         <li><a href="/#/query/list">クエリー管理</a></li>
@@ -37,7 +37,7 @@
         <li><a href="/#/scenario/trigger">トリガーシナリオ管理</a></li>
         <li><a href="/#/scenario/schedule">スケジュールシナリオ管理</a></li>
         <li><a href="/#/approach">アプローチ管理</a></li>
-        <li><a href="/#/user">ユーザー管理</a></li>
+        <li ng-if="isShowUser"><a href="/#/user">ユーザー管理</a></li>
         <li><a href="/#/access">操作履歴</a></li>
         <li><a href="/#/release">リリースノート</a></li>
       </ul>

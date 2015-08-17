@@ -38,7 +38,9 @@
                                 </td>
                                 <td data-th="アプローチ">{{item.approach}}</td>
                                 <td data-th="更新日">{{item.update_date}}</td>
-                                <td><button class="close-button" ng-click="remove(i)"><i class="fa fa-times"></i></button></td>
+                                <td>
+                                    <close-button-direcitve execute=remove(i)></close-button-direcitve>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

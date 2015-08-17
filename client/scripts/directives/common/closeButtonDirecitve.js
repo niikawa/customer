@@ -7,7 +7,7 @@ myApp.directive('closeButtonDirecitve', function(Shared)
         template: '<button ng-if="isShowMine" class="close-button" ng-click="click()"><i class="fa fa-times"></i></button>',
         link: function (scope, element, attrs) 
         {
-            if (1 == Shared.get("role"))
+            if (3 != Shared.get("role"))
             {
                 scope.isShowMine = true;
             }

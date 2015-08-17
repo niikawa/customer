@@ -1,6 +1,18 @@
 var myApp = angular.module('myApp');
 myApp.controller('HeadCtrl',['$scope', 'Auth', 'Modal', 'Shared', 'Mail', function ($scope, Auth, Modal, Shared, Mail)
 {
+    $scope.initialize = function()
+    {
+        if (1 == Shared.get("role"))
+        {
+            $scope.isShowUser = true;
+        }
+        else
+        {
+            $scope.isShowUser = false;
+        }
+    };
+    
     $scope.addMenber = function()
     {
         $scope.modalParam = 
