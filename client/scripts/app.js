@@ -56,6 +56,23 @@ angular
 
         return deferred.promise;
     };
+
+    var isPageAuth = function($http, $q, $window, Shared)
+    {
+        var deferred = $q.defer();
+        if (1 == Shared.get("role"))
+        {
+            deferred.resolve(true);
+        }
+        else
+        {
+            deferred.resolve(false);
+        }
+            
+        return deferred.promise;
+        
+    };
+    
     
     $routeProvider
       .when('/', {
@@ -150,19 +167,19 @@ angular
         templateUrl: 'views/user/user.html',
         controller: 'UserCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
-        resolve: {isLogin: autoCheck}
+        resolve: {isLogin: autoCheck, isShow: isPageAuth}
       })
       .when('/user/control', {
         templateUrl: 'views/user/userControl.html',
         controller: 'UserControlCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
-        resolve: {isLogin: autoCheck}
+        resolve: {isLogin: autoCheck, isShow: isPageAuth}
       })
       .when('/user/control/:id', {
         templateUrl: 'views/user/userControl.html',
         controller: 'UserControlCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
-        resolve: {isLogin: autoCheck}
+        resolve: {isLogin: autoCheck, isShow: isPageAuth}
       })
       .when('/access', {
         templateUrl: 'views/access/history.html',
