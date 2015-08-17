@@ -66,7 +66,7 @@ angular
         }
         else
         {
-            deferred.resolve(false);
+            $window.location.href = "https://"+location.host+"/#/";
         }
             
         return deferred.promise;
