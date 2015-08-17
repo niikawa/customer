@@ -9,16 +9,19 @@ myApp.directive('closeButtonDirecitve', function(Shared)
         {
             if (1 == Shared.get("role"))
             {
+                console.log("ok");
+                console.log(Shared.get("role"));                
                 scope.isShowMine = true;
             }
             else
             {
+                console.log("dameyo");
+                console.log(Shared.get("role"));                
                 scope.isShowMine = false;
             }
             
             scope.click = function()
             {
-                console.log(scope.execute);
                 scope.execute();
             };
         }
