@@ -91,9 +91,7 @@ myApp.controller('CalendarCtrl',['$scope','Calendar', 'Utility', function ($scop
         if (isDisabled) return;
         isDisabled = true;
         var now = $scope.year + '/' + $scope.month + '/01';
-        console.log(now);
         var yearMonth = Utility.addMonth(now, 1).format("YYYY-MM");
-        console.log(yearMonth);
         var params = yearMonth.split("-");
 
         Calendar.resource.month({year:params[0], month: params[1]}).$promise.then(function(response)

@@ -25,7 +25,9 @@
                             <ul class="label-item">
                                 <li  class="" ng-repeat="item in items">
                                     <div ng-class="{'trigger': isTrigger(item.scenario_type_detail), 'sc-priod': isScPriod(item.scenario_type_detail), 'sc-single': isScSingle(item.scenario_type_detail)}">
-                                        <i ng-if="1==item.scenario_type_value" class="fa fa-calendar-o"></i>{{item.scenario_name}}
+                                        <a ng-href='/#/scenario/{{item.scenario_type_key}}/control/{{item.scenario_id}}'>
+                                            <i ng-if="1==item.scenario_type_value" class="fa fa-calendar-o"></i>{{item.scenario_name}}
+                                        </a>
                                     </div>
                                 </li>
                             </ul>
