@@ -19,7 +19,7 @@ myApp.directive('closeButtonDirecitve', function(Shared)
             scope.click = function()
             {
                 console.log(scope.execute);
-                scope.execute;
+                scope.execute();
             };
         }
     };
