@@ -3,11 +3,11 @@ myApp.directive('closeButtonDirecitve', function(Shared)
 {
     return {
         restrict: 'E',
-        scope: {ececute: '&', params: "="},
-        template: '<ng-if="isShowMine" button class="close-button" ng-click="click()"><i class="fa fa-times"></i></button>',
+        scope: {execute: '&', params: "="},
+        template: '<button ng-if="isShowMine" class="close-button" ng-click="click()"><i class="fa fa-times"></i></button>',
         link: function (scope, element, attrs) 
         {
-            if (3 ===Shared.get("role"))
+            if (3 === Shared.get("role"))
             {
                 scope.isShowMine = true;
             }
@@ -18,7 +18,7 @@ myApp.directive('closeButtonDirecitve', function(Shared)
             
             scope.click = function()
             {
-                scope.ececute;
+                scope.execute;
             };
         }
     };

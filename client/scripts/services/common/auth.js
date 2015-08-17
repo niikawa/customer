@@ -15,6 +15,7 @@ authServices.factory("Auth", ['$resource', '$http', '$location', '$cookies','Uti
                 }
                 Shared.set('id', response.data[0].user_id);
                 Shared.set('userName', response.data[0].name);
+                Shared.set('role', response.data[0].role_id);
             });
             return promise;
         };
