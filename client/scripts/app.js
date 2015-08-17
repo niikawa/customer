@@ -42,9 +42,11 @@ angular
         var deferred = $q.defer();
         
         $http.post('/auth/isLogin', {remembertkn: $cookies.remembertkn}
-        ).success(function(data) {
+        ).success(function(response) {
           
-            Shared.set('id', data.id);
+            Shared.set('id', response.data.user_id);
+            Shared.set('userName', response.data.name);
+            Shared.set('role', response.data.role_id);
             deferred.resolve(true);
 
         }).error(function(data) {
