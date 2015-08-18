@@ -1030,7 +1030,9 @@ div.cell{
 div.bug-container {
   
   border: 1px solid #eee;
-  
+}
+p.bug-contents {
+  font-size: 1.2em;
 }
 /*-----------------------------------------------*/
 /* Other
