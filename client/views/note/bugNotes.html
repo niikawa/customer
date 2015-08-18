@@ -31,12 +31,13 @@
                       </div>
                       <ul class="list-group" >
                         <li class="list-group-item clearfix" ng-repeat="(i, item) in bugList" >
-                            <div>
-                                <label class="label label-primary">{{item.type_name}}</label>
-                                <label class="label label-success">{{item.category_name}}</label>
-                                <label class="label label-warning">{{item.resolve_name}}</label>
-                                
-                                <div class="pull-right">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label class="label label-primary">{{item.type_name}}</label>
+                                    <label class="label label-success">{{item.category_name}}</label>
+                                    <label class="label label-warning">{{item.resolve_name}}</label>
+                                </div>
+                                <div class="col-md-4">
                                     <i class="fa fa-clock-o fa-fw"></i>{{item.create_date}}
                                     {{item.name}}
                                     <button ng-if="1==roleId" class="btn btn-primary" ng-click="resolve(i)">解決</button>
@@ -45,8 +46,8 @@
                                         <i class="fa fa-comments fa-2x pointer" ng-click="showCommentView(i)">{{item.comment_count}}</i>
                                         <i class="fa fa-thumbs-o-up fa-2x pointer" ng-click="vote(i)">{{item.vote}}</i>
                                     </div>
-                                    
                                 </div>
+                                
                             </div>
                             
                             <div>
@@ -64,6 +65,7 @@
                                     </li>
                                 </ul>
                             </div>
+                            
                         </li>
                       </ul>
                     </div>     

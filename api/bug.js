@@ -186,7 +186,7 @@ exports.vote = function(req, res)
 
             var update = model.getUpdCommonColumns(req.session.userId);
             update.id = req.params.id;
-            update.vote = data[0].vote + 1;
+            update.vote = Number(data[0].vote) + 1;
             var request = model.getRequest(transaction);
             request.input('id', model.db.Int, update.id);
             request.input('update_by', model.db.Int, update.update_by);
