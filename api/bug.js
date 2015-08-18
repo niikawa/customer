@@ -64,8 +64,7 @@ exports.getComment = function(req, res)
     var order = "T1.demand_bug_comment_id";
     var qObj = model.getQueryObject(col, tableName, where, '', order);
 
-    qObj.request.input('demand_bug_id', model.db.Int, req.body.id);
-    console.log(req.params.id);
+    qObj.request.input('demand_bug_id', model.db.Int, req.params.id);
 
     model.select(qObj, qObj.request, function(err, data)
     {
@@ -177,9 +176,7 @@ exports.vote = function(req, res)
         var where = 'id = @id';
         var qObj = model.getQueryObject(col, tableName, where, '', '');
         request.input('id', model.db.Int, req.params.id);
-        
-        qObj.request.input('demand_bug_id', model.db.Int, req.body.id);
-    
+
         model.select(qObj, request, function(err, data)
         {
             if (err.length > 0)
