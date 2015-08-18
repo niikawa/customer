@@ -36,6 +36,7 @@
                                     <label class="label label-primary">{{item.type_name}}</label>
                                     <label class="label label-success">{{item.category_name}}</label>
                                     <label class="label label-warning">{{item.resolve_name}}</label>
+                                    <p class="bug-title">{{item.title}}</p>
                                 </div>
                                 <div class="col-md-4">
                                     <i class="fa fa-clock-o fa-fw"></i>{{item.create_date}}
@@ -49,8 +50,7 @@
                                 </div>
                             </div>
                             
-                            <div class="bug-container">
-                                <p class="bug-title">{{item.title}}</p>
+                            <div>
                                 <hr class="line">
                                 <p class="bug-contents" ng-bind-html="item.contents"></p>
                             </div>
