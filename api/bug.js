@@ -58,14 +58,15 @@ exports.getByConditon = function(req, res)
 
 exports.getComment = function(req, res)
 {
-    var request = model.getRequest();
     var col = "T1.demand_bug_comment_id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as create_date, T1.comment, T2.name";
     var tableName = "T_DEMAND_BUG_COMMENT T1 LEFT JOIN M_USER T2 ON T1.create_by = T2.user_id";
     var where = 'T1.demand_bug_id = @demand_bug_id';
     var order = "T1.demand_bug_comment_id ACS";
     var qObj = model.getQueryObject(col, tableName, where, '', order);
 
-    model.select(qObj, request, function(err, data)
+    qObj.request.input('demand_bug_id', model.db.Int, req.body.id);
+
+    model.select(qObj, qObj.request, function(err, data)
     {
         if (err.length > 0)
         {
