@@ -1027,6 +1027,11 @@ div.cell{
   display:table-cell;
   float:left;
 }
+div.bug-container {
+  
+  border: 1px solid #eee;
+  
+}
 /*-----------------------------------------------*/
 /* Other
 /*-----------------------------------------------*/
