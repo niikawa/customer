@@ -43,7 +43,7 @@
                                     <button class="btn btn-primary" ng-click="showComment(i)">コメント</button>
                                     <div >
                                         <i class="fa fa-comments fa-2x pointer" ng-click="showCommentView(i)">{{item.comment_count}}</i>
-                                        <i class="fa fa-thumbs-o-up fa-2x pointer" ng-click="vote(i)"></i>
+                                        <i class="fa fa-thumbs-o-up fa-2x pointer" ng-click="vote(i)">{{item.vote}}</i>
                                     </div>
                                     
                                 </div>
@@ -55,11 +55,15 @@
                                 <p ng-bind-html="item.contents"></p>
                             </div>
                             
-                            <div ng-repeat="commentItem in item.comments">
-                                <p ng-bind-html="commentItem.name"></p>
-                                <p ng-bind-html="commentItem.comment"></p>
+                            <div>
+                                <ul class="list-group" >
+                                    <li class="list-group-item clearfix" ng-repeat="commentItem in item.comments">
+                                        <i class="fa fa-clock-o fa-fw"></i>{{commentItem.create_date}}
+                                        {{commentItem.name}}
+                                        <p ng-bind-html="commentItem.comment"></p>
+                                    </li>
+                                </ul>
                             </div>
-                            
                         </li>
                       </ul>
                     </div>     
