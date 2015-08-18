@@ -1019,6 +1019,7 @@ p.bug-title {
   margin-bottom:5px;
   font-weight: bold;
   font-size: 1.5em;
+  color: #6b5e66;
 }
 hr.line {
   margin:5px;
@@ -1033,6 +1034,7 @@ div.bug-container {
 }
 p.bug-contents {
   font-size: 1.2em;
+  color: #6b5e66;
 }
 /*-----------------------------------------------*/
 /* Other

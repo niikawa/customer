@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp');
-myApp.directive('closeButtonDirecitve', function(Shared)
+myApp.directive('closeButtonDirecitve', function(Shared, Modal)
 {
     return {
         restrict: 'E',
@@ -18,7 +18,15 @@ myApp.directive('closeButtonDirecitve', function(Shared)
             
             scope.click = function()
             {
-                scope.execute();
+                scope.modalParam = 
+                {
+                    title: "",
+                    message: "",
+                    isExecute: false,
+                };
+                scope.modalInstance = Modal.open(scope.modalParam, "partials/modal/message.html");
+                
+//                scope.execute();
             };
         }
     };
