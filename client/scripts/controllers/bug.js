@@ -84,4 +84,14 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
         });
     };
     
+    $scope.showComment = function()
+    {
+      $scope.modalParam = 
+      {
+          execute: '',
+          newComment: '',
+      };
+      $scope.modalInstance = Modal.open($scope, "partials/modal/comment.html");
+    };
+    
 }]);

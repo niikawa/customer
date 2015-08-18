@@ -11,12 +11,10 @@
                     <label class="btn btn-default" ng-model="bug.resolve" btn-radio=0 uncheckable>未解決</label>
                     <label class="btn btn-default" ng-model="bug.resolve" btn-radio=1 uncheckable>解決済み</label>
                 </div>
-                
                 <div class="btn-group" ng-click="getByCondition()">
                     <label class="btn btn-default" ng-model="bug.type" btn-radio=0 uncheckable>バグ</label>
                     <label class="btn btn-default" ng-model="bug.type" btn-radio=1 uncheckable>要望</label>
                 </div>
-                
             </div>
             
             <div class="col-md-12">
@@ -48,6 +46,9 @@
                                 <p class="title">{{item.title}}</p>
                                 <hr class="line">
                                 <p>{{item.contents}}</p>
+                            </div>
+                            <div ng-repeat="comment in item.comments">
+                                <p class="title">{{comment}}</p>
                             </div>
                         </li>
                       </ul>
