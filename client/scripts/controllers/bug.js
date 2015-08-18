@@ -99,7 +99,6 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
     {
         Bug.resource.getComment({id: $scope.bugList[index].id}).$promise.then(function(response)
         {
-            getInfo();
             $scope.bugList[index].comments = response.data;
         });
     };

@@ -65,14 +65,15 @@ exports.getComment = function(req, res)
     var qObj = model.getQueryObject(col, tableName, where, '', order);
 
     qObj.request.input('demand_bug_id', model.db.Int, req.body.id);
+    console.log(req.body.id);
 
     model.select(qObj, qObj.request, function(err, data)
     {
         if (err.length > 0)
         {
-            console.log('get execute plan scenario faild');
+            console.log('get comment  faild');
             console.log(err);
-            res.status(510).send('scenario crate faild');
+            res.status(510).send('get comment faild');
         }
 
         res.json({data: data});
@@ -173,7 +174,7 @@ exports.vote = function(req, res)
     {
         var request = model.getRequest(transaction);
         var col = "vote";
-        var where = 'iddemand_bug_id = @id';
+        var where = 'id = @id';
         var qObj = model.getQueryObject(col, tableName, where, '', '');
         request.input('id', model.db.Int, req.body.id);
         

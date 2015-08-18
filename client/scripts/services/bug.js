@@ -87,7 +87,7 @@ bugServices.factory("Bug", ['$resource','Utility',
                 item.type_name = (1 === item.type) ? '要望' : 'バグ';
                 item.resolve_name = (1 === item.resolve) ? '解決' : '未解決';
             });
-        }
+        };
 
         return bugServices;
     }
