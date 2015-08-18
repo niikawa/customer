@@ -21,7 +21,7 @@ exports.getByConditon = function(req, res)
     var request = model.getRequest();
     var col = "T1.id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, ";
     col += "T2.name";
-    var tableName = "T_DEMAND_BUG T1 INNER JOIN M_USER T2 ON T1.create_by = T2.user_id";
+    var tableName = "T_DEMAND_BUG T1 INNER JOIN M_USER T2 ON T1.create_by = T2.user_id LEFT JOIN T_DEMAND_BUG_COMMENT T3 ON T1.id = T3.demand_bug_id";
     var where = '';
     if (req.body.hasOwnProperty('resolve') && null !== req.body.resolve) 
     {
@@ -113,7 +113,6 @@ exports.saveComment = function(req, res)
 {
     var commonColumns = model.getInsCommonColumns();
     var insertData = model.merge(req.body, commonColumns);
-    insertData.resolve = 0;
     var request = model.getRequest();
     request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
     request.input('create_by', model.db.Int, req.session.userId);
