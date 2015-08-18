@@ -24,7 +24,7 @@ exports.getByConditon = function(req, res)
     var tableName = "T_DEMAND_BUG T1 LEFT JOIN M_USER T2 ON T1.create_by = T2.user_id LEFT JOIN T_DEMAND_BUG_COMMENT T3 ON T1.id = T3.demand_bug_id";
     var where = '';
     
-    var groupBy = "T1.id, T1.create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, T2.name";
+    var groupBy = "T1.id, T1.create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, T2.name, T1.vote";
     
     if (req.body.hasOwnProperty('resolve') && null !== req.body.resolve) 
     {
@@ -47,9 +47,8 @@ exports.getByConditon = function(req, res)
     {
         if (err.length > 0)
         {
-            console.log('get execute plan scenario faild');
             console.log(err);
-            res.status(510).send('scenario crate faild');
+            res.status(510).send('get bugs faild sorry!!');
         }
 
         res.json({data: data, role: req.session.roleId});
