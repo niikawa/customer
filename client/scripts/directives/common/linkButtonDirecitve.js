@@ -3,7 +3,7 @@ myApp.directive('linkButtonDirecitve', function(Shared)
 {
     return {
         restrict: 'E',
-        scope: {href: '=', name: "@"},
+        scope: {href: '@', name: "@"},
         template: '<a ng-if="isShowMine" class="btn btn-default" ng-href="/#/{{href}}">{{name}}</a> ',
         link: function (scope, element, attrs) 
         {
