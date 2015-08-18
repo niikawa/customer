@@ -19,10 +19,13 @@ var model = new bug();
 exports.getByConditon = function(req, res)
 {
     var request = model.getRequest();
-    var col = "T1.id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, ";
-    col += "T2.name";
+    var col = "T1.id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, T2.name";
+    col += ", count(T3.demand_bug_comment_id)";
     var tableName = "T_DEMAND_BUG T1 INNER JOIN M_USER T2 ON T1.create_by = T2.user_id LEFT JOIN T_DEMAND_BUG_COMMENT T3 ON T1.id = T3.demand_bug_id";
     var where = '';
+    
+    var groupBy = "T1.id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, T2.name";
+    
     if (req.body.hasOwnProperty('resolve') && null !== req.body.resolve) 
     {
         where += "T1.resolve = @resolve AND ";
@@ -38,7 +41,7 @@ exports.getByConditon = function(req, res)
     where += " T1.delete_flag = 0";
 
     var order = "T1.id DESC";
-    var qObj = model.getQueryObject(col, tableName, where, '', order);
+    var qObj = model.getQueryObject(col, tableName, where, groupBy, order);
 
     model.select(qObj, request, function(err, data)
     {
