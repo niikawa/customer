@@ -37,22 +37,27 @@
                                 <label class="label label-warning">{{item.resolve_name}}</label>
                                 
                                 <div class="pull-right">
-                                    <div ng-if="item.comment_count" >
-                                        <i class="fa fa-comments fa-2x"></i>
-                                        {{item.comment_count}}
-                                    </div>
-                                
                                     <i class="fa fa-clock-o fa-fw"></i>{{item.create_date}}
                                     {{item.name}}
                                     <button ng-if="1==roleId" class="btn btn-primary" ng-click="resolve(i)">解決</button>
                                     <button class="btn btn-primary" ng-click="showComment(i)">コメント</button>
+                                    <div ng-if="item.comment_count" >
+                                        <i class="fa fa-comments fa-2x pointer" ng-click="showCommentView(i)"></i>
+                                        {{item.comment_count}}
+                                    </div>
                                 </div>
                             </div>
+                            
                             <div>
                                 <p class="title">{{item.title}}</p>
                                 <hr class="line">
-                                <p>{{item.contents}}</p>
+                                <p ng-bind-html="item.contents"></p>
                             </div>
+                            
+                            <div ng-repeat="comment in item.comments">
+                                <p ng-bind-html="comment"></p>
+                            </div>
+                            
                         </li>
                       </ul>
                     </div>     

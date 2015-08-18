@@ -95,6 +95,15 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
         $scope.modalInstance = Modal.open($scope, "partials/modal/comment.html");
     };
     
+    $scope.showCommentView = function(index)
+    {
+        Bug.resource.getComment({id: $scope.bugList[index].id}).$promise.then(function(response)
+        {
+            getInfo();
+            $scope.bugList[index].comments = response.data;
+        });
+    };
+    
     function saveComment()
     {
         var params = 
@@ -108,5 +117,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
             getInfo();
         });
     }
+    
+    
     
 }]);

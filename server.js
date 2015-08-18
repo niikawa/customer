@@ -122,6 +122,7 @@ router.post('/access', access.getDayAll);
 
 var bug = require("./api/bug");
 router.get('/bug/resolve/:id', bug.resolve);
+router.get('/bug/save/comment/:id', bug.getComment);
 router.post('/bug/save', bug.save);
 router.post('/bug/save/comment', bug.saveComment);
 router.post('/bug', bug.getByConditon);
