@@ -36,13 +36,12 @@
                                 <label class="label label-success">{{item.category_name}}</label>
                                 <label class="label label-warning">{{item.resolve_name}}</label>
                                 
-                                <div ng-if="item.comment_count" >
-                                    <i class="fa fa-comments fa-2x"></i>
-                                    {{item.comment_count}}
-                                </div>
-                                
-                                
                                 <div class="pull-right">
+                                    <div ng-if="item.comment_count" >
+                                        <i class="fa fa-comments fa-2x"></i>
+                                        {{item.comment_count}}
+                                    </div>
+                                
                                     <i class="fa fa-clock-o fa-fw"></i>{{item.create_date}}
                                     {{item.name}}
                                     <button ng-if="1==roleId" class="btn btn-primary" ng-click="resolve(i)">解決</button>
