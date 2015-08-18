@@ -84,14 +84,20 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
         });
     };
     
-    $scope.showComment = function()
+    $scope.showComment = function(index)
     {
-      $scope.modalParam = 
-      {
-          execute: '',
-          newComment: '',
-      };
-      $scope.modalInstance = Modal.open($scope, "partials/modal/comment.html");
+        $scope.modalParam = 
+        {
+            execute: saveComment,
+            newComment: '',
+            id: $scope.bugList[index].id,
+        };
+        $scope.modalInstance = Modal.open($scope, "partials/modal/comment.html");
     };
+    
+    function saveComment()
+    {
+        console.log($scope.modalParam);
+    }
     
 }]);
