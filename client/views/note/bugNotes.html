@@ -35,7 +35,13 @@
                                 <label class="label label-primary">{{item.type_name}}</label>
                                 <label class="label label-success">{{item.category_name}}</label>
                                 <label class="label label-warning">{{item.resolve_name}}</label>
-                                <i ng-if="item.comment_count" class="fa fa-comments"></i>
+                                
+                                <div ng-if="item.comment_count" >
+                                    <i class="fa fa-comments fa-2x"></i>
+                                    {{item.comment_count}}
+                                </div>
+                                
+                                
                                 <div class="pull-right">
                                     <i class="fa fa-clock-o fa-fw"></i>{{item.create_date}}
                                     {{item.name}}
