@@ -65,7 +65,7 @@ exports.getComment = function(req, res)
     var qObj = model.getQueryObject(col, tableName, where, '', order);
 
     qObj.request.input('demand_bug_id', model.db.Int, req.body.id);
-    console.log(req.body.id);
+    console.log(req.params.id);
 
     model.select(qObj, qObj.request, function(err, data)
     {
@@ -176,7 +176,7 @@ exports.vote = function(req, res)
         var col = "vote";
         var where = 'id = @id';
         var qObj = model.getQueryObject(col, tableName, where, '', '');
-        request.input('id', model.db.Int, req.body.id);
+        request.input('id', model.db.Int, req.params.id);
         
         qObj.request.input('demand_bug_id', model.db.Int, req.body.id);
     
@@ -199,7 +199,10 @@ exports.vote = function(req, res)
 
             model.updateById(update, request, function(err, data)
             {
-                res.status(200).send('vote ok');
+                transaction.commit(function(err)
+                {
+                    res.status(200).send('vote ok');
+                });
             });
         });
     });

@@ -42,7 +42,7 @@ bugServices.factory("Bug", ['$resource','Utility',
             getComment: 
             {
                 method:"GET",
-                url: "/bug/save/comment/:id"
+                url: "/bug/comment/:id"
             },
             vote: 
             {
