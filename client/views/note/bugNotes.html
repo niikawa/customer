@@ -42,7 +42,7 @@
                                     <button ng-if="1==roleId" class="btn btn-primary" ng-click="resolve(i)">解決</button>
                                     <button class="btn btn-primary" ng-click="showComment(i)">コメント</button>
                                     <div >
-                                        <i ng-if="item.comment_count" class="fa fa-comments fa-2x pointer" ng-click="showCommentView(i)">{{item.comment_count}}</i>
+                                        <i class="fa fa-comments fa-2x pointer" ng-click="showCommentView(i)">{{item.comment_count}}</i>
                                         <i class="fa fa-thumbs-o-up fa-2x pointer" ng-click="vote(i)"></i>
                                     </div>
                                     
