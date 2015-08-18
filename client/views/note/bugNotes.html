@@ -35,6 +35,7 @@
                                 <label class="label label-primary">{{item.type_name}}</label>
                                 <label class="label label-success">{{item.category_name}}</label>
                                 <label class="label label-warning">{{item.resolve_name}}</label>
+                                <i ng-if="item.comment_count" class="fa fa-comments"></i>
                                 <div class="pull-right">
                                     <i class="fa fa-clock-o fa-fw"></i>{{item.create_date}}
                                     {{item.name}}
@@ -46,9 +47,6 @@
                                 <p class="title">{{item.title}}</p>
                                 <hr class="line">
                                 <p>{{item.contents}}</p>
-                            </div>
-                            <div ng-repeat="comment in item.comments">
-                                <p class="title">{{comment}}</p>
                             </div>
                         </li>
                       </ul>
