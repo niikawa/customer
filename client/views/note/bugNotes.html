@@ -54,8 +54,9 @@
                                 <p ng-bind-html="item.contents"></p>
                             </div>
                             
-                            <div ng-repeat="comment in item.comments">
-                                <p ng-bind-html="comment"></p>
+                            <div ng-repeat="commentItem in item.comments">
+                                <p ng-bind-html="commentItem.name"></p>
+                                <p ng-bind-html="commentItem.comment"></p>
                             </div>
                             
                         </li>
