@@ -97,7 +97,16 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
     
     function saveComment()
     {
-        console.log($scope.modalParam);
+        var params = 
+        {
+            demand_bug_id: $scope.modalParam.id,
+            comment: $scope.modalParam.newComment,
+        };
+        Bug.resource.saveComment(params).$promise.then(function(response)
+        {
+            $scope.modalInstance.close();
+            getInfo();
+        });
     }
     
 }]);

@@ -108,3 +108,31 @@ exports.resolve = function(req, res)
         res.status(200).send('update ok');
     });
 };
+
+exports.saveComment = function(req, res)
+{
+    var commonColumns = model.getInsCommonColumns();
+    var insertData = model.merge(req.body, commonColumns);
+    insertData.resolve = 0;
+    var request = model.getRequest();
+    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+    request.input('create_by', model.db.Int, req.session.userId);
+    request.input('create_date', model.db.NVarChar, insertData.create_date);
+    request.input('update_by', model.db.Int, req.session.userId);
+    request.input('update_date', model.db.NVarChar, insertData.update_date);
+
+    request.input('demand_bug_id', model.db.Int, insertData.demand_bug_id);
+    request.input('comment', model.db.NVarChar, insertData.comment);
+
+    model.insert("T_DEMAND_BUG_COMMENT", insertData, request, function(err, date)
+    {
+        if (err.length > 0)
+        {
+            console.log(err);
+            res.status(510).send('object not found');
+        }
+        model.insertLog(req.session.userId, 99, Message.COMMON.I_001, insertData.title);
+        res.status(200).send('inset ok');
+    });
+};
+
