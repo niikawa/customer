@@ -61,7 +61,7 @@ exports.getComment = function(req, res)
     var col = "T1.demand_bug_comment_id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as create_date, T1.comment, T2.name";
     var tableName = "T_DEMAND_BUG_COMMENT T1 LEFT JOIN M_USER T2 ON T1.create_by = T2.user_id";
     var where = 'T1.demand_bug_id = @demand_bug_id';
-    var order = "T1.demand_bug_comment_id ACS";
+    var order = "T1.demand_bug_comment_id";
     var qObj = model.getQueryObject(col, tableName, where, '', order);
 
     qObj.request.input('demand_bug_id', model.db.Int, req.body.id);
@@ -130,8 +130,11 @@ exports.resolve = function(req, res)
             console.log(err);
             res.status(510).send('object not found');
         }
-        model.insertLog(req.session.userId, 5, Message.COMMON.I_002, updateData.segment_name);
-        res.status(200).send('update ok');
+        else
+        {
+            model.insertLog(req.session.userId, 5, Message.COMMON.I_002, updateData.segment_name);
+            res.status(200).send('update ok');
+        }
     });
 };
 
@@ -154,10 +157,49 @@ exports.saveComment = function(req, res)
         if (err.length > 0)
         {
             console.log(err);
-            res.status(510).send('object not found');
+            res.status(510).send('comment save faild');
         }
-        model.insertLog(req.session.userId, 99, Message.COMMON.I_001, insertData.title);
-        res.status(200).send('inset ok');
+        else
+        {
+            model.insertLog(req.session.userId, 99, Message.COMMON.I_001, insertData.title);
+            res.status(200).send('inset ok');
+        }
     });
 };
 
+exports.vote = function(req, res)
+{
+    model.tranBegin(function(err, transaction)
+    {
+        var request = model.getRequest(transaction);
+        var col = "vote";
+        var where = 'iddemand_bug_id = @id';
+        var qObj = model.getQueryObject(col, tableName, where, '', '');
+        request.input('id', model.db.Int, req.body.id);
+        
+        qObj.request.input('demand_bug_id', model.db.Int, req.body.id);
+    
+        model.select(qObj, request, function(err, data)
+        {
+            if (err.length > 0)
+            {
+                console.log(err);
+                res.status(510).send('vote faild');
+            }
+
+            var update = model.getUpdCommonColumns(req.session.userId);
+            update.id = req.body.id;
+            update.vote = data[0].vote + 1;
+            var request = model.getRequest(transaction);
+            request.input('id', model.db.Int, update.id);
+            request.input('update_by', model.db.Int, update.update_by);
+            request.input('update_date', model.db.NVarChar, update.update_date);
+            request.input('vote', model.db.BigInt, update.vote);
+
+            model.updateById(update, request, function(err, data)
+            {
+                res.status(200).send('vote ok');
+            });
+        });
+    });
+};

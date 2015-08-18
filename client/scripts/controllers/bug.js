@@ -104,6 +104,15 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
         });
     };
     
+    $scope.vote = function(index)
+    {
+        Bug.resource.vote({id: $scope.bugList[index].id}).$promise.then(function(response)
+        {
+            getInfo();
+//            $scope.bugList[index].comments = response.data;
+        });
+    };
+
     function saveComment()
     {
         var params = 

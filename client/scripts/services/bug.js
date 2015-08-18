@@ -44,6 +44,11 @@ bugServices.factory("Bug", ['$resource','Utility',
                 method:"GET",
                 url: "/bug/save/comment/:id"
             },
+            vote: 
+            {
+                method:"GET",
+                url: "/bug/vote/:id"
+            },
         });
         
         bugServices.addViewInfo = function(list)
