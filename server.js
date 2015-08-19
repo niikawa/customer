@@ -8,8 +8,6 @@ var path = require('path');
 var express = require('express');
 var router = express();
 var multer  = require('multer');
-var upload = multer({ dest: 'uploads/' })
-//router.use(multer({ dest: 'uploads/'}));
 
 var morgan = require("morgan");
 if (process.env.ENVIRONMENT == 'develop')
@@ -25,7 +23,6 @@ else if (process.env.ENVIRONMENT == 'stage')
 else if (process.env.ENVIRONMENT == 'production')
 {
     // 本番環境のみ
-  
 }
 
 var cookieParser = require('cookie-parser');
@@ -43,6 +40,9 @@ router.use(session({
 
 router.use(express.static(path.resolve(__dirname, 'client')));
 router.use(express.static(path.resolve(__dirname, 'files')));
+//var upload = multer({ dest: 'uploads/'})
+router.use(multer({dest: 'uploads/'}));
+
 router.use(bodyParser.json());
 //router.use(bodyParser.urlencoded());
 
