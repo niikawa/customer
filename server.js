@@ -8,7 +8,8 @@ var path = require('path');
 var express = require('express');
 var router = express();
 var multer  = require('multer');
-router.use(multer({ dest: 'uploads/'}));
+var upload = multer({ dest: 'uploads/' })
+//router.use(multer({ dest: 'uploads/'}));
 
 var morgan = require("morgan");
 if (process.env.ENVIRONMENT == 'develop')
