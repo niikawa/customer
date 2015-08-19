@@ -1,6 +1,6 @@
 var bugCtrl = angular.module('bugCtrl',['BugServices']);
-bugCtrl.controller('BugCtrl',['$scope', '$sce', 'Shared', 'Bug', 'Modal','Utility',
-function ($scope, $sce, Shared, Bug, Modal, Utility)
+bugCtrl.controller('BugCtrl',['$scope', '$sce', '$upload', 'Shared', 'Bug', 'Modal','Utility',
+function ($scope, $sce, $upload, Shared, Bug, Modal, Utility)
 {
     $scope.selectedFile = [];
     
@@ -93,6 +93,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
         {
             execute: saveComment,
             onFileSelect: onFileSelect,
+            files: {},
             newComment: '',
             id: $scope.bugList[index].id,
         };
