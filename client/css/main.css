@@ -1051,6 +1051,10 @@ p.bug-contents {
     background-color: #F9F9F9;
     opacity: 0.8;
 }
+.file-name {
+  font-size: 1.2em;
+  font-weight: bold;
+}
 /*-----------------------------------------------*/
 /* Other
 /*-----------------------------------------------*/

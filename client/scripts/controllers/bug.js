@@ -127,20 +127,30 @@ function ($scope, $sce, Upload, Shared, Bug, Modal, Utility)
     {
         
         console.log($scope.modalParam);
-        return;
         if (0 === $scope.modalParam.newComment.length) return;
         var params = 
         {
             demand_bug_id: $scope.modalParam.id,
             comment: $scope.modalParam.newComment,
         };
-        Bug.resource.saveComment(params).$promise.then(function(response)
+        if ($scope.modalParam.files)
         {
-            $scope.modalInstance.close();
-            getInfo();
-        });
+            Bug.saveAndUpload($scope.modalParam.files, params, function(err)
+            {
+                $scope.modalInstance.close();
+                if (null !== err)
+                {
+                    Utility.error(err);
+                }
+            });
+        }
+        else
+        {
+            Bug.resource.saveComment(params).$promise.then(function(response)
+            {
+                $scope.modalInstance.close();
+                getInfo();
+            });
+        }
     }
-    
-    
-    
 }]);

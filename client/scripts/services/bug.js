@@ -1,6 +1,6 @@
 var bugServices = angular.module("BugServices", ["ngResource"]);
-bugServices.factory("Bug", ['$resource','Utility',
-    function($resource, Utility) 
+bugServices.factory("Bug", ['$resource','Utility', 'Upload',
+    function($resource, Utility, Upload) 
     {
         var bugServices = {};
         
@@ -50,6 +50,29 @@ bugServices.factory("Bug", ['$resource','Utility',
                 url: "/bug/vote/:id"
             },
         });
+        
+        bugServices.saveAndUpload = function(file, params, callback)
+        {
+            Upload.upload(
+            {
+                "url":"/bug/save/comment",
+                file: file,
+                params: params
+            }).success(function(result, status, headers, config)
+            {
+                if (result.success)
+                {
+                    callback(null);
+                }
+                else
+                {
+                    callback('コメントの追加に失敗しました');
+                }
+            }).error(function()
+            {
+                callback("通信エラー");
+            });
+        };
         
         bugServices.addViewInfo = function(list)
         {
