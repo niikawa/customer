@@ -3,7 +3,6 @@ var azure = require('../config/azure.json');
 
 //======================================================
 // azure ml webサービスを呼び出す
-//
 //======================================================
 
 function getOptions(type, param)

@@ -17,6 +17,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'ngMessages',
+    'ngFileUpload',
     'ui.bootstrap',
     'coreCtrl',
     'loginCtrl',

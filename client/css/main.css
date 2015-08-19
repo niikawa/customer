@@ -1037,6 +1037,20 @@ p.bug-contents {
   font-size: 1.2em;
   color: #6b5e66;
 }
+.file-upload-area {
+    padding: 20px;
+    border: 2px #DDD dashed;
+    text-align: center;
+    color: #DDD;
+    margin-bottom: 20px;
+}
+.file-upload-area input[type="file"] {
+    display: none;
+}
+.file-upload-dragover {
+    background-color: #F9F9F9;
+    opacity: 0.8;
+}
 /*-----------------------------------------------*/
 /* Other
 /*-----------------------------------------------*/
