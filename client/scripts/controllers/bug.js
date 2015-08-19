@@ -125,6 +125,9 @@ function ($scope, $sce, Upload, Shared, Bug, Modal, Utility)
 
     function saveComment()
     {
+        
+        console.log($scope.modalParam);
+        return;
         var params = 
         {
             demand_bug_id: $scope.modalParam.id,
