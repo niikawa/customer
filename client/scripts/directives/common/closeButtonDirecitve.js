@@ -3,20 +3,9 @@ myApp.controller('CloseButtonCtrl',['$scope', 'Modal', function ($scope, Modal)
 {
     var ctrl = this;
     
-    ctrl.modal = function()
-    {
-        $scope.modalParam = 
-        {
-            title: "",
-            message: "",
-            isExecute: false,
-        };
-        $scope.modalInstance = Modal.open($scope.modalParam, "partials/modal/message.html");
-    };
-    
 }]);
 
-myApp.directive('closeButtonDirecitve', function(Shared, Modal)
+myApp.directive('closeButtonDirecitve', function(Shared, Utility)
 {
     return {
         restrict: 'E',
@@ -36,18 +25,10 @@ myApp.directive('closeButtonDirecitve', function(Shared, Modal)
             
             scope.click = function()
             {
-                console.log(closeButtonCtrl);
-                closeButtonCtrl.modal();
-                // scope.modalParam = 
-                // {
-                //     title: "",
-                //     message: "",
-                //     isExecute: false,
-                // };
-                // scope.modalInstance = Modal.open(scope.modalParam, "partials/modal/message.html");
-                
-//                scope.execute();
+                Utility.closeAlert();
             };
+            
+            
         }
     };
 });

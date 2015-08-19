@@ -27,7 +27,8 @@
     "json3": "~3.3.2",
     "components-font-awesome": "~4.3.0",
     "d3": "~3.5.5",
-    "angular-messages": "~1.4.0"
+    "angular-messages": "~1.4.0",
+    "sweetalert": "~1.1.0"
   },
   "devDependencies": {}
 }
