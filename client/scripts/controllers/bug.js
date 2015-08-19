@@ -128,6 +128,7 @@ function ($scope, $sce, Upload, Shared, Bug, Modal, Utility)
         
         console.log($scope.modalParam);
         return;
+        if (0 === $scope.modalParam.newComment.length) return;
         var params = 
         {
             demand_bug_id: $scope.modalParam.id,
