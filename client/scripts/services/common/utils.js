@@ -253,7 +253,7 @@ utilsServices.service("Utility", ['$rootScope', function($rootScope)
         return m.isValid();
     };
     
-    this.closeAlert = function(execute)
+    this.confirmAlert = function(execute)
     {
         swal({
             title: "削除してもよろしいですか？",
@@ -267,6 +267,23 @@ utilsServices.service("Utility", ['$rootScope', function($rootScope)
             html: false
         }, function() {
             execute();
+        });
+    };
+    this.infoAlert = function(params)
+    {
+        swal({
+            title: params.title,
+            text: params.text,
+            type: "info",
+            allowOutsideClick: true,
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: params.confirmButtonText,
+            cancelButtonText:"閉じる",
+            closeOnConfirm: true,
+            html: false
+        }, function() {
+            params.execute();
         });
     };
 }]);

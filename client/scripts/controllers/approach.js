@@ -69,6 +69,7 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
     $scope.showDiscription = function(id)
     {
         var info = Approach.getInfomation(id);
+        
         $scope.modalParam = 
         {
             title: info.title,
@@ -80,12 +81,11 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
 
     $scope.bulkInvalid = function()
     {
-        $scope.modalParam = 
+        
+        var params = 
         {
             title: 'シナリオの一括無効について',
-            message: '有効なシナリオをすべて無効にしますがよろしいですか？<br>実行した場合、実行予定シナリオはなくなります。',
-            isExecute: true,
-            executeLabel: '一括で無効にする',
+            text: '有効なシナリオをすべて無効にしますがよろしいですか？<br>実行した場合、実行予定シナリオはなくなります。',
             execute: function()
             {
                 Scenario.resource.bulkInvalid().$promise.then(function(response)
@@ -96,7 +96,7 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
                 });
             }
         };
-        $scope.modalInstance = Modal.open($scope, "partials/modal/message.html");
+        Utility.infoAlert(params);
     };
     
     $scope.bulkEnable = function()
