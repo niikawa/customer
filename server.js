@@ -7,7 +7,7 @@ var http = require('http');
 var path = require('path');
 var express = require('express');
 var router = express();
-var multer  = require('multer');
+var multer = require('multer');
 
 var morgan = require("morgan");
 if (process.env.ENVIRONMENT == 'develop')
