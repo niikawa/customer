@@ -41,11 +41,10 @@ router.use(session({
 router.use(express.static(path.resolve(__dirname, 'client')));
 router.use(express.static(path.resolve(__dirname, 'files')));
 //var upload = multer({ dest: 'uploads/'})
-var upload = multer({dest: 'uploads/'});
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
-router.use(multer());
+router.use(multer({dest: 'uploads/'}).single("file"));
 
 //router.use(bodyParser.urlencoded());
 
