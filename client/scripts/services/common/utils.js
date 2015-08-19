@@ -281,7 +281,7 @@ utilsServices.service("Utility", ['$rootScope', function($rootScope)
             confirmButtonText: params.confirmButtonText,
             cancelButtonText:"閉じる",
             closeOnConfirm: true,
-            html: false
+            html: true
         }, function() {
             params.execute();
         });
