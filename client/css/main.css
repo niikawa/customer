@@ -1044,9 +1044,9 @@ p.bug-contents {
     color: #DDD;
     margin-bottom: 20px;
 }
-.file-upload-area input[type="file"] {
-    display: none;
-}
+/*.file-upload-area input[type="file"] {*/
+/*    display: none;*/
+/*}*/
 .file-upload-dragover {
     background-color: #F9F9F9;
     opacity: 0.8;

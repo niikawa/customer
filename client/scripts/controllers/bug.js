@@ -93,7 +93,7 @@ function ($scope, $sce, Upload, Shared, Bug, Modal, Utility)
         {
             execute: saveComment,
             onFileSelect: onFileSelect,
-            files: {},
+            files: [],
             newComment: '',
             id: $scope.bugList[index].id,
         };
