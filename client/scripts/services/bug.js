@@ -55,7 +55,7 @@ bugServices.factory("Bug", ['$resource','Utility', 'Upload',
         {
             Upload.upload(
             {
-                "url":"/bug/save/comment",
+                "url":"/bug/save/comment/upload/",
                 file: file,
                 params: params
             }).success(function(result, status, headers, config)
