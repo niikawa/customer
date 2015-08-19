@@ -21,6 +21,7 @@ function createContainerIfNotExists(containerName)
 
 exports.createContainer = function(containerName, callback)
 {
+    console.log("execute createContainerIfNotExists ");
     blobService.createContainerIfNotExists(containerName, {publicAccessLevel : 'blob'}, function(error, result, response)
     {
         callback(error, result, response);
@@ -62,5 +63,4 @@ exports.uploadStorage = function(uploadInfo, mainCallback)
         }
         mainCallback(err);
     });
-    
 };

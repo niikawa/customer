@@ -102,7 +102,6 @@ function ($scope, $sce, Upload, Shared, Bug, Modal, Utility)
     
     function onFileSelect($files)
     {
-        console.log($files);
 		$scope.selectedFile.push($files[0]);
     }
     
@@ -131,7 +130,7 @@ function ($scope, $sce, Upload, Shared, Bug, Modal, Utility)
             demand_bug_id: $scope.modalParam.id,
             comment: $scope.modalParam.newComment,
         };
-        if ($scope.modalParam.files)
+        if (0 < $scope.modalParam.files.length)
         {
             Bug.saveAndUpload($scope.modalParam.files, params, function(err)
             {
