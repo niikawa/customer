@@ -256,14 +256,14 @@ utilsServices.service("Utility", ['$rootScope', function($rootScope)
     this.closeAlert = function(execute)
     {
         swal({
-            title: "本当に削除してもよろしいですか？",
+            title: "削除してもよろしいですか？",
             type: "warning",
             allowOutsideClick: true,
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "削除する",
             cancelButtonText:"キャンセル",
-            closeOnConfirm: false,
+            closeOnConfirm: true,
             html: false
         }, function() {
             execute();
