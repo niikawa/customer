@@ -141,14 +141,14 @@ exports.saveComment = function(req, res)
 {
     console.log("comment save execute");
     console.log(req.file);
-    console.log(req.body.data.input);
+    console.log(req.body.data.data);
 
     var params = {};
     
     if (req.file)
     {
         //fileアップロードと一緒にデータを渡すためこの形
-        params = req.body.data.input;
+        params = req.body.data.data;
     }
     else
     {
