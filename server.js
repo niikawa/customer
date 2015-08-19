@@ -41,8 +41,8 @@ router.use(express.static(path.resolve(__dirname, 'client')));
 router.use(express.static(path.resolve(__dirname, 'files')));
 router.use(bodyParser.json());
 //router.use(bodyParser.urlencoded());
-var multer  = require('multer')
-router.use(multer({ dest: './uploads/'}))
+var multer  = require('multer');
+router.use(multer({ dest: 'uploads/'}))
 
 
 var auth = require('./api/auth');
