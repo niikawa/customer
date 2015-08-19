@@ -2,7 +2,6 @@ var azureStorage = require('azure-storage');
 var blobService = azureStorage.createBlobService();
 var async = require('async');
 
-
 //======================================================
 // azure storage sdk を利用してstorage操作を行う
 //======================================================

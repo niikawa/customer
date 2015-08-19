@@ -165,8 +165,8 @@ exports.saveComment = function(req, res)
         {
             if (isAttach)
             {
-                var storage = require(".azurestorage");
                 console.log("go storage.createContainer");
+                var storage = require("./azurestorage");
                 storage.createContainer("attach", function(err, re, res)
                 {
                     console.log(err);
