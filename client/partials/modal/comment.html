@@ -18,14 +18,16 @@ comments {string} 入力したコメント
                 <textarea placeholder="コメントを入力してください" ng-model="modalParam.newComment"/>
             </div>
         </div>
-    
-        <div accept=".jpg,.png,.gif" ng-multiple="true" drag-over-class="file-upload-dragover" ng-model="files" ng-file-drop class="file-upload-area">
-            <span class="fa fa-cloud-upload fa-5x"></span>
-            <p><span class="lead">ファイルをドロップ</span><br>または</p>
-            <label class="btn btn-info btn-lg" for="file">ファイルを選択</label>
-            <input type="file" ng-file-change="modalParam.onFileSelect()" ng-file-select multiple="multiple" name="file" id="file">
+        
+        <div class="col-sm-12">
+            <div accept=".jpg,.png,.gif" ng-multiple="true" drag-over-class="file-upload-dragover" ng-model="files" ng-file-drop class="file-upload-area">
+                <span class="fa fa-cloud-upload fa-5x"></span>
+                <p><span class="lead">ファイルをドロップ</span><br>または</p>
+                <label class="btn btn-info btn-lg" for="file">ファイルを選択</label>
+                <input type="file" ng-file-change="modalParam.onFileSelect($files)" ng-file-select multiple="multiple" name="file" id="file">
+            </div>
         </div>
-
+        
     </div>
     
 </div>
