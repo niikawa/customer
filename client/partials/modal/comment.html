@@ -20,13 +20,13 @@ comments {string} 入力したコメント
         </div>
         
         <pre>{{modalParam.files}}</pre>
+        <input type="file" ngf-select ng-model="modalParam.files" ngf-multiple="false" name="file" id="file">
         
         <div class="col-sm-12">
             <div accept=".jpg,.png,.gif, txt" ng-multiple="true" drag-over-class="file-upload-dragover" ng-model="modalParam.files" ngf-drop=true class="file-upload-area">
                 <span class="fa fa-cloud-upload fa-5x"></span>
                 <p><span class="lead">ファイルをドロップ</span><br>または</p>
-                <label class="btn btn-info btn-lg" for="file">ファイルを選択</label>
-                <input type="file" ngf-select ng-model="modalParam.files" ngf-multiple="false" name="file" id="file">
+                <!--<label class="btn btn-info btn-lg" for="file">ファイルを選択</label>-->
                 <!--<input type="file" ngf-select="modalParam.onFileSelect($files)" multiple="multiple" name="file" id="file">-->
             </div>
         </div>
