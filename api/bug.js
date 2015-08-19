@@ -141,11 +141,22 @@ exports.saveComment = function(req, res)
 {
     console.log("comment save execute");
     console.log(req.file);
-    console.log(req.body);
-    console.log(req.params);
+    console.log(req.body.data.input);
+
+    var params = {};
     
+    if (req.file)
+    {
+        //fileアップロードと一緒にデータを渡すためこの形
+        params = req.body.data.input;
+    }
+    else
+    {
+        params = req.body;
+    }
+
     var commonColumns = model.getInsCommonColumns(req.session.userId);
-    var insertData = model.merge(req.body, commonColumns);
+    var insertData = model.merge(params, commonColumns);
     var request = model.getRequest();
     request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
     request.input('create_by', model.db.Int, req.session.userId);
