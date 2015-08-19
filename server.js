@@ -44,6 +44,9 @@ router.use(express.static(path.resolve(__dirname, 'files')));
 var upload = multer({dest: 'uploads/'});
 
 router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use(multer());
+
 //router.use(bodyParser.urlencoded());
 
 
@@ -130,8 +133,8 @@ router.get('/bug/resolve/:id', bug.resolve);
 router.get('/bug/vote/:id', bug.vote);
 router.get('/bug/comment/:id', bug.getComment);
 router.post('/bug/save', bug.save);
-router.post('/bug/save/comment/upload', upload, bug.saveComment);
 router.post('/bug/save/comment', bug.saveComment);
+router.post('/bug/save/comment/upload', bug.saveComment);
 router.post('/bug', bug.getByConditon);
 
 //
