@@ -2,6 +2,8 @@ var bugCtrl = angular.module('bugCtrl',['BugServices']);
 bugCtrl.controller('BugCtrl',['$scope', '$sce', 'Shared', 'Bug', 'Modal','Utility',
 function ($scope, $sce, Shared, Bug, Modal, Utility)
 {
+    $scope.selectedFile = [];
+    
     function setInitializeScope()
     {
         $scope.bug = {resolve: null, type: null};
@@ -75,6 +77,7 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
             title: $scope.modalParam.title,
             contents: $scope.modalParam.contents,
             category: $scope.modalParam.category.type,
+            file: $scope.selectedFile,
         };
         Bug.resource.save(params).$promise.then(function(response)
         {
@@ -89,10 +92,17 @@ function ($scope, $sce, Shared, Bug, Modal, Utility)
         $scope.modalParam = 
         {
             execute: saveComment,
+            onFileSelect: onFileSelect,
             newComment: '',
             id: $scope.bugList[index].id,
         };
         $scope.modalInstance = Modal.open($scope, "partials/modal/comment.html");
+    };
+    
+    function onFileSelect($files)
+    {
+        console.log($files);
+		$scope.selectedFile.push($files[0]);
     };
     
     $scope.showCommentView = function(index)
