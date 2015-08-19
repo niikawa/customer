@@ -25,10 +25,8 @@ myApp.directive('closeButtonDirecitve', function(Shared, Utility)
             
             scope.click = function()
             {
-                Utility.closeAlert();
+                Utility.closeAlert(scope.execute);
             };
-            
-            
         }
     };
 });
