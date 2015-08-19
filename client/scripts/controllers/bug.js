@@ -125,8 +125,6 @@ function ($scope, $sce, Upload, Shared, Bug, Modal, Utility)
 
     function saveComment()
     {
-        
-        console.log($scope.modalParam);
         if (0 === $scope.modalParam.newComment.length) return;
         var params = 
         {
@@ -142,6 +140,7 @@ function ($scope, $sce, Upload, Shared, Bug, Modal, Utility)
                 {
                     Utility.error(err);
                 }
+                getInfo();
             });
         }
         else

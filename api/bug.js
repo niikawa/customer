@@ -141,7 +141,7 @@ exports.saveComment = function(req, res)
 {
     console.log("comment save execute");
     console.log(req.file);
-    console.log(req.body.data.data);
+    console.log(req.body.data);
 
     var params = {};
     var isAttach = false;
