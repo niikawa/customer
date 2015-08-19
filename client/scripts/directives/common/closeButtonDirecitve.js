@@ -1,7 +1,9 @@
 var myApp = angular.module('myApp');
 myApp.controller('CloseButtonCtrl',['$scope', 'Modal', function ($scope, Modal)
 {
-    this.modal = function()
+    var ctrl = this;
+    
+    ctrl.modal = function()
     {
         $scope.modalParam = 
         {
@@ -35,14 +37,14 @@ myApp.directive('closeButtonDirecitve', function(Shared, Modal)
             scope.click = function()
             {
                 console.log(closeButtonCtrl);
-                
-                scope.modalParam = 
-                {
-                    title: "",
-                    message: "",
-                    isExecute: false,
-                };
-                scope.modalInstance = Modal.open(scope.modalParam, "partials/modal/message.html");
+                closeButtonCtrl.modal();
+                // scope.modalParam = 
+                // {
+                //     title: "",
+                //     message: "",
+                //     isExecute: false,
+                // };
+                // scope.modalInstance = Modal.open(scope.modalParam, "partials/modal/message.html");
                 
 //                scope.execute();
             };
