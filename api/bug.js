@@ -143,6 +143,7 @@ exports.saveComment = function(req, res)
     console.log("comment save execute");
     console.log(req.file);
     console.log(req.body);
+    console.log(req.params);
     
     var commonColumns = model.getInsCommonColumns();
     var insertData = model.merge(req.body, commonColumns);
