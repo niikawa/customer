@@ -7,7 +7,6 @@ var http = require('http');
 var path = require('path');
 var express = require('express');
 var router = express();
-var multer = require('multer');
 
 var morgan = require("morgan");
 if (process.env.ENVIRONMENT == 'develop')
@@ -28,6 +27,7 @@ else if (process.env.ENVIRONMENT == 'production')
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
+var multer = require('multer');
 
 router.set('secretKey', 'ix-cpm-forazure');
 router.set('cookieSessionKey', 'sid');
