@@ -144,32 +144,62 @@ exports.saveComment = function(req, res)
     console.log(req.body.data.data);
 
     var params = {};
-    
+    var isAttach = false;
     if (req.file)
     {
         //fileアップロードと一緒にデータを渡すためこの形
         params = req.body.data.data;
+        isAttach = true;
     }
     else
     {
         params = req.body;
     }
-
+    
     var commonColumns = model.getInsCommonColumns(req.session.userId);
     var insertData = model.merge(params, commonColumns);
-    var request = model.getRequest();
-    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
-    request.input('create_by', model.db.Int, req.session.userId);
-    request.input('create_date', model.db.NVarChar, insertData.create_date);
-    request.input('update_by', model.db.Int, req.session.userId);
-    request.input('update_date', model.db.NVarChar, insertData.update_date);
-
-    request.input('demand_bug_id', model.db.Int, insertData.demand_bug_id);
-    request.input('comment', model.db.NVarChar, insertData.comment);
-
-    model.insert("T_DEMAND_BUG_COMMENT", insertData, request, function(err, date)
+    
+    model.async.waterfall(
+    [
+        function(callback)
+        {
+            if (isAttach)
+            {
+                var storage = require(".azurestorage");
+                storage.createContainer("attach", function(err, re, res)
+                {
+                    console.log(err);
+                    console.log(re);
+                    console.log(res);
+                    callback(err);
+                });
+            }
+            else
+            {
+                callback(null);
+            }
+        },
+        function(callback)
+        {
+            var request = model.getRequest();
+            request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+            request.input('create_by', model.db.Int, req.session.userId);
+            request.input('create_date', model.db.NVarChar, insertData.create_date);
+            request.input('update_by', model.db.Int, req.session.userId);
+            request.input('update_date', model.db.NVarChar, insertData.update_date);
+        
+            request.input('demand_bug_id', model.db.Int, insertData.demand_bug_id);
+            request.input('comment', model.db.NVarChar, insertData.comment);
+            
+            model.insert("T_DEMAND_BUG_COMMENT", insertData, request, function(err, date)
+            {
+                var errInfo = (err.length > 0) ? err : null;
+                callback(errInfo);
+            });
+        }
+    ], function(err)
     {
-        if (err.length > 0)
+        if (null !== err)
         {
             console.log(err);
             res.status(510).send('comment save faild');

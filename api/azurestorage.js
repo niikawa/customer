@@ -19,15 +19,11 @@ function createContainerIfNotExists(containerName)
     });    
 }
 
-exports.createContainer = function(req, res)
+exports.createContainer = function(containerName, callback)
 {
-    blobService.createContainerIfNotExists('taskcontainer', {publicAccessLevel : 'blob'}, function(error, result, response)
+    blobService.createContainerIfNotExists(containerName, {publicAccessLevel : 'blob'}, function(error, result, response)
     {
-        if(!error)
-        {
-        // if result = true, container was created.
-        // if result = false, container already existed.
-        }
+        callback(error, result, response);
     });    
 };
 
