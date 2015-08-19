@@ -60,14 +60,8 @@ bugServices.factory("Bug", ['$resource','Utility', 'Upload',
                 params: params
             }).success(function(result, status, headers, config)
             {
-                if (result.success)
-                {
-                    callback(null);
-                }
-                else
-                {
-                    callback('コメントの追加に失敗しました');
-                }
+                callback(null);
+                
             }).error(function()
             {
                 callback("通信エラー");

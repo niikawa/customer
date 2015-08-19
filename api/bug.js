@@ -80,7 +80,8 @@ exports.getComment = function(req, res)
 
 exports.save = function(req, res)
 {
-    console.log(req.file);
+    console.log("comment save execute");
+    console.log(req.files);
     
     var commonColumns = model.getInsCommonColumns();
     var insertData = model.merge(req.body, commonColumns);
