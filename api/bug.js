@@ -80,9 +80,6 @@ exports.getComment = function(req, res)
 
 exports.save = function(req, res)
 {
-    console.log("comment save execute");
-    console.log(req.files);
-    
     var commonColumns = model.getInsCommonColumns();
     var insertData = model.merge(req.body, commonColumns);
     insertData.resolve = 0;
@@ -142,6 +139,10 @@ exports.resolve = function(req, res)
 
 exports.saveComment = function(req, res)
 {
+
+    console.log("comment save execute");
+    console.log(req.files);
+    
     var commonColumns = model.getInsCommonColumns();
     var insertData = model.merge(req.body, commonColumns);
     var request = model.getRequest();
