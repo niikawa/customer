@@ -104,7 +104,7 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
         var params = 
         {
             title: 'シナリオの一括有効について',
-            message: '無効なシナリオをすべて有効にしますがよろしいですか？<br>実行した場合、実行予定シナリオとしてダッシュボード画面に表示されます。',
+            text: '無効なシナリオをすべて有効にしますがよろしいですか？<br>実行した場合、実行予定シナリオとしてダッシュボード画面に表示されます。',
             isExecute: true,
             confirmButtonText: '一括で有効にする',
             execute: function()
