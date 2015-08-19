@@ -139,13 +139,12 @@ exports.resolve = function(req, res)
 
 exports.saveComment = function(req, res)
 {
-
     console.log("comment save execute");
     console.log(req.file);
     console.log(req.body);
     console.log(req.params);
     
-    var commonColumns = model.getInsCommonColumns();
+    var commonColumns = model.getInsCommonColumns(req.session.userId);
     var insertData = model.merge(req.body, commonColumns);
     var request = model.getRequest();
     request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
