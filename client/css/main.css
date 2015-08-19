@@ -1009,7 +1009,9 @@ ul.release-note > li > div > p {
   margin:0;
   padding-left: 15px;
 }
-
+div.bug {
+  color: #6b5e66;
+}
 p.title {
   margin-top:5px;
   margin-bottom:5px;
@@ -1018,8 +1020,7 @@ p.bug-title {
   margin-top:5px;
   margin-bottom:5px;
   font-weight: bold;
-  font-size: 1.5em;
-  color: #6b5e66;
+  font-size: 1.3em;
 }
 hr.line {
   margin:5px;

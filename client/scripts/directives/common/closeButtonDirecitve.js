@@ -1,18 +1,11 @@
 var myApp = angular.module('myApp');
-myApp.controller('CloseButtonCtrl',['$scope', 'Modal', function ($scope, Modal)
-{
-    var ctrl = this;
-    
-}]);
-
 myApp.directive('closeButtonDirecitve', function(Shared, Utility)
 {
     return {
         restrict: 'E',
-        scope: {execute: '&', params: "="},
-        controller:'CloseButtonCtrl',
+        scope: {execute: '&'},
         template: '<button ng-if="isShowMine" class="close-button" ng-click="click()"><i class="fa fa-times"></i></button>',
-        link: function (scope, element, attrs, closeButtonCtrl) 
+        link: function (scope, element, attrs) 
         {
             if (3 != Shared.get("role"))
             {
