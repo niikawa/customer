@@ -93,7 +93,7 @@ function ($scope, $sce, Upload, Shared, Bug, Modal, Utility)
         {
             execute: saveComment,
             onFileSelect: onFileSelect,
-            files: [],
+            files: null,
             newComment: '',
             id: $scope.bugList[index].id,
         };
@@ -131,7 +131,7 @@ function ($scope, $sce, Upload, Shared, Bug, Modal, Utility)
             comment: $scope.modalParam.newComment,
         };
         console.log($scope.modalParam);
-        if (0 < $scope.modalParam.files.length)
+        if (null !== $scope.modalParam.files)
         {
             Bug.saveAndUpload($scope.modalParam.files, params, function(err)
             {
