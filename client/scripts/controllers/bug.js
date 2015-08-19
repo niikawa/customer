@@ -130,6 +130,7 @@ function ($scope, $sce, Upload, Shared, Bug, Modal, Utility)
             demand_bug_id: $scope.modalParam.id,
             comment: $scope.modalParam.newComment,
         };
+        console.log($scope.modalParam);
         if (0 < $scope.modalParam.files.length)
         {
             Bug.saveAndUpload($scope.modalParam.files, params, function(err)
