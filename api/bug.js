@@ -301,7 +301,7 @@ exports.download = function(req, res)
         containerName: "attach",
         dowloadName: "",
         blobName: "",
-        path: "file/",
+        path: "files/",
         fileName: "",
     };
 
