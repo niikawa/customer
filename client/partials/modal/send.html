@@ -28,10 +28,11 @@
                     <textarea class="form-control" placeholder="コメントを入力してください" ng-model="modalParam.contents" ng-required="true"/>
                 </div>
 
-                <div class="col-sm-12">
+                <div class="form-group">
                     <div ng-multiple="true" drag-over-class="file-upload-dragover" ng-model="modalParam.files" ngf-drop=true class="file-upload-area">
                         <span class="fa fa-cloud-upload fa-5x"></span>
                         <p ng-if="modalParam.files.name"><span class="file-name">{{modalParam.files.name}}</span></p>
+                        <p ng-if="!modalParam.files.name"><span class="file-name">添付ファイルは1つだけです</span></p>
                         <label class="btn btn-info btn-lg" for="file">ファイルを選択</label>
                         <input type="file" ngf-select ng-model="modalParam.files" ngf-multiple="false" name="file" id="file">
                     </div>
