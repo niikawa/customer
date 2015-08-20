@@ -141,23 +141,25 @@ exports.saveComment = function(req, res)
 {
     console.log("comment save execute");
     console.log(req.file);
-    console.log(req.body.data);
 
     var params = {};
     var isAttach = false;
     if (req.file)
     {
+        console.log(req.body.data.data);
         //fileアップロードと一緒にデータを渡すためこの形
         params = req.body.data.data;
         isAttach = true;
     }
     else
     {
+        console.log(req.body);
         params = req.body;
     }
     
     var commonColumns = model.getInsCommonColumns(req.session.userId);
     var insertData = model.merge(params, commonColumns);
+    console.log(insertData);
     
     model.async.waterfall(
     [
