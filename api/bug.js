@@ -149,6 +149,7 @@ exports.saveComment = function(req, res)
         console.log(req.body.data);
         var data = JSON.parse(req.body.data);
         console.log(data);
+        console.log(JSON.stringify(req.body.data));
         //fileアップロードと一緒にデータを渡すためこの形
         params = req.body.data.data;
         isAttach = true;
