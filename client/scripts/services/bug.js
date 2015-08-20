@@ -44,10 +44,15 @@ bugServices.factory("Bug", ['$resource','Utility', 'Upload',
                 method:"GET",
                 url: "/bug/comment/:id"
             },
-            vote: 
+            vote:
             {
                 method:"GET",
                 url: "/bug/vote/:id"
+            },
+            download:
+            {
+                method:"GET",
+                url: "/bug/download/:id"
             },
         });
         

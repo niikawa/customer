@@ -156,6 +156,11 @@ function ($rootScope, $scope, $sce, Upload, Shared, Bug, Modal, Utility)
     
     $scope.download = function(id)
     {
-        
+        if (null === id || void 0 === id) return false;
+        Bug.resource.download({id: id}).$promise.then(function(response)
+        {
+            $scope.modalInstance.close();
+            getInfo();
+        });
     };
 }]);
