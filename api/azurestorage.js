@@ -43,6 +43,10 @@ exports.uploadStorage = function(uploadInfo, mainCallback)
         {
             blobService.createContainerIfNotExists(uploadInfo.containerName, {publicAccessLevel : 'blob'}, function(error, result, response)
             {
+                console.log("createContainerIfNotExists result");
+                console.log(error);
+                console.log(result);
+                console.log(response);
                 if(!error)
                 {
                     callback(null);
@@ -57,7 +61,7 @@ exports.uploadStorage = function(uploadInfo, mainCallback)
         
         function(callback)
         {
-            blobService.createBlockBlobFromLocalFile(uploadInfo.containerName, uploadInfo.data, uploadInfo.uploadName, function(error, result, response)
+            blobService.createBlockBlobFromLocalFile(uploadInfo.containerName, uploadInfo.localFileName, uploadInfo.uploadName, function(error, result, response)
             {
                 console.log("createBlockBlobFromLocalFile result");
                 console.log(error);

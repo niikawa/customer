@@ -174,8 +174,8 @@ exports.saveComment = function(req, res)
                 
                 var uploadInfo = {
                     containerName: "attach",
-                    uploadName: req.file.destination+req.file.filename,
-                    data: fileData,
+                    uploadName: req.file.path,
+                    localFileName: req.file.originalname,
                 };
                 console.log(uploadInfo);
                 storage.uploadStorage(uploadInfo, function(err)
