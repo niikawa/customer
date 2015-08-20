@@ -1,5 +1,6 @@
 var Core = require('./core');
 var Message = require('../config/message.json');
+var fs = require('fs');
 
 /** テーブル名 */
 var tableName = 'T_DEMAND_BUG';
@@ -146,13 +147,8 @@ exports.saveComment = function(req, res)
     var isAttach = false;
     if (req.file)
     {
-        console.log("parse");
+        //fileアップロードと一緒にデータを渡すためこの形になる
         var data = JSON.parse(req.body.data);
-        console.log(data.data);
-        console.log("stringify");
-        var s = JSON.stringify(req.body.data);
-        console.log(s.data);
-        //fileアップロードと一緒にデータを渡すためこの形
         params = data.data;
         isAttach = true;
     }
@@ -162,8 +158,6 @@ exports.saveComment = function(req, res)
         params = req.body;
     }
     
-    console.log("parameter :");
-    console.log(params);
     var commonColumns = model.getInsCommonColumns(req.session.userId);
     var insertData = model.merge(params, commonColumns);
     console.log(insertData);
@@ -176,11 +170,16 @@ exports.saveComment = function(req, res)
             {
                 console.log("go storage.createContainer");
                 var storage = require("./azurestorage");
-                storage.createContainer("attach", function(err, re, res)
+                var fileData = fs.readFileSync(req.file.path, 'utf-8');
+                
+                var uploadInfo = {
+                    containerName: "attach",
+                    uploadName: req.file.originalname,
+                    data: fileData,
+                };
+                console.log(uploadInfo);
+                storage.uploadStorage(uploadInfo, function(err)
                 {
-                    console.log(err);
-                    console.log(re);
-                    console.log(res);
                     callback(err);
                 });
             }

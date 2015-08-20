@@ -41,6 +41,22 @@ exports.uploadStorage = function(uploadInfo, mainCallback)
     [
         function(callback)
         {
+            blobService.createContainerIfNotExists(uploadInfo.containerName, {publicAccessLevel : 'blob'}, function(error, result, response)
+            {
+                if(!error)
+                {
+                    callback(null);
+                }
+                else
+                {
+                    console.log("createBlockBlobFromLocalFile error");
+                    callback(error);
+                }
+            });
+        },
+        
+        function(callback)
+        {
             blobService.createBlockBlobFromLocalFile(uploadInfo.containerName, uploadInfo.data, uploadInfo.uploadName, function(error, result, response)
             {
                 if(!error)
@@ -54,6 +70,8 @@ exports.uploadStorage = function(uploadInfo, mainCallback)
                 }
             });
         },
+        
+        
     ], function(err)
     {
         if (err)
