@@ -115,6 +115,7 @@ exports.downLoadStorage = function(downLoadInfo, mainCallback)
         function(callback)
         {
             console.log("getBlockBlobToStream execute");
+            console.log(blobService.getBlockBlobToStream);
             blobService.getBlockBlobToStream(downLoadInfo.containerName, downLoadInfo.blobName, fs.createWriteStream(downLoadInfo.dowloadName), function(error, result, response)
             {
                 console.log("getBlockBlobToStream result");

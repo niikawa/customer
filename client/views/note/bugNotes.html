@@ -60,7 +60,9 @@
                                 <ul class="list-group" >
                                     <li class="list-group-item clearfix" ng-repeat="commentItem in item.comments">
                                         <i class="fa fa-download"></i>{{commentItem.create_date}}{{commentItem.name}}
-                                        <i ng-if="commentItem.attach_name_key" class="fa download fa-fw pointer"><a target="_blank" href="/bug/download/{{commentItem.demand_bug_comment_id}}">{{commentItem.attach_name_key}}</i>
+                                        <i ng-if="commentItem.attach_name_key" class="fa download fa-fw pointer">
+                                            <a target="_blank" href="/bug/download/{{commentItem.demand_bug_comment_id}}">{{commentItem.attach_name_key}}</a>
+                                        </i>
                                         <p ng-bind-html="commentItem.comment"></p>
                                     </li>
                                 </ul>
