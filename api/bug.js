@@ -334,7 +334,7 @@ exports.download = function(req, res)
             console.log(attachKey);
             
             downLoadInfo.fileName = createAttachFileName(attachKey);
-            downLoadInfo.dowloadName = downLoadInfo.path + downLoadInfo.fileName;
+            downLoadInfo.dowloadName = downLoadInfo.path + attachKey;
             downLoadInfo.blobName = attachKey;
             
             storage.downLoadStorage(downLoadInfo, function(err)
@@ -353,16 +353,16 @@ exports.download = function(req, res)
         {
             console.log("go download");
             console.log(downLoadInfo);
-            res.download(downLoadInfo.path, downLoadInfo.fileName, function(err)
+            res.download(downLoadInfo.dowloadName, downLoadInfo.fileName, function(err)
             {
-                // fs.unlink(downLoadInfo.dowloadName, function (err)
-                // {
-                //     if (err)
-                //     {
-                //         console.log("file unlink faild");
-                //         console.log(err);
-                //     }
-                // });                    
+                fs.unlink(downLoadInfo.dowloadName, function (err)
+                {
+                    if (err)
+                    {
+                        console.log("file unlink faild");
+                        console.log(err);
+                    }
+                });                    
                 if (err)
                 {
                     console.log(err);
