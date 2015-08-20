@@ -59,13 +59,16 @@ exports.uploadStorage = function(uploadInfo, mainCallback)
         {
             blobService.createBlockBlobFromLocalFile(uploadInfo.containerName, uploadInfo.data, uploadInfo.uploadName, function(error, result, response)
             {
+                console.log("createBlockBlobFromLocalFile result");
+                console.log(error);
+                console.log(result);
+                console.log(response);
                 if(!error)
                 {
                     callback(null);
                 }
                 else
                 {
-                    console.log("createBlockBlobFromLocalFile error");
                     callback(error);
                 }
             });
