@@ -22,6 +22,7 @@ exports.getByConditon = function(req, res)
     var request = model.getRequest();
     var col = "T1.id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, T1.vote, T2.name";
     col += ", count(T3.demand_bug_comment_id) as comment_count";
+    col += ", count(T3.attach_name_key) as attach_count";
     var tableName = "T_DEMAND_BUG T1 LEFT JOIN M_USER T2 ON T1.create_by = T2.user_id LEFT JOIN T_DEMAND_BUG_COMMENT T3 ON T1.id = T3.demand_bug_id";
     var where = '';
     
@@ -160,8 +161,7 @@ exports.saveComment = function(req, res)
     
     var commonColumns = model.getInsCommonColumns(req.session.userId);
     var insertData = model.merge(params, commonColumns);
-    console.log(insertData);
-    
+    insertData.attach_name_key = "";
     model.async.waterfall(
     [
         function(callback)
@@ -170,17 +170,21 @@ exports.saveComment = function(req, res)
             {
                 console.log("go storage.createContainer");
                 var storage = require("./azurestorage");
-                var fileData = fs.readFileSync(req.file.path, 'utf-8');
-                
                 var uploadInfo = {
                     containerName: "attach",
                     uploadName: req.file.path,
-                    localFileName: req.file.originalname,
+                    localFileName: req.file.filename+"_"+req.file.originalname,
                 };
-                console.log(uploadInfo);
+                
+                insertData.attach_name_key = req.file.filename+"_"+req.file.originalname;
                 storage.uploadStorage(uploadInfo, function(err)
                 {
-                    callback(err);
+                    var storageErr = err;
+                    fs.unlink(req.file.path, function (err)
+                    {
+                        if (err) console.log(err);
+                        callback(storageErr);
+                    });                    
                 });
             }
             else
@@ -199,7 +203,8 @@ exports.saveComment = function(req, res)
         
             request.input('demand_bug_id', model.db.Int, insertData.demand_bug_id);
             request.input('comment', model.db.NVarChar, insertData.comment);
-            
+            request.input('attach_name_key', model.db.NVarChar, insertData.attach_name_key);
+
             model.insert("T_DEMAND_BUG_COMMENT", insertData, request, function(err, date)
             {
                 var errInfo = (err.length > 0) ? err : null;
