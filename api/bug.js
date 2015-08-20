@@ -301,6 +301,8 @@ exports.download = function(req, res)
         containerName: "attach",
         dowloadName: "",
         blobName: "",
+        path: "file/",
+        fileName: "",
     };
 
     model.async.waterfall(
@@ -331,21 +333,13 @@ exports.download = function(req, res)
         {
             console.log(attachKey);
             
-            downLoadInfo.dowloadName = "files/" + createAttachFileName(attachKey);
+            downLoadInfo.fileName = createAttachFileName(attachKey);
+            downLoadInfo.dowloadName = downLoadInfo.path + downLoadInfo.fileName;
             downLoadInfo.blobName = attachKey;
             
             storage.downLoadStorage(downLoadInfo, function(err)
             {
-                var storageErr = err;
-                fs.unlink(req.file.path, function (err)
-                {
-                    if (err)
-                    {
-                        console.log("file unlink faild");
-                        console.log(err);
-                    }
-                    callback(storageErr);
-                });                    
+                callback(err);
             });
         }
     ], function(err)
@@ -357,8 +351,17 @@ exports.download = function(req, res)
         }
         else
         {
-            res.download("files/", downLoadInfo.dowloadName, function(err)
+            console.log("go download");
+            res.download("files/", downLoadInfo.fileName, function(err)
             {
+                fs.unlink(downLoadInfo.dowloadName, function (err)
+                {
+                    if (err)
+                    {
+                        console.log("file unlink faild");
+                        console.log(err);
+                    }
+                });                    
                 if (err)
                 {
                     console.log(err);
