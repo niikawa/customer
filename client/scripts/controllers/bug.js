@@ -1,6 +1,6 @@
 var bugCtrl = angular.module('bugCtrl',['BugServices']);
-bugCtrl.controller('BugCtrl',['$scope', '$sce', 'Upload', 'Shared', 'Bug', 'Modal','Utility',
-function ($scope, $sce, Upload, Shared, Bug, Modal, Utility)
+bugCtrl.controller('BugCtrl',['$rootScope','$scope', '$sce', 'Upload', 'Shared', 'Bug', 'Modal','Utility',
+function ($rootScope, $scope, $sce, Upload, Shared, Bug, Modal, Utility)
 {
     $scope.selectedFile = [];
     
@@ -130,9 +130,9 @@ function ($scope, $sce, Upload, Shared, Bug, Modal, Utility)
             demand_bug_id: $scope.modalParam.id,
             comment: $scope.modalParam.newComment,
         };
-        console.log($scope.modalParam);
         if (null !== $scope.modalParam.files)
         {
+            $rootScope.$broadcast('requestStart');
             Bug.saveAndUpload($scope.modalParam.files, params, function(err)
             {
                 $scope.modalInstance.close();
@@ -141,6 +141,7 @@ function ($scope, $sce, Upload, Shared, Bug, Modal, Utility)
                     Utility.error(err);
                 }
                 getInfo();
+                $rootScope.$broadcast('requestEnd');
             });
         }
         else
