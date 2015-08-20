@@ -43,7 +43,7 @@ router.use(express.static(path.resolve(__dirname, 'files')));
 //var upload = multer({ dest: 'uploads/'})
 
 router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.urlencoded({extended: true}));
 router.use(multer({dest: 'uploads/'}).single("file"));
 
 //router.use(bodyParser.urlencoded());
