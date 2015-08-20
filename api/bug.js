@@ -146,16 +146,19 @@ exports.saveComment = function(req, res)
     var isAttach = false;
     if (req.file)
     {
-        console.log(req.body.data);
-        var data = JSON.stringify(req.body.data);
+        console.log("parse");
+        var data = JSON.parse(req.body.data);
         console.log(data.data);
-        
+        console.log("stringify");
+        var s = JSON.stringify(req.body.data);
+        console.log(s.data);
         //fileアップロードと一緒にデータを渡すためこの形
         params = data.data;
         isAttach = true;
     }
     else
     {
+        console.log(req.body);
         params = req.body;
     }
     
