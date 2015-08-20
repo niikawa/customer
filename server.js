@@ -128,7 +128,8 @@ var access = require("./api/access");
 router.post('/access', access.getDayAll);
 
 var bug = require("./api/bug");
-router.get('/bug/download/:id', bug.download);
+router.get('/bug/main/download/:id', bug.download);
+router.get('/bug/comment/download/:id', bug.downloadByCommentId);
 router.get('/bug/resolve/:id', bug.resolve);
 router.get('/bug/vote/:id', bug.vote);
 router.get('/bug/comment/:id', bug.getComment);

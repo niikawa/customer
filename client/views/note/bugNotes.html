@@ -8,7 +8,7 @@
             <div class="col-md-12 center">
                 
                 <div class="btn-group" ng-click="getByCondition()">
-                    <label class="btn btn-default" ng-model="bug.resolve" btn-radio=0 uncheckable>未解決</label>
+                    <label class="btn btn-default active" ng-model="bug.resolve" btn-radio=0 uncheckable>未解決</label>
                     <label class="btn btn-default" ng-model="bug.resolve" btn-radio=1 uncheckable>解決済み</label>
                 </div>
                 <div class="btn-group" ng-click="getByCondition()">
@@ -47,6 +47,9 @@
                                         <i class="fa fa-comments fa-2x pointer" ng-click="showCommentView(i)">{{item.comment_count}}</i>
                                         <i class="fa fa-paperclip fa-2x pointer" ng-click="showCommentView(i)">{{item.attach_count}}</i>
                                         <i class="fa fa-thumbs-o-up fa-2x pointer" ng-click="vote(i)">{{item.vote}}</i>
+                                        <i ng-if="item.attach_name_key" class="fa fa-download fa-2x pointer">
+                                            <a target="_blank" href="/bug/main/download/{{item.id}}">{{item.attach_name_key}}</a>
+                                        </i>
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +68,7 @@
                                         </div>
                                         <div ng-if="commentItem.attach_name_key" class="col-md-4">
                                             <i class="fa fa-download pointer">
-                                                <a target="_blank" href="/bug/download/{{commentItem.demand_bug_comment_id}}">{{commentItem.attach_name_key}}</a>
+                                                <a target="_blank" href="/bug/comment/download/{{commentItem.demand_bug_comment_id}}">{{commentItem.attach_name_key}}</a>
                                             </i>
                                         </div>
                                     </li>

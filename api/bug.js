@@ -20,13 +20,13 @@ var model = new bug();
 exports.getByConditon = function(req, res)
 {
     var request = model.getRequest();
-    var col = "T1.id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, T1.vote, T2.name";
+    var col = "T1.id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, T1.vote, T1.attach_name_key, T2.name";
     col += ", count(T3.demand_bug_comment_id) as comment_count";
     col += ", count(T3.attach_name_key) as attach_count";
     var tableName = "T_DEMAND_BUG T1 LEFT JOIN M_USER T2 ON T1.create_by = T2.user_id LEFT JOIN T_DEMAND_BUG_COMMENT T3 ON T1.id = T3.demand_bug_id";
     var where = '';
     
-    var groupBy = "T1.id, T1.create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, T2.name, T1.vote";
+    var groupBy = "T1.id, T1.create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, T2.name, T1.vote, T1.attach_name_key";
     
     if (req.body.hasOwnProperty('resolve') && null !== req.body.resolve) 
     {
@@ -47,6 +47,17 @@ exports.getByConditon = function(req, res)
 
     model.select(qObj, request, function(err, data)
     {
+        var num = data.length;
+        for (var index = 0; index < num; index++)
+        {
+            var target = data[index];
+            if (null !== target.attach_name_key)
+            {
+                target.attach_name_key = createAttachFileName(target.attach_name_key);
+                target.attach_count += 1;
+            }
+        }
+
         if (err.length > 0)
         {
             console.log(err);
@@ -360,11 +371,10 @@ exports.vote = function(req, res)
     });
 };
 
-exports.download = function(req, res)
+exports.downloadByCommentId = function(req, res)
 {
     if (!req.params.hasOwnProperty('id')) return res.status(510).send('パラメータが不正です');
 
-    console.log("go storage.downLoadStorage");
     var storage = require("./azurestorage");
     var downLoadInfo = {
         containerName: "attach",
@@ -420,8 +430,85 @@ exports.download = function(req, res)
         }
         else
         {
-            console.log("go download");
-            console.log(downLoadInfo);
+            res.download(downLoadInfo.dowloadName, downLoadInfo.fileName, function(err)
+            {
+                fs.unlink(downLoadInfo.dowloadName, function (err)
+                {
+                    if (err)
+                    {
+                        console.log("file unlink faild");
+                        console.log(err);
+                    }
+                });                    
+                if (err)
+                {
+                    console.log(err);
+                    res.status(err.status).end();
+                }
+            });
+        }
+    });
+};
+
+exports.download = function(req, res)
+{
+    if (!req.params.hasOwnProperty('id')) return res.status(510).send('パラメータが不正です');
+
+    var storage = require("./azurestorage");
+    var downLoadInfo = {
+        containerName: "attach",
+        dowloadName: "",
+        blobName: "",
+        path: "files/",
+        fileName: "",
+    };
+
+    model.async.waterfall(
+    [
+        function(callback)
+        {
+            var col = "T1.attach_name_key";
+            var tableName = "T_DEMAND_BUG T1";
+            var where = 'T1.id = @id';
+            var qObj = model.getQueryObject(col, tableName, where, '', '');
+        
+            qObj.request.input('id', model.db.Int, req.params.id);
+        
+            model.select(qObj, qObj.request, function(err, data)
+            {
+                var errInfo = 0 < err.length ? err : null;
+                if (null === data[0].attach_name_key)
+                {
+                    callback("添付ファイルがありませんでした。");
+                }
+                else
+                {
+                    callback(errInfo, data[0].attach_name_key);
+                }
+            });
+        },
+        function(attachKey, callback)
+        {
+            console.log(attachKey);
+            
+            downLoadInfo.fileName = createAttachFileName(attachKey);
+            downLoadInfo.dowloadName = downLoadInfo.path + attachKey;
+            downLoadInfo.blobName = attachKey;
+            
+            storage.downLoadStorage(downLoadInfo, function(err)
+            {
+                callback(err);
+            });
+        }
+    ], function(err)
+    {
+        if (null !== err)
+        {
+            console.log(err);
+            res.status(510).send(err);
+        }
+        else
+        {
             res.download(downLoadInfo.dowloadName, downLoadInfo.fileName, function(err)
             {
                 fs.unlink(downLoadInfo.dowloadName, function (err)
