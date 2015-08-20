@@ -59,7 +59,7 @@ exports.getByConditon = function(req, res)
 
 exports.getComment = function(req, res)
 {
-    var col = "T1.demand_bug_comment_id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as create_date, T1.comment, T2.name";
+    var col = "T1.demand_bug_comment_id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as create_date, T1.comment, T2.name, T1.attach_name_key";
     var tableName = "T_DEMAND_BUG_COMMENT T1 LEFT JOIN M_USER T2 ON T1.create_by = T2.user_id";
     var where = 'T1.demand_bug_id = @demand_bug_id';
     var order = "T1.demand_bug_comment_id";
@@ -74,6 +74,23 @@ exports.getComment = function(req, res)
             console.log('get comment  faild');
             console.log(err);
             res.status(510).send('get comment faild');
+        }
+        
+        var num = data.length;
+        for (var index = 0; index < num; index++)
+        {
+            var target = data[index];
+            if (null !== target.attach_name_key)
+            {
+                var names = target.attach_name_key.split("_");
+                var namesNum = names.length;
+                var attachName = "";
+                for (var nIndex = 1; nIndex < namesNum; nIndex++)
+                {
+                    attachName += names[nIndex];
+                }
+                target.attach_name_key = attachName;
+            }
         }
 
         res.json({data: data});
@@ -161,7 +178,7 @@ exports.saveComment = function(req, res)
     
     var commonColumns = model.getInsCommonColumns(req.session.userId);
     var insertData = model.merge(params, commonColumns);
-    insertData.attach_name_key = "";
+    insertData.attach_name_key = null;
     model.async.waterfall(
     [
         function(callback)
@@ -182,7 +199,12 @@ exports.saveComment = function(req, res)
                     var storageErr = err;
                     fs.unlink(req.file.path, function (err)
                     {
-                        if (err) console.log(err);
+                        
+                        if (err)
+                        {
+                            console.log("file unlink faild");
+                            console.log(err);
+                        }
                         callback(storageErr);
                     });                    
                 });
