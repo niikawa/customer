@@ -157,6 +157,8 @@ exports.saveComment = function(req, res)
         params = req.body;
     }
     
+    console.log("parameter :");
+    console.log(params);
     var commonColumns = model.getInsCommonColumns(req.session.userId);
     var insertData = model.merge(params, commonColumns);
     console.log(insertData);
