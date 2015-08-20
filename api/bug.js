@@ -352,16 +352,17 @@ exports.download = function(req, res)
         else
         {
             console.log("go download");
-            res.download("files/", downLoadInfo.fileName, function(err)
+            console.log(downLoadInfo);
+            res.download(downLoadInfo.path, downLoadInfo.fileName, function(err)
             {
-                fs.unlink(downLoadInfo.dowloadName, function (err)
-                {
-                    if (err)
-                    {
-                        console.log("file unlink faild");
-                        console.log(err);
-                    }
-                });                    
+                // fs.unlink(downLoadInfo.dowloadName, function (err)
+                // {
+                //     if (err)
+                //     {
+                //         console.log("file unlink faild");
+                //         console.log(err);
+                //     }
+                // });                    
                 if (err)
                 {
                     console.log(err);
