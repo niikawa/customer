@@ -56,11 +56,28 @@ bugServices.factory("Bug", ['$resource','Utility', 'Upload',
             },
         });
         
-        bugServices.saveAndUpload = function(file, parameter, callback)
+        bugServices.commentSaveAndUpload = function(file, parameter, callback)
         {
             Upload.upload(
             {
                 "url":"/bug/save/comment/upload/",
+                file: file,
+                data: {data: parameter},
+            }).success(function(result, status, headers, config)
+            {
+                callback(null);
+                
+            }).error(function()
+            {
+                callback("通信エラー");
+            });
+        };
+        
+        bugServices.saveAndUpload = function(file, parameter, callback)
+        {
+            Upload.upload(
+            {
+                "url":"/bug/save/upload/",
                 file: file,
                 data: {data: parameter},
             }).success(function(result, status, headers, config)

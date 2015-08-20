@@ -44,6 +44,7 @@ function ($rootScope, $scope, $sce, Upload, Shared, Bug, Modal, Utility)
           contents: '',
           category: '',
           categoryList: Bug.categoryList,
+          files: null,
       };
       $scope.modalInstance = Modal.open($scope, "partials/modal/send.html");
     };
@@ -77,14 +78,31 @@ function ($rootScope, $scope, $sce, Upload, Shared, Bug, Modal, Utility)
             title: $scope.modalParam.title,
             contents: $scope.modalParam.contents,
             category: $scope.modalParam.category.type,
-            file: $scope.selectedFile,
         };
-        Bug.resource.save(params).$promise.then(function(response)
+        
+        if (null !== $scope.modalParam.files)
         {
-            Utility.info('ありがとございました。');
-            $scope.modalInstance.close();
-            getInfo();
-        });
+            $rootScope.$broadcast('requestStart');
+            Bug.saveAndUpload($scope.modalParam.files, params, function(err)
+            {
+                $scope.modalInstance.close();
+                if (null !== err)
+                {
+                    Utility.error(err);
+                }
+                getInfo();
+                $rootScope.$broadcast('requestEnd');
+            });
+        }
+        else
+        {
+            Bug.resource.save(params).$promise.then(function(response)
+            {
+                Utility.info('ありがとございました。');
+                $scope.modalInstance.close();
+                getInfo();
+            });
+        }
     };
     
     $scope.showComment = function(index)
@@ -133,7 +151,7 @@ function ($rootScope, $scope, $sce, Upload, Shared, Bug, Modal, Utility)
         if (null !== $scope.modalParam.files)
         {
             $rootScope.$broadcast('requestStart');
-            Bug.saveAndUpload($scope.modalParam.files, params, function(err)
+            Bug.commentSaveAndUpload($scope.modalParam.files, params, function(err)
             {
                 $scope.modalInstance.close();
                 if (null !== err)

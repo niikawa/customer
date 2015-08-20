@@ -104,38 +104,108 @@ function createAttachFileName(attachKey)
 
 exports.save = function(req, res)
 {
-    var commonColumns = model.getInsCommonColumns();
-    var insertData = model.merge(req.body, commonColumns);
-    insertData.resolve = 0;
-    var request = model.getRequest();
-    request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
-    request.input('create_by', model.db.Int, req.session.userId);
-    request.input('create_date', model.db.NVarChar, insertData.create_date);
-    request.input('update_by', model.db.Int, req.session.userId);
-    request.input('update_date', model.db.NVarChar, insertData.update_date);
-
-    request.input('resolve', model.db.SmallInt, insertData.resolve);
-    request.input('type', model.db.SmallInt, insertData.type);
-    request.input('category', model.db.SmallInt, insertData.category);
-    request.input('title', model.db.NVarChar, insertData.title);
-    request.input('contents', model.db.NVarChar, insertData.contents);
-
-    model.insert(tableName, insertData, request, function(err, date)
+    console.log("comment save execute");
+    console.log(req.file);
+    var params = {};
+    var isAttach = false;
+    if (req.file)
     {
-        if (err.length > 0)
+        //fileアップロードと一緒にデータを渡すためこの形になる
+        var data = JSON.parse(req.body.data);
+        params = data.data;
+        isAttach = true;
+    }
+    else
+    {
+        console.log(req.body);
+        params = req.body;
+    }
+    
+    var commonColumns = model.getInsCommonColumns(req.session.userId);
+    var insertData = model.merge(params, commonColumns);
+    insertData.attach_name_key = null;
+    insertData.resolve = 0;
+    model.async.waterfall(
+    [
+        function(callback)
+        {
+            if (isAttach)
+            {
+                console.log("go storage.createContainer");
+                var storage = require("./azurestorage");
+                var uploadInfo = {
+                    containerName: "attach",
+                    uploadName: req.file.path,
+                    localFileName: req.file.filename+"_"+req.file.originalname,
+                };
+                
+                insertData.attach_name_key = req.file.filename+"_"+req.file.originalname;
+                storage.uploadStorage(uploadInfo, function(err)
+                {
+                    var storageErr = err;
+                    fs.unlink(req.file.path, function (err)
+                    {
+                        
+                        if (err)
+                        {
+                            console.log("file unlink faild");
+                            console.log(err);
+                        }
+                        callback(storageErr);
+                    });                    
+                });
+            }
+            else
+            {
+                callback(null);
+            }
+        },
+        function(callback)
+        {
+            var request = model.getRequest();
+            request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
+            request.input('create_by', model.db.Int, req.session.userId);
+            request.input('create_date', model.db.NVarChar, insertData.create_date);
+            request.input('update_by', model.db.Int, req.session.userId);
+            request.input('update_date', model.db.NVarChar, insertData.update_date);
+        
+            request.input('resolve', model.db.SmallInt, insertData.resolve);
+            request.input('type', model.db.SmallInt, insertData.type);
+            request.input('category', model.db.SmallInt, insertData.category);
+            request.input('title', model.db.NVarChar, insertData.title);
+            request.input('contents', model.db.NVarChar, insertData.contents);
+            request.input('attach_name_key', model.db.NVarChar, insertData.attach_name_key);
+        
+            model.insert(tableName, insertData, request, function(err, date)
+            {
+                if (err.length > 0)
+                {
+                    console.log(err);
+                    res.status(510).send('object not found');
+                }
+                model.insertLog(req.session.userId, 99, Message.COMMON.I_001, insertData.title);
+                res.status(200).send('inset ok');
+            });
+        }
+    ], function(err)
+    {
+        if (null !== err)
         {
             console.log(err);
-            res.status(510).send('object not found');
+            res.status(510).send('comment save faild');
         }
-        model.insertLog(req.session.userId, 99, Message.COMMON.I_001, insertData.title);
-        res.status(200).send('inset ok');
+        else
+        {
+            model.insertLog(req.session.userId, 99, Message.COMMON.I_001, insertData.title);
+            res.status(200).send('inset ok');
+        }
     });
 };
 
 exports.resolve = function(req, res)
 {
     if (!req.params.hasOwnProperty('id')) res.status(510).send('parameter not found');
-    
+
     var commonColumns = model.getUpdCommonColumns(req.session.userId);
     var updateData = model.merge(req.params, commonColumns);
     updateData.resolve = 1;
@@ -165,7 +235,6 @@ exports.saveComment = function(req, res)
 {
     console.log("comment save execute");
     console.log(req.file);
-
     var params = {};
     var isAttach = false;
     if (req.file)

@@ -133,6 +133,7 @@ router.get('/bug/resolve/:id', bug.resolve);
 router.get('/bug/vote/:id', bug.vote);
 router.get('/bug/comment/:id', bug.getComment);
 router.post('/bug/save', bug.save);
+router.post('/bug/save/upload', bug.save);
 router.post('/bug/save/comment', bug.saveComment);
 router.post('/bug/save/comment/upload', bug.saveComment);
 router.post('/bug', bug.getByConditon);
