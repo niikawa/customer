@@ -31,7 +31,7 @@ var moment = require("moment");
      *              max: 10,
      *              outputCol: {name: name}
      *          }
-     * 
+     * @author new river
      * @param {object} データベースから取得した結果
      * @param {object} option 
      *                      path : ファイル出力パス

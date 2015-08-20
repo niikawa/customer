@@ -153,4 +153,9 @@ function ($rootScope, $scope, $sce, Upload, Shared, Bug, Modal, Utility)
             });
         }
     }
+    
+    $scope.download = function(id)
+    {
+        
+    };
 }]);

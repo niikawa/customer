@@ -82,20 +82,25 @@ exports.getComment = function(req, res)
             var target = data[index];
             if (null !== target.attach_name_key)
             {
-                var names = target.attach_name_key.split("_");
-                var namesNum = names.length;
-                var attachName = "";
-                for (var nIndex = 1; nIndex < namesNum; nIndex++)
-                {
-                    attachName += names[nIndex];
-                }
-                target.attach_name_key = attachName;
+                target.attach_name_key = createAttachFileName(target.attach_name_key);
             }
         }
 
         res.json({data: data});
     });
 };
+
+function createAttachFileName(attachKey)
+{
+    var names = attachKey.split("_");
+    var namesNum = names.length;
+    var attachName = "";
+    for (var index = 1; index < namesNum; index++)
+    {
+        attachName += names[index];
+    }
+    return attachName;
+}
 
 exports.save = function(req, res)
 {
@@ -283,5 +288,83 @@ exports.vote = function(req, res)
                 });
             });
         });
+    });
+};
+
+exports.download = function(req, res)
+{
+    if (!req.params.hasOwnProperty('id')) return res.status(510).send('パラメータが不正です');
+
+    console.log("go storage.downLoadStorage");
+    var storage = require("./azurestorage");
+    var downLoadInfo = {
+        containerName: "attach",
+        dowloadName: "",
+        blobName: "",
+    };
+
+    model.async.waterfall(
+    [
+        function(callback)
+        {
+            var col = "T1.attach_name_key";
+            var tableName = "T_DEMAND_BUG_COMMENT T1";
+            var where = 'T1.demand_bug_comment_id = @demand_bug_comment_id';
+            var qObj = model.getQueryObject(col, tableName, where, '', '');
+        
+            qObj.request.input('demand_bug_comment_id', model.db.Int, req.params.id);
+        
+            model.select(qObj, qObj.request, function(err, data)
+            {
+                var errInfo = 0 < err.length ? err : null;
+                if (null === data[0].attach_name_key)
+                {
+                    callback("添付ファイルがありませんでした。");
+                }
+                else
+                {
+                    callback(errInfo, data[0].attach_name_key);
+                }
+            });
+        },
+        function(attachKey, callback)
+        {
+            console.log(attachKey);
+            
+            downLoadInfo.dowloadName = "files/" + createAttachFileName(attachKey);
+            downLoadInfo.blobName = attachKey;
+            
+            storage.downLoadStorage(downLoadInfo, function(err)
+            {
+                var storageErr = err;
+                fs.unlink(req.file.path, function (err)
+                {
+                    if (err)
+                    {
+                        console.log("file unlink faild");
+                        console.log(err);
+                    }
+                    callback(storageErr);
+                });                    
+            });
+        }
+    ], function(err)
+    {
+        if (null !== err)
+        {
+            console.log(err);
+            res.status(510).send(err);
+        }
+        else
+        {
+            res.download("files/", downLoadInfo.dowloadName, function(err)
+            {
+                if (err)
+                {
+                    console.log(err);
+                    res.status(err.status).end();
+                }
+            });
+        }
     });
 };

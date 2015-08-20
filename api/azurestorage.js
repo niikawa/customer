@@ -1,6 +1,7 @@
 var azureStorage = require('azure-storage');
 var blobService = azureStorage.createBlobService();
 var async = require('async');
+var fs = require('fs');
 
 //======================================================
 // azure storage sdk を利用してstorage操作を行う
@@ -88,16 +89,16 @@ exports.uploadStorage = function(uploadInfo, mainCallback)
  * 
  * @param {object} uploadInfo パラメータ
  *                      containerName
- *                      uploadName
- *                      localFileName
+ *                      blobName
+ *                      dowloadName
  */
-exports.downLoadStorage = function(uploadInfo, mainCallback)
+exports.downLoadStorage = function(downLoadInfo, mainCallback)
 {
     async.waterfall(
     [
         function(callback)
         {
-            blobService.createContainerIfNotExists(uploadInfo.containerName, {publicAccessLevel : 'blob'}, function(error, result, response)
+            blobService.createContainerIfNotExists(downLoadInfo.containerName, {publicAccessLevel : 'blob'}, function(error, result, response)
             {
                 if(!error)
                 {
@@ -113,8 +114,12 @@ exports.downLoadStorage = function(uploadInfo, mainCallback)
         
         function(callback)
         {
-            blobService.createBlockBlobFromLocalFile(uploadInfo.containerName, uploadInfo.localFileName, uploadInfo.uploadName, function(error, result, response)
+            console.log("getBlockBlobToStream execute");
+            blobService.getBlockBlobToStream(downLoadInfo.containerName, downLoadInfo.blobName, fs.createWriteStream(downLoadInfo.dowloadName), function(error, result, response)
             {
+                console.log("getBlockBlobToStream result");
+                console.log(result);
+                console.log(response);
                 if(!error)
                 {
                     callback(null);
@@ -123,7 +128,7 @@ exports.downLoadStorage = function(uploadInfo, mainCallback)
                 {
                     callback(error);
                 }
-            });
+            });            
         },
     ], function(err)
     {
