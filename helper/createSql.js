@@ -316,7 +316,7 @@ function createSegment(data, request)
                 for (var sIndex = 0; sIndex < splitNum; sIndex++)
                 {
                     console.log(splitSql[sIndex]);
-                    if (replaceKey[index] === splitSql[sIndex])
+                    if ("@"+replaceKey[index] === splitSql[sIndex])
                     {
                         //一致した場合は既にクエリとして組み込まれているカラムの
                         //ため名称を差し替える
