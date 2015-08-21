@@ -294,9 +294,9 @@ function createSegment(data, request)
             else
             {
                 //バインド変数として-は使えないので除去する
-                var newKey = key + "_" + qId.replace(/-/g,"");
-                replaceObj[key] = newKey;
-                request.input(newKey, type, doc.bindInfo[key]);
+                var newBindKey = key + "_" + qId.replace(/-/g,"");
+                replaceObj[key] = "@"+ newBindKey;
+                request.input(newBindKey, type, doc.bindInfo[key]);
             }
             columnsObj[key] = doc.bindInfo[key];
         });
@@ -316,7 +316,7 @@ function createSegment(data, request)
                 for (var sIndex = 0; sIndex < splitNum; sIndex++)
                 {
                     console.log(splitSql[sIndex]);
-                    if ("@"+replaceKey[index] === splitSql[sIndex])
+                    if (replaceKey[index] === splitSql[sIndex])
                     {
                         //一致した場合は既にクエリとして組み込まれているカラムの
                         //ため名称を差し替える
