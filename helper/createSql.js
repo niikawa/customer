@@ -290,7 +290,6 @@ function createSegment(data, request)
             if (!columnsObj.hasOwnProperty(key))
             {
                 request.input(key, type, doc.bindInfo[key]);
-                columnsObj[key] = doc.bindInfo[key];
             }
             else
             {
@@ -298,8 +297,11 @@ function createSegment(data, request)
                 replaceObj[key] = newKey;
                 request.input(newKey, type, doc.bindInfo[key]);
             }
+            columnsObj[key] = doc.bindInfo[key];
         });
-        
+        console.log("check");
+        console.log(columnsObj);
+        console.log(replaceObj);
         //既に同一のカラムが存在していた場合はSQLの該当箇所をリプレイスする
         var replaceKey = Object.keys(replaceObj);
         var replaceKeyNum = replaceKey.length;
@@ -327,8 +329,7 @@ function createSegment(data, request)
         {
             sql += '('+ doc.sql + ')';
         }
-        
-        
+
         if (last !== count) sql += conditionMap[qId];
         count++;
     });
