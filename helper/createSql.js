@@ -261,6 +261,10 @@ function createValuePartBySymbol(item, name, request)
 function createSegment(data, request)
 {
     console.log('createSegment start');
+    
+    //同一カラムがないかチェックするためのオブジェクト
+    var columnsObj = {};
+    var replaceObj = {};
 
     var conditionMap = data.conditionMap;
     console.log(conditionMap);
@@ -277,16 +281,56 @@ function createSegment(data, request)
     var count = 0;
     Object.keys(conditionMap).forEach(function(qId)
     {
+        var replaceObj = {};
         var doc = docs[qId];
-        sql += '('+ doc.sql + ')';
-        if (last !== count) sql += conditionMap[qId];
-        count++;
         Object.keys(doc.columnTypeList).forEach(function(key)
         {
             console.log(doc.bindInfo[key]);
             var type = getColType(doc.columnTypeList[key]);
-            request.input(key, type, doc.bindInfo[key]);
+            if (!columnsObj.hasOwnProperty(key))
+            {
+                request.input(key, type, doc.bindInfo[key]);
+                columnsObj[key] = doc.bindInfo[key];
+            }
+            else
+            {
+                var newKey = key + "_" + qId;
+                replaceObj[key] = newKey;
+                request.input(newKey, type, doc.bindInfo[key]);
+            }
         });
+        
+        //既に同一のカラムが存在していた場合はSQLの該当箇所をリプレイスする
+        var replaceKey = Object.keys(replaceObj);
+        var replaceKeyNum = replaceKey.length;
+        
+        if (0 < replaceKeyNum)
+        {
+            var splitSql = doc.sql.split(" ");
+            var splitNum = splitSql.length;
+            for (var index = 0; index < replaceKeyNum; index++)
+            {
+                for (var sIndex = 0; sIndex < splitNum; sIndex++)
+                {
+                    if (replaceKey[index] === splitSql[sIndex])
+                    {
+                        //一致した場合は既にクエリとして組み込まれているカラムの
+                        //ため名称を差し替える
+                        splitSql[sIndex] = replaceObj[replaceKey[index]];
+                    }
+                }
+                //新しいバインド名でsqlを再生成する
+                sql += '('+ splitSql.join(" ") + ')';
+            }
+        }
+        else
+        {
+            sql += '('+ doc.sql + ')';
+        }
+        
+        
+        if (last !== count) sql += conditionMap[qId];
+        count++;
     });
     console.log(sql);
     return sql;
