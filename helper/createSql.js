@@ -293,7 +293,8 @@ function createSegment(data, request)
             }
             else
             {
-                var newKey = key + "_" + qId;
+                //バインド変数として-は使えないので除去する
+                var newKey = key + "_" + qId.replace(/-/g,"");
                 replaceObj[key] = newKey;
                 request.input(newKey, type, doc.bindInfo[key]);
             }
