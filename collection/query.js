@@ -45,6 +45,10 @@ Query.prototype =
     find: function (querySpec, callback)
     {
         var self = this;
+        
+        console.log("check log");
+        console.log(self.collection);
+        console.log(self);
 
         self.client.queryDocuments(
             self.collection._self, querySpec).toArray(function (err, results)
