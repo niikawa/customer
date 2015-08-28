@@ -15,7 +15,7 @@ exports.getTables = function(req, res)
     //表示対象のテーブル一覧を取得する
     var tableSql = "SELECT t.name AS table_name, ep.value AS comment " +
                     "FROM sys.tables AS t ,sys.extended_properties AS ep " +
-                    "WHERE t.name like 'R_%', AND t.object_id = ep.major_id, AND ep.minor_id = 0 ";
+                    "WHERE t.name like 'R_%' AND t.object_id = ep.major_id, AND ep.minor_id = 0 ";
     var tableInfo = {};
     var request = model.getRequest();
     model.execute(tableSql, request, function(err, tableList)
