@@ -13,9 +13,9 @@ var model = new table();
 exports.getTables = function(req, res)
 {
     //表示対象のテーブル一覧を取得する
-    var tableSql = "SELECT t.name AS table_name, ep.value AS comment " +
-                    "FROM sys.tables AS t ,sys.extended_properties AS ep " +
-                    "WHERE t.name like 'R_%' AND t.object_id = ep.major_id AND ep.minor_id = 0 ";
+    var tableSql = "SELECT t.name table_name, ep.value comment " +
+                    "FROM sys.tables t ,sys.extended_properties ep " +
+                    "WHERE t.name like 'R_%' AND t.object_id = ep.major_id AND ep.minor_id = 0";
     var tableInfo = {};
     var request = model.getRequest();
     model.execute(tableSql, request, function(err, tableList)
@@ -30,8 +30,8 @@ exports.getTables = function(req, res)
         console.log(tableList);
         //表示対象のテーブルが持つカラム一覧を取得する
         var columnSql = "SELECT t.name table_name ,c.name column_name ,sc.data_type ,sc.character_maximum_length max_lengt ,ep.value commnet" +
-                        "FROM  sys.tables AS t, ,sys.columns AS c, sys.extended_properties AS ep, INFORMATION_SCHEMA.COLUMNS sc" +
-                        "WHERE  t.name = @tableName AND t.object_id = c.object_id AND c.object_id = ep.major_id AND c.column_id = ep.minor_id AND t.name = sc.table_name AND sc.COLUMN_NAME = c.name";
+                        "FROM sys.tables AS t, ,sys.columns AS c, sys.extended_properties AS ep, INFORMATION_SCHEMA.COLUMNS sc " +
+                        "WHERE t.name = @tableName AND t.object_id = c.object_id AND c.object_id = ep.major_id AND c.column_id = ep.minor_id AND t.name = sc.table_name AND sc.COLUMN_NAME = c.name";
                         
         model.async.foreach(tableList, function(table, callback)
         {
