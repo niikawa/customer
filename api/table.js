@@ -23,6 +23,7 @@ exports.getTables = function(req, res)
         if (0 < err.length)
         {
             res.status(510).send("テーブルデータの取得に失敗しました。");
+            console.log(err);
             return;
         }
         
