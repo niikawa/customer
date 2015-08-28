@@ -33,6 +33,7 @@ exports.getTables = function(req, res)
                         
         model.async.foreach(tableList, function(table, callback)
         {
+            console.log(table);
             request.input("tableName", model.db.NVarChar, table.table_name);
             var tableInfo = table.comment.split(",");
             tableInfo[table.table_name] = 
@@ -51,6 +52,7 @@ exports.getTables = function(req, res)
                 }
                 else
                 {
+                    console.log(columnList);
                     var num = columnList.length;
                     var colArray = [];
                     for (var index = 0; index < num; index++)
@@ -70,10 +72,20 @@ exports.getTables = function(req, res)
                     tableInfo[table.table_name].column = colArray;
                     callback(null);
                 }
-            });
+            },
+            function (err) 
+            {
+                if (err.length > 0)
+                {
+                    console.log('get table data faild');
+                    console.log(err);
+                    res.status(510).send('テーブルデータの取得に失敗しました。');
+                    return;
+                }
+                res.json({table: tableInfo});
+            });    
         });
     });
     
 //    var table = require('../config/table.json');
-    res.json({table: tableInfo});
 };
