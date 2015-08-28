@@ -27,6 +27,7 @@ exports.getTables = function(req, res)
             return;
         }
         
+        console.log(tableList);
         //表示対象のテーブルが持つカラム一覧を取得する
         var columnSql = "SELECT t.name table_name ,c.name column_name ,sc.data_type ,sc.character_maximum_length max_lengt ,ep.value commnet" +
                         "FROM  sys.tables AS t, ,sys.columns AS c, sys.extended_properties AS ep, INFORMATION_SCHEMA.COLUMNS sc" +
