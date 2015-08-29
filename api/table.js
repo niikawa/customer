@@ -13,11 +13,11 @@ var model = new table();
 exports.getTables = function(req, res)
 {
     //表示対象のテーブル一覧を取得する
-    // var tableSql = "SELECT t.name table_name, ep.value comment " +
-    //                 "FROM sys.tables t ,sys.extended_properties ep " +
-    //                 "WHERE t.name like 'R_%' AND t.object_id = ep.major_id AND ep.minor_id = 0";
+    var tableSql = "SELECT t.name table_name, cast(ep.value as nvarchar) comment " +
+                    "FROM sys.tables t , sys.extended_properties ep " +
+                    "WHERE t.name like 'R_%' AND t.object_id = ep.major_id AND ep.minor_id = 0";
                     
-    var tableSql = "SELECT (cast(sc.value as varchar), 50) as comment FROM sys.extended_properties sc";
+//    var tableSql = "SELECT (cast(sc.value as varchar), 50) as comment FROM sys.extended_properties sc";
     var tableInfo = {};
     var request = model.getRequest();
     model.execute(tableSql, request, function(err, tableList)
