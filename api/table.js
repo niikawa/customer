@@ -17,7 +17,7 @@ exports.getTables = function(req, res)
     //                 "FROM sys.tables t ,sys.extended_properties ep " +
     //                 "WHERE t.name like 'R_%' AND t.object_id = ep.major_id AND ep.minor_id = 0";
                     
-    var tableSql = "SELECT * FROM INFORMATION_SCHEMA.COLUMNS sc";
+    var tableSql = "SELECT * FROM sys.extended_properties sc";
     var tableInfo = {};
     var request = model.getRequest();
     model.execute(tableSql, request, function(err, tableList)
