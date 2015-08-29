@@ -34,18 +34,17 @@ exports.getTables = function(req, res)
                         "FROM sys.tables t, sys.columns c, sys.extended_properties ep, INFORMATION_SCHEMA.COLUMNS sc " +
                         "WHERE t.name = @tableName AND t.object_id = c.object_id AND c.object_id = ep.major_id AND c.column_id = ep.minor_id AND t.name = sc.table_name AND sc.COLUMN_NAME = c.name";
         
-        model.async.forEach(tableList, function(table, callback)
+        model.async.forEach(tableList, function(table, index, next)
         {
             console.log(table);
-            callback(table);
-            
+
             request.input("tableName", model.db.NVarChar, table.table_name);
-            var tableInfo = table.comment.split(",");
+            var description = table.comment.split(",");
             tableInfo[table.table_name] = 
             {
                 physicalname: table.table_name,
-                logicalname: tableInfo[0], 
-                description: tableInfo[1],
+                logicalname: description[0], 
+                description: description[1],
                 column: {}
             };
             
@@ -53,16 +52,18 @@ exports.getTables = function(req, res)
             {
                 if (0 < err.length)
                 {
-                    callback(err);
+                    next(err);
                 }
                 else
                 {
-                    console.log(columnList);
                     var num = columnList.length;
                     var colArray = [];
                     for (var index = 0; index < num; index++)
                     {
                         var target = columnList[index];
+                        
+                        console.log(target);
+                        
                         var colInfo = target.comment.split(",");
                         var colObject = 
                         {
@@ -75,7 +76,7 @@ exports.getTables = function(req, res)
                         colArray.push(colObject);
                     }
                     tableInfo[table.table_name].column = colArray;
-                    callback(null);
+                    next();
                 }
             });
         },
