@@ -1032,9 +1032,11 @@ function update(req, res)
                 delete req.body.scenario.create_by;
                 delete req.body.scenario.create_date;
                 delete req.body.scenario.priority;  //優先順位はここで更新したくないため削除
-                delete req.body.scenario.valid_flag;
+                //delete req.body.scenario.valid_flag;　
                 console.log(commonColumns);
                 var updateData = model.merge(commonColumns, req.body.scenario, true);
+                //送信されてきたデータは信じない
+                updateData.valid_flag = 1;
                 console.log(updateData);
                 
                 var request = model.getRequest(transaction);
@@ -1048,7 +1050,7 @@ function update(req, res)
                 request.input('scenario_type', model.db.SmallInt, updateData.scenario_type);
                 request.input('status', model.db.SmallInt, updateData.status);
                 request.input('approach', model.db.SmallInt, updateData.approach);
-                request.input('valid_flag', model.db.SmallInt, 1);//更新時は有効にする
+                request.input('valid_flag', model.db.SmallInt, updateData.valid_flag);
     
                 console.log('update scenario info');
                 model.updateById(updateData, request, function(err, data)
