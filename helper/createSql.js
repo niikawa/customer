@@ -290,8 +290,6 @@ function createSegment(data, request)
         Object.keys(doc.columnTypeList).forEach(function(key)
         {
             var type = getColType(doc.columnTypeList[key]);
-            console.log(doc.bindInfo[key]);
-            console.log(key);
             if (!columnsObj.hasOwnProperty(key))
             {
                 request.input(key, type, doc.bindInfo[key]);
@@ -302,6 +300,11 @@ function createSegment(data, request)
                 var newBindKey = key + "_" + qId.replace(/-/g,"");
                 replaceObj[key] = "@"+ newBindKey;
                 request.input(newBindKey, type, doc.bindInfo[key]);
+                
+                console.log(key + "を追加しました");
+                console.log(columnsObj);
+                console.log(replaceObj);
+                
             }
             columnsObj[key] = doc.bindInfo[key];
         });
