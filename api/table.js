@@ -70,7 +70,7 @@ exports.getTables = function(req, res)
                         console.log("target is ");
                         console.log(target);
                         
-                        var colInfo = target.comment.toString().split(",");
+                        var colInfo = String(target.comment).split(",");
                         var colObject = 
                         {
                             physicalname: target.column_name,
@@ -95,6 +95,7 @@ exports.getTables = function(req, res)
                 res.status(510).send('テーブルデータの取得に失敗しました。');
                 return;
             }
+            console.log(tableInfo);
             res.json({table: tableInfo});
         });
     });
