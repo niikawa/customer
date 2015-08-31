@@ -286,10 +286,11 @@ function createSegment(data, request)
     {
         var replaceObj = {};
         var doc = docs[qId];
+        console.log(doc);
         Object.keys(doc.columnTypeList).forEach(function(key)
         {
-            console.log(doc.bindInfo[key]);
             var type = getColType(doc.columnTypeList[key]);
+            console.log(doc.bindInfo[key]);
             console.log(key);
             if (!columnsObj.hasOwnProperty(key))
             {
