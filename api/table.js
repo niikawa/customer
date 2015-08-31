@@ -41,9 +41,7 @@ exports.getTablesList = function(callback)
     {
         if (0 < err.length)
         {
-            res.status(510).send("テーブルデータの取得に失敗しました。");
-            console.log(err);
-            return;
+            callback(err);
         }
         
         console.log("table list is ");
@@ -105,7 +103,8 @@ exports.getTablesList = function(callback)
         },
         function (err) 
         {
-            callback(err, tableInfo);
+            var errInfo = null === err ? [] : err;
+            callback(errInfo, tableInfo);
         });
     });
 };
