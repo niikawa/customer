@@ -319,6 +319,7 @@ function createSegment(data, request)
         {
             var splitSql = doc.sql.split(" ");
             var splitNum = splitSql.length;
+            
             for (var index = 0; index < replaceKeyNum; index++)
             {
                 for (var sIndex = 0; sIndex < splitNum; sIndex++)
@@ -330,9 +331,9 @@ function createSegment(data, request)
                         splitSql[sIndex] = replaceObj[replaceKey[index]];
                     }
                 }
-                //新しいバインド名でsqlを再生成する
-                sql += '('+ splitSql.join(" ") + ')';
             }
+            //新しいバインド名でsqlを再生成する
+            sql += '('+ splitSql.join(" ") + ')';
         }
         else
         {
