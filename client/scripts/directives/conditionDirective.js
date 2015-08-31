@@ -107,6 +107,7 @@ myApp.directive('conditionDirective', function(Utility){
                 {
                     type = scope.conditionAppend.column.inputType;
                 }
+                console.log(type);
                 var val = scope.conditionAppend.condition.value1;
                 if ('number' === type || 'INT' === type)
                 {
