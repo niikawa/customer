@@ -38,16 +38,16 @@ exports.getTables = function(req, res)
         model.async.forEach(tableList, function(table, index, next)
         {
             console.log("execute table is ");
-            console.log(index);
             console.log(table);
+            console.log(table.comment);
             var request = model.getRequest();
             request.input("tableName", model.db.NVarChar, table.table_name);
-//            var description = table.comment.split(",");
+            var description = table.comment.split(",");
             tableInfo[table.table_name] = 
             {
                 physicalname: table.table_name,
-                // logicalname: description[0], 
-                // description: description[1],
+                logicalname: description[0], 
+                description: description[1],
                 column: {}
             };
             
@@ -68,19 +68,19 @@ exports.getTables = function(req, res)
                         console.log("target is ");
                         console.log(target);
                         
-                        //var colInfo = target.comment.split(",");
+                        var colInfo = target.comment.split(",");
                         var colObject = 
                         {
                             physicalname: target.column_name,
-//                            logicalname: colInfo[0],
-//                            description: colInfo[1],
+                            logicalname: colInfo[0],
+                            description: colInfo[1],
                             type: target.data_type,
                             length: target.max_lengt,
                         };
                         colArray.push(colObject);
                     }
                     tableInfo[table.table_name].column = colArray;
-                    //next();
+                    next();
                 }
             });
         },
