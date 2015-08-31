@@ -27,8 +27,19 @@ exports.getByIdForInit = function(req, res)
         }
 
         core.insertLog(req.session.userId, 8, Message.COMMON.I_004, doc.query_name);
-        var table = require('../config/table.json');
-        res.json({table: table, data: doc});
+        
+        var table = require('./table.json');
+        table.getTablesListForWeb(function(err, tables)
+        {
+            if (0 < err.length)
+            {
+                console.log('get tableList faild');
+                console.log(err);
+                res.status(511).send('クエリー情報の取得に失敗しました');
+                return;
+            }
+            res.json({table: tables, data: doc});
+        });
     });
 };
 

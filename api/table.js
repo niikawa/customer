@@ -12,6 +12,24 @@ var model = new table();
 
 exports.getTables = function(req, res)
 {
+    this.getTablesList(function(err, data)
+    {
+        if (err)
+        {
+            res.status(510).send('テーブルデータの取得に失敗しました。');
+            return;
+        }
+        console.log(data);
+        res.json({table: data});
+    });
+};
+exports.getTablesListForWeb = function(callback)
+{
+    this.getTablesList(callback);
+};
+
+exports.getTablesList = function(callback)
+{
     //表示対象のテーブル一覧を取得する
     var tableSql = "SELECT t.name table_name, cast(ep.value as nvarchar) comment " +
                     "FROM sys.tables t , sys.extended_properties ep " +
@@ -37,8 +55,6 @@ exports.getTables = function(req, res)
         
         model.async.forEach(tableList, function(table, next)
         {
-            console.log("execute table is ");
-            console.log(table);
             var request = model.getRequest();
             request.input("tableName", model.db.NVarChar, table.table_name);
             var description = String(table.comment).split(",");
@@ -68,9 +84,6 @@ exports.getTables = function(req, res)
                     {
                         var target = columnList[index];
                         
-                        console.log("target is ");
-                        console.log(target);
-                        
                         var colInfo = String(target.comment).split(",");
                         if (void 0 === colInfo[2] || 'true' == colInfo[2])
                         {
@@ -92,17 +105,7 @@ exports.getTables = function(req, res)
         },
         function (err) 
         {
-            if (err)
-            {
-                console.log('get table data faild');
-                console.log(err);
-                res.status(510).send('テーブルデータの取得に失敗しました。');
-                return;
-            }
-            console.log(tableInfo);
-            res.json({table: tableInfo});
+            callback(err, tableInfo);
         });
     });
-    
-//    var table = require('../config/table.json');
 };
