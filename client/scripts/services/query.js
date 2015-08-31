@@ -48,6 +48,7 @@ queryServices.factory("Query", ['$resource', '$http','Shared',
         queryServices.getContentsByColumsType = function(type)
         {
             var countents = {inputType:'', };
+            console.log(type);
             if ('INT' === type)
             {
                 countents.inputType = 'number';
