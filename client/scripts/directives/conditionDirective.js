@@ -106,7 +106,7 @@ myApp.directive('conditionDirective', function(Utility){
                 }
                 else
                 {
-                    type = scope.conditionAppend.column.inputType;
+                    type = scope.conditionAppend.column.type;
                 }
                 console.log(type);
                 var val = scope.conditionAppend.condition.value1;
