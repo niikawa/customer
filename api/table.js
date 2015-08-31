@@ -31,7 +31,7 @@ exports.getTables = function(req, res)
         console.log("table list is ");
         console.log(tableList);
         //表示対象のテーブルが持つカラム一覧を取得する
-        var columnSql = "SELECT t.name table_name ,c.name column_name ,sc.data_type ,sc.character_maximum_length max_lengt ,cast(ep.value as nvarchar) commnet " +
+        var columnSql = "SELECT t.name table_name ,c.name column_name ,sc.data_type ,sc.character_maximum_length max_lengt ,cast(ep.value as nvarchar) comment " +
                         "FROM sys.tables t, sys.columns c, sys.extended_properties ep, INFORMATION_SCHEMA.COLUMNS sc " +
                         "WHERE t.name = @tableName AND t.object_id = c.object_id AND c.object_id = ep.major_id AND c.column_id = ep.minor_id AND t.name = sc.table_name AND sc.COLUMN_NAME = c.name";
         
@@ -68,7 +68,7 @@ exports.getTables = function(req, res)
                         console.log("target is ");
                         console.log(target);
                         
-                        var colInfo = String(target.commnet).split(",");
+                        var colInfo = String(target.comment).split(",");
 
                         var colObject = 
                         {
