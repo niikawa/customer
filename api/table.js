@@ -35,7 +35,7 @@ exports.getTables = function(req, res)
                         "FROM sys.tables t, sys.columns c, sys.extended_properties ep, INFORMATION_SCHEMA.COLUMNS sc " +
                         "WHERE t.name = @tableName AND t.object_id = c.object_id AND c.object_id = ep.major_id AND c.column_id = ep.minor_id AND t.name = sc.table_name AND sc.COLUMN_NAME = c.name";
         
-        model.async.forEach(tableList, function(table, index, next)
+        model.async.forEach(tableList, function(table, next)
         {
             console.log("execute table is ");
             console.log(table);
@@ -69,6 +69,7 @@ exports.getTables = function(req, res)
                         console.log(target);
                         
                         var colInfo = String(target.comment).split(",");
+                        console.log(colInfo);
 
                         var colObject = 
                         {
