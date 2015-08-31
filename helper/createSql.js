@@ -290,6 +290,7 @@ function createSegment(data, request)
         {
             console.log(doc.bindInfo[key]);
             var type = getColType(doc.columnTypeList[key]);
+            console.log(key);
             if (!columnsObj.hasOwnProperty(key))
             {
                 request.input(key, type, doc.bindInfo[key]);
