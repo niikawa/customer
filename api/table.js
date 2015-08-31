@@ -38,8 +38,9 @@ exports.getTables = function(req, res)
         model.async.forEach(tableList, function(table, index, next)
         {
             console.log("execute table is ");
+            console.log(index);
             console.log(table);
-
+            var request = model.getRequest();
             request.input("tableName", model.db.NVarChar, table.table_name);
 //            var description = table.comment.split(",");
             tableInfo[table.table_name] = 
