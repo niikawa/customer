@@ -28,7 +28,7 @@ exports.getByIdForInit = function(req, res)
 
         core.insertLog(req.session.userId, 8, Message.COMMON.I_004, doc.query_name);
         
-        var table = require('./table.json');
+        var table = require('./table');
         table.getTablesListForWeb(function(err, tables)
         {
             if (0 < err.length)
