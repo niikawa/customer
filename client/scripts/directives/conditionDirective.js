@@ -99,6 +99,7 @@ myApp.directive('conditionDirective', function(Utility){
             scope.check = function(event)
             {
                 var type = '';
+                console.log(scope.conditionAppend.column);
                 if (void 0 === scope.conditionAppend.column)
                 {
                     type = scope.conditionAppend.type;
