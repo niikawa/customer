@@ -39,10 +39,10 @@ exports.getTables = function(req, res)
         {
             console.log("execute table is ");
             console.log(table);
-            console.log(table.comment);
             var request = model.getRequest();
             request.input("tableName", model.db.NVarChar, table.table_name);
-            var description = table.comment.split(",");
+            var description = table.comment.toString().split(",");
+            console.log(description);
             tableInfo[table.table_name] = 
             {
                 physicalname: table.table_name,
@@ -68,7 +68,7 @@ exports.getTables = function(req, res)
                         console.log("target is ");
                         console.log(target);
                         
-                        var colInfo = target.comment.split(",");
+                        var colInfo = target.comment.toString().split(",");
                         var colObject = 
                         {
                             physicalname: target.column_name,
