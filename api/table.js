@@ -42,7 +42,7 @@ exports.getTables = function(req, res)
             var request = model.getRequest();
             request.input("tableName", model.db.NVarChar, table.table_name);
             var description = String(table.comment).split(",");
-            console.log(description);
+
             if (void 0 === description[2] || 'true' == description[2])
             {
                 tableInfo[table.table_name] = 
@@ -72,15 +72,18 @@ exports.getTables = function(req, res)
                         console.log(target);
                         
                         var colInfo = String(target.comment).split(",");
-                        var colObject = 
+                        if (void 0 === colInfo[2] || 'true' == colInfo[2])
                         {
-                            physicalname: target.column_name,
-                            logicalname: colInfo[0],
-                            description: colInfo[1],
-                            type: target.data_type,
-                            length: target.max_lengt,
-                        };
-                        colArray.push(colObject);
+                            var colObject = 
+                            {
+                                physicalname: target.column_name,
+                                logicalname: colInfo[0],
+                                description: colInfo[1],
+                                type: target.data_type,
+                                length: target.max_lengt,
+                            };
+                            colArray.push(colObject);
+                        }
                     }
                     tableInfo[table.table_name].column = colArray;
                     next();
