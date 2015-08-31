@@ -41,7 +41,9 @@ exports.getTables = function(req, res)
             console.log(table);
             var request = model.getRequest();
             request.input("tableName", model.db.NVarChar, table.table_name);
-            var description = table.comment.toString().split(",");
+            console.log(typeof(table.comment));
+            var description = String(table.comment).split(",");
+            
             console.log(description);
             tableInfo[table.table_name] = 
             {
