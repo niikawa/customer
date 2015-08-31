@@ -43,13 +43,16 @@ exports.getTables = function(req, res)
             request.input("tableName", model.db.NVarChar, table.table_name);
             var description = String(table.comment).split(",");
             console.log(description);
-            tableInfo[table.table_name] = 
+            if (void 0 === description[2] || 'true' == description[2])
             {
-                physicalname: table.table_name,
-                logicalname: description[0], 
-                description: description[1],
-                column: {}
-            };
+                tableInfo[table.table_name] = 
+                {
+                    physicalname: table.table_name,
+                    logicalname: description[0], 
+                    description: description[1],
+                    column: {}
+                };
+            }
             
             model.execute(columnSql, request, function(err, columnList)
             {
