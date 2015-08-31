@@ -1048,6 +1048,7 @@ function update(req, res)
                 request.input('scenario_type', model.db.SmallInt, updateData.scenario_type);
                 request.input('status', model.db.SmallInt, updateData.status);
                 request.input('approach', model.db.SmallInt, updateData.approach);
+                request.input('valid_flag', model.db.SmallInt, 1);//更新時は有効にする
     
                 console.log('update scenario info');
                 model.updateById(updateData, request, function(err, data)
