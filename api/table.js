@@ -68,9 +68,8 @@ exports.getTables = function(req, res)
                         console.log("target is ");
                         console.log(target);
                         
-                        var colInfo = String(target.comment).split(",");
-                        console.log(colInfo);
-                        
+                        var colInfo = String(target.commnet).split(",");
+
                         var colObject = 
                         {
                             physicalname: target.column_name,
