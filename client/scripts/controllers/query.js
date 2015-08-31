@@ -201,7 +201,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
 
         angular.forEach($scope.selectColumns, function(v, k)
         {
-            v.column.inputType = Query.getContentsByColumsType(v.column.type);
+//            v.column.inputType = Query.getContentsByColumsType(v.column.type);
         });
         
         editSetInitializeScope();

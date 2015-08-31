@@ -109,7 +109,7 @@ myApp.directive('conditionDirective', function(Utility){
                 }
                 console.log(type);
                 var val = scope.conditionAppend.condition.value1;
-                if ('number' === type || 'INT' === type)
+                if ('bigint' === type || 'int' === type)
                 {
                     if (void 0 === val)
                     {
@@ -130,7 +130,7 @@ myApp.directive('conditionDirective', function(Utility){
                         }
                     }
                 }
-                else if ('date' === type)
+                else if ('datetime' === type || 'smalldatetime' === type)
                 {
                     var valL = val.split('-');
                     if (3 !== valL.length)

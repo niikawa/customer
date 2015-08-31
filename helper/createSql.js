@@ -133,12 +133,15 @@ function getColType(type)
     var db = require('mssql');
     switch(type)
     {
-        case 'INT':
+        case 'int':
             return db.Int;
-        case 'VARCHAR':
+        case 'bigint':
+            return db.BigInt;
+        case 'varChar':
             return db.VarChar;
         case 'NVarChar':
-        case 'DATETIME':
+        case 'datetime':
+        case 'smalldatetime':
         default:
             return db.NVarChar;
     }
