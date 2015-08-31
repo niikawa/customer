@@ -69,8 +69,6 @@ exports.getTables = function(req, res)
                         console.log(target);
                         
                         var colInfo = String(target.comment).split(",");
-                        console.log(colInfo);
-
                         var colObject = 
                         {
                             physicalname: target.column_name,
@@ -88,7 +86,7 @@ exports.getTables = function(req, res)
         },
         function (err) 
         {
-            if (err.length > 0)
+            if (err)
             {
                 console.log('get table data faild');
                 console.log(err);
