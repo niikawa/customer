@@ -167,12 +167,13 @@ exports.getList = function(req, res)
                 console.log("getBySegmentId");
                 console.log(data);
                 segment.isUsed = (data.length > 0);
-                callback();
+                var errInfo = 0 < err.length ? err : null;
+                callback(errInfo);
             });
         },
         function (err) 
         {
-            if (void 0 !== err)
+            if (null !== err)
             {
                 if (err.length > 0)
                 {
