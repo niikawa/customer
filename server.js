@@ -147,6 +147,7 @@ router.post('/bug', bug.getByConditon);
 //
 process.on('uncaughtException', function(err)
 {
+    console.log("uncaughtException");
     console.log(err);
 });
 
@@ -175,15 +176,32 @@ server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function()
         }  
     };
     
-    // mssql.connect(config, function(err)
-    // {
-      
-    //   if (null != err)
-    //   {
-    //     console.log('データベースコネクションエラー');
-    //     console.log(err);
-    //   }
-    // });
+    mssql.connect(config, function(err)
+    {
+      if (null != err)
+      {
+        console.log('データベースコネクションエラー');
+        console.log(err);
+      }
+    });
+    
+    
+    mssql.on('error', function(err)
+    {
+        console.log("server.js mssql error");
+        console.log(err);
+        if (err.code == 'ECONNCLOSED')
+        {
+            mssql.connect(config, function(err)
+            {
+                  if (null != err)
+                  {
+                    console.log('データベースコネクションエラー');
+                    console.log(err);
+                  }
+            });
+        }
+    });    
 });
 
 
