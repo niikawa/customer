@@ -185,13 +185,13 @@ server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function()
       }
     });
     
-    
     mssql.on('error', function(err)
     {
         console.log("server.js mssql error");
         console.log(err);
         if (err.code == 'ECONNCLOSED')
         {
+            console.log("コネクション再接続");
             mssql.connect(config, function(err)
             {
                   if (null != err)
