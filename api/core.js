@@ -363,12 +363,12 @@ core.prototype.isSameItemByMultipleCondition = function(conditions, callback)
 
 core.prototype.execute = function(sql, request, callback)
 {
-    this.db.connect(config, function(err)
-    {
-        if (err)
-        {
-            console.log(err);
-        }
+    // this.db.connect(config, function(err)
+    // {
+    //     if (err)
+    //     {
+    //         console.log(err);
+    //     }
         var result = [];
         var errList = [];
         console.log(sql);
@@ -398,7 +398,7 @@ core.prototype.execute = function(sql, request, callback)
         {
             callback(errList, result);
         });
-    });
+//    });
 };
 
 core.prototype.insertLog = function(userId, controlType, appendString, replace, data, callback)
