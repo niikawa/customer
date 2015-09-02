@@ -12,7 +12,7 @@ var config = {
         encrypt: true // Use this if you're on Windows Azure
     },
     pool: {
-        max: 15,
+        max: 10,
         min: 0,
         idleTimeoutMillis: 50000
     }
