@@ -949,6 +949,7 @@ ul.label-item > li > div.sc-single {
   font-weight: bold;
   padding: 5px;
   font-size: 0.8em;
+  line-height:1.6em;
 }
 
 ul.label-item > li > div.trigger > a,
