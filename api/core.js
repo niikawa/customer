@@ -86,10 +86,8 @@ core.prototype.getRequest = function(transaction)
     var ms = require('mssql');
     if (void 0 === transaction)
     {
-        var connection = new ms.Connection(config, function(err)
-        {
-            return new ms.Request(connection);
-        });
+        var connection = new ms.Connection(config);
+        return new ms.Request(connection);
     }
     else
     {
