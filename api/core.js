@@ -370,6 +370,10 @@ core.prototype.execute = function(sql, request, callback)
 {
     this.db.connect(config, function(err)
     {
+        if (err)
+        {
+            console.log(err);
+        }
         var result = [];
         var errList = [];
         console.log(sql);
