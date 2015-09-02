@@ -51,7 +51,7 @@
                   </div>
                   <ul class="list-group" >
                     <li class="list-group-item clearfix" ng-repeat="(i, item) in executePlanScenario">
-                        <span class="label-m label-default type-label">{{item.scenario_type}}</span>
+                        <span class="label-m label-default">{{item.scenario_type}}</span>
                         <a ng-href='/#/scenario/{{item.scenario_type_key}}/control/{{item.scenario_id}}'>{{item.scenario_name}}</a>
                         <div class="pull-right">
                             <span ng-if="item.last_execute_date" class="label-m label-default">{{item.last_execute_date}}に実行しました</span>
