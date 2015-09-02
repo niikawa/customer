@@ -363,34 +363,37 @@ core.prototype.isSameItemByMultipleCondition = function(conditions, callback)
 
 core.prototype.execute = function(sql, request, callback)
 {
-    var result = [];
-    var errList = [];
-    console.log(sql);
-    //auery実行
-    request.query(sql);
+    this.db.connect(config, function(err)
+    {
+        var result = [];
+        var errList = [];
+        console.log(sql);
+        //auery実行
+        request.query(sql);
+        
+        // レコードセットを取得するたびに呼び出される
+        request.on('recordset', function(columns)
+        {
+           //console.log(columns);
+        });
+        
+        // 行を取得するたびに呼ばれる
+        request.on('row', function(row)
+        {
+           result.push(row);
+        });
     
-    // レコードセットを取得するたびに呼び出される
-    request.on('recordset', function(columns)
-    {
-       //console.log(columns);
-    });
+       // エラーが発生するたびによばれる
+        request.on('error', function(err)
+        {
+           errList.push(err);
+        });
     
-    // 行を取得するたびに呼ばれる
-    request.on('row', function(row)
-    {
-       result.push(row);
-    });
-
-   // エラーが発生するたびによばれる
-    request.on('error', function(err)
-    {
-       errList.push(err);
-    });
-
-    // 常時最後によばれる
-    request.on('done', function(returnValue)
-    {
-        callback(errList, result);
+        // 常時最後によばれる
+        request.on('done', function(returnValue)
+        {
+            callback(errList, result);
+        });
     });
 };
 
