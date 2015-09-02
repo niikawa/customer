@@ -170,8 +170,8 @@ server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function()
         encrypt: true // Use this if you're on Windows Azure
       },
       pool: {
-            max: 10,
-            min: 0,
+            max: 20,
+            min: 1,
             idleTimeoutMillis: 50000
         }  
     };
