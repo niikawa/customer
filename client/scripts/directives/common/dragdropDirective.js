@@ -88,26 +88,25 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 if (void 0 !== event.target.dataset.index)
                 {
                     DDShared.setOrverIndex(event.target.dataset.index);
+                    
+                    var wholeheight = Math.max.apply(
+                        null, 
+                        [document.body.clientHeight , document.body.scrollHeight, document.documentElement.scrollHeight, document.documentElement.clientHeight]
+                    );
+                    var windowHeight = (window.innerHeight||document.body.clientHeight||0);
+                    console.log('windowHeight:' + windowHeight);
+                    if (wholeheight > windowHeight)
+                    {
+                        var now = event.target.getBoundingClientRect().top + $(event.target).position().top + 50;
+                        console.log('now:' + now);
+                        if (now > windowHeight)
+                        {
+                            window.scrollTop(60);
+                        }
+                    }
+                    
                 }
                 event.originalEvent.dataTransfer.dropEffect = 'move';
-                
-                var now = event.target.getBoundingClientRect().top + $(event.target).position().top + 50;
-                var scrollTop = $(window).scrollTop();
-                console.log(now);
-                var windowHeight = (window.innerHeight||document.body.clientHeight||0);
-//                console.log(windowHeight);
-
-                var wholeheight = Math.max.apply(
-                    null, 
-                    [document.body.clientHeight , document.body.scrollHeight, document.documentElement.scrollHeight, document.documentElement.clientHeight]
-                );
-                
-//                console.log(wholeheight);
-                
-                if (now > scrollTop)
-                {
-                    //$(window).scrollTop(scrollTop+100);
-                }
             });
             
             element.on('dragleave', function(event)
