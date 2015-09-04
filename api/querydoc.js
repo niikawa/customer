@@ -6,9 +6,8 @@ var core = new Core();
 var Message = require('../config/message.json');
 var functionName = 'クエリー管理';
 
-var docDbClient = new DocumentDBClient('https://ixcpm.documents.azure.com:443/', {
-    masterKey: 'BAVJ6Lb3xefcLJVh7iShAAngAHrYC08mtTj2ieVIVXuoBkftXwxKSCJaOcNrvctBwhi6oFoG6GlDVrDiDyXOzg=='
-});
+var docconf = require("../config/doc").getConfig();
+var docDbClient = new DocumentDBClient(docconf.url, { masterKey: docconf.key });
 
 var Query = new query(docDbClient, 'ixcpm', 'query');
 Query.init();

@@ -158,25 +158,8 @@ server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function()
   console.log("server listening at", addr.address + ":" + addr.port);
   
     var mssql = require('mssql');
-    var config = 
-    {
-      user: 'vxc-databese-master',
-      password: 'VirtUaleX001',
-      server: 'oufq8kwys5.database.windows.net',
-      database: 'CustomerReport',
-      stream: true, // You can enable streaming globally
-    
-      options: {
-        encrypt: true // Use this if you're on Windows Azure
-      },
-      pool: {
-            max: 20,
-            min: 1,
-            idleTimeoutMillis: 50000
-        }  
-    };
-    
-    mssql.connect(config, function(err)
+    var dbconf = require("./config/db");
+    mssql.connect(dbconf.getConfig(), function(err)
     {
       if (null != err)
       {

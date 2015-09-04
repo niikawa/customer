@@ -2,9 +2,8 @@ var async = require('async');
 var DocumentDBClient = require('documentdb').DocumentClient;
 var segment = require('../collection/segment');
 
-var docDbClient = new DocumentDBClient('https://ixcpm.documents.azure.com:443/', {
-    masterKey: 'BAVJ6Lb3xefcLJVh7iShAAngAHrYC08mtTj2ieVIVXuoBkftXwxKSCJaOcNrvctBwhi6oFoG6GlDVrDiDyXOzg=='
-});
+var docconf = require("../config/doc").getConfig();
+var docDbClient = new DocumentDBClient(docconf.url, { masterKey: docconf.key });
 var Segment = new segment(docDbClient, 'ixcpm', 'segment');
 Segment.init();
 
