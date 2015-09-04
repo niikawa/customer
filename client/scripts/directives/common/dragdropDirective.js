@@ -64,16 +64,15 @@ myApp.directive('dragItemDirective', ['DDShared', function(DDShared)
                 event.originalEvent.dataTransfer.setData('item', item);
                 event.originalEvent.dataTransfer.setData('itemIndex', index);
                 DDShared.setFrom(ctrl.$modelValue);
+                $(event.target).on('drag', function(e)
+                {            
+                    console.log(e.pageX);
+                    console.log(e.pageY);
+                    console.log($(window).scrollTop());//現在のスクロールバーのＴＯＰ
+                    //$(window).scrollTop(0);
+                });
                 
             });
-            element.on('drag', function(event)
-            {            
-                console.log(event.pageX);
-                console.log(event.pageY);
-                console.log($(window).scrollTop());//現在のスクロールバーのＴＯＰ
-                //$(window).scrollTop(0);
-            });
-
         }
     };
 }]);
