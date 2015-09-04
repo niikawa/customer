@@ -65,6 +65,14 @@ myApp.directive('dragItemDirective', ['DDShared', function(DDShared)
                 event.originalEvent.dataTransfer.setData('itemIndex', index);
                 DDShared.setFrom(ctrl.$modelValue);
             });
+            
+            element.on("mousemove", function(event)
+            {
+                console.log($(event.target).scrollTop());
+                console.log(element.offsetLeft);
+                console.log($(window).scrollTop());//現在のスクロールバーのＴＯＰ
+                //$(window).scrollTop(0);
+            });
         }
     };
 }]);
@@ -90,12 +98,6 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                     DDShared.setOrverIndex(event.target.dataset.index);
                 }
                 event.originalEvent.dataTransfer.dropEffect = 'move';
-                
-//                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;                 
-                console.log($(event.target).scrollTop());
-                console.log(element.offsetLeft);
-                console.log($(window).scrollTop());//現在のスクロールバーのＴＯＰ
-                element.scrollTop(0);
             });
             
             element.on('dragleave', function(event)
