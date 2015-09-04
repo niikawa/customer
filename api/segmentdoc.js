@@ -3,7 +3,8 @@ var DocumentDBClient = require('documentdb').DocumentClient;
 var segment = require('../collection/segment');
 
 var conf = require("../config/doc");
-var docconf = conf.getConfig();
+console.log(conf());
+var docconf = conf();
 var docDbClient = new DocumentDBClient(docconf.url, { masterKey: docconf.key });
 var Segment = new segment(docDbClient, 'ixcpm', 'segment');
 Segment.init();

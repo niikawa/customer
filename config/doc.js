@@ -1,4 +1,5 @@
-module.exports = function getConfig()
+
+module.exports = function()
 {
     if ('dev' === process.env.ENVIRONMENT)
     {
