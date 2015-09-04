@@ -70,11 +70,11 @@ myApp.directive('dragItemDirective', ['DDShared', function(DDShared)
                     console.log($(e.target).pageX);
                     console.log(e.target.pageY);
                     console.log($(window).scrollTop());//現在のスクロールバーのＴＯＰ
-                    $(window).on("mousemove", function(event)
-                    {
-                        console.log(event.pageX);
-                        console.log(event.pageY);
-                    });
+                    // $(window).on("mousemove", function(event)
+                    // {
+                    //     console.log(event.pageX);
+                    //     console.log(event.pageY);
+                    // });
                     //$(window).scrollTop(0);
                 });
                 
