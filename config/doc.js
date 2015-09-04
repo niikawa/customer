@@ -1,6 +1,6 @@
-
 module.exports = function()
 {
+    console.log(process.env.ENVIRONMENT);
     if ('dev' === process.env.ENVIRONMENT)
     {
         return {
