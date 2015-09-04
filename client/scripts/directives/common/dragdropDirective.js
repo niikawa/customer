@@ -64,20 +64,6 @@ myApp.directive('dragItemDirective', ['DDShared', function(DDShared)
                 event.originalEvent.dataTransfer.setData('item', item);
                 event.originalEvent.dataTransfer.setData('itemIndex', index);
                 DDShared.setFrom(ctrl.$modelValue);
-                $(event.target).on('drag', function(e)
-                {            
-                    console.log($(e.target).position());
-                    console.log($(e.target).scrollTop());
-                    console.log(e.target.scrollTop());
-                    console.log($(window).scrollTop());//現在のスクロールバーのＴＯＰ
-                    // $(window).on("mousemove", function(event)
-                    // {
-                    //     console.log(event.pageX);
-                    //     console.log(event.pageY);
-                    // });
-                    //$(window).scrollTop(0);
-                });
-                
             });
         }
     };
@@ -104,6 +90,8 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                     DDShared.setOrverIndex(event.target.dataset.index);
                 }
                 event.originalEvent.dataTransfer.dropEffect = 'move';
+                console.log($(event.target).position());
+                console.log($(window).scrollTop(0));//現在のスクロールバーのＴＯＰ
             });
             
             element.on('dragleave', function(event)
