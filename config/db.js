@@ -1,6 +1,6 @@
 module.exports = function()
 {
-    if ('dev' === process.env.ENVIRONMENT)
+    if ('develop' === process.env.ENVIRONMENT)
     {
         return {
           user: 'vxc-databese-master',
@@ -61,5 +61,23 @@ module.exports = function()
                 stream: true,
                 options: {encrypt: false }
             };
+    }
+    else
+    {
+        //デフォルト
+        return {
+          user: 'vxc-databese-master',
+          password: 'VirtUaleX001',
+          server: 'oufq8kwys5.database.windows.net',
+          database: 'CustomerReport',
+          stream: true, 
+          options: { encrypt: true },
+          pool:
+          {
+                max: 10,
+                min: 1,
+                idleTimeoutMillis: 50000
+            }  
+        };
     }
 };
