@@ -101,7 +101,7 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                         console.log('now:' + now);
                         if (now > windowHeight)
                         {
-                            window.scrollTop(60);
+                            window.scrollBy(60);
                         }
                     }
                     
