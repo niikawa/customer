@@ -99,6 +99,8 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 {
                     $(window).scrollTop(scrollTop+100);
                 }
+                
+                console.log(event.target.getBoundingClientRect());
             });
             
             element.on('dragleave', function(event)
