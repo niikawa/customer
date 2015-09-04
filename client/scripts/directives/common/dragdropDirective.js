@@ -100,7 +100,8 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                     null, 
                     [document.body.clientHeight , document.body.scrollHeight, document.documentElement.scrollHeight, document.documentElement.clientHeight]
                 );
-                console.log(wholeheight());
+                
+                console.log(wholeheight);
                 
                 if (now > scrollTop)
                 {
