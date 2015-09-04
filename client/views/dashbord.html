@@ -52,12 +52,12 @@
                   <ul class="list-group" >
                     <li class="list-group-item clearfix" ng-repeat="(i, item) in executePlanScenario">
                         <span class="label-m label-default">{{item.scenario_type}}</span>
-                        <span ng-if="item.last_execute_date" class="label-m label-default">{{item.last_execute_date}}に実行しました</span>
-                        <span ng-if="item.last_execute_date" class="label-m label-default">抽出数は{{item.execute_target_num}}件です</span>
-                        <span ng-if="!item.last_execute_date" class="label-m label-default">まだ実行されていません</span>
-                        
                         <a ng-href='/#/scenario/{{item.scenario_type_key}}/control/{{item.scenario_id}}'>{{item.scenario_name}}</a>
-                        
+                        <div class="pull-right">
+                            <span ng-if="item.last_execute_date" class="label-m label-default">{{item.last_execute_date}}に実行しました</span>
+                            <span ng-if="item.last_execute_date" class="label-m label-default">抽出数は{{item.execute_target_num}}件です</span>
+                            <span ng-if="!item.last_execute_date" class="label-m label-default">まだ実行されていません</span>
+                        </div>
                         <span ng-if="0 == item.valid_flag" class="list-error"><i class="glyphicon glyphicon-alert"></i>設定していたセグメントが削除されています。</span>
                     </li>
                   </ul>
