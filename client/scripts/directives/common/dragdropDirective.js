@@ -92,7 +92,7 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 event.originalEvent.dataTransfer.dropEffect = 'move';
                 
 //                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;                 
-                console.log(element.scrollTop);
+                console.log(element.offsetTop);
                 element.scrollTop(0);
             });
             
