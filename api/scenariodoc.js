@@ -1,7 +1,8 @@
 var async = require('async');
 var DocumentDBClient = require('documentdb').DocumentClient;
 var scenario = require('../collection/scenario');
-var docconf = require("../config/doc").getConfig();
+var conf = require("../config/doc");
+var docconf = conf.getConfig();
 var docDbClient = new DocumentDBClient(docconf.url, { masterKey: docconf.key });
 var Scenario = new scenario(docDbClient, 'ixcpm', 'scenario');
 Scenario.init();
