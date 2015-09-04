@@ -90,17 +90,15 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                     DDShared.setOrverIndex(event.target.dataset.index);
                 }
                 event.originalEvent.dataTransfer.dropEffect = 'move';
-                var base = $(event.target).position();
-                var now = base.top + 50;
+                var base = event.target.getBoundingClientRect();
+                var now = base.x + 50;
                 var scrollTop = $(window).scrollTop();
                 console.log(now);
                 console.log($(window).scrollTop());
                 if (now > scrollTop)
                 {
-                    $(window).scrollTop(scrollTop+100);
+                    $(window).scrollBy(100);
                 }
-                
-                console.log(event.target.getBoundingClientRect());
             });
             
             element.on('dragleave', function(event)
