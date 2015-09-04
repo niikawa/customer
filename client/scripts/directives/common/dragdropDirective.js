@@ -66,6 +66,7 @@ myApp.directive('dragItemDirective', ['DDShared', function(DDShared)
                 DDShared.setFrom(ctrl.$modelValue);
                 $(event.target).on('drag', function(e)
                 {            
+                    console.log(e);
                     console.log(e.pageX);
                     console.log(e.pageY);
                     console.log($(window).scrollTop());//現在のスクロールバーのＴＯＰ
