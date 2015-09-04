@@ -64,14 +64,15 @@ myApp.directive('dragItemDirective', ['DDShared', function(DDShared)
                 event.originalEvent.dataTransfer.setData('item', item);
                 event.originalEvent.dataTransfer.setData('itemIndex', index);
                 DDShared.setFrom(ctrl.$modelValue);
-            });
-            
-            element.on("mousemove", function(event)
-            {
-                console.log($(event.target).scrollTop());
-                console.log(element.offsetLeft);
-                console.log($(window).scrollTop());//現在のスクロールバーのＴＯＰ
-                //$(window).scrollTop(0);
+                
+                element.on("mousemove", function(event)
+                {
+                    console.log(event.pageX);
+                    console.log(event.pageY);
+                    console.log(element.offsetLeft);
+                    console.log($(window).scrollTop());//現在のスクロールバーのＴＯＰ
+                    //$(window).scrollTop(0);
+                });
             });
         }
     };
