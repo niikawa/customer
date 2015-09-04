@@ -7,6 +7,7 @@ var Message = require('../config/message.json');
 var functionName = 'クエリー管理';
 
 var conf = require("../config/doc");
+console.log(conf);
 var docconf = conf.getConfig();
 var docDbClient = new DocumentDBClient(docconf.url, { masterKey: docconf.key });
 
