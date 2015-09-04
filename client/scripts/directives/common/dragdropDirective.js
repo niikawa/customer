@@ -90,8 +90,15 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                     DDShared.setOrverIndex(event.target.dataset.index);
                 }
                 event.originalEvent.dataTransfer.dropEffect = 'move';
-                console.log($(event.target).position());
-                console.log($(window).scrollTop(0));//現在のスクロールバーのＴＯＰ
+                var base = $(event.target).position();
+                var now = base.top + 50;
+                var scrollTop = $(window).scrollTop();
+                console.log(now);
+                console.log($(window).scrollTop());
+                if (now > scrollTop)
+                {
+                    $(window).scrollTop(scrollTop+100);
+                }
             });
             
             element.on('dragleave', function(event)
