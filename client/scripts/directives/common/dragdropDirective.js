@@ -90,6 +90,10 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                     DDShared.setOrverIndex(event.target.dataset.index);
                 }
                 event.originalEvent.dataTransfer.dropEffect = 'move';
+                
+//                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;                 
+                console.log(element.scrollTop);
+                element.scrollTop(0);
             });
             
             element.on('dragleave', function(event)
