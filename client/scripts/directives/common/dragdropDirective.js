@@ -92,8 +92,9 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 event.originalEvent.dataTransfer.dropEffect = 'move';
                 
 //                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;                 
-                console.log($(element).scrollTop());
-                console.log($(window).scrollTop());
+                console.log($(event.target).scrollTop());
+                console.log(element.offsetLeft);
+                console.log($(window).scrollTop());//現在のスクロールバーのＴＯＰ
                 element.scrollTop(0);
             });
             
