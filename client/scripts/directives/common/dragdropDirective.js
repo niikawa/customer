@@ -93,10 +93,18 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                 var now = event.target.getBoundingClientRect().x + $(event.target).position().top + 50;
                 var scrollTop = $(window).scrollTop();
                 console.log(now);
-                console.log($(window).scrollTop());
+                var windowHeight = ($(window).innerHeight||document.body.clientHeight||0);
+                console.log(windowHeight);
+
+                var wholeheight = Math.max.apply(
+                    null, 
+                    [document.body.clientHeight , document.body.scrollHeight, document.documentElement.scrollHeight, document.documentElement.clientHeight]
+                );
+                console.log(wholeheight);
+                
                 if (now > scrollTop)
                 {
-                    $(window).scrollTop(scrollTop+100);
+                    //$(window).scrollTop(scrollTop+100);
                 }
             });
             
