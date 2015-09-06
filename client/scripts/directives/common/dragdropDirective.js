@@ -119,6 +119,7 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                     if (wholeheight > windowHeight)
                     {
                         var now = event.target.getBoundingClientRect().top + $(event.target).position().top + 50;
+                        console.log($(event.target).height());
                         console.log('now:' + now);
                         if (now > windowHeight)
                         {
@@ -131,13 +132,13 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                                 if (DDShared.getBeforePosition() > now)
                                 {
                                     //up
-                                    move = -20;
+                                    move = -$(event.target).height();
                                     DDShared.setMove(move);
                                 }
                                 else
                                 {
                                     //down
-                                    move = 20;
+                                    move = $(event.target).height();
                                     DDShared.setMove(move);
                                 }
                                 console.log(move);
