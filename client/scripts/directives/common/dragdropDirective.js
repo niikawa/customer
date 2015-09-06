@@ -112,7 +112,12 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                         if (now > windowHeight)
                         {
                             console.log('be:' + DDShared.getBeforePosition());
-                            var move = (DDShared.getBeforePosition() > now) ? -5 : 5;
+                            var move = 0;
+                            if (DDShared.getBeforePosition() != now)
+                            {
+                                move = (DDShared.getBeforePosition() > now) ? -5 : 5;
+                                
+                            }
                             $(window).scrollTop($(window).scrollTop()+move);
                             DDShared.setBeforePosition(now);
                         }
