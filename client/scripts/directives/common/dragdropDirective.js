@@ -131,13 +131,13 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                                 if (DDShared.getBeforePosition() > now)
                                 {
                                     //up
-                                    move = -10;
+                                    move = -20;
                                     DDShared.setMove(move);
                                 }
                                 else
                                 {
                                     //down
-                                    move = 10;
+                                    move = 20;
                                     DDShared.setMove(move);
                                 }
                                 console.log(move);
