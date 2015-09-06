@@ -4,6 +4,8 @@ dDSharedServices.service('DDShared', function()
     var dDSharedServices = {};
     var orverIndex = 0;
     var fromData = {};
+    var deforePosistion = 0;
+    var isMoveDown = false;
 
     dDSharedServices.setFrom = function(data)
     {
@@ -33,6 +35,26 @@ dDSharedServices.service('DDShared', function()
     dDSharedServices.getOrverIndex = function()
     {
         return orverIndex;
+    };
+
+    dDSharedServices.getBeforePosition = function()
+    {
+        return deforePosistion;
+    };
+
+    dDSharedServices.setBeforePosition = function(num)
+    {
+        deforePosistion = num;
+    };
+
+    dDSharedServices.isMoveDown = function()
+    {
+        return isMoveDown;
+    };
+
+    dDSharedServices.setMove = function(num)
+    {
+        isMoveDown = (0 < num) ? true : false;
     };
 
     dDSharedServices.clear = function()
@@ -82,12 +104,36 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
             {
                 element.addClass('ui-drop-target');
             });
+            
             element.on('dragover', function(event)
             {
                 event.preventDefault();
                 if (void 0 !== event.target.dataset.index)
                 {
                     DDShared.setOrverIndex(event.target.dataset.index);
+                    var wholeheight = Math.max.apply(
+                        null, 
+                        [document.body.clientHeight , document.body.scrollHeight, document.documentElement.scrollHeight, document.documentElement.clientHeight]
+                    );
+                    var windowHeight = (window.innerHeight||document.body.clientHeight||0);
+                    if (wholeheight > windowHeight)
+                    {
+                        var now = event.target.getBoundingClientRect().top + $(event.target).position().top + 50;
+                        var move = 0;
+                        if (0 != DDShared.getBeforePosition() && DDShared.getBeforePosition() != now)
+                        {
+                            // up : down
+                            move =(DDShared.getBeforePosition() > now) ?  -$(event.target).height() :  $(event.target).height();
+                            DDShared.setMove(move);
+                            DDShared.setBeforePosition(now - (move));
+                            $(window).scrollTop($(window).scrollTop()+move);
+                            
+                        }
+                        else
+                        {
+                            DDShared.setBeforePosition(now);
+                        }
+                    }
                 }
                 event.originalEvent.dataTransfer.dropEffect = 'move';
             });
@@ -100,6 +146,7 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
             element.on('drop', function(event)
             {
                 event.stopPropagation();
+                DDShared.getBeforePosition(0);
                 var index = event.originalEvent.dataTransfer.getData('itemIndex');
                 var pushItem = {};
                 

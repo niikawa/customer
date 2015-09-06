@@ -159,7 +159,6 @@ server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function()
   
     var mssql = require('mssql');
     var dbconf = require("./config/db");
-    console.log(dbconf());
     mssql.connect(dbconf(), function(err)
     {
       if (null != err)
@@ -176,7 +175,8 @@ server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function()
         if (err.code == 'ECONNCLOSED')
         {
             console.log("コネクション再接続");
-            mssql.connect(config, function(err)
+            var dbconf = require("./config/db");
+            mssql.connect(dbconf(), function(err)
             {
                   if (null != err)
                   {
