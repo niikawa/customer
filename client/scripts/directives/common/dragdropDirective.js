@@ -5,6 +5,7 @@ dDSharedServices.service('DDShared', function()
     var orverIndex = 0;
     var fromData = {};
     var deforePosistion = 0;
+    var isMoveDown = false;
 
     dDSharedServices.setFrom = function(data)
     {
@@ -44,6 +45,16 @@ dDSharedServices.service('DDShared', function()
     dDSharedServices.setBeforePosition = function(num)
     {
         deforePosistion = num;
+    };
+
+    dDSharedServices.isMoveDown = function()
+    {
+        return isMoveDown;
+    };
+
+    dDSharedServices.setMove = function(num)
+    {
+        isMoveDown = (0 < num) ? true : false;
     };
 
     dDSharedServices.clear = function()
@@ -115,7 +126,9 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                             var move = 0;
                             if (DDShared.getBeforePosition() != now)
                             {
-                                move = (DDShared.getBeforePosition() > now) ? -5 : 5;
+                                DDShared.getBeforePosition();
+                                move = (DDShared.isMoveDown()) ? 10 : -10;
+                                DDShared.setMove(move);
                                 DDShared.setBeforePosition(now - (move));
                             }
                             console.log(move);
