@@ -119,32 +119,20 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                     if (wholeheight > windowHeight)
                     {
                         var now = event.target.getBoundingClientRect().top + $(event.target).position().top + 50;
-                        console.log(windowHeight);
-                        console.log('now:' + now);
-                        
-                        // if (now > windowHeight)
-                        // {
-                            //スクロールが動くと
-                            console.log('be:' + DDShared.getBeforePosition());
-                            var move = 0;
-                            if (0 != DDShared.getBeforePosition() && DDShared.getBeforePosition() != now)
-                            {
-                                // up : down
-                                move =(DDShared.getBeforePosition() > now) ?  -$(event.target).height() :  $(event.target).height();
-                                DDShared.setMove(move);
-                                DDShared.setBeforePosition(now - (move));
-                                $(window).scrollTop($(window).scrollTop()+move);
-                                
-                            }
-                            else
-                            {
-                                DDShared.setBeforePosition(now);
-                            }
-                        // }
-                        // else
-                        // {
-                        //     $(window).scrollTop($(window).scrollTop()-5);
-                        // }
+                        var move = 0;
+                        if (0 != DDShared.getBeforePosition() && DDShared.getBeforePosition() != now)
+                        {
+                            // up : down
+                            move =(DDShared.getBeforePosition() > now) ?  -$(event.target).height() :  $(event.target).height();
+                            DDShared.setMove(move);
+                            DDShared.setBeforePosition(now - (move));
+                            $(window).scrollTop($(window).scrollTop()+move);
+                            
+                        }
+                        else
+                        {
+                            DDShared.setBeforePosition(now);
+                        }
                     }
                 }
                 event.originalEvent.dataTransfer.dropEffect = 'move';
