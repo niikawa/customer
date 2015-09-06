@@ -114,7 +114,7 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                             console.log('be:' + DDShared.getBeforePosition());
                             var move = (DDShared.getBeforePosition() > now) ? -5 : 5;
                             $(window).scrollTop($(window).scrollTop()+move);
-                            DDShared.getBeforePosition(now);
+                            DDShared.setBeforePosition(now);
                         }
                     }
                 }
