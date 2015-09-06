@@ -119,8 +119,9 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                     if (wholeheight > windowHeight)
                     {
                         var now = event.target.getBoundingClientRect().top + $(event.target).position().top + 50;
-                        console.log($(event.target).height());
+                        console.log(windowHeight);
                         console.log('now:' + now);
+                        
                         if (now > windowHeight)
                         {
                             //スクロールが動くと
@@ -128,20 +129,9 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                             var move = 0;
                             if (0 != DDShared.getBeforePosition() && DDShared.getBeforePosition() != now)
                             {
-                                //move = (DDShared.isMoveDown()) ? 10 : -10;
-                                if (DDShared.getBeforePosition() > now)
-                                {
-                                    //up
-                                    move = -$(event.target).height();
-                                    DDShared.setMove(move);
-                                }
-                                else
-                                {
-                                    //down
-                                    move = $(event.target).height();
-                                    DDShared.setMove(move);
-                                }
-                                console.log(move);
+                                // up : down
+                                move =(DDShared.getBeforePosition() > now) ?  -$(event.target).height() :  $(event.target).height();
+                                DDShared.setMove(move);
                                 DDShared.setBeforePosition(now - (move));
                                 $(window).scrollTop($(window).scrollTop()+move);
                                 
