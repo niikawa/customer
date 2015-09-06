@@ -101,10 +101,9 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                         console.log('now:' + now);
                         if (now > windowHeight)
                         {
-                            $(window).scrollTop($(window).scrollTop()+60);
+                            $(window).scrollTop($(window).scrollTop()+5);
                         }
                     }
-                    
                 }
                 event.originalEvent.dataTransfer.dropEffect = 'move';
             });
