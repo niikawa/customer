@@ -4,6 +4,7 @@ dDSharedServices.service('DDShared', function()
     var dDSharedServices = {};
     var orverIndex = 0;
     var fromData = {};
+    var deforePosistion = 0;
 
     dDSharedServices.setFrom = function(data)
     {
@@ -33,6 +34,16 @@ dDSharedServices.service('DDShared', function()
     dDSharedServices.getOrverIndex = function()
     {
         return orverIndex;
+    };
+
+    dDSharedServices.getBeforePosition = function()
+    {
+        return deforePosistion;
+    };
+
+    dDSharedServices.setBeforePosition = function(num)
+    {
+        deforePosistion = num;
     };
 
     dDSharedServices.clear = function()
@@ -82,26 +93,28 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
             {
                 element.addClass('ui-drop-target');
             });
+            
             element.on('dragover', function(event)
             {
                 event.preventDefault();
                 if (void 0 !== event.target.dataset.index)
                 {
                     DDShared.setOrverIndex(event.target.dataset.index);
-                    
                     var wholeheight = Math.max.apply(
                         null, 
                         [document.body.clientHeight , document.body.scrollHeight, document.documentElement.scrollHeight, document.documentElement.clientHeight]
                     );
                     var windowHeight = (window.innerHeight||document.body.clientHeight||0);
-                    console.log('windowHeight:' + windowHeight);
                     if (wholeheight > windowHeight)
                     {
                         var now = event.target.getBoundingClientRect().top + $(event.target).position().top + 50;
                         console.log('now:' + now);
                         if (now > windowHeight)
                         {
-                            $(window).scrollTop($(window).scrollTop()+5);
+                            console.log('be:' + DDShared.getBeforePosition());
+                            var move = (DDShared.getBeforePosition() > now) ? -5 : 5;
+                            $(window).scrollTop($(window).scrollTop()+move);
+                            DDShared.getBeforePosition(now);
                         }
                     }
                 }
