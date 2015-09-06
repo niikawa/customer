@@ -116,8 +116,8 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                         [document.body.clientHeight , document.body.scrollHeight, document.documentElement.scrollHeight, document.documentElement.clientHeight]
                     );
                     var windowHeight = (window.innerHeight||document.body.clientHeight||0);
-                    if (wholeheight > windowHeight)
-                    {
+                    // if (wholeheight > windowHeight)
+                    // {
                         var now = event.target.getBoundingClientRect().top + $(event.target).position().top + 50;
                         console.log(windowHeight);
                         console.log('now:' + now);
@@ -141,10 +141,10 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                                 DDShared.setBeforePosition(now);
                             }
                         }
-                        else
-                        {
-                            $(window).scrollTop($(window).scrollTop()-5);
-                        }
+                        // else
+                        // {
+                        //     $(window).scrollTop($(window).scrollTop()-5);
+                        // }
                     }
                 }
                 event.originalEvent.dataTransfer.dropEffect = 'move';
