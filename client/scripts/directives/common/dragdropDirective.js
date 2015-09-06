@@ -124,15 +124,31 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                         {
                             console.log('be:' + DDShared.getBeforePosition());
                             var move = 0;
-                            if (DDShared.getBeforePosition() != now)
+                            if (0 != DDShared.getBeforePosition() && DDShared.getBeforePosition() != now)
                             {
-                                DDShared.getBeforePosition();
-                                move = (DDShared.isMoveDown()) ? 10 : -10;
-                                DDShared.setMove(move);
-                                DDShared.setBeforePosition(now - (move));
+                                //move = (DDShared.isMoveDown()) ? 10 : -10;
+                                if (DDShared.getBeforePosition() > now)
+                                {
+                                    //up
+                                    move = -10;
+                                    DDShared.setMove(move);
+                                    DDShared.setBeforePosition(now - (move));
+                                }
+                                else
+                                {
+                                    //down
+                                    move = 10;
+                                    DDShared.setMove(move);
+                                    DDShared.setBeforePosition(now + (move));
+                                }
+                                console.log(move);
+                                $(window).scrollTop($(window).scrollTop()+move);
+                                
                             }
-                            console.log(move);
-                            $(window).scrollTop($(window).scrollTop()+move);
+                            else
+                            {
+                                DDShared.setBeforePosition(now);
+                            }
                         }
                         else
                         {
@@ -151,6 +167,7 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
             element.on('drop', function(event)
             {
                 event.stopPropagation();
+                DDShared.getBeforePosition(0);
                 var index = event.originalEvent.dataTransfer.getData('itemIndex');
                 var pushItem = {};
                 
