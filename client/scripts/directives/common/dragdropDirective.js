@@ -116,6 +116,10 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                             $(window).scrollTop($(window).scrollTop()+move);
                             DDShared.setBeforePosition(now);
                         }
+                        else
+                        {
+                            $(window).scrollTop($(window).scrollTop()-5);
+                        }
                     }
                 }
                 event.originalEvent.dataTransfer.dropEffect = 'move';
