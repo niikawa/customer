@@ -86,6 +86,7 @@ myApp.directive('dragItemDirective', ['DDShared', function(DDShared)
                 event.originalEvent.dataTransfer.setData('item', item);
                 event.originalEvent.dataTransfer.setData('itemIndex', index);
                 DDShared.setFrom(ctrl.$modelValue);
+                DDShared.getBeforePosition(0);
             });
         }
     };
