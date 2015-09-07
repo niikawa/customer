@@ -184,20 +184,6 @@ table caption {text-align:center;}
 table.table-pointer > tbody > tr {
   cursor: pointer;
 }
-/*
-input[type="number"] {
-  max-width: 100px;
-}
-*/
-/*@media screen and (min-width: 767px) {*/
-/*  .vertical-container > form > div > input,*/
-/*  .vertical-container > form > div > div >input {*/
-/*    width: 70%;*/
-/*  }*/
-/*  .vertical-container > form > div  > ul {*/
-/*    width: 70%;*/
-/*  }*/
-/*}*/
 
 td > a,
 li > a {
@@ -303,6 +289,72 @@ input.ng-invalid.ng-dirty {
 }
 .white{background-color: #FFF;}
 .red{background-color: #0FF;}
+
+/*-----------------------------------------------*/
+/* version
+/*-----------------------------------------------*/
+.version-item {
+  float: left;
+  margin-right: 10px;
+  padding: 10px;
+  width: 60px;
+  height: 60px;
+  background: #499AAF;
+  color: #fff;
+  list-style: none;
+  text-align: center;
+  line-height: 60px;
+  opacity: 0;
+  -webkit-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  transform: translateY(-100%);
+}
+.version-item:nth-child(1) {
+  -webkit-animation: version-animation 0.5s ease 0.5s 1 forwards;
+  animation: version-animation 0.5s ease 0.5s 1 forwards;
+}
+.version-item:nth-child(2) {
+  -webkit-animation: version-animation 0.5s ease 1s 1 forwards;
+  animation: version-animation 0.5s ease 1s 1 forwards;
+}
+
+.version-item:nth-child(3) {
+  -webkit-animation: version-animation 0.5s ease 1.5s 1 forwards;
+  animation: version-animation 0.5s ease 1.5s 1 forwards;
+}
+
+.version-item:nth-child(4) {
+  -webkit-animation: version-animation 0.5s ease 2s 1 forwards;
+  animation: version-animation 0.5s ease 2s 1 forwards;
+}
+
+.version-item:nth-child(5) {
+  -webkit-animation: version-animation 0.5s ease 2.5s 1 forwards;
+  animation: version-animation 0.5s ease 2.5s 1 forwards;
+}
+
+.version-item:nth-child(6) {
+  -webkit-animation: version-animation 0.5s ease 3s 1 forwards;
+  animation: version-animation 0.5s ease 3s 1 forwards;
+}
+
+@-webkit-keyframes version-animation {
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+@keyframes version-animation {
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
 
 /*-----------------------------------------------*/
 /* title
