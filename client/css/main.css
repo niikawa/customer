@@ -293,13 +293,33 @@ input.ng-invalid.ng-dirty {
 /*-----------------------------------------------*/
 /* version
 /*-----------------------------------------------*/
+.version-label {
+  float: left;
+  margin-right: 10px;
+  padding: 10px;
+  width: 100px;
+  height: 60px;
+  background: #f5f5f5;
+  font-size: 1.2em;
+  font-style:bold;
+  color: #fff;
+  list-style: none;
+  text-align: center;
+  line-height: 60px;
+  opacity: 0;
+  -webkit-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  transform: translateY(-100%);
+}
 .version-item {
   float: left;
   margin-right: 10px;
   padding: 10px;
   width: 60px;
   height: 60px;
-  background: #499AAF;
+  background: #f5f5f5;
+  font-size: 1.2em;
+  font-style:bold;
   color: #fff;
   list-style: none;
   text-align: center;
