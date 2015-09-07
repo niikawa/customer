@@ -311,8 +311,8 @@ input.ng-invalid.ng-dirty {
   transform: translateY(-100%);
 }
 .version-label {
-  -webkit-animation: version-animation 0.2s ease 0.2s 1 forwards;
-  animation: version-animation 0.2s ease 0.2s 1 forwards;
+  -webkit-animation: version-animation 0.25s ease 0.2s 1 forwards;
+  animation: version-animation 0.25s ease 0.25s 1 forwards;
 }
 
 .version-item {
