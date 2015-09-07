@@ -120,8 +120,8 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
                     if (wholeheight > windowHeight)
                     {
                         var now = event.target.getBoundingClientRect().top + $(event.target).position().top + 50;
-                        console.log(now);
-                        console.log(DDShared.getBeforePosition());
+                        console.log("getBefore:"+DDShared.getBeforePosition());
+                        console.log("now:"+now);
                         var move = 0;
                         if (0 != DDShared.getBeforePosition() && DDShared.getBeforePosition() != now)
                         {
