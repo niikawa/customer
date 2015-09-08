@@ -114,7 +114,7 @@ var model = new Log();
  */
 exports.getDayAll = function(req, res)
 {
-    if (model.validation("getDayAll", req.body))
+    if (!model.validation("getDayAll", req.body))
     {
         res.status(510).send(Message.COMMON.E_101);
         return;
