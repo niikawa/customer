@@ -40,6 +40,32 @@ var FUNCTION_NAME = '操作履歴';
 var Log = function Log()
 {
     Core.call(this, TABLE_NAME, PK_NAME);
+    
+    var Validator = require("../helper/validator");
+    var validator = new Validator();
+    var parametersRulesMap = 
+    {
+        getDayAll :
+        {
+            day: validator.isRequire
+        },
+        getDayAllByUserId : 
+        {
+            id: validator.isRequire,
+            day: validator.isRequire
+        }
+    };
+    
+    /**
+     * リクエストパラメータのチェックを行う
+     * 
+     * @method validation
+     */
+    function validation(key ,parameters)
+    {
+        var rules = parametersRulesMap[key];
+        validator.execute(rules, parameters);
+    }
 };
 
 //coreModelを継承する
@@ -68,6 +94,9 @@ var model = new Log();
  */
 exports.getDayAll = function(req, res)
 {
+    
+    model.validation("getDayAll", req.body);
+    
     var col = "T1.log_id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as date, T1.user_id, T1.detail, T2.name";
     var table = "T_LOG T1 INNER JOIN M_USER T2 ON T1.user_id = T2.user_id";
     var where = "T1.create_date BETWEEN @start AND @end AND T1.delete_flag = 0";
@@ -88,7 +117,6 @@ exports.getDayAll = function(req, res)
             res.status(510).send(Message.ACCESS.E_001);
             return ;
         }
-        console.log("とまらない！");
         res.json({data: data});
     });
 };
