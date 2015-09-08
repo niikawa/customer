@@ -8,6 +8,7 @@
 var Validator = function Validator()
 {
 };
+module.exports = Validator;
 
 /**
  * バリデーションを実行する

@@ -129,11 +129,6 @@ exports.getOrCreate = function(req, res)
  * @param {object} req リクエストオブジェクト
  * @param {object} res レスポンスオブジェクト
  * @return {json} data 操作履歴の取得結果<br>
- * 以下のプロパティを持つobjectをjsonとして返却する
- *     <ul>
- *     <li>daily_limit_num: </li>
- *     <li>weekly_limit_num: </li>
- *     </ul>
  */
 exports.save = function(req, res)
 {
