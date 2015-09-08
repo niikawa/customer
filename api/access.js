@@ -41,7 +41,6 @@ var FUNCTION_NAME = '操作履歴';
 var Log = function Log()
 {
     Core.call(this, TABLE_NAME, PK_NAME);
-    console.log("konstorakuta");
     this.validator = new Validator();
     this.parametersRulesMap = 
     {
@@ -57,6 +56,10 @@ var Log = function Log()
     };
 };
 
+//coreModelを継承する
+var util = require('util');
+util.inherits(Log, Core);
+
 /**
  * リクエストパラメータのチェックを行う
  * 
@@ -67,10 +70,6 @@ Log.prototype.validation = function(key ,parameters)
     var rules = this.parametersRulesMap[key];
     this.validator.execute(rules, parameters);
 };
-
-//coreModelを継承する
-var util = require('util');
-util.inherits(Log, Core);
 
 var model = new Log();
 
