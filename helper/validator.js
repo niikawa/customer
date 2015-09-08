@@ -5,7 +5,7 @@
  * @class Validator
  * @constructor
  */
-var Validator = function()
+var Validator = function Validator()
 {
 };
 
