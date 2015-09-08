@@ -67,6 +67,7 @@ Log.prototype.validation = function(key ,parameters)
     var rules = this.parametersRulesMap[key];
     this.validator.execute(rules, parameters);
 };
+module.exports = Log;
 
 //coreModelを継承する
 var util = require('util');
@@ -94,7 +95,7 @@ var model = new Log();
  */
 exports.getDayAll = function(req, res)
 {
-    
+    console.log(model);
     model.validation("getDayAll", req.body);
     
     var col = "T1.log_id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as date, T1.user_id, T1.detail, T2.name";

@@ -47,6 +47,16 @@ var Approach = function Approach()
 {
     Core.call(this, TABLE_NAME, PK_NAME, SEQ_NAME);
 };
+/**
+ * リクエストパラメータのチェックを行う
+ * 
+ * @method validation
+ */
+Approach.prototype.validation = function(key ,parameters)
+{
+    var rules = this.parametersRulesMap[key];
+    this.validator.execute(rules, parameters);
+};
 
 //coreModelを継承する
 var util = require('util');
@@ -128,11 +138,10 @@ exports.getOrCreate = function(req, res)
  * @method save
  * @param {object} req リクエストオブジェクト
  * @param {object} res レスポンスオブジェクト
- * @return {json} data 操作履歴の取得結果<br>
+ * @return {json} 
  */
 exports.save = function(req, res)
 {
-    if (void 0 === req.body) res.status(510).send('params is not found');
     
     //approach_settingは1レコードしか存在しない
     var data = {
