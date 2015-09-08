@@ -1,62 +1,94 @@
 var crypto = require('crypto');
 var Core = require('./core');
 
-/** テーブル名 */
-var tableName = 'M_USER';
-var pk = 'user_id';
+/** 
+ * テーブル名
+ * @property TABLE_NAME
+ * @type {string}
+ * @final
+ */
+var TABLE_NAME = 'M_USER';
+/** 
+ * 主キー名 
+ * @property PK_NAME
+ * @type {string}
+ * @final
+ */
+var PK_NAME = 'user_id';
+/** 
+ * 機能番号
+ * @property FUNCTION_NAME
+ * @type {Number}
+ * @final
+ */
+var FUNCTION_NUMBER = 2;
 
-var auth = function auth()
+/** 
+ * 認証機能APIのクラス
+ * 
+ * @namespace api
+ * @class Auth
+ * @constructor
+ * @extends api.core
+ */
+var Auth = function Auth()
 {
-    Core.call(this, tableName, pk);
+    Core.call(this, TABLE_NAME, PK_NAME);
 };
 
 //coreModelを継承する
 var util = require('util');
-util.inherits(auth, Core);
+util.inherits(Auth, Core);
 
-var model = new auth();
+var model = new Auth();
 
 /**
  * ログイン状態かを判定する
  * 
- * @author niikawa
  * @method isLogin
  * @param {Object} req 画面からのリクエスト
  * @param {Object} res 画面へのレスポンス
+ * @return {json | status code 511}
+ * ログイン状態の場合、以下のプロパティを持つオブジェクトをJsonで返却する
+ * <ul>
+ * <li>user_id: ユーザーID</li>
+ * <li>name: ユーザー名</li>
+ * <li>role_id: ロールID</li>
+ * </ul>
  */
 exports.isLogin = function(req, res)
 {
-    if (req.session.isLogin) {
-        
+    if (req.session.isLogin)
+    {
         var data = {
             user_id: req.session.userId,
             name: req.session.userName, 
             role_id: req.session.roleId,
         };
         res.json({data: data});
-        
-//        res.status(200).send('Authentication Succsess');
-        
-    } else {
-        
-        if (req.body.autoId) {
-            
-            //自動ログイン
-            
-            //新しいトークンを生成
-        }
-        
-        res.status(511).send('Authentication Failed');
+    }
+    else
+    {
+        res.status(511).send('not login');
     }
 };
 
 /**
  * リクエストを受け取り、ログインを行う.
  * 
- * @author niikawa
  * @method login
  * @param {Object} req 画面からのリクエスト
+ *  @param {object} req.body POSTされたパラメータを格納したオブジェクト
+ *   @param {Number} req.body.mailAddress メールアドレス
+ *   @param {Number} req.body.password パスワード
  * @param {Object} res 画面へのレスポンス
+ * @return {json | status code 511}
+ * ログイン状態の場合、以下のプロパティを持つオブジェクトをJsonで返却する
+ * <ul>
+ * <li>user_id: ユーザーID</li>
+ * <li>name: ユーザー名</li>
+ * <li>role_id: ロールID</li>
+ * </ul>
  */
 exports.login = function(req, res)
 {
@@ -91,14 +123,13 @@ exports.login = function(req, res)
 /**
  * セッションを破棄してログアウト状態を作り出す
  * 
- * @author niikawa
  * @method login
  * @param {Object} req 画面からのリクエスト
  * @param {Object} res 画面へのレスポンス
  */
 exports.logout = function(req, res)
 {
-    model.insertLog(req.session.userId, 2);
+    model.insertLog(req.session.userId, FUNCTION_NUMBER);
     delete req.session.isLogin;
     delete req.session.userId;
     delete req.session.userName;

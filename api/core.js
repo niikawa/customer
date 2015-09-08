@@ -2,10 +2,9 @@ var moment = require('moment');
 var logInfo = require('../config/controlLog');
 
 /**
- * core collection class
+ * core class
  * 
- * @author niikawa
- * @namespace collection
+ * @namespace api
  * @class core
  * @constructor
  */

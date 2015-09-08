@@ -3,25 +3,22 @@ var blobService = azureStorage.createBlobService();
 var async = require('async');
 var fs = require('fs');
 
-//======================================================
-// azure storage sdk を利用してstorage操作を行う
-//======================================================
+/**
+ * azure storage sdk を利用してstorage操作を行うAPI
+ * 
+ * @namespace api
+ * @static
+ */
 
-function createContainerIfNotExists(containerName)
-{
-    blobService.createContainerIfNotExists(containerName, {publicAccessLevel : 'blob'}, function(error, result, response)
-    {
-        if(!error)
-        {
-        // if result = true, container was created.
-        // if result = false, container already existed.
-        }
-    });    
-}
-
+/**
+ * azure storage コンテナーを作成する
+ * 
+ * @method createContainer
+ * @param {string} containerName 実行対象メソッド名
+ * @param {Functon} callback コールバック 
+ */
 exports.createContainer = function(containerName, callback)
 {
-    console.log("execute createContainerIfNotExists ");
     blobService.createContainerIfNotExists(containerName, {publicAccessLevel : 'blob'}, function(error, result, response)
     {
         callback(error, result, response);
@@ -31,10 +28,11 @@ exports.createContainer = function(containerName, callback)
 /**
  * azure blob storageへアップロードを行う。
  * 
- * @param {object} uploadInfo パラメータ
- *                      containerName
- *                      uploadName
- *                      localFileName
+ * @param {Object} uploadInfo アップロード情報
+ *  @param {Functon} uploadInfo.containerName アップロード先コンテナ名
+ *  @param {Functon} uploadInfo.uploadName コンテナへアップロードする際のファイル名
+ *  @param {Functon} uploadInfo.localFileName アップロード対象のファイル名
+ * @param {Functon} mainCallback コールバック 
  */
 exports.uploadStorage = function(uploadInfo, mainCallback)
 {
@@ -42,19 +40,16 @@ exports.uploadStorage = function(uploadInfo, mainCallback)
     [
         function(callback)
         {
-            blobService.createContainerIfNotExists(uploadInfo.containerName, {publicAccessLevel : 'blob'}, function(error, result, response)
+            blobService.createContainerIfNotExists(uploadInfo.containerName, 
+                {publicAccessLevel : 'blob'}, function(error, result, response)
             {
                 console.log("createContainerIfNotExists result");
-                console.log(error);
-                console.log(result);
-                console.log(response);
                 if(!error)
                 {
                     callback(null);
                 }
                 else
                 {
-                    console.log("createBlockBlobFromLocalFile error");
                     callback(error);
                 }
             });
@@ -62,7 +57,8 @@ exports.uploadStorage = function(uploadInfo, mainCallback)
         
         function(callback)
         {
-            blobService.createBlockBlobFromLocalFile(uploadInfo.containerName, uploadInfo.localFileName, uploadInfo.uploadName, function(error, result, response)
+            blobService.createBlockBlobFromLocalFile(uploadInfo.containerName, 
+                uploadInfo.localFileName, uploadInfo.uploadName, function(error, result, response)
             {
                 if(!error)
                 {
@@ -85,12 +81,13 @@ exports.uploadStorage = function(uploadInfo, mainCallback)
 };
 
 /**
- * azure blob storageからダウンロードを行う
+ * azure blob storageからダウンロードを行う。
  * 
- * @param {object} uploadInfo パラメータ
- *                      containerName
- *                      blobName
- *                      dowloadName
+ * @param {Object} downLoadInfo ダウンロード情報
+ *  @param {Functon} uploadInfo.containerName アップロード先コンテナ名
+ *  @param {Functon} uploadInfo.blobName コンテナに格納されているファイル名
+ *  @param {Functon} uploadInfo.dowloadName ダウンロード時のファイル名
+ * @param {Functon} mainCallback コールバック 
  */
 exports.downLoadStorage = function(downLoadInfo, mainCallback)
 {
@@ -98,7 +95,8 @@ exports.downLoadStorage = function(downLoadInfo, mainCallback)
     [
         function(callback)
         {
-            blobService.createContainerIfNotExists(downLoadInfo.containerName, {publicAccessLevel : 'blob'}, function(error, result, response)
+            blobService.createContainerIfNotExists(downLoadInfo.containerName, 
+                {publicAccessLevel : 'blob'}, function(error, result, response)
             {
                 if(!error)
                 {
@@ -106,7 +104,6 @@ exports.downLoadStorage = function(downLoadInfo, mainCallback)
                 }
                 else
                 {
-                    console.log("createBlockBlobFromLocalFile error");
                     callback(error);
                 }
             });
@@ -114,12 +111,9 @@ exports.downLoadStorage = function(downLoadInfo, mainCallback)
         
         function(callback)
         {
-            console.log("getBlobToStream execute");
-            blobService.getBlobToStream(downLoadInfo.containerName, downLoadInfo.blobName, fs.createWriteStream(downLoadInfo.dowloadName), function(error, result, response)
+            blobService.getBlobToStream(downLoadInfo.containerName, 
+                downLoadInfo.blobName, fs.createWriteStream(downLoadInfo.dowloadName), function(error, result, response)
             {
-                console.log("getBlobToStream result");
-                console.log(result);
-                console.log(response);
                 if(!error)
                 {
                     callback(null);

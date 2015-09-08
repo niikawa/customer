@@ -17,9 +17,9 @@ var TABLE_NAME = 'M_LOG';
  */
 var PK_NAME = 'log_id';
 /** 
- * 機能名番号
+ * 機能番号
  * @property FUNCTION_NAME
- * @type {int}
+ * @type {Number}
  * @final
  */
 var FUNCTION_NUMBER = 9;
@@ -85,6 +85,9 @@ util.inherits(Log, Core);
  * リクエストパラメータのチェックを行う
  * 
  * @method validation
+ * @param {string} key 実行対象メソッド名
+ * @param {Object} parameters チェック対象パラメータオブジェクト
+ * @return {bool} 
  */
 Log.prototype.validation = function(key ,parameters)
 {
@@ -114,8 +117,11 @@ var model = new Log();
  */
 exports.getDayAll = function(req, res)
 {
+    model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_004, FUNCTION_NAME);
+
     if (!model.validation("getDayAll", req.body))
     {
+        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[access.getDayAll]"));
         res.status(510).send(Message.COMMON.E_101);
         return;
     }
@@ -165,8 +171,11 @@ exports.getDayAll = function(req, res)
  */
 exports.getDayAllByUserId = function(req, res)
 {
-    if (model.validation("getDayAllByUserId", req.body))
+    model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_004, FUNCTION_NAME);
+
+    if (!model.validation("getDayAllByUserId", req.body))
     {
+        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[access.getDayAll]"));
         res.status(510).send(Message.COMMON.E_101);
         return;
     }

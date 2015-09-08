@@ -1,4 +1,5 @@
 var Core = require('./core');
+var Validator = require("../helper/validator");
 var Message = require('../config/message.json');
 
 /** 
@@ -30,9 +31,9 @@ var SEQ_NAME = 'seq_approach';
  */
 var FUNCTION_NAME = 'アプローチ管理';
 /** 
- * 機能名番号
+ * 機能番号
  * @property FUNCTION_NAME
- * @type {int}
+ * @type {Number}
  * @final
  */
 var FUNCTION_NUMBER = 8;
@@ -40,29 +41,66 @@ var FUNCTION_NUMBER = 8;
 /** 
  * アプローチ機能APIのクラス
  * 
+ * @namespace api
+ * @class Approach
  * @constructor
  * @extends api.core
  */
 var Approach = function Approach()
 {
     Core.call(this, TABLE_NAME, PK_NAME, SEQ_NAME);
-};
-/**
- * リクエストパラメータのチェックを行う
- * 
- * @method validation
- * @param {string} key
- * @paran {Object} parameters
- */
-Approach.prototype.validation = function(key ,parameters)
-{
-    var rules = this.parametersRulesMap[key];
-    this.validator.execute(rules, parameters);
+    this.validator = new Validator();
+    this.parametersRulesMap = 
+    {
+        save:
+        {
+            daily_limit_num: 
+            [
+                {
+                    func: this.validator.isRequire
+                },
+                {
+                    func: this.validator.isNumber
+                },
+                {
+                    func: this.validator.isNotMaxOrver,
+                    conditon: {max: 2147483647}
+                }
+            ],
+            weekly_limit_num: 
+            [
+                {
+                    func: this.validator.isRequire
+                },
+                {
+                    func: this.validator.isNumber
+                },
+                {
+                    func: this.validator.isNotMaxOrver,
+                    conditon: {max: 2147483647}
+                }
+            ]
+        }
+    };
 };
 
 //coreModelを継承する
 var util = require('util');
 util.inherits(Approach, Core);
+
+/**
+ * リクエストパラメータのチェックを行う
+ * 
+ * @method validation
+ * @param {string} key 実行対象メソッド名
+ * @param {Object} parameters チェック対象パラメータオブジェクト
+ * @return {bool} 
+ */
+Approach.prototype.validation = function(key ,parameters)
+{
+    var rules = this.parametersRulesMap[key];
+    return this.validator.execute(rules, parameters);
+};
 
 var model = new Approach();
 
@@ -84,12 +122,12 @@ exports.getOrCreate = function(req, res)
     model.insertLog(req.session.userId, 8, Message.COMMON.I_004, FUNCTION_NAME);
     model.getAll(function(err, data)
     {
-        if (err.length > 0)
+        if (0 < err.length)
         {
-            console.log('approach data get error');
+            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[approach.getOrCreate]"));
             console.log(err);
-            res.status(510).send('data get faild').end();
-            
+            res.status(510).send(Message.APPROACH.E_001);
+            return;
         }
         var approachData = data[0];
         
@@ -119,17 +157,16 @@ exports.getOrCreate = function(req, res)
         {
             if (null !== err)
             {
+                console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[approach.getOrCreate last block]"));
                 console.log(err);
-                res.status(510).send('object not found');
+                res.status(510).send(Message.APPROACH.E_001);
+                return;
             }
-            else
-            {
-                var ret = {daily_limit_num: 0, weekly_limit_num: 0};
-                ret.daily_limit_num = approachData.daily_limit_num;
-                ret.weekly_limit_num = approachData.weekly_limit_num;
-                
-                res.json({data: ret});
-            }
+            var ret = {daily_limit_num: 0, weekly_limit_num: 0};
+            ret.daily_limit_num = approachData.daily_limit_num;
+            ret.weekly_limit_num = approachData.weekly_limit_num;
+            
+            res.json({data: ret});
         });
     });
 };
@@ -139,16 +176,25 @@ exports.getOrCreate = function(req, res)
  * 
  * @method save
  * @param {Object} req リクエストオブジェクト
+ *  @param {object} req.body POSTされたパラメータを格納したオブジェクト
+ *   @param {Number} req.body.daily_limit_num 1日の制限回数
+ *   @param {Number} req.body.weekly_limit_num 1週間の制限回数
  * @param {Object} res レスポンスオブジェクト
  * @return 
- *     <li>
- *     <ul>正常終了の場合:ステータスコード200</ul>
- *     <ul>以上終了の場合:ステータスコード510</ul>
- *     </li>
+ *     <ul>
+ *     <li>正常終了の場合:ステータスコード200</li>
+ *     <li>以上終了の場合:ステータスコード510</li>
+ *     </ul>
  */
 exports.save = function(req, res)
 {
-    
+    if (!model.validation("save", req.body))
+    {
+        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[approach.save]"));
+        res.status(510).send(Message.COMMON.E_101);
+        return;
+    }
+
     //approach_settingは1レコードしか存在しない
     var data = {
         approach_setting_id: 1,
@@ -169,11 +215,13 @@ exports.save = function(req, res)
 
     model.updateById(updateData, request, function(err, data)
     {
-        if (err.length > 0)
+        if (0 < err.length)
         {
-            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_002, FUNCTION_NAME);
-            console.log('approach update faild');
+            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[approach.save]"));
             console.log(err);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_002, FUNCTION_NAME);
+            res.status(510).send(Message.COMMON.E_002.replace("$1", FUNCTION_NAME));
+            return;
         }
         
         model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_002, FUNCTION_NAME);

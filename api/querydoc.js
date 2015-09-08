@@ -7,9 +7,7 @@ var Message = require('../config/message.json');
 var functionName = 'クエリー管理';
 
 var conf = require("../config/doc");
-console.log(conf);
 var docconf = conf();
-console.log(docconf);
 var docDbClient = new DocumentDBClient(docconf.url, { masterKey: docconf.key });
 
 var Query = new query(docDbClient, 'ixcpm', 'query');

@@ -44,7 +44,12 @@ Validator.prototype.execute = function(rulesMap, parameters)
             var executeNum = executeFunction.length;
             for (var exeIndex = 0; exeIndex < executeNum; exeIndex++)
             {
-                var result = rulesMap[prop][exeIndex].func(parameters[prop]);
+                var condition = null;
+                if (rulesMap[prop][exeIndex].hasOwnProperty("condition"))
+                {
+                    condition = rulesMap[prop][exeIndex].condition;
+                }
+                var result = rulesMap[prop][exeIndex].func(parameters[prop], condition);
                 if (!result) return false;
             }
         }
@@ -102,4 +107,19 @@ Validator.prototype.isValidDate = function(val)
     console.log("isValidDate:" + val);
     var m = moment(val);
     return m.isValid();
+};
+
+/**
+ * 最大値を超えていないかをチェックする
+ * 
+ * @method isValidDate
+ * @param {mixed} val 値
+ * @param {object} condition 条件を格納したオブジェクト
+ *  @param {object} condition.max 最大値
+ * @return {bool} 
+ */
+Validator.prototype.isNotMaxOrver = function(val, condition)
+{
+    console.log("isMaxOrver:" + val);
+    return parseInt(val, 10) < condition.max;
 };
