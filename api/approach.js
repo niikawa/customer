@@ -136,9 +136,13 @@ exports.getOrCreate = function(req, res)
  * アプローチマスタのデータを保存する
  * 
  * @method save
- * @param {object} req リクエストオブジェクト
- * @param {object} res レスポンスオブジェクト
- * @return {json} 
+ * @param {Object} req リクエストオブジェクト
+ * @param {Object} res レスポンスオブジェクト
+ * @return 
+ *     <li>
+ *     <ul>正常終了の場合:ステータスコード200</ul>
+ *     <ul>以上終了の場合:ステータスコード510</ul>
+ *     </li>
  */
 exports.save = function(req, res)
 {

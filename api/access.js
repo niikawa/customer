@@ -67,7 +67,6 @@ Log.prototype.validation = function(key ,parameters)
     var rules = this.parametersRulesMap[key];
     this.validator.execute(rules, parameters);
 };
-module.exports = Log;
 
 //coreModelを継承する
 var util = require('util');
