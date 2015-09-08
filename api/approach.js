@@ -29,6 +29,13 @@ var SEQ_NAME = 'seq_approach';
  * @final
  */
 var FUNCTION_NAME = 'アプローチ管理';
+/** 
+ * 機能名番号
+ * @property FUNCTION_NAME
+ * @type {int}
+ * @final
+ */
+var FUNCTION_NUMBER = 8;
 
 /** 
  * アプローチ機能APIのクラス
@@ -54,13 +61,10 @@ var model = new Approach();
  * @param {object} req リクエストオブジェクト
  * @param {object} res レスポンスオブジェクト
  * @return {json} data 操作履歴の取得結果<br>
- * 以下のプロパティを持つobjectの配列をjsonとして返却する
+ * 以下のプロパティを持つobjectをjsonとして返却する
  *     <ul>
- *     <li>log_id: PK</li>
- *     <li>date: 操作日(yyyy-MM-dd hh:mm:ss)</li>
- *     <li>user_id: ユーザーID</li>
- *     <li>detail: 内容</li>
- *     <li>name: ユーザー名</li>
+ *     <li>daily_limit_num: 1日の制限回数</li>
+ *     <li>weekly_limit_num: 1週間の制限回数</li>
  *     </ul>
  */
 exports.getOrCreate = function(req, res)
@@ -118,6 +122,19 @@ exports.getOrCreate = function(req, res)
     });
 };
 
+/**
+ * アプローチマスタのデータを保存する
+ * 
+ * @method save
+ * @param {object} req リクエストオブジェクト
+ * @param {object} res レスポンスオブジェクト
+ * @return {json} data 操作履歴の取得結果<br>
+ * 以下のプロパティを持つobjectをjsonとして返却する
+ *     <ul>
+ *     <li>daily_limit_num: </li>
+ *     <li>weekly_limit_num: </li>
+ *     </ul>
+ */
 exports.save = function(req, res)
 {
     if (void 0 === req.body) res.status(510).send('params is not found');
@@ -144,12 +161,12 @@ exports.save = function(req, res)
     {
         if (err.length > 0)
         {
-            model.insertLog(req.session.userId, 8, Message.COMMON.E_002, FUNCTION_NAME);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_002, FUNCTION_NAME);
             console.log('approach update faild');
             console.log(err);
         }
         
-        model.insertLog(req.session.userId, 8, Message.COMMON.I_002, FUNCTION_NAME);
+        model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_002, FUNCTION_NAME);
         res.status(200).send('update ok');
     });
 };
@@ -171,7 +188,7 @@ exports.remove = function(req, res)
                 res.status(510).send('object not found');
             }
            
-            model.insertLog(req.session.userId, 8, Message.COMMON.I_003, FUNCTION_NAME);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_003, FUNCTION_NAME);
             res.status(200).send('delete ok');
         });
     });
