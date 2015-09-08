@@ -99,7 +99,6 @@ myApp.directive('conditionDirective', function(Utility){
             scope.check = function(event)
             {
                 var type = '';
-                console.log(scope.conditionAppend.column);
                 if (void 0 === scope.conditionAppend.column)
                 {
                     type = scope.conditionAppend.type;
@@ -108,7 +107,6 @@ myApp.directive('conditionDirective', function(Utility){
                 {
                     type = scope.conditionAppend.column.type;
                 }
-                console.log(type);
                 var val = scope.conditionAppend.condition.value1;
                 if ('bigint' === type || 'int' === type)
                 {
@@ -142,7 +140,6 @@ myApp.directive('conditionDirective', function(Utility){
                     else
                     {
                         var m = Utility.moment(val);
-                        console.log(m.isValid());
                         if (!m.isValid())
                         {
                             scope.conditionAppend.error = true;

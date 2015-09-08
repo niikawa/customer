@@ -46,12 +46,33 @@ var Log = function Log()
     {
         getDayAll :
         {
-            day: this.validator.isRequire
+            day: 
+            [
+                {
+                    func: this.validator.isRequire
+                },
+                {
+                    func: this.validator.isValidDate
+                }
+            ]
         },
         getDayAllByUserId : 
         {
-            id: this.validator.isRequire,
-            day: this.validator.isRequire
+            id: 
+            [
+                {
+                    func: this.validator.isRequire
+                }
+            ],
+            day: 
+            [
+                {
+                    func: this.validator.isRequire
+                },
+                {
+                    func: this.validator.isValidDate
+                }
+            ]
         }
     };
 };
@@ -68,7 +89,7 @@ util.inherits(Log, Core);
 Log.prototype.validation = function(key ,parameters)
 {
     var rules = this.parametersRulesMap[key];
-    this.validator.execute(rules, parameters);
+    return this.validator.execute(rules, parameters);
 };
 
 var model = new Log();
@@ -93,8 +114,11 @@ var model = new Log();
  */
 exports.getDayAll = function(req, res)
 {
-    console.log(model);
-    model.validation("getDayAll", req.body);
+    if (model.validation("getDayAll", req.body))
+    {
+        res.status(510).send(Message.COMMON.E_101);
+        return;
+    }
     
     var col = "T1.log_id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as date, T1.user_id, T1.detail, T2.name";
     var table = "T_LOG T1 INNER JOIN M_USER T2 ON T1.user_id = T2.user_id";
@@ -108,9 +132,9 @@ exports.getDayAll = function(req, res)
     
     model.select(qObj, qObj.request, function(err, data)
     {
-        if (err.length == 0)
+        if (0 < err.length)
         {
-            console.log(model.appendUserInfoString(Message.COMMON.E_102, req));
+            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[access.getDayAll]"));
             console.log(err);
             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, FUNCTION_NAME);
             res.status(510).send(Message.ACCESS.E_001);
@@ -141,6 +165,11 @@ exports.getDayAll = function(req, res)
  */
 exports.getDayAllByUserId = function(req, res)
 {
+    if (model.validation("getDayAllByUserId", req.body))
+    {
+        res.status(510).send(Message.COMMON.E_101);
+        return;
+    }
     var col = "T1.log_id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as date, T1.user_id, T1.detail, T2.name";
     var table = "T_LOG T1 INNER JOIN M_USER T2 ON T1.user_id = T2.user_id";
     var where = "T1.create_date BETWEEN @start AND @end AND T1.user_id = @userId AND T1.delete_flag = 0";
@@ -154,12 +183,13 @@ exports.getDayAllByUserId = function(req, res)
     
     model.select(qObj, qObj.request, function(err, data)
     {
-        if (err.length > 0)
+        if (0 < err.length)
         {
-            console.log(model.appendUserInfoString("getDayAllByUserId:"+Message.COMMON.E_102, req));
+            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[access.getDayAllByUserId]"));
             console.log(err);
             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, FUNCTION_NAME);
-            res.status(510).send(Message.ACCESS.E_001).end();
+            res.status(510).send(Message.ACCESS.E_001);
+            return;
         }
         res.json({data: data});
     });

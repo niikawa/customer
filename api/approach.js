@@ -51,6 +51,8 @@ var Approach = function Approach()
  * リクエストパラメータのチェックを行う
  * 
  * @method validation
+ * @param {string} key
+ * @paran {Object} parameters
  */
 Approach.prototype.validation = function(key ,parameters)
 {

@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 /** 
  * バリデーションのヘルパークラス
  * 
@@ -20,23 +22,34 @@ module.exports = Validator;
  */
 Validator.prototype.execute = function(rulesMap, parameters)
 {
-    if (void 0 ===  rulesMap || void 0 === parameters)
+    //パラメータが存在しなかったらスルーする
+    if (void 0 === rulesMap || void 0 === parameters)
     {
-        //
         return true;
     }
     
-    var paramNum = Object.keys(parameters);
+    var paramKeys = Object.keys(parameters);
+    var paramNum = paramKeys.length;
     if (0 === paramNum)
     {
         return false;
     }
     
-    Object.keys(parameters).forEach(function(prop)
+    for (var index = 0; index < paramNum; index++)
     {
-        var re = rulesMap[prop](parameters[prop]);
-        
-    });
+        var prop = paramKeys[index];
+        if ( rulesMap.hasOwnProperty(prop) )
+        {
+            var executeFunction = rulesMap[prop];
+            var executeNum = executeFunction.length;
+            for (var exeIndex = 0; exeIndex < executeNum; exeIndex++)
+            {
+                var result = rulesMap[prop][exeIndex].func(parameters[prop]);
+                if (!result) return false;
+            }
+        }
+    }
+    return true;
 };
 
 /**
@@ -65,7 +78,7 @@ Validator.prototype.isRequire = function(val)
 };
 
 /**
- * 数値チェック
+ * 数値かチェック
  * 
  * @method isRequire
  * @param {mixed} val 値
@@ -73,5 +86,20 @@ Validator.prototype.isRequire = function(val)
  */
 Validator.prototype.isNumber = function(val)
 {
+    console.log("isNumber:" + val);
     return isFinite(val);
+};
+
+/**
+ * 有効な日付かチェック
+ * 
+ * @method isValidDate
+ * @param {mixed} val 値
+ * @return {bool} 
+ */
+Validator.prototype.isValidDate = function(val)
+{
+    console.log("isValidDate:" + val);
+    var m = moment(val);
+    return m.isValid();
 };
