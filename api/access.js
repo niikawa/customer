@@ -88,6 +88,7 @@ exports.getDayAll = function(req, res)
             res.status(510).send(Message.ACCESS.E_001);
             return ;
         }
+        console.log("とまらない！");
         res.json({data: data});
     });
 };
