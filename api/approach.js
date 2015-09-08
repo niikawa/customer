@@ -1,36 +1,79 @@
 var Core = require('./core');
 var Message = require('../config/message.json');
 
-/** テーブル名 */
-var tableName = 'M_APPROACH_SETTING';
-/** PK */
-var pk = 'approach_setting_id';
-/** SEQ */
-var seqName = 'seq_approach';
-/** 機能名 */
-var functionName = 'アプローチ管理';
+/** 
+ * テーブル名
+ * @property TABLE_NAME
+ * @type {string}
+ * @final
+ */
+var TABLE_NAME = 'M_APPROACH_SETTING';
+/** 
+ * 主キー名 
+ * @property PK_NAME
+ * @type {string}
+ * @final
+ */
+var PK_NAME = 'approach_setting_id';
+/** 
+ * SEQ名
+ * @property SEQ_NAME
+ * @type {string}
+ * @final
+ */
+var SEQ_NAME = 'seq_approach';
+/** 
+ * 機能名
+ * @property FUNCTION_NAME
+ * @type {string}
+ * @final
+ */
+var FUNCTION_NAME = 'アプローチ管理';
 
-var approach = function approachsegment()
+/** 
+ * アプローチ機能APIのクラス
+ * 
+ * @constructor
+ * @extends api.core
+ */
+var Approach = function Approach()
 {
-    Core.call(this, tableName, pk, seqName);
+    Core.call(this, TABLE_NAME, PK_NAME, SEQ_NAME);
 };
 
 //coreModelを継承する
 var util = require('util');
-util.inherits(approach, Core);
+util.inherits(Approach, Core);
 
-var model = new approach();
+var model = new Approach();
 
+/**
+ * アプローチマスタのデータが存在している場合は取得し、存在していない場合は新規作成する
+ * 
+ * @method getOrCreate
+ * @param {object} req リクエストオブジェクト
+ * @param {object} res レスポンスオブジェクト
+ * @return {json} data 操作履歴の取得結果<br>
+ * 以下のプロパティを持つobjectの配列をjsonとして返却する
+ *     <ul>
+ *     <li>log_id: PK</li>
+ *     <li>date: 操作日(yyyy-MM-dd hh:mm:ss)</li>
+ *     <li>user_id: ユーザーID</li>
+ *     <li>detail: 内容</li>
+ *     <li>name: ユーザー名</li>
+ *     </ul>
+ */
 exports.getOrCreate = function(req, res)
 {
-    model.insertLog(req.session.userId, 8, Message.COMMON.I_004, functionName);
+    model.insertLog(req.session.userId, 8, Message.COMMON.I_004, FUNCTION_NAME);
     model.getAll(function(err, data)
     {
         if (err.length > 0)
         {
             console.log('approach data get error');
             console.log(err);
-            res.status(510).send('data get faild');
+            res.status(510).send('data get faild').end();
+            
         }
         var approachData = data[0];
         
@@ -49,7 +92,7 @@ exports.getOrCreate = function(req, res)
                     request.input('create_date', model.db.NVarChar, commonColumns.create_date);
                     request.input('update_by', model.db.Int, req.session.userId);
                     request.input('update_date', model.db.NVarChar, commonColumns.update_date);
-                    model.insert(tableName, commonColumns, request, callback);
+                    model.insert(TABLE_NAME, commonColumns, request, callback);
                 }
                 else
                 {
@@ -101,12 +144,12 @@ exports.save = function(req, res)
     {
         if (err.length > 0)
         {
-            model.insertLog(req.session.userId, 8, Message.COMMON.E_002, functionName);
+            model.insertLog(req.session.userId, 8, Message.COMMON.E_002, FUNCTION_NAME);
             console.log('approach update faild');
             console.log(err);
         }
         
-        model.insertLog(req.session.userId, 8, Message.COMMON.I_002, functionName);
+        model.insertLog(req.session.userId, 8, Message.COMMON.I_002, FUNCTION_NAME);
         res.status(200).send('update ok');
     });
 };
@@ -122,13 +165,13 @@ exports.remove = function(req, res)
         
         model.removeById(req.params.id, function(err, data)
         {
-           if (err.length > 0)
-           {
+            if (err.length > 0)
+            {
                 console.log(err);
                 res.status(510).send('object not found');
-           }
+            }
            
-            model.insertLog(req.session.userId, 8, Message.COMMON.I_003, functionName);
+            model.insertLog(req.session.userId, 8, Message.COMMON.I_003, FUNCTION_NAME);
             res.status(200).send('delete ok');
         });
     });

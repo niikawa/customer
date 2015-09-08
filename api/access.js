@@ -1,20 +1,71 @@
 var Core = require('./core');
+var Message = require('../config/message.json');
 
-/** テーブル名 */
-var tableName = 'M_LOG';
-var pk = 'log_id';
-
-var log = function log()
+/** 
+ * テーブル名
+ * @property TABLE_NAME
+ * @type {string}
+ * @final
+ */
+var TABLE_NAME = 'M_LOG';
+/** 
+ * 主キー名 
+ * @property PK_NAME
+ * @type {string}
+ * @final
+ */
+var PK_NAME = 'log_id';
+/** 
+ * 機能名番号
+ * @property FUNCTION_NAME
+ * @type {int}
+ * @final
+ */
+var FUNCTION_NUMBER = 9;
+/** 
+ * 機能名
+ * @property FUNCTION_NAME
+ * @type {string}
+ * @final
+ */
+var FUNCTION_NAME = '操作履歴';
+/** 
+ * 操作履歴APIのクラス
+ * 
+ * @namespace api
+ * @class log
+ * @extends api.core
+ * @constructor
+ */
+var Log = function Log()
 {
-    Core.call(this, tableName, pk);
+    Core.call(this, TABLE_NAME, PK_NAME);
 };
 
 //coreModelを継承する
 var util = require('util');
-util.inherits(log, Core);
+util.inherits(Log, Core);
 
-var model = new log();
+var model = new Log();
 
+/**
+ * 指定された日の操作ログをすべて取得する
+ * 
+ * @method getDayAll
+ * @param {object} req リクエストオブジェクト
+ *  @param {object} req.body POSTされたパラメータを格納したオブジェクト
+ *   @param {string} req.body.day 指定日 YYYY-MM-DD形式
+ * @param {object} res レスポンスオブジェクト
+ * @return {json} data 操作履歴の取得結果<br>
+ * 以下のプロパティを持つobjectの配列をjsonとして返却する
+ *     <ul>
+ *     <li>log_id: PK</li>
+ *     <li>date: 操作日(yyyy-MM-dd hh:mm:ss)</li>
+ *     <li>user_id: ユーザーID</li>
+ *     <li>detail: 内容</li>
+ *     <li>name: ユーザー名</li>
+ *     </ul>
+ */
 exports.getDayAll = function(req, res)
 {
     var col = "T1.log_id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as date, T1.user_id, T1.detail, T2.name";
@@ -29,16 +80,36 @@ exports.getDayAll = function(req, res)
     
     model.select(qObj, qObj.request, function(err, data)
     {
-        if (err.length > 0)
+        if (err.length == 0)
         {
-            console.log('get execute plan scenario faild');
+            console.log(model.appendUserInfoString(Message.COMMON.E_102, req));
             console.log(err);
-            res.status(510).send('scenario crate faild');
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, FUNCTION_NAME);
+            res.status(510).send(Message.ACCESS.E_001).end();
         }
         res.json({data: data});
     });
 };
 
+/**
+ * 指定された日の操作ログをすべて取得する
+ * 
+ * @method getDayAllByUserId
+ * @param {object} req リクエストオブジェクト
+ *  @param {object} req.body POSTされたパラメータを格納したオブジェクト
+ *   @param {int} req.body.id 指定日 YYYY-MM-DD形式
+ *   @param {string} req.body.day 指定日 YYYY-MM-DD形式
+ * @param {object} res レスポンスオブジェクト
+ * @return {json} data 操作履歴の取得結果<br>
+ * 以下のプロパティを持つobjectの配列をjsonとして返却する
+ *     <ul>
+ *     <li>log_id: PK</li>
+ *     <li>date: 操作日(yyyy-MM-dd hh:mm:ss)</li>
+ *     <li>user_id: ユーザーID</li>
+ *     <li>detail: 内容</li>
+ *     <li>name: ユーザー名</li>
+ *     </ul>
+ */
 exports.getDayAllByUserId = function(req, res)
 {
     var col = "T1.log_id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as date, T1.user_id, T1.detail, T2.name";
@@ -56,9 +127,10 @@ exports.getDayAllByUserId = function(req, res)
     {
         if (err.length > 0)
         {
-            console.log('get execute plan scenario faild');
+            console.log(model.appendUserInfoString("getDayAllByUserId:"+Message.COMMON.E_102, req));
             console.log(err);
-            res.status(510).send('scenario crate faild');
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, FUNCTION_NAME);
+            res.status(510).send(Message.ACCESS.E_001).end();
         }
         res.json({data: data});
     });

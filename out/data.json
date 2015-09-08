@@ -1,0 +1,1536 @@
+{
+    "project": {},
+    "files": {
+        "api/access.js": {
+            "name": "api/access.js",
+            "modules": {},
+            "classes": {
+                "api.log": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "api": 1
+            }
+        },
+        "api/approach.js": {
+            "name": "api/approach.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "api/auth.js": {
+            "name": "api/auth.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "api/azureapi.js": {
+            "name": "api/azureapi.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "api/azurestorage.js": {
+            "name": "api/azurestorage.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "api/bug.js": {
+            "name": "api/bug.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "api/core.js": {
+            "name": "api/core.js",
+            "modules": {},
+            "classes": {
+                "collection.core": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "collection": 1
+            }
+        },
+        "api/customer.js": {
+            "name": "api/customer.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "api/environment.js": {
+            "name": "api/environment.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "api/query.js": {
+            "name": "api/query.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "api/role.js": {
+            "name": "api/role.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "api/scenario.js": {
+            "name": "api/scenario.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "api/scenariottag.js": {
+            "name": "api/scenariottag.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "api/schedulescenario.js": {
+            "name": "api/schedulescenario.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "api/segment.js": {
+            "name": "api/segment.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "api/tag.js": {
+            "name": "api/tag.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "api/triggerscenario.js": {
+            "name": "api/triggerscenario.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "api/user.js": {
+            "name": "api/user.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "api.log": {
+            "name": "api.log",
+            "shortname": "api.log",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "namespace": "api",
+            "file": "api/access.js",
+            "line": 19,
+            "description": "操作履歴APIのクラス<br>\ncore moduleを継承する",
+            "is_constructor": 1
+        },
+        "collection.core": {
+            "name": "collection.core",
+            "shortname": "collection.core",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "namespace": "collection",
+            "file": "api/core.js",
+            "line": 16,
+            "description": "core collection class",
+            "author": "niikawa",
+            "is_constructor": 1
+        }
+    },
+    "elements": {},
+    "classitems": [
+        {
+            "file": "api/access.js",
+            "line": 4,
+            "description": "テーブル名",
+            "itemtype": "property",
+            "name": "TABLE_NAME",
+            "type": "{string}",
+            "final": 1,
+            "class": "api.log"
+        },
+        {
+            "file": "api/access.js",
+            "line": 11,
+            "description": "主キー名",
+            "itemtype": "property",
+            "name": "PK_NAME",
+            "type": "{string}",
+            "final": 1,
+            "class": "api.log"
+        },
+        {
+            "file": "api/access.js",
+            "line": 37,
+            "description": "指定された日の操作ログをすべて取得する",
+            "itemtype": "method",
+            "name": "getDayAll",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "リクエストオブジェクト",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "body",
+                            "description": "POSTされたパラメータを格納したオブジェクト",
+                            "type": "Object",
+                            "props": [
+                                {
+                                    "name": "day",
+                                    "description": "指定日 YYYY-MM-DD形式",
+                                    "type": "String"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "res",
+                    "description": "レスポンスオブジェクト",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "data 操作履歴の取得結果<br>\n以下のプロパティを持つobjectの配列をjsonとして返却する\n    <ul>\n    <li>log_id: PK</li>\n    <li>date: 操作日(yyyy-MM-dd hh:mm:ss)</li>\n    <li>user_id: ユーザーID</li>\n    <li>detail: 内容</li>\n    <li>name: ユーザー名</li>\n    </ul>",
+                "type": "Json"
+            },
+            "class": "api.log",
+            "namespace": "api"
+        },
+        {
+            "file": "api/access.js",
+            "line": 79,
+            "description": "指定された日の操作ログをすべて取得する",
+            "itemtype": "method",
+            "name": "getDayAllByUserId",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "リクエストオブジェクト",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "body",
+                            "description": "POSTされたパラメータを格納したオブジェクト",
+                            "type": "Object",
+                            "props": [
+                                {
+                                    "name": "id",
+                                    "description": "指定日 YYYY-MM-DD形式",
+                                    "type": "Int"
+                                },
+                                {
+                                    "name": "day",
+                                    "description": "指定日 YYYY-MM-DD形式",
+                                    "type": "String"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "res",
+                    "description": "レスポンスオブジェクト",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "data 操作履歴の取得結果<br>\n以下のプロパティを持つobjectの配列をjsonとして返却する\n    <ul>\n    <li>log_id: PK</li>\n    <li>date: 操作日(yyyy-MM-dd hh:mm:ss)</li>\n    <li>user_id: ユーザーID</li>\n    <li>detail: 内容</li>\n    <li>name: ユーザー名</li>\n    </ul>",
+                "type": "Json"
+            },
+            "class": "api.log",
+            "namespace": "api"
+        },
+        {
+            "file": "api/approach.js",
+            "line": 1,
+            "fileoverview": "アプローチ情報に関するAPI",
+            "author": "t-nikawa@virtuakex.co.jp <t-niikawa>",
+            "class": "collection.core",
+            "namespace": "api"
+        },
+        {
+            "file": "api/approach.js",
+            "line": 9,
+            "description": "テーブル名",
+            "type": "{string}",
+            "class": "collection.core",
+            "namespace": "api"
+        },
+        {
+            "file": "api/approach.js",
+            "line": 14,
+            "description": "主キー名",
+            "type": "{string}",
+            "class": "collection.core",
+            "namespace": "api"
+        },
+        {
+            "file": "api/approach.js",
+            "line": 19,
+            "description": "SEQ名",
+            "type": "{string}",
+            "class": "collection.core",
+            "namespace": "api"
+        },
+        {
+            "file": "api/approach.js",
+            "line": 24,
+            "description": "機能名",
+            "type": "{string}",
+            "class": "collection.core",
+            "namespace": "api"
+        },
+        {
+            "file": "api/approach.js",
+            "line": 30,
+            "is_constructor": 1,
+            "extends": "api.core",
+            "class": "collection.core",
+            "namespace": "api"
+        },
+        {
+            "file": "api/auth.js",
+            "line": 4,
+            "class": "collection.core",
+            "namespace": "api"
+        },
+        {
+            "file": "api/auth.js",
+            "line": 19,
+            "description": "ログイン状態かを判定する",
+            "author": "niikawa",
+            "itemtype": "method",
+            "name": "isLogin",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "collection.core",
+            "namespace": "api"
+        },
+        {
+            "file": "api/auth.js",
+            "line": 53,
+            "description": "リクエストを受け取り、ログインを行う.",
+            "author": "niikawa",
+            "itemtype": "method",
+            "name": "login",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "collection.core",
+            "namespace": "api"
+        },
+        {
+            "file": "api/auth.js",
+            "line": 91,
+            "description": "セッションを破棄してログアウト状態を作り出す",
+            "author": "niikawa",
+            "itemtype": "method",
+            "name": "login",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "collection.core",
+            "namespace": "api"
+        },
+        {
+            "file": "api/azureapi.js",
+            "line": 21,
+            "description": "顧客の情報を取得する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "collection.core",
+            "namespace": "api"
+        },
+        {
+            "file": "api/azurestorage.js",
+            "line": 31,
+            "description": "azure blob storageへアップロードを行う。",
+            "params": [
+                {
+                    "name": "uploadInfo",
+                    "description": "パラメータ\n                     containerName\n                     uploadName\n                     localFileName",
+                    "type": "Object"
+                }
+            ],
+            "class": "collection.core",
+            "namespace": "api"
+        },
+        {
+            "file": "api/azurestorage.js",
+            "line": 87,
+            "description": "azure blob storageからダウンロードを行う",
+            "params": [
+                {
+                    "name": "uploadInfo",
+                    "description": "パラメータ\n                     containerName\n                     blobName\n                     dowloadName",
+                    "type": "Object"
+                }
+            ],
+            "class": "collection.core",
+            "namespace": "api"
+        },
+        {
+            "file": "api/bug.js",
+            "line": 5,
+            "class": "collection.core",
+            "namespace": "api"
+        },
+        {
+            "file": "api/core.js",
+            "line": 132,
+            "description": "シーケンス値を取得する.",
+            "author": "niikawa",
+            "itemtype": "method",
+            "name": "getNextSeq",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "class": "collection.core",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/core.js",
+            "line": 146,
+            "description": "値をすべて取得する.",
+            "author": "niikawa",
+            "itemtype": "method",
+            "name": "getAllSync",
+            "params": [
+                {
+                    "name": "callback",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "class": "collection.core",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/core.js",
+            "line": 180,
+            "description": "_idに合致した情報を取得する.",
+            "author": "niikawa",
+            "itemtype": "method",
+            "name": "getById",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "callback",
+                    "description": "",
+                    "type": "Function"
+                }
+            ],
+            "class": "collection.core",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/customer.js",
+            "line": 4,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/customer.js",
+            "line": 18,
+            "description": "顧客の情報を取得する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/customer.js",
+            "line": 42,
+            "description": "顧客の一覧を取得する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/customer.js",
+            "line": 65,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/customer.js",
+            "line": 148,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/environment.js",
+            "line": 3,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/environment.js",
+            "line": 5,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/environment.js",
+            "line": 7,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/query.js",
+            "line": 7,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/query.js",
+            "line": 9,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/query.js",
+            "line": 12,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/role.js",
+            "line": 4,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/role.js",
+            "line": 6,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/role.js",
+            "line": 8,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/role.js",
+            "line": 22,
+            "description": "顧客の情報を取得する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/role.js",
+            "line": 45,
+            "description": "顧客の一覧を取得する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 6,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 8,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 10,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 13,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 32,
+            "description": "PKからデータを取得する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 56,
+            "description": "delete_flagのたっていないシナリオをすべて取得する\n並び順はPKの昇順",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 140,
+            "description": "アプローチ対象のシナリオを取得する\n並び順はpriorityとscenario_idの昇順",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 168,
+            "description": "アプローチ対象のシナリオを取得する\n並び順はpriorityとscenario_idの昇順",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 244,
+            "description": "実行予定のシナリオを取得する\n並び順はpriorityとscenario_idの昇順",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 282,
+            "description": "実行予定のシナリオをカレンダー表示用に整形した結果を取得する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 522,
+            "description": "アプローチ対象のシナリオを無効にする",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 550,
+            "description": "アプローチ対象の無効なシナリオを有効にする",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 578,
+            "description": "priorityとstatusを更新する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 633,
+            "description": "シナリオを保存する\nパラメータにPKが存在するか否かで登録するか更新するかを決定する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 691,
+            "description": "シナリオを登録する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 920,
+            "description": "パラメータのtagsにidのプロパティがなければそれは新規作成となり\nT_TAGに登録される。\nただし、同一名称のものが存在した場合は、登録しない。",
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 937,
+            "description": "シナリオにタグを設定する",
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 952,
+            "description": "シナリオを更新する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 1151,
+            "description": "PKに合致したレコードのdelete_flagを1にする",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 1324,
+            "description": "PKに合致したレコードを物理削除する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 1344,
+            "description": "シナリオコントロール画面に表示する初期値を取得する\nリクエストにシナリオIDが存在する場合は該当情報も取得する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 1479,
+            "description": "同一名称が存在するかをチェックする\nリクエスト値にシナリオIDが存在する場合は該当レコードの名称を除外してチェックする",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenario.js",
+            "line": 1519,
+            "description": "action.jsonからパラメータのnameと合致する情報を取得する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenariottag.js",
+            "line": 4,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/scenariottag.js",
+            "line": 7,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/schedulescenario.js",
+            "line": 1,
+            "description": "本テーブルはアプリケーションから直接データ操作が行われる想定はない",
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/schedulescenario.js",
+            "line": 7,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/schedulescenario.js",
+            "line": 9,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/schedulescenario.js",
+            "line": 11,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/schedulescenario.js",
+            "line": 25,
+            "description": "PKからデータを取得する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/segment.js",
+            "line": 8,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/segment.js",
+            "line": 10,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/segment.js",
+            "line": 12,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/segment.js",
+            "line": 14,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/segment.js",
+            "line": 134,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/tag.js",
+            "line": 4,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/tag.js",
+            "line": 7,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/triggerscenario.js",
+            "line": 1,
+            "description": "本テーブルはアプリケーションから直接データ操作が行われる想定はない",
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/triggerscenario.js",
+            "line": 7,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/triggerscenario.js",
+            "line": 9,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/triggerscenario.js",
+            "line": 11,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/triggerscenario.js",
+            "line": 25,
+            "description": "PKからデータを取得する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/user.js",
+            "line": 5,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/user.js",
+            "line": 7,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/user.js",
+            "line": 9,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/user.js",
+            "line": 11,
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/user.js",
+            "line": 25,
+            "description": "顧客の情報を取得する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/user.js",
+            "line": 51,
+            "description": "顧客の一覧を取得する",
+            "params": [
+                {
+                    "name": "req",
+                    "description": "画面からのリクエスト",
+                    "type": "Object"
+                },
+                {
+                    "name": "res",
+                    "description": "画面へのレスポンス",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "collection"
+        },
+        {
+            "file": "api/user.js",
+            "line": 74,
+            "description": "全ユーザーを取得する",
+            "class": "",
+            "namespace": "collection"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "unknown tag: fileoverview",
+            "line": " api/approach.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/approach.js:1"
+        },
+        {
+            "message": "Missing item type\nテーブル名",
+            "line": " api/approach.js:9"
+        },
+        {
+            "message": "Missing item type\n主キー名",
+            "line": " api/approach.js:14"
+        },
+        {
+            "message": "Missing item type\nSEQ名",
+            "line": " api/approach.js:19"
+        },
+        {
+            "message": "Missing item type\n機能名",
+            "line": " api/approach.js:24"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/approach.js:30"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/auth.js:4"
+        },
+        {
+            "message": "Missing item type\n顧客の情報を取得する",
+            "line": " api/azureapi.js:21"
+        },
+        {
+            "message": "Missing item type\nazure blob storageへアップロードを行う。",
+            "line": " api/azurestorage.js:31"
+        },
+        {
+            "message": "Missing item type\nazure blob storageからダウンロードを行う",
+            "line": " api/azurestorage.js:87"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/bug.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/customer.js:4"
+        },
+        {
+            "message": "Missing item type\n顧客の情報を取得する",
+            "line": " api/customer.js:18"
+        },
+        {
+            "message": "Missing item type\n顧客の一覧を取得する",
+            "line": " api/customer.js:42"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/customer.js:65"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/customer.js:148"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/environment.js:3"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/environment.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/environment.js:7"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/query.js:7"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/query.js:9"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/query.js:12"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/role.js:4"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/role.js:6"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/role.js:8"
+        },
+        {
+            "message": "Missing item type\n顧客の情報を取得する",
+            "line": " api/role.js:22"
+        },
+        {
+            "message": "Missing item type\n顧客の一覧を取得する",
+            "line": " api/role.js:45"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/scenario.js:6"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/scenario.js:8"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/scenario.js:10"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/scenario.js:13"
+        },
+        {
+            "message": "Missing item type\nPKからデータを取得する",
+            "line": " api/scenario.js:32"
+        },
+        {
+            "message": "Missing item type\ndelete_flagのたっていないシナリオをすべて取得する\n並び順はPKの昇順",
+            "line": " api/scenario.js:56"
+        },
+        {
+            "message": "Missing item type\nアプローチ対象のシナリオを取得する\n並び順はpriorityとscenario_idの昇順",
+            "line": " api/scenario.js:140"
+        },
+        {
+            "message": "Missing item type\nアプローチ対象のシナリオを取得する\n並び順はpriorityとscenario_idの昇順",
+            "line": " api/scenario.js:168"
+        },
+        {
+            "message": "Missing item type\n実行予定のシナリオを取得する\n並び順はpriorityとscenario_idの昇順",
+            "line": " api/scenario.js:244"
+        },
+        {
+            "message": "Missing item type\n実行予定のシナリオをカレンダー表示用に整形した結果を取得する",
+            "line": " api/scenario.js:282"
+        },
+        {
+            "message": "Missing item type\nアプローチ対象のシナリオを無効にする",
+            "line": " api/scenario.js:522"
+        },
+        {
+            "message": "Missing item type\nアプローチ対象の無効なシナリオを有効にする",
+            "line": " api/scenario.js:550"
+        },
+        {
+            "message": "Missing item type\npriorityとstatusを更新する",
+            "line": " api/scenario.js:578"
+        },
+        {
+            "message": "Missing item type\nシナリオを保存する\nパラメータにPKが存在するか否かで登録するか更新するかを決定する",
+            "line": " api/scenario.js:633"
+        },
+        {
+            "message": "Missing item type\nシナリオを登録する",
+            "line": " api/scenario.js:691"
+        },
+        {
+            "message": "Missing item type\nパラメータのtagsにidのプロパティがなければそれは新規作成となり\nT_TAGに登録される。\nただし、同一名称のものが存在した場合は、登録しない。",
+            "line": " api/scenario.js:920"
+        },
+        {
+            "message": "Missing item type\nシナリオにタグを設定する",
+            "line": " api/scenario.js:937"
+        },
+        {
+            "message": "Missing item type\nシナリオを更新する",
+            "line": " api/scenario.js:952"
+        },
+        {
+            "message": "Missing item type\nPKに合致したレコードのdelete_flagを1にする",
+            "line": " api/scenario.js:1151"
+        },
+        {
+            "message": "Missing item type\nPKに合致したレコードを物理削除する",
+            "line": " api/scenario.js:1324"
+        },
+        {
+            "message": "Missing item type\nシナリオコントロール画面に表示する初期値を取得する\nリクエストにシナリオIDが存在する場合は該当情報も取得する",
+            "line": " api/scenario.js:1344"
+        },
+        {
+            "message": "Missing item type\n同一名称が存在するかをチェックする\nリクエスト値にシナリオIDが存在する場合は該当レコードの名称を除外してチェックする",
+            "line": " api/scenario.js:1479"
+        },
+        {
+            "message": "Missing item type\naction.jsonからパラメータのnameと合致する情報を取得する",
+            "line": " api/scenario.js:1519"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/scenariottag.js:4"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/scenariottag.js:7"
+        },
+        {
+            "message": "Missing item type\n本テーブルはアプリケーションから直接データ操作が行われる想定はない",
+            "line": " api/schedulescenario.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/schedulescenario.js:7"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/schedulescenario.js:9"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/schedulescenario.js:11"
+        },
+        {
+            "message": "Missing item type\nPKからデータを取得する",
+            "line": " api/schedulescenario.js:25"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/segment.js:8"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/segment.js:10"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/segment.js:12"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/segment.js:14"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/segment.js:134"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/tag.js:4"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/tag.js:7"
+        },
+        {
+            "message": "Missing item type\n本テーブルはアプリケーションから直接データ操作が行われる想定はない",
+            "line": " api/triggerscenario.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/triggerscenario.js:7"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/triggerscenario.js:9"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/triggerscenario.js:11"
+        },
+        {
+            "message": "Missing item type\nPKからデータを取得する",
+            "line": " api/triggerscenario.js:25"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/user.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/user.js:7"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/user.js:9"
+        },
+        {
+            "message": "Missing item type",
+            "line": " api/user.js:11"
+        },
+        {
+            "message": "Missing item type\n顧客の情報を取得する",
+            "line": " api/user.js:25"
+        },
+        {
+            "message": "Missing item type\n顧客の一覧を取得する",
+            "line": " api/user.js:51"
+        },
+        {
+            "message": "Missing item type\n全ユーザーを取得する",
+            "line": " api/user.js:74"
+        }
+    ]
+}

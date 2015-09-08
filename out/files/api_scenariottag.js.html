@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>api/scenariottag.js</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="" src="../assets/css/logo.png" style="max-height: 65%;" title="">
+            
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b></b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/api.log", "classes/collection.core"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/api.log.html">api.log</a></li>
+	                            <li><a href="../classes/collection.core.html">collection.core</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>api/scenariottag.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+var Core = require(&#x27;./core&#x27;);
+var Message = require(&#x27;../config/message.json&#x27;);
+
+/** テーブル名 */
+var tableName = &#x27;T_SCENARIO_TAG&#x27;;
+var pk = &#x27;scenario_tag_id&#x27;;
+/** SEQ */
+var seqName = &#x27;seq_scenario_tag&#x27;;
+
+var scenarioTag = function scenarioTag()
+{
+    Core.call(this, tableName, pk, seqName);
+};
+
+//coreModelを継承する
+var util = require(&#x27;util&#x27;);
+util.inherits(scenarioTag, Core);
+
+var model = new scenarioTag();
+
+exports.getByScenarioId = function(scenarioId, callback)
+{
+    var col = &quot;T2.tag_id, T2.tag_name&quot;;
+    var where = &quot;T2.delete_flag = 0 AND T1.delete_flag = 0 AND T1.scenario_id = @scenario_id&quot;;
+    var table = tableName + &quot; T1 INNER JOIN T_TAG T2 ON T1.tag_id = T2.tag_id&quot;;
+    var orderBy = &quot;T1.&quot; + pk;
+    
+    var qObj = model.getQueryObject(col, table, where, &#x27;&#x27;, orderBy);
+    qObj.request.input(&#x27;scenario_id&#x27;, model.db.SmallInt, scenarioId);
+
+    model.select(qObj, qObj.request, function(err, data)
+    {
+        callback(err, data);
+    });
+};
+
+exports.save = function(transaction, userId, scenarioId, tagList, mainCallback)
+{
+    console.log(&quot;scenario tag save start&quot;);
+    console.log(tagList);
+    var commonColumns = model.getInsCommonColumns(userId);
+
+    model.async.forEach(tagList, function(item, callback)
+    {
+        console.log(item);
+
+        if (item.hasOwnProperty(&#x27;tag_id&#x27;))
+        {
+            var insertData = model.merge(commonColumns, {tag_id: item.tag_id, scenario_id: scenarioId});
+            console.log(&quot;go insert scenario tag &quot;);
+            
+            var request = model.getRequest(transaction);
+            request.input(&#x27;delete_flag&#x27;, model.db.SmallInt, insertData.delete_flag);
+            request.input(&#x27;create_by&#x27;, model.db.Int, insertData.create_by);
+            request.input(&#x27;create_date&#x27;, model.db.NVarChar, insertData.create_date);
+            request.input(&#x27;update_by&#x27;, model.db.Int, insertData.update_by);
+            request.input(&#x27;update_date&#x27;, model.db.NVarChar, insertData.update_date);
+            request.input(&#x27;tag_id&#x27;, model.db.Int, insertData.tag_id);
+            request.input(&#x27;scenario_id&#x27;, model.db.Int, insertData.scenario_id);
+            
+            console.log(insertData);
+            model.insert(tableName, insertData, request, function(err, id)
+            {
+                var errInfo = (0 &lt; err.length) ? err: null;
+                callback(errInfo);
+            });
+        }
+        else
+        {
+            callback(null);
+        }
+    },
+    function(err)
+    {
+        console.log(&quot;last function for scenariotag.js&quot;);
+        console.log(err);
+        var errInfo = (void 0 === err) ? null : err;
+        mainCallback(errInfo, tagList);
+    });
+};
+
+exports.removeByScenarioId = function(transaction, scenarioId, callback)
+{
+    var request = &quot;&quot;;
+    if (null != transaction)
+    {
+        request = model.getRequest(transaction);
+    }
+    else
+    {
+        request = model.getRequest();
+    }
+    
+    request.input(&quot;scenario_id&quot;, model.db.Int, scenarioId);
+    var sql = &#x27;DELETE FROM &#x27; + tableName + &#x27; WHERE scenario_id = @scenario_id&#x27;;
+    model.execute(sql, request, function(err)
+    {
+        var errInfo = (0 &lt; err.length) ? err : null;
+        callback(errInfo);
+    });
+};
+
+exports.deleteInsert = function(params, callback)
+{
+    var save = this.save;
+    this.removeByScenarioId(params.transaction, params.scenarioId, function(err)
+    {
+        if (null === err)
+        {
+            if (void 0 !== params.tagList)
+            {
+                console.log(this.save);
+                
+                save(params.transaction, params.userId, params.scenarioId, params.tagList, function(err, tagList)
+                {
+                    callback(err);
+                });
+            }
+            else
+            {
+                callback(null);
+            }
+        }
+        else
+        {
+            callback(err);
+        }
+    });
+};
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

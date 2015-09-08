@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>api/query.js</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="" src="../assets/css/logo.png" style="max-height: 65%;" title="">
+            
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b></b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/api.log", "classes/collection.core"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/api.log.html">api.log</a></li>
+	                            <li><a href="../classes/collection.core.html">collection.core</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>api/query.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+var Core = require(&#x27;./core&#x27;);
+var Creator = require(&quot;../helper/createSql&quot;);
+var Message = require(&#x27;../config/message.json&#x27;);
+var QueryDoc = require(&quot;./querydoc&quot;);
+
+//特定のテーブル情報はもたない
+/** テーブル名 */
+var tableName = &#x27;&#x27;;
+/** pk */
+var pk = &#x27;&#x27;;
+
+/** 機能名 */
+var functionName = &#x27;クエリー管理&#x27;;
+
+var query = function query()
+{
+    Core.call(this, tableName, pk);
+};
+
+//coreModelを継承する
+var util = require(&#x27;util&#x27;);
+util.inherits(query, Core);
+
+var model = new query();
+
+exports.getAll = function(req, res)
+{
+    console.log(&#x27;query getAll start&#x27;);
+    QueryDoc.getAllItemForWeb(function(err, doc)
+    {
+        if (err)
+        {
+            console.log(&#x27;query get all error&#x27;);
+            console.log(err);
+        }
+        
+        if (null === doc || 0 === doc.length) 
+        {
+            res.json({data: []});
+        }
+
+        var segmentdoc = require(&quot;./segmentdoc&quot;);
+        model.async.forEach(doc, function(item, callback)
+        {
+            segmentdoc.countByQueryId(item.id, function(err, docs)
+            {
+                if (err)
+                {
+                    console.log(&#x27;query countByQueryId error&#x27;);
+                    console.log(err);
+                }
+                var num = (void 0 === docs)? 0 : docs.length;
+                item.isUse = (0 &lt; num);
+                item.useNum = num;
+                callback(err);
+            });
+        },
+        function (err) 
+        {
+            if (err)
+            {
+                console.log(&#x27;query get all error&#x27;);
+                console.log(err);
+            }
+
+            console.log(&#x27;query getAll end&#x27;);
+            res.json({data: doc});
+        });
+    });
+};
+
+exports.execute = function(req, res)
+{
+    var request = model.getRequest();
+    var creator = new Creator(&#x27;query&#x27;, req.body.conditionList, request);
+    var sql = creator.getCountSql(req.body.tables);
+    model.execute(sql, request, function(err, data)
+    {
+        if (err.length &gt; 0)
+        {
+            console.log(err);
+            res.status(510).send(&#x27;data not found&#x27;);
+        }
+        
+        model.insertLog(req.session.userId, 8, Message.QUERY.I_001);
+        res.json({result: data[0].count});
+    });
+};
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

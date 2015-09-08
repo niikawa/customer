@@ -436,5 +436,11 @@ core.prototype.insertLog = function(userId, controlType, appendString, replace, 
     });
     if (void 0 !== callback) callback();
 };
+
+core.prototype.appendUserInfoString = function(string ,req)
+{
+    return string + " userId = "+ req.session.userId + " : [" + req.session.userName + "]";
+};
+
 //モジュール化
 module.exports = core;

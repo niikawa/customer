@@ -29,6 +29,9 @@ var controlLog = {
             case 8: 
                 data = {show_flag: 1, detail: '[アプローチ管理]'};
                 break;
+            case 9: 
+                data = {show_flag: 1, detail: '[操作履歴]'};
+                break;
             case 99: 
                 data = {show_flag: 1, detail: '[バグ報告・要望追加]'};
                 break;
