@@ -1,4 +1,5 @@
 var Core = require('./core');
+var Validator = require("../helper/validator");
 var Message = require('../config/message.json');
 
 /** 
@@ -40,32 +41,31 @@ var FUNCTION_NAME = '操作履歴';
 var Log = function Log()
 {
     Core.call(this, TABLE_NAME, PK_NAME);
-    
-    var Validator = require("../helper/validator");
-    var validator = new Validator();
-    var parametersRulesMap = 
+    console.log("konstorakuta");
+    this.validator = new Validator();
+    this.parametersRulesMap = 
     {
         getDayAll :
         {
-            day: validator.isRequire
+            day: this.validator.isRequire
         },
         getDayAllByUserId : 
         {
-            id: validator.isRequire,
-            day: validator.isRequire
+            id: this.validator.isRequire,
+            day: this.validator.isRequire
         }
     };
-    
-    /**
-     * リクエストパラメータのチェックを行う
-     * 
-     * @method validation
-     */
-    function validation(key ,parameters)
-    {
-        var rules = parametersRulesMap[key];
-        validator.execute(rules, parameters);
-    }
+};
+
+/**
+ * リクエストパラメータのチェックを行う
+ * 
+ * @method validation
+ */
+Log.prototype.validation = function(key ,parameters)
+{
+    var rules = this.parametersRulesMap[key];
+    this.validator.execute(rules, parameters);
 };
 
 //coreModelを継承する
