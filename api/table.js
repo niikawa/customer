@@ -8,26 +8,6 @@ var table = function table()
 var util = require('util');
 util.inherits(table, Core);
 
-var model = new table();
-
-exports.getTables = function(req, res)
-{
-    model.getTablesList(function(err, data)
-    {
-        if (err)
-        {
-            res.status(510).send('テーブルデータの取得に失敗しました。');
-            return;
-        }
-        console.log(data);
-        res.json({table: data});
-    });
-};
-exports.getTablesListForWeb = function(callback)
-{
-    model.getTablesList(callback);
-};
-
 table.prototype.getTablesList = function(callback)
 {
     //表示対象のテーブル一覧を取得する
@@ -107,4 +87,25 @@ table.prototype.getTablesList = function(callback)
             callback(errInfo, tableInfo);
         });
     });
+};
+
+var model = new table();
+
+exports.getTables = function(req, res)
+{
+    model.getTablesList(function(err, data)
+    {
+        if (err)
+        {
+            console.log(err);
+            res.status(510).send('テーブルデータの取得に失敗しました。');
+            return;
+        }
+        console.log(data);
+        res.json({table: data});
+    });
+};
+exports.getTablesListForWeb = function(callback)
+{
+    model.getTablesList(callback);
 };
