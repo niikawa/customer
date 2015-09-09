@@ -19,7 +19,6 @@ var TABLE_NAME = '';
  * @final
  */
 var PK_NAME = '';
-
 /** 
  * SEQ名
  * @property SEQ_NAME
@@ -40,7 +39,7 @@ var FUNCTION_NAME = 'クエリー管理';
  * @type {Number}
  * @final
  */
-var FUNCTION_NUMBER = 8;
+var FUNCTION_NUMBER = 4;
 
 /** 
  * クエリー機能APIのクラス
@@ -53,11 +52,30 @@ var FUNCTION_NUMBER = 8;
 var Query = function Query()
 {
     Core.call(this, TABLE_NAME, PK_NAME);
+    this.validator = new Validator();
+    this.parametersRulesMap = 
+    {
+    }
+    
 };
 
 //coreModelを継承する
 var util = require('util');
 util.inherits(Query, Core);
+
+/**
+ * リクエストパラメータのチェックを行う
+ * 
+ * @method validation
+ * @param {string} key 実行対象メソッド名
+ * @param {Object} parameters チェック対象パラメータオブジェクト
+ * @return {bool} 
+ */
+Query.prototype.validation = function(key ,parameters)
+{
+    var rules = this.parametersRulesMap[key];
+    return this.validator.execute(rules, parameters);
+};
 
 var model = new Query();
 
@@ -68,17 +86,25 @@ var model = new Query();
  * @param {object} req リクエストオブジェクト
  * @param {object} res レスポンスオブジェクト
  * @return {json} data 操作履歴の取得結果<br>
- * 以下のプロパティを持つobjectをjsonとして返却する
+ * 以下のプロパティを持つobjectの配列をjsonとして返却する
+ * <ul>
+ * <li>{String} id : ドキュメントID</li>
+ * <li>{String} query_name: クエリー名</li>
+ * <li>{Object} tables: key->利用テーブル名 value->カラム情報のオブジェクト</li>
+ * <li>{Bool} isUse: セグメントで利用されているか</li>
+ * <li>{Number} useNum: 利用しているセグメント数</li>
+ * </ul>
  */
 exports.getAll = function(req, res)
 {
-    console.log('query getAll start');
     QueryDoc.getAllItemForWeb(function(err, doc)
     {
         if (err)
         {
-            console.log('query get all error');
+            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[query.getAll]"));
             console.log(err);
+            res.status(510).send(Message.QUERY.E_001);
+            return;
         }
         
         if (null === doc || 0 === doc.length) 
@@ -93,7 +119,8 @@ exports.getAll = function(req, res)
             {
                 if (err)
                 {
-                    console.log('query countByQueryId error');
+                    console.log(model.appendUserInfoString(
+                        Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[query.getAll -> setmentdoc.countByQueryId]"));
                     console.log(err);
                 }
                 var num = (void 0 === docs)? 0 : docs.length;
@@ -106,12 +133,10 @@ exports.getAll = function(req, res)
         {
             if (err)
             {
-                console.log('query get all error');
-                console.log(err);
+                res.status(510).send(Message.QUERY.E_001);
+                return;
             }
-
-            console.log('query getAll end');
-            console.log(doc);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_004);
             res.json({data: doc});
         });
     });
@@ -122,6 +147,9 @@ exports.getAll = function(req, res)
  * 
  * @method execute
  * @param {object} req リクエストオブジェクト
+ *  @param {object} req.body POSTされたパラメータを格納したオブジェクト
+ *   @param {Object} req.body.tables 利用テーブルとカラムを保持したオブジェクト
+ *   @param {Array} req.body.conditionList 条件句を生成するための条件を保持した配列
  * @param {object} res レスポンスオブジェクト
  * @return {json} result 実行結果の件数
  */
@@ -134,13 +162,40 @@ exports.execute = function(req, res)
     var sql = creator.getCountSql(req.body.tables);
     model.execute(sql, request, function(err, data)
     {
-        if (err.length > 0)
+        if (0 < err.length)
         {
+            console.log(model.appendUserInfoString(Message.QUERY.E_002, req).replace("$1", FUNCTION_NAME+"[query.execute]"));
             console.log(err);
-            res.status(510).send('data not found');
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.QUERY.E_002);
+            res.status(510).send(Message.QUERY.E_002);
+            return;
         }
         
-        model.insertLog(req.session.userId, 8, Message.QUERY.I_001);
+        model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.QUERY.I_001);
         res.json({result: data[0].count});
+    });
+};
+
+exports.addItem = function(req, res)
+{
+    if (!model.validation("addItem", req.body))
+    {
+        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[approach.save]"));
+        res.status(511).send(Message.COMMON.E_101);
+        return;
+    }
+    QueryDoc.addItem(req.body, function(err, isUpdate)
+    {
+        var message = "";
+        if (err)
+        {
+            message = isUpdate ? Message.COMMON.E_002 : Message.COMMON.E_001;
+            model.insertLog(req.session.userId, 8, message, req.body.query_name);
+            res.status(512).send(Message.COMMON.E_002, req.body.query_name);
+            return;
+        }
+        message = isUpdate ? Message.COMMON.I_002 : Message.COMMON.I_001;
+        model.insertLog(req.session.userId, 8, Message.COMMON.E_002, req.body.query_name);
+        res.status(200).send();
     });
 };

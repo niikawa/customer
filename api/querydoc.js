@@ -4,38 +4,83 @@ var Creator = require("../helper/createSql");
 var Core = require('./core');
 var core = new Core();
 var Message = require('../config/message.json');
-var functionName = 'クエリー管理';
+
+/** 
+ * コレクション名
+ * @property COLLECTION_NAME
+ * @type {string}
+ * @final
+ */
+var COLLECTION_NAME = 'query';
+/** 
+ * 機能名
+ * @property FUNCTION_NAME
+ * @type {string}
+ * @final
+ */
+var FUNCTION_NAME = 'クエリー管理';
+/** 
+ * 機能番号
+ * @property FUNCTION_NAME
+ * @type {Number}
+ * @final
+ */
+var FUNCTION_NUMBER = 4;
 
 var conf = require("../config/doc");
 var docconf = conf();
 var docDbClient = new DocumentDBClient(docconf.url, { masterKey: docconf.key });
 
-var Query = new query(docDbClient, 'ixcpm', 'query');
-Query.init();
+/** 
+ * クエリーDocument機能APIのクラス
+ * 
+ * @namespace api
+ * @class QueryDOc
+ * @constructor
+ */
+var QueryDoc = new query(docDbClient, docconf.docDbName, COLLECTION_NAME);
+QueryDoc.init();
 
+/**
+ * IDに合致したQueryコレクションの情報と読み込み可能テーブル情報を取得する
+ * 
+ * @method getByIdForInit
+ * @param {object} req リクエストオブジェクト
+ *  @param {object} req.params GETされたパラメータを格納したオブジェクト
+ *   @param {Number} req.body.id クエリーコレクションのID
+ * @param {object} res レスポンスオブジェクト
+ * @return {json}
+ * 以下のプロパティを持つobjectをjsonとして返却する
+ * <ul>
+ * <li>{Objject} tables : 利用可能テーブル情報 {{#crossLink "table"}}{{/crossLink}}</li>
+ * <li>{Objject} data: コレクション情報 {{#crossLink "collection.query:getItem"}}{{/crossLink}}</li>
+ * </ul>
+ */
 exports.getByIdForInit = function(req, res)
 {
     console.log('query doc getByIdForInit start');
-    Query.getItem(req.params.id, function(err, doc)
+    QueryDoc.getItem(req.params.id, function(err, doc)
     {
         if (err)
         {
-            console.log('query doc getByIdForInit error');
+            console.log(core.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[querydoc.getByIdForInit]"));
             console.log(err);
-            res.status(511).send('クエリー情報の取得に失敗しました');
-            core.insertLog(req.session.userId, 8, Message.COMMON.E_004, functionName);
+            core.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, "クエリー情報");
+            res.status(512).send(Message.COMMON.E_102.replace("$1", "クエリー情報"));
+            return;
         }
 
-        core.insertLog(req.session.userId, 8, Message.COMMON.I_004, doc.query_name);
+        core.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_004, doc.query_name);
         
         var table = require('./table');
         table.getTablesListForWeb(function(err, tables)
         {
             if (0 < err.length)
             {
-                console.log('get tableList faild');
+                console.log(core.appendUserInfoString(
+                    Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[querydoc.getByIdForInit -> table.getTablesListForWeb]"));
                 console.log(err);
-                res.status(511).send('クエリー情報の取得に失敗しました');
+                res.status(511).send(Message.COMMON.E_102.replace("$1", "クエリー情報"));
                 return;
             }
             res.json({table: tables, data: doc});
@@ -43,31 +88,58 @@ exports.getByIdForInit = function(req, res)
     });
 };
 
-
+/**
+ * IDに合致したQueryコレクションの情報を取得する
+ * 
+ * @method getItem
+ * @param {object} req リクエストオブジェクト
+ *  @param {object} req.params GETされたパラメータを格納したオブジェクト
+ *   @param {Number} req.body.id クエリーコレクションのID
+ * @param {object} res レスポンスオブジェクト
+ * @return {json}
+ * 以下のプロパティを持つobjectをjsonとして返却する
+ * <ul>
+ * <li>{Objject} data: コレクション情報 {{#crossLink "collection.query:getItem"}}{{/crossLink}}</li>
+ * </ul>
+ */
 exports.getItem = function(req, res)
 {
-    Query.getItem(req.params.id, function(err, doc)
+    QueryDoc.getItem(req.params.id, function(err, doc)
     {
         if (err)
         {
-            res.status(511).send('access ng');
-            
+            console.log(core.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[querydoc.getItem]"));
+            console.log(err);
+            core.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, "クエリー情報");
+            res.status(511).send(Message.COMMON.E_102.replace("$1", "クエリー情報"));
+            return;
         }
-        else
-        {
-            res.json({data: doc});
-        }
+        res.json({data: doc});
     });
 };
 
+/**
+ * Queryコレクションの情報を取得する
+ * 
+ * @method getAllItem
+ * @param {object} req リクエストオブジェクト
+ * @param {object} res レスポンスオブジェクト
+ * @return {json}
+ * 以下のプロパティを持つobjectの配列をjsonとして返却する
+ * <ul>
+ * <li>{String} id: aueryコレクションID</li>
+ * <li>{String} query_name: クエリー名</li>
+ * <li>{Object} tables: 利用テーブル情報</li>
+ * </ul>
+ */
 exports.getAllItem = function(req, res)
 {
     var query = 'SELECT doc.id ,doc.query_name, doc.tables FROM doc';
-    Query.find(query, function(err, doc)
+    QueryDoc.find(query, function(err, doc)
     {
         if (err)
         {
-            core.insertLog(req.session.userId, 8, Message.COMMON.E_004, functionName);
+            core.insertLog(req.session.userId, 8, Message.COMMON.E_004, FUNCTION_NAME);
             res.status(511).send('access ng');
         }
         else
@@ -77,88 +149,88 @@ exports.getAllItem = function(req, res)
     });
 };
 
+/**
+ * Queryコレクションの情報を取得する
+ * 
+ * @method getAllItemForWeb
+ * @param {Function} callback コールバック
+ * @return {json}
+ * 以下のプロパティを持つobjectの配列をjsonとして返却する
+ * <ul>
+ * <li>{String} id: aueryコレクションID</li>
+ * <li>{String} query_name: クエリー名</li>
+ * <li>{Object} tables: 利用テーブル情報</li>
+ * </ul>
+ * @example 
+ * querydoc.getAllItemForWeb(function(err, data)<br>
+ * { <br>
+ *     //err is array<br>
+ *     if (0 < err.length )<br>
+ *     {<br> 
+ *         //error時の処理<br>
+ *     }<br>
+ *     //data[0]で取得データにアクセスできる<br>
+ * });<br>
+ * 
+ */
 exports.getAllItemForWeb = function(callback)
 {
     var query = 'SELECT doc.id ,doc.query_name, doc.tables FROM doc';
-    Query.find(query, callback);
+    QueryDoc.find(query, callback);
 };
 
-exports.addItem = function(req, res)
+/**
+ * Queryコレクションの情報を登録/更新する
+ * 
+ * @method addItem
+ * @param {Object} data 登録/更新用データオブジェクト
+ * @param {Function} callback コールバック
+ * @return {json}
+ * 以下のプロパティを持つobjectの配列をjsonとして返却する
+ * <ul>
+ * <li>{String} id: aueryコレクションID</li>
+ * <li>{String} query_name: クエリー名</li>
+ * <li>{Object} tables: 利用テーブル情報</li>
+ * </ul>
+ */
+exports.addItem = function(data, callback)
 {
-    if (!req.session.isLogin) {
-        
-        res.status(511).send('authentication faild');
-    }
-    
-    if (void 0 === req.body)
-    {
-        res.status(511).send('parameters not found');
-    }
-
-    var creator = new Creator('query', req.body.conditionList);
-    var sql = creator.getConstionString(req.body.tables);
+    var creator = new Creator('query', data.conditionList);
+    var sql = creator.getConstionString(data.tables);
     var values = creator.getValueList();
     var colTypes = creator.getColTypeList();
     
     var parameters =
     {
-        query_name: req.body.query_name,
-        tables: req.body.tables,
-        whereList: req.body.whereList,
+        query_name: data.query_name,
+        tables: data.tables,
+        whereList: data.whereList,
         sql: sql,
         bindInfo: values,
         columnTypeList: colTypes
     };
-    var isUpdate = (req.body.hasOwnProperty('query_document_id'));
+    var isUpdate = (data.hasOwnProperty('query_document_id'));
     if (isUpdate)
     {
-        parameters.id = req.body.query_document_id;
+        parameters.id = data.query_document_id;
         
-        Query.updateItem(parameters, function(err, doc)
+        QueryDoc.updateItem(parameters, function(err, doc)
         {
-            if (err)
-            {
-                core.insertLog(req.session.userId, 8, Message.COMMON.E_002, parameters.query_name);
-                res.status(511).send('access ng');
-                
-            } else
-            {
-                core.insertLog(req.session.userId, 8, Message.COMMON.I_002, parameters.query_name);
-                res.status(200).send('create query succsess');
-            }
+            callback(err, isUpdate);
         });
     }
     else
     {
-        Query.addItem(parameters, function(err, doc)
+        QueryDoc.addItem(parameters, function(err, doc)
         {
-            if (err)
-            {
-                core.insertLog(req.session.userId, 8, Message.COMMON.E_001, parameters.query_name);
-                res.status(511).send('access ng');
-                
-            } else
-            {
-                core.insertLog(req.session.userId, 8, Message.COMMON.I_001, parameters.query_name);
-                res.status(200).send('create query succsess');
-            }
+            callback(err, isUpdate);
         });
     }
 };
 
 exports.removeItem = function(req, res)
 {
-    if (!req.session.isLogin) {
-        
-        res.status(511).send('authentication faild');
-    }
-    
-    if (void 0 === req.params)
-    {
-        res.status(511).send('parameters not found');
-    }
-
-    Query.removeItem(req.params.id, function(err, doc)
+    QueryDoc.removeItem(req.params.id, function(err, doc)
     {
         if (err)
         {
@@ -176,7 +248,7 @@ exports.removeItem = function(req, res)
 
 exports.getItemByIdForWeb = function(id, callback)
 {
-    Query.getItem(id, function(err, doc)
+    QueryDoc.getItem(id, function(err, doc)
     {
         callback(err,doc);
     });
@@ -184,7 +256,7 @@ exports.getItemByIdForWeb = function(id, callback)
 
 exports.getItemByIdsForWeb = function(idList, columnList, callback)
 {
-    Query.getItemByIds(idList, columnList, function(err, doc)
+    QueryDoc.getItemByIds(idList, columnList, function(err, doc)
     {
         callback(err,doc);
     });

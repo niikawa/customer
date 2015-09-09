@@ -46,15 +46,16 @@ var model = new Environment();
  * 
  * @method get
  * @param {Function} callback コールバック
- * @example emv.get(function(err, data)
- * @example { 
- * @example     //err is array
- * @example     if (0 < err.length )
- * @example     { 
- * @example        //error時の処理
- * @example     }
- * @example     //data[0]で取得データにアクセスできる
- * @example });
+ * @example 
+ * emv.get(function(err, data)<br>
+ * { <br>
+ *     //err is array<br>
+ *     if (0 < err.length )<br>
+ *     {<br> 
+ *         //error時の処理<br>
+ *     }<br>
+ *     //data[0]で取得データにアクセスできる<br>
+ * });<br>
  */
 exports.get = function(callback)
 {
