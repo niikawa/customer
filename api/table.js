@@ -12,7 +12,7 @@ var model = new table();
 
 exports.getTables = function(req, res)
 {
-    this.getTablesList(function(err, data)
+    model.getTablesList(function(err, data)
     {
         if (err)
         {
@@ -25,10 +25,10 @@ exports.getTables = function(req, res)
 };
 exports.getTablesListForWeb = function(callback)
 {
-    this.getTablesList(callback);
+    model.getTablesList(callback);
 };
 
-exports.getTablesList = function(callback)
+table.prototype.getTablesList = function(callback)
 {
     //表示対象のテーブル一覧を取得する
     var tableSql = "SELECT t.name table_name, cast(ep.value as nvarchar) comment " +

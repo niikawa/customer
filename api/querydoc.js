@@ -254,6 +254,14 @@ exports.removeById = function(id, callback)
     });
 };
 
+/**
+ * IDに合致したQueryコレクションの情報と読み込み可能テーブル情報を取得する
+ * callbackへはerr情報と対象のコレクションをセットして実行する
+ * 
+ * @method getItemByIdForWeb
+ * @param {String} id queryコレクションID
+ * @param {Function} callback コールバック
+ */
 exports.getItemByIdForWeb = function(id, callback)
 {
     QueryDoc.getItem(id, function(err, doc)
@@ -262,6 +270,15 @@ exports.getItemByIdForWeb = function(id, callback)
     });
 };
 
+/**
+ * IDに合致したQueryコレクションの情報と読み込み可能テーブル情報を取得する
+ * callbackへはerr情報と取得結果のコレクションをセットして実行する
+ * 
+ * @method getItemByIdsForWeb
+ * @param {Array} idList queryコレクションID
+ * @param {Array} columnList 取得対象カラム
+ * @param {Function} callback コールバック
+ */
 exports.getItemByIdsForWeb = function(idList, columnList, callback)
 {
     QueryDoc.getItemByIds(idList, columnList, function(err, doc)
