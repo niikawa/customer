@@ -1,14 +1,30 @@
 var Core = require('./core');
 
-var table = function table()
+/** 
+ * クエリー機能APIのクラス
+ * 
+ * @namespace api
+ * @class Table
+ * @constructor
+ * @extends api.core
+ */
+var Table = function Table()
 {
     Core.call(this, '', '', '');
 };
 
 var util = require('util');
-util.inherits(table, Core);
+util.inherits(Table, Core);
 
-table.prototype.getTablesList = function(callback)
+/**
+ * 参照可能なテーブル情報とカラム情報を取得する
+ * 
+ * @method getTablesList
+ * @param {Function} callback コールバック
+ * @return
+ * 
+ */
+Table.prototype.getTablesList = function(callback)
 {
     //表示対象のテーブル一覧を取得する
     var tableSql = "SELECT t.name table_name, cast(ep.value as nvarchar) comment " +
@@ -89,13 +105,22 @@ table.prototype.getTablesList = function(callback)
     });
 };
 
-var model = new table();
+var model = new Table();
 
+/**
+ * 参照可能なテーブル情報とカラム情報を取得する
+ * 
+ * @method getTables
+ * @param {object} req リクエストオブジェクト
+ * @param {object} res レスポンスオブジェクト
+ * @return 
+ * <li>{Objject} tables : 利用可能テーブル情報 {{#crossLink "Table:getTablesList"}}{{/crossLink}}</li>
+ */
 exports.getTables = function(req, res)
 {
     model.getTablesList(function(err, data)
     {
-        if (err)
+        if (0 < err.length)
         {
             console.log(err);
             res.status(510).send('テーブルデータの取得に失敗しました。');
@@ -105,6 +130,14 @@ exports.getTables = function(req, res)
         res.json({table: data});
     });
 };
+/**
+ * 参照可能なテーブル情報とカラム情報を取得する
+ * 
+ * @method getTables
+ * @param {Function} callback コールバック
+ * @return 
+ * <li>{Objject} tables : 利用可能テーブル情報 {{#crossLink "Table:getTablesList"}}{{/crossLink}}</li>
+ */
 exports.getTablesListForWeb = function(callback)
 {
     model.getTablesList(callback);
