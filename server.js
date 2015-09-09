@@ -70,11 +70,11 @@ var query = require('./api/query');
 router.get('/query/list', query.getAll);
 router.post('/query/execute', query.execute);
 router.post('/query/create', query.save);
+router.delete('/query/:id', query.remove);
 
 var querydoc = require('./api/querydoc');
 router.get('/query/get', querydoc.getAllItem);
 router.get('/query/control/:id', querydoc.getByIdForInit);
-router.delete('/query/:id', querydoc.removeItem);
 
 var segmentdoc = require("./api/segmentdoc");
 router.post('/segment/savedoc', segmentdoc.saveItem);

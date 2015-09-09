@@ -85,6 +85,15 @@ var Query = function Query()
                     func: this.validator.isRequire
                 }
             ]
+        },
+        remove:
+        {
+            id:
+            [
+                {
+                    func: this.validator.isRequire
+                }
+            ],
         }
     };
 };
@@ -214,6 +223,7 @@ exports.execute = function(req, res)
  *  @param {object} req.body POSTされたパラメータを格納したオブジェクト
  *   @param {Object} req.body.tables 利用テーブルとカラムを保持したオブジェクト
  *   @param {Array} req.body.conditionList 条件句を生成するための条件を保持した配列
+ *   @param {String} req.body.
  * @param {object} res レスポンスオブジェクト
  * @return {json} result 実行結果の件数
  */
@@ -221,11 +231,11 @@ exports.save = function(req, res)
 {
     if (!model.validation("save", req.body))
     {
-        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[approach.save]"));
+        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[query.save]"));
         res.status(511).send(Message.COMMON.E_101);
         return;
     }
-    QueryDoc.addItem(req.body, function(err, isUpdate)
+    QueryDoc.save(req.body, function(err, isUpdate)
     {
         var message = "";
         if (err)
@@ -238,5 +248,42 @@ exports.save = function(req, res)
         message = isUpdate ? Message.COMMON.I_002 : Message.COMMON.I_001;
         model.insertLog(req.session.userId, 8, Message.COMMON.E_002, req.body.query_name);
         res.status(200).send();
+    });
+};
+
+/**
+ * クエリーの削除を行う
+ * 
+ * @method remove
+ * @param {Object} req リクエストオブジェクト
+ *  @param {Object} req.params GETされたパラメータを格納したオブジェクト
+ *   @param {String} req.params.id queryコレクションID
+ * @param {Object} res レスポンスオブジェクト
+ * @return 
+ *     <ul>
+ *     <li>正常終了の場合:ステータスコード200</li>
+ *     <li>パラメータ異常:ステータスコード511</li>
+ *     <li>クエリー実行異常終了の場合:ステータスコード512</li>
+ *     </ul>
+ */
+exports.remove = function(req, res)
+{
+    if (!model.validation("remove", req.params))
+    {
+        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[query.remove]"));
+        res.status(511).send(Message.COMMON.E_101);
+        return;
+    }
+    QueryDoc.removeById(req.params.id, function(err, docs)
+    {
+        if (err)
+        {
+            console.log(model.appendUserInfoString(Message.COMMON.E_002, req).replace("$1", FUNCTION_NAME+"[query.remove]"+docs.query_name));
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_003, docs.query_name);
+            res.status(512).send(Message.COMMON.E_003.replace("$1", docs.query_name));
+            return;
+        }
+        model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_003, docs.query_name);
+        res.status(200).send(Message.COMMON.I_003.replace("$1", docs.query_name));
     });
 };

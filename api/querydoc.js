@@ -182,7 +182,7 @@ exports.getAllItemForWeb = function(callback)
 /**
  * Queryコレクションの情報を登録/更新する
  * 
- * @method addItem
+ * @method save
  * @param {Object} data 登録/更新用データオブジェクト
  * @param {Function} callback コールバック
  * @return {json}
@@ -193,7 +193,7 @@ exports.getAllItemForWeb = function(callback)
  * <li>{Object} tables: 利用テーブル情報</li>
  * </ul>
  */
-exports.addItem = function(data, callback)
+exports.save = function(data, callback)
 {
     var creator = new Creator('query', data.conditionList);
     var sql = creator.getConstionString(data.tables);
@@ -228,20 +228,28 @@ exports.addItem = function(data, callback)
     }
 };
 
-exports.removeItem = function(req, res)
+/**
+ * Queryコレクションの情報を削除する。<br>
+ * callbackへはerr情報と削除対象のコレクションをセットして実行する
+ * 
+ * @method removeById
+ * @param {String} id queryコレクションID
+ * @param {Function} callback コールバック
+ */
+exports.removeById = function(id, callback)
 {
-    QueryDoc.removeItem(req.params.id, function(err, doc)
+    QueryDoc.getItem(id, function(err, doc)
     {
         if (err)
         {
-            core.insertLog(req.session.userId, 8, Message.COMMON.I_001, 'クエリー');
-            res.status(511).send('access ng');
-            
+            callback(err);
         }
         else
         {
-            core.insertLog(req.session.userId, 8, Message.COMMON.I_001, 'クエリー');
-            res.json({data: doc});
+            QueryDoc.removeItem(id, function(err)
+            {
+                callback(err, doc);
+            });
         }
     });
 };
