@@ -61,7 +61,7 @@ Validator.prototype.execute = function(rulesMap, parameters)
  * 必須チェック
  * 
  * @method isRequire
- * @param {string | Number | bool} val 値
+ * @param {mixed} val 値
  * @return {bool} 
  */
 Validator.prototype.isRequire = function(val)
@@ -80,6 +80,23 @@ Validator.prototype.isRequire = function(val)
     {
         return void 0 !== val;
     }
+};
+
+/**
+ * 指定の値が存在している場合は必須チェックをする
+ * 
+ * @method isRequire
+ * @param {mixed} val 値
+ * @return {bool} 
+ */
+Validator.prototype.isRequireIfExistsProp = function(val)
+{
+    console.log("isRequireIfExistsProp:" + val);
+    if (void 0 === val)
+    {
+        return true;
+    }
+    return this.isRequire(val);
 };
 
 /**
@@ -121,5 +138,61 @@ Validator.prototype.isValidDate = function(val)
 Validator.prototype.isNotMaxOrver = function(val, condition)
 {
     console.log("isMaxOrver:" + val);
-    return parseInt(val, 10) < condition.max;
+    var type = typeof(val);
+    if ("string" === type)
+    {
+        return 0 < val.replace(/^[\s　]+|[\s　]+$/g, "").length;
+    }
+    else if ("number" === type)
+    {
+        return val < condition.max;
+    }
+    else
+    {
+        return false;
+    }
+};
+
+/**
+ * プロパティ数をチェックする
+ * 
+ * @method isMatchPropNum
+ * @param {Object} val 値
+ * @param {object} condition 条件を格納したオブジェクト
+ *  @param {object} condition.num プロパティ数
+ * @return {bool} 
+ */
+Validator.prototype.isMatchPropNum = function(val, condition)
+{
+    console.log("isMatchPropNum:" + val);
+    if ("object" === typeof(val))
+    {
+        return Object.keys(val).length === condition.num;
+    }
+    else
+    {
+        return false;
+    }
+};
+
+/**
+ * プロパティ名をチェックする
+ * TODO
+ * @method isMatchPropList
+ * @param {Array} propList 値
+ * @param {object} condition 条件を格納したオブジェクト
+ *  @param {object} condition.num プロパティ数
+ * @return {bool} 
+ */
+Validator.prototype.isMatchPropList = function(val, condition)
+{
+    console.log("isMatchPropList:" + val);
+    if ("object" === typeof(val))
+    {
+        return Object.keys(val).length === condition.num;
+    }
+    else
+    {
+        return false;
+    }
 };

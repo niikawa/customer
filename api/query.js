@@ -55,8 +55,38 @@ var Query = function Query()
     this.validator = new Validator();
     this.parametersRulesMap = 
     {
-    }
-    
+        save: 
+        {
+            query_name:
+            [
+                {
+                    func: this.validator.isRequire
+                },
+                {
+                    func: this.validator.isNotMaxOrver,
+                    condition: {max: 50}
+                }
+            ],
+            query_document_id:
+            [
+                {
+                    func: this.validator.isRequireIfExistsProp
+                }
+            ],
+            conditionList:
+            [
+                {
+                    func: this.validator.isRequire
+                }
+            ],
+            tables:
+            [
+                {
+                    func: this.validator.isRequire
+                }
+            ],
+        }
+    };
 };
 
 //coreModelを継承する
@@ -176,9 +206,20 @@ exports.execute = function(req, res)
     });
 };
 
-exports.addItem = function(req, res)
+/**
+ * クエリーの登録/更新を行う
+ * 
+ * @method save
+ * @param {object} req リクエストオブジェクト
+ *  @param {object} req.body POSTされたパラメータを格納したオブジェクト
+ *   @param {Object} req.body.tables 利用テーブルとカラムを保持したオブジェクト
+ *   @param {Array} req.body.conditionList 条件句を生成するための条件を保持した配列
+ * @param {object} res レスポンスオブジェクト
+ * @return {json} result 実行結果の件数
+ */
+exports.save = function(req, res)
 {
-    if (!model.validation("addItem", req.body))
+    if (!model.validation("save", req.body))
     {
         console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[approach.save]"));
         res.status(511).send(Message.COMMON.E_101);
