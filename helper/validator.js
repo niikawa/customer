@@ -1,5 +1,22 @@
 var moment = require('moment');
 
+var isRequireProcess = function(val)
+{
+    var type = typeof(val);
+    if ("string" === type)
+    {
+        return void 0 !== val && 0 < val.replace(/^[\s　]+|[\s　]+$/g, "").length;
+    }
+    else if ("number" === type)
+    {
+        return isFinite(val);
+    }
+    else
+    {
+        return void 0 !== val;
+    }
+};
+
 /** 
  * バリデーションのヘルパークラス
  * 
@@ -9,22 +26,6 @@ var moment = require('moment');
  */
 var Validator = function Validator()
 {
-    var require = function(val)
-    {
-        var type = typeof(val);
-        if ("string" === type)
-        {
-            return void 0 !== val && 0 < val.replace(/^[\s　]+|[\s　]+$/g, "").length;
-        }
-        else if ("number" === type)
-        {
-            return isFinite(val);
-        }
-        else
-        {
-            return void 0 !== val;
-        }
-    }
 };
 module.exports = Validator;
 
@@ -83,19 +84,7 @@ Validator.prototype.execute = function(rulesMap, parameters)
 Validator.prototype.isRequire = function(val)
 {
     console.log("isRequire:" + val);
-    var type = typeof(val);
-    if ("string" === type)
-    {
-        return void 0 !== val && 0 < val.replace(/^[\s　]+|[\s　]+$/g, "").length;
-    }
-    else if ("number" === type)
-    {
-        return isFinite(val);
-    }
-    else
-    {
-        return void 0 !== val;
-    }
+    return isRequireProcess(val);
 };
 
 /**
@@ -112,7 +101,7 @@ Validator.prototype.isRequireIfExistsProp = function(val)
     {
         return true;
     }
-    return this.require(val);
+    return isRequireProcess(val);
 };
 
 /**
