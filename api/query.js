@@ -84,7 +84,7 @@ var Query = function Query()
                 {
                     func: this.validator.isRequire
                 }
-            ],
+            ]
         }
     };
 };

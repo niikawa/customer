@@ -69,7 +69,7 @@ router.get('/query', table.getTables);
 var query = require('./api/query');
 router.get('/query/list', query.getAll);
 router.post('/query/execute', query.execute);
-router.post('/query/create', query.addItem);
+router.post('/query/create', query.save);
 
 var querydoc = require('./api/querydoc');
 router.get('/query/get', querydoc.getAllItem);
