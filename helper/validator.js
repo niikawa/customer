@@ -9,6 +9,22 @@ var moment = require('moment');
  */
 var Validator = function Validator()
 {
+    var require = function(val)
+    {
+        var type = typeof(val);
+        if ("string" === type)
+        {
+            return void 0 !== val && 0 < val.replace(/^[\s　]+|[\s　]+$/g, "").length;
+        }
+        else if ("number" === type)
+        {
+            return isFinite(val);
+        }
+        else
+        {
+            return void 0 !== val;
+        }
+    }
 };
 module.exports = Validator;
 
@@ -96,7 +112,7 @@ Validator.prototype.isRequireIfExistsProp = function(val)
     {
         return true;
     }
-    return this.isRequire(val);
+    return this.require(val);
 };
 
 /**
