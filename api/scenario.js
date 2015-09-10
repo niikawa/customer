@@ -71,6 +71,7 @@ var Scenario = function Scenario()
         weekdaysShort: ["日","月","火","水","木","金","土"],
         weekdaysMin:["sun", "mon", "tue", "wed", "thu", "fri", "sat"],
     });
+    this.validator = new Validator();
     var scenarioObjectRules =
     {
         approach: 
@@ -110,8 +111,6 @@ var Scenario = function Scenario()
             {func: this.validator.isMatchValueList, condition:[0, 1]},
         ],
     };
-    
-    this.validator = new Validator();
     this.parametersRulesMap = 
     {
         getById:
