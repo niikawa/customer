@@ -1,6 +1,6 @@
 var crypto = require('crypto');
 var Core = require('./core');
-
+var logger = require("../helper/logger");
 /** 
  * テーブル名
  * @property TABLE_NAME
@@ -117,6 +117,7 @@ exports.login = function(req, res)
             req.session.roleId = data[0].role_id;
             res.json({data: data});
         }
+        logger.error("ろぐいんしました", req);
     });
 };
 
