@@ -530,9 +530,10 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
 
                 for (var index = 0; index < dataNum; index++)
                 {
-                    //var target = data[index];
+                    console.log(calendar);
                     pushCalendarItem(calendar, data[index], docsObject);
-                    
+                    console.log("--------------------------------");
+                    console.log(calendar);
                 }
                 callback(null);
             }
