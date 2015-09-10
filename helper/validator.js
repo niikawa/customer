@@ -194,7 +194,34 @@ Validator.prototype.isMatchPropList = function(val, condition)
     console.log("isMatchPropList:" + val);
     if ("object" === typeof(val))
     {
-        return Object.keys(val).length === condition.num;
+        Object.keys(condition).forEach(function(key)
+        {
+            if (!val.hasOwnProperty(key))
+            {
+                return false;
+            }
+            else
+            {
+                var paramNum = Object.keys(condition[key]).length;
+                if (0 === paramNum)
+                {
+                    //チェックメソッドがなければtrue
+                    return true;
+                }
+                
+                for (var index = 0; index < paramNum; index++)
+                {
+                    var conditionParam = null;
+                    if (condition[key][index].hasOwnProperty("condition"))
+                    {
+                        conditionParam = condition[key][index].condition;
+                    }
+                    var result = condition[key][index].func(val[key], conditionParam);
+                    if (!result) return false;
+                }
+            }
+        });
+        return true;
     }
     else
     {

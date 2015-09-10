@@ -71,6 +71,45 @@ var Scenario = function Scenario()
         weekdaysShort: ["日","月","火","水","木","金","土"],
         weekdaysMin:["sun", "mon", "tue", "wed", "thu", "fri", "sat"],
     });
+    var scenarioObjectRules =
+    {
+        approach: 
+        [
+            {func: this.validator.isRequire},
+            {func: this.validator.isNumber},
+            {func: this.validator.isMatchValueList, condition:[0, 1]}
+        ],
+        if_layout_id: 
+        [
+            {func: this.validator.isRequire},
+        ],
+        output_name: 
+        [
+            {func: this.validator.isRequire},
+            {func: this.validator.isMaxOrver, condition: {max: 100}},
+        ],
+        scenario_name: 
+        [
+            {func: this.validator.isRequire},
+            {func: this.validator.isMaxOrver, condition: {max: 100}},
+        ],
+        scenario_type: 
+        [
+            {func: this.validator.isRequire},
+            {func: this.validator.isNumber},
+            {func: this.validator.isMatchValueList, condition:[1, 2]},
+        ],
+        segment_id: 
+        [
+            {func: this.validator.isRequireIfExistsProp}
+        ],
+        status:
+        [
+            {func: this.validator.isRequire},
+            {func: this.validator.isNumber},
+            {func: this.validator.isMatchValueList, condition:[0, 1]},
+        ],
+    };
     
     this.validator = new Validator();
     this.parametersRulesMap = 
@@ -79,31 +118,30 @@ var Scenario = function Scenario()
         {
             id:
             [
-                {
-                    func: this.validator.isRequire
-                },
-                {
-                    func: this.validator.isNumber
-                },
-                {
-                    func: this.validator.isNotMaxOrver,
-                    condition: 9223372036854775807
-                }
+                {func: this.validator.isRequire},
+                {func: this.validator.isNumber},
+                {func: this.validator.isNotMaxOrver, condition: {max:9223372036854775807}}
             ],
         },
         getAll:
         {
             type:
             [
-                {
-                    func: this.validator.isRequire
-                },
-                {
-                    func: this.validator.isMatchValueList,
-                    condition: ["trigger", "schedule"]
-                }
+                {func: this.validator.isRequire},
+                {func: this.validator.isMatchValueList, condition: ["trigger", "schedule"]}
             ]
-            
+        },
+        save:
+        {
+            scenario:
+            [
+                {func: this.validator.isRequire},
+                {func: this.validator.isMatchPropList, condition: scenarioObjectRules}
+            ],
+            scenario_id:
+            [
+                {func: this.validator.isRequireIfExistsProp}
+            ]
         }
     };
     
@@ -422,8 +460,10 @@ exports.getExecutePlanScenario = function(req, res)
 /**
  * 実行予定のシナリオをカレンダー表示用に整形した結果を取得する
  * 
- * @param {Object} req 画面からのリクエスト
- * @param {Object} res 画面へのレスポンス
+ * @method getExecutePlanScenarioToCalendar
+ * @param {Object} req リクエストオブジェクト
+ * @param {Object} res レスポンスオブジェクト
+ * @return
  */
 exports.getExecutePlanScenarioToCalendar = function(req, res)
 {
@@ -530,10 +570,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
 
                 for (var index = 0; index < dataNum; index++)
                 {
-                    console.log(calendar);
                     pushCalendarItem(calendar, data[index], docsObject);
-                    console.log("--------------------------------");
-                    console.log(calendar);
                 }
                 callback(null);
             }
@@ -558,7 +595,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
         });
     });
 };
-
+//ドキュメントDBのデータをアクセスしやすいように整形する
 function createDocsObject(docs)
 {
     var docObject = {};
@@ -571,7 +608,7 @@ function createDocsObject(docs)
     
     return docObject;
 }
-
+//日付毎にシナリオを追加する
 function pushCalendarItem(calendar, target, docsObject)
 {
     Object.keys(calendar).forEach(function(key)
@@ -633,7 +670,7 @@ function pushCalendarItem(calendar, target, docsObject)
         }
     });
 }
-
+//画面表示しやすいようにカレンダーを作成する
 function createCalendar(calendar)
 {
     var calendarOfMonth = [];
@@ -665,6 +702,7 @@ function createCalendar(calendar)
 /**
  * アプローチ対象のシナリオを無効にする
  * 
+ * @method bulkInvalid
  * @param {Object} req 画面からのリクエスト
  * @param {Object} res 画面へのレスポンス
  */
@@ -681,11 +719,13 @@ exports.bulkInvalid = function(req, res)
     {
         if (err.length > 0)
         {
-            console.log('execute plan scenario bulk invalid faild');
+            console.log(model.appendUserInfoString(Message.SCENARIO.E_003, req)+ " " +FUNCTION_NAME+"[scenario.bulkInvalid]");
             console.log(err);
-            return res.status(510).send('無効化に失敗しました。');
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_003, FUNCTION_NAME);
+            res.status(511).send(Message.SCENARIO.E_003);
+            return;
         }
-        model.insertLog(req.session.userId, 8, Message.SCENARIO.I_003);
+        model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.I_003);
         res.status(200).send('scenario status bulk invalid ok');
     });
 };
@@ -693,8 +733,10 @@ exports.bulkInvalid = function(req, res)
 /**
  * アプローチ対象の無効なシナリオを有効にする
  * 
- * @param {Object} req 画面からのリクエスト
- * @param {Object} res 画面へのレスポンス
+ * @method bulkEnable
+ * @param {Object} req リクエストオブジェクト
+ * @param {Object} res レスポンスオブジェクト
+ * @return 
  */
 exports.bulkEnable = function(req, res)
 {
@@ -709,9 +751,11 @@ exports.bulkEnable = function(req, res)
     {
         if (0 < err.length)
         {
-            console.log('execute plan scenario bulk enable faild');
+            console.log(model.appendUserInfoString(Message.SCENARIO.E_004, req)+ " " +FUNCTION_NAME+"[scenario.bulkEnable]");
             console.log(err);
-            return res.status(510).send('有効化に失敗しました。');
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_004, FUNCTION_NAME);
+            res.status(511).send(Message.SCENARIO.E_004);
+            return;
         }
         model.insertLog(req.session.userId, 8, Message.SCENARIO.I_002);
         res.status(200).send('scenario status bulk enable ok');
@@ -721,13 +765,13 @@ exports.bulkEnable = function(req, res)
 /**
  * priorityとstatusを更新する
  * 
- * @param {Object} req 画面からのリクエスト
- * @param {Object} res 画面へのレスポンス
+ * @method savePriority
+ * @param {Object} req リクエストオブジェクト
+ * @param {Object} res レスポンスオブジェクト
+ * @return 
  */
 exports.savePriority = function(req, res)
 {
-    console.log('scenario save priority execute');
-    console.log(req.body);
     var commonColumns = model.getUpdCommonColumns();
 
     model.async.forEach(req.body.data, function(item, callback)
@@ -752,18 +796,28 @@ exports.savePriority = function(req, res)
     }, 
     function (err) 
     {
-        if (err.length > 0)
+        if (0 < err.length)
         {
-            console.log('scenario priority update faild');
+            console.log(model.appendUserInfoString(Message.SCENARIO.E_005, req)+ " " +FUNCTION_NAME+"[scenario.savePriority]");
             console.log(err);
-            res.status(510).send('scenario crate faild');
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_005, FUNCTION_NAME);
+            res.status(511).send(Message.SCENARIO.E_005);
+            return;
         }
         
-        model.insertLog(req.session.userId, 8, Message.SCENARIO.I_001);
+        model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.I_001);
         res.status(200).send('scenario priority update ok');
     });    
 };
 
+/**
+ * priorityとstatusを更新する
+ * 
+ * @method getBySegmentId
+ * @param {Number} segment_id セグメントID
+ * @param {Function} callback コールバック
+ * @return 
+ */
 exports.getBySegmentId = function(segment_id, callback)
 {
     var col = "scenario_id, scenario_name, valid_flag";
@@ -777,27 +831,36 @@ exports.getBySegmentId = function(segment_id, callback)
  * シナリオを保存する
  * パラメータにPKが存在するか否かで登録するか更新するかを決定する
  * 
- * @param {Object} req 画面からのリクエスト
- * @param {Object} res 画面へのレスポンス
+ * @method save
+ * @param {Object} req リクエストオブジェクト
+ * @param {Object} res レスポンスオブジェクト
+ * @return 
  */
 exports.save = function(req, res)
 {
-    console.log('scenario save execute');
-    if (!req.body.hasOwnProperty('scenario')) res.status(510).send('param is not found');
-
+    if (!model.validation("save", req.body))
+    {
+        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[scenario.save]"));
+        res.status(510).send(Message.COMMON.E_101);
+        return;
+    }
+    
     if (req.body.scenario.hasOwnProperty('scenario_id'))
     {
         update(req, res);
     }
     else
     {
+        //非同期
         model.async.parallel(
         {
+            //環境情報取得
             env: function(callback)
             {
                 var env = require("./environment");
                 env.get(callback);
             },
+            //件数取得
             count: function(callback)
             {
                 var col = "count(1) as count";
@@ -811,46 +874,44 @@ exports.save = function(req, res)
         {
             if (0 < err.length)
             {
-                console.log('scenario initialize data select faild');
+                console.log(model.appendUserInfoString(Message.SCENARIO.E_005, req)+ " " +FUNCTION_NAME+"[scenario.save parallel->complete]");
                 console.log(err);
-                return res.status(510).send('システムエラーが発生しました。');
+                model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_001, FUNCTION_NAME);
+                res.status(511).send(Message.SCENARIO.E_001.replace("$1", "シナリオ"));
             }
             var envInfo = items.env[0];
             var max = (1 == req.body.scenario.scenario_type) 
                 ? envInfo.schedule_scenario_max : envInfo.trigger_scenario_max;
                 
+            //登録最大件数に達していた場合
             if (max <= items.count[0].count)
             {
-                res.status(510).send('これ以上登録できません。<br>不要なシナリオを削除してください。');
+                res.status(511).send(Message.SCENARIO.E_006);
+                return;
             }
-            else
-            {
-                create(req, res);
-            }
+            
+            create(req, res);
         });
     }
 };
 
-/**
- * シナリオを登録する
- * 
- * @param {Object} req 画面からのリクエスト
- * @param {Object} res 画面へのレスポンス
- */
+//シナリオを登録する
 function create(req, res)
 {
+    //はじめにドキュメント情報を作成する
     scenariodoc.saveItemForWeb(true, req.body.doc, function(err, doc)
     {
         if (null !== err)
         {
-            console.log('scenario create doc faild');
+            console.log(model.appendUserInfoString(Message.SCENARIO.E_005, req)+ " " +FUNCTION_NAME+"[scenario.create scenariodoc->saveItemForWeb]");
             console.log(err);
             console.log(req.body);
-            return res.status(510).send('シナリオドキュメントの作成に失敗しました');
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_001, FUNCTION_NAME);
+            res.status(511).send(Message.SCENARIO.E_001.replace("$1", "シナリオ"));
+            return ;
         }
         else
         {
-
             model.tranBegin(function(err, transaction)
             {
                 model.async.waterfall(
@@ -861,7 +922,7 @@ function create(req, res)
                         var insertData = model.merge(req.body.scenario, commonColumns);
                         insertMine(transaction, insertData, function(err, scenarioId)
                         {
-                            if (err.length > 0)
+                            if (0 < err.length)
                             {
                                 console.log('insert faild M_SCENARIO');
                                 console.log(err);
@@ -918,13 +979,10 @@ function create(req, res)
                 ],
                 function(err)
                 {
-                    console.log("main last function");
-                    console.log(err);
                     if (null != err)
                     {
                         console.log('scenario insert faild');
                         console.log(err);
-                        
                         //documentを削除しなくちゃ
                         if (null !== doc)
                         {
@@ -977,6 +1035,7 @@ function create(req, res)
     });
 }
 
+//シナリオマスタにデータを登録する
 function insertMine(transaction, insertData, callback)
 {
     var request = model.getRequest(transaction);
@@ -1002,6 +1061,7 @@ function insertMine(transaction, insertData, callback)
     });
 }
 
+//トリガーまたはスケジュールシナリオマスタに登録する
 function insertChildren(transaction, req, id, doc, callback)
 {
     var request = model.getRequest(transaction);
@@ -1064,23 +1124,17 @@ function insertChildren(transaction, req, id, doc, callback)
  * パラメータのtagsにidのプロパティがなければそれは新規作成となり
  * T_TAGに登録される。
  * ただし、同一名称のものが存在した場合は、登録しない。
- * 
  */
 function insertTags(transaction, userid, tags, callback)
 {
-    console.log("insert tags");
     var tag = require("./tag");
     tag.save(transaction, userid, tags, function(err, tagList)
     {
-        console.log("insert tags end");
         callback(err, tagList);
     });
 }
 
-/**
- * シナリオにタグを設定する
- * 
- */
+//シナリオにタグを設定する
 function insertScnarioTag(transaction, userid, scenarioId, tags, callback)
 {
     console.log("insert tags");
@@ -1623,8 +1677,10 @@ exports.initializeData = function(req, res)
  * 同一名称が存在するかをチェックする
  * リクエスト値にシナリオIDが存在する場合は該当レコードの名称を除外してチェックする
  * 
+ * @method isSameName
  * @param {Object} req 画面からのリクエスト
  * @param {Object} res 画面へのレスポンス
+ * @return {Number} result 件数
  */
 exports.isSameName = function(req, res)
 {
@@ -1644,7 +1700,7 @@ exports.isSameName = function(req, res)
     else
     {
         var conditions = [
-            {columns: pk, type: model.db.Int, value: scenarioId, symbol: '!='},
+            {columns: PK_NAME, type: model.db.Int, value: scenarioId, symbol: '!='},
             {columns: 'scenario_name', type: model.db.NVarChar, value: req.body.scenario_name, symbol: '='},
         ];
         model.isSameItemByMultipleCondition(conditions , function(err, result)
