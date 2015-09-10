@@ -64,7 +64,7 @@ var Query = function Query()
                 },
                 {
                     func: this.validator.isNotMaxOrver,
-                    condition: {max: 50}
+                    condition: {max: 100}
                 }
             ],
             query_document_id:
@@ -152,6 +152,7 @@ exports.getAll = function(req, res)
         }
 
         var segmentdoc = require("./segmentdoc");
+        //クエリーコレクション分繰り返す(同期)
         model.async.forEach(doc, function(item, callback)
         {
             segmentdoc.countByQueryId(item.id, function(err, docs)
@@ -185,11 +186,11 @@ exports.getAll = function(req, res)
  * パラメータからクエリーを作成し実行する
  * 
  * @method execute
- * @param {object} req リクエストオブジェクト
- *  @param {object} req.body POSTされたパラメータを格納したオブジェクト
+ * @param {Object} req リクエストオブジェクト
+ *  @param {Object} req.body POSTされたパラメータを格納したオブジェクト
  *   @param {Object} req.body.tables 利用テーブルとカラムを保持したオブジェクト
  *   @param {Array} req.body.conditionList 条件句を生成するための条件を保持した配列
- * @param {object} res レスポンスオブジェクト
+ * @param {Object} res レスポンスオブジェクト
  * @return {json} result 実行結果の件数
  */
 exports.execute = function(req, res)

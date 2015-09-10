@@ -35,7 +35,7 @@ var docDbClient = new DocumentDBClient(docconf.url, { masterKey: docconf.key });
  * クエリーDocument機能APIのクラス
  * 
  * @namespace api
- * @class QueryDOc
+ * @class QueryDoc
  * @constructor
  */
 var QueryDoc = new query(docDbClient, docconf.docDbName, COLLECTION_NAME);
@@ -181,17 +181,11 @@ exports.getAllItemForWeb = function(callback)
 
 /**
  * Queryコレクションの情報を登録/更新する
+ * callbackへはerr情報と更新フラグをセットして実行する
  * 
  * @method save
  * @param {Object} data 登録/更新用データオブジェクト
  * @param {Function} callback コールバック
- * @return {json}
- * 以下のプロパティを持つobjectの配列をjsonとして返却する
- * <ul>
- * <li>{String} id: aueryコレクションID</li>
- * <li>{String} query_name: クエリー名</li>
- * <li>{Object} tables: 利用テーブル情報</li>
- * </ul>
  */
 exports.save = function(data, callback)
 {
@@ -271,7 +265,7 @@ exports.getItemByIdForWeb = function(id, callback)
 };
 
 /**
- * IDに合致したQueryコレクションの情報と読み込み可能テーブル情報を取得する
+ * IDに合致したQueryコレクションの情報と読み込み可能テーブル情報を取得する<br>
  * callbackへはerr情報と取得結果のコレクションをセットして実行する
  * 
  * @method getItemByIdsForWeb

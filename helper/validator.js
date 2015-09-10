@@ -134,7 +134,7 @@ Validator.prototype.isValidDate = function(val)
 /**
  * 最大値を超えていないかをチェックする
  * 
- * @method isValidDate
+ * @method isNotMaxOrver
  * @param {mixed} val 値
  * @param {object} condition 条件を格納したオブジェクト
  *  @param {object} condition.max 最大値
@@ -200,4 +200,32 @@ Validator.prototype.isMatchPropList = function(val, condition)
     {
         return false;
     }
+};
+
+/**
+ * 指定された値かチェックする
+ * TODO
+ * @method isMatchValueList
+ * @param {String | Number} val 値
+ * @param {Array} condition 条件を格納したオブジェクト
+ *  @param {object} condition.num プロパティ数
+ * @return {bool} 
+ */
+Validator.prototype.isMatchValueList = function(val, condition)
+{
+    console.log("isMatchValueList:" + val);
+    if (void 0 === val || void 0 === condition)
+    {
+        return false;
+    }
+    
+    var num = condition.length;
+    for (var index = 0; index < num; index++)
+    {
+        if (condition[index] === val)
+        {
+            return true;
+        }
+    }
+    return false;
 };

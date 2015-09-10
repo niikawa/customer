@@ -2,70 +2,189 @@ var moment = require('moment');
 var Core = require('./core');
 var Message = require('../config/message.json');
 var scenariodoc = require("./scenariodoc");
+var Validator = require("../helper/validator");
 
-/** テーブル名 */
-var tableName = 'M_SCENARIO';
-/** PK */
-var pk = 'scenario_id';
-/** SEQ */
-var seqName = 'seq_scenario';
+/** 
+ * テーブル名
+ * @property TABLE_NAME
+ * @type {string}
+ * @final
+ */
+var TABLE_NAME = 'M_SCENARIO';
+/** 
+ * 主キー名 
+ * @property PK_NAME
+ * @type {string}
+ * @final
+ */
+var PK_NAME = 'scenario_id';
+/** 
+ * SEQ名
+ * @property SEQ_NAME
+ * @type {string}
+ * @final
+ */
+var SEQ_NAME = 'seq_scenario';
+/** 
+ * 機能名
+ * @property FUNCTION_NAME
+ * @type {string}
+ * @final
+ */
+var FUNCTION_NAME = 'シナリオ管理';
+/** 
+ * 機能番号
+ * @property FUNCTION_NAME
+ * @type {Number}
+ * @final
+ */
+var FUNCTION_NUMBER = 6;
+/** 
+ * レスポンスメッセージ文字列
+ * @property RESPONSE_MESSAGE_BIND_STRING
+ * @type {String}
+ * @final
+ */
+var RESPONSE_MESSAGE_BIND_STRING = "シナリオ";
+/** 
+ * 週表示のデフォルト数
+ * @property RESPONSE_MESSAGE_BIND_STRING
+ * @type {Number}
+ * @final
+ */
+var DEFAULT_PERIOD = 5;
 
-/** 機能名 */
-//var functionName = 'シナリオ管理';
-
-var scenario = function scenario()
+/** 
+ * シナリオ機能APIのクラス
+ * 
+ * @namespace api
+ * @class Scenario
+ * @constructor
+ * @extends api.core
+ */
+var Scenario = function Scenario()
 {
-    Core.call(this, tableName, pk, seqName);
+    Core.call(this, TABLE_NAME, PK_NAME, SEQ_NAME);
+    //カレンダー生成用にmomentの設定を日本語にする
     moment.locale('ja', {
         weekdays: ["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
         weekdaysShort: ["日","月","火","水","木","金","土"],
         weekdaysMin:["sun", "mon", "tue", "wed", "thu", "fri", "sat"],
     });
+    
+    this.validator = new Validator();
+    this.parametersRulesMap = 
+    {
+        getById:
+        {
+            id:
+            [
+                {
+                    func: this.validator.isRequire
+                },
+                {
+                    func: this.validator.isNumber
+                },
+                {
+                    func: this.validator.isNotMaxOrver,
+                    condition: 9223372036854775807
+                }
+            ],
+        },
+        getAll:
+        {
+            type:
+            [
+                {
+                    func: this.validator.isRequire
+                },
+                {
+                    func: this.validator.isMatchValueList,
+                    condition: ["trigger", "schedule"]
+                }
+            ]
+            
+        }
+    };
+    
 };
 
 //coreModelを継承する
 var util = require('util');
-util.inherits(scenario, Core);
-
-var model = new scenario();
+util.inherits(Scenario, Core);
 
 /**
- * PKからデータを取得する
+ * リクエストパラメータのチェックを行う
  * 
- * @param {Object} req 画面からのリクエスト
- * @param {Object} res 画面へのレスポンス
+ * @method validation
+ * @param {string} key 実行対象メソッド名
+ * @param {Object} parameters チェック対象パラメータオブジェクト
+ * @return {bool} 
+ */
+Scenario.prototype.validation = function(key ,parameters)
+{
+    var rules = this.parametersRulesMap[key];
+    return this.validator.execute(rules, parameters);
+};
+
+var model = new Scenario();
+
+/**
+ * IDからデータを取得する
+ * 
+ * @method getById
+ * @param {Object} req リクエストオブジェクト
+ *  @param {Object} req.params GETされたパラメータを格納したオブジェクト
+ *   @param {Number} req.params.id シナリオID
+ * @param {Object} res レスポンスオブジェクト
+ * @return 
  */
 exports.getById = function(req, res)
 {
+    if (!model.validation("getById", req.params))
+    {
+        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[scenario.getById]"));
+        res.status(511).send(Message.COMMON.E_101);
+        return;
+    }
     model.getById(req.params.id, function(err, data)
     {
-        if (err.length > 0)
+        if (0 < err.length)
         {
+            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[scenario.getById]"));
             console.log(err);
-            res.status(510).send('data not found');
-            res.json({data: []});
+            res.status(511).send(Message.COMMON.E_102.replace("$1", RESPONSE_MESSAGE_BIND_STRING));
+            return;
         }
-        else
-        {
-            model.insertLog(req.session.userId, 6, Message.COMMON.I_004, data[0].scenario_name);
-            res.json({data: data});
-        }
+        
+        model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_004, data[0].scenario_name);
+        res.json({data: data});
     });
 };
 
 /**
- * delete_flagのたっていないシナリオをすべて取得する
+ * シナリオをすべて取得する<br>
  * 並び順はPKの昇順
  * 
- * @param {Object} req 画面からのリクエスト
- * @param {Object} res 画面へのレスポンス
+ * @method getAll
+ * @param {object} req リクエストオブジェクト
+ * @param {object} res レスポンスオブジェクト
+ * 
+ * @return {}
  */
 exports.getAll = function(req, res)
 {
+    if (!model.validation("getAll", req.params))
+    {
+        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[scenario.getAll]"));
+        res.status(510).send(Message.COMMON.E_101);
+        return;
+    }
+    
     var col = "T1.scenario_id, FORMAT(T1.update_date, 'yyyy/MM/dd') AS update_date, T1.scenario_name, " +
                 "CASE T1.approach WHEN 1 THEN N'対象' WHEN 0 THEN N'対象外' ELSE N'未設定' END AS approach, " +
                 "CASE T1.status WHEN 1 THEN N'有効' WHEN 0 THEN N'無効' ELSE N'未設定' END AS status, T3.tag_name";
-    var table = tableName + " T1 LEFT JOIN T_SCENARIO_TAG T2 ON T1.scenario_id = T2.scenario_id AND T2.delete_flag = 0 LEFT JOIN T_TAG T3 ON T2.tag_id = T3.tag_id AND T3.delete_flag = 0";
+    var table = TABLE_NAME + " T1 LEFT JOIN T_SCENARIO_TAG T2 ON T1.scenario_id = T2.scenario_id AND T2.delete_flag = 0 LEFT JOIN T_TAG T3 ON T2.tag_id = T3.tag_id AND T3.delete_flag = 0";
     var where = "T1.delete_flag = 0 AND T1.scenario_type = @scenario_type";
     var order = "T1.scenario_id";
     var qObj = model.getQueryObject(col, table, where, '', order);
@@ -86,14 +205,14 @@ exports.getAll = function(req, res)
 
     model.select(qObj, qObj.request, function(err, data)
     {
-        if (err.length > 0)
+        if (0 < err.length)
         {
-            model.insertLog(req.session.userId, 6, Message.COMMON.E_004, functionName);
+            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[scenario.getAll->select]"));
             console.log(err);
-            return res.status(510).send('シナリオデータの取得に失敗しました。');
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, functionName);
+            res.status(511).send(Message.COMMON.E_102.replace("$1", RESPONSE_MESSAGE_BIND_STRING));
+            return;
         }
-        
-        console.log(data);
         var num = data.length;
         var last = num - 1;
         var tagList = [];
@@ -101,6 +220,7 @@ exports.getAll = function(req, res)
         if (0 < num)
         {
             var defore = data[0].scenario_id;
+            //タグは複数シナリオに設定できるため取得レコードをまとめる
             for (var index = 0; index < num; index++)
             {
                 if (defore === data[index].scenario_id)
@@ -123,26 +243,27 @@ exports.getAll = function(req, res)
                 defore = data[index].scenario_id;
             }
             
-            //データが1件しかない、またはすべて同じデータだった場合
+            //まとめた結果データが1件しかない、またはすべて同じデータだった場合
             if (0 === newData.length)
             {
                 data[0].searchTag = tagList.join(" ");
                 newData.push(data[0]);
-                console.log(newData);
             }
         }
             
-        model.insertLog(req.session.userId, 6, Message.COMMON.I_004, functionName);
+        model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_004, functionName);
         res.json({data: newData});
     });
 };
 
 /**
- * アプローチ対象のシナリオを取得する
+ * アプローチ対象のシナリオを取得する<br>
  * 並び順はpriorityとscenario_idの昇順
  * 
- * @param {Object} req 画面からのリクエスト
- * @param {Object} res 画面へのレスポンス
+ * @method getValid
+ * @param {object} req リクエストオブジェクト
+ * @param {object} res レスポンスオブジェクト
+ * @return {}
  */
 exports.getValid = function(req, res)
 {
@@ -150,16 +271,20 @@ exports.getValid = function(req, res)
                 "CASE scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key, " +
                 "CASE scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type";
 
+    //アプローチ対象となる条件は、削除フラグが0かつアプローチが対象（1）のもの。
     var where = "delete_flag = 0 AND approach = 1";
     var order = "priority, scenario_id";
-    var qObj = model.getQueryObject(col, tableName, where, '', order);
+    var qObj = model.getQueryObject(col, TABLE_NAME, where, '', order);
     
     model.select(qObj, qObj.request, function(err, data)
     {
-        if (err.length > 0)
+        if (0 < err.length)
         {
+            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[scenario.getValid->select]"));
             console.log(err);
-            res.status(510).send('object not found');
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_102, FUNCTION_NAME);
+            res.status(511).send(Message.COMMON.E_102.replace("$1", RESPONSE_MESSAGE_BIND_STRING));
+            return;
         }
         res.json({data: data});
     });
@@ -169,20 +294,23 @@ exports.getValid = function(req, res)
  * アプローチ対象のシナリオを取得する
  * 並び順はpriorityとscenario_idの昇順
  * 
- * @param {Object} req 画面からのリクエスト
- * @param {Object} res 画面へのレスポンス
+ * @method getScenarioCount
+ * @param {object} req リクエストオブジェクト
+ * @param {object} res レスポンスオブジェクト
+ * @return {}
  */
 exports.getScenarioCount = function(req, res)
 {
+    //非同期でデータを取得する
     model.async.parallel(
     {
-        //セグメント情報
+        //環境情報
         env: function(callback)
         {
             var env = require("./environment");
             env.get(callback);
         },
-        //count
+        //件数
         count: function(callback)
         {
             var col = "scenario_type, count(1) as regist_num, "+
@@ -190,22 +318,26 @@ exports.getScenarioCount = function(req, res)
                 "CASE scenario_type WHEN 1 THEN N'スケジュール型シナリオ' WHEN 2 THEN N'トリガー型シナリオ' ELSE N'未設定' END AS scenario_type_name";
             var where = "delete_flag = 0";
             var grop = "scenario_type";
-            var qObj = model.getQueryObject(col, tableName, where, grop, '');
+            var qObj = model.getQueryObject(col, TABLE_NAME, where, grop, '');
             
             model.select(qObj, qObj.request, callback);
         },
     },
     function complete(err, items)
     {
+        //取得した情報から、各シナリオの登録数と登録最大数のリストを作成する
         var list = [];
         var envInfo = items.env[0];
+        //シナリオが登録されていない場合
         if (0 === items.count.length)
         {
             list.push({scenario_type_key: 'schedule', scenario_type_name:'スケジュール型シナリオ', regist_num: 0, regist_max: envInfo.schedule_scenario_max});
             list.push({scenario_type_key: 'trigger', scenario_type_name:'トリガー型シナリオ', regist_num: 0, regist_max: envInfo.trigger_scenario_max});
         }
+        //どちらかのみ登録されている場合
         else if (1 === items.count.length)
         {
+            
             var isSchedule = (1 === items.count[0].scenario_type) ? true : false;
             if (isSchedule)
             {
@@ -220,6 +352,7 @@ exports.getScenarioCount = function(req, res)
                 list.push(items.count[0]);
             }
         }
+        //両方登録されている場合
         else
         {
             var num = items.count.length;
@@ -236,7 +369,6 @@ exports.getScenarioCount = function(req, res)
             }
             list = items.count;
         }
-        
         res.json({data: list});
     });
 };
@@ -245,8 +377,10 @@ exports.getScenarioCount = function(req, res)
  * 実行予定のシナリオを取得する
  * 並び順はpriorityとscenario_idの昇順
  * 
- * @param {Object} req 画面からのリクエスト
- * @param {Object} res 画面へのレスポンス
+ * @method getExecutePlanScenario
+ * @param {object} req リクエストオブジェクト
+ * @param {object} res レスポンスオブジェクト
+ * @return {}
  */
 exports.getExecutePlanScenario = function(req, res)
 {
@@ -254,9 +388,14 @@ exports.getExecutePlanScenario = function(req, res)
         "CASE T1.scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type, "+
         "CASE T1.scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key";
     
-    var table = tableName + " T1 LEFT JOIN M_SCHEDULE_SCENARIO T2 ON T1.scenario_id = T2.scenario_id ";
+    var table = TABLE_NAME + " T1 LEFT JOIN M_SCHEDULE_SCENARIO T2 ON T1.scenario_id = T2.scenario_id ";
+    
+    //実行予定となる条件は、削除フラグが0かつアプローチが対象（1）かつステータスが有効（1）
+    //トリガーシナリオの場合は上記条件を満たせば実行予定となるため、開始期限日がnullであるレコードを条件として指定する。
+    //スケジュール型シナリオの場合は日付を持っているので、追加で以下の条件を設定する
+    // 開始期限日がnullではなく、終了期限日が本日よりも未来であること（機関指定されているレコードを特定する条件）
+    // または、開始期限日が本日であり、終了期限日がnull (日付指定されているレコードを特定する条件)
     var where = "T1.delete_flag = 0 AND T1.approach = 1 AND T1.status = 1";
-
     where += " AND ( T2.expiration_start_date is null OR (T2.expiration_start_date is not null AND expiration_end_date >= @now) OR T2.expiration_start_date = @now AND T2.expiration_end_date is null)";
     
     var order = "T1.priority, T1.scenario_id";
@@ -268,11 +407,12 @@ exports.getExecutePlanScenario = function(req, res)
 
     model.select(qObj, qObj.request, function(err, data)
     {
-        if (err.length > 0)
+        if (0 < err.length)
         {
-            console.log('get execute plan scenario faild');
+            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[scenario.getExecutePlanScenario]"));
             console.log(err);
-            res.status(510).send('シナリオ情報の取得に失敗しました');
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_001);
+            res.status(511).send(Message.SCENARIO.E_001);
         }
         
         res.json({data: data});
@@ -292,7 +432,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
         "CASE T1.scenario_type WHEN 1 THEN N'スケジュール' WHEN 2 THEN N'トリガー' ELSE N'未設定' END AS scenario_type, "+
         "CASE T1.scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key";
     
-    var table = tableName + " T1 LEFT JOIN M_SCHEDULE_SCENARIO T2 ON T1.scenario_id = T2.scenario_id ";
+    var table = TABLE_NAME + " T1 LEFT JOIN M_SCHEDULE_SCENARIO T2 ON T1.scenario_id = T2.scenario_id ";
     var where = "T1.delete_flag = 0 AND T1.approach = 1 AND T1.status = 1 AND ";
     //トリガー型を取得する条件
     where += "( T2.expiration_start_date is null ";
@@ -325,12 +465,10 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
     else
     {
         //初期表示の場合
-        period = 5;
+        period = DEFAULT_PERIOD;
         start = moment().format("YYYY/MM/DD") + " 00:00:00";
         end = moment().add(period, 'day').format("YYYY/MM/DD") + " 00:00:00" ;
     }
-    console.log(start);
-    console.log(end);
     var calendar = {};
     for (var i = 0; i < period; i++)
     {
@@ -343,11 +481,12 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
 
     model.select(qObj, qObj.request, function(err, data)
     {
-        if (err.length > 0)
+        if (0 < err.length)
         {
-            console.log('get execute plan scenario faild');
+            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[scenario.getExecutePlanScenarioToCalendar]"));
             console.log(err);
-            res.status(510).send('シナリオ情報の取得に失敗しました');
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_001);
+            res.status(511).send(Message.SCENARIO.E_001);
         }
         
         console.log(data);
@@ -367,14 +506,14 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
             }
         }
         
+        //順番に処理をしていく
         model.async.waterfall(
         [
             function(callback)
             {
-                console.log(docIdList);
                 if (0 < docIdList.length)
                 {
-                    console.log("scenariodoc.getItemByIdsForWeb");
+                    //シナリオdocumentを取得する
                     scenariodoc.getItemByIdsForWeb(docIdList, ["*"], function(err, docs)
                     {
                         callback(err, docs);
@@ -387,73 +526,13 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
             },
             function(docs, callback)
             {
-                console.log("calendar crate");
-                console.log(docs);
-                
                 var docsObject = (null === docs) ? {} : createDocsObject(docs);
 
                 for (var index = 0; index < dataNum; index++)
                 {
-                    var target = data[index];
-                    console.log(target);
-                    Object.keys(calendar).forEach(function(key)
-                    {
-                        var isAdd = false;
-                        if (2 === target.scenario_type_value)
-                        {
-                            isAdd = true;
-                            target.scenario_type_detail = 1;
-                        }
-                        else if (null === target.scenario_action_document_id && 1 === target.scenario_type_value)
-                        {
-                            //スケジュール型 日付指定の場合
-                            var day = moment(target.expiration_start_date).format("YYYY-MM-DD");
-                            isAdd = (moment(key).format("YYYY-MM-DD") === day);
-                            target.scenario_type_detail = 2;
-                        }
-                        else if (null !== target.scenario_action_document_id && 1 === target.scenario_type_value)
-                        {
-                            //スケジュール型 期間指定の場合
-                            var doc = docsObject[target.scenario_action_document_id];
-                            //期間内であるかの判定
-                            var keyDay = moment(key).format("YYYY-MM-DD");
-                            var isPeriod = (moment(keyDay).isAfter(moment(target.expiration_start_date))
-                                && moment(moment(target.expiration_end_date)).isAfter(keyDay) );
-
-                            //以下の条件に合わないものは不正データのため破棄
-                            if (2 === doc.interval)
-                            {
-                                var minDay = model.momoent(key).format("dd");
-                                isAdd = isPeriod && doc.weekCondition[minDay];
-                            }
-                            else if (3 === doc.interval)
-                            {
-                                var dayIndex = Number(model.momoent(key).format("D")) - 1;
-                                isAdd = isPeriod && doc.daysCondition[dayIndex].check;
-                                
-                                var targetDay = moment(key).format("YYYY-MM-DD");
-                                var targetYearMonth = moment(key).format("YYYY-MM") + "-" + moment(key).daysInMonth();
-                                console.log(targetDay + ":" +targetYearMonth);
-                                if (targetDay == targetYearMonth)
-                                {
-                                    //最終日のチェックが優先される
-                                    var lastIndex = doc.daysCondition.length -1;
-                                    isAdd = isPeriod && doc.daysCondition[lastIndex].check; 
-                                }
-                            }
-                            target.scenario_type_detail = 3;
-                        }
-                        if (isAdd)
-                        {
-                            calendar[key].push({
-                                scenario_id: target.scenario_id, 
-                                scenario_name: target.scenario_name,
-                                scenario_type_value: target.scenario_type_value,
-                                scenario_type_detail: target.scenario_type_detail,
-                                scenario_type_key: target.scenario_type_key
-                            });
-                        }
-                    });
+                    //var target = data[index];
+                    pushCalendarItem(calendar, data[index], docsObject);
+                    
                 }
                 callback(null);
             }
@@ -463,34 +542,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
             //月カレンダーの場合はさらに整形する
             if (isCalendar)
             {
-                var calendarOfMonth = [];
-                //angulerでリピートするときに、objectのプロパティの昇順になっちゃうから数値を含むキーを生成
-                var weekList = {"0sun": {}, "1mon": {}, "2tue": {}, "3wed": {}, "4thu": {}, "5fri": {}, "6sat": {}};
-                var deforeCount = 1;
-                Object.keys(calendar).forEach(function(key)
-                {
-                    //該当日が第N週かを求める
-                    var day = model.momoent(key).format("D");
-                    var weekdayNum = model.momoent(key).format("e");
-                    var weekCount =Math.floor((day - weekdayNum + 12) / 7);
-                    var weekday = model.momoent(key).format("dd");
-                    var weekDayKey = weekdayNum + weekday;
-                    
-                    if (weekCount !== deforeCount)
-                    {
-                        calendarOfMonth.push(weekList);
-                        weekList = {"0sun": {}, "1mon": {}, "2tue": {}, "3wed": {}, "4thu": {}, "5fri": {}, "6sat": {}};
-                    }
-                    
-                    weekList[weekDayKey].scenario = calendar[key];
-                    weekList[weekDayKey].date = model.momoent(key).format("DD");
-                    deforeCount = weekCount;
-                });
-                //最終週をセット
-                calendarOfMonth.push(weekList);
-                
-                console.log(calendarOfMonth);
-                
+                var calendarOfMonth = createCalendar(calendar);
                 var params = start.split("/");
                 res.json({
                     data: calendarOfMonth, 
@@ -503,7 +555,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
                 res.json({data: calendar});
             }
         });
-     });
+    });
 };
 
 function createDocsObject(docs)
@@ -519,6 +571,96 @@ function createDocsObject(docs)
     return docObject;
 }
 
+function pushCalendarItem(calendar, target, docsObject)
+{
+    Object.keys(calendar).forEach(function(key)
+    {
+        var isAdd = false;
+        if (2 === target.scenario_type_value)
+        {
+            //トリガー型
+            isAdd = true;
+            target.scenario_type_detail = 1;
+        }
+        else if (null === target.scenario_action_document_id && 1 === target.scenario_type_value)
+        {
+            //スケジュール型 日付指定の場合
+            var day = moment(target.expiration_start_date).format("YYYY-MM-DD");
+            isAdd = (moment(key).format("YYYY-MM-DD") === day);
+            target.scenario_type_detail = 2;
+        }
+        else if (null !== target.scenario_action_document_id && 1 === target.scenario_type_value)
+        {
+            //スケジュール型 期間指定の場合
+            var doc = docsObject[target.scenario_action_document_id];
+            //期間内であるかの判定
+            var keyDay = moment(key).format("YYYY-MM-DD");
+            var isPeriod = (moment(keyDay).isAfter(moment(target.expiration_start_date))
+                && moment(moment(target.expiration_end_date)).isAfter(keyDay) );
+
+            //以下の条件に合わないものは不正データのため破棄
+            if (2 === doc.interval)
+            {
+                var minDay = model.momoent(key).format("dd");
+                isAdd = isPeriod && doc.weekCondition[minDay];
+            }
+            else if (3 === doc.interval)
+            {
+                var dayIndex = Number(model.momoent(key).format("D")) - 1;
+                isAdd = isPeriod && doc.daysCondition[dayIndex].check;
+                
+                var targetDay = moment(key).format("YYYY-MM-DD");
+                var targetYearMonth = moment(key).format("YYYY-MM") + "-" + moment(key).daysInMonth();
+                if (targetDay == targetYearMonth)
+                {
+                    //最終日のチェックが優先される
+                    var lastIndex = doc.daysCondition.length -1;
+                    isAdd = isPeriod && doc.daysCondition[lastIndex].check; 
+                }
+            }
+            target.scenario_type_detail = 3;
+        }
+        if (isAdd)
+        {
+            calendar[key].push({
+                scenario_id: target.scenario_id, 
+                scenario_name: target.scenario_name,
+                scenario_type_value: target.scenario_type_value,
+                scenario_type_detail: target.scenario_type_detail,
+                scenario_type_key: target.scenario_type_key
+            });
+        }
+    });
+}
+
+function createCalendar(calendar)
+{
+    var calendarOfMonth = [];
+    //angulerでリピートするときに、objectのプロパティの昇順になっちゃうから数値を含むキーを生成
+    var weekList = {"0sun": {}, "1mon": {}, "2tue": {}, "3wed": {}, "4thu": {}, "5fri": {}, "6sat": {}};
+    var deforeCount = 1;
+    Object.keys(calendar).forEach(function(key)
+    {
+        //該当日が第N週かを求める
+        var day = model.momoent(key).format("D");
+        var weekdayNum = model.momoent(key).format("e");
+        var weekCount = Math.floor((day - weekdayNum + 12) / 7);
+        var weekday = model.momoent(key).format("dd");
+        var weekDayKey = weekdayNum + weekday;
+        
+        if (weekCount !== deforeCount)
+        {
+            calendarOfMonth.push(weekList);
+            weekList = {"0sun": {}, "1mon": {}, "2tue": {}, "3wed": {}, "4thu": {}, "5fri": {}, "6sat": {}};
+        }
+        
+        weekList[weekDayKey].scenario = calendar[key];
+        weekList[weekDayKey].date = model.momoent(key).format("DD");
+        deforeCount = weekCount;
+    });
+    return calendarOfMonth;
+}
+
 /**
  * アプローチ対象のシナリオを無効にする
  * 
@@ -528,7 +670,7 @@ function createDocsObject(docs)
 exports.bulkInvalid = function(req, res)
 {
     var commonColumns = model.getUpdCommonColumns();
-    var sql = 'UPDATE ' + tableName + ' SET status = @status, update_by = @update_by,  update_date = @update_date WHERE delete_flag = 0 AND approach = 1'; 
+    var sql = 'UPDATE ' + TABLE_NAME + ' SET status = @status, update_by = @update_by,  update_date = @update_date WHERE delete_flag = 0 AND approach = 1'; 
     var request = model.getRequest();
     request.input('update_by', model.db.Int, req.session.userId);
     request.input('update_date', model.db.NVarChar, commonColumns.update_date);
@@ -556,7 +698,7 @@ exports.bulkInvalid = function(req, res)
 exports.bulkEnable = function(req, res)
 {
     var commonColumns = model.getUpdCommonColumns();
-    var sql = 'UPDATE ' + tableName + ' SET status = @status, update_by = @update_by,  update_date = @update_date WHERE delete_flag = 0 AND approach = 1'; 
+    var sql = 'UPDATE ' + TABLE_NAME + ' SET status = @status, update_by = @update_by,  update_date = @update_date WHERE delete_flag = 0 AND approach = 1'; 
     var request = model.getRequest();
     request.input('update_by', model.db.Int, req.session.userId);
     request.input('update_date', model.db.NVarChar, commonColumns.update_date);
@@ -564,7 +706,7 @@ exports.bulkEnable = function(req, res)
 
     model.execute(sql, request, function(err, data)
     {
-        if (err.length > 0)
+        if (0 < err.length)
         {
             console.log('execute plan scenario bulk enable faild');
             console.log(err);
@@ -625,7 +767,7 @@ exports.getBySegmentId = function(segment_id, callback)
 {
     var col = "scenario_id, scenario_name, valid_flag";
     var where = "delete_flag = 0 AND segment_id = @segment_id";
-    var qObj = model.getQueryObject(col, tableName, where, '', '');
+    var qObj = model.getQueryObject(col, TABLE_NAME, where, '', '');
     qObj.request.input('segment_id', model.db.Int, segment_id);
     model.select(qObj, qObj.request, callback);
 };
@@ -659,7 +801,7 @@ exports.save = function(req, res)
             {
                 var col = "count(1) as count";
                 var where = "delete_flag = 0 and scenario_type = @scenario_type";
-                var qObj = model.getQueryObject(col, tableName, where, '', '');
+                var qObj = model.getQueryObject(col, TABLE_NAME, where, '', '');
                 qObj.request.input('scenario_type', model.db.SmallInt, req.body.scenario.scenario_type);
                 model.select(qObj, qObj.request, callback);
             },
@@ -853,7 +995,7 @@ function insertMine(transaction, insertData, callback)
     request.input('approach', model.db.SmallInt, insertData.approach);
     request.input('priority', model.db.Int, 32767);
 
-    model.insert(tableName, insertData, request, function(err, id)
+    model.insert(TABLE_NAME, insertData, request, function(err, id)
     {
         callback(err, id);
     });

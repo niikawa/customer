@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>api/access.js</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="" src="../assets/css/logo.png" style="max-height: 65%;" title="">
+            
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b></b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/api.Approach", "classes/api.Auth", "classes/api.core", "classes/api.Environment", "classes/api.log", "classes/api.Query", "classes/api.QueryDOc", "classes/api.Table"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/api.Approach.html">api.Approach</a></li>
+	                            <li><a href="../classes/api.Auth.html">api.Auth</a></li>
+	                            <li><a href="../classes/api.core.html">api.core</a></li>
+	                            <li><a href="../classes/api.Environment.html">api.Environment</a></li>
+	                            <li><a href="../classes/api.log.html">api.log</a></li>
+	                            <li><a href="../classes/api.Query.html">api.Query</a></li>
+	                            <li><a href="../classes/api.QueryDOc.html">api.QueryDOc</a></li>
+	                            <li><a href="../classes/api.Table.html">api.Table</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>api/access.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+var Core = require(&#x27;./core&#x27;);
+var Validator = require(&quot;../helper/validator&quot;);
+var Message = require(&#x27;../config/message.json&#x27;);
+
+/** 
+ * テーブル名
+ * @property TABLE_NAME
+ * @type {string}
+ * @final
+ */
+var TABLE_NAME = &#x27;M_LOG&#x27;;
+/** 
+ * 主キー名 
+ * @property PK_NAME
+ * @type {string}
+ * @final
+ */
+var PK_NAME = &#x27;log_id&#x27;;
+/** 
+ * 機能番号
+ * @property FUNCTION_NAME
+ * @type {Number}
+ * @final
+ */
+var FUNCTION_NUMBER = 9;
+/** 
+ * 機能名
+ * @property FUNCTION_NAME
+ * @type {string}
+ * @final
+ */
+var FUNCTION_NAME = &#x27;操作履歴&#x27;;
+/** 
+ * 操作履歴APIのクラス
+ * 
+ * @namespace api
+ * @class log
+ * @extends api.core
+ * @constructor
+ */
+var Log = function Log()
+{
+    Core.call(this, TABLE_NAME, PK_NAME);
+    this.validator = new Validator();
+    this.parametersRulesMap = 
+    {
+        getDayAll :
+        {
+            day: 
+            [
+                {
+                    func: this.validator.isRequire
+                },
+                {
+                    func: this.validator.isValidDate
+                }
+            ]
+        },
+        getDayAllByUserId : 
+        {
+            id: 
+            [
+                {
+                    func: this.validator.isRequire
+                }
+            ],
+            day: 
+            [
+                {
+                    func: this.validator.isRequire
+                },
+                {
+                    func: this.validator.isValidDate
+                }
+            ]
+        }
+    };
+};
+
+//coreModelを継承する
+var util = require(&#x27;util&#x27;);
+util.inherits(Log, Core);
+
+/**
+ * リクエストパラメータのチェックを行う
+ * 
+ * @method validation
+ * @param {string} key 実行対象メソッド名
+ * @param {Object} parameters チェック対象パラメータオブジェクト
+ * @return {bool} 
+ */
+Log.prototype.validation = function(key ,parameters)
+{
+    var rules = this.parametersRulesMap[key];
+    return this.validator.execute(rules, parameters);
+};
+
+var model = new Log();
+
+/**
+ * 指定された日の操作ログをすべて取得する
+ * 
+ * @method getDayAll
+ * @param {object} req リクエストオブジェクト
+ *  @param {object} req.body POSTされたパラメータを格納したオブジェクト
+ *   @param {string} req.body.day 指定日 YYYY-MM-DD形式
+ * @param {object} res レスポンスオブジェクト
+ * @return {json} data 操作履歴の取得結果&lt;br&gt;
+ * 以下のプロパティを持つobjectの配列をjsonとして返却する
+ *     &lt;ul&gt;
+ *     &lt;li&gt;log_id: PK&lt;/li&gt;
+ *     &lt;li&gt;date: 操作日(yyyy-MM-dd hh:mm:ss)&lt;/li&gt;
+ *     &lt;li&gt;user_id: ユーザーID&lt;/li&gt;
+ *     &lt;li&gt;detail: 内容&lt;/li&gt;
+ *     &lt;li&gt;name: ユーザー名&lt;/li&gt;
+ *     &lt;/ul&gt;
+ */
+exports.getDayAll = function(req, res)
+{
+    model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_004, FUNCTION_NAME);
+
+    if (!model.validation(&quot;getDayAll&quot;, req.body))
+    {
+        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace(&quot;$1&quot;, FUNCTION_NAME+&quot;[access.getDayAll]&quot;));
+        res.status(510).send(Message.COMMON.E_101);
+        return;
+    }
+    
+    var col = &quot;T1.log_id, FORMAT(T1.create_date, &#x27;yyyy-MM-dd hh:mm:ss&#x27;) as date, T1.user_id, T1.detail, T2.name&quot;;
+    var table = &quot;T_LOG T1 INNER JOIN M_USER T2 ON T1.user_id = T2.user_id&quot;;
+    var where = &quot;T1.create_date BETWEEN @start AND @end AND T1.delete_flag = 0&quot;;
+    var order = &quot;T1.log_id DESC&quot;;
+    var qObj = model.getQueryObject(col, table, where, &#x27;&#x27;, order);
+    var start = req.body.day + &#x27; 00:00:00&#x27;;
+    var end = req.body.day + &#x27; 23:59:59&#x27;;
+    qObj.request.input(&#x27;start&#x27;, model.db.NVarChar, start);
+    qObj.request.input(&#x27;end&#x27;, model.db.NVarChar, end);
+    
+    model.select(qObj, qObj.request, function(err, data)
+    {
+        if (0 &lt; err.length)
+        {
+            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace(&quot;$1&quot;, FUNCTION_NAME+&quot;[access.getDayAll]&quot;));
+            console.log(err);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, FUNCTION_NAME);
+            res.status(510).send(Message.ACCESS.E_001);
+            return ;
+        }
+        res.json({data: data});
+    });
+};
+
+/**
+ * 指定された日の操作ログをすべて取得する
+ * 
+ * @method getDayAllByUserId
+ * @param {object} req リクエストオブジェクト
+ *  @param {object} req.body POSTされたパラメータを格納したオブジェクト
+ *   @param {int} req.body.id 指定日 YYYY-MM-DD形式
+ *   @param {string} req.body.day 指定日 YYYY-MM-DD形式
+ * @param {object} res レスポンスオブジェクト
+ * @return {json} data 操作履歴の取得結果&lt;br&gt;
+ * 以下のプロパティを持つobjectの配列をjsonとして返却する
+ *     &lt;ul&gt;
+ *     &lt;li&gt;log_id: PK&lt;/li&gt;
+ *     &lt;li&gt;date: 操作日(yyyy-MM-dd hh:mm:ss)&lt;/li&gt;
+ *     &lt;li&gt;user_id: ユーザーID&lt;/li&gt;
+ *     &lt;li&gt;detail: 内容&lt;/li&gt;
+ *     &lt;li&gt;name: ユーザー名&lt;/li&gt;
+ *     &lt;/ul&gt;
+ */
+exports.getDayAllByUserId = function(req, res)
+{
+    model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_004, FUNCTION_NAME);
+
+    if (!model.validation(&quot;getDayAllByUserId&quot;, req.body))
+    {
+        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace(&quot;$1&quot;, FUNCTION_NAME+&quot;[access.getDayAll]&quot;));
+        res.status(510).send(Message.COMMON.E_101);
+        return;
+    }
+    var col = &quot;T1.log_id, FORMAT(T1.create_date, &#x27;yyyy-MM-dd hh:mm:ss&#x27;) as date, T1.user_id, T1.detail, T2.name&quot;;
+    var table = &quot;T_LOG T1 INNER JOIN M_USER T2 ON T1.user_id = T2.user_id&quot;;
+    var where = &quot;T1.create_date BETWEEN @start AND @end AND T1.user_id = @userId AND T1.delete_flag = 0&quot;;
+    var order = &quot;T1.log_id ASC&quot;;
+    var qObj = model.getQueryObject(col, table, where, &#x27;&#x27;, order);
+    var start = req.body.day + &#x27; 00:00:00&#x27;;
+    var end = req.body.day + &#x27; 23:59:59&#x27;;
+    qObj.request.input(&#x27;start&#x27;, model.db.NVarChar, start);
+    qObj.request.input(&#x27;end&#x27;, model.db.NVarChar, end);
+    qObj.request.input(&#x27;userId&#x27;, model.db.Int, req.body.id);
+    
+    model.select(qObj, qObj.request, function(err, data)
+    {
+        if (0 &lt; err.length)
+        {
+            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace(&quot;$1&quot;, FUNCTION_NAME+&quot;[access.getDayAllByUserId]&quot;));
+            console.log(err);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, FUNCTION_NAME);
+            res.status(510).send(Message.ACCESS.E_001);
+            return;
+        }
+        res.json({data: data});
+    });
+};
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

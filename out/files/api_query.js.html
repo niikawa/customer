@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>api/query.js</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="" src="../assets/css/logo.png" style="max-height: 65%;" title="">
+            
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b></b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/api.Approach", "classes/api.Auth", "classes/api.core", "classes/api.Environment", "classes/api.log", "classes/api.Query", "classes/api.QueryDOc", "classes/api.Table"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/api.Approach.html">api.Approach</a></li>
+	                            <li><a href="../classes/api.Auth.html">api.Auth</a></li>
+	                            <li><a href="../classes/api.core.html">api.core</a></li>
+	                            <li><a href="../classes/api.Environment.html">api.Environment</a></li>
+	                            <li><a href="../classes/api.log.html">api.log</a></li>
+	                            <li><a href="../classes/api.Query.html">api.Query</a></li>
+	                            <li><a href="../classes/api.QueryDOc.html">api.QueryDOc</a></li>
+	                            <li><a href="../classes/api.Table.html">api.Table</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>api/query.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+var Core = require(&#x27;./core&#x27;);
+var Creator = require(&quot;../helper/createSql&quot;);
+var Message = require(&#x27;../config/message.json&#x27;);
+var QueryDoc = require(&quot;./querydoc&quot;);
+var Validator = require(&quot;../helper/validator&quot;);
+
+//特定のテーブル情報はもたない
+/** 
+ * テーブル名
+ * @property TABLE_NAME
+ * @type {string}
+ * @final
+ */
+var TABLE_NAME = &#x27;&#x27;;
+/** 
+ * 主キー名 
+ * @property PK_NAME
+ * @type {string}
+ * @final
+ */
+var PK_NAME = &#x27;&#x27;;
+/** 
+ * SEQ名
+ * @property SEQ_NAME
+ * @type {string}
+ * @final
+ */
+var SEQ_NAME = &#x27;seq_approach&#x27;;
+/** 
+ * 機能名
+ * @property FUNCTION_NAME
+ * @type {string}
+ * @final
+ */
+var FUNCTION_NAME = &#x27;クエリー管理&#x27;;
+/** 
+ * 機能番号
+ * @property FUNCTION_NAME
+ * @type {Number}
+ * @final
+ */
+var FUNCTION_NUMBER = 4;
+
+/** 
+ * クエリー機能APIのクラス
+ * 
+ * @namespace api
+ * @class Query
+ * @constructor
+ * @extends api.core
+ */
+var Query = function Query()
+{
+    Core.call(this, TABLE_NAME, PK_NAME);
+    this.validator = new Validator();
+    this.parametersRulesMap = 
+    {
+        save: 
+        {
+            query_name:
+            [
+                {
+                    func: this.validator.isRequire
+                },
+                {
+                    func: this.validator.isNotMaxOrver,
+                    condition: {max: 50}
+                }
+            ],
+            query_document_id:
+            [
+                {
+                    func: this.validator.isRequireIfExistsProp
+                }
+            ],
+            conditionList:
+            [
+                {
+                    func: this.validator.isRequire
+                }
+            ],
+            tables:
+            [
+                {
+                    func: this.validator.isRequire
+                }
+            ]
+        },
+        remove:
+        {
+            id:
+            [
+                {
+                    func: this.validator.isRequire
+                }
+            ],
+        }
+    };
+};
+
+//coreModelを継承する
+var util = require(&#x27;util&#x27;);
+util.inherits(Query, Core);
+
+/**
+ * リクエストパラメータのチェックを行う
+ * 
+ * @method validation
+ * @param {string} key 実行対象メソッド名
+ * @param {Object} parameters チェック対象パラメータオブジェクト
+ * @return {bool} 
+ */
+Query.prototype.validation = function(key ,parameters)
+{
+    var rules = this.parametersRulesMap[key];
+    return this.validator.execute(rules, parameters);
+};
+
+var model = new Query();
+
+/**
+ * クエリー一覧を生成するための情報を取得する
+ * 
+ * @method getAll
+ * @param {object} req リクエストオブジェクト
+ * @param {object} res レスポンスオブジェクト
+ * @return {json} data 操作履歴の取得結果&lt;br&gt;
+ * 以下のプロパティを持つobjectの配列をjsonとして返却する
+ * &lt;ul&gt;
+ * &lt;li&gt;{String} id : ドキュメントID&lt;/li&gt;
+ * &lt;li&gt;{String} query_name: クエリー名&lt;/li&gt;
+ * &lt;li&gt;{Object} tables: key-&gt;利用テーブル名 value-&gt;カラム情報のオブジェクト&lt;/li&gt;
+ * &lt;li&gt;{Bool} isUse: セグメントで利用されているか&lt;/li&gt;
+ * &lt;li&gt;{Number} useNum: 利用しているセグメント数&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+exports.getAll = function(req, res)
+{
+    QueryDoc.getAllItemForWeb(function(err, doc)
+    {
+        if (err)
+        {
+            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace(&quot;$1&quot;, FUNCTION_NAME+&quot;[query.getAll]&quot;));
+            console.log(err);
+            res.status(510).send(Message.QUERY.E_001);
+            return;
+        }
+        
+        if (null === doc || 0 === doc.length) 
+        {
+            res.json({data: []});
+        }
+
+        var segmentdoc = require(&quot;./segmentdoc&quot;);
+        model.async.forEach(doc, function(item, callback)
+        {
+            segmentdoc.countByQueryId(item.id, function(err, docs)
+            {
+                if (err)
+                {
+                    console.log(model.appendUserInfoString(
+                        Message.COMMON.E_102, req).replace(&quot;$1&quot;, FUNCTION_NAME+&quot;[query.getAll -&gt; setmentdoc.countByQueryId]&quot;));
+                    console.log(err);
+                }
+                var num = (void 0 === docs)? 0 : docs.length;
+                item.isUse = (0 &lt; num);
+                item.useNum = num;
+                callback(err);
+            });
+        },
+        function (err) 
+        {
+            if (err)
+            {
+                res.status(510).send(Message.QUERY.E_001);
+                return;
+            }
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_004);
+            res.json({data: doc});
+        });
+    });
+};
+
+/**
+ * パラメータからクエリーを作成し実行する
+ * 
+ * @method execute
+ * @param {object} req リクエストオブジェクト
+ *  @param {object} req.body POSTされたパラメータを格納したオブジェクト
+ *   @param {Object} req.body.tables 利用テーブルとカラムを保持したオブジェクト
+ *   @param {Array} req.body.conditionList 条件句を生成するための条件を保持した配列
+ * @param {object} res レスポンスオブジェクト
+ * @return {json} result 実行結果の件数
+ */
+exports.execute = function(req, res)
+{
+    console.log(&#x27;query execute&#x27;);
+    console.log(req.body);
+    var request = model.getRequest();
+    var creator = new Creator(&#x27;query&#x27;, req.body.conditionList, request);
+    var sql = creator.getCountSql(req.body.tables);
+    model.execute(sql, request, function(err, data)
+    {
+        if (0 &lt; err.length)
+        {
+            console.log(model.appendUserInfoString(Message.QUERY.E_002, req).replace(&quot;$1&quot;, FUNCTION_NAME+&quot;[query.execute]&quot;));
+            console.log(err);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.QUERY.E_002);
+            res.status(510).send(Message.QUERY.E_002);
+            return;
+        }
+        
+        model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.QUERY.I_001);
+        res.json({result: data[0].count});
+    });
+};
+
+/**
+ * クエリーの登録/更新を行う
+ * 
+ * @method save
+ * @param {object} req リクエストオブジェクト
+ *  @param {object} req.body POSTされたパラメータを格納したオブジェクト
+ *   @param {Object} req.body.tables 利用テーブルとカラムを保持したオブジェクト
+ *   @param {Array} req.body.conditionList 条件句を生成するための条件を保持した配列
+ *   @param {String} req.body.
+ * @param {object} res レスポンスオブジェクト
+ * @return {json} result 実行結果の件数
+ */
+exports.save = function(req, res)
+{
+    if (!model.validation(&quot;save&quot;, req.body))
+    {
+        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace(&quot;$1&quot;, FUNCTION_NAME+&quot;[query.save]&quot;));
+        res.status(511).send(Message.COMMON.E_101);
+        return;
+    }
+    QueryDoc.save(req.body, function(err, isUpdate)
+    {
+        var message = &quot;&quot;;
+        if (err)
+        {
+            message = isUpdate ? Message.COMMON.E_002 : Message.COMMON.E_001;
+            model.insertLog(req.session.userId, 8, message, req.body.query_name);
+            res.status(512).send(Message.COMMON.E_002, req.body.query_name);
+            return;
+        }
+        message = isUpdate ? Message.COMMON.I_002 : Message.COMMON.I_001;
+        model.insertLog(req.session.userId, 8, Message.COMMON.E_002, req.body.query_name);
+        res.status(200).send();
+    });
+};
+
+/**
+ * クエリーの削除を行う
+ * 
+ * @method remove
+ * @param {Object} req リクエストオブジェクト
+ *  @param {Object} req.params GETされたパラメータを格納したオブジェクト
+ *   @param {String} req.params.id queryコレクションID
+ * @param {Object} res レスポンスオブジェクト
+ * @return 
+ *     &lt;ul&gt;
+ *     &lt;li&gt;正常終了の場合:ステータスコード200&lt;/li&gt;
+ *     &lt;li&gt;パラメータ異常:ステータスコード511&lt;/li&gt;
+ *     &lt;li&gt;クエリー実行異常終了の場合:ステータスコード512&lt;/li&gt;
+ *     &lt;/ul&gt;
+ */
+exports.remove = function(req, res)
+{
+    if (!model.validation(&quot;remove&quot;, req.params))
+    {
+        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace(&quot;$1&quot;, FUNCTION_NAME+&quot;[query.remove]&quot;));
+        res.status(511).send(Message.COMMON.E_101);
+        return;
+    }
+    QueryDoc.removeById(req.params.id, function(err, docs)
+    {
+        if (err)
+        {
+            console.log(model.appendUserInfoString(Message.COMMON.E_002, req).replace(&quot;$1&quot;, FUNCTION_NAME+&quot;[query.remove]&quot;+docs.query_name));
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_003, docs.query_name);
+            res.status(512).send(Message.COMMON.E_003.replace(&quot;$1&quot;, docs.query_name));
+            return;
+        }
+        model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_003, docs.query_name);
+        res.status(200).send(Message.COMMON.I_003.replace(&quot;$1&quot;, docs.query_name));
+    });
+};
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

@@ -1,32 +1,96 @@
-var async = require('async');
 var Core = require('./core');
+var Message = require('../config/message.json');
+var Validator = require("../helper/validator");
 
-/** テーブル名 */
-var tableName = 'M_ROLE';
-/** PK */
-var pk = 'role_id';
-/** SEQ */
-var seqName = 'seq_role';
+/** 
+ * テーブル名
+ * @property TABLE_NAME
+ * @type {string}
+ * @final
+ */
+var TABLE_NAME = 'M_ROLE';
+/** 
+ * 主キー名 
+ * @property PK_NAME
+ * @type {string}
+ * @final
+ */
+var PK_NAME = 'role_id';
+/** 
+ * SEQ名
+ * @property SEQ_NAME
+ * @type {string}
+ * @final
+ */
+var SEQ_NAME = 'seq_role';
 
-var role = function role()
+/** 
+ * 役割機能APIのクラス
+ * 
+ * @namespace api
+ * @class Role
+ * @constructor
+ */
+var Role = function Role()
 {
-    Core.call(this, tableName, pk, seqName);
+    Core.call(this, TABLE_NAME, PK_NAME, SEQ_NAME);
+    this.validator = new Validator();
+    this.parametersRulesMap = 
+    {
+        getById:
+        {
+            id:
+            [
+                {
+                    func: this.validator.isRequire
+                },
+                {
+                    func: this.validator.isNumber
+                },
+                {
+                    func: this.validator.isNotMaxOrver,
+                    condition: 9223372036854775807
+                }
+            ],
+        }
+    };
 };
 
 //coreModelを継承する
 var util = require('util');
-util.inherits(role, Core);
-
-var model = new role();
+util.inherits(Role, Core);
 
 /**
- * 顧客の情報を取得する
+ * リクエストパラメータのチェックを行う
  * 
+ * @method validation
+ * @param {string} key 実行対象メソッド名
+ * @param {Object} parameters チェック対象パラメータオブジェクト
+ * @return {bool} 
+ */
+Role.prototype.validation = function(key ,parameters)
+{
+    var rules = this.parametersRulesMap[key];
+    return this.validator.execute(rules, parameters);
+};
+
+var model = new Role();
+
+/**
+ * IDに合致した役割を取得する
+ * 
+ * @method getById
  * @param {Object} req 画面からのリクエスト
  * @param {Object} res 画面へのレスポンス
  */
 exports.getById = function(req, res)
 {
+    if (!model.validation("getById", req.params))
+    {
+        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", "[role.getById]"));
+        res.status(511).send(Message.COMMON.E_101);
+        return;
+    }
     model.getById(req.params.id, function(err, data)
     {
         if (err)
@@ -43,7 +107,7 @@ exports.getById = function(req, res)
 };
 
 /**
- * 顧客の一覧を取得する
+ * 役割の一覧を取得する
  * 
  * @param {Object} req 画面からのリクエスト
  * @param {Object} res 画面へのレスポンス

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>api/querydoc.js</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="" src="../assets/css/logo.png" style="max-height: 65%;" title="">
+            
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b></b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/api.Approach", "classes/api.Auth", "classes/api.core", "classes/api.Environment", "classes/api.log", "classes/api.Query", "classes/api.QueryDOc", "classes/api.Table"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/api.Approach.html">api.Approach</a></li>
+	                            <li><a href="../classes/api.Auth.html">api.Auth</a></li>
+	                            <li><a href="../classes/api.core.html">api.core</a></li>
+	                            <li><a href="../classes/api.Environment.html">api.Environment</a></li>
+	                            <li><a href="../classes/api.log.html">api.log</a></li>
+	                            <li><a href="../classes/api.Query.html">api.Query</a></li>
+	                            <li><a href="../classes/api.QueryDOc.html">api.QueryDOc</a></li>
+	                            <li><a href="../classes/api.Table.html">api.Table</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>api/querydoc.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+var DocumentDBClient = require(&#x27;documentdb&#x27;).DocumentClient;
+var query = require(&#x27;../collection/query&#x27;);
+var Creator = require(&quot;../helper/createSql&quot;);
+var Core = require(&#x27;./core&#x27;);
+var core = new Core();
+var Message = require(&#x27;../config/message.json&#x27;);
+
+/** 
+ * コレクション名
+ * @property COLLECTION_NAME
+ * @type {string}
+ * @final
+ */
+var COLLECTION_NAME = &#x27;query&#x27;;
+/** 
+ * 機能名
+ * @property FUNCTION_NAME
+ * @type {string}
+ * @final
+ */
+var FUNCTION_NAME = &#x27;クエリー管理&#x27;;
+/** 
+ * 機能番号
+ * @property FUNCTION_NAME
+ * @type {Number}
+ * @final
+ */
+var FUNCTION_NUMBER = 4;
+
+var conf = require(&quot;../config/doc&quot;);
+var docconf = conf();
+var docDbClient = new DocumentDBClient(docconf.url, { masterKey: docconf.key });
+
+/** 
+ * クエリーDocument機能APIのクラス
+ * 
+ * @namespace api
+ * @class QueryDOc
+ * @constructor
+ */
+var QueryDoc = new query(docDbClient, docconf.docDbName, COLLECTION_NAME);
+QueryDoc.init();
+
+/**
+ * IDに合致したQueryコレクションの情報と読み込み可能テーブル情報を取得する
+ * 
+ * @method getByIdForInit
+ * @param {object} req リクエストオブジェクト
+ *  @param {object} req.params GETされたパラメータを格納したオブジェクト
+ *   @param {Number} req.body.id クエリーコレクションのID
+ * @param {object} res レスポンスオブジェクト
+ * @return {json}
+ * 以下のプロパティを持つobjectをjsonとして返却する
+ * &lt;ul&gt;
+ * &lt;li&gt;{Objject} tables : 利用可能テーブル情報 {{#crossLink &quot;table&quot;}}{{/crossLink}}&lt;/li&gt;
+ * &lt;li&gt;{Objject} data: コレクション情報 {{#crossLink &quot;collection.query:getItem&quot;}}{{/crossLink}}&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+exports.getByIdForInit = function(req, res)
+{
+    console.log(&#x27;query doc getByIdForInit start&#x27;);
+    QueryDoc.getItem(req.params.id, function(err, doc)
+    {
+        if (err)
+        {
+            console.log(core.appendUserInfoString(Message.COMMON.E_102, req).replace(&quot;$1&quot;, FUNCTION_NAME+&quot;[querydoc.getByIdForInit]&quot;));
+            console.log(err);
+            core.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, &quot;クエリー情報&quot;);
+            res.status(512).send(Message.COMMON.E_102.replace(&quot;$1&quot;, &quot;クエリー情報&quot;));
+            return;
+        }
+
+        core.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_004, doc.query_name);
+        
+        var table = require(&#x27;./table&#x27;);
+        table.getTablesListForWeb(function(err, tables)
+        {
+            if (0 &lt; err.length)
+            {
+                console.log(core.appendUserInfoString(
+                    Message.COMMON.E_102, req).replace(&quot;$1&quot;, FUNCTION_NAME+&quot;[querydoc.getByIdForInit -&gt; table.getTablesListForWeb]&quot;));
+                console.log(err);
+                res.status(511).send(Message.COMMON.E_102.replace(&quot;$1&quot;, &quot;クエリー情報&quot;));
+                return;
+            }
+            res.json({table: tables, data: doc});
+        });
+    });
+};
+
+/**
+ * IDに合致したQueryコレクションの情報を取得する
+ * 
+ * @method getItem
+ * @param {object} req リクエストオブジェクト
+ *  @param {object} req.params GETされたパラメータを格納したオブジェクト
+ *   @param {Number} req.body.id クエリーコレクションのID
+ * @param {object} res レスポンスオブジェクト
+ * @return {json}
+ * 以下のプロパティを持つobjectをjsonとして返却する
+ * &lt;ul&gt;
+ * &lt;li&gt;{Objject} data: コレクション情報 {{#crossLink &quot;collection.query:getItem&quot;}}{{/crossLink}}&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+exports.getItem = function(req, res)
+{
+    QueryDoc.getItem(req.params.id, function(err, doc)
+    {
+        if (err)
+        {
+            console.log(core.appendUserInfoString(Message.COMMON.E_102, req).replace(&quot;$1&quot;, FUNCTION_NAME+&quot;[querydoc.getItem]&quot;));
+            console.log(err);
+            core.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, &quot;クエリー情報&quot;);
+            res.status(511).send(Message.COMMON.E_102.replace(&quot;$1&quot;, &quot;クエリー情報&quot;));
+            return;
+        }
+        res.json({data: doc});
+    });
+};
+
+/**
+ * Queryコレクションの情報を取得する
+ * 
+ * @method getAllItem
+ * @param {object} req リクエストオブジェクト
+ * @param {object} res レスポンスオブジェクト
+ * @return {json}
+ * 以下のプロパティを持つobjectの配列をjsonとして返却する
+ * &lt;ul&gt;
+ * &lt;li&gt;{String} id: aueryコレクションID&lt;/li&gt;
+ * &lt;li&gt;{String} query_name: クエリー名&lt;/li&gt;
+ * &lt;li&gt;{Object} tables: 利用テーブル情報&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+exports.getAllItem = function(req, res)
+{
+    var query = &#x27;SELECT doc.id ,doc.query_name, doc.tables FROM doc&#x27;;
+    QueryDoc.find(query, function(err, doc)
+    {
+        if (err)
+        {
+            core.insertLog(req.session.userId, 8, Message.COMMON.E_004, FUNCTION_NAME);
+            res.status(511).send(&#x27;access ng&#x27;);
+        }
+        else
+        {
+            res.json({data: doc});
+        }
+    });
+};
+
+/**
+ * Queryコレクションの情報を取得する
+ * 
+ * @method getAllItemForWeb
+ * @param {Function} callback コールバック
+ * @return {json}
+ * 以下のプロパティを持つobjectの配列をjsonとして返却する
+ * &lt;ul&gt;
+ * &lt;li&gt;{String} id: aueryコレクションID&lt;/li&gt;
+ * &lt;li&gt;{String} query_name: クエリー名&lt;/li&gt;
+ * &lt;li&gt;{Object} tables: 利用テーブル情報&lt;/li&gt;
+ * &lt;/ul&gt;
+ * @example 
+ * querydoc.getAllItemForWeb(function(err, data)&lt;br&gt;
+ * { &lt;br&gt;
+ *     //err is array&lt;br&gt;
+ *     if (0 &lt; err.length )&lt;br&gt;
+ *     {&lt;br&gt; 
+ *         //error時の処理&lt;br&gt;
+ *     }&lt;br&gt;
+ *     //data[0]で取得データにアクセスできる&lt;br&gt;
+ * });&lt;br&gt;
+ * 
+ */
+exports.getAllItemForWeb = function(callback)
+{
+    var query = &#x27;SELECT doc.id ,doc.query_name, doc.tables FROM doc&#x27;;
+    QueryDoc.find(query, callback);
+};
+
+/**
+ * Queryコレクションの情報を登録/更新する
+ * 
+ * @method save
+ * @param {Object} data 登録/更新用データオブジェクト
+ * @param {Function} callback コールバック
+ * @return {json}
+ * 以下のプロパティを持つobjectの配列をjsonとして返却する
+ * &lt;ul&gt;
+ * &lt;li&gt;{String} id: aueryコレクションID&lt;/li&gt;
+ * &lt;li&gt;{String} query_name: クエリー名&lt;/li&gt;
+ * &lt;li&gt;{Object} tables: 利用テーブル情報&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+exports.save = function(data, callback)
+{
+    var creator = new Creator(&#x27;query&#x27;, data.conditionList);
+    var sql = creator.getConstionString(data.tables);
+    var values = creator.getValueList();
+    var colTypes = creator.getColTypeList();
+    
+    var parameters =
+    {
+        query_name: data.query_name,
+        tables: data.tables,
+        whereList: data.whereList,
+        sql: sql,
+        bindInfo: values,
+        columnTypeList: colTypes
+    };
+    var isUpdate = (data.hasOwnProperty(&#x27;query_document_id&#x27;));
+    if (isUpdate)
+    {
+        parameters.id = data.query_document_id;
+        
+        QueryDoc.updateItem(parameters, function(err, doc)
+        {
+            callback(err, isUpdate);
+        });
+    }
+    else
+    {
+        QueryDoc.addItem(parameters, function(err, doc)
+        {
+            callback(err, isUpdate);
+        });
+    }
+};
+
+/**
+ * Queryコレクションの情報を削除する。&lt;br&gt;
+ * callbackへはerr情報と削除対象のコレクションをセットして実行する
+ * 
+ * @method removeById
+ * @param {String} id queryコレクションID
+ * @param {Function} callback コールバック
+ */
+exports.removeById = function(id, callback)
+{
+    QueryDoc.getItem(id, function(err, doc)
+    {
+        if (err)
+        {
+            callback(err);
+        }
+        else
+        {
+            QueryDoc.removeItem(id, function(err)
+            {
+                callback(err, doc);
+            });
+        }
+    });
+};
+
+/**
+ * IDに合致したQueryコレクションの情報と読み込み可能テーブル情報を取得する
+ * callbackへはerr情報と対象のコレクションをセットして実行する
+ * 
+ * @method getItemByIdForWeb
+ * @param {String} id queryコレクションID
+ * @param {Function} callback コールバック
+ */
+exports.getItemByIdForWeb = function(id, callback)
+{
+    QueryDoc.getItem(id, function(err, doc)
+    {
+        callback(err,doc);
+    });
+};
+
+/**
+ * IDに合致したQueryコレクションの情報と読み込み可能テーブル情報を取得する
+ * callbackへはerr情報と取得結果のコレクションをセットして実行する
+ * 
+ * @method getItemByIdsForWeb
+ * @param {Array} idList queryコレクションID
+ * @param {Array} columnList 取得対象カラム
+ * @param {Function} callback コールバック
+ */
+exports.getItemByIdsForWeb = function(idList, columnList, callback)
+{
+    QueryDoc.getItemByIds(idList, columnList, function(err, doc)
+    {
+        callback(err,doc);
+    });
+};
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

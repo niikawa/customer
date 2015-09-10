@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>api/bug.js</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="" src="../assets/css/logo.png" style="max-height: 65%;" title="">
+            
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b></b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/api.Approach", "classes/api.Auth", "classes/api.core", "classes/api.Environment", "classes/api.log", "classes/api.Query", "classes/api.QueryDOc", "classes/api.Table"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/api.Approach.html">api.Approach</a></li>
+	                            <li><a href="../classes/api.Auth.html">api.Auth</a></li>
+	                            <li><a href="../classes/api.core.html">api.core</a></li>
+	                            <li><a href="../classes/api.Environment.html">api.Environment</a></li>
+	                            <li><a href="../classes/api.log.html">api.log</a></li>
+	                            <li><a href="../classes/api.Query.html">api.Query</a></li>
+	                            <li><a href="../classes/api.QueryDOc.html">api.QueryDOc</a></li>
+	                            <li><a href="../classes/api.Table.html">api.Table</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>api/bug.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+var Core = require(&#x27;./core&#x27;);
+var Message = require(&#x27;../config/message.json&#x27;);
+var fs = require(&#x27;fs&#x27;);
+
+/** テーブル名 */
+var tableName = &#x27;T_DEMAND_BUG&#x27;;
+var pk = &#x27;id&#x27;;
+
+var bug = function bug()
+{
+    Core.call(this, tableName, pk);
+};
+
+//coreModelを継承する
+var util = require(&#x27;util&#x27;);
+util.inherits(bug, Core);
+
+var model = new bug();
+
+exports.getByConditon = function(req, res)
+{
+    var request = model.getRequest();
+    var col = &quot;T1.id, FORMAT(T1.create_date, &#x27;yyyy-MM-dd hh:mm:ss&#x27;) as create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, T1.vote, T1.attach_name_key, T2.name&quot;;
+    col += &quot;, count(T3.demand_bug_comment_id) as comment_count&quot;;
+    col += &quot;, count(T3.attach_name_key) as attach_count&quot;;
+    var tableName = &quot;T_DEMAND_BUG T1 LEFT JOIN M_USER T2 ON T1.create_by = T2.user_id LEFT JOIN T_DEMAND_BUG_COMMENT T3 ON T1.id = T3.demand_bug_id&quot;;
+    var where = &#x27;&#x27;;
+    
+    var groupBy = &quot;T1.id, T1.create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, T2.name, T1.vote, T1.attach_name_key&quot;;
+    
+    if (req.body.hasOwnProperty(&#x27;resolve&#x27;) &amp;&amp; null !== req.body.resolve) 
+    {
+        where += &quot;T1.resolve = @resolve AND &quot;;
+        request.input(&#x27;resolve&#x27;, model.db.Int, req.body.resolve);
+    }
+    
+    if (req.body.hasOwnProperty(&#x27;type&#x27;) &amp;&amp; null !== req.body.type) 
+    {
+        where += &quot;T1.type = @type AND &quot;;
+        request.input(&#x27;type&#x27;, model.db.Int, req.body.type);
+    }
+
+    where += &quot; T1.delete_flag = 0&quot;;
+
+    var order = &quot;T1.id DESC&quot;;
+    var qObj = model.getQueryObject(col, tableName, where, groupBy, order);
+
+    model.select(qObj, request, function(err, data)
+    {
+        var num = data.length;
+        for (var index = 0; index &lt; num; index++)
+        {
+            var target = data[index];
+            if (null !== target.attach_name_key)
+            {
+                target.attach_name_key = createAttachFileName(target.attach_name_key);
+                target.attach_count += 1;
+            }
+        }
+
+        if (err.length &gt; 0)
+        {
+            console.log(err);
+            res.status(510).send(&#x27;get bugs faild sorry!!&#x27;);
+        }
+
+        res.json({data: data, role: req.session.roleId});
+    });
+};
+
+exports.getComment = function(req, res)
+{
+    var col = &quot;T1.demand_bug_comment_id, FORMAT(T1.create_date, &#x27;yyyy-MM-dd hh:mm:ss&#x27;) as create_date, T1.comment, T2.name, T1.attach_name_key&quot;;
+    var tableName = &quot;T_DEMAND_BUG_COMMENT T1 LEFT JOIN M_USER T2 ON T1.create_by = T2.user_id&quot;;
+    var where = &#x27;T1.demand_bug_id = @demand_bug_id&#x27;;
+    var order = &quot;T1.demand_bug_comment_id&quot;;
+    var qObj = model.getQueryObject(col, tableName, where, &#x27;&#x27;, order);
+
+    qObj.request.input(&#x27;demand_bug_id&#x27;, model.db.Int, req.params.id);
+
+    model.select(qObj, qObj.request, function(err, data)
+    {
+        if (err.length &gt; 0)
+        {
+            console.log(&#x27;get comment  faild&#x27;);
+            console.log(err);
+            res.status(510).send(&#x27;get comment faild&#x27;);
+        }
+        
+        var num = data.length;
+        for (var index = 0; index &lt; num; index++)
+        {
+            var target = data[index];
+            if (null !== target.attach_name_key)
+            {
+                target.attach_name_key = createAttachFileName(target.attach_name_key);
+            }
+        }
+
+        res.json({data: data});
+    });
+};
+
+function createAttachFileName(attachKey)
+{
+    var names = attachKey.split(&quot;_&quot;);
+    var namesNum = names.length;
+    var attachName = &quot;&quot;;
+    for (var index = 1; index &lt; namesNum; index++)
+    {
+        attachName += names[index];
+    }
+    return attachName;
+}
+
+exports.save = function(req, res)
+{
+    console.log(&quot;comment save execute&quot;);
+    console.log(req.file);
+    var params = {};
+    var isAttach = false;
+    if (req.file)
+    {
+        //fileアップロードと一緒にデータを渡すためこの形になる
+        var data = JSON.parse(req.body.data);
+        params = data.data;
+        isAttach = true;
+    }
+    else
+    {
+        console.log(req.body);
+        params = req.body;
+    }
+    
+    var commonColumns = model.getInsCommonColumns(req.session.userId);
+    var insertData = model.merge(params, commonColumns);
+    insertData.attach_name_key = null;
+    insertData.resolve = 0;
+    model.async.waterfall(
+    [
+        function(callback)
+        {
+            if (isAttach)
+            {
+                console.log(&quot;go storage.createContainer&quot;);
+                var storage = require(&quot;./azurestorage&quot;);
+                var uploadInfo = {
+                    containerName: &quot;attach&quot;,
+                    uploadName: req.file.path,
+                    localFileName: req.file.filename+&quot;_&quot;+req.file.originalname,
+                };
+                
+                insertData.attach_name_key = req.file.filename+&quot;_&quot;+req.file.originalname;
+                storage.uploadStorage(uploadInfo, function(err)
+                {
+                    var storageErr = err;
+                    fs.unlink(req.file.path, function (err)
+                    {
+                        
+                        if (err)
+                        {
+                            console.log(&quot;file unlink faild&quot;);
+                            console.log(err);
+                        }
+                        callback(storageErr);
+                    });                    
+                });
+            }
+            else
+            {
+                callback(null);
+            }
+        },
+        function(callback)
+        {
+            var request = model.getRequest();
+            request.input(&#x27;delete_flag&#x27;, model.db.SmallInt, insertData.delete_flag);
+            request.input(&#x27;create_by&#x27;, model.db.Int, req.session.userId);
+            request.input(&#x27;create_date&#x27;, model.db.NVarChar, insertData.create_date);
+            request.input(&#x27;update_by&#x27;, model.db.Int, req.session.userId);
+            request.input(&#x27;update_date&#x27;, model.db.NVarChar, insertData.update_date);
+        
+            request.input(&#x27;resolve&#x27;, model.db.SmallInt, insertData.resolve);
+            request.input(&#x27;type&#x27;, model.db.SmallInt, insertData.type);
+            request.input(&#x27;category&#x27;, model.db.SmallInt, insertData.category);
+            request.input(&#x27;title&#x27;, model.db.NVarChar, insertData.title);
+            request.input(&#x27;contents&#x27;, model.db.NVarChar, insertData.contents);
+            request.input(&#x27;attach_name_key&#x27;, model.db.NVarChar, insertData.attach_name_key);
+        
+            model.insert(tableName, insertData, request, function(err, date)
+            {
+                if (err.length &gt; 0)
+                {
+                    console.log(err);
+                    res.status(510).send(&#x27;object not found&#x27;);
+                }
+                model.insertLog(req.session.userId, 99, Message.COMMON.I_001, insertData.title);
+                res.status(200).send(&#x27;inset ok&#x27;);
+            });
+        }
+    ], function(err)
+    {
+        if (null !== err)
+        {
+            console.log(err);
+            res.status(510).send(&#x27;comment save faild&#x27;);
+        }
+        else
+        {
+            model.insertLog(req.session.userId, 99, Message.COMMON.I_001, insertData.title);
+            res.status(200).send(&#x27;inset ok&#x27;);
+        }
+    });
+};
+
+exports.resolve = function(req, res)
+{
+    if (!req.params.hasOwnProperty(&#x27;id&#x27;)) res.status(510).send(&#x27;parameter not found&#x27;);
+
+    var commonColumns = model.getUpdCommonColumns(req.session.userId);
+    var updateData = model.merge(req.params, commonColumns);
+    updateData.resolve = 1;
+    var request = model.getRequest();
+    request.input(&#x27;update_by&#x27;, model.db.Int, req.session.userId);
+    request.input(&#x27;update_date&#x27;, model.db.NVarChar, updateData.update_date);
+    request.input(&#x27;resolve&#x27;, model.db.SmallInt, updateData.resolve);
+    request.input(&#x27;id&#x27;, model.db.SmallInt, updateData.id);
+
+    model.updateById(updateData, request, function(err, date)
+    {
+        if (err.length &gt; 0)
+        {
+            model.insertLog(req.session.userId, 5, Message.COMMON.E_002, updateData.segment_name);
+            console.log(err);
+            res.status(510).send(&#x27;object not found&#x27;);
+        }
+        else
+        {
+            model.insertLog(req.session.userId, 5, Message.COMMON.I_002, updateData.segment_name);
+            res.status(200).send(&#x27;update ok&#x27;);
+        }
+    });
+};
+
+exports.saveComment = function(req, res)
+{
+    console.log(&quot;comment save execute&quot;);
+    console.log(req.file);
+    var params = {};
+    var isAttach = false;
+    if (req.file)
+    {
+        //fileアップロードと一緒にデータを渡すためこの形になる
+        var data = JSON.parse(req.body.data);
+        params = data.data;
+        isAttach = true;
+    }
+    else
+    {
+        console.log(req.body);
+        params = req.body;
+    }
+    
+    var commonColumns = model.getInsCommonColumns(req.session.userId);
+    var insertData = model.merge(params, commonColumns);
+    insertData.attach_name_key = null;
+    model.async.waterfall(
+    [
+        function(callback)
+        {
+            if (isAttach)
+            {
+                console.log(&quot;go storage.createContainer&quot;);
+                var storage = require(&quot;./azurestorage&quot;);
+                var uploadInfo = {
+                    containerName: &quot;attach&quot;,
+                    uploadName: req.file.path,
+                    localFileName: req.file.filename+&quot;_&quot;+req.file.originalname,
+                };
+                
+                insertData.attach_name_key = req.file.filename+&quot;_&quot;+req.file.originalname;
+                storage.uploadStorage(uploadInfo, function(err)
+                {
+                    var storageErr = err;
+                    fs.unlink(req.file.path, function (err)
+                    {
+                        
+                        if (err)
+                        {
+                            console.log(&quot;file unlink faild&quot;);
+                            console.log(err);
+                        }
+                        callback(storageErr);
+                    });                    
+                });
+            }
+            else
+            {
+                callback(null);
+            }
+        },
+        function(callback)
+        {
+            var request = model.getRequest();
+            request.input(&#x27;delete_flag&#x27;, model.db.SmallInt, insertData.delete_flag);
+            request.input(&#x27;create_by&#x27;, model.db.Int, req.session.userId);
+            request.input(&#x27;create_date&#x27;, model.db.NVarChar, insertData.create_date);
+            request.input(&#x27;update_by&#x27;, model.db.Int, req.session.userId);
+            request.input(&#x27;update_date&#x27;, model.db.NVarChar, insertData.update_date);
+        
+            request.input(&#x27;demand_bug_id&#x27;, model.db.Int, insertData.demand_bug_id);
+            request.input(&#x27;comment&#x27;, model.db.NVarChar, insertData.comment);
+            request.input(&#x27;attach_name_key&#x27;, model.db.NVarChar, insertData.attach_name_key);
+
+            model.insert(&quot;T_DEMAND_BUG_COMMENT&quot;, insertData, request, function(err, date)
+            {
+                var errInfo = (err.length &gt; 0) ? err : null;
+                callback(errInfo);
+            });
+        }
+    ], function(err)
+    {
+        if (null !== err)
+        {
+            console.log(err);
+            res.status(510).send(&#x27;comment save faild&#x27;);
+        }
+        else
+        {
+            model.insertLog(req.session.userId, 99, Message.COMMON.I_001, insertData.title);
+            res.status(200).send(&#x27;inset ok&#x27;);
+        }
+    });
+};
+
+exports.vote = function(req, res)
+{
+    model.tranBegin(function(err, transaction)
+    {
+        var request = model.getRequest(transaction);
+        var col = &quot;vote&quot;;
+        var where = &#x27;id = @id&#x27;;
+        var qObj = model.getQueryObject(col, tableName, where, &#x27;&#x27;, &#x27;&#x27;);
+        request.input(&#x27;id&#x27;, model.db.Int, req.params.id);
+
+        model.select(qObj, request, function(err, data)
+        {
+            if (err.length &gt; 0)
+            {
+                console.log(err);
+                res.status(510).send(&#x27;vote faild&#x27;);
+            }
+
+            var update = model.getUpdCommonColumns(req.session.userId);
+            update.id = req.params.id;
+            update.vote = Number(data[0].vote) + 1;
+            var request = model.getRequest(transaction);
+            request.input(&#x27;id&#x27;, model.db.Int, update.id);
+            request.input(&#x27;update_by&#x27;, model.db.Int, update.update_by);
+            request.input(&#x27;update_date&#x27;, model.db.NVarChar, update.update_date);
+            request.input(&#x27;vote&#x27;, model.db.BigInt, update.vote);
+
+            model.updateById(update, request, function(err, data)
+            {
+                transaction.commit(function(err)
+                {
+                    res.status(200).send(&#x27;vote ok&#x27;);
+                });
+            });
+        });
+    });
+};
+
+exports.downloadByCommentId = function(req, res)
+{
+    if (!req.params.hasOwnProperty(&#x27;id&#x27;)) return res.status(510).send(&#x27;パラメータが不正です&#x27;);
+
+    var storage = require(&quot;./azurestorage&quot;);
+    var downLoadInfo = {
+        containerName: &quot;attach&quot;,
+        dowloadName: &quot;&quot;,
+        blobName: &quot;&quot;,
+        path: &quot;files/&quot;,
+        fileName: &quot;&quot;,
+    };
+
+    model.async.waterfall(
+    [
+        function(callback)
+        {
+            var col = &quot;T1.attach_name_key&quot;;
+            var tableName = &quot;T_DEMAND_BUG_COMMENT T1&quot;;
+            var where = &#x27;T1.demand_bug_comment_id = @demand_bug_comment_id&#x27;;
+            var qObj = model.getQueryObject(col, tableName, where, &#x27;&#x27;, &#x27;&#x27;);
+        
+            qObj.request.input(&#x27;demand_bug_comment_id&#x27;, model.db.Int, req.params.id);
+        
+            model.select(qObj, qObj.request, function(err, data)
+            {
+                var errInfo = 0 &lt; err.length ? err : null;
+                if (null === data[0].attach_name_key)
+                {
+                    callback(&quot;添付ファイルがありませんでした。&quot;);
+                }
+                else
+                {
+                    callback(errInfo, data[0].attach_name_key);
+                }
+            });
+        },
+        function(attachKey, callback)
+        {
+            console.log(attachKey);
+            
+            downLoadInfo.fileName = createAttachFileName(attachKey);
+            downLoadInfo.dowloadName = downLoadInfo.path + attachKey;
+            downLoadInfo.blobName = attachKey;
+            
+            storage.downLoadStorage(downLoadInfo, function(err)
+            {
+                callback(err);
+            });
+        }
+    ], function(err)
+    {
+        if (null !== err)
+        {
+            console.log(err);
+            res.status(510).send(err);
+        }
+        else
+        {
+            res.download(downLoadInfo.dowloadName, downLoadInfo.fileName, function(err)
+            {
+                fs.unlink(downLoadInfo.dowloadName, function (err)
+                {
+                    if (err)
+                    {
+                        console.log(&quot;file unlink faild&quot;);
+                        console.log(err);
+                    }
+                });                    
+                if (err)
+                {
+                    console.log(err);
+                    res.status(err.status).end();
+                }
+            });
+        }
+    });
+};
+
+exports.download = function(req, res)
+{
+    if (!req.params.hasOwnProperty(&#x27;id&#x27;)) return res.status(510).send(&#x27;パラメータが不正です&#x27;);
+
+    var storage = require(&quot;./azurestorage&quot;);
+    var downLoadInfo = {
+        containerName: &quot;attach&quot;,
+        dowloadName: &quot;&quot;,
+        blobName: &quot;&quot;,
+        path: &quot;files/&quot;,
+        fileName: &quot;&quot;,
+    };
+
+    model.async.waterfall(
+    [
+        function(callback)
+        {
+            var col = &quot;T1.attach_name_key&quot;;
+            var tableName = &quot;T_DEMAND_BUG T1&quot;;
+            var where = &#x27;T1.id = @id&#x27;;
+            var qObj = model.getQueryObject(col, tableName, where, &#x27;&#x27;, &#x27;&#x27;);
+        
+            qObj.request.input(&#x27;id&#x27;, model.db.Int, req.params.id);
+        
+            model.select(qObj, qObj.request, function(err, data)
+            {
+                var errInfo = 0 &lt; err.length ? err : null;
+                if (null === data[0].attach_name_key)
+                {
+                    callback(&quot;添付ファイルがありませんでした。&quot;);
+                }
+                else
+                {
+                    callback(errInfo, data[0].attach_name_key);
+                }
+            });
+        },
+        function(attachKey, callback)
+        {
+            console.log(attachKey);
+            
+            downLoadInfo.fileName = createAttachFileName(attachKey);
+            downLoadInfo.dowloadName = downLoadInfo.path + attachKey;
+            downLoadInfo.blobName = attachKey;
+            
+            storage.downLoadStorage(downLoadInfo, function(err)
+            {
+                callback(err);
+            });
+        }
+    ], function(err)
+    {
+        if (null !== err)
+        {
+            console.log(err);
+            res.status(510).send(err);
+        }
+        else
+        {
+            res.download(downLoadInfo.dowloadName, downLoadInfo.fileName, function(err)
+            {
+                fs.unlink(downLoadInfo.dowloadName, function (err)
+                {
+                    if (err)
+                    {
+                        console.log(&quot;file unlink faild&quot;);
+                        console.log(err);
+                    }
+                });                    
+                if (err)
+                {
+                    console.log(err);
+                    res.status(err.status).end();
+                }
+            });
+        }
+    });
+};
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

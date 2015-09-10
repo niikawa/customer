@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>api/table.js</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="" src="../assets/css/logo.png" style="max-height: 65%;" title="">
+            
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b></b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/api.Approach", "classes/api.Auth", "classes/api.core", "classes/api.Environment", "classes/api.log", "classes/api.Query", "classes/api.QueryDOc", "classes/api.Table"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/api.Approach.html">api.Approach</a></li>
+	                            <li><a href="../classes/api.Auth.html">api.Auth</a></li>
+	                            <li><a href="../classes/api.core.html">api.core</a></li>
+	                            <li><a href="../classes/api.Environment.html">api.Environment</a></li>
+	                            <li><a href="../classes/api.log.html">api.log</a></li>
+	                            <li><a href="../classes/api.Query.html">api.Query</a></li>
+	                            <li><a href="../classes/api.QueryDOc.html">api.QueryDOc</a></li>
+	                            <li><a href="../classes/api.Table.html">api.Table</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>api/table.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+var Core = require(&#x27;./core&#x27;);
+
+/** 
+ * クエリー機能APIのクラス
+ * 
+ * @namespace api
+ * @class Table
+ * @constructor
+ * @extends api.core
+ */
+var Table = function Table()
+{
+    Core.call(this, &#x27;&#x27;, &#x27;&#x27;, &#x27;&#x27;);
+};
+
+var util = require(&#x27;util&#x27;);
+util.inherits(Table, Core);
+
+/**
+ * 参照可能なテーブル情報とカラム情報を取得する
+ * 
+ * @method getTablesList
+ * @param {Function} callback コールバック
+ * @return
+ * 
+ */
+Table.prototype.getTablesList = function(callback)
+{
+    //表示対象のテーブル一覧を取得する
+    var tableSql = &quot;SELECT t.name table_name, cast(ep.value as nvarchar) comment &quot; +
+                    &quot;FROM sys.tables t , sys.extended_properties ep &quot; +
+                    &quot;WHERE t.name like &#x27;R_%&#x27; AND t.object_id = ep.major_id AND ep.minor_id = 0&quot;;
+                    
+    var tableInfo = {};
+    var request = model.getRequest();
+    model.execute(tableSql, request, function(err, tableList)
+    {
+        if (0 &lt; err.length)
+        {
+            callback(err);
+        }
+        
+        console.log(&quot;table list is &quot;);
+        console.log(tableList);
+        //表示対象のテーブルが持つカラム一覧を取得する
+        var columnSql = &quot;SELECT t.name table_name ,c.name column_name ,sc.data_type ,sc.character_maximum_length max_lengt ,cast(ep.value as nvarchar) comment &quot; +
+                        &quot;FROM sys.tables t, sys.columns c, sys.extended_properties ep, INFORMATION_SCHEMA.COLUMNS sc &quot; +
+                        &quot;WHERE t.name = @tableName AND t.object_id = c.object_id AND c.object_id = ep.major_id AND c.column_id = ep.minor_id AND t.name = sc.table_name AND sc.COLUMN_NAME = c.name&quot;;
+        
+        model.async.forEach(tableList, function(table, next)
+        {
+            var request = model.getRequest();
+            request.input(&quot;tableName&quot;, model.db.NVarChar, table.table_name);
+            var description = String(table.comment).split(&quot;,&quot;);
+
+            if (void 0 === description[2] || &#x27;true&#x27; == description[2])
+            {
+                tableInfo[table.table_name] = 
+                {
+                    physicalname: table.table_name,
+                    logicalname: description[0], 
+                    description: description[1],
+                    column: {}
+                };
+            }
+            
+            model.execute(columnSql, request, function(err, columnList)
+            {
+                if (0 &lt; err.length)
+                {
+                    next(err);
+                }
+                else
+                {
+                    var num = columnList.length;
+                    var colArray = [];
+                    for (var index = 0; index &lt; num; index++)
+                    {
+                        var target = columnList[index];
+                        
+                        var colInfo = String(target.comment).split(&quot;,&quot;);
+                        if (void 0 === colInfo[2] || &#x27;true&#x27; == colInfo[2])
+                        {
+                            var colObject = 
+                            {
+                                physicalname: target.column_name,
+                                logicalname: colInfo[0],
+                                description: colInfo[1],
+                                type: target.data_type,
+                                length: target.max_lengt,
+                            };
+                            colArray.push(colObject);
+                        }
+                    }
+                    tableInfo[table.table_name].column = colArray;
+                    next();
+                }
+            });
+        },
+        function (err) 
+        {
+            var errInfo = null === err ? [] : err;
+            callback(errInfo, tableInfo);
+        });
+    });
+};
+
+var model = new Table();
+
+/**
+ * 参照可能なテーブル情報とカラム情報を取得する
+ * 
+ * @method getTables
+ * @param {object} req リクエストオブジェクト
+ * @param {object} res レスポンスオブジェクト
+ * @return 
+ * &lt;li&gt;{Objject} tables : 利用可能テーブル情報 {{#crossLink &quot;Table:getTablesList&quot;}}{{/crossLink}}&lt;/li&gt;
+ */
+exports.getTables = function(req, res)
+{
+    model.getTablesList(function(err, data)
+    {
+        if (0 &lt; err.length)
+        {
+            console.log(err);
+            res.status(510).send(&#x27;テーブルデータの取得に失敗しました。&#x27;);
+            return;
+        }
+        console.log(data);
+        res.json({table: data});
+    });
+};
+/**
+ * 参照可能なテーブル情報とカラム情報を取得する
+ * 
+ * @method getTables
+ * @param {Function} callback コールバック
+ * @return 
+ * &lt;li&gt;{Objject} tables : 利用可能テーブル情報 {{#crossLink &quot;Table:getTablesList&quot;}}{{/crossLink}}&lt;/li&gt;
+ */
+exports.getTablesListForWeb = function(callback)
+{
+    model.getTablesList(callback);
+};
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>

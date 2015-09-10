@@ -14,7 +14,8 @@
             <div class="col-md-12">
                 <form name="queryForm" novalidate>
                     <div>
-                        <input type="text" class="form-control" placeholder="クエリー名" name="name" ng-model="query.query_name" ng-required="true"/>
+                        <input type="text" class="form-control" placeholder="クエリー名" name="name" 
+                            ng-model="query.query_name" ng-required="true" ng-maxlength="100"/>
                         <p class="item-error" ng-if="queryForm.name.$dirty && queryForm.name.$invalid">クエリ名を入力してください</p>
                     </div>
                 </form>

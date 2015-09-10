@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>api/schedulescenario.js</title>
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.css">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+</head>
+<body class="yui3-skin-sam">
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+	    <img alt="" src="../assets/css/logo.png" style="max-height: 65%;" title="">
+            
+        </h1>
+	<div class="nav">
+            <li class="divider-vertical"></li>
+            <li>
+                <p class="navbar-text">
+                    API Docs for Version: <b></b>
+                </p>
+            </li>
+        </div>
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='["classes/api.Approach", "classes/api.Auth", "classes/api.core", "classes/api.Environment", "classes/api.log", "classes/api.Query", "classes/api.QueryDOc", "classes/api.Table"]'>
+        </form>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="span3">
+	    <div>
+	        <h3>APIs</h3>
+	        <div id="sidebar">
+	            <ul id="main-nav" class="nav nav-tabs" style="margin-bottom:0;">
+	                <li class="active"><a href="#classes" data-toggle="tab">Classes</a></li>
+	                <li><a href="#modules" data-toggle="tab">Modules</a></li>
+	            </ul>
+	    
+	            <div id="api-tabview-filter">
+	                <input type="search" placeholder="Type to filter APIs">
+	            </div>
+	    
+	            <div class="tab-content" style="border: 1px solid #DDD; border-top:0;">
+	                <div class="tab-pane active" id="classes">
+	                    <ul id="api-classes" class="nav nav-list">
+	                            <li><a href="../classes/api.Approach.html">api.Approach</a></li>
+	                            <li><a href="../classes/api.Auth.html">api.Auth</a></li>
+	                            <li><a href="../classes/api.core.html">api.core</a></li>
+	                            <li><a href="../classes/api.Environment.html">api.Environment</a></li>
+	                            <li><a href="../classes/api.log.html">api.log</a></li>
+	                            <li><a href="../classes/api.Query.html">api.Query</a></li>
+	                            <li><a href="../classes/api.QueryDOc.html">api.QueryDOc</a></li>
+	                            <li><a href="../classes/api.Table.html">api.Table</a></li>
+	                    </ul>
+	                </div>
+	    
+	                <div class="tab-pane" id="modules">
+	                    <ul id="api-modules" class="nav nav-list">
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+        </div>
+        <div class="span9">
+                <form id="options-form" class="form-inline pull-right">
+                    Show:
+                    <label for="api-show-inherited" class="checkbox">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected" class="checkbox">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private" class="checkbox">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated" class="checkbox">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </form>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<div class="page-header">
+    <h1>api/schedulescenario.js <small>File</small></h1>
+</div>
+
+<div class="file">
+    <pre class="prettyprint linenums">
+/**
+ * 本テーブルはアプリケーションから直接データ操作が行われる想定はない
+ */
+
+var Core = require(&#x27;./core&#x27;);
+
+/** テーブル名 */
+var tableName = &#x27;M_SCHEDULE_SCENARIO&#x27;;
+/** PK */
+var pk = &#x27;schedule_scenario_id&#x27;;
+/** SEQ */
+var seqName = &#x27;seq_schedule_scenario&#x27;;
+
+var scheduleScenario = function scheduleScenario()
+{
+    Core.call(this, tableName, pk, seqName);
+};
+
+//coreModelを継承する
+var util = require(&#x27;util&#x27;);
+util.inherits(scheduleScenario, Core);
+
+var model = new scheduleScenario();
+
+/**
+ * PKからデータを取得する
+ * 
+ * @param {Object} req 画面からのリクエスト
+ * @param {Object} res 画面へのレスポンス
+ */
+exports.getById = function(req, res)
+{
+    model.getById(req.params.id, function(err, data)
+    {
+        if (err.length &gt; 0)
+        {
+            console.log(err);
+            res.status(510).send(&#x27;data not found&#x27;);
+            res.json({data: []});
+        }
+        else
+        {
+            res.json({data: data});
+        }
+    });
+};
+
+exports.getByScenarioId = function(scenario_id, callback)
+{
+    var col = &quot;schedule_scenario_id, scenario_id, repeat_flag, expiration_start_date, expiration_end_date, scenario_action_document_id&quot;;
+    var where = &quot;delete_flag = 0 AND scenario_id = @scenario_id&quot;;
+    var qObj = model.getQueryObject(col, tableName, where, &#x27;&#x27;, &#x27;&#x27;);
+    qObj.request.input(&#x27;scenario_id&#x27;, model.db.SmallInt, scenario_id);
+
+    model.select(qObj, qObj.request, function(err, data)
+    {
+        callback(err, data);
+    });
+};
+
+exports.saveForParent = function(insertData, request, callback)
+{
+    model.insert(tableName, insertData, request, callback);
+};
+
+exports.updateByScenarioId = function(updateData, request, callback)
+{
+    console.log(updateData);
+    //expiration_end_dateはから文字は許されないのでnullに変換
+    if (updateData.hasOwnProperty(&quot;expiration_end_date&quot;))
+    {
+        updateData.expiration_end_date = 
+            (null === updateData.expiration_end_date || 0 === updateData.expiration_end_date.length) ? null : updateData.expiration_end_date;
+    }
+    else
+    {
+        updateData.expiration_end_date = null;
+    }
+    request.input(&#x27;update_date&#x27;, model.db.NVarChar, updateData.update_date);
+    request.input(&#x27;repeat_flag&#x27;, model.db.Int, updateData.repeat_flag);
+    request.input(&#x27;expiration_start_date&#x27;, model.db.NVarChar, updateData.expiration_start_date);
+    request.input(&#x27;expiration_end_date&#x27;, model.db.NVarChar, updateData.expiration_end_date);
+    request.input(&#x27;scenario_id&#x27;, model.db.Int, updateData.scenario_id);
+
+    model.updateByForeignKey(updateData, &#x27;scenario_id&#x27;, request, callback);
+};
+
+exports.remove = function(id, transaction, callback)
+{
+    model.removeByIdAndTran(id, transaction, function(err)
+    {
+        var errInfo = (0 &lt; err.length) ? err : null;
+        callback(errInfo);
+    });
+};
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/jquery/jquery-1.8.2.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/js/yuidoc-bootstrap.js"></script>
+<script>prettyPrint();</script>
+</body>
+</html>
