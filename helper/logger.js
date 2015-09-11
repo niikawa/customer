@@ -39,6 +39,7 @@ exports.error = function(message, req)
 
 function write(message, req)
 {
+    console.log("logger write");
     var request = "";
     if (req.hasOwnProperty("body"))
     {
@@ -63,11 +64,13 @@ function write(message, req)
     {
         if(!error)
         {
+    console.log("logger insertEntity");
             tableService.insertEntity(tableName, entity, function (error)
             {
+    console.log(error);
                 if (error)
                 {
-                    
+                    console.log(error);
                 }
             });
         }
