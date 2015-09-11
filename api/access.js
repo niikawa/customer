@@ -1,6 +1,7 @@
 var Core = require('./core');
 var Validator = require("../helper/validator");
 var Message = require('../config/message.json');
+var logger = require("../helper/logger");
 
 /** 
  * テーブル名
@@ -121,6 +122,8 @@ exports.getDayAll = function(req, res)
 
     if (!model.validation("getDayAll", req.body))
     {
+        logger.error("ろぐいんしました", req.body);
+
         console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[access.getDayAll]"));
         console.log(req.body);
         res.status(510).send(Message.COMMON.E_101);

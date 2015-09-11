@@ -1,6 +1,8 @@
 var crypto = require('crypto');
 var Core = require('./core');
 var logger = require("../helper/logger");
+var Message = require('../config/message.json');
+
 /** 
  * テーブル名
  * @property TABLE_NAME
@@ -102,10 +104,14 @@ exports.login = function(req, res)
 
     model.select(qObj, qObj.request,  function(err, data)
     {
-        if (err.length > 0 || 0 === data.length )
+        if (0 < err.length)
         {
-            console.log(err);
-            res.status(510).send('メールアドレスまたはパスワードに誤りがあります');
+            logger.error(Message.AUTH.E_001, req, err);
+            res.status(510).send(Message.AUTH.E_001);
+        }
+        else if (0 === data.length)
+        {
+            res.status(510).send(Message.AUTH.E_002);
         }
         else
         {
@@ -117,7 +123,6 @@ exports.login = function(req, res)
             req.session.roleId = data[0].role_id;
             res.json({data: data});
         }
-        logger.error("ろぐいんしました", req);
     });
 };
 

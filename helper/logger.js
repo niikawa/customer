@@ -32,12 +32,12 @@ exports.info = function(message, req)
     }
 };
 
-exports.error = function(message, req)
+exports.error = function(message, req, err)
 {
-    write(message, req);
+    write(message, req, err);
 };
 
-function write(message, req)
+function write(message, req, err)
 {
     var request = "";
     if (req.hasOwnProperty("body"))
@@ -48,6 +48,8 @@ function write(message, req)
     {
         request = req.params;
     }
+    
+    var errInfo = void 0 === err ? "" : err;
     var entity = 
     {
         PartitionKey: eg.String(momoent().format("YYYYMMDD")),
@@ -56,6 +58,7 @@ function write(message, req)
         userName: eg.String(req.session.userName),
         message: eg.String(message),
         params: eg.String(JSON.stringify(request)),
+        error: eg.String(errInfo),
     };
 
     tableService.createTableIfNotExists(tableName, function(error, result, response)
