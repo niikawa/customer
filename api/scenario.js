@@ -362,6 +362,9 @@ exports.getScenarioCount = function(req, res)
     },
     function complete(err, items)
     {
+        console.log("items.count");
+        console.log(items.count);
+        
         //取得した情報から、各シナリオの登録数と登録最大数のリストを作成する
         var list = [];
         var envInfo = items.env[0];
