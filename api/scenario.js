@@ -482,7 +482,7 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
     
     var order = "T1.priority, T1.scenario_id";
     var qObj =  model.getQueryObject(col, table, where, '', order);
-    
+console.log("koko1");
     var period = 0;
     var start ='';
     var end ='';
@@ -520,6 +520,8 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
 
     model.select(qObj, qObj.request, function(err, data)
     {
+console.log("koko2");
+console.log(err);
         if (0 < err.length)
         {
             console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[scenario.getExecutePlanScenarioToCalendar]"));

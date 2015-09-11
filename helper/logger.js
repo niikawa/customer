@@ -39,7 +39,6 @@ exports.error = function(message, req)
 
 function write(message, req)
 {
-    console.log("logger write");
     var request = "";
     if (req.hasOwnProperty("body"))
     {
