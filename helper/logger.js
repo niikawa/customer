@@ -1,6 +1,6 @@
+var momoent = require('moment');
 var conf = require('../config/logger.json');
 var azureStorage = require('azure-storage');
-
 var TableUtilities = azureStorage.TableUtilities;
 var eg = TableUtilities.entityGenerator;
 
@@ -50,9 +50,8 @@ function write(message, req)
     }
     var entity = 
     {
-        PartitionKey: eg.String('log'),
-        RowKey: eg.String('row1'),
-        //date: eg.DateTime(),
+        PartitionKey: eg.String(momoent().format("YYYYMMDD")),
+        RowKey: eg.String(momoent().format("YYYYMMDDhhmmss")+req.session.userId),
         userId: eg.String(req.session.userId),
         userName: eg.String(req.session.userName),
         message: eg.String(message),
@@ -63,10 +62,8 @@ function write(message, req)
     {
         if(!error)
         {
-    console.log("logger insertEntity");
             tableService.insertEntity(tableName, entity, function (error)
             {
-    console.log(error);
                 if (error)
                 {
                     console.log(error);
@@ -74,4 +71,4 @@ function write(message, req)
             });
         }
     });
-};
+}
