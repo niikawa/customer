@@ -1571,6 +1571,8 @@ exports.initializeData = function(req, res)
     },
     function complete(err, items)
     {
+        console.log("action is ");
+        console.log(items);
         //parallel実行した場合、5こめのfunctionが実行完了前に
         //completeしてしまう。これはたぶんライブラリのバグだと思うけど、
         //どうにもならないのでここでさらに実行させる

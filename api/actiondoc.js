@@ -1,6 +1,5 @@
 var DocumentDBClient = require('documentdb').DocumentClient;
 var action = require('../collection/action');
-var Creator = require("../helper/createSql");
 var Core = require('./core');
 var core = new Core();
 var Message = require('../config/message.json');
