@@ -1534,23 +1534,10 @@ exports.initializeData = function(req, res)
         {
             if ('trigger' === req.params.type)
             {
-                
-//                var action = require('../config/action.json');
-                
                 actiondoc.getAllItemForWeb(function(err, docs)
                 {
-                    console.log("actiondoc.getAllItemForWeb");
-                    console.log(err);
-                    
-                    callback(null, docs);
-                    
+                    callback(err, docs);
                 });
-                
-                // Object.keys(action).forEach(function(key)
-                // {
-                //     var target = action[key];
-                //     list.push({logicalname: target.logicalname, physicalname: target.physicalname, description: target.description});
-                // });
             }
             else if ('schedule' === req.params.type)
             {
@@ -1573,8 +1560,6 @@ exports.initializeData = function(req, res)
     },
     function complete(err, items)
     {
-        console.log("action is ");
-        console.log(items);
         //parallel実行した場合、5こめのfunctionが実行完了前に
         //completeしてしまう。これはたぶんライブラリのバグだと思うけど、
         //どうにもならないのでここでさらに実行させる
@@ -1644,15 +1629,15 @@ exports.initializeData = function(req, res)
                 return;
             }
             res.json(
-                {
-                    segment: items.segment,
-                    ifLayout: items.ifLayout,
-                    specific: items.action, 
-                    target: items.target[0], 
-                    specificInfo: items2.specificData,
-                    settinTags: items2.settinTags,
-                    tagList: items2.tagList,
-                });
+            {
+                segment: items.segment,
+                ifLayout: items.ifLayout,
+                specific: items.action, 
+                target: items.target[0], 
+                specificInfo: items2.specificData,
+                settinTags: items2.settinTags,
+                tagList: items2.tagList,
+            });
         });
     });
 };

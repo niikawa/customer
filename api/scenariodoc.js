@@ -112,7 +112,7 @@ exports.getItem = function(req, res)
  */
 exports.saveItem = function(req, res)
 {
-    var key = req.body.data.hasOwnProperty('actionName') ? "saveItemForTrigger" : "saveItemForSchdule"; 
+    var key = req.body.data.hasOwnProperty('actionId') ? "saveItemForTrigger" : "saveItemForSchdule"; 
     if (!model.validation(key, req.body.data))
     {
         logger.error(Message.COMMON.E_103.replace("$1", FUNCTION_NAME+"[scenariodoc.saveItem]"), req);

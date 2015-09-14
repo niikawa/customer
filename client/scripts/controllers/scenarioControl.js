@@ -4,7 +4,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
 {
     var pageProp = Scenario.getPageProp($routeParams.scenario, $routeParams.id);
     var id = $routeParams.id;
-    var actionName = '';
+    var actionId = 0;
     var selectConditionList = [];
     /**
      * scope初期化用
@@ -203,33 +203,30 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     function editTriggerInitialize(initData)
     {
         $scope.specificInfo = initData.specificInfo.specific;
-        Scenario.resource.action({name: initData.specificInfo.doc.action_name}).$promise.then(function(response)
+        actionId = initData.specificInfo.doc.actionId;
+        $scope.isShowExtraction = true;
+        $scope.columnList = initData.response.specific.column;
+        $scope.activeName = initData.specificInfo.doc.action_name;
+        
+        angular.forEach(initData.specificInfo.doc.conditionList, function(conditionItems)
         {
-            actionName = initData.specificInfo.doc.action_name;
-            $scope.isShowExtraction = true;
-            $scope.columnList = response.data.column;
-            $scope.activeName = initData.specificInfo.doc.action_name;
-            
-            angular.forEach(initData.specificInfo.doc.conditionList, function(conditionItems)
+            var restoration = [];
+            angular.forEach(conditionItems, function(items)
             {
-                var restoration = [];
-                angular.forEach(conditionItems, function(items)
+                angular.forEach($scope.columnList, function(info)
                 {
-                    angular.forEach($scope.columnList, function(info)
+                    if (items.physicalname == info.physicalname)
                     {
-                        if (items.physicalname == info.physicalname)
-                        {
-                            info.condition = items.condition;
-                            info.selectedCondition = items.selectedCondition;
-                            restoration.push(info);
-                            //return false;
-                        }
-                    });
+                        info.condition = items.condition;
+                        info.selectedCondition = items.selectedCondition;
+                        restoration.push(info);
+                        //return false;
+                    }
                 });
-                selectConditionList.push(restoration);
-                var condtionString = Scenario.createCondtionString(restoration);
-                $scope.decisionList.push(condtionString);
             });
+            selectConditionList.push(restoration);
+            var condtionString = Scenario.createCondtionString(restoration);
+            $scope.decisionList.push(condtionString);
         });
     }
     function setWatchItems()
@@ -290,22 +287,19 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         setEventListeners();
     };
     
-    $scope.showAction = function(targetName)
+    $scope.showAction = function(id, col)
     {
         $scope.conditions = [];
         $scope.decisionList = [];
-        if (actionName == targetName)
+        if (actionId == id)
         {
             $scope.isShowExtraction = !$scope.isShowExtraction;
         }
         else
         {
-            Scenario.resource.action({name: targetName}).$promise.then(function(response)
-            {
-                actionName = targetName;
-                $scope.isShowExtraction = true;
-                $scope.columnList = response.data.column;
-            });
+            $scope.isShowExtraction = true;
+            $scope.columnList = col;
+            actionId = id;
         }
     };
     
@@ -401,6 +395,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             if (0 === selectConditionList.length) return false;
             doc = 
             {
+                actionId: actionId,
                 actionName: actionName,
                 conditionList: Scenario.getConditionDoc(selectConditionList)
             };
