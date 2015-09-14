@@ -1299,6 +1299,8 @@ function update(req, res)
                                         logger.error(Message.COMMON.E_002.replace(
                                             "$1", FUNCTION_NAME+"[scenario.update -> scenariodoc.saveItemForWeb]"), req, err);
                                     }
+                                    console.log("scenariodoc.saveItemForWeb");
+                                    console.log(err);
                                     callback(err);
                                 });
                             }

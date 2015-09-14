@@ -131,6 +131,7 @@ Scenario.prototype = {
                     else
                     {
                         callback('コレクションを作るためのデータが足りません', null);
+                        return;
                     }
                 }
 
