@@ -206,7 +206,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         actionId = initData.specificInfo.doc.actionId;
         $scope.isShowExtraction = true;
         $scope.columnList = initData.response.specific.column;
-        $scope.activeName = initData.specificInfo.doc.action_name;
+        //$scope.activeName = initData.specificInfo.doc.actionId;
         
         angular.forEach(initData.specificInfo.doc.conditionList, function(conditionItems)
         {
