@@ -104,7 +104,7 @@ exports.login = function(req, res)
 
     model.select(qObj, qObj.request,  function(err, data)
     {
-        if (0 < err.length)
+        if (null !== err)
         {
             logger.error(Message.AUTH.E_001, req, err);
             res.status(510).send(Message.AUTH.E_001);
