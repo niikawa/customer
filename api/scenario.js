@@ -1266,7 +1266,6 @@ function update(req, res)
                         res.status(511).send(Message.COMMON.E_100);
                         return;
                     }
-                    console.log("ろーるばっくした");
                     res.status(511).send(Message.COMMON.E_002.replace("$1", req.body.scenario.scenario_name));
                     return;
                 });

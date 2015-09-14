@@ -40,7 +40,7 @@ myApp.config(
                         }
                         else if (500 <= rejection.status)
                         {
-                            if (511 != rejection.status)
+                            if (511 === rejection.status)
                             {
                                 if (rejection.data)
                                 {

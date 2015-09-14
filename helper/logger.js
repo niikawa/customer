@@ -39,6 +39,11 @@ exports.error = function(message, req, err)
 
 function write(level, message, req, err)
 {
+    console.log(level);
+    console.log(message);
+    console.log(req.session);
+    console.log(err);
+    
     var request = "";
     if (req.hasOwnProperty("body"))
     {
@@ -52,6 +57,7 @@ function write(level, message, req, err)
     {
         request = req;
     }
+    console.log(req);
     
     var errInfo = void 0 === err ? "" : err;
     var entity = 
