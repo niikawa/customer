@@ -1338,8 +1338,8 @@ function createUpdateData(requestData)
         scenario_type: requestData.scenario_type,
         segment_id: requestData.segment_id,
         status: requestData.status
-    }
-};
+    };
+}
 
 /**
  * PKに合致したレコードのdelete_flagを1にする
