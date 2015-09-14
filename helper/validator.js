@@ -67,7 +67,7 @@ Validator.prototype.execute = function(rulesMap, parameters)
                     condition = functionInfo[exeIndex].condition;
                 }
                 console.log("validation executeas");
-                console.log(functionInfo);
+                console.log(functionInfo[exeIndex]);
                 console.log(condition);
                 var result = functionInfo[exeIndex].func(parameters[prop], condition);
                 if (!result) return false;

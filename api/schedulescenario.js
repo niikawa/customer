@@ -77,7 +77,7 @@ var ScheduleScenario = function ScheduleScenario()
 
 //coreModelを継承する
 var util = require('util');
-util.inherits(scheduleScenario, Core);
+util.inherits(ScheduleScenario, Core);
 
 /**
  * リクエストパラメータのチェックを行う

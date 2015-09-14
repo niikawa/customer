@@ -1251,7 +1251,10 @@ function update(req, res)
         {
             if (null !== err)
             {
+                logger.error(Message.COMMON.E_002.replace(
+                    "$1", FUNCTION_NAME+"[scenario.update -> last block]"), req, err);
                 model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_002, req.body.scenario.scenario_name);
+                
                 //エラーがある場合はロールバック
                 model.commitOrRollback(transaction, req, err, function(err)
                 {
@@ -1319,7 +1322,7 @@ function update(req, res)
                             res.status(511).send(Message.COMMON.E_100);
                             return;
                         }
-                        return res.status(511).send(Message.COMMON.E_002.replace("$1", req.body.scenario.scenario_name));
+                        return res.status(200).send(Message.COMMON.I_002.replace("$1", req.body.scenario.scenario_name));
                     });
                 });
             }
