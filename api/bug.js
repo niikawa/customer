@@ -314,8 +314,7 @@ exports.saveComment = function(req, res)
 
             model.insert("T_DEMAND_BUG_COMMENT", insertData, request, function(err, date)
             {
-                var errInfo = (err.length > 0) ? err : null;
-                callback(errInfo);
+                callback(err);
             });
         }
     ], function(err)
@@ -397,14 +396,13 @@ exports.downloadByCommentId = function(req, res)
         
             model.select(qObj, qObj.request, function(err, data)
             {
-                var errInfo = 0 < err.length ? err : null;
                 if (null === data[0].attach_name_key)
                 {
                     callback("添付ファイルがありませんでした。");
                 }
                 else
                 {
-                    callback(errInfo, data[0].attach_name_key);
+                    callback(err, data[0].attach_name_key);
                 }
             });
         },
@@ -476,14 +474,13 @@ exports.download = function(req, res)
         
             model.select(qObj, qObj.request, function(err, data)
             {
-                var errInfo = 0 < err.length ? err : null;
                 if (null === data[0].attach_name_key)
                 {
                     callback("添付ファイルがありませんでした。");
                 }
                 else
                 {
-                    callback(errInfo, data[0].attach_name_key);
+                    callback(err, data[0].attach_name_key);
                 }
             });
         },

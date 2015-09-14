@@ -224,7 +224,7 @@ core.prototype.insert = function(table, data, request, callback)
     {
         this.getNextSeq(function(err, seqInfo)
         {
-            if (0 < err.length)
+            if (null !== err)
             {
                 callback(err);
             }

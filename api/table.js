@@ -68,7 +68,7 @@ Table.prototype.getTablesList = function(callback)
             //カラムを取得する
             model.execute(columnSql, request, function(err, columnList)
             {
-                if (null !== err.length)
+                if (null !== err)
                 {
                     next(err);
                 }

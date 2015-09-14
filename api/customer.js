@@ -74,7 +74,7 @@ exports.getDetail = function(req, res)
     }
     model.getById(id, function(err, data)
     {
-        if (err.length > 0 || null === data)
+        if (null !== err )
         {
             console.log(err);
             //レスポンスコード確認

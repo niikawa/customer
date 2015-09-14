@@ -50,7 +50,7 @@ var model = new Environment();
  * emv.get(function(err, data)<br>
  * { <br>
  *     //err is array<br>
- *     if (0 < err.length )<br>
+ *     if (null === err )<br>
  *     {<br> 
  *         //error時の処理<br>
  *     }<br>
