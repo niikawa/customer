@@ -1286,8 +1286,6 @@ function update(req, res)
                         {
                             var doc = req.body.doc;
                             doc.id = data[0].scenario_action_document_id;
-                            console.log("doc info");
-                            console.log(doc);
                             if (null === doc.id)
                             {
                                 callback(null);
@@ -1313,7 +1311,6 @@ function update(req, res)
                 ],
                 function(err)
                 {
-                    console.log(err);
                     var message = "";
                     var code = 0;
                     if (err === null)

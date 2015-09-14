@@ -90,7 +90,6 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
             {
                 Scenario.resource.bulkInvalid().$promise.then(function(response)
                 {
-                    $scope.modalInstance.close();
                     Utility.info('アプローチ対象シナリオをすべて無効しました。');
                     $scope.initialize();
                 });
@@ -111,7 +110,6 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
             {
                 Scenario.resource.bulkEnable().$promise.then(function(response)
                 {
-                    $scope.modalInstance.close();
                     Utility.info('アプローチ対象シナリオをすべて有効しました。');
                     $scope.initialize();
                 });
