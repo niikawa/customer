@@ -53,12 +53,7 @@ function write(level, message, req, err)
     {
         request = req.params;
     }
-    else
-    {
-        request = req;
-    }
-    console.log(req);
-    
+
     var errInfo = void 0 === err ? "" : err;
     var entity = 
     {
@@ -71,6 +66,8 @@ function write(level, message, req, err)
         params: eg.String(JSON.stringify(request)),
         error: eg.String(errInfo),
     };
+
+    console.log(entity);
 
     tableService.createTableIfNotExists(tableName, function(error, result, response)
     {

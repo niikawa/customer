@@ -71,7 +71,7 @@ exports.isLogin = function(req, res)
     }
     else
     {
-        res.status(511).send('not login');
+        res.status(510).send('not login');
     }
 };
 
@@ -107,11 +107,11 @@ exports.login = function(req, res)
         if (null !== err)
         {
             logger.error(Message.AUTH.E_001, req, err);
-            res.status(510).send(Message.AUTH.E_001);
+            res.status(511).send(Message.AUTH.E_001);
         }
         else if (0 === data.length)
         {
-            res.status(510).send(Message.AUTH.E_002);
+            res.status(511).send(Message.AUTH.E_002);
         }
         else
         {
