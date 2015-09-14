@@ -204,8 +204,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     {
         $scope.specificInfo = initData.specificInfo.specific;
         actionId = initData.specificInfo.doc.actionId;
-        console.log(initData.specificInfo.doc);
-        
+
         $scope.isShowExtraction = true;
         var actionLen = initData.specific.length;
         for (var index = 0; index < actionLen; index++)
