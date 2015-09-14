@@ -64,7 +64,7 @@ function write(level, message, req, err)
         userName: eg.String(req.session.userName),
         message: eg.String(message),
         params: eg.String(JSON.stringify(request)),
-        error: eg.String(errInfo),
+        error: eg.String(JSON.stringify(errInfo)),
     };
 
     console.log(entity);
