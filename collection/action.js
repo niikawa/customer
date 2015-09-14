@@ -1,7 +1,7 @@
 var DocumentDBClient = require('documentdb').DocumentClient;
 var docdbUtils = require('./docdbUtils');
 
-function Query(documentDBClient, databaseId, collectionId) {
+function Action(documentDBClient, databaseId, collectionId) {
   this.client = documentDBClient;
   this.databaseId = databaseId;
   this.collectionId = collectionId;
@@ -10,9 +10,9 @@ function Query(documentDBClient, databaseId, collectionId) {
   this.collection = null;
 }
 
-module.exports = Query;
+module.exports = Action;
 
-Query.prototype =
+Action.prototype =
 {
     init: function (callback)
     {
@@ -82,41 +82,6 @@ Query.prototype =
             else
             {
                 callback(null, doc);
-            }
-        });
-    },
-    updateItem: function (data, callback)
-    {
-        var self = this;
-
-        self.getItem(data.id, function (err, doc)
-        {
-            if (err)
-            {
-                callback(err);
-            }
-            else
-            {
-                //ここに更新する値を入れるはず
-                doc.query_name = data.query_name;
-                doc.sql = data.sql;
-                doc.tables = data.tables,
-                doc.whereList = data.whereList,
-                doc.bindInfo = data.bindInfo,
-                doc.columnTypeList = data.columnTypeList;
-
-                self.client.replaceDocument(doc._self, doc, function (err, replaced)
-                {
-                    if (err)
-                    {
-                        callback(err);
-
-                    }
-                    else
-                    {
-                        callback(null, replaced);
-                    }
-                });
             }
         });
     },

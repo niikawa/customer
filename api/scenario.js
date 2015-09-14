@@ -2,6 +2,7 @@ var moment = require('moment');
 var Core = require('./core');
 var Message = require('../config/message.json');
 var scenariodoc = require("./scenariodoc");
+var actiondoc = require("./actiondoc");
 var Validator = require("../helper/validator");
 var logger = require("../helper/logger");
 
@@ -1533,15 +1534,21 @@ exports.initializeData = function(req, res)
         {
             if ('trigger' === req.params.type)
             {
-                var action = require('../config/action.json');
-                var list = [];
-                Object.keys(action).forEach(function(key)
+                
+//                var action = require('../config/action.json');
+                
+                actiondoc.getAllItemForWeb(function(err, docs)
                 {
-                    var target = action[key];
-                    list.push({logicalname: target.logicalname, physicalname: target.physicalname, description: target.description});
+                    callback(null, docs);
                 });
                 
-                callback(null, list);
+                // Object.keys(action).forEach(function(key)
+                // {
+                //     var target = action[key];
+                //     list.push({logicalname: target.logicalname, physicalname: target.physicalname, description: target.description});
+                // });
+                
+                callback(null, []);
             }
             else if ('schedule' === req.params.type)
             {
