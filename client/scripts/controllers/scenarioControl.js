@@ -364,6 +364,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     
     $scope.removeDecisionList = function(index)
     {
+        selectConditionList.splice(index, 1);
         $scope.decisionList.splice(index, 1);
     };
 
