@@ -204,13 +204,15 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     {
         $scope.specificInfo = initData.specificInfo.specific;
         actionId = initData.specificInfo.doc.actionId;
+        console.log(initData.specificInfo.doc);
+        
         $scope.isShowExtraction = true;
-        var actionLen = $scope.specificInfo.length;
+        var actionLen = initData.specific.length;
         for (var index = 0; index < actionLen; index++)
         {
-            if (actionId === $scope.specificInfo[index].id)
+            if (actionId === initData.specific[index].id)
             {
-                $scope.columnList = $scope.specificInfo[index].column;
+                $scope.columnList = initData.specific[index].column;
                 break;
             }
         }
@@ -403,7 +405,6 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             doc = 
             {
                 actionId: actionId,
-                actionName: actionName,
                 conditionList: Scenario.getConditionDoc(selectConditionList)
             };
             specificInfo = $scope.specificInfo;
@@ -414,8 +415,8 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         }
 
         $scope.scenario.scenario_type = pageProp.type;
-        Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario);
-        Scenario.setActivePushItem($scope.ifList, 'if_layout_id', $scope.scenario);
+        Scenario.setActivePushItem($scope.segmentList, 'segment_id', $scope.scenario, 'segment_id');
+        Scenario.setActivePushItem($scope.ifList, 'id', $scope.scenario, 'if_layout_id');
 
         var params = {scenario: $scope.scenario, specificInfo: specificInfo, doc: doc, tags: $scope.selectTagList};
 

@@ -57,11 +57,11 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <input type="text" class="form-control" placeholder="IFレイアウトを絞り込みます" ng-model="ifSearch" 
-                                    refine-directive refine-item="ifList" keyword="ifSearch" name-propertie="if_name" >
+                                    refine-directive refine-item="ifList" keyword="ifSearch" name-propertie="layout_name" >
                             </div>
                             <ul class="list-group overflow-box-s" name="ifLayout" 
                                 ng-model="scenario.if_layout_id" my-validators="validators.ifLayout">
-                                <li class="list-group-item clearfix" ng-repeat="item in ifList" push-directive list="ifList" info="item" active="scenario.if_layout_id" activekey="if_layout_id">
+                                <li class="list-group-item clearfix" ng-repeat="item in ifList" push-directive list="ifList" info="item" active="scenario.if_layout_id" activekey="id">
                                 {{item.if_name}}
                                 </li>
                             </ul>

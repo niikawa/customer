@@ -3,6 +3,7 @@ var Core = require('./core');
 var Message = require('../config/message.json');
 var scenariodoc = require("./scenariodoc");
 var actiondoc = require("./actiondoc");
+var iflayoutdoc = require("./iflayoutdoc");
 var Validator = require("../helper/validator");
 var logger = require("../helper/logger");
 
@@ -1526,8 +1527,11 @@ exports.initializeData = function(req, res)
         //IF情報
         ifLayout: function(callback)
         {
-            var data = [{if_layout_id: 1, if_name: 'デフォルトテンプレート'}];
-            callback(null, data);
+            iflayoutdoc.getAllItemForWeb(function(err, docs)
+            {
+                callback(err, docs);
+            });
+            //var data = [{if_layout_id: 1, if_name: 'デフォルトテンプレート'}];
         },
         //アクション情報
         action: function(callback)

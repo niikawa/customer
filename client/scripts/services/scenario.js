@@ -106,13 +106,13 @@ scenarioServices.factory("Scenario", ['$resource','$http','$q','Utility',
             },
         };
         
-        scenarioServices.setActivePushItem = function(items, propertie, bindObj)
+        scenarioServices.setActivePushItem = function(items, propertie, bindObj, bindProp)
         {
             angular.forEach(items, function(item, key)
             {
                 if (item.isPush)
                 {
-                    bindObj[propertie] = item[propertie];
+                    bindObj[bindProp] = item[propertie];
                     return false;
                 }
             });
