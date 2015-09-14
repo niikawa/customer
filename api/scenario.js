@@ -88,12 +88,12 @@ var Scenario = function Scenario()
         output_name: 
         [
             {func: this.validator.isRequire},
-            {func: this.validator.isMaxOrver, condition: {max: 100}},
+            {func: this.validator.isNotMaxOrver, condition: {max: 100}},
         ],
         scenario_name: 
         [
             {func: this.validator.isRequire},
-            {func: this.validator.isMaxOrver, condition: {max: 100}},
+            {func: this.validator.isNotMaxOrver, condition: {max: 100}},
         ],
         scenario_type: 
         [

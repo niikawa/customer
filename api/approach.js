@@ -59,13 +59,13 @@ var Approach = function Approach()
             [
                 {func: this.validator.isRequire},
                 {func: this.validator.isNumber},
-                {func: this.validator.isNotMaxOrver, conditon: {max: 2147483647}}
+                {func: this.validator.isNotMaxOrver, condition: {max: 2147483647}}
             ],
             weekly_limit_num: 
             [
                 {func: this.validator.isRequire},
                 {func: this.validator.isNumber},
-                {func: this.validator.isNotMaxOrver, conditon: {max: 2147483647}}
+                {func: this.validator.isNotMaxOrver, condition: {max: 2147483647}}
             ]
         }
     };
