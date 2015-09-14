@@ -57,16 +57,19 @@ Validator.prototype.execute = function(rulesMap, parameters)
         var prop = paramKeys[index];
         if ( rulesMap.hasOwnProperty(prop) )
         {
-            var executeFunction = rulesMap[prop];
-            var executeNum = executeFunction.length;
+            var functionInfo = rulesMap[prop];
+            var executeNum = functionInfo.length;
             for (var exeIndex = 0; exeIndex < executeNum; exeIndex++)
             {
                 var condition = null;
-                if (rulesMap[prop][exeIndex].hasOwnProperty("condition"))
+                if (functionInfo[exeIndex].hasOwnProperty("condition"))
                 {
-                    condition = rulesMap[prop][exeIndex].condition;
+                    condition = functionInfo[exeIndex].condition;
                 }
-                var result = rulesMap[prop][exeIndex].func(parameters[prop], condition);
+                console.log("validation executeas");
+                console.log(functionInfo);
+                console.log(condition);
+                var result = functionInfo[exeIndex].func(parameters[prop], condition);
                 if (!result) return false;
             }
         }
@@ -216,6 +219,8 @@ Validator.prototype.isMatchPropList = function(val, condition)
                     {
                         conditionParam = condition[key][index].condition;
                     }
+                    console.log(key);
+                    console.log(condition[key]);
                     var result = condition[key][index].func(val[key], conditionParam);
                     if (!result) return false;
                 }
