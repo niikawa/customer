@@ -58,7 +58,7 @@ exports.getByConditon = function(req, res)
             }
         }
 
-        if (err.length > 0)
+        if (null !== err)
         {
             console.log(err);
             res.status(510).send('get bugs faild sorry!!');
@@ -80,7 +80,7 @@ exports.getComment = function(req, res)
 
     model.select(qObj, qObj.request, function(err, data)
     {
-        if (err.length > 0)
+        if (null !== err)
         {
             console.log('get comment  faild');
             console.log(err);
@@ -189,7 +189,7 @@ exports.save = function(req, res)
         
             model.insert(tableName, insertData, request, function(err, date)
             {
-                if (err.length > 0)
+                if (null !== err)
                 {
                     console.log(err);
                     res.status(510).send('object not found');
@@ -228,7 +228,7 @@ exports.resolve = function(req, res)
 
     model.updateById(updateData, request, function(err, date)
     {
-        if (err.length > 0)
+        if (null !== err)
         {
             model.insertLog(req.session.userId, 5, Message.COMMON.E_002, updateData.segment_name);
             console.log(err);
@@ -345,7 +345,7 @@ exports.vote = function(req, res)
 
         model.select(qObj, request, function(err, data)
         {
-            if (err.length > 0)
+            if (null !== err)
             {
                 console.log(err);
                 res.status(510).send('vote faild');

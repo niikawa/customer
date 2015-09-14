@@ -32,8 +32,7 @@ exports.getById = function(req, res)
 {
     model.getById(req.params.id, function(err, data)
     {
-        console.log(data);
-        if (err.length > 0)
+        if (null !== err)
         {
             console.log(err);
             model.insertLog(req.session.userId, 3, Message.COMMON.E_001);
@@ -58,7 +57,7 @@ exports.getAll = function(req, res)
 {
     model.getAll(function(err, data)
     {
-        if (err)
+        if (null !== err)
         {
             console.log(err);
             //レスポンスコード確認
@@ -84,7 +83,7 @@ exports.getList = function(req, res)
 
     model.select(qObj, qObj.request,  function(err, data)
     {
-        if (err.length > 0)
+        if (null !== err)
         {
             model.insertLog(req.session.userId, 3, Message.COMMON.E_004, functionName);
             console.log(err);
@@ -114,7 +113,7 @@ exports.craete = function(req, res)
     
     model.insert(tableName, insertData, request, function(err, date)
     {
-        if (err.length > 0)
+        if (null !== err)
         {
             model.insertLog(req.session.userId, 3, Message.COMMON.E_001, insertData.name);
             console.log(err);
@@ -161,7 +160,7 @@ exports.update = function(req, res)
     
         model.updateById(updateData, request, function(err)
         {
-            if (err.length > 0)
+            if (null !== err)
             {
                 model.insertLog(req.session.userId, 3, Message.COMMON.E_002, updateData.name);
                 console.log(err);
@@ -178,7 +177,7 @@ exports.remove = function(req, res)
     var user_id = req.params.id;
     model.removeById(user_id, function(err, data)
     {
-        if (err.length > 0)
+        if (null !== err)
         {
             console.log(err);
             res.status(510).send('object not found');
@@ -192,7 +191,7 @@ exports.delete = function(req, res)
     var user_id = req.params.id;
     model.deleteById(user_id, function(err, data)
     {
-        if (err.length > 0)
+        if (null !== err)
         {
             console.log(err);
             res.status(510).send('object not found');
@@ -208,7 +207,7 @@ exports.isSameMailAddress = function(req, res)
     {
         model.isSameItem('mailaddress', req.body.mailaddress, model.db.VarChar, function(err, result)
         {
-            if (err.length > 0)
+            if (null !== err)
             {
                 console.log(err);
                 res.status(510).send('query execute faild');
@@ -225,7 +224,7 @@ exports.isSameMailAddress = function(req, res)
         console.log(conditions);
         model.isSameItemByMultipleCondition(conditions , function(err, result)
         {
-            if (err.length > 0)
+            if (null !== err)
             {
                 console.log(err);
                 res.status(510).send('query execute faild');
