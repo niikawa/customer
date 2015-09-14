@@ -109,7 +109,9 @@ exports.save = function(transaction, userId, scenarioId, tagList, mainCallback)
     },
     function(err)
     {
-        mainCallback(err, tagList);
+        //タグリストが存在しない場合はerr情報がundefindになるためnullに変換
+        var errInfo = void 0 === err ? null : err;
+        mainCallback(errInfo, tagList);
     });
 };
 /**
@@ -156,7 +158,7 @@ exports.deleteInsert = function(params, callback)
     {
         if (null === err)
         {
-            if (void 0 !== params.tagList)
+            if (void 0 !== params.tagList || 0 < params.tagList.length)
             {
                 save(params.transaction, params.userId, params.scenarioId, params.tagList, function(err, tagList)
                 {

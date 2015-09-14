@@ -1211,8 +1211,6 @@ function update(req, res)
                 request.input('update_by', model.db.Int, req.session.userId);
                 childTabelObject.updateByScenarioId(updateData, request, function(err, data)
                 {
-                    console.log("updateByScenarioId");
-                    console.log(err);
                     if (null !== err)
                     {
                         logger.error(Message.COMMON.E_002.replace(
@@ -1226,8 +1224,6 @@ function update(req, res)
                 //新規タグがあれば新しく登録する
                 insertTags(transaction, req.session.userId, req.body.tags, function(err, tagList)
                 {
-                    console.log("insertTags");
-                    console.log(err);
                     if (null !== err)
                     {
                         callback(err);
