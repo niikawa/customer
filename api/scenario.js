@@ -1461,13 +1461,13 @@ exports.remove = function(req, res)
                     {
                         if (null !== err)
                         {
-                            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_003, req.body.scenario.scenario_name);
+                            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_003, typeData[0].scenario_name);
                             res.status(511).send(Message.COMMON.E_100);
                             return;
                         }
 
-                        model.insertLog(req.session.userId, FUNCTION_NUMBER, message, req.body.scenario.scenario_name);
-                        res.status(code).send(message.replace("$1", req.body.scenario.scenario_name));
+                        model.insertLog(req.session.userId, FUNCTION_NUMBER, message, typeData[0].scenario_name);
+                        res.status(code).send(message.replace("$1", typeData[0].scenario_name));
                         return;
                     });
                 });
