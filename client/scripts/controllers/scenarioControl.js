@@ -172,7 +172,11 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
             else if (2 === pageProp.type)
             {
                 $scope.actionList =  response.specific;
-                if (isEdit) editTriggerInitialize(response);
+                if (isEdit)
+                {
+                    $scope.activeId = response.specificInfo.doc.actionId;
+                    editTriggerInitialize(response);
+                }
             }
         });
     }
@@ -215,7 +219,6 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                 break;
             }
         }
-        $scope.activeId = initData.specificInfo.doc.actionId;
         angular.forEach(initData.specificInfo.doc.conditionList, function(conditionItems)
         {
             var restoration = [];
