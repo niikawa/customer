@@ -205,12 +205,12 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.specificInfo = initData.specificInfo.specific;
         actionId = initData.specificInfo.doc.actionId;
         $scope.isShowExtraction = true;
-        var actionLen = initData.response.specific.length;
+        var actionLen = $scope.specificInfo.length;
         for (var index = 0; index < actionLen; index++)
         {
-            if (actionId === initData.response.specific[index].id)
+            if (actionId === $scope.specificInfo[index].id)
             {
-                $scope.columnList = initData.response.specific[index].column;
+                $scope.columnList = $scope.specificInfo[index].column;
                 break;
             }
         }
