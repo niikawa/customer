@@ -1539,7 +1539,11 @@ exports.initializeData = function(req, res)
                 
                 actiondoc.getAllItemForWeb(function(err, docs)
                 {
+                    console.log("actiondoc.getAllItemForWeb");
+                    console.log(err);
+                    
                     callback(null, docs);
+                    
                 });
                 
                 // Object.keys(action).forEach(function(key)
@@ -1547,8 +1551,6 @@ exports.initializeData = function(req, res)
                 //     var target = action[key];
                 //     list.push({logicalname: target.logicalname, physicalname: target.physicalname, description: target.description});
                 // });
-                
-                callback(null, []);
             }
             else if ('schedule' === req.params.type)
             {
