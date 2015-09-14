@@ -59,6 +59,9 @@ var model = new Environment();
  */
 exports.get = function(callback)
 {
-    model.getAll(callback);
+    model.getAll(function(err, data)
+    {
+        callback(err, data);
+    });
 };
 

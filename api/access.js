@@ -122,10 +122,7 @@ exports.getDayAll = function(req, res)
 
     if (!model.validation("getDayAll", req.body))
     {
-        logger.error("ろぐいんしました", req.body);
-
-        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[access.getDayAll]"));
-        console.log(req.body);
+        logger.error(Message.COMMON.E_103.replace("$1", FUNCTION_NAME+"[access.getDayAll]"), req);
         res.status(510).send(Message.COMMON.E_101);
         return;
     }
@@ -142,12 +139,11 @@ exports.getDayAll = function(req, res)
     
     model.select(qObj, qObj.request, function(err, data)
     {
-        if (0 < err.length)
+        if (null !== err)
         {
-            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[access.getDayAll]"));
-            console.log(err);
+            logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[access.getDayAll]"), req, err);
             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, FUNCTION_NAME);
-            res.status(510).send(Message.ACCESS.E_001);
+            res.status(511).send(Message.ACCESS.E_001);
             return ;
         }
         res.json({data: data});
@@ -179,7 +175,7 @@ exports.getDayAllByUserId = function(req, res)
 
     if (!model.validation("getDayAllByUserId", req.body))
     {
-        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[access.getDayAll]"));
+        logger.error(Message.COMMON.E_103.replace("$1", FUNCTION_NAME+"[access.getDayAllByUserId]"), req);
         res.status(510).send(Message.COMMON.E_101);
         return;
     }
@@ -196,12 +192,11 @@ exports.getDayAllByUserId = function(req, res)
     
     model.select(qObj, qObj.request, function(err, data)
     {
-        if (0 < err.length)
+        if (null !== err)
         {
-            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[access.getDayAllByUserId]"));
-            console.log(err);
+            logger.error(Message.COMMON.E_101.replace("$1", FUNCTION_NAME+"[access.getDayAllByUserId]"), req, err);
             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, FUNCTION_NAME);
-            res.status(510).send(Message.ACCESS.E_001);
+            res.status(511).send(Message.ACCESS.E_001);
             return;
         }
         res.json({data: data});

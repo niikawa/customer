@@ -1,5 +1,6 @@
 var moment = require('moment');
 var logInfo = require('../config/controlLog');
+var logger = require("../helper/logger");
 
 /**
  * core class
@@ -368,8 +369,35 @@ core.prototype.execute = function(sql, request, callback)
     // 常時最後によばれる
     request.on('done', function(returnValue)
     {
-        callback(errList, result);
+        var errInfo = 0 < errList.length ? errList : null;
+        callback(errInfo, result);
     });
+};
+
+core.prototype.commitOrRollback = function(transaction, req, err, callback)
+{
+    if (null !== err)
+    {
+        transaction.rollback(function(err)
+        {
+            if (err)
+            {
+                logger.error("ロールバックに失敗しました", req, err);
+            }
+            callback(err);
+        });
+    }
+    else
+    {
+        transaction.commit(function(err)
+        {
+            if (err)
+            {
+                logger.error("コミットに失敗しました", req, err);
+            }
+            callback(err);
+        });
+    }
 };
 
 core.prototype.insertLog = function(userId, controlType, appendString, replace, data, callback)

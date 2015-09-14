@@ -1,4 +1,6 @@
 var Core = require('./core');
+var Message = require('../config/message.json');
+var logger = require("../helper/logger");
 
 /** 
  * クエリー機能APIのクラス
@@ -35,13 +37,12 @@ Table.prototype.getTablesList = function(callback)
     var request = model.getRequest();
     model.execute(tableSql, request, function(err, tableList)
     {
-        if (0 < err.length)
+        if (null !== err)
         {
             callback(err);
+            return;
         }
         
-        console.log("table list is ");
-        console.log(tableList);
         //表示対象のテーブルが持つカラム一覧を取得するSQL
         var columnSql = "SELECT t.name table_name ,c.name column_name ,sc.data_type ,sc.character_maximum_length max_lengt ,cast(ep.value as nvarchar) comment " +
                         "FROM sys.tables t, sys.columns c, sys.extended_properties ep, INFORMATION_SCHEMA.COLUMNS sc " +
@@ -67,7 +68,7 @@ Table.prototype.getTablesList = function(callback)
             //カラムを取得する
             model.execute(columnSql, request, function(err, columnList)
             {
-                if (0 < err.length)
+                if (null !== err.length)
                 {
                     next(err);
                 }
@@ -100,8 +101,7 @@ Table.prototype.getTablesList = function(callback)
         },
         function (err) 
         {
-            var errInfo = null === err ? [] : err;
-            callback(errInfo, tableInfo);
+            callback(err, tableInfo);
         });
     });
 };
@@ -121,13 +121,12 @@ exports.getTables = function(req, res)
 {
     model.getTablesList(function(err, data)
     {
-        if (0 < err.length)
+        if (null !== err)
         {
-            console.log(err);
-            res.status(510).send('テーブルデータの取得に失敗しました。');
+            logger.error(Message.COMMON.E_102.replace("$1", "[table.getTables]"), req, err);
+            res.status(511).send(Message.QUERY.E_003);
             return;
         }
-        console.log(data);
         res.json({table: data});
     });
 };

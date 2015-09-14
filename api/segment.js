@@ -4,31 +4,135 @@ var Creator = require("../helper/createSql");
 var Message = require('../config/message.json');
 var querydoc = require("./querydoc");
 var segmentdoc = require("./segmentdoc");
+var Validator = require("../helper/validator");
+var logger = require("../helper/logger");
 
-/** テーブル名 */
-var tableName = 'M_SEGMENT';
-/** PK */
-var pk = 'segment_id';
-/** SEQ */
-var seqName = 'seq_segment';
-/** 機能名 */
-var functionName = 'セグメント管理';
+/** 
+ * テーブル名
+ * @property TABLE_NAME
+ * @type {string}
+ * @final
+ */
+var TABLE_NAME = 'M_SEGMENT';
+/** 
+ * 主キー名 
+ * @property PK_NAME
+ * @type {string}
+ * @final
+ */
+var PK_NAME = 'segment_id';
+/** 
+ * SEQ名
+ * @property SEQ_NAME
+ * @type {string}
+ * @final
+ */
+var SEQ_NAME = 'seq_segment';
+/** 
+ * 機能名
+ * @property FUNCTION_NAME
+ * @type {string}
+ * @final
+ */
+var FUNCTION_NAME = 'セグメント管理';
+/** 
+ * 機能番号
+ * @property FUNCTION_NAME
+ * @type {Number}
+ * @final
+ */
+var FUNCTION_NUMBER = 5;
 
-var segment = function segment()
+/** 
+ * セグメント機能APIのクラス
+ * 
+ * @namespace api
+ * @class Segment
+ * @constructor
+ * @extends api.core
+ */
+var Segment = function Segment()
 {
-    Core.call(this, tableName, pk, seqName);
+    Core.call(this, TABLE_NAME, PK_NAME, SEQ_NAME);
+    this.validator = new Validator();
+    this.parametersRulesMap = 
+    {
+        getById:
+            {id: [{func: this.validator.isRequire}] },
+        getByQueryDocId:
+        {
+            qId: [{func: this.validator.isRequire}],
+            count: [{func: this.validator.isRequire}, {func: this.validator.isNumber}]
+        },
+        execute:
+        {
+            qIds: [{func: this.validator.isRequire}]
+        },
+        save:
+        {
+            segment_name: 
+            [
+                {func: this.validator.isRequire},
+                {func: this.validator.isNotMaxOrver, condition: {max: 100}},
+            ],
+            segment_document_id: [{func: this.validator.isRequire}],
+            status: 
+            [
+                {func: this.validator.isRequire},
+                {func: this.validator.isMatchValueList, condition: [0, 1]},
+            ]
+        },
+        remove:
+        {
+            id: 
+            [
+                {func: this.validator.isRequire}, 
+                {func: this.validator.isNumber}, 
+                {func: this.validator.isNotMaxOrver, condition: 9223372036854775807}
+            ],
+            segment_document_id: [{func: this.validator.isRequire}],
+        },
+        download:
+        {
+            id: 
+            [
+                {func: this.validator.isRequire}, 
+                {func: this.validator.isNumber}, 
+                {func: this.validator.isNotMaxOrver, condition: 9223372036854775807}
+            ]
+        }
+    };
+    
 };
 
 //coreModelを継承する
 var util = require('util');
-util.inherits(segment, Core);
+util.inherits(Segment, Core);
 
-var model = new segment();
+/**
+ * リクエストパラメータのチェックを行う
+ * 
+ * @method validation
+ * @param {string} key 実行対象メソッド名
+ * @param {Object} parameters チェック対象パラメータオブジェクト
+ * @return {bool} 
+ */
+Segment.prototype.validation = function(key ,parameters)
+{
+    var rules = this.parametersRulesMap[key];
+    return this.validator.execute(rules, parameters);
+};
+
+var model = new Segment();
 
 exports.getById = function(req, res)
 {
-    console.log('segment getById start');
-    if (void 0 === req.params.id) return res.status(510).send('Invalid parameter');
+    if (!model.validation("getById", req.params))
+    {
+        logger.error(Message.COMMON.E_103.replace("$1", FUNCTION_NAME+"[segment.getById]"), req);
+        res.status(511).send(Message.COMMON.E_101);
+        return;
+    }
 
     model.async.waterfall
     ([
@@ -36,43 +140,51 @@ exports.getById = function(req, res)
         {
             if (isFinite(req.params.id, 10))
             {
-                console.log('koko1');
                 model.getById(req.params.id, function(err, data)
                 {
-                    if (err.length > 0)
+                    if (null !== err)
                     {
-                        console.log(err);
-                        res.status(510).send('該当するセグメント情報はありません');
-                        return;
+                        logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[segment.getById -> core.getById]"), req, err);
+                        model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_102, FUNCTION_NAME);
                     }
-                    callback(null, data[0]);
+                    callback(err, data[0]);
                 });
             }
             else
             {
-                console.log('koko2');
                 var col = "*";
                 var where = "delete_flag = 0 AND segment_document_id = @segment_document_id";
-                var qObj = model.getQueryObject(col, tableName, where, '', '');
+                var qObj = model.getQueryObject(col, TABLE_NAME, where, '', '');
                 qObj.request.input('segment_document_id', model.db.NVarChar, req.params.id);
                 model.select(qObj, qObj.request, function(err, data)
                 {
-                    if (err.length > 0)
+                    if (null !== err)
                     {
-                        console.log(err);
-                        res.status(510).send('object not found');
-                        return;
+                        logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[segment.getById -> getByDocumentId]"), req, err);
+                        model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_102, FUNCTION_NAME);
                     }
-                    callback(null, data[0]);
+                    callback(err, data[0]);
                 });
             }
         }
     ],
     function(err, data)
     {
+        if (null !== err)
+        {
+            res.status(511).send(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_102, FUNCTION_NAME);
+            return;
+        }
+        //ドキュメント情報を取得する
         segmentdoc.getItemByIdForWeb(data.segment_document_id, function(err, doc)
         {
-            if (err) res.status(510).send('document is not found');
+            if (null !== err)
+            {
+                logger.error(Message.COMMON.E_002+" "+FUNCTION_NAME+"[segment.getById -> segmentdoc.getItemByIdForWeb]", req, err);
+                model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_102, FUNCTION_NAME);
+                res.status(511).send(Message.SEGMENT.E_004.replace("$1", FUNCTION_NAME));
+                return;
+            }
             
             res.json({
                 segment_name: data.segment_name, 
@@ -84,31 +196,39 @@ exports.getById = function(req, res)
     });
 };
 
+/**
+ * クエリーコレクションIDからセグメント情報を取得する
+ * 
+ * @method getByQueryDocId
+ * @param {Object} req リクエストオブジェクト
+ *  @param {object} req.body POSTされたパラメータを格納したオブジェクト
+ *   @param {String} req.body.qId クエリーコレクションID
+ *   @param {Number} req.body.count 件数
+ * @param {Object} res レスポンスオブジェクト
+ * @return 
+ *     <ul>
+ *     <li>正常終了の場合:ステータスコード200</li>
+ *     <li>以上終了の場合:ステータスコード510</li>
+ *     </ul>
+ */
 exports.getByQueryDocId = function(req, res)
 {
-    console.log('getByQueryDocId');
-    if (!req.body.hasOwnProperty('qId')) res.status(510).send('Invalid parameter');
-    if (req.body.hasOwnProperty('count'))
+    if (!model.validation("getByQueryDocId", req.body))
     {
-        if (!isFinite(req.body.count, 10))
-        {
-            res.status(510).send('Invalid parameter');
-        }
+        logger.error(Message.COMMON.E_103.replace("$1", FUNCTION_NAME+"[segment.getByQueryDocId]"), req);
+        res.status(511).send(Message.COMMON.E_101);
+        return;
     }
-    else
-    {
-        res.status(510).send('Invalid parameter');
-    }
-    
-    
+
     var query = "SELECT doc.id, doc.segment_name, doc.qIds FROM doc";
     segmentdoc.getItemByQuery(query, function(err, docs)
     {
         if (err)
         {
-            console.log('select segment document faild');
-            console.log(err);
-            res.status(510).send('セグメント情報の取得に失敗しました。');
+            logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[segment.getByQueryDocId -> segmentdoc.getItemByQuery]"), req, err);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, FUNCTION_NAME);
+            res.status(511).send(Message.COMMON.E_102.replace("$1", "セグメント"));
+            return;
         }
         var num = docs.length;
         var findCount = 0;
@@ -131,67 +251,64 @@ exports.getByQueryDocId = function(req, res)
     });
 };
 
-/** misiyou */
-exports.getAll = function(req, res)
-{
-    model.getAll(function(err, data)
-    {
-        if (err)
-        {
-            console.log(err);
-            //レスポンスコード確認
-            res.json({data: data});
-        }
-        else
-        {
-            res.json({data: data});
-        }
-    });
-};
-
+/**
+ * セグメント情報をすべて取得する
+ * 
+ * @method getList
+ * @param {Object} req リクエストオブジェクト
+ * @param {Object} res レスポンスオブジェクト
+ * @return 
+ *     <ul>
+ *     <li>正常終了の場合:ステータスコード200</li>
+ *     <li>以上終了の場合:ステータスコード510</li>
+ *     </ul>
+ */
 exports.getList = function(req, res)
 {
     var col = "segment_id, segment_name, FORMAT(update_date, 'yyyy/MM/dd') AS update_date, segment_document_id";
     var where = "delete_flag = 0";
-    var qObj = model.getQueryObject(col, tableName, where, '', '');
+    var qObj = model.getQueryObject(col, TABLE_NAME, where, '', '');
     model.select(qObj, qObj.request, function(err, data)
     {
-        //セグメントの利用状況を設定する
         var scenario = require("./scenario");
-        console.log('scenario.getBySegmentId for');
-        console.log(data);
         async.forEach(data, function(segment, callback)
         {
             scenario.getBySegmentId(segment.segment_id, function(err, data)
             {
-                console.log("getBySegmentId");
-                console.log(data);
-                segment.isUsed = (data.length > 0);
-                var errInfo = 0 < err.length ? err : null;
-                callback(errInfo);
+                //セグメントの利用状況を設定する
+                if (null !== err) segment.isUsed = (data.length > 0);
+                callback(err);
             });
         },
         function (err) 
         {
             if (null !== err)
             {
-                if (err.length > 0)
-                {
-                    model.insertLog(req.session.userId, 5, Message.COMMON.E_004, functionName);
-                    console.log('get segment data faild');
-                    console.log(err);
-                    res.status(510).send('get segment data faild');
-                }
+                logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[segment.getList]"), req, err);
+                model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, FUNCTION_NAME);
+                res.status(511).send(Message.COMMON.E_102.replace("$1", "セグメント"));
+                return;
             }
-            model.insertLog(req.session.userId, 5, Message.COMMON.I_004, functionName);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_004, FUNCTION_NAME);
             res.json({data: data});
         });    
     });
 };
 
+/**
+ * 画面で選択されたクエリをもとにSQLを実行する
+ * 
+ * @method execute
+ * @param {Object} req リクエストオブジェクト
+ * @param {Object} res レスポンスオブジェクト
+ * @return 
+ *     <ul>
+ *     <li>正常終了の場合:ステータスコード200</li>
+ *     <li>以上終了の場合:ステータスコード510</li>
+ *     </ul>
+ */
 exports.execute = function(req, res)
 {
-    console.log('segment exexute start');
     var colmunList = [];
     colmunList.push('*');
     
@@ -199,9 +316,10 @@ exports.execute = function(req, res)
     {
         if (err)
         {
-            console.log(err);
-            console.log(req.body.qIds);
-            res.status(510).send('docs not found');
+            logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[segment.execute -> querydoc.getItemByIdsForWeb]"), req, err);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SEGMENT.E_003, FUNCTION_NAME);
+            res.status(511).send(Message.SEGMENT.E_003);
+            return;
         }
         
         var request = model.getRequest();
@@ -211,18 +329,32 @@ exports.execute = function(req, res)
 
         model.execute(sql, request, function(err, data)
         {
-            if (err.length > 0)
+            if (null !== err)
             {
-                console.log(err);
-                res.status(510).send('data not found');
+                logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[segment.execute]"), req, err);
+                model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SEGMENT.E_003, FUNCTION_NAME);
+                res.status(511).send(Message.SEGMENT.E_003);
+                return;
             }
-            model.insertLog(req.session.userId, 5, Message.SEGMENT.I_001);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SEGMENT.I_001);
             res.json({result: data[0].count});
         });
     });
 };
 
-exports.save = function(req, res)
+/**
+ * セグメントを保存する
+ * 
+ * @method save
+ * @param {Object} req リクエストオブジェクト
+ * @param {Object} res レスポンスオブジェクト
+ * @return 
+ *     <ul>
+ *     <li>正常終了の場合:ステータスコード200</li>
+ *     <li>以上終了の場合:ステータスコード510</li>
+ *     </ul>
+ */
+ exports.save = function(req, res)
 {
     var isCreate = 
         (void 0 === req.body.data.segment_id || '' === req.body.data.segment_id);
@@ -236,26 +368,45 @@ exports.save = function(req, res)
     }
 };
 
-exports.remove = function(req, res)
+/**
+ * セグメントを削除する
+ * 
+ * @method remove
+ * @param {Object} req リクエストオブジェクト
+ * @param {Object} res レスポンスオブジェクト
+ * @return 
+ *     <ul>
+ *     <li>正常終了の場合:ステータスコード200</li>
+ *     <li>以上終了の場合:ステータスコード510</li>
+ *     </ul>
+ */
+ exports.remove = function(req, res)
 {
-    console.log('segment remove start');
-    if (void 0 === req.params.id || void 0 === req.params.segment_document_id) res.status(510).send('parameters not found');
-    
+    if (!model.validation("remove", req.params))
+    {
+        logger.error(Message.COMMON.E_103.replace("$1", "[segment.remove]"), req);
+        res.status(511).send(Message.COMMON.E_101);
+        return;
+    }
+
     segmentdoc.removeItemForWeb(req.params.segment_document_id, function(err, doc)
     {
+        var message = Message.SEGMENT.E_003.replace("$1", doc.segment_name);
         if (err) 
         {
-            return res.status(510).send('document is not found');
+            logger.error(Message.COMMON.E_003.replace("$1", "[segment.remove -> segmentdoc.removeItemForWeb]"), req, err);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, message);
+            res.status(511).send(message);
+            return;
         }
-        console.log('segment doc removeItemForWeb ok');
-        console.log(doc);
-        
+
         model.tranBegin(function(err, transaction)
         {
             if (err)
             {
-                console.log(err);
-                
+                logger.error(Message.COMMON.E_003.replace("$1", "[segment.remove -> tranBegin]"), req, err);
+                model.insertLog(req.session.userId, FUNCTION_NUMBER, message);
+                res.status(511).send(message);
             }
             model.async.waterfall(
             [
@@ -263,16 +414,12 @@ exports.remove = function(req, res)
                 {
                     model.removeByIdAndTran(req.params.id, transaction, function(err, data)
                     {
-                        if (err.length > 0)
+                        if (null === err)
                         {
-                            console.log("segment remove faild: segment_id="+req.params.id);
-                            console.log(err);
-                            callback(err, {});
+                            logger.error(Message.COMMON.E_003.replace("$1", "[segment.remove -> removeByIdAndTran]"), req, err);
+                            model.insertLog(req.session.userId, FUNCTION_NUMBER, message);
                         }
-                        else
-                        {
-                            callback(null);
-                        }
+                        callback(err, {});
                     });
                 },
                 function(callback)
@@ -283,67 +430,52 @@ exports.remove = function(req, res)
                     request.input("segment_id", model.db.Int, req.params.id);
                     model.execute(sql, request, function(err, data)
                     {
-                        if (err.length > 0)
+                        if (null !== err)
                         {
-                            console.log("scenario.valid_flag update faild: segment_id="+req.params.id);
-                            console.log(err);
-                            callback(err, {});
+                            logger.error(Message.COMMON.E_003.replace("$1", "[segment.remove -> update valid_flag]"), req, err);
+                            model.insertLog(req.session.userId, FUNCTION_NUMBER, message);
                         }
-                        else
-                        {
-                            callback(null);
-                        }
+                        callback(err);
                     });
                 }
             ],
             function(err)
             {
-                if (null !== err)
+                model.commitOrRollback(transaction, req, err, function(errInfo)
                 {
-                    console.log('scenario remove faild');
-                    console.log(err);
-                    
-                    transaction.rollback(function(err)
+                    if (null !== errInfo)
                     {
-                        if (err)
-                        {
-                            console.log('scenario remove rollback faild');
-                            console.log(err);
-                            res.status(510).send("システムエラーが発生しました。");
-                        }
-                        else
-                        {
-                            //model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
-                            res.status(510).send("シナリオの削除に失敗しました。");
-                        }
-                    });
-                }
-                else
-                {
-                    transaction.commit(function(err)
-                    {
-                        if (err)
-                        {
-                            console.log('scenario remove commit faild');
-                            console.log(err);
-                            res.status(510).send("システムエラーが発生しました。");
-                        }
-                        else
-                        {
-                            //model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
-                            res.status(200).send('segment remove ok');
-                        }
-                    });
-                }
+                        logger.error(Message.COMMON.E_003.replace("$1", "[segment.remove -> commitOrRollback]"), req, err);
+                        model.insertLog(req.session.userId, FUNCTION_NUMBER, message);
+                        res.status(511).send(message);
+                    }
+                    res.status(200).send('segment remove ok');
+                });
             });
         });
     });
 };
 
-exports.download = function(req, res)
+/**
+ * セグメント結果をダウンロードする
+ * 
+ * @method download
+ * @param {Object} req リクエストオブジェクト
+ * @param {Object} res レスポンスオブジェクト
+ * @return 
+ *     <ul>
+ *     <li>正常終了の場合:ステータスコード200</li>
+ *     <li>以上終了の場合:ステータスコード510</li>
+ *     </ul>
+ */
+ exports.download = function(req, res)
 {
-    if (!req.params.hasOwnProperty('id')) res.status(510).send('パラメータが不正です');
-    console.log('segment download start');
+    if (!model.validation("download", req.params))
+    {
+        logger.error(Message.COMMON.E_103.replace("$1", "[segment.download]"), req);
+        res.status(511).send(Message.COMMON.E_101);
+        return;
+    }
     
     //現状、segmentテーブルのIDしかパラメータとしてわたってこないが、拡張の可能性を考慮し
     //segment_document_idでも取得できるようにしておく
@@ -355,44 +487,46 @@ exports.download = function(req, res)
             {
                 model.getById(req.params.id, function(err, data)
                 {
-                    if (err.length > 0)
+                    if (null !== err)
                     {
-                        console.log(err);
-                        res.status(510).send('該当するセグメント情報はありません');
-                        return;
+                        logger.error(Message.COMMON.E_003.replace("$1", "[segment.download -> getById]"), req, err);
                     }
-                    callback(null, data[0]);
+                    callback(err, data[0]);
                 });
             }
             else
             {
                 var col = "*";
                 var where = "delete_flag = 0 AND segment_document_id = @segment_document_id";
-                var qObj = model.getQueryObject(col, tableName, where, '', '');
+                var qObj = model.getQueryObject(col, TABLE_NAME, where, '', '');
                 qObj.request.input('segment_document_id', model.db.NVarChar, req.params.id);
                 model.select(qObj, qObj.request, function(err, data)
                 {
-                    if (err.length > 0)
+                    if (null !== err)
                     {
-                        console.log(err);
-                        res.status(510).send('該当するセグメント情報はありません');
-                        return;
+                        logger.error(Message.COMMON.E_003.replace("$1", "[segment.download -> getById]"), req, err);
                     }
-                    callback(null, data[0]);
+                    callback(err, data[0]);
                 });
             }
         }
     ],
     function(err, data)
     {
+        if (null !== err)
+        {
+            res.status(511).send(Message.SEGMENT.E_001+"<br>"+Message.COMMON.I_006);
+            return ;
+        }
         //segment_document_idからsegment情報をdocumentDBから取得する
         segmentdoc.getItemByIdForWeb(data.segment_document_id, function(err, doc)
         {
             if (err) 
             {
-                console.log(err);
-                console.log('セグメント情報を取得できませんでした。');
-                res.status(510).send('セグメント情報を取得できませんでした。');
+                logger.error(Message.COMMON.E_003.replace("$1", "[segment.download -> segmentdoc.getItemByIdForWeb]"), req, err);
+                model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SEGMENT.E_001);
+                res.status(511).send(Message.SEGMENT.E_001+"<br>"+Message.COMMON.I_006);
+                return;
             }
             
             //queryを組み立てるための情報を生成
@@ -407,12 +541,19 @@ exports.download = function(req, res)
             //segment情報からquery情報をdocumentDBから取得する
             querydoc.getItemByIdsForWeb(doc.qIds, ['*'], function(err, docs)
             {
-                console.log('segment download getItemByIdsForWeb');
                 if (err)
                 {
-                    console.log(err);
-                    console.log('セグメントするためのクエリが取得できませんでした。');
-                    res.status(510).send('セグメントするためのクエリが取得できませんでした。');
+                    logger.error(Message.COMMON.E_003.replace("$1", "[segment.download -> querydoc.getItemByIdsForWeb]"), req, err);
+                    model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SEGMENT.E_005);
+                    res.status(511).send(Message.SEGMENT.E_005);
+                    return;
+                }
+                if (void 0 === docs || 0 === docs.length)
+                {
+                    logger.info(Message.COMMON.E_003.replace("$1", "[segment.download -> querydoc.getItemByIdsForWeb]"), req);
+                    model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SEGMENT.E_005);
+                    res.status(511).send(Message.SEGMENT.E_004);
+                    return;
                 }
                 
                 //セグメント結果を取得するためのSQLを生成し実行する
@@ -423,11 +564,12 @@ exports.download = function(req, res)
                 var sql = creator.getSql(tables);
                 model.execute(sql, request, function(err, data)
                 {
-                    if (err.length > 0)
+                    if (null !== err)
                     {
-                        console.log('セグメント情報取得時にエラーが発生しました。');
-                        console.log(err);
-                        res.status(510).send('セグメント情報取得時にエラーが発生しました。');
+                        logger.error(Message.COMMON.E_003.replace("$1", "[segment.download -> execute]"), req, err);
+                        model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SEGMENT.E_005);
+                        res.status(511).send(Message.SEGMENT.E_005);
+                        return;
                     }
                     
                     var fileHelper = require("../helper/fileHelper");
@@ -436,15 +578,19 @@ exports.download = function(req, res)
                     {
                         if (null !== err)
                         {
-                            console.log(err);
-                            res.status(err.status).end();
+                            logger.error(Message.COMMON.E_104.replace("$1", "[segment.download -> write]"), req, err);
+                            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SEGMENT.E_005);
+                            res.status(511).send(Message.SEGMENT.E_005);
+                            return;
                         }
                         res.download(fileInfo.output, fileInfo.fileName, function(err)
                         {
                             if (err)
                             {
-                                console.log(err);
-                                res.status(err.status).end();
+                                logger.error(Message.COMMON.E_105.replace("$1", "[segment.download -> download]"), req, err);
+                                model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SEGMENT.E_005);
+                                res.status(511).send(Message.SEGMENT.E_005);
+                                return;
                             }
                         });
                     });
@@ -453,7 +599,7 @@ exports.download = function(req, res)
         });
     });
 };
-
+//セグメントを作成する
 function create(req, res)
 {
     var commonColumns = model.getInsCommonColumns();
@@ -469,19 +615,20 @@ function create(req, res)
     request.input('status', model.db.SmallInt, insertData.status);
     request.input('segment_document_id', model.db.NVarChar, insertData.segment_document_id);
 
-    model.insert(tableName, insertData, request, function(err, date)
+    model.insert(TABLE_NAME, insertData, request, function(err, date)
     {
-        if (err.length > 0)
+        if (null !== err)
         {
-            model.insertLog(req.session.userId, 5, Message.COMMON.E_001, insertData.segment_name);
-            console.log(err);
-            res.status(510).send('object not found');
+            logger.error(Message.COMMON.E_001.replace("$1", "[segment.save -> create]"), req, err);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_001, insertData.segment_name);
+            res.status(511).send(Message.SEGMENT.E_001.replace("$1", insertData.segment_name));
+            return;
         }
-        model.insertLog(req.session.userId, 5, Message.COMMON.I_001, insertData.segment_name);
+        model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_001, insertData.segment_name);
         res.status(200).send('insert ok');
     });
 }
-
+//セグメントを更新する
 function update(req, res)
 {
     var commonColumns = model.getUpdCommonColumns();
@@ -494,13 +641,14 @@ function update(req, res)
 
     model.updateById(updateData, request, function(err, date)
     {
-        if (err.length > 0)
+        if (null !== err)
         {
-            model.insertLog(req.session.userId, 5, Message.COMMON.E_002, updateData.segment_name);
-            console.log(err);
-            res.status(510).send('object not found');
+            logger.error(Message.COMMON.E_002.replace("$1", "[segment.save -> update]"), req, err);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_002, updateData.segment_name);
+            res.status(511).send(Message.SEGMENT.E_002.replace("$1", updateData.segment_name));
+            return ;
         }
-        model.insertLog(req.session.userId, 5, Message.COMMON.I_002, updateData.segment_name);
+        model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_002, updateData.segment_name);
         res.status(200).send('update ok');
     });
 }

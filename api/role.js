@@ -1,6 +1,7 @@
 var Core = require('./core');
 var Message = require('../config/message.json');
 var Validator = require("../helper/validator");
+var logger = require("../helper/logger");
 
 /** 
  * テーブル名
@@ -41,16 +42,9 @@ var Role = function Role()
         {
             id:
             [
-                {
-                    func: this.validator.isRequire
-                },
-                {
-                    func: this.validator.isNumber
-                },
-                {
-                    func: this.validator.isNotMaxOrver,
-                    condition: 9223372036854775807
-                }
+                {func: this.validator.isRequire},
+                {func: this.validator.isNumber},
+                {func: this.validator.isNotMaxOrver, condition: 9223372036854775807}
             ],
         }
     };
@@ -87,22 +81,19 @@ exports.getById = function(req, res)
 {
     if (!model.validation("getById", req.params))
     {
-        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", "[role.getById]"));
+        logger.error(Message.COMMON.E_103.replace("$1", "[role.getById]"), req);
         res.status(511).send(Message.COMMON.E_101);
         return;
     }
     model.getById(req.params.id, function(err, data)
     {
-        if (err)
+        if (null !== err)
         {
-            console.log(err);
-            //レスポンスコード確認
-            res.json({data: data});
+            logger.error(Message.COMMON.E_102.replace("$1", "[role.getById]"), req, err);
+            res.status(511).send(Message.COMMON.E_102.replace("$1", "役職"));
+            return;
         }
-        else
-        {
-            res.json({data: data});
-        }
+        res.json({data: data});
     });
 };
 
@@ -116,15 +107,12 @@ exports.getAll = function(req, res)
 {
     model.getAll(function(err, data)
     {
-        if (err)
+        if (null !== err)
         {
-            console.log(err);
-            //レスポンスコード確認
-            res.json({data: data});
+            logger.error(Message.COMMON.E_102.replace("$1", "[role.getAll]"), req, err);
+            res.status(511).send(Message.COMMON.E_102.replace("$1", "役職"));
+            return;
         }
-        else
-        {
-            res.json({data: data});
-        }
+        res.json({data: data});
     });
 };

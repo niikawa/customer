@@ -10,7 +10,8 @@
         <div class="row" >
             <div class="col-md-12">
                 <form name="segmentForm" novalidate>
-                    <input type="text" class="form-control" name="name" placeholder="セグメント名を入力してください" ng-model="segment.segment_name" ng-required="true">
+                    <input type="text" class="form-control" name="name" placeholder="セグメント名を入力してください" 
+                        ng-model="segment.segment_name" ng-required="true" ng-maxlength="100">
                     <p class="item-error" ng-if="segmentForm.name.$dirty && segmentForm.name.$invalid">セグメント名を入力してください</p>
                 </form>
                 <hr>

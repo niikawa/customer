@@ -4,6 +4,7 @@ var Creator = require("../helper/createSql");
 var Core = require('./core');
 var core = new Core();
 var Message = require('../config/message.json');
+var logger = require("../helper/logger");
 
 /** 
  * コレクション名
@@ -63,8 +64,7 @@ exports.getByIdForInit = function(req, res)
     {
         if (err)
         {
-            console.log(core.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[querydoc.getByIdForInit]"));
-            console.log(err);
+            logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[querydoc.getByIdForInit]"), req, err);
             core.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, "クエリー情報");
             res.status(512).send(Message.COMMON.E_102.replace("$1", "クエリー情報"));
             return;
@@ -75,11 +75,9 @@ exports.getByIdForInit = function(req, res)
         var table = require('./table');
         table.getTablesListForWeb(function(err, tables)
         {
-            if (0 < err.length)
+            if (null !== err)
             {
-                console.log(core.appendUserInfoString(
-                    Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[querydoc.getByIdForInit -> table.getTablesListForWeb]"));
-                console.log(err);
+                logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[querydoc.getByIdForInit -> table.getTablesListForWeb]"), req, err);
                 res.status(511).send(Message.COMMON.E_102.replace("$1", "クエリー情報"));
                 return;
             }
@@ -108,8 +106,7 @@ exports.getItem = function(req, res)
     {
         if (err)
         {
-            console.log(core.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[querydoc.getItem]"));
-            console.log(err);
+            logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[querydoc.getItem]"), req, err);
             core.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, "クエリー情報");
             res.status(511).send(Message.COMMON.E_102.replace("$1", "クエリー情報"));
             return;
@@ -139,7 +136,8 @@ exports.getAllItem = function(req, res)
     {
         if (err)
         {
-            core.insertLog(req.session.userId, 8, Message.COMMON.E_004, FUNCTION_NAME);
+            logger.error(Message.COMMON.E_004.replace("$1", FUNCTION_NAME+"[querydoc.getItem]"), req, err);
+            core.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, FUNCTION_NAME);
             res.status(511).send('access ng');
         }
         else

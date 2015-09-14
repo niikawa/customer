@@ -1,6 +1,7 @@
 var Core = require('./core');
 var Validator = require("../helper/validator");
 var Message = require('../config/message.json');
+var logger = require("../helper/logger");
 
 /** 
  * テーブル名
@@ -56,29 +57,15 @@ var Approach = function Approach()
         {
             daily_limit_num: 
             [
-                {
-                    func: this.validator.isRequire
-                },
-                {
-                    func: this.validator.isNumber
-                },
-                {
-                    func: this.validator.isNotMaxOrver,
-                    conditon: {max: 2147483647}
-                }
+                {func: this.validator.isRequire},
+                {func: this.validator.isNumber},
+                {func: this.validator.isNotMaxOrver, conditon: {max: 2147483647}}
             ],
             weekly_limit_num: 
             [
-                {
-                    func: this.validator.isRequire
-                },
-                {
-                    func: this.validator.isNumber
-                },
-                {
-                    func: this.validator.isNotMaxOrver,
-                    conditon: {max: 2147483647}
-                }
+                {func: this.validator.isRequire},
+                {func: this.validator.isNumber},
+                {func: this.validator.isNotMaxOrver, conditon: {max: 2147483647}}
             ]
         }
     };
@@ -119,14 +106,14 @@ var model = new Approach();
  */
 exports.getOrCreate = function(req, res)
 {
-    model.insertLog(req.session.userId, 8, Message.COMMON.I_004, FUNCTION_NAME);
+    model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_004, FUNCTION_NAME);
     model.getAll(function(err, data)
     {
-        if (0 < err.length)
+        if (null !== err)
         {
-            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[approach.getOrCreate]"));
-            console.log(err);
-            res.status(510).send(Message.APPROACH.E_001);
+            logger.error(Message.COMMON.E_004.replace("$1", FUNCTION_NAME+"[approach.getOrCreate]"), req, err);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, FUNCTION_NAME);
+            res.status(511).send(Message.APPROACH.E_001);
             return;
         }
         var approachData = data[0];
@@ -157,9 +144,8 @@ exports.getOrCreate = function(req, res)
         {
             if (null !== err)
             {
-                console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[approach.getOrCreate last block]"));
-                console.log(err);
-                res.status(510).send(Message.APPROACH.E_001);
+                logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[approach.getOrCreate last block]"), req, err);
+                res.status(511).send(Message.APPROACH.E_001);
                 return;
             }
             var ret = {daily_limit_num: 0, weekly_limit_num: 0};
@@ -190,7 +176,7 @@ exports.save = function(req, res)
 {
     if (!model.validation("save", req.body))
     {
-        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[approach.save]"));
+        logger.error(Message.COMMON.E_103.replace("$1", FUNCTION_NAME+"[approach.save]"), req);
         res.status(510).send(Message.COMMON.E_101);
         return;
     }
@@ -215,12 +201,11 @@ exports.save = function(req, res)
 
     model.updateById(updateData, request, function(err, data)
     {
-        if (0 < err.length)
+        if (null !== err)
         {
-            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[approach.save]"));
-            console.log(err);
+            logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[approach.save]"), req, err);
             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_002, FUNCTION_NAME);
-            res.status(510).send(Message.COMMON.E_002.replace("$1", FUNCTION_NAME));
+            res.status(511).send(Message.COMMON.E_002.replace("$1", FUNCTION_NAME));
             return;
         }
         

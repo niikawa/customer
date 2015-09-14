@@ -135,7 +135,7 @@ Segment.prototype = {
                 callback(err);
 
             } else {
-                callback(null, results);
+                callback(null, results.length);
             }
         });
     },
@@ -151,7 +151,6 @@ Segment.prototype = {
             }
             else
             {
-                // if (doc)
                 if (void 0 !== doc)
                 {
                     self.client.deleteDocument(doc._self, doc, function (err, result)

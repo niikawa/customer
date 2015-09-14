@@ -1,47 +1,85 @@
 var Core = require('./core');
 var Message = require('../config/message.json');
+var logger = require("../helper/logger");
 
-/** テーブル名 */
-var tableName = 'T_TAG';
-var pk = 'tag_id';
-/** SEQ */
-var seqName = 'seq_tag';
+/** 
+ * テーブル名
+ * @property TABLE_NAME
+ * @type {string}
+ * @final
+ */
+var TABLE_NAME = 'T_TAG';
+/** 
+ * 主キー名 
+ * @property PK_NAME
+ * @type {string}
+ * @final
+ */
+var PK_NAME = 'tag_id';
+/** 
+ * SEQ名
+ * @property SEQ_NAME
+ * @type {string}
+ * @final
+ */
+var SEQ_NAME = 'seq_tag';
 
-var tag = function tag()
+/** 
+ * タグ機能APIのクラス
+ * 
+ * @namespace api
+ * @class Tag
+ * @constructor
+ * @extends api.core
+ */
+var Tag = function Tag()
 {
-    Core.call(this, tableName, pk, seqName);
+    Core.call(this, TABLE_NAME, PK_NAME, SEQ_NAME);
+    
 };
 
 //coreModelを継承する
 var util = require('util');
-util.inherits(tag, Core);
+util.inherits(Tag, Core);
 
-var model = new tag();
+var model = new Tag();
 
+/**
+ * 全てのタグを取得する
+ * 
+ * @method getAll
+ * @param {Function} callback リクエストオブジェクト
+ * @return 
+ */
 exports.getAll = function(callback)
 {
     var request = model.getRequest();
 
     var col = "tag_id, tag_name";
     var where = "delete_flag = 0";
-    var qObj = model.getQueryObject(col, tableName, where, '', '');
+    var qObj = model.getQueryObject(col, TABLE_NAME, where, '', '');
     model.select(qObj, request, function(err, data)
     {
-        var errInfo = (0 < err.length) ? err: null;
-        callback(errInfo, data);
+        callback(err, data);
     });
 };
 
+/**
+ * タグを保存する
+ * 
+ * @method save
+ * @param {Objet} transaction トランザクション
+ * @param {Number} userId ユーザーID
+ * @param {Array} tagList タグリスト
+ * @param {Function} mainCallback コールバック
+ * @return 
+ */
 exports.save = function(transaction, userId, tagList, mainCallback)
 {
-    console.log("tag save start");
-    console.log(tagList);
     var commonColumns = model.getInsCommonColumns(userId);
 
     model.async.forEach(tagList, function(item, callback)
     {
-        console.log(item);
-
         if (!item.hasOwnProperty('tag_id'))
         {
             if (item.hasOwnProperty('tag_name'))
@@ -56,17 +94,14 @@ exports.save = function(transaction, userId, tagList, mainCallback)
                         
                         var col = "tag_id";
                         var where = "tag_name = @tag_name AND delete_flag = 0";
-                        var qObj = model.getQueryObject(col, tableName, where, '', '');
+                        var qObj = model.getQueryObject(col, TABLE_NAME, where, '', '');
                         model.select(qObj, request, function(err, data)
                         {
-                            var errInfo = (0 < err.length) ? err: null;
-                            callback(errInfo, data);
+                            callback(err, data);
                         });
                     },
                     function(data, callback)
                     {
-                        console.log(data);
-                        
                         if (0 < data.length)
                         {
                             item.tag_id = data[0].tag_id;
@@ -75,9 +110,7 @@ exports.save = function(transaction, userId, tagList, mainCallback)
                         else
                         {
                             var insertData = model.merge(commonColumns, {tag_name: tagName});
-                            console.log("go insert tags");
-                            console.log(insertData);
-                            
+
                             var request = model.getRequest(transaction);
                             request.input('delete_flag', model.db.SmallInt, insertData.delete_flag);
                             request.input('create_by', model.db.Int, insertData.create_by);
@@ -86,14 +119,10 @@ exports.save = function(transaction, userId, tagList, mainCallback)
                             request.input('update_date', model.db.NVarChar, insertData.update_date);
                             request.input('tag_name', model.db.NVarChar, insertData.tag_name);
                             
-                            model.insert(tableName, insertData, request, function(err, id)
+                            model.insert(TABLE_NAME, insertData, request, function(err, id)
                             {
                                 item.tag_id = id;
-                                var errInfo = (0 < err.length) ? err: null;
-                                console.log("tag insert info");
-                                console.log(id);
-                                console.log(err);
-                                callback(errInfo);
+                                callback(err);
                             });
                         }
                     }
@@ -115,8 +144,6 @@ exports.save = function(transaction, userId, tagList, mainCallback)
     },
     function(err)
     {
-        console.log("last function for tags.js");
-        console.log(err);
         mainCallback(err, tagList);
     });
 };

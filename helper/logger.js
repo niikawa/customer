@@ -12,7 +12,7 @@ exports.debug = function(message, req)
 {
     if (2 > conf.LEVEL)
     {
-        write(message, req);
+        write("DEBUG", message, req);
     }
 };
 
@@ -20,7 +20,7 @@ exports.warn = function(message, req)
 {
     if (3 > conf.LEVEL)
     {
-        write(message, req);
+        write("WARN", message, req);
     }
 };
 
@@ -28,16 +28,16 @@ exports.info = function(message, req)
 {
     if (4 > conf.LEVEL)
     {
-        write(message, req);
+        write("INFO", message, req);
     }
 };
 
 exports.error = function(message, req, err)
 {
-    write(message, req, err);
+    write("ERROR", message, req, err);
 };
 
-function write(message, req, err)
+function write(level, message, req, err)
 {
     var request = "";
     if (req.hasOwnProperty("body"))
@@ -48,12 +48,17 @@ function write(message, req, err)
     {
         request = req.params;
     }
+    else
+    {
+        request = req;
+    }
     
     var errInfo = void 0 === err ? "" : err;
     var entity = 
     {
         PartitionKey: eg.String(momoent().format("YYYYMMDD")),
         RowKey: eg.String(momoent().format("YYYYMMDDhhmmss")+req.session.userId),
+        level: eg.String(level),
         userId: eg.String(req.session.userId),
         userName: eg.String(req.session.userName),
         message: eg.String(message),

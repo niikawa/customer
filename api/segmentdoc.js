@@ -1,96 +1,198 @@
-var async = require('async');
 var DocumentDBClient = require('documentdb').DocumentClient;
+var Core = require('./core');
 var segment = require('../collection/segment');
 
+var Validator = require("../helper/validator");
+var logger = require("../helper/logger");
+var Message = require('../config/message.json');
+
 var conf = require("../config/doc");
-console.log(conf());
 var docconf = conf();
 var docDbClient = new DocumentDBClient(docconf.url, { masterKey: docconf.key });
-var Segment = new segment(docDbClient, 'ixcpm', 'segment');
-Segment.init();
+var SegmentCollection = new segment(docDbClient, 'ixcpm', 'segment');
+SegmentCollection.init();
 
-exports.getItem = function(req, res)
+/** 
+ * 機能名
+ * @property FUNCTION_NAME
+ * @type {string}
+ * @final
+ */
+var FUNCTION_NAME = 'セグメント管理';
+/** 
+ * 機能番号
+ * @property FUNCTION_NAME
+ * @type {Number}
+ * @final
+ */
+var FUNCTION_NUMBER = 5;
+
+/** 
+ * セグメントドキュメント機能APIのクラス
+ * 
+ * @namespace api
+ * @class SegmentDoc
+ * @constructor
+ * @extends api.core
+ */
+var SegmentDoc = function SegmentDoc()
 {
-    var query = 'SELECT * FROM doc';
-    
-    Segment.find(query, function(err, doc)
+    Core.call(this, "", "", "");
+    this.validator = new Validator();
+    this.parametersRulesMap = 
     {
-        if (err) {
-            
-            res.status(511).send('access ng');
-            
-        } else {
-            
-            res.json({data: doc});
+        saveItem: 
+        {
+            segment_document_id:
+            [
+                {func: this.validator.isRequireIfExistsProp},
+            ],
+            segment_name:
+            [
+                {func: this.validator.isRequire},
+                {func: this.validator.isNotMaxOrver, condition: {max: 100}}
+            ],
+            condition:
+            [
+                {func: this.validator.isRequire}
+            ],
+            whereList:
+            [
+                {func: this.validator.isRequire}
+            ],
+            qIds:
+            [
+                {func: this.validator.isRequire}
+            ]
         }
-    });
+    };
 };
 
+//coreModelを継承する
+var util = require('util');
+util.inherits(SegmentDoc, Core);
+
+var model = new SegmentDoc();
+
+/**
+ * リクエストパラメータのチェックを行う
+ * 
+ * @method validation
+ * @param {string} key 実行対象メソッド名
+ * @param {Object} parameters チェック対象パラメータオブジェクト
+ * @return {bool} 
+ */
+SegmentDoc.prototype.validation = function(key ,parameters)
+{
+    var rules = this.parametersRulesMap[key];
+    return this.validator.execute(rules, parameters);
+};
+
+/**
+ * セグメントコレクションへパラメータのクエリーを発行する
+ * 
+ * @method getItemByQuery
+ * @param {String} query クエリー
+ * @param {Function} callback コールバック
+ * @return 
+ */
 exports.getItemByQuery = function(query, callback)
 {
-    Segment.find(query, callback);
+    SegmentCollection.find(query, callback);
 };
 
+/**
+ * クエリーコレクションIDを利用してセグメントコレクションの件数を取得する
+ * 
+ * @method getItemByQuery
+ * @param {String} id クエリーコレクションID
+ * @param {Function} callback コールバック
+ * @return 
+ */
 exports.countByQueryId = function(id, callback)
 {
-    Segment.countByQueryId(id, callback);
+    SegmentCollection.countByQueryId(id, callback);
 };
 
-
+/**
+ * セグメントコレクションを保存する
+ * 
+ * @method saveItem
+ * @param {Object} req リクエストオブジェクト
+ * @param {Object} res レスポンスオブジェクト
+ * @return 
+ */
 exports.saveItem = function(req, res)
 {
-    if (void 0 === req.body.data)
+    if (!model.validation("saveItem", req.body.data))
     {
-        res.status(511).send('parameters not found');
+        logger.error(Message.COMMON.E_103.replace("$1", FUNCTION_NAME+"[segmentdoc.saveItem]"), req);
+        res.status(511).send(Message.COMMON.E_101);
+        return;
     }
-    
+
     var isCreate = 
         (void 0 === req.body.data.segment_document_id || '' === req.body.data.segment_document_id);
     
     if (isCreate)
     {
-        Segment.addItem(req.body.data, function(err, doc)
+        SegmentCollection.addItem(req.body.data, function(err, doc)
         {
             if (err)
             {
-                console.log('document create faild');
-                console.log(err);
-                res.status(511).send('document create faild');
+                logger.error(Message.COMMON.E_001.replace("$1", FUNCTION_NAME+"[segmentdoc.saveItem]"), req, err);
+                res.status(511).send(Message.COMMON.E_001.replace("$1", req.body.data.segment_name));
+                return;
             }
-            else
-            {
-                res.json({data: doc});
-            }
+            res.json({data: doc});
         });
     }
     else
     {
-        Segment.updateItem(req.body.data, function(err, doc)
+        SegmentCollection.updateItem(req.body.data, function(err, doc)
         {
             if (err)
             {
-                console.log('document update faild');
-                console.log(err);
+                logger.error(Message.COMMON.E_002.replace("$1", FUNCTION_NAME+"[segmentdoc.saveItem]"), req, err);
+                res.status(511).send(Message.COMMON.E_002.replace("$1", req.body.data.segment_name));
+                return;
             }
-            else
-            {
-                res.json({data: doc});
-            }
+            res.json({data: doc});
         });
     }
 };
 
+/**
+ * セグメントコレクションを取得する
+ * 
+ * @method getItemByIdForWeb
+ * @param {String} id セグメントコレクションID
+ * @param {Function} callback コールバック
+ * @return 
+ */
 exports.getItemByIdForWeb = function(id, callback)
 {
-    Segment.getItem(id, function(err, doc)
+    //呼び出し元が同期処理を行っている場合、一度本メソッドで明示的に
+    //callbackを指定しないとうまくいかない
+    SegmentCollection.getItem(id, function(err, doc)
     {
         callback(err, doc);
     });
 };
 
+/**
+ * セグメントコレクションを削除する
+ * 
+ * @method removeItemForWeb
+ * @param {String} id セグメントコレクションID
+ * @param {Function} callback コールバック
+ * @return 
+ */
 exports.removeItemForWeb = function(id, callback)
 {
-    Segment.removeItem(id, function(err, doc)
+    //呼び出し元が同期処理を行っている場合、一度本メソッドで明示的に
+    //callbackを指定しないとうまくいかない
+    SegmentCollection.removeItem(id, function(err, doc)
     {
         callback(err, doc);
     });

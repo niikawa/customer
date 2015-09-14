@@ -3,6 +3,7 @@ var Creator = require("../helper/createSql");
 var Message = require('../config/message.json');
 var QueryDoc = require("./querydoc");
 var Validator = require("../helper/validator");
+var logger = require("../helper/logger");
 
 //特定のテーブル情報はもたない
 /** 
@@ -140,9 +141,8 @@ exports.getAll = function(req, res)
     {
         if (err)
         {
-            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[query.getAll]"));
-            console.log(err);
-            res.status(510).send(Message.QUERY.E_001);
+            logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[query.getAll]"), req, err);
+            res.status(511).send(Message.QUERY.E_001);
             return;
         }
         
@@ -155,17 +155,14 @@ exports.getAll = function(req, res)
         //クエリーコレクション分繰り返す(同期)
         model.async.forEach(doc, function(item, callback)
         {
-            segmentdoc.countByQueryId(item.id, function(err, docs)
+            segmentdoc.countByQueryId(item.id, function(err, docsNum)
             {
                 if (err)
                 {
-                    console.log(model.appendUserInfoString(
-                        Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[query.getAll -> setmentdoc.countByQueryId]"));
-                    console.log(err);
+                    logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[query.getAll -> setmentdoc.countByQueryId]"), req, err);
                 }
-                var num = (void 0 === docs)? 0 : docs.length;
-                item.isUse = (0 < num);
-                item.useNum = num;
+                item.isUse = (0 < docsNum);
+                item.useNum = docsNum;
                 callback(err);
             });
         },
@@ -173,7 +170,8 @@ exports.getAll = function(req, res)
         {
             if (err)
             {
-                res.status(510).send(Message.QUERY.E_001);
+                logger.error(Message.QUERY.E_001.replace("$1", FUNCTION_NAME+"[query.getAll last block]"), req, err);
+                res.status(511).send(Message.QUERY.E_001);
                 return;
             }
             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_004);
@@ -195,19 +193,16 @@ exports.getAll = function(req, res)
  */
 exports.execute = function(req, res)
 {
-    console.log('query execute');
-    console.log(req.body);
     var request = model.getRequest();
     var creator = new Creator('query', req.body.conditionList, request);
     var sql = creator.getCountSql(req.body.tables);
     model.execute(sql, request, function(err, data)
     {
-        if (0 < err.length)
+        if (null !== err)
         {
-            console.log(model.appendUserInfoString(Message.QUERY.E_002, req).replace("$1", FUNCTION_NAME+"[query.execute]"));
-            console.log(err);
+            logger.error(Message.QUERY.E_002.replace("$1", FUNCTION_NAME+"[query.execute]"), req, err);
             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.QUERY.E_002);
-            res.status(510).send(Message.QUERY.E_002);
+            res.status(511).send(Message.QUERY.E_002);
             return;
         }
         
@@ -232,7 +227,7 @@ exports.save = function(req, res)
 {
     if (!model.validation("save", req.body))
     {
-        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[query.save]"));
+        logger.error(Message.COMMON.E_103.replace("$1", FUNCTION_NAME+"[query.save]"), req);
         res.status(511).send(Message.COMMON.E_101);
         return;
     }
@@ -271,7 +266,7 @@ exports.remove = function(req, res)
 {
     if (!model.validation("remove", req.params))
     {
-        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[query.remove]"));
+        logger.error(Message.COMMON.E_103.replace("$1", FUNCTION_NAME+"[query.remove]"), req);
         res.status(511).send(Message.COMMON.E_101);
         return;
     }

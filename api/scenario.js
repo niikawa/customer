@@ -3,6 +3,7 @@ var Core = require('./core');
 var Message = require('../config/message.json');
 var scenariodoc = require("./scenariodoc");
 var Validator = require("../helper/validator");
+var logger = require("../helper/logger");
 
 /** 
  * テーブル名
@@ -141,6 +142,20 @@ var Scenario = function Scenario()
             [
                 {func: this.validator.isRequireIfExistsProp}
             ]
+        },
+        remove:
+        {
+            id:
+            [
+                {func: this.validator.isRequire},
+                {func: this.validator.isNumber},
+                {func: this.validator.isNotMaxOrver, condition: {max:9223372036854775807}}
+            ],
+            type:
+            [
+                {func: this.validator.isRequire},
+                {func: this.validator.isMatchValueList, condition: ["trigger", "schedule"]}
+            ]
         }
     };
     
@@ -180,17 +195,17 @@ exports.getById = function(req, res)
 {
     if (!model.validation("getById", req.params))
     {
-        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[scenario.getById]"));
+        logger.error(Message.COMMON.E_103.replace("$1", FUNCTION_NAME+"[scenario.getById]"), req);
         res.status(511).send(Message.COMMON.E_101);
         return;
     }
     model.getById(req.params.id, function(err, data)
     {
-        if (0 < err.length)
+        if (null !== err)
         {
-            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[scenario.getById]"));
-            console.log(err);
-            res.status(511).send(Message.COMMON.E_102.replace("$1", RESPONSE_MESSAGE_BIND_STRING));
+            logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[scenario.getById]"), req, err);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, FUNCTION_NAME);
+            res.status(511).send(Message.COMMON.E_004.replace("$1", RESPONSE_MESSAGE_BIND_STRING));
             return;
         }
         
@@ -213,8 +228,8 @@ exports.getAll = function(req, res)
 {
     if (!model.validation("getAll", req.params))
     {
-        console.log(model.appendUserInfoString(Message.COMMON.E_101, req).replace("$1", FUNCTION_NAME+"[scenario.getAll]"));
-        res.status(510).send(Message.COMMON.E_101);
+        logger.error(Message.COMMON.E_103.replace("$1", FUNCTION_NAME+"[scenario.getById]"), req);
+        res.status(511).send(Message.COMMON.E_101);
         return;
     }
     
@@ -242,10 +257,9 @@ exports.getAll = function(req, res)
 
     model.select(qObj, qObj.request, function(err, data)
     {
-        if (0 < err.length)
+        if (null !== err)
         {
-            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[scenario.getAll->select]"));
-            console.log(err);
+            logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[scenario.getAll -> core.getById]"), req, err);
             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_004, functionName);
             res.status(511).send(Message.COMMON.E_102.replace("$1", RESPONSE_MESSAGE_BIND_STRING));
             return;
@@ -315,10 +329,9 @@ exports.getValid = function(req, res)
     
     model.select(qObj, qObj.request, function(err, data)
     {
-        if (0 < err.length)
+        if (null !== err)
         {
-            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[scenario.getValid->select]"));
-            console.log(err);
+            logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[scenario.getValid->select]"), req, err);
             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_102, FUNCTION_NAME);
             res.status(511).send(Message.COMMON.E_102.replace("$1", RESPONSE_MESSAGE_BIND_STRING));
             return;
@@ -362,10 +375,13 @@ exports.getScenarioCount = function(req, res)
     },
     function complete(err, items)
     {
-        console.log("items.count");
-        console.log(items);
-        console.log(err);
-        
+        if (null !== err)
+        {
+            logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[scenario.getScenarioCount -> complete]"), req, err);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_102, FUNCTION_NAME);
+            res.status(511).send(Message.COMMON.E_102.replace("$1", RESPONSE_MESSAGE_BIND_STRING));
+            return;
+        }
         //取得した情報から、各シナリオの登録数と登録最大数のリストを作成する
         var list = [];
         var envInfo = items.env[0];
@@ -448,14 +464,14 @@ exports.getExecutePlanScenario = function(req, res)
 
     model.select(qObj, qObj.request, function(err, data)
     {
-        if (0 < err.length)
+        if (null !== err)
         {
-            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[scenario.getExecutePlanScenario]"));
-            console.log(err);
+            logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[scenario.getExecutePlanScenario]"), req, err);
             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_001);
             res.status(511).send(Message.SCENARIO.E_001);
+            return ;
         }
-        
+
         res.json({data: data});
     });
 };
@@ -486,7 +502,6 @@ exports.getExecutePlanScenarioToCalendar = function(req, res)
     
     var order = "T1.priority, T1.scenario_id";
     var qObj =  model.getQueryObject(col, table, where, '', order);
-console.log("koko1");
     var period = 0;
     var start ='';
     var end ='';
@@ -524,17 +539,13 @@ console.log("koko1");
 
     model.select(qObj, qObj.request, function(err, data)
     {
-console.log("koko2");
-console.log(err);
-        if (0 < err.length)
+        if (null !== err)
         {
-            console.log(model.appendUserInfoString(Message.COMMON.E_102, req).replace("$1", FUNCTION_NAME+"[scenario.getExecutePlanScenarioToCalendar]"));
-            console.log(err);
+            logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[scenario.getExecutePlanScenarioToCalendar]"), req, err);
             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_001);
             res.status(511).send(Message.SCENARIO.E_001);
+            return;
         }
-        
-        console.log(data);
 
         //スケジュールの期間指定はdocumentDBにデータが入っているため
         //データを取得する必要がある
@@ -582,6 +593,13 @@ console.log(err);
         ], 
         function(err)
         {
+            if (null !== err)
+            {
+                logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[scenario.getExecutePlanScenarioToCalendar -> last block]"), req, err);
+                model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_007);
+                res.status(511).send(Message.SCENARIO.E_007);
+                return;
+            }
             //月カレンダーの場合はさらに整形する
             if (isCalendar)
             {
@@ -722,10 +740,9 @@ exports.bulkInvalid = function(req, res)
 
     model.execute(sql, request, function(err, data)
     {
-        if (err.length > 0)
+        if (null !== err)
         {
-            console.log(model.appendUserInfoString(Message.SCENARIO.E_003, req)+ " " +FUNCTION_NAME+"[scenario.bulkInvalid]");
-            console.log(err);
+            logger.error(Message.SCENARIO.E_003+FUNCTION_NAME+"[scenario.bulkInvalid]", req, err);
             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_003, FUNCTION_NAME);
             res.status(511).send(Message.SCENARIO.E_003);
             return;
@@ -754,10 +771,9 @@ exports.bulkEnable = function(req, res)
 
     model.execute(sql, request, function(err, data)
     {
-        if (0 < err.length)
+        if (null !== err)
         {
-            console.log(model.appendUserInfoString(Message.SCENARIO.E_004, req)+ " " +FUNCTION_NAME+"[scenario.bulkEnable]");
-            console.log(err);
+            logger.error(Message.SCENARIO.E_004+FUNCTION_NAME+"[scenario.bulkEnable]", req, err);
             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_004, FUNCTION_NAME);
             res.status(511).send(Message.SCENARIO.E_004);
             return;
@@ -801,10 +817,9 @@ exports.savePriority = function(req, res)
     }, 
     function (err) 
     {
-        if (0 < err.length)
+        if (null !== err)
         {
-            console.log(model.appendUserInfoString(Message.SCENARIO.E_005, req)+ " " +FUNCTION_NAME+"[scenario.savePriority]");
-            console.log(err);
+            logger.error(Message.SCENARIO.E_005+FUNCTION_NAME+"[scenario.savePriority]", req, err);
             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_005, FUNCTION_NAME);
             res.status(511).send(Message.SCENARIO.E_005);
             return;
@@ -877,12 +892,12 @@ exports.save = function(req, res)
         },
         function complete(err, items)
         {
-            if (0 < err.length)
+            if (null !== err)
             {
-                console.log(model.appendUserInfoString(Message.SCENARIO.E_005, req)+ " " +FUNCTION_NAME+"[scenario.save parallel->complete]");
-                console.log(err);
-                model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_001, FUNCTION_NAME);
-                res.status(511).send(Message.SCENARIO.E_001.replace("$1", "シナリオ"));
+                logger.error(Message.COMMON.E_001.replace("$1", FUNCTION_NAME+"[scenario.save -> complete]"), req, err);
+                model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_001, "シナリオ");
+                res.status(511).send(Message.COMMON.E_001.replace("$1", "シナリオ"));
+                return;
             }
             var envInfo = items.env[0];
             var max = (1 == req.body.scenario.scenario_type) 
@@ -908,9 +923,7 @@ function create(req, res)
     {
         if (null !== err)
         {
-            console.log(model.appendUserInfoString(Message.SCENARIO.E_005, req)+ " " +FUNCTION_NAME+"[scenario.create scenariodoc->saveItemForWeb]");
-            console.log(err);
-            console.log(req.body);
+            logger.error(Message.COMMON.E_001.replace("$1", FUNCTION_NAME+"[scenario.create scenariodoc -> saveItemForWeb]"), req, err);
             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_001, FUNCTION_NAME);
             res.status(511).send(Message.SCENARIO.E_001.replace("$1", "シナリオ"));
             return ;
@@ -927,115 +940,99 @@ function create(req, res)
                         var insertData = model.merge(req.body.scenario, commonColumns);
                         insertMine(transaction, insertData, function(err, scenarioId)
                         {
-                            if (0 < err.length)
+                            if (null !== err)
                             {
-                                console.log('insert faild M_SCENARIO');
-                                console.log(err);
-                                callback(err, {});
-                                return;
+                                logger.error(Message.COMMON.E_001.replace("$1", FUNCTION_NAME+"[scenario.create -> insertMine]"), req, err);
                             }
-                            callback(null, scenarioId);
+                            callback(err, scenarioId);
                         });
                     },
                     function(scenarioId, callback)
                     {
                         insertChildren(transaction, req, scenarioId, doc, function(err, childTabelName)
                         {
-                            if (err.length > 0)
+                            if (null !== err)
                             {
-                                console.log(childTabelName + ' insert faild');
-                                console.log(err);
-                                callback(err, {});
-                                return;
+                                logger.error(Message.COMMON.E_001.replace("$1", FUNCTION_NAME+"[scenario.create -> insertChildren]"), req, err);
                             }
-                            callback(null, scenarioId);
+                            callback(err, scenarioId);
                         });
                     },
                     function(scenarioId, callback)
                     {
-                        console.log("insert tag execute");
-                        console.log(scenarioId);
                         insertTags(transaction, req.session.userId, req.body.tags, function(err, tagList)
                         {
-                            console.log(err);
-                            console.log(tagList);
-                            if (null != err)
+                            if (null !== err)
                             {
-                                console.log("insert tags faild");
-                                console.log(err);
-                                callback(err);
+                                logger.error(Message.COMMON.E_001.replace("$1", FUNCTION_NAME+"[scenario.create -> insertTags]"), req, err);
                             }
-                            else
-                            {
-                                callback(null, scenarioId, tagList);
-                            }
+                            callback(err, scenarioId, tagList);
                         });
                     },
                     function(scenarioId, tagList, callback)
                     {
-                        console.log("insert scenario tag execute");
-                        console.log(scenarioId);
-                        console.log(tagList);
                         insertScnarioTag(transaction, req.session.userId, scenarioId, tagList, function(err, tagList)
                         {
+                            if (null !== err)
+                            {
+                                logger.error(Message.COMMON.E_001.replace("$1", FUNCTION_NAME+"[scenario.create -> insertScnarioTag]"), req, err);
+                            }
                             callback(err);
                         });
                     }
                 ],
                 function(err)
                 {
-                    if (null != err)
-                    {
-                        console.log('scenario insert faild');
-                        console.log(err);
-                        //documentを削除しなくちゃ
-                        if (null !== doc)
+                    model.async.waterfall(
+                    [
+                        function(callback)
                         {
-                            scenariodoc.removeItemForWeb(doc.id, function(err, doc)
+                            if (null !== err)
                             {
-                                if (err)
+                                logger.error(Message.COMMON.E_001.replace("$1", FUNCTION_NAME+"[scenario.create -> last block]"), req, err);
+                                if (null !== doc)
                                 {
-                                    console.log('scenario document remove faild');
-                                    console.log(err);
-                                    console.log(doc);
+                                    //コレクション情報を削除する
+                                    scenariodoc.removeItemForWeb(doc.id, function(docerr, doc)
+                                    {
+                                        if (null !== docerr)
+                                        {
+                                            logger.error(Message.COMMON.E_001.replace("$1", FUNCTION_NAME+"[scenario.create -> scenariodoc.removeItemForWeb]"), req, err);
+                                        }
+                                        //元のエラー情報をコールバックに渡す
+                                        callback(err);
+                                    });
                                 }
-                                transaction.rollback(function(err)
+                                else
                                 {
-                                    if (err)
-                                    {
-                                        console.log('scenario data rollback faild');
-                                        console.log(err);
-                                        res.status(510).send("システムエラーが発生しました。");
-                                    }
-                                    else
-                                    {
-                                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
-                                        res.status(510).send("シナリオの登録に失敗しました。");
-                                    }
-                                });
-                            });
-                        }
-                    }
-                    else
-                    {
-                        transaction.commit(function(err)
-                        {
-                            if (err)
-                            {
-                                console.log('scenario data commit faild');
-                                console.log(err);
-                                res.status(510).send("システムエラーが発生しました。");
+                                    callback(err);
+                                }
                             }
                             else
                             {
-                                model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
-                                res.status(200).send('insert ok');
+                                callback(null);
                             }
+                        },
+                    ],
+                    function(err)
+                    {
+                        var message = (null === err) ? Message.COMMON.I_001 : Message.COMMON.E_001;
+                        var code = (null === err) ? 200 : 511;
+                        model.commitOrRollback(transaction, req, err, function(err)
+                        {
+                            if (null !== err)
+                            {
+                                model.insertLog(req.session.userId, FUNCTION_NUMBER, message, req.body.scenario.scenario_name);
+                                res.status(511).send(Message.COMMON.E_100);
+                                return;
+                            }
+    
+                            model.insertLog(req.session.userId, FUNCTION_NUMBER, message, req.body.scenario.scenario_name);
+                            res.status(code).send(message.replace("$1", req.body.scenario.scenario_name));
                         });
-                    }
+                    });
                 });
             });
-            
         }
     });
 }
@@ -1142,11 +1139,9 @@ function insertTags(transaction, userid, tags, callback)
 //シナリオにタグを設定する
 function insertScnarioTag(transaction, userid, scenarioId, tags, callback)
 {
-    console.log("insert tags");
     var scenarioTag = require("./scenariottag");
     scenarioTag.save(transaction, userid, scenarioId, tags, function(err, tagList)
     {
-        console.log("insert tags end");
         callback(err, tagList);
     });
 }
@@ -1159,19 +1154,15 @@ function insertScnarioTag(transaction, userid, scenarioId, tags, callback)
  */
 function update(req, res)
 {
-    console.log('scenario update start');
     var childTabelObject = '';
-    var childTabelName = '';
     var isSchedule = (1 === req.body.scenario.scenario_type);
     if (isSchedule)
     {
         childTabelObject = require("./schedulescenario");
-        childTabelName = 'M_SCHEDULE_SCENARIO';
     }
     else
     {
         childTabelObject = require("./triggerscenario");
-        childTabelName = 'M_TRIGGER_SCENARIO';
     }
     
     var commonColumns = model.getUpdCommonColumns();
@@ -1182,65 +1173,16 @@ function update(req, res)
         [
             function(callback)
             {
-                console.log('get scenario by id');
-                console.log(req.body.scenario.scenario_id);
-                childTabelObject.getByScenarioId(req.body.scenario.scenario_id, function(err, data)
-                {
-                    console.log(data);
-                    if (err.length > 0)
-                    {
-                        console.log('trigger scenario is not found');
-                        console.log(err);
-                        res.status(510).send('scenario update faild');
-                        
-                    }
-                    callback(null, data);
-                });
-            },
-            function(data, callback)
-            {
-                if (req.body.hasOwnProperty('doc'))
-                {
-                    console.log('update scenario doc');
-                    var doc = req.body.doc;
-                    doc.id = data[0].scenario_action_document_id;
-                    console.log(doc);
-                    if (null === doc.id)
-                    {
-                        console.log('no update scenario doc');
-                        callback(null);
-                    }
-                    else
-                    {
-                        scenariodoc.saveItemForWeb(false, doc, function(err, doc)
-                        {
-                            console.log('scenario doc update');
-                            console.log(err);
-                            console.log(doc);
-                            callback(err);
-                        });
-                    }
-                }
-                else
-                {
-                    console.log('no update scenario doc');
-                    callback(null);
-                }
-            },
-            function(callback)
-            {
                 //scenarioマスタを更新
                 delete req.body.scenario.delete_flag;
                 delete req.body.scenario.create_by;
                 delete req.body.scenario.create_date;
                 delete req.body.scenario.priority;  //優先順位はここで更新したくないため削除
                 //delete req.body.scenario.valid_flag;　
-                console.log(commonColumns);
                 var updateData = model.merge(commonColumns, req.body.scenario, true);
                 //送信されてきたデータは信じない
                 updateData.valid_flag = 1;
-                console.log(updateData);
-                
+
                 var request = model.getRequest(transaction);
                 request.input('update_by', model.db.Int, req.session.userId);
                 request.input('update_date', model.db.NVarChar, updateData.update_date);
@@ -1254,11 +1196,14 @@ function update(req, res)
                 request.input('approach', model.db.SmallInt, updateData.approach);
                 request.input('valid_flag', model.db.SmallInt, updateData.valid_flag);
     
-                console.log('update scenario info');
                 model.updateById(updateData, request, function(err, data)
                 {
-                    var nextErr = (0 < err.length) ? err.length: null;
-                    callback(nextErr);
+                    if (null !== err)
+                    {
+                        logger.error(Message.COMMON.E_002.replace(
+                            "$1", FUNCTION_NAME+"[scenario.update -> updateById]"), req, err);
+                    }
+                    callback(err);
                 });
             },
             function(callback)
@@ -1269,26 +1214,23 @@ function update(req, res)
                 
                 var request = model.getRequest(transaction);
                 request.input('update_by', model.db.Int, req.session.userId);
-                console.log('update ' + childTabelName);
                 childTabelObject.updateByScenarioId(updateData, request, function(err, data)
                 {
-                    console.log(err);
-                    console.log(data);
-                    var nextErr = (0 < err.length) ? err.length: null;
-                    callback(nextErr);
+                    if (null !== err)
+                    {
+                        logger.error(Message.COMMON.E_002.replace(
+                            "$1", FUNCTION_NAME+"[scenario.update -> childTabelObject.updateByScenarioId]"), req, err);
+                    }
+                    callback(err);
                 });
             },
             function(callback)
             {
+                //新規タグがあれば新しく登録する
                 insertTags(transaction, req.session.userId, req.body.tags, function(err, tagList)
                 {
-                    console.log("tag insert end next is sc tag");
-                    console.log(err);
-                    console.log(tagList);
                     if (null != err)
                     {
-                        console.log("insert tags faild");
-                        console.log(err);
                         callback(err);
                     }
                     else
@@ -1307,43 +1249,78 @@ function update(req, res)
         ], 
         function(err)
         {
-            console.log('execute last function');
-            if (null !== err && 0 !== err.length)
+            if (null !== err)
             {
-                console.log(err);
-                
-                transaction.rollback(function(err)
+                model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_002, req.body.scenario.scenario_name);
+                //エラーがある場合はロールバック
+                model.commitOrRollback(transaction, req, err, function(err)
                 {
-                    if (err)
+                    if (null !== err)
                     {
-                        console.log('scenario data rollback faild');
-                        console.log(err);
-                        return res.status(510).send("システムエラーが発生しました。");
+                        res.status(511).send(Message.COMMON.E_100);
+                        return;
                     }
-                    else
-                    {
-                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, req.body.scenario.scenario_name);
-                        return res.status(510).send("シナリオの更新に失敗しました。");
-                    }
+                    return res.status(511).send(Message.COMMON.E_002.replace("$1", req.body.scenario.scenario_name));
                 });
             }
             else
             {
-                console.log('commit execute');
-                transaction.commit(function(err)
+                //エラーがない場合はここでコレクション情報を更新する
+                model.async.waterfall(
+                [
+                    function(callback)
+                    {
+                        childTabelObject.getByScenarioId(req.body.scenario.scenario_id, function(err, data)
+                        {
+                            if (null !== err)
+                            {
+                                logger.error(Message.COMMON.E_002.replace(
+                                    "$1", FUNCTION_NAME+"[scenario.update -> childTabelObject.getByScenarioId]"), req, err);
+                            }
+                            callback(err, data);
+                        });
+                    },
+                    function(data, callback)
+                    {
+                        //更新対象のドキュメントがあれば更新
+                        if (req.body.hasOwnProperty('doc'))
+                        {
+                            var doc = req.body.doc;
+                            doc.id = data[0].scenario_action_document_id;
+                            if (null === doc.id)
+                            {
+                                callback(null);
+                            }
+                            else
+                            {
+                                scenariodoc.saveItemForWeb(false, doc, function(err, doc)
+                                {
+                                    if (null !== err)
+                                    {
+                                        logger.error(Message.COMMON.E_002.replace(
+                                            "$1", FUNCTION_NAME+"[scenario.update -> scenariodoc.saveItemForWeb]"), req, err);
+                                    }
+                                    callback(err);
+                                });
+                            }
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    },
+                ],
+                function(err)
                 {
-                    console.log(err);
-                    if (err)
+                    model.commitOrRollback(transaction, req, err, function(err)
                     {
-                        console.log('scenario data commit faild');
-                        console.log(err);
-                        res.status(510).send("システムエラーが発生しました。");
-                    }
-                    else
-                    {
-//                        model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
-                        res.status(200).send('insert ok');
-                    }
+                        if (null !== err)
+                        {
+                            res.status(511).send(Message.COMMON.E_100);
+                            return;
+                        }
+                        return res.status(511).send(Message.COMMON.E_002.replace("$1", req.body.scenario.scenario_name));
+                    });
                 });
             }
         });
@@ -1358,12 +1335,13 @@ function update(req, res)
  */
 exports.remove = function(req, res)
 {
-    console.log('scenario remove exexute');
-    
-    if (!req.params.hasOwnProperty('id')) res.status(510).send('scenario remove faild');
-    if (!req.params.hasOwnProperty('type')) res.status(510).send('scenario remove faild');
+    if (!model.validation("remove", req.params))
+    {
+        logger.error(Message.COMMON.E_103.replace("$1", FUNCTION_NAME+"[scenario.remove]"), req);
+        res.status(511).send(Message.COMMON.E_101);
+        return;
+    }
 
-    var id = req.params.id;
     var type = req.params.type;
     var scenarioTypeObject = ''; 
     if ('trigger' === type)
@@ -1375,25 +1353,17 @@ exports.remove = function(req, res)
         scenarioTypeObject = require("./schedulescenario");
     }
     
+    var id = req.params.id;
     scenarioTypeObject.getByScenarioId(id, function(err, typeData)
     {
-        console.log(typeData);
-        
-        if (err.length > 0)
+        if (null !== err)
         {
-            console.log('scenario remove faild');
-            console.log(id);
-            console.log(err);
+            logger.error(Message.COMMON.E_001.replace("$1", FUNCTION_NAME+"[scenario.remove]"), req);
+            res.status(511).send(Message.COMMON.E_003.replace("$1", "シナリオ"));
+            return;
         }
-        
-        var exsitsData = true;
-        if (0 === typeData.length)
-        {
-            console.log('scenario type data not found');
-            console.log(id);
-            exsitsData = false;
-        }
-        
+        var exsitsData = (0 === typeData.length);
+
         model.tranBegin(function(err, transaction)
         {
             //transactionはキューにしなきゃいけないからwaterfallで実効
@@ -1425,8 +1395,11 @@ exports.remove = function(req, res)
                 {
                     model.removeByIdAndTran(id, transaction, function(err)
                     {
-                        var errInfo = (0 < err.length) ? err : null;
-                        callback(errInfo);
+                        if (null !== err)
+                        {
+                            logger.error(Message.COMMON.E_003.replace("$1", FUNCTION_NAME+"[scenario.remove -> removeByIdAndTran]"), req, err);
+                        }
+                        callback(err);
                     });
                 },
                 function(callback)
@@ -1437,109 +1410,66 @@ exports.remove = function(req, res)
             ], 
             function(err)
             {
-                console.log(err);
-                
-                if (null != err)
-                {
-                    console.log(err);
-                    transaction.rollback(function(err)
+                model.async.waterfall(
+                [
+                    function(callback)
                     {
-                        if (err)
-                        {
-                            console.log('scenario data rollback faild');
-                            console.log(err);
-                            return res.status(510).send("システムエラーが発生しました。");
-                        }
-                        else
-                        {
-//                                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, typeData[0].);
-                            return res.status(510).send("シナリオの削除に失敗しました。");
-                        }
-                    });
-                }
-                //シナリオdox削除
-                if (exsitsData && null !== typeData[0].scenario_action_document_id)
-                {
-                    console.log("doc delete");
-                    var scenariodoc = require("./scenariodoc");
-                    scenariodoc.removeItemForWeb(typeData[0].scenario_action_document_id, function(err)
+                        callback(err);
+                    },
+                    function(callback)
                     {
-                        console.log("doc delete complete");
-                        if (err)
+                        //シナリオdoc削除
+                        if (exsitsData && null !== typeData[0].scenario_action_document_id)
                         {
-                            transaction.rollback(function(err)
+                            var scenariodoc = require("./scenariodoc");
+                            scenariodoc.removeItemForWeb(typeData[0].scenario_action_document_id, function(err)
                             {
-                                if (err)
+                                if (null !== err)
                                 {
-                                    console.log('scenario data rollback faild');
-                                    console.log(err);
-                                    res.status(510).send("システムエラーが発生しました。");
+                                    logger.error(Message.COMMON.E_003.replace(
+                                        "$1", FUNCTION_NAME+"[scenario.remove -> scenariodoc.removeItemForWeb]"), req, err);
                                 }
-                                else
-                                {
-//                                        model.insertLog(req.session.userId, 8, Message.COMMON.E_001, typeData[0].);
-                                    return res.status(510).send("シナリオの削除に失敗しました。");
-                                }
+                                callback(err);
                             });
                         }
                         else
                         {
-                            transaction.commit(function(err)
-                            {
-                                if (err)
-                                {
-                                    console.log('scenario data commit faild 1');
-                                    console.log(err);
-                                    res.status(510).send("システムエラーが発生しました。");
-                                }
-                                else
-                                {
-    //                                model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
-                                    return res.status(200).send('remove ok');
-                                }
-                            });
+                            callback(null);
                         }
-                    });
-                }
-                else
+                    }
+                ], 
+                function(err)
                 {
-                    transaction.commit(function(err)
+                    var message = "";
+                    var code = 0;
+                    if (null != err)
                     {
-                        if (err)
+                        logger.error(Message.COMMON.E_003.replace(
+                            "$1", FUNCTION_NAME+"[scenario.remove -> last block]"), req, err);
+                        code = 511;
+                    }
+                    else
+                    {
+                        message = Message.COMMON.I_003;
+                        code = 200;
+                    }
+                    
+                    model.commitOrRollback(transaction, req, err, function(err)
+                    {
+                        if (null !== err)
                         {
-                            console.log('scenario data commit faild 2');
-                            console.log(err);
-                            res.status(510).send("システムエラーが発生しました。");
+                            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_003, req.body.scenario.scenario_name);
+                            res.status(511).send(Message.COMMON.E_100);
+                            return;
                         }
-                        else
-                        {
-//                                model.insertLog(req.session.userId, 8, Message.COMMON.I_001, req.body.scenario.scenario_name);
-                            return res.status(200).send('remove ok');
-                        }
+
+                        model.insertLog(req.session.userId, FUNCTION_NUMBER, message, req.body.scenario.scenario_name);
+                        res.status(code).send(message.replace("$1", req.body.scenario.scenario_name));
+                        return;
                     });
-                }
+                });
             });
         });
-    });
-};
-
-/**
- * PKに合致したレコードを物理削除する
- * 
- * @param {Object} req 画面からのリクエスト
- * @param {Object} res 画面へのレスポンス
- */
-exports.delete = function(req, res)
-{
-    var id = req.params.id;
-    model.deleteById(id, function(err, data)
-    {
-        if (err.length > 0)
-        {
-            console.log(err);
-            res.status(510).send('object not found');
-        }
-        res.status(200).send('delete ok');
     });
 };
 
@@ -1552,7 +1482,6 @@ exports.delete = function(req, res)
  */
 exports.initializeData = function(req, res)
 {
-    console.log('scenario control initializeData');
     model.async.parallel(
     {
         //セグメント情報
@@ -1608,7 +1537,6 @@ exports.initializeData = function(req, res)
     },
     function complete(err, items)
     {
-        console.log("complete fuction start");
         //parallel実行した場合、5こめのfunctionが実行完了前に
         //completeしてしまう。これはたぶんライブラリのバグだと思うけど、
         //どうにもならないのでここでさらに実行させる
@@ -1629,10 +1557,15 @@ exports.initializeData = function(req, res)
                     }
                     typeObject.getByScenarioId(req.params.id, function(err, data)
                     {
-                        console.log(data);
+                        if (null !== err)
+                        {
+                            logger.error(Message.COMMON.E_001.replace(
+                                "$1", FUNCTION_NAME+"[scenario.initializeData -> typeObject.getByScenarioId]"), req, err);
+                            callback(err);
+                        }
                         scenariodoc.getItemByIdForWeb(data[0].scenario_action_document_id, function(err, doc)
                         {
-                            callback(null, {specific: data[0], doc: doc});
+                            callback(err, {specific: data[0], doc: doc});
                         });
                     });
                 }
@@ -1646,7 +1579,10 @@ exports.initializeData = function(req, res)
                 var scenarioTag = require("./scenariottag");
                 if (req.params.hasOwnProperty("id"))
                 {
-                    scenarioTag.getByScenarioId(req.params.id, function(err, data){callback(null, data)});
+                    scenarioTag.getByScenarioId(req.params.id, function(err, data)
+                    {
+                        callback(err, data);
+                    });
                 }
                 else
                 {
@@ -1657,13 +1593,18 @@ exports.initializeData = function(req, res)
             tagList: function(callback)
             {
                 var tag = require("./tag");
-                tag.getAll(function(err, data){callback(null, data)});
-                
+                tag.getAll(function(err, data){callback(err, data)});
             }
         },
         function complete(err, items2)
         {
-            console.log(err);
+            if (null !== err)
+            {
+                logger.error(Message.COMMON.E_001.replace("$1", FUNCTION_NAME+"[scenario.initializeData -> complete]"), req, err);
+                model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_001, "シナリオ");
+                res.status(511).send(Message.COMMON.E_001.replace("$1", "シナリオ"));
+                return;
+            }
             res.json(
                 {
                     segment: items.segment,
@@ -1694,10 +1635,12 @@ exports.isSameName = function(req, res)
     {
         model.isSameItem('scenario_name', req.body.scenario_name, model.db.NVarChar, function(err, result)
         {
-            if (err.length > 0)
+            if (null !== err)
             {
-                console.log(err);
-                res.status(510).send('query execute faild');
+                logger.error(Message.COMMON.E_001.replace("$1", FUNCTION_NAME+"[scenario.isSameName -> isSameItem]"), req, err);
+                model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_008);
+                res.status(511).send(Message.SCENARIO.E_008);
+                return;
             }
             res.json({result: result[0]});
         });
@@ -1710,10 +1653,11 @@ exports.isSameName = function(req, res)
         ];
         model.isSameItemByMultipleCondition(conditions , function(err, result)
         {
-            if (err.length > 0)
+            if (null !== err)
             {
-                console.log(err);
-                res.status(510).send('query execute faild');
+                logger.error(Message.COMMON.E_001.replace("$1", FUNCTION_NAME+"[scenario.isSameName -> isSameItem]"), req, err);
+                model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SCENARIO.E_008);
+                res.status(511).send(Message.SCENARIO.E_008);
             }
             res.json({result: result[0]});
         });
@@ -1729,7 +1673,6 @@ exports.isSameName = function(req, res)
 exports.getActionByName = function(req, res)
 {
     var physicalname = req.params.name;
-    if (void 0 === physicalname) res.status(510).send('params not found');
 
     var action = require('../config/action.json');
     if (action.hasOwnProperty(physicalname))
@@ -1738,6 +1681,6 @@ exports.getActionByName = function(req, res)
     }
     else
     {
-        res.status(510).send('action is not found');
+        res.status(511).send(Message.COMMON.E_101);
     }
 };
