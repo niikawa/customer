@@ -144,6 +144,8 @@ exports.save = function(transaction, userId, tagList, mainCallback)
     },
     function(err)
     {
-        mainCallback(err, tagList);
+        //タグが存在しない場合は、err情報を設定していないのでundefinedになるためnullに変換
+        var errInfo = void 0 === err ? null : err;
+        mainCallback(errInfo, tagList);
     });
 };
