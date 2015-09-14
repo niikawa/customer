@@ -109,9 +109,9 @@ Scenario.prototype = {
             }
             else
             {
-                if (data.hasOwnProperty('actionName'))
+                if (data.hasOwnProperty('actionId'))
                 {
-                    doc.action_name = data.actionName;
+                    doc.actionId = data.actionId;
                     doc.conditionList = data.conditionList;
                 }
                 else if (data.hasOwnProperty('interval'))
