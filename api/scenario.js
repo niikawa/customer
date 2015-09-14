@@ -1299,8 +1299,6 @@ function update(req, res)
                                         logger.error(Message.COMMON.E_002.replace(
                                             "$1", FUNCTION_NAME+"[scenario.update -> scenariodoc.saveItemForWeb]"), req, err);
                                     }
-                                    console.log("scenariodoc.saveItemForWeb");
-                                    console.log(err);
                                     callback(err);
                                 });
                             }
@@ -1313,7 +1311,19 @@ function update(req, res)
                 ],
                 function(err)
                 {
-                    console.log(err);
+                    var message = "";
+                    var code = 0;
+                    if (err === null)
+                    {
+                        message = Message.COMMON.I_002;
+                        code = 200;
+                    }
+                    else
+                    {
+                        message = Message.COMMON.E_002;
+                        code = 511;
+                    }
+                    
                     model.commitOrRollback(transaction, req, err, function(err)
                     {
                         if (null !== err)
@@ -1321,7 +1331,7 @@ function update(req, res)
                             res.status(511).send(Message.COMMON.E_100);
                             return;
                         }
-                        return res.status(200).send(Message.COMMON.I_002.replace("$1", req.body.scenario.scenario_name));
+                        return res.status(code).send(message.replace("$1", req.body.scenario.scenario_name));
                     });
                 });
             }
