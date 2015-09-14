@@ -205,9 +205,16 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.specificInfo = initData.specificInfo.specific;
         actionId = initData.specificInfo.doc.actionId;
         $scope.isShowExtraction = true;
-        $scope.columnList = initData.response.specific.column;
-        //$scope.activeName = initData.specificInfo.doc.actionId;
-        
+        var actionLen = initData.response.specific.length;
+        for (var index = 0; index < actionLen; index++)
+        {
+            if (actionId === initData.response.specific[index].id)
+            {
+                $scope.columnList = initData.response.specific[index].column;
+                break;
+            }
+        }
+        $scope.activeId = initData.specificInfo.doc.actionId;
         angular.forEach(initData.specificInfo.doc.conditionList, function(conditionItems)
         {
             var restoration = [];
