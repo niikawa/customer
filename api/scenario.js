@@ -1311,6 +1311,7 @@ function update(req, res)
                 ],
                 function(err)
                 {
+                    console.log(err);
                     model.commitOrRollback(transaction, req, err, function(err)
                     {
                         if (null !== err)
