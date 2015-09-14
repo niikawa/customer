@@ -39,11 +39,6 @@ exports.error = function(message, req, err)
 
 function write(level, message, req, err)
 {
-    console.log(level);
-    console.log(message);
-    console.log(req.session);
-    console.log(err);
-    
     var request = "";
     if (req.hasOwnProperty("body"))
     {
@@ -67,11 +62,8 @@ function write(level, message, req, err)
         error: eg.String(JSON.stringify(errInfo)),
     };
 
-    console.log(entity);
-
     tableService.createTableIfNotExists(tableName, function(error, result, response)
     {
-        console.log("log write table storage");
         if(!error)
         {
             tableService.insertEntity(tableName, entity, function (error)
@@ -81,10 +73,6 @@ function write(level, message, req, err)
                     console.log(error);
                 }
             });
-        }
-        else
-        {
-            console.log("log write table storage error");
         }
     });
 }

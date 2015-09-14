@@ -1173,13 +1173,8 @@ function update(req, res)
         [
             function(callback)
             {
-                //scenarioマスタを更新
-                delete req.body.scenario.delete_flag;
-                delete req.body.scenario.create_by;
-                delete req.body.scenario.create_date;
-                delete req.body.scenario.priority;  //優先順位はここで更新したくないため削除
-                //delete req.body.scenario.valid_flag;　
-                var updateData = model.merge(commonColumns, req.body.scenario, true);
+                var scenarioParameter = createUpdateData(req.body.scenario);
+                var updateData = model.merge(commonColumns, scenarioParameter, true);
                 //送信されてきたデータは信じない
                 updateData.valid_flag = 1;
 
@@ -1249,9 +1244,6 @@ function update(req, res)
         ], 
         function(err)
         {
-            console.log("update last block");
-            console.log(err);
-            
             if (null !== err)
             {
                 logger.error(Message.COMMON.E_002.replace(
@@ -1333,6 +1325,21 @@ function update(req, res)
         });
     });
 }
+
+function createUpdateData(requestData)
+{
+    //更新時に必要な情報のみ設定する
+    return {
+        approach: requestData.approach,
+        if_layout_id: requestData.if_layout_id,
+        output_name: requestData.output_name,
+        scenario_id: requestData.scenario_id,
+        scenario_name: requestData.scenario_name,
+        scenario_type: requestData.scenario_type,
+        segment_id: requestData.segment_id,
+        status: requestData.status
+    }
+};
 
 /**
  * PKに合致したレコードのdelete_flagを1にする
