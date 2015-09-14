@@ -1249,6 +1249,9 @@ function update(req, res)
         ], 
         function(err)
         {
+            console.log("update last block");
+            console.log(err);
+            
             if (null !== err)
             {
                 logger.error(Message.COMMON.E_002.replace(
