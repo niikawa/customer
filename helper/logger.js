@@ -68,6 +68,7 @@ function write(level, message, req, err)
 
     tableService.createTableIfNotExists(tableName, function(error, result, response)
     {
+        console.log("log write table storage");
         if(!error)
         {
             tableService.insertEntity(tableName, entity, function (error)
@@ -77,6 +78,10 @@ function write(level, message, req, err)
                     console.log(error);
                 }
             });
+        }
+        else
+        {
+            console.log("log write table storage error");
         }
     });
 }
