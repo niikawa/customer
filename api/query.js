@@ -174,7 +174,7 @@ exports.getAll = function(req, res)
                 res.status(511).send(Message.QUERY.E_001);
                 return;
             }
-            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_004);
+            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_004, "クエリー");
             res.json({data: doc});
         });
     });
