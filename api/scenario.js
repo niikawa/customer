@@ -1051,7 +1051,7 @@ function insertMine(transaction, insertData, callback)
     request.input('update_date', model.db.NVarChar, insertData.update_date);
     
     request.input('segment_id', model.db.Int, insertData.segment_id);
-    request.input('if_layout_id', model.db.Int, insertData.if_layout_id);
+    request.input('if_layout_id', model.db.NVarChar, insertData.if_layout_id);
     request.input('scenario_name', model.db.NVarChar, insertData.scenario_name);
     request.input('output_name', model.db.NVarChar, insertData.output_name);
     request.input('scenario_type', model.db.SmallInt, insertData.scenario_type);
@@ -1185,7 +1185,7 @@ function update(req, res)
                 request.input('update_date', model.db.NVarChar, updateData.update_date);
                 
                 request.input('segment_id', model.db.Int, updateData.segment_id);
-                request.input('if_layout_id', model.db.Int, updateData.if_layout_id);
+                request.input('if_layout_id', model.db.NVarChar, updateData.if_layout_id);
                 request.input('scenario_name', model.db.NVarChar, updateData.scenario_name);
                 request.input('output_name', model.db.NVarChar, updateData.output_name);
                 request.input('scenario_type', model.db.SmallInt, updateData.scenario_type);
@@ -1531,7 +1531,6 @@ exports.initializeData = function(req, res)
             {
                 callback(err, docs);
             });
-            //var data = [{if_layout_id: 1, if_name: 'デフォルトテンプレート'}];
         },
         //アクション情報
         action: function(callback)
