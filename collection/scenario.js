@@ -62,6 +62,8 @@ Scenario.prototype = {
         {
             doc.actionId = data.actionId;
             doc.conditionList = data.conditionList;
+            console.log("check check");
+            console.log(doc.conditionList);
         }
         else if (data.hasOwnProperty('interval'))
         {

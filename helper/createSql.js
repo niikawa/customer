@@ -300,11 +300,6 @@ function createSegment(data, request)
                 var newBindKey = key + "_" + qId.replace(/-/g,"");
                 replaceObj[key] = "@"+ newBindKey;
                 request.input(newBindKey, type, doc.bindInfo[key]);
-                
-                console.log(key + "を追加しました");
-                console.log(columnsObj);
-                console.log(replaceObj);
-                
             }
             columnsObj[key] = doc.bindInfo[key];
         });
