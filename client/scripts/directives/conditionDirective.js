@@ -16,7 +16,7 @@ myApp.directive('conditionDirective', function(Utility){
                 'ものを条件とする'+
                 '<div ng-if="isOneInput"><input type="text" name="{{conditionAppend.column.physicalname}}" class="form-control" ng-model="conditionAppend.condition.value1" ng-keyup="check()" ng-required="true">'+
 
-                '<p ng-if="conditionAppend.error" class="item-error">{{conditionAppend.message}}</p>'+
+                '<div ng-if="conditionAppend.error" class="item-error-box"><p class="item-error">{{conditionAppend.message}}</p></div>'+
 
                 '</div>'+
                 '<div ng-if="isTextArea"><textarea class="form-control" ng-model="conditionAppend.condition.value1" ng-required="true"></textarea></div>'+

@@ -264,8 +264,9 @@ input.ng-invalid.ng-dirty {
   background: #333;
   color: #fff;
   left: 40%;
-  top: 20px;
+  top: 0;
   max-width: 400px;
+  z-index: 99999;
 }
 
 .item-error:after {

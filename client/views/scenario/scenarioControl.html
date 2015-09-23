@@ -21,7 +21,7 @@
                             <input type="text" class="form-control" name="scenario_name" placeholder="シナリオ名を入力してください" 
                                 ng-model="scenario.scenario_name" ng-maxlength=100 ng-required="true"
                                 my-async-validators="asyncValidators.scenario_name">
-                            <div ng-messages="scenarioForm.scenario_name.$dirty && scenarioForm.scenario_name.$error">
+                            <div class="item-error-box" ng-messages="scenarioForm.scenario_name.$dirty && scenarioForm.scenario_name.$error">
                                 <p class="item-error" ng-message="same">すでに登録されているシナリオ名です</p>
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                                 {{item.segment_name}}
                                 </li>
                             </ul>
-                            <div ng-messages="scenarioForm.segment.$dirty && scenarioForm.segment.$error">
+                            <div class="item-error-box" ng-messages="scenarioForm.segment.$dirty && scenarioForm.segment.$error">
                                 <p class="item-error" ng-message="isSelect">セグメントを選択してください</p>
                             </div>
                         </div>                        
@@ -72,7 +72,7 @@
                                 {{item.layout_name}}
                                 </li>
                             </ul>
-                            <div ng-messages="scenarioForm.ifLayout.$dirty && scenarioForm.ifLayout.$error">
+                            <div class="item-error-box" ng-messages="scenarioForm.ifLayout.$dirty && scenarioForm.ifLayout.$error">
                                 <p class="item-error" ng-message="isSelect">IFレイアウトを選択してください</p>
                             </div>
                         </div>
