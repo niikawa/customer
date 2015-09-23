@@ -46,8 +46,6 @@ myApp.directive('conditionDirective', function(Utility){
                 scope.isTwoInput = true;
             };
             
-            console.log(scope.screenType);
-            
             if (1 == scope.screenType)
             {
                 scope.selectItems = [

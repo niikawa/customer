@@ -920,6 +920,8 @@ exports.save = function(req, res)
 //シナリオを登録する
 function create(req, res)
 {
+    //doc情報のバリデーションチェックをしたい
+
     //はじめにドキュメント情報を作成する
     scenariodoc.saveItemForWeb(true, req.body.doc, function(err, doc)
     {
