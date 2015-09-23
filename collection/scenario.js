@@ -112,6 +112,9 @@ Scenario.prototype = {
                 if (data.hasOwnProperty('actionId'))
                 {
                     doc.actionId = data.actionId;
+                    console.log("update document");
+                    console.log(data.conditionList);
+                    console.log(doc.conditionList);
                     doc.conditionList = data.conditionList;
                 }
                 else if (data.hasOwnProperty('interval'))
