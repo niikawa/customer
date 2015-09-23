@@ -371,10 +371,23 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     
     $scope.decision = function()
     {
-        selectConditionList.push($scope.conditions);
-        var condtionString = Scenario.createCondtionString($scope.conditions);
-        $scope.decisionList.push(condtionString);
-        $scope.conditions = [];
+        var isDecision = false;
+        angular.forEach($scope.conditions, function(condition)
+        {
+            if (!condition.error || '' === condition.condition.value1)
+            {
+                return false;
+            }
+            isDecision = true;
+        })
+        
+        if (isDecision)
+        {
+            selectConditionList.push($scope.conditions);
+            var condtionString = Scenario.createCondtionString($scope.conditions);
+            $scope.decisionList.push(condtionString);
+            $scope.conditions = [];
+        }
     };
     
     $scope.removeDecisionList = function(index)
