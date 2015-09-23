@@ -6,8 +6,8 @@ myApp.directive('conditionDirective', function(Utility){
     return {
         restrict: 'EA',
         scope:{
-            
             conditionAppend: '=',
+            screenType: '@',
         },
         template: 
                 '指定した値' +
@@ -46,19 +46,34 @@ myApp.directive('conditionDirective', function(Utility){
                 scope.isTwoInput = true;
             };
             
-            scope.selectItems = [
-                {name: 'に等しい', value: 1, execute: showOneInput, 'symbol': '='},
-                {name: '以上', value: 2, execute: showOneInput, 'symbol': '>='},
-                {name: '以下', value: 3, execute: showOneInput, 'symbol': '<='},
-                {name: 'を超える', value: 4, execute: showOneInput, 'symbol': '>'},
-                {name: '未満', value: 5, execute: showOneInput, 'symbol': '<'},
-                {name: 'の間', value: 6, execute: showTwoInput, 'symbol': 'BETWEEN'},
-                {name: 'を含む', value: 7, execute: showTextArea, 'symbol': 'IN'},
-                {name: 'を含まない', value: 8, execute: showTextArea, 'symbol': 'NOT IN'},
-                {name: 'から始まる', value: 9, execute: showOneInput, 'symbol': 'LIKE'},
-                {name: 'で終わる', value: 10, execute: showOneInput, 'symbol': 'LIKE'},
-                {name: 'を一部に持つ', value: 11, execute: showOneInput, 'symbol': 'LIKE'},
-            ];
+            if (1 === scope.screenType)
+            {
+                scope.selectItems = [
+                    {name: 'に等しい', value: 1, execute: showOneInput, 'symbol': '='},
+                    {name: '以上', value: 2, execute: showOneInput, 'symbol': '>='},
+                    {name: '以下', value: 3, execute: showOneInput, 'symbol': '<='},
+                    {name: 'を超える', value: 4, execute: showOneInput, 'symbol': '>'},
+                    {name: '未満', value: 5, execute: showOneInput, 'symbol': '<'},
+                    {name: 'の間', value: 6, execute: showTwoInput, 'symbol': 'BETWEEN'},
+                ];
+            }
+            else
+            {
+                scope.selectItems = [
+                    {name: 'に等しい', value: 1, execute: showOneInput, 'symbol': '='},
+                    {name: '以上', value: 2, execute: showOneInput, 'symbol': '>='},
+                    {name: '以下', value: 3, execute: showOneInput, 'symbol': '<='},
+                    {name: 'を超える', value: 4, execute: showOneInput, 'symbol': '>'},
+                    {name: '未満', value: 5, execute: showOneInput, 'symbol': '<'},
+                    {name: 'の間', value: 6, execute: showTwoInput, 'symbol': 'BETWEEN'},
+                    {name: 'を含む', value: 7, execute: showTextArea, 'symbol': 'IN'},
+                    {name: 'を含まない', value: 8, execute: showTextArea, 'symbol': 'NOT IN'},
+                    {name: 'から始まる', value: 9, execute: showOneInput, 'symbol': 'LIKE'},
+                    {name: 'で終わる', value: 10, execute: showOneInput, 'symbol': 'LIKE'},
+                    {name: 'を一部に持つ', value: 11, execute: showOneInput, 'symbol': 'LIKE'},
+                ];
+            }
+            
 
             scope.isOneInput = false;
             scope.isTextArea = false;
