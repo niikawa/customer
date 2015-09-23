@@ -371,15 +371,15 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
     
     $scope.decision = function()
     {
-        var isDecision = false;
+        var isDecision = true;
         angular.forEach($scope.conditions, function(condition)
         {
             if (condition.error || '' === condition.condition.value1)
             {
+                isDecision = false;
                 return false;
             }
-            isDecision = true;
-        })
+        });
         
         if (isDecision)
         {
