@@ -115,9 +115,6 @@ myApp.directive('conditionDirective', function(Utility){
             
             scope.check = function(event)
             {
-                console.log(scope.conditionAppend.column);
-                console.log(scope.conditionAppend.type);
-                
                 var type = '';
                 if (void 0 === scope.conditionAppend.column)
                 {
@@ -128,7 +125,7 @@ myApp.directive('conditionDirective', function(Utility){
                     type = scope.conditionAppend.column.type;
                 }
                 var val = scope.conditionAppend.condition.value1;
-                if ('bigint' === type || 'int' === type)
+                if ('bigint' === type || 'int' === type || 'number' === type)
                 {
                     if (void 0 === val)
                     {
@@ -151,24 +148,32 @@ myApp.directive('conditionDirective', function(Utility){
                 }
                 else if ('datetime' === type || 'smalldatetime' === type)
                 {
-                    var valL = val.split('-');
-                    if (3 !== valL.length)
+                    if (void 0 === val)
                     {
-                        scope.conditionAppend.error = true;
-                        scope.conditionAppend.message = '日付はYYYY-MM-DDで入力してください';
+                        scope.conditionAppend.error = false;
+                        scope.conditionAppend.message = '';
                     }
                     else
                     {
-                        var m = Utility.moment(val);
-                        if (!m.isValid())
+                        var valL = val.split('-') ;
+                        if (3 !== valL.length)
                         {
                             scope.conditionAppend.error = true;
-                            scope.conditionAppend.message = '有効な日付ではありません';
+                            scope.conditionAppend.message = '日付はYYYY-MM-DDで入力してください';
                         }
                         else
                         {
-                            scope.conditionAppend.error = false;
-                            scope.conditionAppend.message = '';
+                            var m = Utility.moment(val);
+                            if (!m.isValid())
+                            {
+                                scope.conditionAppend.error = true;
+                                scope.conditionAppend.message = '有効な日付ではありません';
+                            }
+                            else
+                            {
+                                scope.conditionAppend.error = false;
+                                scope.conditionAppend.message = '';
+                            }
                         }
                     }
                 }
