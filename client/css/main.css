@@ -224,6 +224,10 @@ input.ng-invalid.ng-dirty {
 }
 .vertical-container > form > div {position:relative}
 
+.item-error-box {
+  position: absolute;
+}
+
 .item-error {
   display: block;
   padding: 10px;

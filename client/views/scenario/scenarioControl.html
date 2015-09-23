@@ -30,8 +30,8 @@
                             <input type="text" class="form-control" name="output_name" placeholder="出力名を入力してください" 
                                 ng-model="scenario.output_name" ng-maxlength=100 ng-required="true"
                                 my-async-validators="asyncValidators.output_name">
-                            <div class="item-error" ng-messages="scenarioForm.output_name.$dirty && scenarioForm.output_name.$error">
-                                <p class="" ng-message="same">すでに登録されている出力名です</p>
+                            <div class="item-error-box" ng-messages="scenarioForm.output_name.$dirty && scenarioForm.output_name.$error">
+                                <p class="item-error" ng-message="same">すでに登録されている出力名です</p>
                             </div>
                         </div>
 
