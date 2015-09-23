@@ -46,7 +46,9 @@ myApp.directive('conditionDirective', function(Utility){
                 scope.isTwoInput = true;
             };
             
-            if (1 === scope.screenType)
+            console.log(scope.screenType);
+            
+            if (1 == scope.screenType)
             {
                 scope.selectItems = [
                     {name: 'に等しい', value: 1, execute: showOneInput, 'symbol': '='},
