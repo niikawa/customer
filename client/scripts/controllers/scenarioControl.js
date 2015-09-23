@@ -374,7 +374,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         var isDecision = true;
         angular.forEach($scope.conditions, function(condition)
         {
-            if (condition.error || '' === condition.condition.value1)
+            if (condition.error || '' === condition.condition.value1 || void 0 === condition.condition.value1)
             {
                 isDecision = false;
                 return false;
