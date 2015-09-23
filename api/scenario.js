@@ -1657,9 +1657,22 @@ exports.initializeData = function(req, res)
 exports.isSameName = function(req, res)
 {
     var scenarioId = req.body.id;
+    var targetCol = "";
+    var targetVal = "";
+    if (req.body.hasOwnProperty("scenario_name"))
+    {
+        targetCol = "scenario_name";
+        targetVal = req.body.scenario_name;
+    }
+    else if (req.body.hasOwnProperty("output_name"))
+    {
+        targetCol = "output_name";
+        targetVal = req.body.output_name;
+    }
+    
     if (void 0 === scenarioId)
     {
-        model.isSameItem('scenario_name', req.body.scenario_name, model.db.NVarChar, function(err, result)
+        model.isSameItem(targetCol, targetVal, model.db.NVarChar, function(err, result)
         {
             if (null !== err)
             {
@@ -1675,7 +1688,7 @@ exports.isSameName = function(req, res)
     {
         var conditions = [
             {columns: PK_NAME, type: model.db.Int, value: scenarioId, symbol: '!='},
-            {columns: 'scenario_name', type: model.db.NVarChar, value: req.body.scenario_name, symbol: '='},
+            {columns: targetCol, type: model.db.NVarChar, value: targetVal, symbol: '='},
         ];
         model.isSameItemByMultipleCondition(conditions , function(err, result)
         {

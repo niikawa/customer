@@ -146,7 +146,17 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
                     var val = modelValue || viewValue;
                     if (void 0 === val || val.length === 0) return true;
                     
-                    return Scenario.validators.isSameName(id, val);
+                    return Scenario.validators.isSameName({id: id, scenario_name: val});
+                }
+            },
+            output_name:
+            {
+                same: function (modelValue, viewValue)
+                {
+                    var val = modelValue || viewValue;
+                    if (void 0 === val || val.length === 0) return true;
+
+                    return Scenario.validators.isSameName({id: id, output_name: val});
                 }
             }
         };
@@ -245,6 +255,11 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.$watch('scenario.scenario_name', function()
         {
             $scope.scenarioForm.scenario_name.$validate();
+        });
+
+        $scope.$watch('scenario.output_name', function()
+        {
+            $scope.scenarioForm.output_name.$validate();
         });
 
         $scope.$watch('segmentList', function()
