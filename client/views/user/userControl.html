@@ -41,8 +41,10 @@
                             <input type="password" class="form-control" name="password" placeholder="パスワード"
                                 ng-model="user.password" my-validators="validators.password"
                                 ng-minlength=6 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
+                            <div class="item-error-box" ng-if="userForm.password.$dirty && userForm.password.$invalid">
+                                <p class="item-error">6文字以上の半角英数値で入力してください</p>
+                            </div>
                             <div class="item-error-box" ng-messages="userForm.password.$dirty && userForm.password.$error">
-                                <p class="item-error" ng-if="userForm.password.$dirty && userForm.password.$invalid">6文字以上の半角英数値で入力してください</p>
                                 <p class="item-error" ng-message="same">ユーザー名と異なるパスワードにしてください</p>
                             </div>
                         </div>
