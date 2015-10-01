@@ -14,7 +14,9 @@
                     <!-- ユーザー名 -->
                     <div>
                         <input type="text" class="form-control" placeholder="ユーザー名" name="name" ng-model="user.name" ng-maxlength=30 ng-required="true"/>
-                        <p class="item-error" ng-if="userForm.name.$dirty && userForm.name.$invalid">30文字以内で入力してください</p>
+                        <div class="item-error-box" ng-if="userForm.name.$dirty && userForm.name.$invalid">
+                            <p class="item-error">30文字以内で入力してください</p>
+                        </div>
                     </div>
                     
                     <!-- メールアドレス -->
@@ -23,7 +25,7 @@
                             ng-model="user.mailaddress" ng-maxlength=255 ng-required="true" ng-blur="isSameMailAddress()" 
                             my-async-validators="asyncValidators.mailaddress" />
                         <p class="item-error" ng-if="userForm.mailaddress.$dirty && !userForm.mailaddress.$valid">形式が不正です</p>
-                        <div ng-messages="userForm.mailaddress.$dirty && userForm.mailaddress.$error">
+                        <div class="item-error-box" ng-messages="userForm.mailaddress.$dirty && userForm.mailaddress.$error">
                             <p class="item-error" ng-message="same">すでに登録されているメールアドレスです</p>
                         </div>
                     </div>
@@ -38,7 +40,7 @@
                                 ng-model="user.password" my-validators="validators.password"
                                 ng-minlength=6 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
                             <p class="item-error" ng-if="userForm.password.$dirty && userForm.password.$invalid">6文字以上の半角英数値で入力してください</p>
-                            <div ng-messages="userForm.password.$dirty && userForm.password.$error">
+                            <div class="item-error-box" ng-messages="userForm.password.$dirty && userForm.password.$error">
                                 <p class="item-error" ng-message="same">ユーザー名と異なるパスワードにしてください</p>
                             </div>
                         </div>
@@ -46,7 +48,7 @@
                         <div>
                             <input type="password" class="form-control" name="password_confirm" ng-model="user.password_confirm" placeholder="パスワード再入力"
                                 my-validators="validators.password_confirm" ng-required="true" />
-                            <div ng-messages="userForm.password_confirm.$error">
+                            <div class="item-error-box" ng-messages="userForm.password_confirm.$error">
                                 <p class="item-error" ng-message="confirm">パスワード確認が一致しません</p>
                             </div>
                         </div>
