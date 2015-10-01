@@ -15,15 +15,6 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
         $scope.isExecte = false;
     }
     
-    // function setEvntListeners()
-    // {
-    //     $scope.$on('dropItemComplete', function(event, data)
-    //     {
-    //         event.stopPropagation();
-    //         $scope.isExecte = true;
-    //     });
-    // }
-
     $scope.initialize = function()
     {
         $scope._construct();
