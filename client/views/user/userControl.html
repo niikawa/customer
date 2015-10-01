@@ -22,7 +22,7 @@
                     <!-- メールアドレス -->
                     <div>
                         <input type="email" class="form-control" placeholder="メールアドレス" name="mailaddress" 
-                            ng-model="user.mailaddress" ng-maxlength=255 ng-required="true" ng-blur="isSameMailAddress()" 
+                            ng-model="user.mailaddress" ng-maxlength=255 ng-required="true"
                             my-async-validators="asyncValidators.mailaddress" />
                         <div class="item-error-box" ng-if="userForm.mailaddress.$dirty && !userForm.mailaddress.$valid">
                             <p class="item-error">形式が不正です</p>
