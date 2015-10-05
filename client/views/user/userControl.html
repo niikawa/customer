@@ -40,7 +40,7 @@
                         <div>
                             <input type="password" class="form-control" name="password" placeholder="パスワード"
                                 ng-model="user.password" my-validators="validators.password"
-                                ng-minlength=6 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" />
+                                ng-minlength=6 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" ng-maxlength=50 />
                             <div class="item-error-box" ng-if="userForm.password.$dirty && userForm.password.$invalid">
                                 <p class="item-error">6文字以上の半角英数値で入力してください</p>
                             </div>
@@ -51,7 +51,7 @@
                         
                         <div>
                             <input type="password" class="form-control" name="password_confirm" ng-model="user.password_confirm" placeholder="パスワード再入力"
-                                my-validators="validators.password_confirm" ng-required="true" />
+                                my-validators="validators.password_confirm" ng-required="true" ng-maxlength=50 />
                             <div class="item-error-box" ng-messages="userForm.password_confirm.$error">
                                 <p class="item-error" ng-message="confirm">パスワード確認が一致しません</p>
                             </div>
