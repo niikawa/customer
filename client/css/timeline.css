@@ -154,13 +154,14 @@
     }
 
     ul.timeline > li > .timeline-badge {
-        top: -16px;
-        left: 0px;
+        top: 30px;
+        left: -5px;
         margin-left: 0;
-        width: 100px;
+        width: 80px;
         font-size: 0.9em;
-        line-height: 25px;
-        height: 25px;
+        line-height: 45px;
+        height: 45px;
+        word-break: keep-all;
     }
 
     ul.timeline > li > .timeline-panel {
