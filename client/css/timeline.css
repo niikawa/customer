@@ -155,10 +155,12 @@
 
     ul.timeline > li > .timeline-badge {
         top: -16px;
-        left: 15px;
+        left: 0px;
         margin-left: 0;
         width: 100px;
-        font: 8px;
+        font-size: 0.9em;
+        line-height: 25px;
+        height: 25px;
     }
 
     ul.timeline > li > .timeline-panel {
