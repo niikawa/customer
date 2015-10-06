@@ -43,8 +43,8 @@ router.use(session({
         }
     ),
     secret : router.get('secretKey'),
-    resave : false,
     saveUninitialized: true,
+    resave : false,
 }));
 
 router.use(express.static(path.resolve(__dirname, 'client')));
