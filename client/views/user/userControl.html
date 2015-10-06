@@ -27,6 +27,8 @@
                         <div class="item-error-box" ng-if="userForm.mailaddress.$dirty && !userForm.mailaddress.$valid">
                             <p class="item-error">形式が不正です</p>
                         </div>
+                        <code>{{userForm.mailaddress.$error}}</code>
+                        
                         <div class="item-error-box" ng-messages="userForm.mailaddress.$dirty && userForm.mailaddress.$error">
                             <p class="item-error" ng-message="same">すでに登録されているメールアドレスです</p>
                         </div>
@@ -41,7 +43,7 @@
                             <input type="password" class="form-control" name="password" placeholder="パスワード"
                                 ng-model="user.password" my-validators="validators.password"
                                 ng-minlength=6 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" ng-maxlength=50 />
-                            <div class="item-error-box" ng-if="userForm.password.$dirty && userForm.password.$invalid">
+                            <div class="item-error-box" ng-if="userForm.password.$error.pattern || userForm.password.$error.maxlength">
                                 <p class="item-error">6文字以上の半角英数値で入力してください</p>
                             </div>
                             <div class="item-error-box" ng-messages="userForm.password.$dirty && userForm.password.$error">
