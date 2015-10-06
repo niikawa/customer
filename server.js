@@ -6,6 +6,8 @@
 var http = require('http');
 var path = require('path');
 var express = require('express');
+var session = require('express-session');
+var redisStore = require('connect-redis')(session);
 var router = express();
 
 var morgan = require("morgan");
@@ -25,8 +27,6 @@ else if (process.env.ENVIRONMENT == 'production')
 }
 
 var cookieParser = require('cookie-parser');
-var session = require('express-session');
-var redisStore = require('connect-redis')(session);
 var bodyParser = require('body-parser');
 var multer = require('multer');
 
@@ -34,14 +34,11 @@ router.set('secretKey', 'ix-cpm-forazure');
 router.set('cookieSessionKey', 'sid');
 router.use(cookieParser(router.get('secretKey')));
 router.use(session({
-    store: new redisStore
-    (
-        {
-            host: 'new-river.redis.cache.windows.net',
-            port: 6380,
-            pass: 'JNPUUHigCvJUUjmAHujLW9u5Hv5BNO/YV6Tj8fSLwd4=',
-        }
-    ),
+    store: new redisStore({
+        host: 'new-river.redis.cache.windows.net',
+        port: 6380,
+        pass: 'JNPUUHigCvJUUjmAHujLW9u5Hv5BNO/YV6Tj8fSLwd4=',
+    }),
     secret : router.get('secretKey'),
     saveUninitialized: true,
     resave : false,
