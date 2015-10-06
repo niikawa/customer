@@ -40,7 +40,6 @@ router.use(session({
             host: 'new-river.redis.cache.windows.net',
             port: 6380,
             pass: 'JNPUUHigCvJUUjmAHujLW9u5Hv5BNO/YV6Tj8fSLwd4=',
-            prefix: 'sid:',
         }
     ),
     secret : router.get('secretKey'),
