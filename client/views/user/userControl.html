@@ -24,11 +24,9 @@
                         <input type="email" class="form-control" placeholder="メールアドレス" name="mailaddress" 
                             ng-model="user.mailaddress" ng-maxlength=255 ng-required="true"
                             my-async-validators="asyncValidators.mailaddress" />
-                        <div class="item-error-box" ng-if="userForm.mailaddress.$dirty && !userForm.mailaddress.$valid">
+                        <div class="item-error-box" ng-if="userForm.mailaddress.$error.email">
                             <p class="item-error">形式が不正です</p>
                         </div>
-                        <code>{{userForm.mailaddress.$error}}</code>
-                        
                         <div class="item-error-box" ng-messages="userForm.mailaddress.$dirty && userForm.mailaddress.$error">
                             <p class="item-error" ng-message="same">すでに登録されているメールアドレスです</p>
                         </div>
