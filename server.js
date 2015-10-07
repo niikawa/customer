@@ -44,15 +44,16 @@ router.use(session({
     resave : false,
 }));
 
-function ensureSecure(req, res, next){
-  if(req.secure)
-  {
-    return next();
-  }
-  else
-  {
-      res.redirect('https://'+req.host+req.url);
-  }
+function ensureSecure(req, res, next)
+{
+    console.log(req.host);
+    console.log(req.url);
+    
+    if(req.secure)
+    {
+        return next();
+    }
+    res.redirect('https://'+req.host+req.url);
 }
 router.all('*', ensureSecure);
 
