@@ -1,0 +1,1 @@
+var modalService=angular.module("myApp");modalService.service("Modal",["$modal",function(a){var b=function(b,c){return a.open({templateUrl:c,backdrop:"static",scope:b})};return{open:b}}]);

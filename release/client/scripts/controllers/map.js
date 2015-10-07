@@ -1,0 +1,1 @@
+var mapCtrl=angular.module("mapCtrl",[]);mapCtrl.controller("MapCtrl",["$scope","Shared","Utility",function(a){function b(){}a.initialize=function(){a._construct(),b()}}]);

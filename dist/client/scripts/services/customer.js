@@ -1,0 +1,1 @@
+var customerServices=angular.module("CustomerServices",["ngResource"]);customerServices.factory("Customer",["$resource","Utility",function(a){var b={};return b.resource=a("/customer/:id/",{id:"@id"},{detail:{method:"GET",url:"custmoer/detail/:id",cache:!0},orders:{method:"GET",url:"custmoer/orders/:id",cache:!0}}),b}]);

@@ -1,0 +1,1 @@
+var roleServices=angular.module("RoleServices",["ngResource"]);roleServices.factory("Role",["$resource","Utility",function(a){var b={};return b.resource=a("/role/:id",{id:"@id"},{}),b}]);

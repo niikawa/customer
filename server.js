@@ -45,6 +45,7 @@ router.use(session({
 }));
 
 router.use(express.static(path.resolve(__dirname, 'client')));
+router.use(express.static(path.resolve(__dirname, 'dist')));
 router.use(express.static(path.resolve(__dirname, 'files')));
 //var upload = multer({ dest: 'uploads/'})
 

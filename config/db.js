@@ -22,8 +22,8 @@ module.exports = function()
         return {
           user: 'vxc-databese-master',
           password: 'VirtUaleX001',
-          server: 'oufq8kwys5.database.windows.net',
-          database: 'CustomerReport',
+          server: 'a9kl4a5stz.database.windows.net',
+          database: 'NewRiverTest',
           stream: true, 
           options: { encrypt: true },
           pool:

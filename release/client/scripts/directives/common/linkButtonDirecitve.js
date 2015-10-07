@@ -1,0 +1,1 @@
+var myApp=angular.module("myApp");myApp.directive("linkButtonDirecitve",function(a){return{restrict:"E",scope:{href:"@",name:"@"},template:'<a ng-if="isShowMine" class="btn btn-default" ng-href="/#/{{href}}">{{name}}</a> ',link:function(b){b.isShowMine=3!=a.get("role")?!0:!1,b.click=function(){b.execute()}}}});
