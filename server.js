@@ -48,6 +48,7 @@ function ensureSecure(req, res, next)
 {
     console.log(req.host);
     console.log(req.url);
+    console.log(req.secure);
     
     if(req.secure)
     {
