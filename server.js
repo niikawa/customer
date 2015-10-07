@@ -44,20 +44,6 @@ router.use(session({
     resave : false,
 }));
 
-// function ensureSecure(req, res, next)
-// {
-//     console.log(req.protocol);
-//     console.log(req.host);
-//     console.log(req.url);
-    
-//     if('https' == req.protocol)
-//     {
-//         return next();
-//     }
-//     res.redirect('https://'+req.host+req.url);
-// }
-// router.all('*', ensureSecure);
-
 router.use(express.static(path.resolve(__dirname, 'client')));
 router.use(express.static(path.resolve(__dirname, 'files')));
 //var upload = multer({ dest: 'uploads/'})
