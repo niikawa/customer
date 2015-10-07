@@ -36,13 +36,25 @@ router.use(cookieParser(router.get('secretKey')));
 router.use(session({
     store: new redisStore({
         host: 'new-river.redis.cache.windows.net',
-        port: 6379,
+        port: 6380,
         pass: 'JNPUUHigCvJUUjmAHujLW9u5Hv5BNO/YV6Tj8fSLwd4=',
     }),
     secret : router.get('secretKey'),
     saveUninitialized: true,
     resave : false,
 }));
+
+function ensureSecure(req, res, next){
+  if(req.secure)
+  {
+    return next();
+  }
+  else
+  {
+      res.redirect('https://'+req.host+req.url);
+  }
+}
+router.all('*', ensureSecure);
 
 router.use(express.static(path.resolve(__dirname, 'client')));
 router.use(express.static(path.resolve(__dirname, 'files')));
