@@ -1,0 +1,94 @@
+        <div class="box" ng-controller="MainCtrl" ng-init="initialize()">
+            
+            <div class="page-title"><h2>Customer Profile</h2></div>
+            
+            <div class="row col-md-12">
+                <div class="pull-left">
+                  <auto-complete-directive item-list="customerList" selected-item="selectedCustomer" 
+                    name-propertie="customer_id" 
+                    append-string = "顧客#:"
+                    execute="custmoerChangeExecute()">
+                  </auto-complete-directive>
+                </div>
+            </div>
+            
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="card-gray center">
+                        <div class="panel-heading">ランク</div>
+                        <div class="panel-footer ">
+                            <p ng-show="isGetData">{{rank}}</p>
+                            <input ng-show="isGetData" type="button" class="btn btn-info" value="おすすめ商品を表示" ng-click="recomender()">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card-gray center">
+                        <div class="panel-heading">直近購買日（R）</div>
+                        <div class="panel-footer {{addStyle}}">
+                            <p ng-show="isGetData">{{customer.last_purchasing_date}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card-gray center">
+                        <div class="panel-heading">購買頻度（F）</div>
+                        <div class="panel-footer">
+                            <div ng-show="isGetData">
+                                <p>{{customer.frequency}}回</p>
+                                <p>({{customer.frequency_avg}})回</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card-gray center">
+                        <div class="panel-heading">購買金額（M）</div>
+                        <div class="panel-footer">
+                            <div ng-show="isGetData">
+                                <p>\{{customer.monetary}}</p>
+                                <p>(Avg. \ {{customer.monetary_avg}})</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- サマリ -->
+            <div class="row" ng-show="orders">
+                <div class="col-md-12">
+                    <div class="card-gray" line-chart data="orders" header-label="lineLabel" legend-label="legendLabel" ></div>
+                </div>
+            </div>
+
+            <!-- アプローチ方法 -->
+            <div class="row" ng-show="isGetData">
+                <div class="col-md-12">
+                    
+                    <table class="table table-bordered table-hover">
+                        <caption>アプローチ方法</caption>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>カテゴリ</th>
+                                <th>タイトル</th>
+                                <th>タイミング</th>
+                                <th>内容</th>
+                            </tr>
+                        </thead>
+                        <!--  ここデータでとるところ -->
+                        <tbody>
+                            
+                            <tr ng-repeat="item in approch track by $index">
+                                <td>{{$index+1}}</td>
+                                <td>{{item.category_name}}</td>
+                                <td>{{item.title}}</td>
+                                <td>{{item.situation}}</td>
+                                <td>{{item.contents}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>

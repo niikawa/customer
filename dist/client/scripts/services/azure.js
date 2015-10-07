@@ -1,1 +1,0 @@
-var azureServices=angular.module("AzureServices",["ngResource"]);azureServices.factory("Azure",["$resource","$http","Shared",function(a){var b={};return b.resource=a("/customer/:id/",{id:"@id"},{recomender:{method:"GET",url:"/azure/recomender/:id"}}),b}]);

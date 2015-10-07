@@ -1,34 +1,68 @@
 module.exports = function(grunt) {
-    // initConfigの中に各タスクの設定を行っていきます。
+    var pkg = grunt.file.readJSON( 'package.json' );
     grunt.initConfig({ 
-        // watchタスク: ファイルの変更を監視します。
+        pkg: pkg,
+        copy: {
+            html: {
+                files: [ {
+                    expand: true,
+                    cwd: 'client',
+                    src: [ '**/*' ],
+                    dest: 'release'
+                } ]
+            }
+        },        
+        //オートプレフィックス
         autoprefixer: {
             target: {
                 expand: true,
-                src: 'client/css/**/*.css',
+                src: 'release/css/**/*.css',
                 dest: 'release/'
             }
-        },        
-        cssmin: {
-            target: {
-                expand: true,
-                // dist/css以下のcss。ただしmin.cssで終わっていないものに限る
-                src: ['release/client/css/**/*.css', '!*.min.css'],
-                // 出力先はそのまま
-                dest: './',
-                // ファイルの拡張子をファイル名.min.cssにする
-                ext: '.min.css'
+        },
+        // //ファイル連結
+        // concat: {
+        //     generated: {
+        //         files: [{
+        //             src : 'release/client/css/**/*.css',
+        //             dest: 'release/style/app.css'
+        //         }]}
+        // },
+        // //CSS圧縮
+        // cssmin: {
+        //     target: {
+        //         expand: true,
+        //         src: ['release/style/app.css', '!*.min.css'],
+        //         // 出力先はそのまま
+        //         dest: './',
+        //         // ファイルの拡張子をファイル名.min.cssにする
+        //         ext: '.min.css'
+        //     }
+        // },
+        // //JS圧縮
+        // uglify: {
+        //     generated: {
+        //         files: [{
+        //             expand: true,
+        //             // jsフォルダ以下にあるすべてのjs
+        //             src: 'client/scripts/**/*.js',
+        //             // 出力先フォルダ
+        //             dest: 'release'
+        //         }]
+        //     }
+        // },
+        useminPrepare: {
+            html: 'release/index.html',
+            options: {
+                root: 'client/',
+                dest: 'release/'
             }
         },
-        uglify: {
-            target: {
-                files: [{
-                    expand: true,
-                    // jsフォルダ以下にあるすべてのjs
-                    src: 'client/scripts/**/*.js',
-                    // 出力先フォルダ
-                    dest: 'release'
-                }]
+        usemin: {
+            html: 'release/index.html',
+            options: {
+                //root: 'client/',
+                dest: 'release'
             }
         },
         watch: {
@@ -37,13 +71,13 @@ module.exports = function(grunt) {
     });
  
     // grunt.loadNpmTasks('プラグイン名');でプラグインを読み込みます。
-    grunt.loadNpmTasks('grunt-autoprefixer');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-imagemin');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-watch');
+    Object.keys( pkg.devDependencies ).forEach( function( devDependency ) {
+        if( devDependency.match( /^grunt\-/ ) ) {
+            grunt.loadNpmTasks( devDependency );
+        }
+    } );
  
     // gruntコマンドのデフォルトタスクにwatchを追加します。
     grunt.registerTask('css', ['autoprefixer','cssmin']);
-    grunt.registerTask('all', ['autoprefixer','cssmin', 'uglify']);
+    grunt.registerTask('build', ['copy','autoprefixer','useminPrepare','uglify','concat','cssmin','usemin']);
 };

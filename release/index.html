@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ja" >
+  <head>
+    <title>new river</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="style/components.min.css">
+
+    <link rel="stylesheet" href="style/app.min.css">
+    <link rel='stylesheet' href="vendor/alert/css/jquery.toastmessage.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+  <body ng-app="myApp" ng-controller="CoreCtrl">
+
+    <my-header class="fixed-100" ng-if="isHeader"></my-header>
+    <div id="view" class="container-fluid view-animate-container-wide">
+      
+      <spinner-directive is="isSpinner" src="img/common/loading.gif"></spinner-directive>
+      
+      <ng-view class="view-animate"></ng-view>
+
+    </div>
+    
+    <script src="js/components.js"></script>
+
+    <script src="vendor/alert/jquery.toastmessage.js"></script>
+
+    <script src="js/newriver.js"></script>
+  </body>
+</html>

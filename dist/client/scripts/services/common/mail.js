@@ -1,1 +1,0 @@
-var mailServices=angular.module("myApp");mailServices.service("Mail",["$resource",function(a){var b={};return b.resource=a("https://api-gozaru9.c9.io/V1/mail/:site/",{site:"@site"}),b}]);

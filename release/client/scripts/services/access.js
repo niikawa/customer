@@ -1,1 +1,0 @@
-var accessServices=angular.module("AccessServices",["ngResource"]);accessServices.factory("Access",["$resource","Utility",function(a){var b={};return b.resource=a("/access/",{},{day:{method:"POST",url:"/access"},dayByUser:{method:"POST",url:"/access/user"}}),b}]);

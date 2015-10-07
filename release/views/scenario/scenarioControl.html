@@ -1,0 +1,132 @@
+<div class="" ng-controller="ScenarioControlCtrl" ng-init="initialize()">
+
+    <div class="page-title"><h2>シナリオ管理</h2></div>
+    
+    <div class="box">
+        <h4>{{pageTitle}}</h4>
+
+        <form name="scenarioForm" novalidate>
+            <div class="row" >
+                
+                <div class="col-md-12 vertical-container">
+                    
+                    <h3 class="pointer" ng-click="isBaseCollapse = !isBaseCollapse">
+                        <i ng-if="!isBaseCollapse" class="fa fa-caret-square-o-up"></i>
+                        <i ng-if="isBaseCollapse" class="fa fa-caret-square-o-down"></i>
+                        基本設定</h3>
+                    
+                    <div collapse="isBaseCollapse">
+                        
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="scenario_name" placeholder="シナリオ名を入力してください" 
+                                ng-model="scenario.scenario_name" ng-maxlength=100 ng-required="true"
+                                my-async-validators="asyncValidators.scenario_name">
+                            <div class="item-error-box" ng-messages="scenarioForm.scenario_name.$dirty && scenarioForm.scenario_name.$error">
+                                <p class="item-error" ng-message="same">すでに登録されているシナリオ名です</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="output_name" placeholder="出力名を入力してください" 
+                                ng-model="scenario.output_name" ng-maxlength=100 ng-required="true"
+                                my-async-validators="asyncValidators.output_name">
+                            <div class="item-error-box" ng-messages="scenarioForm.output_name.$dirty && scenarioForm.output_name.$error">
+                                <p class="item-error" ng-message="same">すでに登録されている出力名です</p>
+                            </div>
+                        </div>
+
+                        <div class="btn-group">
+                            <label class="btn btn-default" name="approach" ng-model="scenario.approach" ng-required="true" btn-radio=1 uncheckable>アプローチ対象</label>
+                            <label class="btn btn-default" name="approach" ng-model="scenario.approach" ng-required="true" btn-radio=0 uncheckable>アプローチ対象外</label>
+                        </div>
+    
+                        <div class="btn-group">
+                            <label class="btn btn-default" name="status" ng-model="scenario.status" ng-required="true" btn-radio=1 uncheckable>有効</label>
+                            <label class="btn btn-default" name="status" ng-model="scenario.status" ng-required="true" btn-radio=0 uncheckable>無効</label>
+                        </div>
+    
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <input type="text" class="form-control" placeholder="セグメントを絞り込みます" ng-model="segmentSearch" 
+                                    refine-directive refine-item="segmentList" keyword="segmentSearch" name-propertie="segment_name" >
+                            </div>
+                            <ul class="list-group overflow-box-s" name="segment" 
+                                ng-model="scenario.segment_id" my-validators="validators.segment">
+                                <li class="list-group-item clearfix" ng-repeat="item in segmentList" push-directive list="segmentList" info="item" active="scenario.segment_id" activekey="segment_id">
+                                {{item.segment_name}}
+                                </li>
+                            </ul>
+                            <div class="item-error-box" ng-messages="scenarioForm.segment.$dirty && scenarioForm.segment.$error">
+                                <p class="item-error" ng-message="isSelect">セグメントを選択してください</p>
+                            </div>
+                        </div>                        
+        
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <input type="text" class="form-control" placeholder="IFレイアウトを絞り込みます" ng-model="ifSearch" 
+                                    refine-directive refine-item="ifList" keyword="ifSearch" name-propertie="layout_name" >
+                            </div>
+                            <ul class="list-group overflow-box-s" name="ifLayout" 
+                                ng-model="scenario.if_layout_id" my-validators="validators.ifLayout">
+                                <li class="list-group-item clearfix" ng-repeat="item in ifList" push-directive list="ifList" info="item" active="scenario.if_layout_id" activekey="id">
+                                {{item.layout_name}}
+                                </li>
+                            </ul>
+                            <div class="item-error-box" ng-messages="scenarioForm.ifLayout.$dirty && scenarioForm.ifLayout.$error">
+                                <p class="item-error" ng-message="isSelect">IFレイアウトを選択してください</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row" >
+                <div class="col-md-12 vertical-container">
+
+                    <h3 class="pointer" ng-click="isTagCollapse = !isTagCollapse">
+                        <i ng-if="!isTagCollapse" class="fa fa-caret-square-o-up"></i>
+                        <i ng-if="isTagCollapse" class="fa fa-caret-square-o-down"></i>
+                        タグ設定</h3>
+                    <div collapse="isTagCollapse">
+                        
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <auto-complete-fa-directive item-list="tagList" addon-string="つけたいタグを入力してください" click-execute=addTag()
+                                    name-propertie="tag_name" show-Label=false select-by-list=false select-name="inputTag">
+                                </auto-complete-directive>
+                                
+                                <!--<input class="form-control form-control-add-fa2" placeholder="" ng-model="inputTag">-->
+                            </div>
+                            
+                            <div class="col-md-12 break-all">
+                                <div class="label label-success" ng-repeat="(i, tag) in selectTagList">
+                                    {{tag.tag_name}}
+                                    <!--<i class="fa fa-tag"></i><span></span>-->
+                                    <span type="button" class="label-close" ng-click="removeTag(i)">&times;</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row" >
+                <div class="col-md-12 vertical-container">
+                    <h3 class="pointer" ng-click="isOriginCollapse = !isOriginCollapse">
+                        <i ng-if="!isOriginCollapse" class="fa fa-caret-square-o-up"></i>
+                        <i ng-if="isOriginCollapse" class="fa fa-caret-square-o-down"></i>
+                        個別設定</h3>
+                    <div collapse="isOriginCollapse" ng-include="template">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row　col-md-12 center" >
+                <a class="btn btn-default" ng-href="#/scenario/{{type}}" >戻る</a>
+                <button class="btn btn-default" ng-click="clear()">クリア</button>
+                <button class="btn btn-default" ng-disabled="scenarioForm.$invalid" ng-click="save()">保存</button>
+            </div>
+        </form>
+    </div>
+</div>

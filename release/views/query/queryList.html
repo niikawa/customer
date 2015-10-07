@@ -1,0 +1,48 @@
+<div class="" ng-controller="QueryListCtrl" ng-init="initialize()">
+
+    <div class="page-title"><h2>クエリー管理</h2></div>
+    
+    <div class="box">
+        <h4>
+            クエリー一覧<a class="btn btn-default" ng-href="/#/query">新規登録</a> 
+        </h4>
+        
+        <div class="row" >
+            <div class="col-md-12">
+                
+                <div ng-if="false === isQueryShow" class="alert alert-info" role="alert">
+                    作成しているクエリーはありません。
+                </div>
+                
+                <div ng-if="isQueryShow" class="panel panel-default">
+                    <div class="panel-heading">
+                        <input type="text" class="form-control" placeholder="クエリーを絞り込みます" ng-model="querySearch" 
+                            refine-directive refine-item="queryList" keyword="querySearch" name-propertie="query_name" >
+                    </div>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>クエリー名</th>
+                                <th>利用状況</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="(i, item) in queryList">
+                                <td data-th="名称"><a ng-href='/#/query/control/{{item.id}}'>{{item.query_name}}</a></td>
+                                <td ng-if="item.isUse" data-th="利用状況">
+                                    <a ng-href="" ng-click="showSegment(i)">{{item.useNum}}件</a>のセグメントで利用されています。
+                                </td>
+                                <td ng-if="!item.isUse" data-th="利用状況">利用されていません。</td>
+                                <td>
+                                    <close-button-direcitve execute=deleteItem(i)></close-button-direcitve>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>

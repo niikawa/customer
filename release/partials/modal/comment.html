@@ -1,0 +1,38 @@
+<!-- 
+コメント追加用モーダル
+
+[scope]
+comentList {array} 表示するコメントの配列
+comments {string} 入力したコメント
+
+@author niikawa
+-->
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()">&times;</button>
+    <h3>コメントを入力</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="arrorw-panel form-group">
+                <textarea placeholder="コメントを入力してください" ng-model="modalParam.newComment"/>
+            </div>
+        </div>
+        
+        <div class="col-sm-12">
+            <div accept=".jpg,.png,.gif, txt" ng-multiple="true" drag-over-class="file-upload-dragover" ng-model="modalParam.files" ngf-drop=true class="file-upload-area">
+                <span class="fa fa-cloud-upload fa-3x"></span>
+                <p ng-if="modalParam.files.name"><span class="file-name">{{modalParam.files.name}}</span></p>
+                <p ng-if="!modalParam.files.name"><span class="file-name">添付ファイルは1つだけです</span></p>
+                <label class="btn btn-info btn-lg" for="file">ファイルを選択</label>
+                <input type="file" ngf-select ng-model="modalParam.files" ngf-multiple="false" name="file" id="file">
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="$close()">閉じる</button>
+    <button class="btn btn-primary" ng-click="modalParam.execute()">追加する</button>
+</div>

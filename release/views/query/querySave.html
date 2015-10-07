@@ -1,0 +1,105 @@
+<div class="" ng-controller="QueryCtrl" ng-init="saveInitialize()">
+
+    <div class="page-title"><h2>クエリー管理</h2></div>
+    
+    <div class="box">
+        <h4>条件を組み立てて保存してください</h4>
+        
+        <div ng-if="isShowEditMessage" class="alert alert-info center" role="alert">
+            {{queryName}}を更新します。
+        </div>
+
+        <div class="row vertical-container" >
+            
+            <div class="col-md-12">
+                <form name="queryForm" novalidate>
+                    <div>
+                        <input type="text" class="form-control" placeholder="クエリー名" name="name" 
+                            ng-model="query.query_name" ng-required="true" ng-maxlength="100"/>
+                        <p class="item-error" ng-if="queryForm.name.$dirty && queryForm.name.$invalid">クエリ名を入力してください</p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-12 center" >
+                <a class="btn btn-default" ng-href="#/query/set" >戻る</a>
+                <button class="btn btn-default"  ng-disabled="queryForm.$invalid" ng-click="execute()">実行する</button>
+                <button class="btn btn-default"  ng-disabled="queryForm.$invalid" ng-click="save()">保存</button>
+            </div>
+            
+            <div class="col-md-6 col-sm-6">
+                
+                <div class="card-container" ng-model='showConditions' drop-directive drop-area-key="1">
+
+                    <div ng-class="{childlist: isJoin(items)}" ng-repeat="(i, items) in showConditions track by $index" >
+                        
+                        <!-- ここがdragするやつ -->
+                        <div class="card-info btn-draggable" ng-repeat="(j, item) in items track by $index" drag-item-directive dragindex="i">
+                            
+                            <div class="card-cell-left">
+                                <div >
+                                    <p>
+                                        {{item.table.logicalname}}.{{item.column.logicalname}}が{{item.selectedCondition.condtionString}}
+                                    </p>
+                                    
+                                    <div class="btn-group" ng-if="!$parent.$last || !$last">
+                                        <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'AND'" uncheckable>かつ</label>
+                                        <label class="btn btn-default" ng-model="item.condition.where" btn-radio="'OR'" uncheckable>または</label>
+                                    </div>
+
+                                    <div class="btn-group" ng-if="!$last || j > 0">
+                                        <label class="label label-success " ng-click="release(i, j)">
+                                            解除
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div ng-if="!isJoin(items)" class="card-cell-right" drop-join-directive ng-model="items">
+                                <div class="drop-join"></div>
+                            </div>
+                        </div>
+                        <div ng-if="isJoin(items)" drop-join-directive ng-model="items">
+                            <div class="drop-join-long"><p>まとめる条件をドロップしてください</p></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-sm-6">
+                
+                <div class="box-gray mh" >
+                
+                    <div class="" ng-repeat="items in showConditions track by $index">
+                        
+                        <div ng-repeat="item in items track by $index">
+                            <span ng-if="$index==0 && $first!=$last">(</span>
+                            <p>
+                                {{item.table.logicalname}}.{{item.column.logicalname}}
+                                <span ng-if="item.selectedCondition.symbol=='LIKE' && item.selectedCondition.value=='9'">{{item.selectedCondition.symbol}} {{item.condition.value1}}%</span>
+                                <span ng-if="item.selectedCondition.symbol=='LIKE' && item.selectedCondition.value=='10'">%{{item.selectedCondition.symbol}} {{item.condition.value1}}</span>
+                                <span ng-if="item.selectedCondition.symbol=='LIKE' && item.selectedCondition.value=='11'">%{{item.selectedCondition.symbol}} {{item.condition.value1}}%</span>
+                                <span ng-if="item.selectedCondition.symbol=='BETWEEN'">{{item.selectedCondition.symbol}}{{item.condition.value1}} AND {{item.condition.value2}}</span>
+                                <span ng-if="item.selectedCondition.symbol=='IN' || item.selectedCondition.symbol=='NOT IN'">{{item.selectedCondition.symbol}} ({{item.condition.value1}})</span>
+                                <span ng-if="item.selectedCondition.symbol!='IN' && item.selectedCondition.symbol!='NOT IN' && item.selectedCondition.symbol!='LIKE' && item.selectedCondition.symbol!='BETWEEN'">{{item.selectedCondition.symbol}} {{item.condition.value1}}</span>
+                            </p>
+                            
+                            <span ng-if="$index!=0 && $last">)</span>
+                            
+                            <p ng-if="!$parent.$last || !$last">
+                                {{item.condition.where}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 center" >
+                <a class="btn btn-default" ng-href="#/query/set" >戻る</a>
+                <button class="btn btn-default"  ng-disabled="queryForm.$invalid" ng-click="execute()">実行する</button>
+                <button class="btn btn-default"  ng-disabled="queryForm.$invalid" ng-click="save()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>

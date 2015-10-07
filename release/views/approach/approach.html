@@ -1,0 +1,72 @@
+<div class="" ng-controller="ApproachCtrl" ng-init="initialize()">
+
+    <div class="page-title"><h2>アプローチ管理</h2></div>
+    
+    <div class="box">
+        <h4>回数制限</h4>
+
+        <div class="row vertical-container">
+            <div class="col-md-12">
+                <div class="col-md-6 col-sm-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">1日の制限回数</span>
+                        <input type="number" class="form-control form-control-add-fa2" placeholder="1日の制限回数" 
+                            ng-model="approach.daily_limit_num" ng-required="true">
+                        <span class="input-group-addon question"><i class="fa fa-question-circle fa-2x" ng-click="showDiscription(1)"></i></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">1週間の制限回数</span>
+                        <input type="number" class="form-control form-control-add-fa2" placeholder="1週間の制限回数" 
+                            ng-model="approach.weekly_limit_num" ng-required="true">
+                        <span class="input-group-addon question"><i class="fa fa-question-circle fa-2x" ng-click="showDiscription(2)"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row" >
+            <div class="col-md-12 center" >
+                <button class="btn btn-default" ng-click="save()">保存</button>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="box">
+        <h4>シナリオ優先順位
+            <button ng-if="showScenarioList" class="btn btn-default" ng-click="bulkInvalid()">一括無効</button>
+            <button ng-if="showScenarioList" class="btn btn-default" ng-click="bulkEnable()">一括有効</button>
+        </h4>
+
+        <div class="row vertical-container" >
+            <div class="col-md-12">
+                
+                <div ng-if="!showScenarioList" class="alert alert-info" role="alert">
+                    アプローチ対象のシナリオはありません。
+                </div>
+                
+                <div class="card-container" ng-model='scenarioList' drop-directive drop-line-name="priority" drop-area-key="1">
+                    
+                    <div class="card btn-draggable" ng-repeat="item in scenarioList track by $index" drag-item-directive dragindex="$index" >
+                        <span class="badge">{{$index+1}}</span>
+                        <span class="label-m label-default">{{item.scenario_type}}</span>
+                        <a ng-href='/#/scenario/{{item.scenario_type_key}}/control/{{item.scenario_id}}'>{{item.scenario_name}}</a>
+                        <div class="btn-group">
+                            <label class="btn btn-default" name="status" ng-model="item.status" btn-radio=1 uncheckable>有効</label>
+                            <label class="btn btn-default" name="status" ng-model="item.status" btn-radio=0 uncheckable>無効</label>
+                        </div>
+                        <span ng-if="0 == item.valid_flag" class="list-error"><i class="glyphicon glyphicon-alert"></i>設定していたセグメントが削除されています。</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row col-md-12 center" >
+                <button class="btn btn-default" ng-click="savePriority()">保存</button>
+            </div>
+        </div>
+    </div>
+
+</div>

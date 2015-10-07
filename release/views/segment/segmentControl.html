@@ -1,0 +1,62 @@
+<div class="" ng-controller="SegmentControlCtrl" ng-init="initialize()">
+
+    <div class="page-title"><h2>セグメント管理</h2></div>
+    
+    <div class="box">
+        <h4>セグメント{{pageTitle}}
+            <a class="btn btn-default" ng-href="/#/query">クエリ作成</a> 
+        </h4>
+
+        <div class="row" >
+            <div class="col-md-12">
+                <form name="segmentForm" novalidate>
+                    <input type="text" class="form-control" name="name" placeholder="セグメント名を入力してください" 
+                        ng-model="segment.segment_name" ng-required="true" ng-maxlength="100">
+                    <p class="item-error" ng-if="segmentForm.name.$dirty && segmentForm.name.$invalid">セグメント名を入力してください</p>
+                </form>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">
+                              <input type="text" class="form-control" placeholder="クエリを絞り込みます" ng-model="segmentSearch" 
+                                refine-directive refine-item="queryList" keyword="segmentSearch" name-propertie="query_name" >
+                          </div>
+                          <ul class="list-group" >
+                            <li class="list-group-item clearfix" ng-repeat="item in queryList track by $index" ng-model="queryList" >
+                                {{item.query_name}}
+                                <div class="card-cell-right">
+                                    <button class="btn-clear" ng-click="moveQuery($index)"><i class="fa fa-plus-square fa-2x"></i></button>
+                                </div>
+                            </li>
+                          </ul>
+                        </div>                        
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="box-gray mh" ng-model='conditions' drop-directive drop-area-key="" >
+                            <div class="panel panel-success" ng-repeat="condition in conditions track by $index" drag-item-directive dragindex="$index">
+                                <div class="panel-heading">{{condition.query_name}}
+                                    <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="btn-group" ng-if="!$last">
+                                        <label class="btn btn-default" ng-model="condition.where" btn-radio="'AND'" uncheckable>かつ</label>
+                                        <label class="btn btn-default" ng-model="condition.where" btn-radio="'OR'" uncheckable>または</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 center" >
+                    <a class="btn btn-default" ng-href="#/segment" >戻る</a>
+                    <button class="btn btn-default" ng-disabled="!isExecte" ng-click="execute()">実行する</button>
+                    <button ng-if="1==viewMode" class="btn btn-default" ng-disabled="(segmentForm.$invalid==isExecte || segmentForm.$invalid)" ng-click="save()">保存</button>
+                    <button ng-if="2==viewMode" class="btn btn-default" ng-disabled="segmentForm.$invalid==isExecte" ng-click="save()">保存</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

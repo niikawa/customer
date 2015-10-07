@@ -1,1 +1,0 @@
-var myApp=angular.module("myApp");myApp.directive("saveButtonDirecitve",function(a){return{restrict:"E",scope:{is:"=",execute:"&",name:"@"},template:'<button ng-if="is" class="close-button" ng-click="click()">{{name}}</button>',link:function(b){b.isShowMine=3!=a.get("role")?!0:!1,b.click=function(){b.execute()}}}});

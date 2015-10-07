@@ -1,0 +1,67 @@
+<div class="" ng-controller="QueryCtrl" ng-init="initialize()">
+
+    <div class="page-title"><h2>クエリー管理</h2></div>
+    
+    <div class="box">
+        
+        <h4>対象のカラムを選択してください</h4>
+
+        <div ng-if="isShowEditMessage" class="alert alert-info center" role="alert">
+            {{queryName}}を更新します。
+        </div>
+        
+        <div class="row vertical-container">
+            
+            <div class="col-md-12 break-all label-box">
+                <h3>選択したカラム</h3>
+                <div ng-if="showSelectedColumnsBox" class="label label-success" ng-repeat="item in selectColumns">
+                    {{item.table.logicalname}}.{{item.column.logicalname}}
+                    <span type="button" class="label-close" ng-click="removeColumn($index)">&times;</span>
+                </div>
+                <div ng-if="!showSelectedColumnsBox" class="alert alert-info" role="alert">
+                    選択しているカラムはありません。
+                </div>
+            </div>
+            
+            <div class="col-md-12 center" >
+                <a class="btn btn-default" ng-href="#{{returnUrl}}" >戻る</a>
+                <a class="btn btn-default" ng-disabled="!showSelectedColumnsBox" ng-href="#/query/set">次へ</a>
+            </div>
+        </div>
+
+        <div class="row" >
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                      <input type="text" class="form-control" placeholder="テーブルを絞り込みます" ng-model="tableSearch" 
+                        refine-directive refine-item="tableListRef" keyword="tableSearch" name-propertie="logicalname|description" >
+                  </div>
+                  <ul class="list-group" >
+                    <li class="list-group-item clearfix" ng-repeat="item in tableListRef" push-directive list="tableListRef" info="item" ng-click="showColumns(item.physicalname)">
+                        {{item.logicalname}}
+                        <section>{{item.description}}</section>
+                    </li>
+                  </ul>
+                </div>     
+            </div>
+            <div class="col-md-6">
+                <table class="table table-hover table-pointer" ng-if="columnNum > 0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>カラム名</th>
+                            <th>説明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="col in columnList" ng-click="setColumn($index)">
+                            <td data-th="#">{{$index+1}}</td>
+                            <td data-th="カラム">{{col.logicalname}}</td>
+                            <td data-th="説明">{{col.description}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

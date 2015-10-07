@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()">&times;</button>
+    <h5 class="title" ng-if="''!=modalParam.title">{{modalParam.title}}</h2>
+</div>
+
+<div class="modal-body">
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <ul class="list-group overflow-box-l" >
+                <li class="list-group-item" ng-repeat="(i, item) in modalParam.list" >
+                    <a ng-click="modalParam.close(item[modalParam.dynamicParamKey])">{{item.segment_name}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer center">
+    <button class="btn btn-default" ng-click="$dismiss()">閉じる</button>
+</div>

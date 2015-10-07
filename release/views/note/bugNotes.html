@@ -1,0 +1,85 @@
+<div class="" ng-controller="BugCtrl" ng-init="initialize()">
+    <div class="page-title"><h2>報告ボード</h2></div>
+    
+    <div class="box">
+        <h4>状況を報告します <a class="btn btn-default" ng-click="show()">バグ・要望を送る</a></h4>
+
+        <div class="row vertical-container" >
+            <div class="col-md-12 center">
+                
+                <div class="btn-group" ng-click="getByCondition()">
+                    <label class="btn btn-default active" ng-model="bug.resolve" btn-radio=0 uncheckable>未解決</label>
+                    <label class="btn btn-default" ng-model="bug.resolve" btn-radio=1 uncheckable>解決済み</label>
+                </div>
+                <div class="btn-group" ng-click="getByCondition()">
+                    <label class="btn btn-default" ng-model="bug.type" btn-radio=0 uncheckable>バグ</label>
+                    <label class="btn btn-default" ng-model="bug.type" btn-radio=1 uncheckable>要望</label>
+                </div>
+            </div>
+            
+            <div class="col-md-12">
+                
+                <div ng-if="!isBugShow" class="alert alert-info" role="alert">
+                    条件に合うものはありません。
+                </div>
+
+                <div ng-if="isBugShow" class="col-md-12 bug">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                          <input type="text" class="form-control" placeholder="絞り込みます" ng-model="bugSearch" 
+                            refine-directive refine-item="bugList" keyword="bugSearch" name-propertie="title|contents" >
+                      </div>
+                      <ul class="list-group" >
+                        <li class="list-group-item clearfix" ng-repeat="(i, item) in bugList" >
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label class="label label-primary">{{item.type_name}}</label>
+                                    <label class="label label-success">{{item.category_name}}</label>
+                                    <label class="label label-warning">{{item.resolve_name}}</label>
+                                    <p class="bug-title">{{item.title}}</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <i class="fa fa-clock-o fa-fw"></i>{{item.create_date}}
+                                    {{item.name}}
+                                    <button ng-if="1==roleId" class="btn btn-primary" ng-click="resolve(i)">解決</button>
+                                    <button class="btn btn-primary" ng-click="showComment(i)">コメント</button>
+                                    <div >
+                                        <i class="fa fa-comments fa-2x pointer" ng-click="showCommentView(i)">{{item.comment_count}}</i>
+                                        <i class="fa fa-paperclip fa-2x pointer" ng-click="showCommentView(i)">{{item.attach_count}}</i>
+                                        <i class="fa fa-thumbs-o-up fa-2x pointer" ng-click="vote(i)">{{item.vote}}</i>
+                                        <i ng-if="item.attach_name_key" class="fa fa-download fa-2x pointer">
+                                            <a target="_blank" href="/bug/main/download/{{item.id}}">{{item.attach_name_key}}</a>
+                                        </i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <hr class="line">
+                                <p class="bug-contents" ng-bind-html="item.contents"></p>
+                            </div>
+                            
+                            <div>
+                                <ul class="list-group" >
+                                    <li class="list-group-item clearfix" ng-repeat="commentItem in item.comments">
+                                        <div class="col-md-8">
+                                            <i class="fa fa-clock-o"></i>{{commentItem.create_date}}{{commentItem.name}}
+                                            <p ng-bind-html="commentItem.comment"></p>
+                                        </div>
+                                        <div ng-if="commentItem.attach_name_key" class="col-md-4">
+                                            <i class="fa fa-download pointer">
+                                                <a target="_blank" href="/bug/comment/download/{{commentItem.demand_bug_comment_id}}">{{commentItem.attach_name_key}}</a>
+                                            </i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                      </ul>
+                    </div>     
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        
