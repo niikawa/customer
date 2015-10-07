@@ -46,11 +46,11 @@ router.use(session({
 
 function ensureSecure(req, res, next)
 {
+    console.log(req.protocol);
     console.log(req.host);
     console.log(req.url);
-    console.log(req);
     
-    if(req.secure)
+    if('https' == req.protocol)
     {
         return next();
     }
