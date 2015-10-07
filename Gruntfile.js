@@ -11,7 +11,7 @@ module.exports = function(grunt) {
                     dest: 'release'
                 } ]
             }
-        },        
+        },
         //オートプレフィックス
         autoprefixer: {
             target: {
