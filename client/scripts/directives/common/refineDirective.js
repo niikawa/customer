@@ -1,18 +1,5 @@
-/**
- * 絞込みディレクティブ
- * 
- * [属性]
- * selectedItem : コントローラー側と選択した値のバインド用
- * itemList     : リスト表示用のデータ
- * 
- * [使用方法]
- * <refine-directive item-list="trackerList" selected-item="ticketModel.tracker" ></refine-directive>
- * 
- * @module refineDirective
- * @author niikawa
- */
 var myApp = angular.module('myApp');
-myApp.directive('refineDirective', function()
+myApp.directive('refineDirective', [function()
 {
     return {
         restrict: 'A',
@@ -22,11 +9,6 @@ myApp.directive('refineDirective', function()
         {
             var originList = [];
 
-            /**
-             * 入力文字に合致した選択肢を表示する
-             * 
-             * @author niikawa
-             */
             element.on('keyup', function()
             {
                 if (0 === originList.length)
@@ -68,4 +50,4 @@ myApp.directive('refineDirective', function()
             });
         }
     };
-});
+}]);
