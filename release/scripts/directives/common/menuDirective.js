@@ -48,7 +48,7 @@ myApp.directive('myHeader', [function(){
         restrict: 'E',
         replace: true,
         controller: 'HeadCtrl',
-        templateUrl: 'partials/common/header.html',
+        templateUrl: '../../partials/common/header.html',
         link: function (scope, element, attrs, ctrl) 
         {
             scope.isOpenMenu = true;
@@ -69,7 +69,6 @@ myApp.directive('myHeader', [function(){
                     $('#view').addClass('view-animate-container-wide');
                 }
             };
-            
         }
     };
 }]);
