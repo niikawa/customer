@@ -13,7 +13,6 @@ myApp.directive('autoCompleteFaDirective', function()
                     '</li>' +
                     '</ul>' +
                     '<span class="input-group-addon question"><i class="fa fa-plus fa-2x" ng-click="clickI()"></i></span>',
-        replace: true,
         link: function (scope, element, attrs) 
         {
             scope.selectName = '';
