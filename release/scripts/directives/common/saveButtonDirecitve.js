@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp');
-myApp.directive('saveButtonDirecitve', ["Shared", function(Shared)
+myApp.directive('saveButtonDirecitve', ['Shared', function(Shared)
 {
     return {
         restrict: 'E',

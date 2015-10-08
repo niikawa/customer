@@ -12,7 +12,7 @@
  * @author niikawa
  */
 var myApp = angular.module('myApp');
-myApp.directive('autoCompleteDirective', function()
+myApp.directive('autoCompleteDirective', [function()
 {
     return {
         restrict: 'E',
@@ -192,4 +192,4 @@ myApp.directive('autoCompleteDirective', function()
             };
         }
     };
-});
+}]);
