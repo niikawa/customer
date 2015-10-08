@@ -20,7 +20,7 @@ module.exports = function(grunt) {
                 dest: 'release/'
             }
         },
-        ngmin: {
+        ngAnnotate: {
           controllers: {
             src: 'release/scripts/controllers/*.js',
             dest: 'release/scripts/controllers.js'
@@ -102,5 +102,5 @@ module.exports = function(grunt) {
  
     // gruntコマンドのデフォルトタスクにwatchを追加します。
     grunt.registerTask('css', ['autoprefixer','cssmin']);
-    grunt.registerTask('build', ['copy','autoprefixer','ngmin','useminPrepare','uglify','concat','cssmin','usemin']);
+    grunt.registerTask('build', ['copy','autoprefixer','ngAnnotate','useminPrepare','uglify','concat','cssmin','usemin']);
 };
