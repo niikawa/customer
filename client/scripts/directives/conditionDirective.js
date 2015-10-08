@@ -1,8 +1,5 @@
-/**
- * 
- */
 var myApp = angular.module('myApp');
-myApp.directive('conditionDirective', function(Utility){
+myApp.directive('conditionDirective', ['Utility', function(Utility){
     return {
         restrict: 'EA',
         scope:{
@@ -178,4 +175,4 @@ myApp.directive('conditionDirective', function(Utility){
             };
         }
     };
-});
+}]);
