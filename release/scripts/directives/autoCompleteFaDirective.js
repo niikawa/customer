@@ -1,16 +1,3 @@
-/**
- * オートコンプリートディレクティブ
- * 
- * [属性]
- * selectedItem : コントローラー側と選択した値のバインド用
- * itemList     : リスト表示用のデータ
- * 
- * [使用方法]
- * <auto-complete-directive item-list="trackerList" selected-item="ticketModel.tracker" ></auto-complete-directive>
- * 
- * @module autoCompleteDirective
- * @author niikawa
- */
 var myApp = angular.module('myApp');
 myApp.directive('autoCompleteFaDirective', function()
 {
@@ -37,7 +24,6 @@ myApp.directive('autoCompleteFaDirective', function()
             {
                 if (void 0 !== newValue && void 0 !== oldValue)
                 {
-                    console.log('watch itemList');
                     if (newValue.length === oldValue.length)
                     {
                         return false;
@@ -55,17 +41,11 @@ myApp.directive('autoCompleteFaDirective', function()
                 {
                     if (void 0 !== scope.itemList)
                     {
-                        console.log('set initialize data');
                         angular.copy(scope.itemList, originList);
                     }
                 }
             });
 
-            /**
-             * 要素のインプットにフォーカが合った場合にリストを表示する
-             * 
-             * @author niikawa
-             */
             element.find('input').on('focus', function()
             {
                 if (0 < scope.itemList.length)
@@ -77,11 +57,6 @@ myApp.directive('autoCompleteFaDirective', function()
                 }
             });
             
-            /**
-             * 要素のインプットからにフォーカが外れた場合にリストを非表示する
-             * 
-             * @author niikawa
-             */
             element.find('input').on('blur', function()
             {
                 var hide = setInterval(function(isExist)
@@ -116,11 +91,6 @@ myApp.directive('autoCompleteFaDirective', function()
                 }, 300);
             });
             
-            /**
-             * 入力文字に合致した選択肢を表示する
-             * 
-             * @author niikawa
-             */
             element.find('input').on('keyup', function()
             {
                 if (0 === originList.length)
@@ -154,15 +124,6 @@ myApp.directive('autoCompleteFaDirective', function()
                 });
             });
             
-            /**
-             * 選択肢がクリックされた時に実行され、選択したアイテムを
-             * selectedItemに格納する
-             * 
-             * @event click
-             * @author niikawa
-             * @param {object} $event イベント
-             * @param {string} item   選択したアイテム
-             */
             scope.click = function ($event, item) 
             {
                 //イベントが伝搬しないように制御
@@ -180,12 +141,6 @@ myApp.directive('autoCompleteFaDirective', function()
                 scope.selectName = item[scope.namePropertie]; 
             };
             
-            /**
-             * spanからinputに変更する
-             * 
-             * @event click
-             * @author niikawa
-             */
             scope.changeElement = function()
             {
                 angular.copy(originList, scope.itemList);
