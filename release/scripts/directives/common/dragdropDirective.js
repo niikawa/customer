@@ -196,9 +196,9 @@ myApp.directive('dropDirective', ['DDShared', function(DDShared)
     };
 }]);
 
-//完全に画面（データ依存）のため使い回しはできない
 myApp.directive('dropJoinDirective', ['DDShared', function(DDShared)
 {
+    //完全に画面（データ依存）のため使い回しはできない
     return {
         restrict: 'A',
         scope: {dropJoinIndex: '='},

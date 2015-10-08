@@ -36,7 +36,7 @@ angular
     'bugCtrl',
     'mapCtrl',
   ])
-  .config(function ($routeProvider) {
+  .config(['$routeProvider', function ($routeProvider) {
     
     var autoCheck = function($http, $q, $window, $cookies, Shared)
     {
@@ -215,4 +215,4 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  });
+  }]);
