@@ -46,7 +46,6 @@ myApp.controller('HeadCtrl',['$scope', 'Auth', 'Modal', 'Shared', 'Mail', functi
 myApp.directive('myHeader', [function(){
     return {
         restrict: 'E',
-        replace: true,
         controller: 'HeadCtrl',
         templateUrl: '../../partials/common/header.html',
         link: function (scope, element, attrs, ctrl) 
