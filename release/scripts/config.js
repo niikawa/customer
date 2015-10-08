@@ -3,7 +3,7 @@
  */
 var myApp = angular.module('myApp');
 myApp.config(
-    function($httpProvider, $routeProvider) 
+    ['$httpProvider', '$routeProvider', function($httpProvider, $routeProvider) 
     {
         // $httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
         // $httpProvider.defaults.useXDomain = true;
@@ -60,4 +60,4 @@ myApp.config(
         );
     
     }
-);
+]);
