@@ -43,7 +43,7 @@ myApp.controller('HeadCtrl',['$scope', 'Auth', 'Modal', 'Shared', 'Mail', functi
     };
 }]);
 
-myApp.directive('myHeader', function(){
+myApp.directive('myHeader', [function(){
     return {
         restrict: 'E',
         replace: true,
@@ -72,5 +72,5 @@ myApp.directive('myHeader', function(){
             
         }
     };
-});
+}]);
 
