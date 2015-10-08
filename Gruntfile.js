@@ -20,6 +20,19 @@ module.exports = function(grunt) {
                 dest: 'release/'
             }
         },
+        ngmin: {
+          controllers: {
+            src: 'release/scripts/controllers/*.js',
+            dest: 'release/scripts/controllers.js'
+          },
+          directives: {
+            expand: true,
+            cwd: 'release/scripts',
+            src: ['directives/**/*.js'],
+            dest: 'release/scripts'
+          }
+        },
+        
         // //ファイル連結
         // concat: {
         //     generated: {
@@ -39,15 +52,25 @@ module.exports = function(grunt) {
         //         ext: '.min.css'
         //     }
         // },
-        // //JS圧縮
         // uglify: {
         //     generated: {
         //         files: [{
         //             expand: true,
         //             // jsフォルダ以下にあるすべてのjs
-        //             src: 'client/scripts/**/*.js',
+        //             src: 'release/scripts/**/*.js',
         //             // 出力先フォルダ
         //             dest: 'release'
+        //         }]
+        //     }
+        // },
+        //JS圧縮
+        // uglify: {
+        //     generated: {
+        //         files: [{
+        //             expand: true,
+        //             src: 'release/scripts/controllers.js',
+        //             // 出力先フォルダ
+        //             dest: '/'
         //         }]
         //     }
         // },
@@ -79,5 +102,5 @@ module.exports = function(grunt) {
  
     // gruntコマンドのデフォルトタスクにwatchを追加します。
     grunt.registerTask('css', ['autoprefixer','cssmin']);
-    grunt.registerTask('build', ['copy','autoprefixer','useminPrepare','uglify','concat','cssmin','usemin']);
+    grunt.registerTask('build', ['copy','autoprefixer','ngmin','useminPrepare','uglify','concat','cssmin','usemin']);
 };
