@@ -1,5 +1,5 @@
 var dDSharedServices = angular.module("myApp");
-dDSharedServices.service('DDShared', function()
+dDSharedServices.service('DDShared', [function()
 {
     var dDSharedServices = {};
     var orverIndex = 0;
@@ -64,7 +64,7 @@ dDSharedServices.service('DDShared', function()
     };
 
     return dDSharedServices;
-});
+}]);
 
 var myApp = angular.module('myApp');
 myApp.directive('dragItemDirective', ['DDShared', function(DDShared)
