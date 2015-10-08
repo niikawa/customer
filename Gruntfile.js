@@ -2,6 +2,7 @@ module.exports = function(grunt) {
     var pkg = grunt.file.readJSON( 'package.json' );
     grunt.initConfig({ 
         pkg: pkg,
+        clean: [ 'release' ],
         copy: {
             html: {
                 files: [ {
@@ -102,5 +103,5 @@ module.exports = function(grunt) {
  
     // gruntコマンドのデフォルトタスクにwatchを追加します。
     grunt.registerTask('css', ['autoprefixer','cssmin']);
-    grunt.registerTask('build', ['copy','autoprefixer','ngAnnotate','useminPrepare','uglify','concat','cssmin','usemin']);
+    grunt.registerTask('build', ['clean','copy','autoprefixer','ngAnnotate','useminPrepare','uglify','concat','cssmin','usemin']);
 };
