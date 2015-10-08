@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp');
-myApp.directive('myValidators', function () {
+myApp.directive('myValidators', [function() {
     return {
         require: 'ngModel',
         scope: {
@@ -12,8 +12,8 @@ myApp.directive('myValidators', function () {
             });
         }
     };
-});
-myApp.directive('myAsyncValidators', function () {
+}]);
+myApp.directive('myAsyncValidators', [function() {
     return {
         require: 'ngModel',
         scope: {
@@ -26,4 +26,4 @@ myApp.directive('myAsyncValidators', function () {
             });
         }
     };
-});
+}]);
