@@ -1,16 +1,3 @@
-/**
- * オートコンプリートディレクティブ
- * 
- * [属性]
- * selectedItem : コントローラー側と選択した値のバインド用
- * itemList     : リスト表示用のデータ
- * 
- * [使用方法]
- * <auto-complete-directive item-list="trackerList" selected-item="ticketModel.tracker" ></auto-complete-directive>
- * 
- * @module autoCompleteDirective
- * @author niikawa
- */
 var myApp = angular.module('myApp');
 myApp.directive('autoCompleteDirective', [function()
 {
@@ -59,11 +46,6 @@ myApp.directive('autoCompleteDirective', [function()
                 }
             });
 
-            /**
-             * 要素のインプットにフォーカが合った場合にリストを表示する
-             * 
-             * @author niikawa
-             */
             element.find('input').on('focus', function()
             {
                 if (0 < scope.itemList.length)
@@ -75,11 +57,6 @@ myApp.directive('autoCompleteDirective', [function()
                 }
             });
             
-            /**
-             * 要素のインプットからにフォーカが外れた場合にリストを非表示する
-             * 
-             * @author niikawa
-             */
             element.find('input').on('blur', function()
             {
                 var hide = setInterval(function(isExist)
@@ -114,11 +91,6 @@ myApp.directive('autoCompleteDirective', [function()
                 }, 300);
             });
             
-            /**
-             * 入力文字に合致した選択肢を表示する
-             * 
-             * @author niikawa
-             */
             element.find('input').on('keyup', function()
             {
                 if (0 === originList.length)
@@ -152,15 +124,6 @@ myApp.directive('autoCompleteDirective', [function()
                 });
             });
             
-            /**
-             * 選択肢がクリックされた時に実行され、選択したアイテムを
-             * selectedItemに格納する
-             * 
-             * @event click
-             * @author niikawa
-             * @param {object} $event イベント
-             * @param {string} item   選択したアイテム
-             */
             scope.click = function ($event, item) 
             {
                 //イベントが伝搬しないように制御
@@ -178,12 +141,6 @@ myApp.directive('autoCompleteDirective', [function()
                 scope.selectName = item[scope.namePropertie]; 
             };
             
-            /**
-             * spanからinputに変更する
-             * 
-             * @event click
-             * @author niikawa
-             */
             scope.changeElement = function()
             {
                 angular.copy(originList, scope.itemList);

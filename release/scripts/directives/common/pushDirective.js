@@ -1,8 +1,5 @@
-/**
- * 
- */
 var myApp = angular.module('myApp');
-myApp.directive('pushDirective', function(){
+myApp.directive('pushDirective', [function(){
     return {
         restrict: 'A',
         scope:{
@@ -62,4 +59,4 @@ myApp.directive('pushDirective', function(){
             });
         }
     };
-});
+}]);
