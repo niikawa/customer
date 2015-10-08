@@ -1,6 +1,3 @@
-/**
- * interceptors configration
- */
 var myApp = angular.module('myApp');
 myApp.config(
     ['$httpProvider', '$routeProvider', function($httpProvider, $routeProvider) 
@@ -52,7 +49,6 @@ myApp.config(
                                 }
                             }
                         }
-                        
                         return $q.reject(rejection);
                     }
                 };
