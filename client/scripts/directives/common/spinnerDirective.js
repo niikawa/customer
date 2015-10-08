@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp');
-myApp.directive('spinnerDirective', function()
+myApp.directive('spinnerDirective', [function()
 {
     return {
         restrict: 'E',
@@ -9,4 +9,4 @@ myApp.directive('spinnerDirective', function()
         {
         }
     };
-});
+}]);
