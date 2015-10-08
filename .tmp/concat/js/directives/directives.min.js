@@ -151,7 +151,7 @@ myApp.directive('calendarDirective', ['Utility', function(Utility)
         restrict: 'E',
         templateUrl: '../../partials/calendar.html',
         controller: 'CalendarCtrl',
-        replace: true,
+        //replace: true,
         link: function (scope, element, attrs, ctrl) 
         {
             scope.showCircle = false;
