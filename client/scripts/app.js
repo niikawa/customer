@@ -36,7 +36,7 @@ angular
     'bugCtrl',
     'mapCtrl',
   ])
-  .config(['$routeProvider','$http', '$q', '$window', '$cookies', 'Shared', function ($routeProvider, $http, $q, $window, $cookies, Shared)
+  .config(['$routeProvider', function ($routeProvider)
   {
     var autoCheck = function($http, $q, $window, $cookies, Shared)
     {

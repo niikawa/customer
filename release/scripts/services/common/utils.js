@@ -1,8 +1,3 @@
-/**
- * 共通サービス
- * 
- * @author niikawa
- */
 var utilsServices = angular.module("myApp");
 utilsServices.service("Utility", ['$rootScope', function($rootScope)
 {
@@ -125,85 +120,94 @@ utilsServices.service("Utility", ['$rootScope', function($rootScope)
     //http://momentjs.com/
     //--------------------------------------------------------------------------
     //momentオブジェクトを取得する
-    this.momentDefault = function() {
+    var moment = moment();
+    this.momentDefault = function()
+    {
         return moment();
     };
-    this.moment = function(d) {
+    this.moment = function(d)
+    {
         return moment(d);
     };
     //本日の日付けを文字列で取得する
-    this.today = function(format) {
+    this.today = function(format)
+    {
         var formatString = (null == format) ? 'YYYY-MM-DD' : format;
         return this.moment().format(formatString);
     };
     //指定したフォーマットでパラメータの日付を文字列で取得する
-    this.formatString = function(d,format) {
+    this.formatString = function(d,format)
+    {
         var formatString = (null == format) ? 'YYYY-MM-DD' : format;
         return this.moment(d).format(formatString);
     };
     
     //指定した年月の持つ最終日を取得する
-    this.dayInMonth = function(a) {
+    this.dayInMonth = function(a)
+    {
         return moment(a).daysInMonth();
     };
     //aがbより未来かを判定する
-    this.isAfter = function(a, b) {
+    this.isAfter = function(a, b)
+    {
         return moment(a).isAfter(moment(b));
     };
-    this.getMomemtObject = function(date) {
+    this.getMomemtObject = function(date)
+    {
         return moment(date);
     };
     //
     // add
     //
-    this.addDay = function(a, b) {
-
+    this.addDay = function(a, b)
+    {
         return moment(a).add(b, 'day');
     };
-    this.addMonth = function(a, b) {
-
+    this.addMonth = function(a, b)
+    {
         return moment(a).add(b, 'month');
     };
-    this.addYear = function(a, b) {
-
+    this.addYear = function(a, b)
+    {
         return moment(a).add(b, 'year');
     };
     //
     // subtract
     //
-    this.subtractDay = function(a, b) {
-        
+    this.subtractDay = function(a, b)
+    {
         return moment(a).subtract('day', b);
     };
     
-    this.subtractMonth = function(a, b) {
-        
+    this.subtractMonth = function(a, b)
+    {
         return moment(a).subtract('month', b);
     };
-    this.subtractYear = function(a, b) {
+    this.subtractYear = function(a, b)
+    {
         
         return moment(a).subtract('year', b);
     };
     //
     // diff
     //
-    this.diffDay = function(a, b) {
-        
+    this.diffDay = function(a, b)
+    {
         return moment(a).diff(moment(b), 'day');
     };
 
-    this.diffMonth = function(a, b) {
-        
+    this.diffMonth = function(a, b)
+    {
         return moment(a).diff(moment(b), 'month');
     };
 
-    this.diffYear = function(a, b) {
-        
+    this.diffYear = function(a, b)
+    {
         return moment(a).diff(moment(b), 'year');
     };
 
-    this.createDayList = function(maxDay) {
-        
+    this.createDayList = function(maxDay)
+    {
         var dayList = [];
         for (var index=1; index <= maxDay; index++) {
             var day = ('00' + index).slice(-2);
@@ -212,7 +216,8 @@ utilsServices.service("Utility", ['$rootScope', function($rootScope)
         return dayList;
     };
     
-    this.createMonthList = function() {
+    this.createMonthList = function()
+    {
         var monthList = [];
         for (var index=1; index < 12; index++) {
             var month = ('00' + index).slice(-2);
@@ -221,8 +226,8 @@ utilsServices.service("Utility", ['$rootScope', function($rootScope)
         return monthList;
     };
     
-    this.createYearList = function(min, max) {
-        
+    this.createYearList = function(min, max)
+    {
         var yearList = [];
         for (var year= min; year <= max; year++) {
             yearList.push({value:String(year), text:year});
