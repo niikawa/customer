@@ -31,6 +31,7 @@ var AccessController = (function () {
         key: 'initialize',
         value: function initialize() {
             var _this = this;
+            console.log("initialize");
 
             this.$scope._construct();
             var today = this.Utility.today('YYYY-MM-DD');
