@@ -120,7 +120,6 @@ utilsServices.service("Utility", ['$rootScope', function($rootScope)
     //http://momentjs.com/
     //--------------------------------------------------------------------------
     //momentオブジェクトを取得する
-    var moment = moment();
     this.momentDefault = function()
     {
         return moment();
