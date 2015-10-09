@@ -36,8 +36,8 @@ angular
     'bugCtrl',
     'mapCtrl',
   ])
-  .config(['$routeProvider', function ($routeProvider) {
-    
+  .config(['$routeProvider','$http', '$q', '$window', '$cookies', 'Shared', function ($routeProvider, $http, $q, $window, $cookies, Shared)
+  {
     var autoCheck = function($http, $q, $window, $cookies, Shared)
     {
         var deferred = $q.defer();
@@ -73,8 +73,6 @@ angular
         return deferred.promise;
         
     };
-    
-    
     $routeProvider
       .when('/', {
         templateUrl: 'views/dashbord.html',
@@ -205,13 +203,6 @@ angular
         reloadOnSearch: false, //ページ内リンクを可能にする
         resolve: {isLogin: autoCheck}
       })
-
-//       .when('/map', {
-//         templateUrl: 'views/map.html',
-//         controller: 'MapCtrl',
-//         reloadOnSearch: false, //ページ内リンクを可能にする
-// //        resolve: {isLogin: autoCheck}
-//       })
       .otherwise({
         redirectTo: '/'
       });
