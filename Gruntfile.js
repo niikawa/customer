@@ -13,6 +13,17 @@ module.exports = function(grunt) {
                 } ]
             }
         },
+        babel: {
+            dist: {
+                files: [{
+                  "expand": true,
+                  "cwd": "release/scripts/controllers",
+                  "src": ["*.js", "**/*.js"],
+                  "dest": "release/scripts/controllers/",
+                  "ext": ".js"
+                }]
+            }
+          },        
         //オートプレフィックス
         autoprefixer: {
             target: {
@@ -103,5 +114,5 @@ module.exports = function(grunt) {
  
     // gruntコマンドのデフォルトタスクにwatchを追加します。
     grunt.registerTask('css', ['autoprefixer','cssmin']);
-    grunt.registerTask('build', ['clean','copy','autoprefixer','ngAnnotate','useminPrepare','uglify','concat','cssmin','usemin']);
+    grunt.registerTask('build', ['clean','copy','autoprefixer','ngAnnotate','babel','useminPrepare','uglify','concat','cssmin','usemin']);
 };
