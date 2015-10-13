@@ -642,7 +642,7 @@ class DashbordController
     }
 }
 DashbordController.$inject = ['$scope', 'Shared', 'Scenario', 'Utility', 'Modal'];
-angular.module('dashbordCtrl', DashbordController);
+angular.module('dashbordCtrl',['ScenarioServices']).controller('DashbordCtrl', DashbordController);
 
 // var mainCtrl = angular.module('dashbordCtrl',['ScenarioServices']);
 // mainCtrl.controller('DashbordCtrl',['$scope', 'Shared', 'Scenario', 'Utility', 'Modal',
