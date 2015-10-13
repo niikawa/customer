@@ -3,7 +3,7 @@
 //
 class ApproachController
 {
-    constructor($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
+    constructor($scope, Shared, Utility, Approach, Scenario, Modal)
     {
         this._scope = $scope;
         this._approachService = Approach;
@@ -120,7 +120,7 @@ class ApproachController
         this._utilityService.infoAlert(params);
     }
 }
-ApproachController.$inject = ['$scope', '$sce', '$routeParams', 'Shared', 'Access', 'Utility'];
+ApproachController.$inject = ['$scope', 'Shared', 'Utility', 'Approach', 'Scenario', 'Modal'];
 angular.module('approachCtrl',['ApproachServices','ScenarioServices']).controller('ApproachCtrl', ApproachController);
 //approachCtrl.controller('ApproachCtrl',['$scope', '$routeParams','Shared', 'Utility', 'Approach', 'Scenario', 'Modal',
 // function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
