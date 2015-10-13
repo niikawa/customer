@@ -641,7 +641,7 @@ class DashbordController
         this._scope.modalInstance = this._modalService.open(this._scope, "partials/modal/message.html");
     }
 }
-DashbordController.$inject = ['$scope', 'Shared', 'Scenario', 'Utility', 'Modal'];
+DashbordController.$inject = ['$scope', 'Shared', 'Utility', 'Scenario', 'Modal'];
 angular.module('dashbordCtrl',['ScenarioServices']).controller('DashbordCtrl', DashbordController);
 
 // var mainCtrl = angular.module('dashbordCtrl',['ScenarioServices']);

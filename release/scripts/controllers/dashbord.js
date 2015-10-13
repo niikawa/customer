@@ -61,7 +61,7 @@ var DashbordController = (function () {
     return DashbordController;
 })();
 
-DashbordController.$inject = ['$scope', 'Shared', 'Scenario', 'Utility', 'Modal'];
+DashbordController.$inject = ['$scope', 'Shared', 'Utility', 'Scenario', 'Modal'];
 angular.module('dashbordCtrl', ['ScenarioServices']).controller('DashbordCtrl', DashbordController);
 
 // var mainCtrl = angular.module('dashbordCtrl',['ScenarioServices']);
