@@ -11,7 +11,7 @@
                     <div class="input-group">
                         <span class="input-group-addon">1日の制限回数</span>
                         <input type="number" class="form-control form-control-add-fa2" placeholder="1日の制限回数" 
-                            ng-model="approach.daily_limit_num" ng-required="true">
+                            ng-model="approach.approachData.daily_limit_num" ng-required="true">
                         <span class="input-group-addon question"><i class="fa fa-question-circle fa-2x" ng-click="approach.showDiscription(1)"></i></span>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                     <div class="input-group">
                         <span class="input-group-addon">1週間の制限回数</span>
                         <input type="number" class="form-control form-control-add-fa2" placeholder="1週間の制限回数" 
-                            ng-model="approach.weekly_limit_num" ng-required="true">
+                            ng-model="approach.approachData.weekly_limit_num" ng-required="true">
                         <span class="input-group-addon question"><i class="fa fa-question-circle fa-2x" ng-click="approach.showDiscription(2)"></i></span>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
         <div class="row vertical-container" >
             <div class="col-md-12">
                 
-                <div ng-if="!showScenarioList" class="alert alert-info" role="alert">
+                <div ng-if="!approach.showScenarioList" class="alert alert-info" role="alert">
                     アプローチ対象のシナリオはありません。
                 </div>
                 

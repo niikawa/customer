@@ -32,7 +32,7 @@ var ApproachController = (function () {
     }, {
         key: '_clear',
         value: function _clear() {
-            this.approach = [];
+            this.approachData = [];
             this.scenarioList = [];
             this.showScenarioList = false;
         }
@@ -42,10 +42,10 @@ var ApproachController = (function () {
             var _this = this;
 
             this._approachService.resource.get().$promise.then(function (approachResponse) {
-                _this.approach = approachResponse.data;
+                _this.approachData = approachResponse.data;
                 _this._scenarioService.resource.valid().$promise.then(function (scenarioResponse) {
                     _this.scenarioList = scenarioResponse.data;
-                    _this.showScenarioList = 0 < _this._scope.scenarioList.length;
+                    _this.showScenarioList = 0 < _this.scenarioList.length;
                 });
             });
         }

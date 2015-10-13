@@ -25,7 +25,7 @@ class ApproachController
     
     _clear()
     {
-        this.approach = [];
+        this.approachData = [];
         this.scenarioList = [];
         this.showScenarioList = false;
     }
@@ -34,11 +34,11 @@ class ApproachController
     {
         this._approachService.resource.get().$promise.then(approachResponse =>
         {
-            this.approach = approachResponse.data;
+            this.approachData = approachResponse.data;
             this._scenarioService.resource.valid().$promise.then(scenarioResponse =>
             {
                 this.scenarioList = scenarioResponse.data;
-                this.showScenarioList = (0 < this._scope.scenarioList.length);
+                this.showScenarioList = (0 < this.scenarioList.length);
             });
         });
     }

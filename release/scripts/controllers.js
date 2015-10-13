@@ -94,7 +94,7 @@ class ApproachController
     
     _clear()
     {
-        this.approach = [];
+        this.approachData = [];
         this.scenarioList = [];
         this.showScenarioList = false;
     }
@@ -103,11 +103,11 @@ class ApproachController
     {
         this._approachService.resource.get().$promise.then(approachResponse =>
         {
-            this.approach = approachResponse.data;
+            this.approachData = approachResponse.data;
             this._scenarioService.resource.valid().$promise.then(scenarioResponse =>
             {
                 this.scenarioList = scenarioResponse.data;
-                this.showScenarioList = (0 < this._scope.scenarioList.length);
+                this.showScenarioList = (0 < this.scenarioList.length);
             });
         });
     }
@@ -585,43 +585,60 @@ coreCtrl.controller('CoreCtrl', ['$scope', 'Shared', function($scope, Shared)
 
 }]);
 
-// class DashbordController
-// {
-//     constructor($scope, Shared, Utility, Scenario, Modal)
-//     {
-//         this._scope = $scope;
-//         this._sharedService = Shared;
-//         this._utilityService = Utility;
-//         this._scenarioService = Scenario;
+class DashbordController
+{
+    constructor($scope, Shared, Utility, Scenario, Modal)
+    {
+        this._scope = $scope;
+        this._sharedService = Shared;
+        this._utilityService = Utility;
+        this._scenarioService = Scenario;
+        this._modalService = Modal;
         
-//         this.scenario = [];
-//         this.executePlanScenario = [];
-//     }
+        this.scenario = [];
+        this.executePlanScenario = [];
+    }
     
-//     initialize()
-//     {
+    initialize()
+    {
         
-//     }
-//     _getInitializeData()
-//     {
-//         this._scenarioService.resource.typeCount().$promise.then(typeCountResponse =>
-//         {
-//             this.scenarioList = typeCountResponse.data;
+    }
+    _getInitializeData()
+    {
+        this._scenarioService.resource.typeCount().$promise.then(typeCountResponse =>
+        {
+            this.scenarioList = typeCountResponse.data;
             
-//             this._scenarioService.resource.executeplan().$promise.then(scenarioResponse =>
-//             {
-//                 this.isShowExecutePlanScenario = (scenarioResponse.data.length > 0);
-//                 this.executePlanScenario = scenarioResponse.data;
-//             });
-//         });
-//     }
+            this._scenarioService.resource.executeplan().$promise.then(scenarioResponse =>
+            {
+                this.isShowExecutePlanScenario = (scenarioResponse.data.length > 0);
+                this.executePlanScenario = scenarioResponse.data;
+            });
+        });
+    }
     
-//     bulkInvalid()
-//     {
-        
-//     }
-// }
-// DashbordController.$inject = ['$scope', 'Shared', 'Scenario', 'Utility', 'Modal'];
+    bulkInvalid()
+    {
+        this._scope.modalParam = 
+        {
+            title: 'シナリオの一括無効について',
+            message: '実行予定のシナリオをすべて無効にしますがよろしいですか？<br>再度有効にする場合はアプローチ管理画面から有効にできます。',
+            isExecute: true,
+            executeLabel: '一括で無効にする',
+            execute: function()
+            {
+                this._scenarioService.resource.bulkInvalid().$promise.then(function(response)
+                {
+                    this._scope.modalInstance.close();
+                    this._utilityService.info('実行予定のシナリオを一括無効しました。');
+                    this._scope.initialize();
+                });
+            }
+        };
+        this._scope.modalInstance = this._modalService.open(this._scope, "partials/modal/message.html");
+    }
+}
+DashbordController.$inject = ['$scope', 'Shared', 'Scenario', 'Utility', 'Modal'];
 
 var mainCtrl = angular.module('dashbordCtrl',['ScenarioServices']);
 mainCtrl.controller('DashbordCtrl',['$scope', 'Shared', 'Scenario', 'Utility', 'Modal',
