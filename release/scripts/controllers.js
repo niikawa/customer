@@ -594,6 +594,8 @@ class DashbordController
         this._utilityService = Utility;
         this._scenarioService = Scenario;
         this._modalService = Modal;
+
+        this._scope._construct();
         
         this.scenario = [];
         this.scenarioList = [];
@@ -608,10 +610,12 @@ class DashbordController
     }
     _getInitializeData()
     {
+        this._scope.$emit('requestStart');
         this._scenarioService.resource.typeCount().$promise.then(typeCountResponse =>
         {
             this.scenarioList = typeCountResponse.data;
             
+            this._scope.$emit('requestStart');
             this._scenarioService.resource.executeplan().$promise.then(scenarioResponse =>
             {
                 this.isShowExecutePlanScenario = (scenarioResponse.data.length > 0);
