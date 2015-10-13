@@ -62,7 +62,7 @@ var ApproachController = (function () {
         value: function save() {
             var _this2 = this;
 
-            this._approachService.resource.save(this.approach).$promise.then(function (response) {
+            this._approachService.resource.save(this.approachData).$promise.then(function (response) {
                 _this2._utilityService.info('設定を更新しました');
             });
         }

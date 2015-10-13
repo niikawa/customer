@@ -1,4 +1,4 @@
-<div class="" ng-controller="DashbordCtrl" ng-init="initialize()">
+<div class="" ng-controller="DashbordCtrl as dashbord" ng-init="dashbord.initialize()">
 
     <div class="page-title"><h2>ダッシュボード</h2></div>
     
@@ -17,7 +17,7 @@
                     </thead>
                     <!--  ここデータでとるところ -->
                     <tbody>
-                        <tr ng-repeat="item in scenarioList">
+                        <tr ng-repeat="item in dashbord.scenarioList">
                             <td data-th="タイプ"><a ng-href='/#/scenario/{{item.scenario_type_key}}'>{{item.scenario_type_name}}</a></td>
                             <td data-th="数">{{item.regist_num}}</td>
                             <td data-th="上限">{{item.regist_max}}</td>
@@ -35,22 +35,22 @@
 
     <div class="box">
         <h4>実行予定のシナリオ
-            <button ng-if="isShowExecutePlanScenario" class="btn btn-default" ng-click="bulkInvalid()">一括無効</button>
+            <button ng-if="dashbord.isShowExecutePlanScenario" class="btn btn-default" ng-click="dashbord.bulkInvalid()">一括無効</button>
         </h4>
 
         <div class="row" >
             <div class="col-md-12">
-                <div ng-if="!isShowExecutePlanScenario" class="alert alert-info" role="alert">
+                <div ng-if="!dashbord.isShowExecutePlanScenario" class="alert alert-info" role="alert">
                     実行予定のシナリオはありません。
                 </div>
                 
-                <div ng-if="isShowExecutePlanScenario" class="panel panel-default">
+                <div ng-if="dashbord.isShowExecutePlanScenario" class="panel panel-default">
                   <div class="panel-heading">
-                    <input type="text" class="form-control" placeholder="シナリオを絞り込みます" ng-model="scenarioSearch" 
-                        refine-directive refine-item="executePlanScenario" keyword="scenarioSearch" name-propertie="scenario_name" >
+                    <input type="text" class="form-control" placeholder="シナリオを絞り込みます" ng-model="dashbord.scenarioSearch" 
+                        refine-directive refine-item="dashbord.executePlanScenario" keyword="dashbord.scenarioSearch" name-propertie="scenario_name" >
                   </div>
                   <ul class="list-group" >
-                    <li class="list-group-item clearfix" ng-repeat="(i, item) in executePlanScenario">
+                    <li class="list-group-item clearfix" ng-repeat="(i, item) in dashbord.executePlanScenario">
                         <span class="label-m label-default">{{item.scenario_type}}</span>
                         <a ng-href='/#/scenario/{{item.scenario_type_key}}/control/{{item.scenario_id}}'>{{item.scenario_name}}</a>
                         <div class="pull-right">
@@ -65,5 +65,4 @@
             </div>
         </div>
     </div>
-
 </div>

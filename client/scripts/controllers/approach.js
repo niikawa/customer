@@ -54,7 +54,7 @@ class ApproachController
     
     save()
     {
-        this._approachService.resource.save(this.approach).$promise.then(response =>
+        this._approachService.resource.save(this.approachData).$promise.then(response =>
         {
             this._utilityService.info('設定を更新しました');
         });
