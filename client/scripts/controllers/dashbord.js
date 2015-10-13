@@ -17,10 +17,6 @@ class DashbordController
         this._getInitializeData();
     }
     
-    initialize()
-    {
-        
-    }
     _getInitializeData()
     {
         this._scope.$emit('requestStart');

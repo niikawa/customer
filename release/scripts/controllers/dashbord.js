@@ -24,9 +24,6 @@ var DashbordController = (function () {
     }
 
     _createClass(DashbordController, [{
-        key: 'initialize',
-        value: function initialize() {}
-    }, {
         key: '_getInitializeData',
         value: function _getInitializeData() {
             var _this = this;
