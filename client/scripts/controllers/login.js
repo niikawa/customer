@@ -13,7 +13,7 @@ class LoginController
     submit()
     {
         this._scope.$emit('requestStart');
-        this._authService.login(this.data).then(function(response)
+        this._authService.login(this.data).then(response =>
         {
             this._scope.$emit('requestEnd');
             this._scope.$emit('loginComplete');

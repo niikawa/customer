@@ -647,10 +647,9 @@ function ($scope, Shared, Scenario, Utility, Modal)
 
 class LoginController
 {
-    constructor($scope, $location, Auth, Location)
+    constructor($scope, Auth, Location)
     {
         this._scope = $scope;
-        this._location = $location;
         this._authService = Auth;
         this._locationService = Location;
 
@@ -661,20 +660,20 @@ class LoginController
     submit()
     {
         this._scope.$emit('requestStart');
-        this._authService.login(this.data).then(function(response)
+        this._authService.login(this.data).then(response =>
         {
             this._scope.$emit('requestEnd');
             this._scope.$emit('loginComplete');
             this._locationService.home();
-            
-        }, function()
+        }, 
+        function()
         {
             this._scope.$emit('requestEnd');
         });
     }
 }
-LoginController.$inject = ['$scope', '$location', 'Auth', 'Location'];
-angular.module('loginCtrl',['AuthServices',]).controller('LoginCtrl',LoginController);
+LoginController.$inject = ['$scope', 'Auth', 'Location'];
+angular.module('loginCtrl',['AuthServices']).controller('LoginCtrl', LoginController);
 
 // var loginCtrl = angular.module('loginCtrl',['AuthServices',]);
 // loginCtrl.controller('LoginCtrl', ['$scope', '$location', 'Auth', 'Location',

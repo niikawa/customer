@@ -5,11 +5,10 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var LoginController = (function () {
-    function LoginController($scope, $location, Auth, Location) {
+    function LoginController($scope, Auth, Location) {
         _classCallCheck(this, LoginController);
 
         this._scope = $scope;
-        this._location = $location;
         this._authService = Auth;
         this._locationService = Location;
 
@@ -20,11 +19,13 @@ var LoginController = (function () {
     _createClass(LoginController, [{
         key: 'submit',
         value: function submit() {
+            var _this = this;
+
             this._scope.$emit('requestStart');
             this._authService.login(this.data).then(function (response) {
-                this._scope.$emit('requestEnd');
-                this._scope.$emit('loginComplete');
-                this._locationService.home();
+                _this._scope.$emit('requestEnd');
+                _this._scope.$emit('loginComplete');
+                _this._locationService.home();
             }, function () {
                 this._scope.$emit('requestEnd');
             });
@@ -34,7 +35,7 @@ var LoginController = (function () {
     return LoginController;
 })();
 
-LoginController.$inject = ['$scope', '$location', 'Auth', 'Location'];
+LoginController.$inject = ['$scope', 'Auth', 'Location'];
 angular.module('loginCtrl', ['AuthServices']).controller('LoginCtrl', LoginController);
 
 // var loginCtrl = angular.module('loginCtrl',['AuthServices',]);
