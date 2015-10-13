@@ -139,7 +139,7 @@ class ApproachController
     
     showDiscription(id)
     {
-        var info = this._approachService.getInfomation(id);
+        let info = this._approachService.getInfomation(id);
         
         this._scope.modalParam = 
         {
@@ -152,7 +152,7 @@ class ApproachController
     
     bulkInvalid()
     {
-        var params = 
+        let params = 
         {
             title: 'シナリオの一括無効について',
             text: '有効なシナリオをすべて無効にしますがよろしいですか？<br>実行した場合、実行予定シナリオはなくなります。',
@@ -171,7 +171,7 @@ class ApproachController
     
     bulkEnable()
     {
-        var params = 
+        let params = 
         {
             title: 'シナリオの一括有効について',
             text: '無効なシナリオをすべて有効にしますがよろしいですか？<br>実行した場合、実行予定シナリオとしてダッシュボード画面に表示されます。',
@@ -596,6 +596,8 @@ class DashbordController
         this._modalService = Modal;
         
         this.scenario = [];
+        this.scenarioList = [];
+        this.isShowExecutePlanScenario = false;
         this.executePlanScenario = [];
         this._getInitializeData();
     }

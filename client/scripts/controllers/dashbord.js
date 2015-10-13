@@ -9,6 +9,8 @@ class DashbordController
         this._modalService = Modal;
         
         this.scenario = [];
+        this.scenarioList = [];
+        this.isShowExecutePlanScenario = false;
         this.executePlanScenario = [];
         this._getInitializeData();
     }
