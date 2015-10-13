@@ -32,7 +32,7 @@ class ApproachController
 
     _getInitializeData()
     {
-        this._approach.resource.get().$promise.then(approachResponse =>
+        this._approachService.resource.get().$promise.then(approachResponse =>
         {
             this.approach = approachResponse.data;
             

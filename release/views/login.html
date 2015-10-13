@@ -16,14 +16,14 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">Please Sign In</h3>
                         </div>
-                        <div class="panel-body" ng-controller="LoginCtrl" ng-init="initialize()">
-                            <form name="loginForm" ng-submit="submit()" novalidate>
+                        <div class="panel-body" ng-controller="LoginCtrl as login" ng-init="login.initialize()">
+                            <form name="loginForm" ng-submit="login.submit()" novalidate>
                                 <fieldset>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="E-mail" ng-model="data.mailAddress" type="email" required autofocus>
+                                        <input class="form-control" placeholder="E-mail" ng-model="login.data.mailAddress" type="email" required autofocus>
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Password" ng-model="data.password" type="password" required>
+                                        <input class="form-control" placeholder="Password" ng-model="login.data.password" type="password" required>
                                     </div>
                                     <button type="submit" class="btn btn-lg btn-success btn-block" ng-disabled="!loginForm.$valid">Login</button>
                                 </fieldset>

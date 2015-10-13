@@ -41,7 +41,7 @@ var ApproachController = (function () {
         value: function _getInitializeData() {
             var _this = this;
 
-            this._approach.resource.get().$promise.then(function (approachResponse) {
+            this._approachService.resource.get().$promise.then(function (approachResponse) {
                 _this.approach = approachResponse.data;
 
                 _this._approachService.resource.valid().$promise.then(function (scenarioResponse) {
