@@ -1,3 +1,41 @@
+// class DashbordController
+// {
+//     constructor($scope, Shared, Utility, Scenario, Modal)
+//     {
+//         this._scope = $scope;
+//         this._sharedService = Shared;
+//         this._utilityService = Utility;
+//         this._scenarioService = Scenario;
+
+//         this.scenario = [];
+//         this.executePlanScenario = [];
+//     }
+
+//     initialize()
+//     {
+
+//     }
+//     _getInitializeData()
+//     {
+//         this._scenarioService.resource.typeCount().$promise.then(typeCountResponse =>
+//         {
+//             this.scenarioList = typeCountResponse.data;
+
+//             this._scenarioService.resource.executeplan().$promise.then(scenarioResponse =>
+//             {
+//                 this.isShowExecutePlanScenario = (scenarioResponse.data.length > 0);
+//                 this.executePlanScenario = scenarioResponse.data;
+//             });
+//         });
+//     }
+
+//     bulkInvalid()
+//     {
+
+//     }
+// }
+// DashbordController.$inject = ['$scope', 'Shared', 'Scenario', 'Utility', 'Modal'];
+
 'use strict';
 
 var mainCtrl = angular.module('dashbordCtrl', ['ScenarioServices']);

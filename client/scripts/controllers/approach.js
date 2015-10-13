@@ -35,8 +35,7 @@ class ApproachController
         this._approachService.resource.get().$promise.then(approachResponse =>
         {
             this.approach = approachResponse.data;
-            
-            this._approachService.resource.valid().$promise.then(scenarioResponse =>
+            this._scenarioService.resource.valid().$promise.then(scenarioResponse =>
             {
                 this.scenarioList = scenarioResponse.data;
                 this.showScenarioList = (0 < this._scope.scenarioList.length);

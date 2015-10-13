@@ -43,8 +43,7 @@ var ApproachController = (function () {
 
             this._approachService.resource.get().$promise.then(function (approachResponse) {
                 _this.approach = approachResponse.data;
-
-                _this._approachService.resource.valid().$promise.then(function (scenarioResponse) {
+                _this._scenarioService.resource.valid().$promise.then(function (scenarioResponse) {
                     _this.scenarioList = scenarioResponse.data;
                     _this.showScenarioList = 0 < _this._scope.scenarioList.length;
                 });

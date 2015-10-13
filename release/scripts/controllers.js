@@ -104,8 +104,7 @@ class ApproachController
         this._approachService.resource.get().$promise.then(approachResponse =>
         {
             this.approach = approachResponse.data;
-            
-            this._approachService.resource.valid().$promise.then(scenarioResponse =>
+            this._scenarioService.resource.valid().$promise.then(scenarioResponse =>
             {
                 this.scenarioList = scenarioResponse.data;
                 this.showScenarioList = (0 < this._scope.scenarioList.length);
@@ -585,6 +584,44 @@ coreCtrl.controller('CoreCtrl', ['$scope', 'Shared', function($scope, Shared)
     });
 
 }]);
+
+// class DashbordController
+// {
+//     constructor($scope, Shared, Utility, Scenario, Modal)
+//     {
+//         this._scope = $scope;
+//         this._sharedService = Shared;
+//         this._utilityService = Utility;
+//         this._scenarioService = Scenario;
+        
+//         this.scenario = [];
+//         this.executePlanScenario = [];
+//     }
+    
+//     initialize()
+//     {
+        
+//     }
+//     _getInitializeData()
+//     {
+//         this._scenarioService.resource.typeCount().$promise.then(typeCountResponse =>
+//         {
+//             this.scenarioList = typeCountResponse.data;
+            
+//             this._scenarioService.resource.executeplan().$promise.then(scenarioResponse =>
+//             {
+//                 this.isShowExecutePlanScenario = (scenarioResponse.data.length > 0);
+//                 this.executePlanScenario = scenarioResponse.data;
+//             });
+//         });
+//     }
+    
+//     bulkInvalid()
+//     {
+        
+//     }
+// }
+// DashbordController.$inject = ['$scope', 'Shared', 'Scenario', 'Utility', 'Modal'];
 
 var mainCtrl = angular.module('dashbordCtrl',['ScenarioServices']);
 mainCtrl.controller('DashbordCtrl',['$scope', 'Shared', 'Scenario', 'Utility', 'Modal',
