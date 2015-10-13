@@ -23,7 +23,7 @@ module.exports = function(grunt) {
                   "ext": ".js"
                 }]
             }
-          },        
+        },        
         //オートプレフィックス
         autoprefixer: {
             target: {
@@ -44,7 +44,20 @@ module.exports = function(grunt) {
             dest: 'release/scripts'
           }
         },
-        
+        useminPrepare: {
+            html: 'release/index.html',
+            options: {
+                root: 'release/',
+                dest: 'release/'
+            }
+        },
+        usemin: {
+            html: 'release/index.html',
+            options: {
+                //root: 'client/',
+                dest: 'release'
+            }
+        },
         // //ファイル連結
         // concat: {
         //     generated: {
@@ -76,30 +89,27 @@ module.exports = function(grunt) {
         //     }
         // },
         //JS圧縮
+        // babel: {
+        //     dist: {
+        //         files: [{
+        //           "expand": true,
+        //           "cwd": "test",
+        //           "src": ["*.js", "**/*.js"],
+        //           "dest": "dist/",
+        //           "ext": ".js"
+        //         }]
+        //     }
+        //   },        
         // uglify: {
         //     generated: {
         //         files: [{
         //             expand: true,
-        //             src: 'release/scripts/controllers.js',
+        //             src: './dist/test.js',
         //             // 出力先フォルダ
-        //             dest: '/'
+        //             dest: './test/test.min.js'
         //         }]
         //     }
         // },
-        useminPrepare: {
-            html: 'release/index.html',
-            options: {
-                root: 'client/',
-                dest: 'release/'
-            }
-        },
-        usemin: {
-            html: 'release/index.html',
-            options: {
-                //root: 'client/',
-                dest: 'release'
-            }
-        },
         watch: {
             // ここにwatchタスクの設定を記述します。
        }
@@ -113,6 +123,9 @@ module.exports = function(grunt) {
     } );
  
     // gruntコマンドのデフォルトタスクにwatchを追加します。
+    grunt.registerTask('es5', ['babel','uglify']);
     grunt.registerTask('css', ['autoprefixer','cssmin']);
-    grunt.registerTask('build', ['clean','copy','autoprefixer','ngAnnotate','babel','useminPrepare','uglify','concat','cssmin','usemin']);
+    grunt.registerTask('build', ['clean','copy','autoprefixer','ngAnnotate','useminPrepare','babel','uglify','concat','cssmin','usemin']);
+    
+    
 };
