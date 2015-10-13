@@ -75,13 +75,14 @@ class ApproachController
     constructor($scope, Shared, Utility, Approach, Scenario, Modal)
     {
         this._scope = $scope;
-        this._approachService = Approach;
+        this._sharedService = Shared;
         this._utilityService = Utility;
+        this._approachService = Approach;
         this._scenarioService = Scenario;
         this._modalService = Modal;
         
         this._scope._construct();
-        Shared.setRoot('approach');
+        this._sharedService.setRoot('approach');
         this._clear();
     }
     
@@ -643,6 +644,17 @@ function ($scope, Shared, Scenario, Utility, Modal)
     };
     
 }]);
+
+// class LoginController
+// {
+//     constructor($scope, $location, Auth, Location)
+//     {
+        
+//     }
+    
+// }
+// LoginController.$inject = ['$scope', '$location', 'Auth', 'Location'];
+// angular.module('loginCtrl',['AuthServices',]).controller('LoginCtrl',LoginController);
 
 var loginCtrl = angular.module('loginCtrl',['AuthServices',]);
 loginCtrl.controller('LoginCtrl', ['$scope', '$location', 'Auth', 'Location',

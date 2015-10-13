@@ -6,13 +6,14 @@ class ApproachController
     constructor($scope, Shared, Utility, Approach, Scenario, Modal)
     {
         this._scope = $scope;
-        this._approachService = Approach;
+        this._sharedService = Shared;
         this._utilityService = Utility;
+        this._approachService = Approach;
         this._scenarioService = Scenario;
         this._modalService = Modal;
         
         this._scope._construct();
-        Shared.setRoot('approach');
+        this._sharedService.setRoot('approach');
         this._clear();
     }
     

@@ -1,3 +1,14 @@
+// class LoginController
+// {
+//     constructor($scope, $location, Auth, Location)
+//     {
+        
+//     }
+    
+// }
+// LoginController.$inject = ['$scope', '$location', 'Auth', 'Location'];
+// angular.module('loginCtrl',['AuthServices',]).controller('LoginCtrl',LoginController);
+
 var loginCtrl = angular.module('loginCtrl',['AuthServices',]);
 loginCtrl.controller('LoginCtrl', ['$scope', '$location', 'Auth', 'Location',
     function($scope, $location, Auth, Location) {
