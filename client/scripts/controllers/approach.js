@@ -1,85 +1,87 @@
-/**
- * @ngdoc function
- * @name workspaceApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the workspaceApp
- */
-var approachCtrl = angular.module('approachCtrl',['ApproachServices','ScenarioServices']);
-approachCtrl.controller('ApproachCtrl',['$scope', '$routeParams','Shared', 'Utility', 'Approach', 'Scenario', 'Modal',
-function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
+//
+//アプローチコントローラークラス
+//
+class ApproachController
 {
-    function setInitializeScope()
+    constructor($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
     {
-        $scope.approach = [];
-        $scope.scenarioList = [];
-        $scope.showScenarioList = false;
+        this._scope = $scope;
+        this._approachService = Approach;
+        this._utilityService = Utility;
+        this._scenarioService = Scenario;
+        this._modalService = Modal;
+        
+        this._scope._construct();
+        Shared.setRoot('approach');
+        this._clear();
     }
     
-    function getInitializeData()
+    initialize()
     {
-        Approach.resource.get().$promise.then(function(approachResponse)
+        this._clear();
+        this._getInitializeData();
+    }
+    
+    _clear()
+    {
+        this.approach = [];
+        this.scenarioList = [];
+        this.showScenarioList = false;
+    }
+
+    _getInitializeData()
+    {
+        this._approach.resource.get().$promise.then(approachResponse =>
         {
-            $scope.approach = approachResponse.data;
+            this.approach = approachResponse.data;
             
-            Scenario.resource.valid().$promise.then(function(scenarioResponse)
+            this._approachService.resource.valid().$promise.then(scenarioResponse =>
             {
-                $scope.scenarioList = scenarioResponse.data;
-                $scope.showScenarioList = (0 < $scope.scenarioList.length);
+                this.scenarioList = scenarioResponse.data;
+                this.showScenarioList = (0 < this._scope.scenarioList.length);
             });
         });
     }
     
-    function setEventListeners()
+    _setEventListeners()
     {
-        $scope.$on('dropItemComplete', function(event, data)
+        this._scope.$on('dropItemComplete', function(event, data)
         {
-            $scope.scenarioList = data.to;
-            $scope.$apply();
+            this.scenarioList = data.to;
+            this._scope.$apply();
         });
     }
     
-    $scope.initialize = function()
+    save()
     {
-        $scope._construct();
-        setInitializeScope();
-        getInitializeData();
-        setEventListeners();
-        Shared.setRoot('approach');
-    };
-    
-    $scope.save = function()
-    {
-        console.log($scope.approach);
-        Approach.resource.save($scope.approach).$promise.then(function(response)
+        this._approachService.resource.save(this.approach).$promise.then(response =>
         {
-            Utility.info('設定を更新しました');
+            this._utilityService.info('設定を更新しました');
         });
-    };
+    }
     
-    $scope.savePriority = function()
+    savePriority()
     {
-        console.log($scope.scenarioList);
-        Scenario.resource.priority({data: $scope.scenarioList}).$promise.then(function(response)
+        this._scenarioService.resource.priority({data: this.scenarioList}).$promise.then(response =>
         {
-            Utility.info('優先順位を更新しました');
+            this._utilityService.info('優先順位を更新しました');
         });
-    };
+    }
     
-    $scope.showDiscription = function(id)
+    showDiscription(id)
     {
-        var info = Approach.getInfomation(id);
+        var info = this._approachService.getInfomation(id);
         
-        $scope.modalParam = 
+        this._scope.modalParam = 
         {
             title: info.title,
             message: info.message,
             isExecute: false,
         };
-        $scope.modalInstance = Modal.open($scope, "partials/modal/message.html");
-    };
-
-    $scope.bulkInvalid = function()
+        this._scope.modalInstance = this._modalService.open(this._scope, "partials/modal/message.html");
+    }
+    
+    bulkInvalid()
     {
         var params = 
         {
@@ -88,17 +90,17 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
             confirmButtonText: '一括で無効にする',
             execute: function()
             {
-                Scenario.resource.bulkInvalid().$promise.then(function(response)
+                this._scenarioService.resource.bulkInvalid().$promise.then(response=>
                 {
-                    Utility.info('アプローチ対象シナリオをすべて無効しました。');
-                    $scope.initialize();
+                    this._utilityService.info('アプローチ対象シナリオをすべて無効しました。');
+                    this.initialize();
                 });
             }
         };
-        Utility.infoAlert(params);
-    };
+        this._utilityService.infoAlert(params);
+    }
     
-    $scope.bulkEnable = function()
+    bulkEnable()
     {
         var params = 
         {
@@ -108,14 +110,128 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
             confirmButtonText: '一括で有効にする',
             execute: function()
             {
-                Scenario.resource.bulkEnable().$promise.then(function(response)
+                this._scenarioService.resource.bulkEnable().$promise.then(response =>
                 {
-                    Utility.info('アプローチ対象シナリオをすべて有効しました。');
-                    $scope.initialize();
+                    this._utilityService.info('アプローチ対象シナリオをすべて有効しました。');
+                    this.initialize();
                 });
             }
         };
-        Utility.infoAlert(params);
-    };
+        this._utilityService.infoAlert(params);
+    }
+}
+ApproachController.$inject = ['$scope', '$sce', '$routeParams', 'Shared', 'Access', 'Utility'];
+angular.module('approachCtrl',['ApproachServices','ScenarioServices']).controller('ApproachCtrl', ApproachController);
+//approachCtrl.controller('ApproachCtrl',['$scope', '$routeParams','Shared', 'Utility', 'Approach', 'Scenario', 'Modal',
+// function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
+// {
+//     function setInitializeScope()
+//     {
+//         $scope.approach = [];
+//         $scope.scenarioList = [];
+//         $scope.showScenarioList = false;
+//     }
     
-}]);
+//     function getInitializeData()
+//     {
+//         Approach.resource.get().$promise.then(function(approachResponse)
+//         {
+//             $scope.approach = approachResponse.data;
+            
+//             Scenario.resource.valid().$promise.then(function(scenarioResponse)
+//             {
+//                 $scope.scenarioList = scenarioResponse.data;
+//                 $scope.showScenarioList = (0 < $scope.scenarioList.length);
+//             });
+//         });
+//     }
+    
+//     function setEventListeners()
+//     {
+//         $scope.$on('dropItemComplete', function(event, data)
+//         {
+//             $scope.scenarioList = data.to;
+//             $scope.$apply();
+//         });
+//     }
+    
+//     $scope.initialize = function()
+//     {
+//         $scope._construct();
+//         setInitializeScope();
+//         getInitializeData();
+//         setEventListeners();
+//         Shared.setRoot('approach');
+//     };
+    
+//     $scope.save = function()
+//     {
+//         console.log($scope.approach);
+//         Approach.resource.save($scope.approach).$promise.then(function(response)
+//         {
+//             Utility.info('設定を更新しました');
+//         });
+//     };
+    
+//     $scope.savePriority = function()
+//     {
+//         console.log($scope.scenarioList);
+//         Scenario.resource.priority({data: $scope.scenarioList}).$promise.then(function(response)
+//         {
+//             Utility.info('優先順位を更新しました');
+//         });
+//     };
+    
+//     $scope.showDiscription = function(id)
+//     {
+//         var info = Approach.getInfomation(id);
+        
+//         $scope.modalParam = 
+//         {
+//             title: info.title,
+//             message: info.message,
+//             isExecute: false,
+//         };
+//         $scope.modalInstance = Modal.open($scope, "partials/modal/message.html");
+//     };
+
+//     $scope.bulkInvalid = function()
+//     {
+//         var params = 
+//         {
+//             title: 'シナリオの一括無効について',
+//             text: '有効なシナリオをすべて無効にしますがよろしいですか？<br>実行した場合、実行予定シナリオはなくなります。',
+//             confirmButtonText: '一括で無効にする',
+//             execute: function()
+//             {
+//                 Scenario.resource.bulkInvalid().$promise.then(function(response)
+//                 {
+//                     Utility.info('アプローチ対象シナリオをすべて無効しました。');
+//                     $scope.initialize();
+//                 });
+//             }
+//         };
+//         Utility.infoAlert(params);
+//     };
+    
+//     $scope.bulkEnable = function()
+//     {
+//         var params = 
+//         {
+//             title: 'シナリオの一括有効について',
+//             text: '無効なシナリオをすべて有効にしますがよろしいですか？<br>実行した場合、実行予定シナリオとしてダッシュボード画面に表示されます。',
+//             isExecute: true,
+//             confirmButtonText: '一括で有効にする',
+//             execute: function()
+//             {
+//                 Scenario.resource.bulkEnable().$promise.then(function(response)
+//                 {
+//                     Utility.info('アプローチ対象シナリオをすべて有効しました。');
+//                     $scope.initialize();
+//                 });
+//             }
+//         };
+//         Utility.infoAlert(params);
+//     };
+    
+// }]);

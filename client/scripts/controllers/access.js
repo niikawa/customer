@@ -1,7 +1,8 @@
-class AccessController {
+class AccessController
+{
     constructor($scope, $sce, $routeParams, Shared, Access, Utility)
     {
-        this.$scope = $scope; 
+        this._scope = $scope; 
         this.$sce = $sce;
         this.$routeParams = $routeParams;
         this.Shared = Shared;
@@ -22,13 +23,13 @@ class AccessController {
     
     initialize()
     {
-        this.$scope._construct();
+        this._scope._construct();
         let today = this.Utility.today('YYYY-MM-DD');
-        this.$scope.$emit('requestStart');
+        this._scope.$emit('requestStart');
         this.Access.resource.day({day: today}).$promise.then(response =>
         {
             this.logList = response.data;
-            this.$scope.$emit('requestEnd');
+            this._scope.$emit('requestEnd');
         });
     }
     

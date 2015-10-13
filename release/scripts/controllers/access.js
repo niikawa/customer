@@ -8,7 +8,7 @@ var AccessController = (function () {
     function AccessController($scope, $sce, $routeParams, Shared, Access, Utility) {
         _classCallCheck(this, AccessController);
 
-        this.$scope = $scope;
+        this._scope = $scope;
         this.$sce = $sce;
         this.$routeParams = $routeParams;
         this.Shared = Shared;
@@ -32,12 +32,12 @@ var AccessController = (function () {
         value: function initialize() {
             var _this = this;
 
-            this.$scope._construct();
+            this._scope._construct();
             var today = this.Utility.today('YYYY-MM-DD');
-            this.$scope.$emit('requestStart');
+            this._scope.$emit('requestStart');
             this.Access.resource.day({ day: today }).$promise.then(function (response) {
                 _this.logList = response.data;
-                _this.$scope.$emit('requestEnd');
+                _this._scope.$emit('requestEnd');
             });
         }
     }, {
