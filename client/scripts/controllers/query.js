@@ -100,9 +100,11 @@ class QueryController
     {
         let target = this.tableList[this._selectTable];
         let isSame = false;
-        console.log(this.selectColumns);
         angular.forEach(this.selectColumns, function(v, k)
         {
+            console.log(this._selectTable);
+            console.log(v.table.physicalname);
+            console.log(target.column[index].physicalname);
             if (v.table.physicalname === this._selectTable && v.column.physicalname === target.column[index].physicalname)
             {
                 isSame = true;
