@@ -5,7 +5,7 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var AccessController = (function () {
-    function AccessController($scope, $sce, $routeParams, Shared, Access, Utility) {
+    function AccessController($scope, $sce, $routeParams, Shared, Utility, Access) {
         _classCallCheck(this, AccessController);
 
         this._scope = $scope;
@@ -77,5 +77,5 @@ var AccessController = (function () {
     return AccessController;
 })();
 
-AccessController.$inject = ['$scope', '$sce', '$routeParams', 'Shared', 'Access', 'Utility'];
+AccessController.$inject = ['$scope', '$sce', '$routeParams', 'Shared', 'Utility', 'Access'];
 angular.module('accessCtrl', ['AccessServices']).controller('AccessCtrl', AccessController);

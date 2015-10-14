@@ -1,6 +1,6 @@
 class AccessController
 {
-    constructor($scope, $sce, $routeParams, Shared, Access, Utility)
+    constructor($scope, $sce, $routeParams, Shared, Utility, Access)
     {
         this._scope = $scope; 
         this.$sce = $sce;
@@ -65,5 +65,5 @@ class AccessController
         return index % 2 == 0;
     }
 }
-AccessController.$inject = ['$scope', '$sce', '$routeParams', 'Shared', 'Access', 'Utility'];
+AccessController.$inject = ['$scope', '$sce', '$routeParams', 'Shared', 'Utility', 'Access'];
 angular.module('accessCtrl',['AccessServices']).controller('AccessCtrl', AccessController);
