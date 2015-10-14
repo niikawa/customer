@@ -10,7 +10,6 @@ class QuerySaveController
         
         this._sharedService.setRoot('query save');
         this._setEventListeners();
-        this._editSetInitializeScope();
         this.query = {query_name: this._sharedService.get('updateQueryName')};
         this.conditions = [];
         

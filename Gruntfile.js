@@ -122,9 +122,9 @@ module.exports = function(grunt) {
         }
     } );
  
-    // gruntコマンドのデフォルトタスクにwatchを追加します。
     grunt.registerTask('es5', ['babel','uglify']);
     grunt.registerTask('css', ['autoprefixer','cssmin']);
+    grunt.registerTask('build-dev', ['clean','copy','autoprefixer','babel']);
     grunt.registerTask('build', ['clean','copy','autoprefixer','ngAnnotate','useminPrepare','babel','uglify','concat','cssmin','usemin']);
     
     
