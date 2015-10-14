@@ -27,6 +27,8 @@ angular
     'segmentControlCtrl',
     'queryCtrl',
     'queryListCtrl',
+    'querySetCtrl',
+    'querySaveCtrl',
     'scenarioCtrl',
     'scenarioControlCtrl',
     'approachCtrl',

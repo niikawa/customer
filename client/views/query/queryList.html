@@ -31,7 +31,7 @@
                             <tr ng-repeat="(i, item) in queryList.queryList">
                                 <td data-th="名称"><a ng-href='/#/query/control/{{item.id}}'>{{item.query_name}}</a></td>
                                 <td ng-if="item.isUse" data-th="利用状況">
-                                    <a ng-href="" ng-click="showSegment(i)">{{item.useNum}}件</a>のセグメントで利用されています。
+                                    <a ng-href="" ng-click="queryList.showSegment(i)">{{item.useNum}}件</a>のセグメントで利用されています。
                                 </td>
                                 <td ng-if="!item.isUse" data-th="利用状況">利用されていません。</td>
                                 <td>

@@ -1,99 +1,80 @@
-// var queryListCtrl = angular.module('queryListCtrl',['QueryServices']);
-// queryListCtrl.controller('QueryListCtrl',['$scope', 'Shared', 'Query', 'Segment','Modal','Location', 'Utility',
-// function ($scope, Shared, Query, Segment, Modal, Location, Utility)
-// {
-//     function setInitializeScope()
-//     {
-//         $scope.queryList = [];
-//         Shared.setRoot('query list');
-//     }
-    
-//     $scope.initialize = function()
-//     {
-//         $scope._construct();
-//         setInitializeScope();
-
-//         Query.resource.getList().$promise.then(function(response)
-//         {
-//             $scope.queryList = response.data;
-//             $scope.isQueryShow = $scope.queryList.length > 0;
-//         });
-//     };
-    
-//     $scope.showSegment = function(index)
-//     {
-//         if (void 0 === $scope.queryList[index].id) return;
-//         var target = $scope.queryList[index];
-//         var params = {qId: target.id, count: target.useNum};
-//         Segment.resource.useSegment(params).$promise.then(function(response)
-//         {
-//             $scope.modalParam = 
-//             {
-//                 title: $scope.queryList[index].query_name+"を利用しているセグメント",
-//                 list: response.data,
-//                 hrefBase: '#/segment/control',
-//                 dynamicParamKey: 'id',
-//                 close: function(id)
-//                 {
-//                     $scope.modalInstance.close();
-//                     Location.segmentControl(id);
-//                 }
-//             };
-//             $scope.modalInstance = Modal.open($scope, "partials/modal/list.html");
-            
-//         });
-//     };
-    
-//     $scope.deleteItem = function(index)
-//     {
-//         if (void 0 === $scope.queryList[index]) return;
-//         var name = $scope.queryList[index].query_name;
-//         Query.resource.remove({id: $scope.queryList[index].id}).$promise.then(function(response)
-//         {
-//             Utility.info(name + '<br>を削除しました。');
-//             $scope.queryList.splice(index,1);
-//         });
-//     };
-// }]);
-
-var queryCtrl = angular.module('queryCtrl',['QueryServices']);
-queryCtrl.controller('QueryCtrl',['$scope', '$routeParams', 'Shared', 'Query', 'Location', 'Utility',
-function ($scope, $routeParams, Shared, Query, Location, Utility)
+class QueryController
 {
-    var selectTable = '';
-    
-    function setInitializeScope(isEdit)
+    constructor($scope, $routeParams, Shared, Utility, Location, Query)
     {
-        Shared.destloyByName('queryName');
-        Shared.destloyByName('updateQueryDocumentId');
-        $scope.tableList = [];
-        $scope.tableListRef = [];
-        $scope.columnNum = 0;
-        $scope.selectColumns = [];
-        if (!isEdit)
+        this._scope = $scope;
+        this._routeParams = $routeParams;
+        this._sharedService = Shared;
+        this._utilityService = Utility;
+        this._locationService = Location;
+        this._queryService = Query;
+        this._selectTable = '';
+        this.tableSearch = '';
+
+        this._scope._construct();
+
+        let isEdit = this._routeParams.hasOwnProperty('id');
+        this._setInitializeScope(isEdit);
+        
+        if (isEdit)
         {
-            $scope.selectColumns = Shared.get('queryColumns') || [];
+            let paramId = this._routeParams.id;
+            this._queryService.resource.getControlInit({id: paramId}).$promise.then(response =>
+            {
+                this.queryName = response.data.query_name;
+                this.tableList = response.table;
+                this.tableListRef = response.getRefTabels(response.table);
+                if (0 === this.selectColumns.length)
+                {
+                    this._setEdtInitializeScope(response.data);
+                }
+                this.isShowEditMessage = true;
+                this._sharedService.set('updateQueryDocumentId', paramId);
+                this._sharedService.set('updateQueryName', response.data.query_name);
+            });
         }
-        $scope.showSelectedColumnsBox = $scope.selectColumns.length > 0;
-        $scope.conditions = [];
-        $scope.isShowEditMessage = false;
-        $scope.returnUrl = Query.getReturnURL();
-        Shared.setRoot('query');
+        else
+        {
+            this._queryService.resource.get().$promise.then(response =>
+            {
+                this.tableList = response.table;
+                this.tableListRef = this._queryService.getRefTabels(response.table);
+            });
+        }
     }
     
-    function setEdtInitializeScope(data)
+    _setInitializeScope(isEdit)
+    {
+        this._sharedService.destloyByName('queryName');
+        this._sharedService.destloyByName('updateQueryDocumentId');
+        this.tableList = [];
+        this.tableListRef = [];
+        this.columnNum = 0;
+        this.selectColumns = [];
+        if (!isEdit)
+        {
+            this.selectColumns = this._sharedService.get('queryColumns') || [];
+        }
+        this.showSelectedColumnsBox = this.selectColumns.length > 0;
+        this.conditions = [];
+        this.isShowEditMessage = false;
+        this.returnUrl = this._queryService.getReturnURL();
+        this._sharedService.setRoot('query');
+    }
+    
+    _setEdtInitializeScope(data)
     {
         angular.forEach(data.tables, function(columnList, tableName)
         {
             angular.forEach(columnList, function(columnInfo)
             {
-                angular.forEach($scope.tableList[tableName].column, function(columnData)
+                angular.forEach(this.tableList[tableName].column, function(columnData)
                 {
                     if (columnInfo.column === columnData.physicalname)
                     {
-                        $scope.selectColumns.push(
+                        this.selectColumns.push(
                         {
-                            table: {logicalname: $scope.tableList[tableName].logicalname, physicalname:  $scope.tableList[tableName].physicalname}, 
+                            table: {logicalname: this.tableList[tableName].logicalname, physicalname:  this.tableList[tableName].physicalname}, 
                             column: columnData,
                             selectedCondition: {name: '', value: columnInfo.conditionType, symbol: ''},
                             condition: columnInfo.values
@@ -104,227 +85,46 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
                 });
             });
         });
-        $scope.showSelectedColumnsBox = $scope.selectColumns.length > 0;
+        this.showSelectedColumnsBox = this.selectColumns.length > 0;
+        this._sharedService.set('queryColumns', this.selectColumns);
+    }
 
-        Shared.set('queryColumns', $scope.selectColumns);
+    showColumns(table)
+    {
+        this._selectTable = table;
+        this.columnList = this.tableList[table].column;
+        this.columnNum = this.columnList.length;
     }
     
-    $scope.initialize = function()
+    setColumn(index)
     {
-        var isEdit = $routeParams.hasOwnProperty('id');
-        $scope._construct();
-        setInitializeScope(isEdit);
-        
-        if (isEdit)
+        let target = this.tableList[this._selectTable];
+        let isSame = false;
+        angular.forEach(this.selectColumns, function(v, k)
         {
-            Query.resource.getControlInit({id: $routeParams.id}).$promise.then(function(response)
-            {
-                $scope.queryName = response.data.query_name;
-                $scope.tableList = response.table;
-                $scope.tableListRef = Query.getRefTabels(response.table);
-                if (0 === $scope.selectColumns.length)
-                {
-                    setEdtInitializeScope(response.data);
-                }
-                $scope.isShowEditMessage = true;
-                Shared.set('updateQueryDocumentId', $routeParams.id);
-                Shared.set('updateQueryName', response.data.query_name);
-            });
-        }
-        else
-        {
-            Query.resource.get().$promise.then(function(response)
-            {
-                $scope.tableList = response.table;
-                $scope.tableListRef = Query.getRefTabels(response.table);
-            });
-        }
-    };
-    
-    $scope.showColumns = function(table)
-    {
-        selectTable = table;
-        $scope.columnList = $scope.tableList[table].column;
-        $scope.columnNum = $scope.columnList.length;
-    };
-    
-    $scope.setColumn = function(index)
-    {
-        var target = $scope.tableList[selectTable];
-        var isSame = false;
-        angular.forEach($scope.selectColumns, function(v, k)
-        {
-            if (v.table.physicalname === selectTable && v.column.physicalname === target.column[index].physicalname)
+            if (v.table.physicalname === this._selectTable && v.column.physicalname === target.column[index].physicalname)
             {
                 isSame = true;
             }
         });
         if (!isSame)
         {
-            $scope.selectColumns.push(
+            this.selectColumns.push(
             {
                 table: {logicalname: target.logicalname, physicalname:  target.physicalname}, 
                 column: target.column[index]
             });
         }
-        $scope.showSelectedColumnsBox = true;
-        Shared.set('queryColumns', $scope.selectColumns);
+        this.showSelectedColumnsBox = true;
+        this._sharedService.set('queryColumns', this.selectColumns);
     };
     
-    $scope.removeColumn = function(index)
+    removeColumn(index)
     {
-        $scope.selectColumns.splice(index, 1);
-        $scope.showSelectedColumnsBox = ($scope.selectColumns.length > 0);
-        Shared.set('queryColumns', $scope.selectColumns);
+        this.selectColumns.splice(index, 1);
+        this.showSelectedColumnsBox = (this.selectColumns.length > 0);
+        this._sharedService.set('queryColumns', this.selectColumns);
     };
-    
-    /****************************************/
-    /*                  set                 */
-    /****************************************/
-    function editSetInitializeScope()
-    {
-        $scope.docIdUrl = '';
-        var docId = Shared.get('updateQueryDocumentId');
-        if (void 0 !== docId)
-        {
-            $scope.docIdUrl = '/control/'+docId;
-            $scope.isShowEditMessage = true;
-            $scope.queryName = Shared.get('updateQueryName');
-        }
-    }
-    
-    $scope.nextValidation = function()
-    {
-        Shared.setRoot('query set');
-        $scope.selectColumns = Shared.get('queryColumns');
-        if (void 0 === $scope.selectColumns) Location.query();
-
-        angular.forEach($scope.selectColumns, function(v, k)
-        {
-//            v.column.inputType = Query.getContentsByColumsType(v.column.type);
-        });
-        
-        editSetInitializeScope();
-    };
-    
-    $scope.removeItem = function(index)
-    {
-        $scope.selectColumns.splice(index, 1);
-        if (0 === $scope.selectColumns.length) Location.query();
-    };
-    
-    $scope.next = function()
-    {
-        var isNext = false;
-        angular.forEach($scope.selectColumns, function(item)
-        {
-            if (item.error)
-            {
-                return false;
-            }
-            else
-            {
-                isNext = true;
-            }
-        });
-        if (isNext) Location.querySave();
-    };
-    
-    /*****************************************/
-    /*                  save                 */
-    /*****************************************/
-    function setEventListeners()
-    {
-        $scope.$on('dropItemComplete', function(event, data)
-        {
-            event.stopPropagation();
-            angular.forEach($scope.showConditions, function(v, k)
-            {
-                console.log(v.length);
-                if (1 === v.length) v.isJoin = false;
-            });
-        });
-    }
-
-    $scope.saveInitialize = function()
-    {
-        Shared.setRoot('query save');
-        setEventListeners();
-        editSetInitializeScope();
-        $scope.query = {query_name: Shared.get('updateQueryName')};
-        $scope.conditions = [];
-        var selectColumns = Shared.get('queryColumns');
-
-        if (void 0 === selectColumns)
-        {
-            Location.query();
-        }
-        $scope.selectColumns = [];
-        Query.createCondtionString(selectColumns);
-        $scope.showConditions = [];
-        angular.forEach(selectColumns, function(v, k)
-        {
-            var array = [];
-            array.push(v);
-            array.isJoin = false;
-            $scope.showConditions.push(array);
-        });
-    };
-    
-    $scope.isJoin = function(items)
-    {
-        return items.isJoin;
-    };
-
-    $scope.release = function(pIndex, cIndex)
-    {
-        var target = [];
-        target.push($scope.showConditions[pIndex][cIndex]);
-        
-        console.log('削除前：' + $scope.showConditions.length);
-        
-        $scope.showConditions[pIndex].splice(cIndex, 1);
-        
-        console.log('削除後：' +$scope.showConditions.length);
-        console.log($scope.showConditions);
-
-        if (1 === $scope.showConditions[pIndex].length) $scope.showConditions[pIndex].isJoin = false;
-        $scope.showConditions.push(pIndex, 0, target);
-        console.log('ぷっしゅ後：' +$scope.showConditions.length);
-
-        console.log($scope.showConditions);
-    };
-
-    $scope.save = function()
-    {
-        var queryColumns = Shared.get('queryColumns');
-        var tables = Query.getTables(queryColumns);
-
-        var parameters = 
-        {
-            query_document_id: Shared.get('updateQueryDocumentId'),
-            query_name: $scope.query.query_name, 
-            conditionList: $scope.showConditions, 
-            tables: tables
-        };
-        Query.resource.create(parameters).$promise.then(function(response, err)
-        {
-            Shared.destloyByName('queryColumns');
-            Shared.destloyByName('updateQueryName');
-            Shared.destloyByName('updateQueryDocumentId');
-            Utility.info('クエリを保存しました');
-            Location.query();
-        });
-    };
-    
-    $scope.execute = function()
-    {
-        var data = Shared.get('queryColumns');
-        var tables = Query.getTables(data);
-        var parameters = {tables: tables, conditionList: $scope.showConditions};
-        Query.resource.executeQuery(parameters).$promise.then(function(response, err)
-        {
-            Utility.info('該当データは' + response.result + '件あります');
-        });
-    };
-}]);
+}
+QueryController.$inject = ['$scope', '$routeParams', 'Shared', 'Utility', 'Location', 'Query'];
+angular.module('queryCtrl',['QueryServices']).controller('QueryCtrl', QueryController);

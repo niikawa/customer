@@ -1,12 +1,12 @@
-<div class="" ng-controller="QueryCtrl" ng-init="nextValidation()">
+<div class="" ng-controller="QuerySetCtrl as querySet" >
 
     <div class="page-title"><h2>クエリー管理</h2></div>
     
     <div class="box">
         <h4>選択したカラムに対する条件を設定してください</h4>
         
-        <div ng-if="isShowEditMessage" class="alert alert-info center" role="alert">
-            {{queryName}}を更新します。
+        <div ng-if="querySet.isShowEditMessage" class="alert alert-info center" role="alert">
+            {{querySet.queryName}}を更新します。
         </div>
 
         <form name="conditionForm" novalidate>
@@ -14,10 +14,10 @@
             <div class="row">
                 <div class="col-md-12 break-all label-box">
                     <h3>選択しているカラム</h3>
-                    <div class="col-md-4" ng-repeat="item in selectColumns">
+                    <div class="col-md-4" ng-repeat="item in querySet.selectColumns">
                         <div class="panel panel-success" >
                             <div class="panel-heading">{{item.table.logicalname}}.{{item.column.logicalname}}
-                                <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
+                                <button type="button" class="close" ng-click="querySet.removeItem($index)">&times;</button>
                             </div>
                             <div class="panel-body">
                                 <section>{{item.column.description}}</section><br>
@@ -30,8 +30,8 @@
     
             <div class="row" >
                 <div class="col-md-12 center" >
-                    <a class="btn btn-default" ng-href="#/query{{docIdUrl}}" >戻る</a>
-                    <button class="btn btn-default" ng-disabled="conditionForm.$invalid" ng-click="next()">次へ</button>
+                    <a class="btn btn-default" ng-href="#/query{{querySet.docIdUrl}}" >戻る</a>
+                    <button class="btn btn-default" ng-disabled="conditionForm.$invalid" ng-click="querySet.next()">次へ</button>
                 </div>
             </div>
         </form>
