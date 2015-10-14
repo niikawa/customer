@@ -1,4 +1,4 @@
-<div class="" ng-controller="QueryListCtrl" ng-init="initialize()">
+<div class="" ng-controller="QueryListCtrl as queryList">
 
     <div class="page-title"><h2>クエリー管理</h2></div>
     
@@ -10,14 +10,14 @@
         <div class="row" >
             <div class="col-md-12">
                 
-                <div ng-if="false === isQueryShow" class="alert alert-info" role="alert">
+                <div ng-if="!queryList.isQueryShow" class="alert alert-info" role="alert">
                     作成しているクエリーはありません。
                 </div>
                 
-                <div ng-if="isQueryShow" class="panel panel-default">
+                <div ng-if="queryList.isQueryShow" class="panel panel-default">
                     <div class="panel-heading">
-                        <input type="text" class="form-control" placeholder="クエリーを絞り込みます" ng-model="querySearch" 
-                            refine-directive refine-item="queryList" keyword="querySearch" name-propertie="query_name" >
+                        <input type="text" class="form-control" placeholder="クエリーを絞り込みます" ng-model="queryList.querySearch" 
+                            refine-directive refine-item="queryList.queryList" keyword="queryList.querySearch" name-propertie="query_name" >
                     </div>
                     <table class="table table-hover">
                         <thead>
@@ -28,14 +28,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="(i, item) in queryList">
+                            <tr ng-repeat="(i, item) in queryList.queryList">
                                 <td data-th="名称"><a ng-href='/#/query/control/{{item.id}}'>{{item.query_name}}</a></td>
                                 <td ng-if="item.isUse" data-th="利用状況">
                                     <a ng-href="" ng-click="showSegment(i)">{{item.useNum}}件</a>のセグメントで利用されています。
                                 </td>
                                 <td ng-if="!item.isUse" data-th="利用状況">利用されていません。</td>
                                 <td>
-                                    <close-button-direcitve execute=deleteItem(i)></close-button-direcitve>
+                                    <close-button-direcitve execute=queryList.deleteItem(i)></close-button-direcitve>
                                 </td>
                             </tr>
                         </tbody>

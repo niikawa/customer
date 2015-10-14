@@ -1,55 +1,62 @@
-// class queryListController
+// var queryListCtrl = angular.module('queryListCtrl',['QueryServices']);
+// queryListCtrl.controller('QueryListCtrl',['$scope', 'Shared', 'Query', 'Segment','Modal','Location', 'Utility',
+// function ($scope, Shared, Query, Segment, Modal, Location, Utility)
 // {
+//     function setInitializeScope()
+//     {
+//         $scope.queryList = [];
+//         Shared.setRoot('query list');
+//     }
 
-// }
+//     $scope.initialize = function()
+//     {
+//         $scope._construct();
+//         setInitializeScope();
+
+//         Query.resource.getList().$promise.then(function(response)
+//         {
+//             $scope.queryList = response.data;
+//             $scope.isQueryShow = $scope.queryList.length > 0;
+//         });
+//     };
+
+//     $scope.showSegment = function(index)
+//     {
+//         if (void 0 === $scope.queryList[index].id) return;
+//         var target = $scope.queryList[index];
+//         var params = {qId: target.id, count: target.useNum};
+//         Segment.resource.useSegment(params).$promise.then(function(response)
+//         {
+//             $scope.modalParam =
+//             {
+//                 title: $scope.queryList[index].query_name+"を利用しているセグメント",
+//                 list: response.data,
+//                 hrefBase: '#/segment/control',
+//                 dynamicParamKey: 'id',
+//                 close: function(id)
+//                 {
+//                     $scope.modalInstance.close();
+//                     Location.segmentControl(id);
+//                 }
+//             };
+//             $scope.modalInstance = Modal.open($scope, "partials/modal/list.html");
+
+//         });
+//     };
+
+//     $scope.deleteItem = function(index)
+//     {
+//         if (void 0 === $scope.queryList[index]) return;
+//         var name = $scope.queryList[index].query_name;
+//         Query.resource.remove({id: $scope.queryList[index].id}).$promise.then(function(response)
+//         {
+//             Utility.info(name + '<br>を削除しました。');
+//             $scope.queryList.splice(index,1);
+//         });
+//     };
+// }]);
 
 'use strict';
-
-var queryListCtrl = angular.module('queryListCtrl', ['QueryServices']);
-queryListCtrl.controller('QueryListCtrl', ['$scope', 'Shared', 'Query', 'Segment', 'Modal', 'Location', 'Utility', function ($scope, Shared, Query, Segment, Modal, Location, Utility) {
-    function setInitializeScope() {
-        $scope.queryList = [];
-        Shared.setRoot('query list');
-    }
-
-    $scope.initialize = function () {
-        $scope._construct();
-        setInitializeScope();
-
-        Query.resource.getList().$promise.then(function (response) {
-            $scope.queryList = response.data;
-            $scope.isQueryShow = $scope.queryList.length > 0;
-        });
-    };
-
-    $scope.showSegment = function (index) {
-        if (void 0 === $scope.queryList[index].id) return;
-        var target = $scope.queryList[index];
-        var params = { qId: target.id, count: target.useNum };
-        Segment.resource.useSegment(params).$promise.then(function (response) {
-            $scope.modalParam = {
-                title: $scope.queryList[index].query_name + "を利用しているセグメント",
-                list: response.data,
-                hrefBase: '#/segment/control',
-                dynamicParamKey: 'id',
-                close: function close(id) {
-                    $scope.modalInstance.close();
-                    Location.segmentControl(id);
-                }
-            };
-            $scope.modalInstance = Modal.open($scope, "partials/modal/list.html");
-        });
-    };
-
-    $scope.deleteItem = function (index) {
-        if (void 0 === $scope.queryList[index]) return;
-        var name = $scope.queryList[index].query_name;
-        Query.resource.remove({ id: $scope.queryList[index].id }).$promise.then(function (response) {
-            Utility.info(name + '<br>を削除しました。');
-            $scope.queryList.splice(index, 1);
-        });
-    };
-}]);
 
 var queryCtrl = angular.module('queryCtrl', ['QueryServices']);
 queryCtrl.controller('QueryCtrl', ['$scope', '$routeParams', 'Shared', 'Query', 'Location', 'Utility', function ($scope, $routeParams, Shared, Query, Location, Utility) {
