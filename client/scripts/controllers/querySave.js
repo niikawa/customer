@@ -25,7 +25,6 @@ class QuerySaveController
             this.queryName = this._sharedService.get('updateQueryName');
         }
         
-        this.selectColumns = [];
         this._queryService.createCondtionString(selectColumns);
         this.showConditions = [];
         angular.forEach(selectColumns, function(v, k)
