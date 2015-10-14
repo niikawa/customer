@@ -20,7 +20,7 @@ var ScenarioController = (function () {
         this._sharedService.setRoot('scenario');
         this._scope._construct();
 
-        var type = this._routeParams;
+        var type = this._routeParams.scenario;
         this.addPageTitle = this._scenarioService.getPageProp(type).title;
         this.type = type;
         this.scenarioList = [];
@@ -63,7 +63,6 @@ var ScenarioController = (function () {
 
 ScenarioController.$inject = ['$scope', '$routeParams', 'Shared', 'Utility', 'Scenario'];
 angular.module('scenarioCtrl', ['ScenarioServices']).controller('ScenarioCtrl', ScenarioController);
-
 /**
  * @ngdoc function
  * @name workspaceApp.controller:MainCtrl
