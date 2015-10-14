@@ -25,15 +25,18 @@ class QuerySaveController
             this.queryName = this._sharedService.get('updateQueryName');
         }
         
+        //this.selectColumns = [];
         this._queryService.createCondtionString(selectColumns);
-        this.showConditions = [];
+        //this.showConditions = [];
+        let wConditions = [];
         angular.forEach(selectColumns, function(v, k)
         {
             var array = [];
             array.push(v);
             array.isJoin = false;
-            this.showConditions.push(array);
+            wConditions.push(array);
         });
+        this.showConditions = wConditions;
     }
     _setEventListeners()
     {
