@@ -21,7 +21,7 @@ var ScenarioController = (function () {
         this._scope._construct();
 
         var type = this._routeParams;
-        this.addPageTitle = Scenario.getPageProp(type).title;
+        this.addPageTitle = this._scenarioService.getPageProp(type).title;
         this.type = type;
         this.scenarioList = [];
         this.scenarioSearch = '';

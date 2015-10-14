@@ -1,3 +1,9 @@
+// class queryListController
+// {
+    
+// }
+
+
 var queryListCtrl = angular.module('queryListCtrl',['QueryServices']);
 queryListCtrl.controller('QueryListCtrl',['$scope', 'Shared', 'Query', 'Segment','Modal','Location', 'Utility',
 function ($scope, Shared, Query, Segment, Modal, Location, Utility)

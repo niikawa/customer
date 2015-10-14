@@ -1,3 +1,8 @@
+// class queryListController
+// {
+
+// }
+
 'use strict';
 
 var queryListCtrl = angular.module('queryListCtrl', ['QueryServices']);
