@@ -51,7 +51,7 @@ class ScenarioController
     
 }
 ScenarioController.$inject = ['$scope', '$routeParams','Shared', 'Utility', 'Scenario'];
-angular.module('accessCtrl',['ScenarioServices']).controller('ScenarioCtrl', ScenarioController);
+angular.module('scenarioCtrl',['ScenarioServices']).controller('ScenarioCtrl', ScenarioController);
 
 /**
  * @ngdoc function
