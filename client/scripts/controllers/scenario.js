@@ -15,7 +15,6 @@ class ScenarioController
         this._scope._construct();
         
         let type = this._routeParams.scenario; 
-        alert(type);
         this.addPageTitle = this._scenarioService.getPageProp(type).title;
         this.type = type;
         this.scenarioList = [];
