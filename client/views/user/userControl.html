@@ -1,9 +1,9 @@
-<div class="" ng-controller="UserControlCtrl as userControl" >
+<div class="" ng-controller="UserControlCtrl as u" >
 
     <div class="page-title"><h2>ユーザー管理</h2></div>
     
     <div class="box">
-        <h4>{{userControl.pageTitle}}
+        <h4>{{u.pageTitle}}
         </h4>
 
         <div class="row" >
@@ -13,7 +13,7 @@
                 <form name="userForm" novalidate>
                     <!-- ユーザー名 -->
                     <div>
-                        <input type="text" class="form-control" placeholder="ユーザー名" name="name" ng-model="userControl.user.name" ng-maxlength=30 ng-required="true"/>
+                        <input type="text" class="form-control" placeholder="ユーザー名" name="name" ng-model="u.user.name" ng-maxlength=30 ng-required="true"/>
                         <div class="item-error-box" ng-if="userForm.name.$dirty && userForm.name.$invalid">
                             <p class="item-error">30文字以内で入力してください</p>
                         </div>
@@ -22,7 +22,7 @@
                     <!-- メールアドレス -->
                     <div>
                         <input type="email" class="form-control" placeholder="メールアドレス" name="mailaddress" 
-                            ng-model="userControl.user.mailaddress" ng-maxlength=255 ng-required="true"
+                            ng-model="u.user.mailaddress" ng-maxlength=255 ng-required="true"
                             my-async-validators="asyncValidators.mailaddress" />
                         <div class="item-error-box" ng-if="userForm.mailaddress.$error.email">
                             <p class="item-error">形式が不正です</p>
@@ -34,12 +34,12 @@
                     
                     <!-- パスワード -->
                     <div ng-if="2==pageType" class="btn-group">
-                        <label class="btn btn-default" ng-model="userControl.passwordEdit.show" btn-radio="'1'" uncheckable>パスワードを変更する</label>
+                        <label class="btn btn-default" ng-model="u.passwordEdit.show" btn-radio="'1'" uncheckable>パスワードを変更する</label>
                     </div>
-                    <div ng-if="passwordEdit.show=='1'">
+                    <div ng-if="u.passwordEdit.show=='1'">
                         <div>
                             <input type="password" class="form-control" name="password" placeholder="パスワード"
-                                ng-model="userControl.user.password" my-validators="validators.password"
+                                ng-model="u.user.password" my-validators="u.validators.password"
                                 ng-minlength=6 ng-pattern="/^[a-zA-Z0-9]*$/" ng-required="true" ng-maxlength=50 />
                             <div class="item-error-box" ng-if="userForm.password.$error.pattern || userForm.password.$error.maxlength">
                                 <p class="item-error">6文字以上の半角英数値で入力してください</p>
@@ -50,8 +50,8 @@
                         </div>
                         
                         <div>
-                            <input type="password" class="form-control" name="password_confirm" ng-model="userControl.user.password_confirm" placeholder="パスワード再入力"
-                                my-validators="validators.password_confirm" ng-required="true" ng-maxlength=50 />
+                            <input type="password" class="form-control" name="password_confirm" ng-model="u.user.password_confirm" placeholder="パスワード再入力"
+                                my-validators="u.validators.password_confirm" ng-required="true" ng-maxlength=50 />
                             <div class="item-error-box" ng-messages="userForm.password_confirm.$error">
                                 <p class="item-error" ng-message="confirm">パスワード確認が一致しません</p>
                             </div>
@@ -59,9 +59,9 @@
                     </div>
                     <!-- 権限 -->
                     <div>
-                        <ul class="list-group overflow-box-l" name="selected_role" ng-model="userControl.user.role_id" my-validators="validators.selected_role">
+                        <ul class="list-group overflow-box-l" name="selected_role" ng-model="u.user.role_id" my-validators="u.validators.selected_role">
                             <li class="list-group-item clearfix" ng-repeat="item in roleList" 
-                                push-directive list="userControl.roleList" info="item" active="userControl.user.role_id" activekey="role_id">
+                                push-directive list="u.roleList" info="item" active="u.user.role_id" activekey="role_id">
                             {{item.role_name}}
                             <section>{{item.description}}</section>
                             </li>
@@ -72,7 +72,7 @@
                     </div>
                     <div class="row　col-md-12 center" >
                         <a class="btn btn-default" ng-href="#/user" >戻る</a>
-                        <button class="btn btn-default" ng-disabled="userForm.$invalid" ng-click="userControl.save()">保存</button>
+                        <button class="btn btn-default" ng-disabled="userForm.$invalid" ng-click="u.save()">保存</button>
                     </div>
                 </form>    
             </div>
