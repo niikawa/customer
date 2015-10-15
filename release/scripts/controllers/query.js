@@ -107,9 +107,7 @@ var QueryController = (function () {
                 for (var _iterator = this.selectColumns[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                     var item = _step.value;
 
-                    console.log(this._selectTable);
-                    console.log(v.table.physicalname);
-                    console.log(target.column[index].physicalname);
+                    console.log("for of");
                     if (item.table.physicalname === this._selectTable && item.column.physicalname === target.column[index].physicalname) {
                         isSame = true;
                     }
