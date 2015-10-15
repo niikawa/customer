@@ -28,15 +28,15 @@ class QuerySaveController
         //this.selectColumns = [];
         this._queryService.createCondtionString(selectColumns);
         //this.showConditions = [];
-        let wConditions = [];
-        angular.forEach(selectColumns, function(v, k)
+        //let wConditions = [];
+        for (let item of selectColumns)
         {
             var array = [];
-            array.push(v);
+            array.push(item);
             array.isJoin = false;
-            wConditions.push(array);
-        });
-        this.showConditions = wConditions;
+            this.showConditions.push(array);
+        }
+        //this.showConditions = wConditions;
     }
     _setEventListeners()
     {
@@ -60,19 +60,9 @@ class QuerySaveController
     {
         let target = [];
         target.push(this.showConditions[pIndex][cIndex]);
-        
-        console.log('削除前：' + this.showConditions.length);
-        
         this.showConditions[pIndex].splice(cIndex, 1);
-        
-        console.log('削除後：' + this.showConditions.length);
-        console.log(this.showConditions);
-
         if (1 === this.showConditions[pIndex].length) this.showConditions[pIndex].isJoin = false;
         this.showConditions.push(pIndex, 0, target);
-        console.log('ぷっしゅ後：' +this.showConditions.length);
-
-        console.log(this.showConditions);
     };
 
     save()

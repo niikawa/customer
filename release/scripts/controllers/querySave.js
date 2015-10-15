@@ -33,14 +33,35 @@ var QuerySaveController = (function () {
         //this.selectColumns = [];
         this._queryService.createCondtionString(selectColumns);
         //this.showConditions = [];
-        var wConditions = [];
-        angular.forEach(selectColumns, function (v, k) {
-            var array = [];
-            array.push(v);
-            array.isJoin = false;
-            wConditions.push(array);
-        });
-        this.showConditions = wConditions;
+        //let wConditions = [];
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = selectColumns[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var item = _step.value;
+
+                var array = [];
+                array.push(item);
+                array.isJoin = false;
+                this.showConditions.push(array);
+            }
+            //this.showConditions = wConditions;
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator['return']) {
+                    _iterator['return']();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
     }
 
     _createClass(QuerySaveController, [{
@@ -64,19 +85,9 @@ var QuerySaveController = (function () {
         value: function release(pIndex, cIndex) {
             var target = [];
             target.push(this.showConditions[pIndex][cIndex]);
-
-            console.log('削除前：' + this.showConditions.length);
-
             this.showConditions[pIndex].splice(cIndex, 1);
-
-            console.log('削除後：' + this.showConditions.length);
-            console.log(this.showConditions);
-
             if (1 === this.showConditions[pIndex].length) this.showConditions[pIndex].isJoin = false;
             this.showConditions.push(pIndex, 0, target);
-            console.log('ぷっしゅ後：' + this.showConditions.length);
-
-            console.log(this.showConditions);
         }
     }, {
         key: 'save',

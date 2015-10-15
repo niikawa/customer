@@ -64,17 +64,18 @@ class QueryController
     
     _setEdtInitializeScope(data)
     {
+        let tableList = this.tableList;
         angular.forEach(data.tables, function(columnList, tableName)
         {
             angular.forEach(columnList, function(columnInfo)
             {
-                angular.forEach(this.tableList[tableName].column, function(columnData)
+                angular.forEach(tableList[tableName].column, function(columnData)
                 {
                     if (columnInfo.column === columnData.physicalname)
                     {
                         this.selectColumns.push(
                         {
-                            table: {logicalname: this.tableList[tableName].logicalname, physicalname:  this.tableList[tableName].physicalname}, 
+                            table: {logicalname: tableList[tableName].logicalname, physicalname:  tableList[tableName].physicalname}, 
                             column: columnData,
                             selectedCondition: {name: '', value: columnInfo.conditionType, symbol: ''},
                             condition: columnInfo.values
@@ -85,6 +86,7 @@ class QueryController
                 });
             });
         });
+        
         this.showSelectedColumnsBox = this.selectColumns.length > 0;
         this._sharedService.set('queryColumns', this.selectColumns);
     }
@@ -102,7 +104,6 @@ class QueryController
         let isSame = false;
         for (let item of this.selectColumns)
         {
-            console.log("for of");
             if (item.table.physicalname === this._selectTable && item.column.physicalname === target.column[index].physicalname)
             {
                 isSame = true;
