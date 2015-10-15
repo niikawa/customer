@@ -38,7 +38,7 @@ var UserControlController = (function () {
             });
         }
 
-        this._setValidation();
+        //    this._setValidation();
 
         this._roleService.resource.get().$promise.then(function (response) {
             _this.roleList = response.data;
@@ -46,17 +46,17 @@ var UserControlController = (function () {
 
         if (1 === this.passwordEdit) {
             // user_name != password判定のため
-            this._scope.$watch('user.name', function () {
+            this._scope.$watch('userControl.user.name', function () {
                 this._scope.userForm.password.$validate();
             });
 
             // password == password_confirm判定のため
-            this._scope.$watch('user.password', function () {
+            this._scope.$watch('userControl.user.password', function () {
                 this._scope.userForm.password_confirm.$validate();
             });
         }
 
-        this._scope.$watch('roleList', function () {
+        this._scope.$watch('userControl.roleList', function () {
             this._scope.userForm.selected_role.$validate();
         }, true);
     }
