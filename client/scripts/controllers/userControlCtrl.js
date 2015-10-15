@@ -1,41 +1,71 @@
-/**
- * @ngdoc function
- * @name workspaceApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the workspaceApp
- */
-var userControlCtrl = angular.module('userControlCtrl',['UesrServices','RoleServices']);
-userControlCtrl.controller('UserControlCtrl',['$scope', '$routeParams', 'User', 'Role', 'Utility', 'Shared','Location',
-function ($scope, $routeParams, User, Role, Utility, Shared, Location)
+class userControlController
 {
-    var pageProp = User.getPageProp($routeParams.id);
     
-    function setInitializeScope()
+    constructor($scope, $routeParams, Shared, Utility, Location, User, Role)
     {
-        $scope.user = {};
-        $scope.pageTitle = pageProp.title;
-        $scope.showPassword = true;
-        $scope.passwordEdit = {show: '1'};
-        $scope.pageType = pageProp.type;
+        this._scope = $scope;
+        this._routeParams = $routeParams;
+        this._sharedService = Shared;
+        this._utilityService = Utility;
+        this._locationService = Location;
+        this._userService = User;
+        this._roleService = Role;
+        
+        this._sharedService.setRoot('user control');
+        this._scope._construct();
 
-        if (2 === pageProp.type)
+        this.pageProp = this._userService.getPageProp(this._routeParams.id);
+        this.user = {};
+        this.pageTitle = this.pageProp.title;
+        this.showPassword = true;
+        this.passwordEdit = {show: '1'};
+        this.pageType = this.pageProp.type;
+        
+        if (2 === this.pageProp.type)
         {
-            $scope.passwordEdit.show = '0';
-            $scope.showPassword = false;
-            var id = parseInt($routeParams.id, 10);
-            User.resource.get({id: id}).$promise.then(function(response)
+            this.passwordEdit.show = '0';
+            this.showPassword = false;
+            let id = parseInt(this._routeParams.id, 10);
+            this._userService.resource.get({id: id}).$promise.then(response =>
             {
-                $scope.user = response.data[0];
-                $scope.user.password_confirm = $scope.user.password;
+                this.user = response.data[0];
+                this.user.password_confirm = this.user.password;
             });
         }
+        
+        this._setValidation();
+
+        this._roleService.resource.get().$promise.then(response =>
+        {
+            this.roleList = response.data;
+        });
+        
+        if (1 === this.passwordEdit)
+        {
+            // user_name != password判定のため
+            this._scope.$watch('user.name', function()
+            {
+                this._scope.userForm.password.$validate();
+            });
+     
+            // password == password_confirm判定のため
+            this._scope.$watch('user.password', function()
+            {
+                this._scope.userForm.password_confirm.$validate();
+            });
+        }
+    
+        this._scope.$watch('roleList', function()
+        {
+            this._scope.userForm.selected_role.$validate();
+            
+        },true);
+        
     }
     
-    // TODO コントローラーに記載すべきなのか。。。。。
-    function setValidation()
+    _setValidation()
     {
-        $scope.validators = 
+        this.validators = 
         {
             password:
             {
@@ -43,7 +73,7 @@ function ($scope, $routeParams, User, Role, Utility, Shared, Location)
                 same: function (modelValue, viewValue)
                 {
                     var val = modelValue || viewValue;
-                    var user = $scope.user || {};
+                    var user = this.user || {};
     
                     return val != user.name;
                 }
@@ -53,8 +83,8 @@ function ($scope, $routeParams, User, Role, Utility, Shared, Location)
                 // パスワード確認
                 confirm: function (modelValue, viewValue)
                 {
-                    var user = $scope.user || {};
-                    var val = modelValue || viewValue;
+                    let user = this.user || {};
+                    let val = modelValue || viewValue;
     
                     return val == user.password;
                 }
@@ -64,110 +94,242 @@ function ($scope, $routeParams, User, Role, Utility, Shared, Location)
                 // ロール選択
                 role: function (modelValue, viewValue)
                 {
-                    var roleList = $scope.roleList || {};
-                    var isSelect = false;
+                    let roleList = this.roleList || {};
+                    let isSelect = false;
                     angular.forEach(roleList, function(item, key)
                     {
                         if (item.isPush) isSelect = true;
                     });
+                    
                     return isSelect;
                 }
             },
         };
-        $scope.asyncValidators = 
+        this.asyncValidators = 
         {
             mailaddress:
             {
                 same: function (modelValue, viewValue)
                 {
-                    var val = modelValue || viewValue;
+                    let val = modelValue || viewValue;
                     if (void 0 === val || val.length === 0) return true;
                     
-                    return User.validators.isSameMailAddress($scope.user.user_id, val);
+                    return this._userService.validators.isSameMailAddress(this.user.user_id, val);
                 }
             }
         };
     }
-    
-    function setRole(items)
+    _setRole(items)
     {
-        angular.forEach(items, function(item, key)
+        for (let item of items)
         {
             if (item.isPush)
             {
-                $scope.user.role_id = item.role_id;
+                this.user.role_id = item.role_id;
+                break;
             }
-        });
-    }
-    
-    $scope.initialize = function()
-    {
-        Shared.setRoot('user control');
-        $scope._construct();
-        setInitializeScope();
-        setValidation();
-
-        Role.resource.get().$promise.then(function(response)
-        {
-            $scope.roleList = response.data;
-        });
-        
-        if (1 === $scope.passwordEdit)
-        {
-            // user_name != password判定のため
-            $scope.$watch('user.name', function()
-            {
-                $scope.userForm.password.$validate();
-            });
-     
-            // password == password_confirm判定のため
-            $scope.$watch('user.password', function()
-            {
-                $scope.userForm.password_confirm.$validate();
-            });
         }
-    
-        $scope.$watch('roleList', function()
-        {
-            $scope.userForm.selected_role.$validate();
-        },true);
-    };
-    
-    /**
-     * 登録/更新
-     */
-    $scope.save = function()
+    }
+    save()
     {
-        setRole($scope.roleList);
-        
-        var message = $scope.user.name + 'さんの情報を保存しました';
-        if (2 === pageProp.type)
+        this._setRole(this.roleList);
+        let message = this.user.name + 'さんの情報を保存しました';
+        if (2 === this.pageProp.type)
         {
-            Utility.deleteCommonInfo($scope.user);
-            if ('1' !== $scope.passwordEdit.show)
+            this._utilityService.deleteCommonInfo(this.user);
+            if ('1' !== this.passwordEdit.show)
             {
-                delete $scope.user.password_confirm;
-                delete $scope.user.password;
+                delete this.user.password_confirm;
+                delete this.user.password;
             }
-            User.resource.save({id: $scope.user.user_id, data: $scope.user}).$promise.then(function(response)
+            this._userService.resource.save({id: this.user.user_id, data: this.user}).$promise.then(function(response)
             {
-                Utility.successSticky(message);
-                Location.user();
+                this._utilityService.successSticky(message);
+                this._locationService.user();
             });
         }
         else
         {
-            User.resource.create({data: $scope.user}).$promise.then(function(response)
+            this._userService.resource.create({data: this.user}).$promise.then(function(response)
             {
-                Utility.successSticky(message);
-                Location.user();
+                this._utilityService.successSticky(message);
+                this._locationService.user();
             });
         }
     };
-    
-    $scope.isSameMailAddress = function()
+    isSameMailAddress()
     {
-        $scope.userForm.mailaddress.$validate();
+        this.userForm.mailaddress.$validate();
     };
 
-}]);
+}
+
+userControlController.$inject = ['$scope', '$routeParams', 'Shared', 'Utility', 'Location', 'User', 'Role']
+angular.module('userControlCtrl',['UesrServices','RoleServices']).controller('UserControlCtrl', userControlController);
+
+// var userControlCtrl = angular.module('userControlCtrl',['UesrServices','RoleServices']);
+// userControlCtrl.controller('UserControlCtrl',['$scope', '$routeParams', 'User', 'Role', 'Utility', 'Shared','Location',
+// function ($scope, $routeParams, User, Role, Utility, Shared, Location)
+// {
+//     var pageProp = User.getPageProp($routeParams.id);
+    
+//     function setInitializeScope()
+//     {
+//         $scope.user = {};
+//         $scope.pageTitle = pageProp.title;
+//         $scope.showPassword = true;
+//         $scope.passwordEdit = {show: '1'};
+//         $scope.pageType = pageProp.type;
+
+//         if (2 === pageProp.type)
+//         {
+//             $scope.passwordEdit.show = '0';
+//             $scope.showPassword = false;
+//             var id = parseInt($routeParams.id, 10);
+//             User.resource.get({id: id}).$promise.then(function(response)
+//             {
+//                 $scope.user = response.data[0];
+//                 $scope.user.password_confirm = $scope.user.password;
+//             });
+//         }
+//     }
+    
+//     // TODO コントローラーに記載すべきなのか。。。。。
+//     function setValidation()
+//     {
+//         $scope.validators = 
+//         {
+//             password:
+//             {
+//                 // ユーザー名とパスワードは一緒はダメ
+//                 same: function (modelValue, viewValue)
+//                 {
+//                     var val = modelValue || viewValue;
+//                     var user = $scope.user || {};
+    
+//                     return val != user.name;
+//                 }
+//             },
+//             password_confirm:
+//             {
+//                 // パスワード確認
+//                 confirm: function (modelValue, viewValue)
+//                 {
+//                     var user = $scope.user || {};
+//                     var val = modelValue || viewValue;
+    
+//                     return val == user.password;
+//                 }
+//             },
+//             selected_role:
+//             {
+//                 // ロール選択
+//                 role: function (modelValue, viewValue)
+//                 {
+//                     var roleList = $scope.roleList || {};
+//                     var isSelect = false;
+//                     angular.forEach(roleList, function(item, key)
+//                     {
+//                         if (item.isPush) isSelect = true;
+//                     });
+//                     return isSelect;
+//                 }
+//             },
+//         };
+//         $scope.asyncValidators = 
+//         {
+//             mailaddress:
+//             {
+//                 same: function (modelValue, viewValue)
+//                 {
+//                     var val = modelValue || viewValue;
+//                     if (void 0 === val || val.length === 0) return true;
+                    
+//                     return User.validators.isSameMailAddress($scope.user.user_id, val);
+//                 }
+//             }
+//         };
+//     }
+    
+//     function setRole(items)
+//     {
+//         angular.forEach(items, function(item, key)
+//         {
+//             if (item.isPush)
+//             {
+//                 $scope.user.role_id = item.role_id;
+//             }
+//         });
+//     }
+    
+//     $scope.initialize = function()
+//     {
+//         Shared.setRoot('user control');
+//         $scope._construct();
+//         setInitializeScope();
+//         setValidation();
+
+//         Role.resource.get().$promise.then(function(response)
+//         {
+//             $scope.roleList = response.data;
+//         });
+        
+//         if (1 === $scope.passwordEdit)
+//         {
+//             // user_name != password判定のため
+//             $scope.$watch('user.name', function()
+//             {
+//                 $scope.userForm.password.$validate();
+//             });
+     
+//             // password == password_confirm判定のため
+//             $scope.$watch('user.password', function()
+//             {
+//                 $scope.userForm.password_confirm.$validate();
+//             });
+//         }
+    
+//         $scope.$watch('roleList', function()
+//         {
+//             $scope.userForm.selected_role.$validate();
+//         },true);
+//     };
+    
+//     /**
+//      * 登録/更新
+//      */
+//     $scope.save = function()
+//     {
+//         setRole($scope.roleList);
+        
+//         var message = $scope.user.name + 'さんの情報を保存しました';
+//         if (2 === pageProp.type)
+//         {
+//             Utility.deleteCommonInfo($scope.user);
+//             if ('1' !== $scope.passwordEdit.show)
+//             {
+//                 delete $scope.user.password_confirm;
+//                 delete $scope.user.password;
+//             }
+//             User.resource.save({id: $scope.user.user_id, data: $scope.user}).$promise.then(function(response)
+//             {
+//                 Utility.successSticky(message);
+//                 Location.user();
+//             });
+//         }
+//         else
+//         {
+//             User.resource.create({data: $scope.user}).$promise.then(function(response)
+//             {
+//                 Utility.successSticky(message);
+//                 Location.user();
+//             });
+//         }
+//     };
+    
+//     $scope.isSameMailAddress = function()
+//     {
+//         $scope.userForm.mailaddress.$validate();
+//     };
+
+// }]);
