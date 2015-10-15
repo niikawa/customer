@@ -8,7 +8,7 @@ class UserControll
         this._utilityService = Utility;
         this._userService = User;
         
-        this._construct();
+        this._scope._construct();
         
         this.userList = [];
         this._sharedService.setRoot('user');

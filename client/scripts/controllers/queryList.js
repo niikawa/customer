@@ -52,7 +52,7 @@ class QueryListController
         this._queryService.resource.remove({id: this.queryList[index].id}).$promise.then(response =>
         {
             this._utilityService.info(name + '<br>を削除しました。');
-            this._scope.queryList.splice(index,1);
+            this._scope.queryList.splice(index, 1);
         });
     }
     
