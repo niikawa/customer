@@ -4,11 +4,11 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var userControlController = (function () {
-    function userControlController($scope, $routeParams, Shared, Utility, Location, User, Role) {
+var UserControlController = (function () {
+    function UserControlController($scope, $routeParams, Shared, Utility, Location, User, Role) {
         var _this = this;
 
-        _classCallCheck(this, userControlController);
+        _classCallCheck(this, UserControlController);
 
         this._scope = $scope;
         this._routeParams = $routeParams;
@@ -61,7 +61,7 @@ var userControlController = (function () {
         }, true);
     }
 
-    _createClass(userControlController, [{
+    _createClass(UserControlController, [{
         key: '_setValidation',
         value: function _setValidation() {
             this.validators = {
@@ -167,11 +167,11 @@ var userControlController = (function () {
         }
     }]);
 
-    return userControlController;
+    return UserControlController;
 })();
 
-userControlController.$inject = ['$scope', '$routeParams', 'Shared', 'Utility', 'Location', 'User', 'Role'];
-angular.module('userControlCtrl', ['UesrServices', 'RoleServices']).controller('UserControlCtrl', userControlController);
+UserControlController.$inject = ['$scope', '$routeParams', 'Shared', 'Utility', 'Location', 'User', 'Role'];
+angular.module('userControlCtrl', ['UesrServices', 'RoleServices']).controller('UserControlCtrl', UserControlController);
 
 // var userControlCtrl = angular.module('userControlCtrl',['UesrServices','RoleServices']);
 // userControlCtrl.controller('UserControlCtrl',['$scope', '$routeParams', 'User', 'Role', 'Utility', 'Shared','Location',

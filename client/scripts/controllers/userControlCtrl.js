@@ -1,4 +1,4 @@
-class userControlController
+class UserControlController
 {
     
     constructor($scope, $routeParams, Shared, Utility, Location, User, Role)
@@ -164,8 +164,8 @@ class userControlController
 
 }
 
-userControlController.$inject = ['$scope', '$routeParams', 'Shared', 'Utility', 'Location', 'User', 'Role']
-angular.module('userControlCtrl',['UesrServices','RoleServices']).controller('UserControlCtrl', userControlController);
+UserControlController.$inject = ['$scope', '$routeParams', 'Shared', 'Utility', 'Location', 'User', 'Role']
+angular.module('userControlCtrl',['UesrServices','RoleServices']).controller('UserControlCtrl', UserControlController);
 
 // var userControlCtrl = angular.module('userControlCtrl',['UesrServices','RoleServices']);
 // userControlCtrl.controller('UserControlCtrl',['$scope', '$routeParams', 'User', 'Role', 'Utility', 'Shared','Location',
