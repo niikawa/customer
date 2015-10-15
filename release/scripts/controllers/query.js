@@ -99,14 +99,43 @@ var QueryController = (function () {
         value: function setColumn(index) {
             var target = this.tableList[this._selectTable];
             var isSame = false;
-            angular.forEach(this.selectColumns, function (v, k) {
-                console.log(this._selectTable);
-                console.log(v.table.physicalname);
-                console.log(target.column[index].physicalname);
-                if (v.table.physicalname === this._selectTable && v.column.physicalname === target.column[index].physicalname) {
-                    isSame = true;
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = this.selectColumns[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var item = _step.value;
+
+                    console.log(this._selectTable);
+                    console.log(v.table.physicalname);
+                    console.log(target.column[index].physicalname);
+                    if (item.table.physicalname === this._selectTable && item.column.physicalname === target.column[index].physicalname) {
+                        isSame = true;
+                    }
                 }
-            });
+                // angular.forEach(this.selectColumns, function(v, k)
+                // {
+                //     if (v.table.physicalname === this._selectTable && v.column.physicalname === target.column[index].physicalname)
+                //     {
+                //         isSame = true;
+                //     }
+                // });
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator['return']) {
+                        _iterator['return']();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
             if (!isSame) {
                 this.selectColumns.push({
                     table: { logicalname: target.logicalname, physicalname: target.physicalname },
