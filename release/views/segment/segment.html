@@ -1,4 +1,4 @@
-<div class="" ng-controller="SegmentCtrl" ng-init="initialize()">
+<div class="" ng-controller="SegmentCtrl as segment" >
 
     <div class="page-title"><h2>セグメント管理</h2></div>
     
@@ -10,14 +10,14 @@
         <div class="row" >
             <div class="col-md-12">
                 
-                <div ng-if="!showInfo" class="alert alert-info" role="alert">
+                <div ng-if="!segment.showInfo" class="alert alert-info" role="alert">
                     作成しているセグメントはありません。
                 </div>
                 
-                <div ng-if="showInfo" class="panel panel-default">
+                <div ng-if="segment.showInfo" class="panel panel-default">
                     <div class="panel-heading">
-                        <input type="text" class="form-control" placeholder="セグメントを絞り込みます" ng-model="segmentSearch" 
-                            refine-directive refine-item="segmentList" keyword="segmentSearch" name-propertie="segment_name" >
+                        <input type="text" class="form-control" placeholder="セグメントを絞り込みます" ng-model="segment.segmentSearch" 
+                            refine-directive refine-item="segment.segmentList" keyword="segment.segmentSearch" name-propertie="segment_name" >
                     </div>
                     <table class="table table-hover">
                         <thead>
@@ -30,14 +30,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="(i,item) in segmentList">
+                            <tr ng-repeat="(i,item) in segment.segmentList">
                                 <td data-th="名称"><a ng-href='/#/segment/control/{{item.segment_id}}'>{{item.segment_name}}</a></td>
                                 <td data-th="更新日">{{item.update_date}}</td>
                                 <td ng-if="item.isUsed" data-th="状況">使用中</td>
                                 <td ng-if="!item.isUsed" data-th="状況">未使用</td>
                                 <td><a target="_blank" href="/segment/{{item.segment_id}}/download"><i class="fa fa-download fa-2x"></i></a></td>
                                 <td>
-                                    <close-button-direcitve execute=remove(i)></close-button-direcitve>
+                                    <close-button-direcitve execute=segment.remove(i)></close-button-direcitve>
                                 </td>
                             </tr>
                         </tbody>

@@ -1,45 +1,74 @@
-/**
- * @ngdoc function
- * @name workspaceApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the workspaceApp
- */
-var userCtrl = angular.module('userCtrl',['UesrServices']);
-userCtrl.controller('UserCtrl',['$scope', '$routeParams','Shared', 'User', 'Utility',
-function ($scope, $routeParams, Shared, User, Utility)
+class UserControll
 {
-    function setInitializeScope()
+    constructor($scope, $routeParams, Shared, Utility, User)
     {
-        $scope.userList = [];
-    }
-    
-    $scope.initialize = function()
-    {
-        Shared.setRoot('user');
-        $scope._construct();
-        setInitializeScope();
+        this._scope = $scope;
+        this._routeParams = $routeParams;
+        this._sharedService = Shared;
+        this._utilityService = Utility;
+        this._userService = User;
+        
+        this._construct();
+        
+        this.userList = [];
+        this._sharedService.setRoot('user');
 
-        User.resource.get().$promise.then(function(response)
+        this._userService.resource.get().$promise.then(response =>
         {
-            $scope.userList = response.data;
+            this.userList = response.data;
         });
-    };
-    
-    $scope.remove = function(id)
+    }
+    remove(id, index)
     {
-        User.resource.delete({id: id}).$promise.then(function(response)
+        this._userService.resource.delete({id: id}).$promise.then(response =>
         {
-            angular.forEach($scope.userList, function(v, k)
-            {
-                if (v.user_id === id)
-                {
-                    $scope.userList.splice(k,1);
-                }
-            });
-            Utility.successSticky('ユーザーを削除しました');
+            this.userList.splice(index, 1);
+            this._utilityService.successSticky('ユーザーを削除しました');
         });
         
     };
+}
+UserControll.$inject = ['$scope', '$routeParams','Shared', 'Utility', 'User'];
+angular.module('userCtrl',['UesrServices']).controller('UserCtrl', UserControll);
+
+//
+// ↓↓↓↓↓↓↓ anguler + ES5 ↓↓↓↓↓
+//
+// var userCtrl = angular.module('userCtrl',['UesrServices']);
+// userCtrl.controller('UserCtrl',['$scope', '$routeParams','Shared', 'User', 'Utility',
+// function ($scope, $routeParams, Shared, User, Utility)
+// {
+//     function setInitializeScope()
+//     {
+//         $scope.userList = [];
+//     }
     
-}]);
+//     $scope.initialize = function()
+//     {
+//         Shared.setRoot('user');
+//         $scope._construct();
+//         setInitializeScope();
+
+//         User.resource.get().$promise.then(function(response)
+//         {
+//             $scope.userList = response.data;
+//         });
+//     };
+    
+//     $scope.remove = function(id)
+//     {
+//         User.resource.delete({id: id}).$promise.then(function(response)
+//         {
+//             angular.forEach($scope.userList, function(v, k)
+//             {
+//                 if (v.user_id === id)
+//                 {
+//                     $scope.userList.splice(k,1);
+//                 }
+//             });
+//             Utility.successSticky('ユーザーを削除しました');
+//         });
+        
+//     };
+    
+// }]);

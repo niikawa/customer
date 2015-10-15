@@ -16,9 +16,10 @@ var SegmentController = (function () {
         this._utilityService = Utility;
         this._segmentService = Segment;
 
-        $scope._construct();
+        this._scope._construct();
         this._sharedService.setRoot('segment');
         this.segmentList = [];
+        this.segmentSearch = '';
 
         this._segmentService.resource.get().$promise.then(function (response) {
             _this.segmentList = response.data;
@@ -50,13 +51,9 @@ var SegmentController = (function () {
 SegmentController.$inject = ['$scope', 'Shared', 'Utility', 'Segment'];
 angular.module('segmentCtrl', ['SegmentServices']).controller('SegmentCtrl', SegmentController);
 
-/**
- * @ngdoc function
- * @name workspaceApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the workspaceApp
- */
+//
+// ↓↓↓↓↓↓↓ anguler + ES5 ↓↓↓↓↓
+//
 // var segmentCtrl = angular.module('segmentCtrl',['SegmentServices']);
 // segmentCtrl.controller('SegmentCtrl',['$scope', 'Shared', 'Segment', 'Utility',
 // function ($scope, Shared, Segment, Utility)
