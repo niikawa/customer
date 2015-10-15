@@ -28,15 +28,15 @@ class QuerySaveController
         //this.selectColumns = [];
         this._queryService.createCondtionString(selectColumns);
         //this.showConditions = [];
-        //let wConditions = [];
+        let wConditions = [];
         for (let item of selectColumns)
         {
             var array = [];
             array.push(item);
             array.isJoin = false;
-            this.showConditions.push(array);
+            wConditions.push(array);
         }
-        //this.showConditions = wConditions;
+        this.showConditions = wConditions;
     }
     _setEventListeners()
     {

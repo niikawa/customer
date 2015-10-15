@@ -33,7 +33,7 @@ var QuerySaveController = (function () {
         //this.selectColumns = [];
         this._queryService.createCondtionString(selectColumns);
         //this.showConditions = [];
-        //let wConditions = [];
+        var wConditions = [];
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;
@@ -45,9 +45,8 @@ var QuerySaveController = (function () {
                 var array = [];
                 array.push(item);
                 array.isJoin = false;
-                this.showConditions.push(array);
+                wConditions.push(array);
             }
-            //this.showConditions = wConditions;
         } catch (err) {
             _didIteratorError = true;
             _iteratorError = err;
@@ -62,6 +61,8 @@ var QuerySaveController = (function () {
                 }
             }
         }
+
+        this.showConditions = wConditions;
     }
 
     _createClass(QuerySaveController, [{
