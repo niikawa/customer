@@ -31,6 +31,17 @@ module.exports = function(grunt) {
                 }]
             }
         },        
+        browserify : {
+            dist: {
+                files: {
+                  'release/scripts/directives/app/core-b.js': ['release/scripts/directives/app/core.js'],
+                  'release/scripts/directives/app/access-b.js': ['release/scripts/directives/app/access.js'],
+                },
+                options: {
+                  transform: [['babelify', { optional: ['runtime'] }]]
+                }
+            }            
+        },
         //オートプレフィックス
         autoprefixer: {
             target: {
@@ -122,17 +133,17 @@ module.exports = function(grunt) {
        }
     });
  
+//    grunt.loadNpmTasks('babelify');
     // grunt.loadNpmTasks('プラグイン名');でプラグインを読み込みます。
     Object.keys( pkg.devDependencies ).forEach( function( devDependency ) {
         if( devDependency.match( /^grunt\-/ ) ) {
             grunt.loadNpmTasks( devDependency );
         }
     } );
+    
  
     grunt.registerTask('es5', ['babel','uglify']);
     grunt.registerTask('css', ['autoprefixer','cssmin']);
-    grunt.registerTask('build-dev', ['clean','copy','autoprefixer','babel']);
-    grunt.registerTask('build', ['clean','copy','autoprefixer','ngAnnotate','useminPrepare','babel','uglify','concat','cssmin','usemin']);
-    
-    
+    grunt.registerTask('build-dev', ['clean','copy','autoprefixer','babel', 'browserify']);
+    grunt.registerTask('build', ['clean','copy','autoprefixer','ngAnnotate','useminPrepare','babel', 'browserify','uglify','concat','cssmin','usemin']);
 };
