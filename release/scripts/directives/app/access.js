@@ -74,7 +74,7 @@ function accessDirective()
         controller: AccessController,
         controllerAs: 'access',
         scope: {},
-        templateUrl: '../../app/access/history.html',
+        templateUrl: 'partials/app/access/history.html',
     };
 }
 angular.module('myApp').directive('accessHistory', accessDirective);
