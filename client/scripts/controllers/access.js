@@ -4,8 +4,6 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
 {
     this.initialize = function()
     {
-        $scope.$emit('requestStart');
-        
         $scope._construct();
 
         this.showDate = '';
@@ -14,12 +12,11 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
         Shared.setRoot('accsess');
 
         var today = Utility.today('YYYY-MM-DD');
+        $scope.$emit('requestStart');
         Access.resource.day({day: today}).$promise.then(function(response)
         {
             this.logList = response.data;
-            $scope.$emit('requestEnd');
         });
-
     };
     
     this.serchByDay = function()
@@ -34,29 +31,19 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
         }
     };
     
-    function getTimeInitializeData()
+    this.timeLineInitialize = function()
     {
         var day = Shared.get('serchDay');
         if (void 0 === day)
         {
             day = Utility.today('YYYY-MM-DD');
         }
-        getTimeLine(day);
-    }
-    
-    function getTimeLine(day)
-    {
         Access.resource.day({day: day, id: $routeParams.id}).$promise.then(function(response)
         {
             this.targetName = response.data[0].name;
             this.showDate = day;
             this.timelineList = response.data;
         });
-    }
-
-    this.timeLineInitialize = function()
-    {
-        getTimeInitializeData();
     };
     
     this.setPosition = function(index)
