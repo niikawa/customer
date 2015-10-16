@@ -21,6 +21,13 @@ module.exports = function(grunt) {
                   "src": ["*.js", "**/*.js"],
                   "dest": "release/scripts/controllers/",
                   "ext": ".js"
+                },
+                {
+                  "expand": true,
+                  "cwd": "release/scripts/directives",
+                  "src": ["*.js", "**/*.js"],
+                  "dest": "release/scripts/directives/",
+                  "ext": ".js"
                 }]
             }
         },        

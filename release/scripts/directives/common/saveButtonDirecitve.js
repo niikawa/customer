@@ -1,23 +1,19 @@
+'use strict';
+
 var myApp = angular.module('myApp');
-myApp.directive('saveButtonDirecitve', ['Shared', function(Shared)
-{
+myApp.directive('saveButtonDirecitve', ['Shared', function (Shared) {
     return {
         restrict: 'E',
-        scope: {is:"=", execute: '&', name: "@"},
+        scope: { is: "=", execute: '&', name: "@" },
         template: '<button ng-if="is" class="close-button" ng-click="click()">{{name}}</button>',
-        link: function (scope, element, attrs) 
-        {
-            if (3 != Shared.get("role"))
-            {
+        link: function link(scope, element, attrs) {
+            if (3 != Shared.get("role")) {
                 scope.isShowMine = true;
-            }
-            else
-            {
+            } else {
                 scope.isShowMine = false;
             }
-            
-            scope.click = function()
-            {
+
+            scope.click = function () {
                 scope.execute();
             };
         }

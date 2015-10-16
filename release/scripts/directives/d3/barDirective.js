@@ -1,15 +1,17 @@
+'use strict';
+
 var myApp = angular.module('myApp');
 myApp.directive('d3Bar', ['d3Service', '$parse', function (d3Service, $parse) {
   var d3 = d3Service.d3;
-  return{
+  return {
     restrict: 'EAC',
-    scope:{
+    scope: {
       data: '=', // APLのController側とデータをやり取り.
       key: '@',
       valueProp: '@',
       label: '@'
     },
-    link: function(scope, element){
+    link: function link(scope, element) {
       // 初期化時に可視化領域の確保.a
       var svg = d3.select(element[0]).append('svg').style('width', '100%');
       var colorScale = d3.scale.category20();
@@ -22,8 +24,8 @@ myApp.directive('d3Bar', ['d3Service', '$parse', function (d3Service, $parse) {
       var getLabel = $parse(scope.label || 'name');
 
       // (Angular) Collectionの要素変動を監視.
-      scope.$watchCollection('data', function(){
-        if(!scope.data){
+      scope.$watchCollection('data', function () {
+        if (!scope.data) {
           return;
         }
 
@@ -31,27 +33,22 @@ myApp.directive('d3Bar', ['d3Service', '$parse', function (d3Service, $parse) {
         var dataSet = svg.selectAll('g.data-group').data(scope.data, getId);
 
         // (D3) enter()はCollection要素の追加に対応.
-        var createdGroup = dataSet.enter()
-        .append('g').classed('data-group', true)
-        .each(function(d){
+        var createdGroup = dataSet.enter().append('g').classed('data-group', true).each(function (d) {
           // (Angular) Collection要素毎の値に対する変更は、$watchで仕込んでいく.
           var self = d3.select(this);
-          watched[getId(d)] = scope.$watch(function(){
+          watched[getId(d)] = scope.$watch(function () {
             return getValue(d);
-          }, function(v){
+          }, function (v) {
             self.select('rect').attr('width', v);
           });
         });
-        createdGroup.append('rect')
-        .attr('x', 130)
-        .attr('height', 18)
-        .attr('fill', function(d){
+        createdGroup.append('rect').attr('x', 130).attr('height', 18).attr('fill', function (d) {
           return colorScale(d.name);
         });
         createdGroup.append('text').text(getLabel).attr('height', 15);
 
         // (D3) exit()はCollection要素の削除に対応.
-        dataSet.exit().each(function(d){
+        dataSet.exit().each(function (d) {
           // (Angular) $watchに登録されたリスナを解除して、メモリリークを防ぐ.
           var id = getId(d);
           watched[id]();
@@ -59,14 +56,12 @@ myApp.directive('d3Bar', ['d3Service', '$parse', function (d3Service, $parse) {
         }).remove();
 
         // (D3) Collection要素変動の度に再計算する箇所.
-        dataSet.each(function(d, i){
+        dataSet.each(function (d, i) {
           var self = d3.select(this);
           self.select('rect').attr('y', i * 25);
           self.select('text').attr('y', i * 25 + 15);
         });
-
       });
-
     }
   };
 }]);
