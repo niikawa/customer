@@ -437,6 +437,7 @@ exports.execute = function(req, res)
                     var sql = "UPDATE M_SCENARIO SET valid_flag = 0 WHERE segment_id = @segment_id";
                     var request = model.getRequest(transaction);
                     request.input("segment_id", model.db.Int, req.params.id);
+                        console.log(callback);
                     model.execute(sql, request, function(err, data)
                     {
                         if (null !== err)
