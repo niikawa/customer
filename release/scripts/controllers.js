@@ -378,7 +378,6 @@ function ($rootScope, $scope, $sce, Upload, Shared, Bug, Modal, Utility)
 var coreCtrl = angular.module('coreCtrl',[]);
 coreCtrl.controller('CoreCtrl', ['$scope', 'Shared', function($scope, Shared) 
 {
-    /** ヘッダー表示 */
     $scope.isHeader = (void 0 !== Shared.get('id'));
     Shared.set('isSpinner', false);
 

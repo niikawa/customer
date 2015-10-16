@@ -2,7 +2,7 @@ module.exports = function(grunt) {
     var pkg = grunt.file.readJSON( 'package.json' );
     grunt.initConfig({ 
         pkg: pkg,
-        clean: [ 'release' ],
+        clean: ['release'],
         copy: {
             html: {
                 files: [ {
