@@ -1,7 +1,10 @@
-class AccessController
+import CoreContrller from './core';
+
+class AccessController extends CoreContrller
 {
     constructor($scope, $sce, $routeParams, Shared, Utility, Access)
     {
+        super();
         this._scope = $scope; 
         this.$sce = $sce;
         this.$routeParams = $routeParams;
@@ -19,12 +22,12 @@ class AccessController
         this.targetName = '';
         this.showDate = '';
         this.timelineList = [];
+        
         this.initialize();
     }
     
     initialize()
     {
-        this._scope._construct();
         let today = this.Utility.today('YYYY-MM-DD');
         this._scope.$emit('requestStart');
         this.Access.resource.day({day: today}).$promise.then(response =>
