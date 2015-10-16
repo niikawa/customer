@@ -428,7 +428,7 @@ exports.execute = function(req, res)
                             logger.error(Message.COMMON.E_003.replace("$1", "[segment.remove -> removeByIdAndTran]"), req, err);
                             model.insertLog(req.session.userId, FUNCTION_NUMBER, message);
                         }
-                        callback(err, {});
+                        callback(err);
                     });
                 },
                 function(callback)
@@ -437,7 +437,6 @@ exports.execute = function(req, res)
                     var sql = "UPDATE M_SCENARIO SET valid_flag = 0 WHERE segment_id = @segment_id";
                     var request = model.getRequest(transaction);
                     request.input("segment_id", model.db.Int, req.params.id);
-                        console.log(callback);
                     model.execute(sql, request, function(err, data)
                     {
                         if (null !== err)
@@ -445,14 +444,12 @@ exports.execute = function(req, res)
                             logger.error(Message.COMMON.E_003.replace("$1", "[segment.remove -> update valid_flag]"), req, err);
                             model.insertLog(req.session.userId, FUNCTION_NUMBER, message);
                         }
-                        console.log(callback);
                         callback(err);
                     });
                 }
             ],
             function(err)
             {
-                console.log("remove last function");
                 model.commitOrRollback(transaction, req, err, function(errInfo)
                 {
                     if (null !== errInfo)
