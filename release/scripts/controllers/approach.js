@@ -1,10 +1,3 @@
-/**
- * @ngdoc function
- * @name workspaceApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the workspaceApp
- */
 var approachCtrl = angular.module('approachCtrl',['ApproachServices','ScenarioServices']);
 approachCtrl.controller('ApproachCtrl',['$scope', '$routeParams','Shared', 'Utility', 'Approach', 'Scenario', 'Modal',
 function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)

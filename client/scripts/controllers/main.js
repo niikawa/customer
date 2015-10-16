@@ -1,10 +1,3 @@
-/**
- * @ngdoc function
- * @name workspaceApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the workspaceApp
- */
 var mainCtrl = angular.module('mainCtrl',['CustomerServices', 'AzureServices']);
 mainCtrl.controller('MainCtrl',['$scope', 'Shared', 'Customer', 'Azure', 'Utility',
 function ($scope, Shared, Customer, Azure, Utility)

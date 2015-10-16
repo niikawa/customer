@@ -75,13 +75,6 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
     
 }]);
 
-/**
- * @ngdoc function
- * @name workspaceApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the workspaceApp
- */
 var approachCtrl = angular.module('approachCtrl',['ApproachServices','ScenarioServices']);
 approachCtrl.controller('ApproachCtrl',['$scope', '$routeParams','Shared', 'Utility', 'Approach', 'Scenario', 'Modal',
 function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
@@ -382,13 +375,6 @@ function ($rootScope, $scope, $sce, Upload, Shared, Bug, Modal, Utility)
     };
 }]);
 
-/**
- * core controller
- * 
- * すべての上位コントローラー
- * アプリケーションの全体変更に関する処理のみを記述し、下位コントローラーは継承されたscopeの直接変更するのではなく、
- * bordcastすることで変更通知を行うこと
- */
 var coreCtrl = angular.module('coreCtrl',[]);
 coreCtrl.controller('CoreCtrl', ['$scope', 'Shared', function($scope, Shared) 
 {
@@ -519,13 +505,6 @@ loginCtrl.controller('LoginCtrl', ['$scope', '$location', 'Auth', 'Location',
     };
 }]);
 
-/**
- * @ngdoc function
- * @name workspaceApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the workspaceApp
- */
 var mainCtrl = angular.module('mainCtrl',['CustomerServices', 'AzureServices']);
 mainCtrl.controller('MainCtrl',['$scope', 'Shared', 'Customer', 'Azure', 'Utility',
 function ($scope, Shared, Customer, Azure, Utility)
