@@ -2,32 +2,24 @@ var accessCtrl = angular.module('accessCtrl',['AccessServices']);
 accessCtrl.controller('AccessCtrl',['$scope', '$sce', '$routeParams', 'Shared', 'Access', 'Utility',
 function ($scope, $sce, $routeParams, Shared, Access, Utility)
 {
-    function setInitializeScope()
-    {
-        this.showDate = '';
-        this.serchDay = '';
-        Shared.destloy('serchDay');
-        Shared.setRoot('accsess');
-    }
-    
-    function getInitializeData()
-    {
-        var today = Utility.today('YYYY-MM-DD');
-        Access.resource.day({day: today}).$promise.then(function(response)
-        {
-            $scope.logList = response.data;
-        });
-    }
-    
     this.initialize = function()
     {
         $scope.$emit('requestStart');
         
         $scope._construct();
-        setInitializeScope();
-        getInitializeData();
-        
-        $scope.$emit('requestEnd');
+
+        this.showDate = '';
+        this.serchDay = '';
+        Shared.destloy('serchDay');
+        Shared.setRoot('accsess');
+
+        var today = Utility.today('YYYY-MM-DD');
+        Access.resource.day({day: today}).$promise.then(function(response)
+        {
+            this.logList = response.data;
+            $scope.$emit('requestEnd');
+        });
+
     };
     
     this.serchByDay = function()
