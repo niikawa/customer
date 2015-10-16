@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp');
-myApp.directive('linkButtonDirecitve', function(Shared)
+myApp.directive('linkButtonDirecitve', ["Shared", function(Shared)
 {
     return {
         restrict: 'E',
@@ -22,4 +22,4 @@ myApp.directive('linkButtonDirecitve', function(Shared)
             };
         }
     };
-});
+}]);

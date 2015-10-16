@@ -145,7 +145,7 @@ myApp.factory("Calendar", ['$resource','Utility', function($resource, Utility)
     return calendarServices;
 }]);
 
-myApp.directive('calendarDirective', function(Utility)
+myApp.directive('calendarDirective', ["Utility", function(Utility)
 {
     return {
         restrict: 'E',
@@ -188,4 +188,4 @@ myApp.directive('calendarDirective', function(Utility)
             };
         }
     };
-});
+}]);
