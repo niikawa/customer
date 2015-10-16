@@ -392,7 +392,7 @@ exports.execute = function(req, res)
     segmentdoc.removeItemForWeb(req.params.segment_document_id, function(err, doc)
     {
         var message = '';
-        if (doc.hasOwnProperty('segment_name'))
+        if (void 0 === doc)
         {
             message = Message.SEGMENT.E_003.replace("$1", "セグメント");
         }
