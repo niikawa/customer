@@ -19,7 +19,7 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
         });
     }
     
-    $scope.initialize = function()
+    this.initialize = function()
     {
         $scope.$emit('requestStart');
         
@@ -30,7 +30,7 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
         $scope.$emit('requestEnd');
     };
     
-    $scope.serchByDay = function()
+    this.serchByDay = function()
     {
         if (Utility.isDateValid(this.serchDay))
         {
@@ -42,7 +42,6 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
         }
     };
     
-    //time line functions 
     function getTimeInitializeData()
     {
         var day = Shared.get('serchDay');
