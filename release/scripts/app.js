@@ -34,7 +34,6 @@ angular
     'userControlCtrl',
     'accessCtrl',
     'bugCtrl',
-    'mapCtrl',
   ])
   .config(function ($routeProvider) {
     
