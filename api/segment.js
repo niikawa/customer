@@ -437,16 +437,14 @@ exports.execute = function(req, res)
                     var sql = "UPDATE M_SCENARIO SET valid_flag = 0 WHERE segment_id = @segment_id";
                     var request = model.getRequest(transaction);
                     request.input("segment_id", model.db.Int, req.params.id);
-                    console.log("execute scenario update valid");
                     model.execute(sql, request, function(err, data)
                     {
-                        console.log(err);
                         if (null !== err)
                         {
-                            console.log("logger err inerty");
                             logger.error(Message.COMMON.E_003.replace("$1", "[segment.remove -> update valid_flag]"), req, err);
                             model.insertLog(req.session.userId, FUNCTION_NUMBER, message);
                         }
+                        console.log(callback);
                         callback(err);
                     });
                 }
