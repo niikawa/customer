@@ -55,6 +55,10 @@ ul#nav1 {
 	background-image:url(rss.png);
 }
 
+ul > li > a > i {
+  cursor: pointer;
+}
+
 .mh {
   min-height: 200px;
 }
@@ -103,8 +107,6 @@ button.close-button-left {
   opacity: 0.8;
   text-shadow: 0 1px 0 #fff;
 }  
-
-ul > li > a > i {cursor: pointer;}
 
 .sidebar {
   position: fixed;
