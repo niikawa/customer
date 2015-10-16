@@ -25,7 +25,7 @@ var AccessController = (function () {
         this.targetName = '';
         this.showDate = '';
         this.timelineList = [];
-        this._initialize();
+        this.initialize();
     }
 
     _createClass(AccessController, [{

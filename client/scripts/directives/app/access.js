@@ -19,7 +19,7 @@ class AccessController
         this.targetName = '';
         this.showDate = '';
         this.timelineList = [];
-        this._initialize();
+        this.initialize();
     }
     
     initialize()
