@@ -423,7 +423,7 @@ exports.execute = function(req, res)
                 {
                     model.removeByIdAndTran(req.params.id, transaction, function(err, data)
                     {
-                        if (null === err)
+                        if (null !== err)
                         {
                             logger.error(Message.COMMON.E_003.replace("$1", "[segment.remove -> removeByIdAndTran]"), req, err);
                             model.insertLog(req.session.userId, FUNCTION_NUMBER, message);
@@ -450,6 +450,7 @@ exports.execute = function(req, res)
             ],
             function(err)
             {
+                console.log("remove last function");
                 model.commitOrRollback(transaction, req, err, function(errInfo)
                 {
                     if (null !== errInfo)
@@ -458,7 +459,10 @@ exports.execute = function(req, res)
                         model.insertLog(req.session.userId, FUNCTION_NUMBER, message);
                         res.status(511).send(message);
                     }
-                    res.status(200).send('segment remove ok');
+                    else
+                    {
+                        res.status(200).send('segment remove ok');
+                    }
                 });
             });
         });
