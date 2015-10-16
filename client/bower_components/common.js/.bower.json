@@ -1,0 +1,21 @@
+{
+  "name": "common.js",
+  "version": "0.5.0",
+  "main": "./build/common-min.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/commons/common.js.git"
+  },
+  "dependencies": {},
+  "homepage": "https://github.com/commons/common.js",
+  "_release": "0.5.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.5.0",
+    "commit": "7a6ebc05fee46df5084c800bab422dbd8e88e2b4"
+  },
+  "_source": "git://github.com/commons/common.js.git",
+  "_target": "~0.5.0",
+  "_originalSource": "common.js",
+  "_direct": true
+}

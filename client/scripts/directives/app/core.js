@@ -41,7 +41,6 @@ export default class CoreContrller
     }
 }
 CoreContrller.$inject = ['$scope', 'Shared'];
-angular.module('coreCtrl',[]).controller('CoreCtrl', CoreContrller);
 
 // var coreCtrl = angular.module('coreCtrl',[]);
 // coreCtrl.controller('CoreCtrl', ['$scope', 'Shared', function($scope, Shared) 

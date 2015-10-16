@@ -30,7 +30,8 @@
     "angular-messages": "~1.4.0",
     "sweetalert": "~1.1.0",
     "ng-file-upload-shim": "~7.0.1",
-    "ng-file-upload": "~7.0.1"
+    "ng-file-upload": "~7.0.1",
+    "common.js": "~0.5.0"
   },
   "devDependencies": {}
 }
