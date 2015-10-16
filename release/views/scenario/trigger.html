@@ -1,0 +1,93 @@
+    <div class="row">
+        <div class="col-md-6 col-sm-6">
+            <div class="input-group">
+                <span class="input-group-addon">イベント発生後日数</span>
+                <input type="number" class="form-control" placeholder="イベント発生後日数" 
+                    ng-model="specificInfo.after_event_occurs_num" ng-required="true">
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-sm-6">
+            <div class="input-group">
+                <span class="input-group-addon">無効期間日数</span>
+                <input type="number" class="form-control" placeholder="無効期間日数"
+                    ng-model="specificInfo.inoperative_num" ng-required="true">
+            </div>
+        </div>
+    </div>    
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          <input type="text" class="form-control" placeholder="アクションを絞り込みます" ng-model="actionSearch" 
+            refine-directive refine-item="actionList" keyword="actionSearch" name-propertie="logicalname|description" >
+        </div>
+        <ul class="list-group overflow-box-l" >
+            <li class="list-group-item clearfix" ng-repeat="item in actionList" 
+                push-directive info="item" ng-click="showAction(item.id, item.column)" active="$parent.activeId" activekey="id">
+                <p>{{item.logicalname}}</p>
+                <section>{{item.description}}</section>
+            </li>
+        </ul>
+    </div>
+    <div ng-if="isShowExtraction">
+        
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <input type="text" class="form-control" placeholder="カラムを絞り込みます" ng-model="columnSearch" 
+                            refine-directive refine-item="columnList" keyword="columnSearch" name-propertie="logicalname|description" >
+                    </div>
+                    <ul class="list-group" >
+                        <li class="list-group-item clearfix" ng-repeat="item in columnList">
+                            <div class="card-cell-left">
+                                {{item.logicalname}}
+                                <section>{{item.description}}</section>
+                            </div>
+                            <div class="card-cell-right">
+                                <button class="btn-clear" ng-click="moveCondition(item)"><i class="fa fa-plus-square fa-2x"></i></button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+                
+            <div class="col-md-6 col-sm-6" >
+                <div class="box-gray mh">
+                    
+                    <div class="panel panel-success" >
+                        
+                        <div class="panel-body" ng-repeat="(i, condition) in conditions">
+                            
+                            <button type="button" class="close" ng-click="removeItem(i)">&times;</button>
+                            {{condition.logicalname}}が
+                            <condition-directive condition-append="condition" screen-type=1 ></condition-directive>
+                            
+                            <div ng-if="!$last" class="col-md-12 center">
+                                <div class="btn-group">
+                                    <label class="btn btn-default" ng-model="condition.where" btn-radio="'AND'" uncheckable>かつ</label>
+                                    <label class="btn btn-default" ng-model="condition.where" btn-radio="'OR'" uncheckable>または</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer center">
+                            <button ng-click="decision()" class="btn btn-default">決定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            
+            <div class="col-md-12 col-sm-12">
+                <ul class="list-group">
+                    <li class="list-group-item clearfix" ng-repeat="(i,item) in decisionList">
+                        <span class="label label-success">条件{{i+1}}</span>{{item}}
+                        <button type="button" class="close-button-right" ng-click="removeDecisionList(i)"><i class="fa fa-times"></i></button>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+    </div>

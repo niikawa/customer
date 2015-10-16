@@ -1,0 +1,69 @@
+<div class="" ng-controller="DashbordCtrl" ng-init="initialize()">
+
+    <div class="page-title"><h2>ダッシュボード</h2></div>
+    
+    <div class="box">
+        <h4>設定済みシナリオ</h4>
+
+        <div class="row" >
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>シナリオタイプ</th>
+                            <th>登録数</th>
+                            <th>登録上限数</th>
+                        </tr>
+                    </thead>
+                    <!--  ここデータでとるところ -->
+                    <tbody>
+                        <tr ng-repeat="item in scenarioList">
+                            <td data-th="タイプ"><a ng-href='/#/scenario/{{item.scenario_type_key}}'>{{item.scenario_type_name}}</a></td>
+                            <td data-th="数">{{item.regist_num}}</td>
+                            <td data-th="上限">{{item.regist_max}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="box">
+        <h4>シナリオカレンダー</h4>
+        <calendar-directive ></calendar-directive>
+    </div>
+
+    <div class="box">
+        <h4>実行予定のシナリオ
+            <button ng-if="isShowExecutePlanScenario" class="btn btn-default" ng-click="bulkInvalid()">一括無効</button>
+        </h4>
+
+        <div class="row" >
+            <div class="col-md-12">
+                <div ng-if="!isShowExecutePlanScenario" class="alert alert-info" role="alert">
+                    実行予定のシナリオはありません。
+                </div>
+                
+                <div ng-if="isShowExecutePlanScenario" class="panel panel-default">
+                  <div class="panel-heading">
+                    <input type="text" class="form-control" placeholder="シナリオを絞り込みます" ng-model="scenarioSearch" 
+                        refine-directive refine-item="executePlanScenario" keyword="scenarioSearch" name-propertie="scenario_name" >
+                  </div>
+                  <ul class="list-group" >
+                    <li class="list-group-item clearfix" ng-repeat="(i, item) in executePlanScenario">
+                        <span class="label-m label-default">{{item.scenario_type}}</span>
+                        <a ng-href='/#/scenario/{{item.scenario_type_key}}/control/{{item.scenario_id}}'>{{item.scenario_name}}</a>
+                        <div class="pull-right">
+                            <span ng-if="item.last_execute_date" class="label-m label-default">{{item.last_execute_date}}に実行しました</span>
+                            <span ng-if="item.last_execute_date" class="label-m label-default">抽出数は{{item.execute_target_num}}件です</span>
+                            <span ng-if="!item.last_execute_date" class="label-m label-default">まだ実行されていません</span>
+                        </div>
+                        <span ng-if="0 == item.valid_flag" class="list-error"><i class="glyphicon glyphicon-alert"></i>設定していたセグメントが削除されています。</span>
+                    </li>
+                  </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()">&times;</button>
+    <h2>報告あざす！</h2>
+</div>
+
+<form name="sendForm" novalidate>
+    <div class="modal-body">
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <div class="btn-group">
+                        <label class="btn btn-default" name="approach" ng-model="modalParam.type" ng-required="true" btn-radio=1 uncheckable>要望</label>
+                        <label class="btn btn-default" name="approach" ng-model="modalParam.type" ng-required="true" btn-radio=0  ng-click="apology()" uncheckable>障害報告</label>
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <select ng-model="modalParam.category" class="form-control" ng-options="item as item.name for item in modalParam.categoryList" ng-required="true">
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="タイトルを入力してください" ng-model="modalParam.title" ng-required="true"/>
+                </div>
+
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="コメントを入力してください" ng-model="modalParam.contents" ng-required="true"/>
+                </div>
+
+                <div class="form-group">
+                    <div ng-multiple="true" drag-over-class="file-upload-dragover" ng-model="modalParam.files" ngf-drop=true class="file-upload-area">
+                        <span class="fa fa-cloud-upload fa-3x"></span>
+                        <p ng-if="modalParam.files.name"><span class="file-name">{{modalParam.files.name}}</span></p>
+                        <p ng-if="!modalParam.files.name"><span class="file-name">添付ファイルは1つだけです</span></p>
+                        <label class="btn btn-info btn-lg" for="file">ファイルを選択</label>
+                        <input type="file" ngf-select ng-model="modalParam.files" ngf-multiple="false" name="file" id="file">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-disabled="sendForm.$invalid" ng-click="save()">送信する</button>
+    </div>
+</form>

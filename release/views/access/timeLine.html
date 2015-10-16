@@ -1,0 +1,32 @@
+<div class="" ng-controller="AccessCtrl" ng-init="timeLineInitialize()">
+    <div class="page-title"><h2>操作履歴</h2></div>
+    
+    <div class="box">
+        <h4>{{targetName}}さんのタイムライン</h4>
+
+        <div class="row" >
+            <div class="col-md-12">
+        
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-clock-o fa-fw"></i> {{showDate}}
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <ul class="timeline">
+                            <li ng-repeat="(i, item) in timelineList" ng-class="{'timeline-inverted': setPosition(i)}">
+                                <div class="timeline-badge">{{item.date}}</i>
+                                </div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-body">
+                                        <p ng-bind-html="item.detail"></p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

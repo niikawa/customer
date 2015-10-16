@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ja" >
+  <head>
+    <title>new river</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel='stylesheet' href="vendor/alert/css/jquery.toastmessage.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="style/app.min.css">
+
+  </head>
+  <body>
+
+  <body ng-app="myApp" ng-controller="CoreCtrl">
+
+    <my-header class="fixed-100" ng-if="isHeader"></my-header>
+    <div id="view" class="container-fluid view-animate-container-wide">
+      
+      <spinner-directive is="isSpinner" src="img/common/loading.gif"></spinner-directive>
+      
+      <ng-view class="view-animate"></ng-view>
+
+    </div>
+    
+    <script src="js/components.min.js"></script>
+
+    <script src="vendor/alert/jquery.toastmessage.js"></script>
+
+    <script src="scripts/app.js"></script>
+    <script src="scripts/config.js"></script>
+
+    <script src="js/controllers.min.js"></script>
+    
+    <script src="scripts/services/common/utils.js"></script>
+
+    <script src="js/services-common.min.js"></script>
+    
+    <script src="js/services.min.js"></script>
+
+    <script src="js/directives/directives-common.min.js"></script>
+
+    <script src="js/directives/directives.min.js"></script>
+
+    <!--
+    <script src="scripts/controllers/map.js"></script>
+    <script src="scripts/directives/common/saveButtonDirecitve.js"></script>
+    <script src="scripts/directives/common/mapDirective.js"></script>
+    <script src="scripts/directives/common/drawerMenuDirective.js"></script>
+    -->
+
+    <script src="js/directives/directives-d3.min.js"></script>
+
+  </body>
+</html>

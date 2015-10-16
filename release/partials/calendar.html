@@ -1,0 +1,110 @@
+    <div ng-mouseenter="enterCircle()" ng-mouseleave="leaveCircle()" ng-init="initialize()">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                
+                <ul class="label-item legend">
+                    <li><span class="trigger">トリガー型シナリオ</span></li>
+                    <li><span class="sc-priod">スケジュール型シナリオ：期間指定</span></li>
+                    <li><span class="sc-single">スケジュール型シナリオ：日付指定</span></li>
+                </ul>
+                <div class="pull-right">
+                    <i ng-if="isWeek" class="fa fa-expand fa-2x pointer" ng-click="showMonth()"></i>
+                    <i ng-if="isMonth" class="fa fa-compress fa-2x pointer" ng-click="showWeek()"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- week -->
+        <div ng-if="isWeek" class="row relative animate-if">
+            <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left" ng-click="deforeDay()" ></i>
+            <div class="row-height">
+                <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height" ng-repeat="(day, items) in calendarList">
+                    <div class="inside inside-full-height">
+                        <div>
+                            <p ng-class="{'holiday': isHolidayToWeek(day)}">{{day}}</p>
+                            <ul class="label-item">
+                                <li  class="" ng-repeat="item in items">
+                                    <div ng-class="{'trigger': isTrigger(item.scenario_type_detail), 'sc-priod': isScPriod(item.scenario_type_detail), 'sc-single': isScSingle(item.scenario_type_detail)}">
+                                        <a ng-href='/#/scenario/{{item.scenario_type_key}}/control/{{item.scenario_id}}'>
+                                            <i ng-if="1==item.scenario_type_value" class="fa fa-calendar-o"></i>{{item.scenario_name}}
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <i ng-if="showCircle" class="fa fa-chevron-circle-right fa-3x circle-right" ng-click="nextDay()" ></i>
+        </div>
+        
+        <!-- month -->
+        <div ng-if="isMonth" class="animate-if" >
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <i ng-if="showCircle" class="fa fa-chevron-circle-left fa-3x circle-left" ng-click="deforeMonth()" ></i>
+                    <div class="center">
+                        <span class="cal-year">{{year}}</span><span class="cal-month">{{month}}</span><span class="cal-year">月</span>
+                    </div>
+                    <i ng-if="showCircle" class="fa fa-chevron-circle-right fa-3x circle-right" ng-click="nextMonth()" ></i>
+                </div>
+            </div>
+            <div class="row relative">
+                <div class="row-height">
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
+                        <div class="inside inside-full-height cal-week-day holiday">
+                            日
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
+                        <div class="inside inside-full-height cal-week-day">
+                            月
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
+                        <div class="inside inside-full-height cal-week-day">
+                            火
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
+                        <div class="inside inside-full-height cal-week-day">
+                            水
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
+                        <div class="inside inside-full-height cal-week-day">
+                            木
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
+                        <div class="inside inside-full-height cal-week-day">
+                            金
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height">
+                        <div class="inside inside-full-height cal-week-day">
+                            土
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row-height"  ng-repeat="(weekCount, weekItem) in calendarofMonthList">
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-sm-height" ng-repeat="(dayMin, items) in weekItem">
+                        <div class="inside inside-full-height">
+                            <div>
+                                <p ng-if="items.date" ng-class="{'holiday':isHoliday(dayMin)}">{{items.date}}</p>
+                                <p ng-if="!items.date">&nbsp;</p>
+                                <ul class="label-item">
+                                    <li  class="" ng-repeat="item in items.scenario">
+                                        <div ng-class="{'trigger': isTrigger(item.scenario_type_detail), 'sc-priod': isScPriod(item.scenario_type_detail), 'sc-single': isScSingle(item.scenario_type_detail)}">
+                                            <i ng-if="1==item.scenario_type_value" class="fa fa-calendar-o"></i>{{item.scenario_name}}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
