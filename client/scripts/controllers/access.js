@@ -4,8 +4,8 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
 {
     function setInitializeScope()
     {
-        $scope.showDate = '';
-        $scope.serchDay = '';
+        this.showDate = '';
+        this.serchDay = '';
         Shared.destloy('serchDay');
         Shared.setRoot('accsess');
     }
@@ -32,12 +32,12 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
     
     $scope.serchByDay = function()
     {
-        if (Utility.isDateValid($scope.serchDay))
+        if (Utility.isDateValid(this.serchDay))
         {
-            Access.resource.day({day: $scope.serchDay}).$promise.then(function(response)
+            Access.resource.day({day: this.serchDay}).$promise.then(function(response)
             {
-                $scope.logList = response.data;
-                Shared.set('serchDay', $scope.serchDay);
+                this.logList = response.data;
+                Shared.set('serchDay', this.serchDay);
             });
         }
     };
@@ -57,18 +57,18 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
     {
         Access.resource.day({day: day, id: $routeParams.id}).$promise.then(function(response)
         {
-            $scope.targetName = response.data[0].name;
-            $scope.showDate = day;
-            $scope.timelineList = response.data;
+            this.targetName = response.data[0].name;
+            this.showDate = day;
+            this.timelineList = response.data;
         });
     }
 
-    $scope.timeLineInitialize = function()
+    this.timeLineInitialize = function()
     {
         getTimeInitializeData();
     };
     
-    $scope.setPosition = function(index)
+    this.setPosition = function(index)
     {
         return index % 2 == 0;
     };
