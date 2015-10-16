@@ -183,7 +183,7 @@ angular
       })
       .when('/access', {
         templateUrl: 'views/access/history.html',
-        controller: 'AccessCtrl',
+        // controller: 'AccessCtrl',
         reloadOnSearch: false, //ページ内リンクを可能にする
         resolve: {isLogin: autoCheck}
       })
