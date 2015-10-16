@@ -11,6 +11,9 @@ body {
   font-family:'Lucida Grande','Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
   font-size: 15px !important;
 }
+ul > li > a > i {
+  cursor: pointer;
+}
 #body [ng-cloak],
 #body .ng-hide {
   display: none !important;
@@ -53,10 +56,6 @@ ul#nav1 {
 }
 #nav1 .rss{
 	background-image:url(rss.png);
-}
-
-ul > li > a > i {
-  cursor: pointer;
 }
 
 .mh {
