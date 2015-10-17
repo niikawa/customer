@@ -2,16 +2,16 @@ var accessCtrl = angular.module('accessCtrl',['AccessServices']);
 accessCtrl.controller('AccessCtrl',['$scope', '$sce', '$routeParams', 'Shared', 'Access', 'Utility',
 function ($scope, $sce, $routeParams, Shared, Access, Utility)
 {
+    this.showDate = '';
+    this.serchDay = '';
+    this.logList = [];
+
     this.initialize = function()
     {
         $scope._construct();
 
         Shared.destloy('serchDay');
         Shared.setRoot('accsess');
-
-        this.showDate = '';
-        this.serchDay = '';
-        this.logList = [];
 
         var today = Utility.today('YYYY-MM-DD');
         $scope.$emit('requestStart');
@@ -59,13 +59,6 @@ var approachCtrl = angular.module('approachCtrl',['ApproachServices','ScenarioSe
 approachCtrl.controller('ApproachCtrl',['$scope', '$routeParams','Shared', 'Utility', 'Approach', 'Scenario', 'Modal',
 function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
 {
-    function setInitializeScope()
-    {
-        $scope.approach = [];
-        $scope.scenarioList = [];
-        $scope.showScenarioList = false;
-    }
-    
     function getInitializeData()
     {
         Approach.resource.get().$promise.then(function(approachResponse)
@@ -92,7 +85,8 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
     $scope.initialize = function()
     {
         $scope._construct();
-        setInitializeScope();
+        $scope.approach = [];
+        $scope.scenarioList = [];
         getInitializeData();
         setEventListeners();
         Shared.setRoot('approach');
@@ -447,7 +441,6 @@ function ($scope, Shared, Scenario, Utility, Modal)
             {
                 Scenario.resource.bulkInvalid().$promise.then(function(response)
                 {
-                    //$scope.initialize();
                     setInitializeScope();
                     getInitializeData();
                     $scope.modalInstance.close();

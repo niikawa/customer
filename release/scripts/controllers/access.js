@@ -2,16 +2,16 @@ var accessCtrl = angular.module('accessCtrl',['AccessServices']);
 accessCtrl.controller('AccessCtrl',['$scope', '$sce', '$routeParams', 'Shared', 'Access', 'Utility',
 function ($scope, $sce, $routeParams, Shared, Access, Utility)
 {
+    this.showDate = '';
+    this.serchDay = '';
+    this.logList = [];
+
     this.initialize = function()
     {
         $scope._construct();
 
         Shared.destloy('serchDay');
         Shared.setRoot('accsess');
-
-        this.showDate = '';
-        this.serchDay = '';
-        this.logList = [];
 
         var today = Utility.today('YYYY-MM-DD');
         $scope.$emit('requestStart');

@@ -46,7 +46,6 @@ function ($scope, Shared, Scenario, Utility, Modal)
             {
                 Scenario.resource.bulkInvalid().$promise.then(function(response)
                 {
-                    //$scope.initialize();
                     setInitializeScope();
                     getInitializeData();
                     $scope.modalInstance.close();
