@@ -9,17 +9,17 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
 
     this.initialize = function()
     {
+        var _this = this;
         $scope._construct();
 
         Shared.destloy('serchDay');
         Shared.setRoot('accsess');
-
         var today = Utility.today('YYYY-MM-DD');
         $scope.$emit('requestStart');
         Access.resource.day({day: today}).$promise.then(function(response)
         {
-            this.logList = response.data;
-            this.showLogList = this.logList.length > 0;
+            _this.logList = response.data;
+            _this.showLogList = response.data.length > 0;
         });
     };
     
