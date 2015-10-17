@@ -447,15 +447,16 @@ function ($scope, Shared, Scenario, Utility, Modal)
             {
                 Scenario.resource.bulkInvalid().$promise.then(function(response)
                 {
+                    //$scope.initialize();
+                    setInitializeScope();
+                    getInitializeData();
                     $scope.modalInstance.close();
                     Utility.info('実行予定のシナリオを一括無効しました。');
-                    $scope.initialize();
                 });
             }
         };
         $scope.modalInstance = Modal.open($scope, "partials/modal/message.html");
     };
-    
 }]);
 
 var loginCtrl = angular.module('loginCtrl',['AuthServices',]);
