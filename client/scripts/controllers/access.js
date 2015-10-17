@@ -6,10 +6,12 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
     {
         $scope._construct();
 
-        this.showDate = '';
-        this.serchDay = '';
         Shared.destloy('serchDay');
         Shared.setRoot('accsess');
+
+        this.showDate = '';
+        this.serchDay = '';
+        this.logList = [];
 
         var today = Utility.today('YYYY-MM-DD');
         $scope.$emit('requestStart');
