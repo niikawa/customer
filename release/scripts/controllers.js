@@ -30,6 +30,7 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
             Access.resource.day({day: this.serchDay}).$promise.then(function(response)
             {
                 _this.logList = response.data;
+                _this.showLogList = response.data.length > 0;
                 Shared.set('serchDay', _this.serchDay);
             });
         }

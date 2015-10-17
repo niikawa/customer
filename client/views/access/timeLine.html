@@ -1,20 +1,20 @@
-<div class="" ng-controller="AccessCtrl" ng-init="timeLineInitialize()">
+<div class="" ng-controller="AccessCtrl as access" ng-init="access.timeLineInitialize()">
     <div class="page-title"><h2>操作履歴</h2></div>
     
     <div class="box">
-        <h4>{{targetName}}さんのタイムライン</h4>
+        <h4>{{access.targetName}}さんのタイムライン</h4>
 
         <div class="row" >
             <div class="col-md-12">
         
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-clock-o fa-fw"></i> {{showDate}}
+                        <i class="fa fa-clock-o fa-fw"></i> {{access.showDate}}
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <ul class="timeline">
-                            <li ng-repeat="(i, item) in timelineList" ng-class="{'timeline-inverted': setPosition(i)}">
+                            <li ng-repeat="(i, item) in access.timelineList" ng-class="{'timeline-inverted': access.setPosition(i)}">
                                 <div class="timeline-badge">{{item.date}}</i>
                                 </div>
                                 <div class="timeline-panel">
