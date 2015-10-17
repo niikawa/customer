@@ -37,7 +37,6 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
     
     $scope.save = function()
     {
-        console.log($scope.approach);
         Approach.resource.save($scope.approach).$promise.then(function(response)
         {
             Utility.info('設定を更新しました');
@@ -46,7 +45,6 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
     
     $scope.savePriority = function()
     {
-        console.log($scope.scenarioList);
         Scenario.resource.priority({data: $scope.scenarioList}).$promise.then(function(response)
         {
             Utility.info('優先順位を更新しました');
@@ -104,5 +102,4 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
         };
         Utility.infoAlert(params);
     };
-    
 }]);

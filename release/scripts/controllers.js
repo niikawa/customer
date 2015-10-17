@@ -29,8 +29,8 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
         {
             Access.resource.day({day: this.serchDay}).$promise.then(function(response)
             {
-                this.logList = response.data;
-                Shared.set('serchDay', this.serchDay);
+                _this.logList = response.data;
+                Shared.set('serchDay', _this.serchDay);
             });
         }
     };
@@ -44,9 +44,9 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
         }
         Access.resource.day({day: day, id: $routeParams.id}).$promise.then(function(response)
         {
-            this.targetName = response.data[0].name;
-            this.showDate = day;
-            this.timelineList = response.data;
+            _this.targetName = response.data[0].name;
+            _this.showDate = day;
+            _this.timelineList = response.data;
         });
     };
     
@@ -96,7 +96,6 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
     
     $scope.save = function()
     {
-        console.log($scope.approach);
         Approach.resource.save($scope.approach).$promise.then(function(response)
         {
             Utility.info('設定を更新しました');
@@ -105,7 +104,6 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
     
     $scope.savePriority = function()
     {
-        console.log($scope.scenarioList);
         Scenario.resource.priority({data: $scope.scenarioList}).$promise.then(function(response)
         {
             Utility.info('優先順位を更新しました');
@@ -163,7 +161,6 @@ function ($scope, $routeParams, Shared, Utility, Approach, Scenario, Modal)
         };
         Utility.infoAlert(params);
     };
-    
 }]);
 
 var bugCtrl = angular.module('bugCtrl',['BugServices']);
