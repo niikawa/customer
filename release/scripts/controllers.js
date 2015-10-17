@@ -6,10 +6,10 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
     this.serchDay = '';
     this.logList = [];
     this.showLogList;
+    var _this = this;
 
     this.initialize = function()
     {
-        var _this = this;
         $scope._construct();
 
         Shared.destloy('serchDay');
