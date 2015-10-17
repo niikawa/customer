@@ -11,7 +11,7 @@ body {
   font-family:'Lucida Grande','Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
   font-size: 15px !important;
 }
-ul > li > a > i {
+ul>li>a>i {
   cursor: pointer;
 }
 #body [ng-cloak],
