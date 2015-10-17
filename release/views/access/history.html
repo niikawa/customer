@@ -9,7 +9,7 @@
             <div class="col-md-12">
                 
                 <div class="panel panel-default">
-                  <div class="panel-heading vertical-container">
+                    <div class="panel-heading vertical-container">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="日付を変更します。YYYY-MM-DD形式で入力してください。" ng-model="access.serchDay">
                             <span class="input-group-btn">
@@ -18,8 +18,14 @@
                         </div>
                         <input type="text" class="form-control" placeholder="ログを絞り込みます" ng-model="access.logSearch" 
                             refine-directive refine-item="access.logList" keyword="access.logSearch" name-propertie="name|date|detail" >
-                  </div>
-                    <table class="table table-hover">
+                    </div>
+                  
+                    <div ng-if="false === access.showLogList" class="alert alert-info" role="alert">
+                        ログはありません。
+                    </div>
+                  
+                  
+                    <table ng-if="access.showLogList" class="table table-hover">
                         <thead>
                             <tr>
                                 <th>操作時間</th>

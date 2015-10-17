@@ -5,6 +5,7 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
     this.showDate = '';
     this.serchDay = '';
     this.logList = [];
+    this.showLogList;
 
     this.initialize = function()
     {
@@ -18,6 +19,7 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
         Access.resource.day({day: today}).$promise.then(function(response)
         {
             this.logList = response.data;
+            this.showLogList = this.logList.length > 0;
         });
     };
     
