@@ -145,5 +145,5 @@ module.exports = function(grunt) {
     grunt.registerTask('es5', ['babel','uglify']);
     grunt.registerTask('css', ['autoprefixer','cssmin']);
     grunt.registerTask('build-dev', ['clean','copy','ngAnnotate']);
-    grunt.registerTask('build', ['clean','copy','ngAnnotate', 'useminPrepare', 'uglify','concat','cssmin','usemin']);
+    grunt.registerTask('build', ['clean','copy','ngAnnotate', 'useminPrepare','uglify','concat','cssmin','usemin']);
 };
