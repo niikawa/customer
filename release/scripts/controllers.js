@@ -812,7 +812,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         var workRow = [];
         for (var index = 0; index < num; index++)
         {
-            if (0 !==index && 0 === index % 4)
+            if (0 !==index && 0 === index % 3)
             {
                 $scope.columnsRows.push(workRow);
                 workRow = [];
@@ -828,8 +828,10 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     {
         var selectColumns = Shared.get('queryColumns');
         //削除用インデックスを算出
-        var removeIndex = (i+1) * (j+1);
-        selectColumns[removeIndex, 1];
+        var index1 = (0 === i) ? 1 : i*3;
+        var index2 = (0 === j) ? 1 : j;
+        var removeIndex = index1 + index2;
+        selectColumns.splice(removeIndex, 1);
         if (0 === selectColumns.length) Location.query();
         
         var num = selectColumns.length;
@@ -837,7 +839,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         $scope.columnsRows = [];
         for (var index = 0; index < num; index++)
         {
-            if (0 !==index && 0 === index % 4)
+            if (0 !==index && 0 === index % 3)
             {
                 $scope.columnsRows.push(workRow);
                 workRow = [];
