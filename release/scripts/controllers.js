@@ -826,12 +826,13 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     
     $scope.removeItem = function(i, j)
     {
+        var selectColumns = Shared.get('queryColumns');
         //削除用インデックスを算出
         var removeIndex = (i+1) * (j+1);
-        $scope.selectColumns[removeIndex, 1];
-        if (0 === $scope.selectColumns.length) Location.query();
+        selectColumns[removeIndex, 1];
+        if (0 === selectColumns.length) Location.query();
         
-        var num = $scope.selectColumns.length;
+        var num = selectColumns.length;
         var workRow = [];
         $scope.columnsRows = [];
         for (var index = 0; index < num; index++)
@@ -841,9 +842,10 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
                 $scope.columnsRows.push(workRow);
                 workRow = [];
             }
-            workRow.push($scope.selectColumns[index]);
+            workRow.push(selectColumns[index]);
         }
         if (0 < workRow.length) $scope.columnsRows.push(workRow);
+        Shared.set('queryColumns', selectColumns);
     };
     
     $scope.next = function()
