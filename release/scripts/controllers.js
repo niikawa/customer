@@ -824,12 +824,12 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         editSetInitializeScope();
     };
     
-    $scope.removeItem = function(index)
+    $scope.removeItem = function(i, j)
     {
-        $scope.selectColumns.splice(index, 1);
+        $scope.columnsRows[i].splice(j, 1);
         if (0 === $scope.selectColumns.length) Location.query();
         
-        var num = $scope.selectColumns.length;
+        var num = $scope.columnsRows.length;
         var workRow = [];
         for (var index = 0; index < num; index++)
         {

@@ -12,12 +12,12 @@
         <form name="conditionForm" novalidate>
             
             <div class="row">
-                <div class="col-md-12 break-all label-box row-height " ng-repeat="row in columnsRows">
-                    <h3>選択しているカラム</h3>
-                    <div class="col-md-4 col-sm-height" ng-repeat="item in row">
+                <h3>選択しているカラム</h3>
+                <div class="col-md-12 break-all label-box row-height " ng-repeat="(i,row) in columnsRows">
+                    <div class="col-md-4 col-sm-height" ng-repeat="(j,item) in row">
                         <div class="panel panel-success" >
                             <div class="panel-heading">{{item.table.logicalname}}.{{item.column.logicalname}}
-                                <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
+                                <button type="button" class="close" ng-click="removeItem(i, j)">&times;</button>
                             </div>
                             <div class="panel-body inside inside-full-height">
                                 <section>{{item.column.description}}</section><br>
