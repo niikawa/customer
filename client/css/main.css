@@ -775,6 +775,14 @@ div .card-cell-right-b {
   padding-left: 15px;
   padding-right: 15px;
 }
+.row-height-nonborder {
+  display: table;
+  table-layout: fixed;
+  height: 100%;
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+}
 
 .row-back {
   background-color: #FFF;
@@ -867,6 +875,10 @@ div .card-cell-right-b {
   .col-sm-height {
     display: table-cell;
     float: none;
+    height: 100%;
+  }
+  .col-sm-height-fixed {
+    display: table-cell;
     height: 100%;
   }
   .col-sm-top {
