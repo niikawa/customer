@@ -15,11 +15,11 @@
                 <div class="col-md-12 break-all label-box row-height " ng-repeat="row in columnsRows">
                     <h3>選択しているカラム</h3>
                     <div class="col-md-4 col-sm-height" ng-repeat="item in row">
-                        <div class="panel panel-success inside inside-full-height" >
+                        <div class="panel panel-success" >
                             <div class="panel-heading">{{item.table.logicalname}}.{{item.column.logicalname}}
                                 <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
                             </div>
-                            <div class="panel-body">
+                            <div class="panel-body inside inside-full-height">
                                 <section>{{item.column.description}}</section><br>
                                 <condition-directive form="conditionForm" condition-append="item"></condition-directive>
                             </div>
