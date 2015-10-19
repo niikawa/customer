@@ -12,10 +12,10 @@
         <form name="conditionForm" novalidate>
             
             <div class="row">
-                <div class="col-md-12 break-all label-box ">
+                <div class="col-md-12 break-all label-box row-height " ng-repeat="row in columnsRows">
                     <h3>選択しているカラム</h3>
-                    <div class="col-md-4 " ng-repeat="item in selectColumns">
-                        <div class="panel panel-success" >
+                    <div class="col-md-4 col-sm-height" ng-repeat="item in row">
+                        <div class="panel panel-success inside inside-full-height" >
                             <div class="panel-heading">{{item.table.logicalname}}.{{item.column.logicalname}}
                                 <button type="button" class="close" ng-click="removeItem($index)">&times;</button>
                             </div>

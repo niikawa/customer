@@ -671,7 +671,15 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         $scope.selectColumns = [];
         if (!isEdit)
         {
-            $scope.selectColumns = Shared.get('queryColumns') || [];
+            var root = Shared.getRoot();
+            if ( (void 0 !== root || 0 < root.length) && 'query set' === root[root.length-1])
+            {
+                $scope.selectColumns = Shared.get('queryColumns') || [];
+            }
+            else
+            {
+                Shared.destloyByName('queryColumns');
+            }
         }
         $scope.showSelectedColumnsBox = $scope.selectColumns.length > 0;
         $scope.conditions = [];
@@ -768,6 +776,8 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         }
         $scope.showSelectedColumnsBox = true;
         Shared.set('queryColumns', $scope.selectColumns);
+        
+        
     };
     
     $scope.removeColumn = function(index)
@@ -797,12 +807,19 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         Shared.setRoot('query set');
         $scope.selectColumns = Shared.get('queryColumns');
         if (void 0 === $scope.selectColumns) Location.query();
-
-        angular.forEach($scope.selectColumns, function(v, k)
+        $scope.columnsRows = [];
+        var num = $scope.selectColumns.length;
+        var workRow = [];
+        for (var index = 0; index < num; index++)
         {
-//            v.column.inputType = Query.getContentsByColumsType(v.column.type);
-        });
-        
+            if (0 !==index && 0 === index % 4)
+            {
+                $scope.columnsRows.push(workRow);
+                workRow = [];
+            }
+            workRow.push($scope.selectColumns[index]);
+        }
+
         editSetInitializeScope();
     };
     
@@ -810,6 +827,19 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     {
         $scope.selectColumns.splice(index, 1);
         if (0 === $scope.selectColumns.length) Location.query();
+        
+        var num = $scope.selectColumns.length;
+        var workRow = [];
+        for (var index = 0; index < num; index++)
+        {
+            if (0 !==index && 0 === index % 4)
+            {
+                $scope.columnsRows.push(workRow);
+                workRow = [];
+            }
+            workRow.push($scope.selectColumns[index]);
+        }
+        $scope.columnsRows = workRow;
     };
     
     $scope.next = function()

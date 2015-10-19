@@ -17,7 +17,7 @@ sharedServices.service('Shared', function()
         }
         data['applicationAccsessRoot'].push(value);
     };
-    sharedServices.getRoot = function(value)
+    sharedServices.getRoot = function()
     {
         return data['applicationAccsessRoot'];
     };
