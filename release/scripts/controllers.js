@@ -828,9 +828,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     {
         var selectColumns = Shared.get('queryColumns');
         //削除用インデックスを算出
-        var index1 = (0 === i) ? 1 : i*3;
-        var index2 = (0 === j) ? 1 : j;
-        var removeIndex = index1 + index2;
+        var removeIndex = i*3 + j;
         selectColumns.splice(removeIndex, 1);
         if (0 === selectColumns.length) Location.query();
         
