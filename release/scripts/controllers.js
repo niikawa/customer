@@ -819,6 +819,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
             }
             workRow.push($scope.selectColumns[index]);
         }
+        if (0 < workRow.length) $scope.columnsRows.push(workRow);
 
         editSetInitializeScope();
     };
