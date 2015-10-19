@@ -838,9 +838,10 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
                 $scope.columnsRows.push(workRow);
                 workRow = [];
             }
-            workRow.push($scope.selectColumns[index]);
+            workRow.push($scope.columnsRows[index]);
         }
-        $scope.columnsRows = workRow;
+        if (0 < workRow.length) $scope.columnsRows.push(workRow);
+        //$scope.columnsRows = workRow;
     };
     
     $scope.next = function()
