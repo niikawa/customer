@@ -227,11 +227,14 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     
     $scope.removeItem = function(i, j)
     {
-        $scope.columnsRows[i].splice(j, 1);
+        //削除用インデックスを算出
+        var removeIndex = (i+1) * (j+1);
+        $scope.selectColumns[removeIndex, 1];
         if (0 === $scope.selectColumns.length) Location.query();
         
-        var num = $scope.columnsRows.length;
+        var num = $scope.selectColumns.length;
         var workRow = [];
+        $scope.columnsRows = [];
         for (var index = 0; index < num; index++)
         {
             if (0 !==index && 0 === index % 4)
@@ -239,10 +242,9 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
                 $scope.columnsRows.push(workRow);
                 workRow = [];
             }
-            workRow.push($scope.columnsRows[index]);
+            workRow.push($scope.selectColumns[index]);
         }
         if (0 < workRow.length) $scope.columnsRows.push(workRow);
-        //$scope.columnsRows = workRow;
     };
     
     $scope.next = function()
