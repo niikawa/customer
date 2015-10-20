@@ -16,7 +16,9 @@
                     <div>
                         <input type="text" class="form-control" placeholder="クエリー名" name="name" 
                             ng-model="query.query_name" ng-required="true" ng-maxlength="100"/>
-                        <p class="item-error" ng-if="queryForm.name.$dirty && queryForm.name.$invalid">クエリ名を入力してください</p>
+                        <div class="item-error-box" ng-if="queryForm.name.$dirty && queryForm.name.$invalid">
+                            <p class="item-error">クエリ名を100文字以内で入力してください</p>
+                        </div>
                     </div>
                 </form>
             </div>
