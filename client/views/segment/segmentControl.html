@@ -12,8 +12,12 @@
                 <form name="segmentForm" novalidate>
                     <input type="text" class="form-control" name="name" placeholder="セグメント名を入力してください" 
                         ng-model="segment.segment_name" ng-required="true" ng-maxlength="100">
-                    <div class="item-error-box" ng-if="segmentForm.name.$dirty && segmentForm.name.$invalid">
-                        <p class="item-error">セグメント名を入力してください</p>
+                        
+                    <div class="item-error-box" ng-if="segmentForm.name.$dirty && segmentForm.name.$required">
+                        <p class="item-error">セグメント名を入力してください。</p>
+                    </div>
+                    <div class="item-error-box" ng-if=" segmentForm.name.$error.pattern || segmentForm.name.$error.maxlength">
+                        <p class="item-error">セグメント名は100文字以内で入力してください。</p>
                     </div>
                 </form>
                 <hr>
