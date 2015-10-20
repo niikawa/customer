@@ -12,7 +12,11 @@
                 <form name="segmentForm" novalidate>
                     <input type="text" class="form-control" name="name" placeholder="セグメント名を入力してください" 
                         ng-model="segment.segment_name" ng-required="true" ng-maxlength="100">
-                        
+                    
+                    <pre >
+                        {{segmentForm.name.$dirty}}
+                        {{segmentForm.name.$required}}
+                    </pre>
                     <div class="item-error-box" ng-if="segmentForm.name.$dirty && segmentForm.name.$required">
                         <p class="item-error">セグメント名を入力してください。</p>
                     </div>
