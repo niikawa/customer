@@ -26,10 +26,10 @@
                             <span class="input-group-addon">1週間の制限回数</span>
                             <input type="number" class="form-control form-control-add-fa2" placeholder="1週間の制限回数" name="weekly_limit_num" 
                                 ng-model="approach.weekly_limit_num" ng-required="true">
-                            <div class="item-error-box" ng-if="numberForm.weekly_limit_num.$error.number">
-                                <p class="item-error">半角数字で入力してください</p>
-                            </div>
                             <span class="input-group-addon question"><i class="fa fa-question-circle fa-2x" ng-click="showDiscription(2)"></i></span>
+                        </div>
+                        <div class="item-error-box" ng-if="numberForm.weekly_limit_num.$error.number">
+                            <p class="item-error">半角数字で入力してください</p>
                         </div>
                     </div>
                 </form>
