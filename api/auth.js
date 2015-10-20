@@ -107,7 +107,13 @@ exports.login = function(req, res)
         if (null !== err)
         {
             logger.error(Message.AUTH.E_001, req, err);
-            res.status(511).send(Message.AUTH.E_001);
+            //ログイン時にコネクションエラーが発生した場合は再接続を行う。
+            var mssql = require('mssql');
+            var dbconf = require("./config/db");
+            mssql.connect(dbconf(), function(err)
+            {
+                res.status(511).send(Message.AUTH.E_001);
+            });
         }
         else if (0 === data.length)
         {

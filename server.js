@@ -161,18 +161,18 @@ process.on('uncaughtException', function(err)
 var server = http.createServer(router);
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function()
 {
-  var addr = server.address();
-  console.log("server listening at", addr.address + ":" + addr.port);
+    var addr = server.address();
+    console.log("server listening at", addr.address + ":" + addr.port);
   
     var mssql = require('mssql');
     var dbconf = require("./config/db");
     mssql.connect(dbconf(), function(err)
     {
-      if (null != err)
-      {
-        console.log('データベースコネクションエラー');
-        console.log(err);
-      }
+        if (null != err)
+        {
+            console.log('データベースコネクションエラー');
+            console.log(err);
+        }
     });
     
     mssql.on('error', function(err)
