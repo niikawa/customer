@@ -17,7 +17,10 @@
                             <span class="input-group-addon question"><i class="fa fa-question-circle fa-2x" ng-click="showDiscription(1)"></i></span>
                         </div>
                         <div class="item-error-box" ng-if="numberForm.daily_limit_num.$error.number || numberForm.daily_limit_num.$error.required">
-                            <p class="item-error">半角数字で入力してください</p>
+                            <p class="item-error">半角数字で入力してください。</p>
+                        </div>
+                        <div class="item-error-box" ng-if="numberForm.daily_limit_num.$error.min || numberForm.daily_limit_num.$error.max">
+                            <p class="item-error">入力できる範囲は0から999までです。</p>
                         </div>
                     </div>
     
@@ -29,7 +32,10 @@
                             <span class="input-group-addon question"><i class="fa fa-question-circle fa-2x" ng-click="showDiscription(2)"></i></span>
                         </div>
                         <div class="item-error-box" ng-if="numberForm.weekly_limit_num.$error.number || numberForm.weekly_limit_num.$error.required">
-                            <p class="item-error">半角数字で入力してください</p>
+                            <p class="item-error">半角数字で入力してください。</p>
+                        </div>
+                        <div class="item-error-box" ng-if="numberForm.weekly_limit_num.$error.min || numberForm.weekly_limit_num.$error.max">
+                            <p class="item-error">入力できる範囲は0から999までです。</p>
                         </div>
                     </div>
                 </form>
