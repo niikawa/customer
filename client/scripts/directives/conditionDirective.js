@@ -216,6 +216,7 @@ myApp.directive('conditionDirective', function(Utility){
             {
                 console.log(value);
                 var hms = value.trim().split(':');
+                console.log(hms.length);
                 if (3 !== hms.length)
                 {
                     scope.conditionAppend.error = true;

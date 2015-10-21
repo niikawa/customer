@@ -51,15 +51,15 @@ CreateSQL.prototype =
     {
         var tables = this.getTableListByTableInfoObject(tableList);
         var tableJoin = getJoinTable(tables);
-        
-        return "SELECT distinct("+ tables[0] +"."+ keyColumnName +") FROM " + tableJoin + ' WHERE ' + this.conditions;
+        var distinctColumnName = getKey(tables[0]);
+        return "SELECT distinct("+ tables[0] +"."+ distinctColumnName +") FROM " + tableJoin + ' WHERE ' + this.conditions;
     },
     getCountSql: function(tableList)
     {
         var tables = this.getTableListByTableInfoObject(tableList);
         var tableJoin = getJoinTable(tables);
-        
-        return "SELECT count( distinct("+ tables[0] + '.' + keyColumnName + ") ) AS count FROM " + tableJoin + ' WHERE ' + this.conditions;
+        var distinctColumnName = getKey(tables[0]);
+        return "SELECT count( distinct("+ tables[0] + '.' + distinctColumnName + ") ) AS count FROM " + tableJoin + ' WHERE ' + this.conditions;
     },
     getValueList: function()
     {
@@ -85,7 +85,6 @@ CreateSQL.prototype =
     },
     mergeTablesToQueryDocInfo: function(queryDocs)
     {
-        
         var num = queryDocs.length;
         var tableListObject = [];
         for (var index = 0; index < num; index++)
@@ -102,6 +101,22 @@ CreateSQL.prototype =
         return tableListObject;
     }
 };
+
+function getKey(tableName)
+{
+    if ('R_AGENT' == tableName)
+    {
+        return 'column1';
+    }
+    else if ('R_AGENT' == tableName)
+    {
+        return 'column11';
+    }
+    else
+    {
+        return keyColumnName;
+    }
+}
 
 function getJoinTable(tables)
 {
