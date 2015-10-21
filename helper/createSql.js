@@ -140,8 +140,15 @@ function getColType(type)
         case 'varChar':
             return db.VarChar;
         case 'NVarChar':
+            return db.NVarChar;
         case 'datetime':
+            return db.DateTime;
+        case 'datetime2':
+            return db.DateTime2;
         case 'smalldatetime':
+            return db.SmallDateTime;
+        case 'time':
+            return db.Time;
         default:
             return db.NVarChar;
     }

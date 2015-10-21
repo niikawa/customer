@@ -153,29 +153,94 @@ myApp.directive('conditionDirective', function(Utility){
                     }
                     else
                     {
-                        var valL = val.split('-') ;
-                        if (3 !== valL.length)
+                        isYMD();
+                    }
+                }
+                else if('datetime2' === type)
+                {
+                    if (void 0 === val)
+                    {
+                        scope.conditionAppend.error = false;
+                        scope.conditionAppend.message = '';
+                    }
+                    else
+                    {
+                        var valL2 = val.split('-');
+                        if (4 !== valL2.length)
                         {
                             scope.conditionAppend.error = true;
-                            scope.conditionAppend.message = '日付はYYYY-MM-DDで入力してください';
+                            scope.conditionAppend.message = 'YYYY-MM-DD hh:mm:ssで入力してください';
                         }
                         else
                         {
-                            var m = Utility.moment(val);
-                            if (!m.isValid())
+                            var hms = valL2[3].split(':');
+                            if (3 !== hms.length)
                             {
                                 scope.conditionAppend.error = true;
-                                scope.conditionAppend.message = '有効な日付ではありません';
+                                scope.conditionAppend.message = 'YYYY-MM-DD hh:mm:ssで入力してください';
                             }
                             else
                             {
-                                scope.conditionAppend.error = false;
-                                scope.conditionAppend.message = '';
+                                var m2 = Utility.moment(val);
+                                if (!m2.isValid())
+                                {
+                                    scope.conditionAppend.error = true;
+                                    scope.conditionAppend.message = '有効な日時ではありません';
+                                }
+                                else
+                                {
+                                    scope.conditionAppend.error = false;
+                                    scope.conditionAppend.message = '';
+                                }
                             }
                         }
                     }
                 }
+                else if('time' === type)
+                {
+                    isHMS(val);
+                }
             };
+            
+            function isYMD(value)
+            {
+                var valL = value.split('-');
+                if (3 !== valL.length)
+                {
+                    scope.conditionAppend.error = true;
+                    scope.conditionAppend.message = '日付はYYYY-MM-DDで入力してください';
+                }
+                else
+                {
+                    isValidDate(value);
+                }
+            }
+            
+            function isHMS(value)
+            {
+                var hms = value[3].split(':');
+                if (3 !== hms.length)
+                {
+                    scope.conditionAppend.error = true;
+                    scope.conditionAppend.message = 'hh:mm:ssで入力してください';
+                }
+            }
+            
+            function isValidDate(value)
+            {
+                var m = Utility.moment(value);
+                if (!m.isValid())
+                {
+                    scope.conditionAppend.error = true;
+                    scope.conditionAppend.message = '有効な日付ではありません';
+                }
+                else
+                {
+                    scope.conditionAppend.error = false;
+                    scope.conditionAppend.message = '';
+                }
+                
+            }
         }
     };
 });
