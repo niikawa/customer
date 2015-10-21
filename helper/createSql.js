@@ -59,7 +59,7 @@ CreateSQL.prototype =
         var tables = this.getTableListByTableInfoObject(tableList);
         var tableJoin = getJoinTable(tables);
         
-        return "SELECT count( distinct("+ tables[0] + '.' +keyColumnName + ") ) AS count FROM " + tableJoin + ' WHERE ' + this.conditions;
+        return "SELECT count( distinct("+ tables[0] + '.' + keyColumnName + ") ) AS count FROM " + tableJoin + ' WHERE ' + this.conditions;
     },
     getValueList: function()
     {

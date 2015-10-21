@@ -173,13 +173,8 @@ myApp.directive('conditionDirective', ["Utility", function(Utility){
                         }
                         else
                         {
-                            var hms = valL2[3].split(':');
-                            if (3 !== hms.length)
-                            {
-                                scope.conditionAppend.error = true;
-                                scope.conditionAppend.message = 'YYYY-MM-DD hh:mm:ssで入力してください';
-                            }
-                            else
+                            isHMS(valL2[3]);
+                            if (!scope.conditionAppend.error)
                             {
                                 var m2 = Utility.moment(val);
                                 if (!m2.isValid())
@@ -192,6 +187,7 @@ myApp.directive('conditionDirective', ["Utility", function(Utility){
                                     scope.conditionAppend.error = false;
                                     scope.conditionAppend.message = '';
                                 }
+                                
                             }
                         }
                     }
@@ -218,7 +214,8 @@ myApp.directive('conditionDirective', ["Utility", function(Utility){
             
             function isHMS(value)
             {
-                var hms = value[3].split(':');
+                console.log(value);
+                var hms = value.trim().split(':');
                 if (3 !== hms.length)
                 {
                     scope.conditionAppend.error = true;
