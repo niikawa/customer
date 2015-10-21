@@ -21,6 +21,12 @@
                             <input type="text" class="form-control" name="scenario_name" placeholder="シナリオ名を入力してください" 
                                 ng-model="scenario.scenario_name" ng-maxlength=100 ng-required="true"
                                 my-async-validators="asyncValidators.scenario_name">
+                            <div class="item-error-box" ng-if="scenarioForm.scenario_name.$dirty && scenarioForm.scenario_name.$error.required">
+                                <p class="item-error">シナリオ名を入力してください。</p>
+                            </div>
+                            <div class="item-error-box" ng-if="scenarioForm.scenario_name.$error.maxlength">
+                                <p class="item-error">シナリオ名は100文字以内で入力してください。</p>
+                            </div>
                             <div class="item-error-box" ng-messages="scenarioForm.scenario_name.$dirty && scenarioForm.scenario_name.$error">
                                 <p class="item-error" ng-message="same">すでに登録されているシナリオ名です</p>
                             </div>
@@ -30,6 +36,12 @@
                             <input type="text" class="form-control" name="output_name" placeholder="出力名を入力してください" 
                                 ng-model="scenario.output_name" ng-maxlength=100 ng-required="true"
                                 my-async-validators="asyncValidators.output_name">
+                            <div class="item-error-box" ng-if="scenarioForm.output_name.$dirty && scenarioForm.output_name.$error.required">
+                                <p class="item-error">出力名を入力してください。</p>
+                            </div>
+                            <div class="item-error-box" ng-if="scenarioForm.output_name.$error.maxlength">
+                                <p class="item-error">出力名は100文字以内で入力してください。</p>
+                            </div>
                             <div class="item-error-box" ng-messages="scenarioForm.output_name.$dirty && scenarioForm.output_name.$error">
                                 <p class="item-error" ng-message="same">すでに登録されている出力名です</p>
                             </div>

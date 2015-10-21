@@ -37,7 +37,6 @@ myApp.directive('autoCompleteFaDirective', function()
             {
                 if (void 0 !== newValue && void 0 !== oldValue)
                 {
-                    console.log('watch itemList');
                     if (newValue.length === oldValue.length)
                     {
                         return false;
@@ -84,6 +83,7 @@ myApp.directive('autoCompleteFaDirective', function()
              */
             element.find('input').on('blur', function()
             {
+                console.log('blur');
                 var hide = setInterval(function(isExist)
                 {
                     scope.$apply(function ()
