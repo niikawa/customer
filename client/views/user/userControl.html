@@ -24,7 +24,7 @@
                         <input type="email" class="form-control" placeholder="メールアドレス" name="mailaddress" 
                             ng-model="user.mailaddress" ng-maxlength=255 ng-required="true"
                             my-async-validators="asyncValidators.mailaddress" />
-                        <div class="item-error-box" ng-if="userForm.mailaddress.$error.required">
+                        <div class="item-error-box" ng-if="userForm.mailaddress.$dirty && userForm.mailaddress.$error.required">
                             <p class="item-error">メールアドレスを入力してください。</p>
                         </div>
                         <div class="item-error-box" ng-if="userForm.mailaddress.$error.email">
