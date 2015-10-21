@@ -84,6 +84,7 @@ myApp.directive('autoCompleteFaDirective', function()
             element.find('input').on('blur', function()
             {
                 console.log('blur');
+                scope.isFocus = false;
                 var hide = setInterval(function(isExist)
                 {
                     scope.$apply(function ()
