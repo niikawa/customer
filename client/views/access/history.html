@@ -7,10 +7,6 @@
 
         <div class="row" >
             <div class="col-md-12">
-                
-                <div ng-if="false === access.showLogList" class="alert alert-info" role="alert">
-                    ログはありません。
-                </div>
                 <div class="panel panel-default">
                     <div class="panel-heading vertical-container">
                         <div class="input-group">
@@ -39,6 +35,9 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div ng-if="false === access.showLogList" class="alert alert-info" role="alert">
+                    ログはありません。
                 </div>
             </div>
         </div>
