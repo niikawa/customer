@@ -109,7 +109,7 @@ exports.login = function(req, res)
             logger.error(Message.AUTH.E_001, req, err);
             //ログイン時にコネクションエラーが発生した場合は再接続を行う。
             var mssql = require('mssql');
-            var dbconf = require("./config/db");
+            var dbconf = require("../config/db");
             mssql.connect(dbconf(), function(err)
             {
                 res.status(511).send(Message.AUTH.E_001);
