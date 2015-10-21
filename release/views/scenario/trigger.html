@@ -1,5 +1,5 @@
     <form>
-        <input type="text" name=""/>
+        <span></span>
     </form>
     <div class="row">
         
@@ -10,7 +10,7 @@
                     <input type="number" class="form-control" placeholder="イベント発生後日数" name="after_event_occurs_num"
                         min=0 max=999 ng-model="specificInfo.after_event_occurs_num" ng-required="true">
                 </div>
-                <div class="item-error-box" ng-if="numberForm.after_event_occurs_num.$error.number || numberForm.after_event_occurs_num.$error.required">
+                <div class="item-error-box" ng-if="numberForm.after_event_occurs_num.$error.number || (numberForm.after_event_occurs_num.$dirty && numberForm.after_event_occurs_num.$error.required)">
                     <p class="item-error">半角数字で入力してください。</p>
                 </div>
                 <div class="item-error-box" ng-if="numberForm.after_event_occurs_num.$error.min || numberForm.after_event_occurs_num.$error.max">
