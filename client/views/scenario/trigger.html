@@ -1,19 +1,34 @@
     <div class="row">
-        <div class="col-md-6 col-sm-6">
-            <div class="input-group">
-                <span class="input-group-addon">イベント発生後日数</span>
-                <input type="number" class="form-control" placeholder="イベント発生後日数" 
-                    ng-model="specificInfo.after_event_occurs_num" ng-required="true">
+        <form name="numberForm" novalidate>
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <span class="input-group-addon">イベント発生後日数</span>
+                    <input type="number" class="form-control" placeholder="イベント発生後日数" 
+                        min=0 max=999 ng-model="specificInfo.after_event_occurs_num" ng-required="true">
+                </div>
             </div>
-        </div>
-        
-        <div class="col-md-6 col-sm-6">
-            <div class="input-group">
-                <span class="input-group-addon">無効期間日数</span>
-                <input type="number" class="form-control" placeholder="無効期間日数"
-                    ng-model="specificInfo.inoperative_num" ng-required="true">
+            <div class="item-error-box" ng-if="numberForm.after_event_occurs_num.$error.number || numberForm.after_event_occurs_num.$error.required">
+                <p class="item-error">半角数字で入力してください。</p>
             </div>
-        </div>
+            <div class="item-error-box" ng-if="numberForm.after_event_occurs_num.$error.min || numberForm.after_event_occurs_num.$error.max">
+                <p class="item-error">入力できる範囲は0から999までです。</p>
+            </div>
+            
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <span class="input-group-addon">無効期間日数</span>
+                    <input type="number" class="form-control" placeholder="無効期間日数"
+                        min=0 max=999 ng-model="specificInfo.inoperative_num" ng-required="true">
+                </div>
+            </div>
+            <div class="item-error-box" ng-if="numberForm.inoperative_num.$error.number || numberForm.inoperative_num.$error.required">
+                <p class="item-error">半角数字で入力してください。</p>
+            </div>
+            <div class="item-error-box" ng-if="numberForm.inoperative_num.$error.min || numberForm.inoperative_num.$error.max">
+                <p class="item-error">入力できる範囲は0から999までです。</p>
+            </div>
+            
+        </form>
     </div>    
 
     <div class="panel panel-default">
