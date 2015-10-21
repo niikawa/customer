@@ -270,6 +270,7 @@ function createValuePartBySymbol(item, name, request)
     else
     {
         request.input(name, type, item.condition.value1);
+        console.log(item.condition.value1);
         values[name] = item.condition.value1;
         colTypes[name] = item.column.type;
     }
