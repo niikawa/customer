@@ -157,11 +157,11 @@ function getColType(type)
         case 'NVarChar':
             return db.NVarChar;
         case 'datetime':
-            return db.DateTime;
+//            return db.DateTime;
         case 'datetime2':
-            return db.DateTime2;
+//            return db.DateTime2;
         case 'smalldatetime':
-            return db.SmallDateTime;
+//            return db.SmallDateTime;
         case 'time':
             return db.NVarChar;
             //return db.Time(7);

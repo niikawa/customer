@@ -221,8 +221,16 @@ myApp.directive('conditionDirective', ["Utility", function(Utility){
                 }
                 else
                 {
-                    scope.conditionAppend.error = false;
-                    scope.conditionAppend.message = '';
+                    if (24 < hms[0] || 59 < hms[1] || 59 < hms[2])
+                    {
+                        scope.conditionAppend.error = true;
+                        scope.conditionAppend.message = '24:59:59が最大になります';
+                    }
+                    else
+                    {
+                        scope.conditionAppend.error = false;
+                        scope.conditionAppend.message = '';
+                    }
                 }
             }
             
