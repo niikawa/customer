@@ -154,6 +154,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         selectTable = table;
         $scope.columnList = $scope.tableList[table].column;
         $scope.columnNum = $scope.columnList.length;
+        //すでに選択しているテーブルとの関連が無い場合
     };
     
     $scope.setColumn = function(index)
@@ -321,7 +322,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         
         console.log('ぷっしゅ前：' +$scope.showConditions.length);
         console.log($scope.showConditions);
-        $scope.showConditions.splice(pIndex, 0, target);
+        $scope.showConditions.splice(pIndex+1, 0, target);
         console.log('ぷっしゅ後：' +$scope.showConditions.length);
         console.log($scope.showConditions);
     };
