@@ -920,7 +920,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         
         console.log('ぷっしゅ前：' +$scope.showConditions.length);
         console.log($scope.showConditions);
-        $scope.showConditions.splice(pIndex, target);
+        $scope.showConditions.splice(pIndex, 0, target);
         console.log('ぷっしゅ後：' +$scope.showConditions.length);
         console.log($scope.showConditions);
     };
