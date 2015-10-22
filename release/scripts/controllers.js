@@ -761,7 +761,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
             var name = $scope.selectColumns[index].table.physicalname;
             if (!tableObje.hasOwnProperty(name))
             {
-                tableObje[name] = $scope.selectColumns.table.logicalname;
+                tableObje[name] = $scope.selectColumns[index].table.logicalname;
             }
         }
         var hasRelation = (void 0 !== $scope.tableList[table].relation);
