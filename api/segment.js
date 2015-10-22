@@ -273,9 +273,10 @@ exports.getList = function(req, res)
         var scenario = require("./scenario");
         async.forEach(data, function(segment, callback)
         {
+            console.log("async.forEach:");
             scenario.getBySegmentId(segment.segment_id, function(err, scenarioData)
             {
-                console.log(scenarioData);
+                console.log("scenarioData.length:"+scenarioData.length);
                 //セグメントの利用状況を設定する
                 if (null !== err) segment.isUsed = (scenarioData.length > 0);
                 console.log(segment);
@@ -284,6 +285,7 @@ exports.getList = function(req, res)
         },
         function (err) 
         {
+            console.log("last function");
             if (null !== err)
             {
                 logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[segment.getList]"), req, err);
