@@ -326,6 +326,10 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         console.log($scope.showConditions);
 
         if (1 === $scope.showConditions[pIndex].length) $scope.showConditions[pIndex].isJoin = false;
+        
+        console.log('ぷっしゅ前：' +$scope.showConditions.length);
+        console.log($scope.showConditions);
+        
         $scope.showConditions.push(pIndex, 0, target);
         console.log('ぷっしゅ後：' +$scope.showConditions.length);
         console.log($scope.showConditions);
