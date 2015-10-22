@@ -665,7 +665,7 @@ function pushCalendarItem(calendar, target, docsObject)
             if (1 === doc.interval)
             {
                 //毎日
-                isAdd = true;
+                isAdd = isPeriod;
             }
             else if (2 === doc.interval)
             {
