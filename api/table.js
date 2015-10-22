@@ -62,6 +62,7 @@ Table.prototype.getTablesList = function(callback)
                     physicalname: table.table_name,
                     logicalname: description[0], 
                     description: description[1],
+                    relation: description[2],
                     column: {}
                 };
             }

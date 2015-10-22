@@ -754,6 +754,34 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         $scope.columnList = $scope.tableList[table].column;
         $scope.columnNum = $scope.columnList.length;
         //すでに選択しているテーブルとの関連が無い場合
+        var num = $scope.selectColumns.length;
+        var tableObje = {};
+        for (var index = 0; index < num; index++)
+        {
+            var name = $scope.selectColumns.table.physicalname;
+            if (!tableObje.hasOwnProperty(name))
+            {
+                tableObje[name] = $scope.selectColumns.table.logicalname;
+            }
+        }
+        var hasRelation = (void 0 !== $scope.tableList[table].relation);
+        if (0 < num && !hasRelation)
+        {
+            Utility.warn(table+"は既に選択しているテーブルと関連がありません");
+        }
+        else if (0 < num && hasRelation)
+        {
+            var relationList = $scope.tableList[table].relation.split(" ");
+            var relationListNum = relationList.length;
+            for (var relationIndex = 0; relationIndex < relationListNum; relationIndex++)
+            {
+                if (!tableObje.hasOwnProperty(relationList[relationIndex]))
+                {
+                    Utility.warn(table+"は既に選択しているテーブルと関連がありません");
+                }
+            }
+        }
+
     };
     
     $scope.setColumn = function(index)
