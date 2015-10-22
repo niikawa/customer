@@ -55,7 +55,7 @@ Table.prototype.getTablesList = function(callback)
             //テーブル名と説明に分割する
             var description = String(table.comment).split(",");
 
-            if (void 0 === description[2] || 'true' == description[2])
+            if (void 0 === description[3] || 'true' == description[3])
             {
                 tableInfo[table.table_name] = 
                 {
@@ -65,42 +65,42 @@ Table.prototype.getTablesList = function(callback)
                     relation: description[2],
                     column: {}
                 };
-            }
-            console.log(tableInfo);
-            //カラムを取得する
-            model.execute(columnSql, request, function(err, columnList)
-            {
-                if (null !== err)
+                
+                //カラムを取得する
+                model.execute(columnSql, request, function(err, columnList)
                 {
-                    next(err);
-                }
-                else
-                {
-                    var num = columnList.length;
-                    var colArray = [];
-                    for (var index = 0; index < num; index++)
+                    if (null !== err)
                     {
-                        var target = columnList[index];
-                        //カラム名と説明に分割する
-                        var colInfo = String(target.comment).split(",");
-                        if (void 0 === colInfo[2] || 'true' == colInfo[2])
-                        {
-                            var colObject = 
-                            {
-                                physicalname: target.column_name,
-                                logicalname: colInfo[0],
-                                description: colInfo[1],
-                                type: target.data_type,
-                                length: target.max_lengt,
-                            };
-                            colArray.push(colObject);
-                        }
+                        next(err);
                     }
-                    console.log(table.table_name);
-                    tableInfo[table.table_name].column = colArray;
-                    next();
-                }
-            });
+                    else
+                    {
+                        var num = columnList.length;
+                        var colArray = [];
+                        for (var index = 0; index < num; index++)
+                        {
+                            var target = columnList[index];
+                            //カラム名と説明に分割する
+                            var colInfo = String(target.comment).split(",");
+                            if (void 0 === colInfo[2] || 'true' == colInfo[2])
+                            {
+                                var colObject = 
+                                {
+                                    physicalname: target.column_name,
+                                    logicalname: colInfo[0],
+                                    description: colInfo[1],
+                                    type: target.data_type,
+                                    length: target.max_lengt,
+                                };
+                                colArray.push(colObject);
+                            }
+                        }
+                        console.log(table.table_name);
+                        tableInfo[table.table_name].column = colArray;
+                        next();
+                    }
+                });
+            }
         },
         function (err) 
         {
