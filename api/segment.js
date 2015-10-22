@@ -273,10 +273,11 @@ exports.getList = function(req, res)
         var scenario = require("./scenario");
         async.forEach(data, function(segment, callback)
         {
-            scenario.getBySegmentId(segment.segment_id, function(err, data)
+            scenario.getBySegmentId(segment.segment_id, function(err, scenarioData)
             {
                 //セグメントの利用状況を設定する
-                if (null !== err) segment.isUsed = (data.length > 0);
+                if (null !== err) segment.isUsed = (scenarioData.length > 0);
+                console.log(segment);
                 callback(err);
             });
         },
@@ -290,6 +291,7 @@ exports.getList = function(req, res)
                 return;
             }
             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.I_004, FUNCTION_NAME);
+            console.log(data);
             res.json({data: data});
         });    
     });
