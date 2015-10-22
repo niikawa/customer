@@ -917,6 +917,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         target.push($scope.showConditions[pIndex][cIndex]);
         
         console.log('削除前：' + $scope.showConditions.length);
+        console.log($scope.showConditions);
         
         $scope.showConditions[pIndex].splice(cIndex, 1);
         
@@ -926,7 +927,6 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         if (1 === $scope.showConditions[pIndex].length) $scope.showConditions[pIndex].isJoin = false;
         $scope.showConditions.push(pIndex, 0, target);
         console.log('ぷっしゅ後：' +$scope.showConditions.length);
-
         console.log($scope.showConditions);
     };
 
