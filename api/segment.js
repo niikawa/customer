@@ -328,19 +328,28 @@ exports.execute = function(req, res)
         var params = {docs: docs, conditionMap: req.body.conditionMap};
         var creator = new Creator('segment', params, request);
         var sql = creator.getCountSql(req.body.tables);
-
-        model.execute(sql, request, function(err, data)
+        
+        try
         {
-            if (null !== err)
+            model.execute(sql, request, function(err, data)
             {
-                logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[segment.execute]"), req, err);
-                model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SEGMENT.E_003, FUNCTION_NAME);
-                res.status(511).send(Message.SEGMENT.E_003);
-                return;
-            }
-            model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SEGMENT.I_001);
-            res.json({result: data[0].count});
-        });
+                if (null !== err)
+                {
+                    logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[segment.execute]"), req, err);
+                    model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SEGMENT.E_003, FUNCTION_NAME);
+                    res.status(511).send(Message.SEGMENT.E_003);
+                    return;
+                }
+                model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SEGMENT.I_001);
+                res.json({result: data[0].count});
+            });
+            
+        }
+        catch (e)
+        {
+            res.status(511).send(Message.SEGMENT.E_006);
+            return;
+        }
     });
 };
 
