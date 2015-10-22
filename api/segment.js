@@ -275,6 +275,7 @@ exports.getList = function(req, res)
         {
             scenario.getBySegmentId(segment.segment_id, function(err, scenarioData)
             {
+                console.log(scenarioData);
                 //セグメントの利用状況を設定する
                 if (null !== err) segment.isUsed = (scenarioData.length > 0);
                 console.log(segment);
