@@ -751,6 +751,9 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     $scope.showColumns = function(table)
     {
         selectTable = table;
+        //非表示にするため初期化
+        $scope.columnList = [];
+        $scope.columnNum = 0;
         var selectTableName = $scope.tableList[table].logicalname;
         //すでに選択しているテーブルとの関連が無い場合
         var num = $scope.selectColumns.length;
@@ -814,8 +817,6 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         }
         $scope.showSelectedColumnsBox = true;
         Shared.set('queryColumns', $scope.selectColumns);
-        
-        
     };
     
     $scope.removeColumn = function(index)
