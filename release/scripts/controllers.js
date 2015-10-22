@@ -767,7 +767,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         var hasRelation = (void 0 !== $scope.tableList[table].relation);
         if (0 < num && !hasRelation)
         {
-            Utility.warn(table+"は既に選択しているテーブルと関連がありません");
+            Utility.warning(table+"は既に選択しているテーブルと関連がありません");
         }
         else if (0 < num && hasRelation)
         {
@@ -777,11 +777,11 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
             {
                 if (!tableObje.hasOwnProperty(relationList[relationIndex]))
                 {
-                    Utility.warn(table+"は既に選択しているテーブルと関連がありません");
+                    Utility.warning(table+"は既に選択しているテーブルと関連がありません");
+                    break;
                 }
             }
         }
-
     };
     
     $scope.setColumn = function(index)
