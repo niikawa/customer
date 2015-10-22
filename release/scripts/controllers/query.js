@@ -197,6 +197,11 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
                     break;
                 }
             }
+            if (isRelation)
+            {
+                $scope.columnList = $scope.tableList[table].column;
+                $scope.columnNum = $scope.columnList.length;
+            }
         }
         else if (1 !== tableNum && !hasRelation)
         {
