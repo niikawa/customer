@@ -152,6 +152,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     $scope.showColumns = function(table)
     {
         selectTable = table;
+        console.log($scope.tableList);
         $scope.columnList = $scope.tableList[table].column;
         $scope.columnNum = $scope.columnList.length;
         //すでに選択しているテーブルとの関連が無い場合
