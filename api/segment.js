@@ -335,9 +335,10 @@ exports.execute = function(req, res)
             {
                 if (null !== err)
                 {
-                    logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[segment.execute]"), req, err);
-                    model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SEGMENT.E_003, FUNCTION_NAME);
-                    res.status(511).send(Message.SEGMENT.E_003);
+                    //エラーとなった場合は組みあわせられないものと判断
+                    // logger.error(Message.COMMON.E_102.replace("$1", FUNCTION_NAME+"[segment.execute]"), req, err);
+                    // model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SEGMENT.E_003, FUNCTION_NAME);
+                    res.status(511).send(Message.SEGMENT.E_006);
                     return;
                 }
                 model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.SEGMENT.I_001);
