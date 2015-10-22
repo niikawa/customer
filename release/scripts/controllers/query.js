@@ -159,7 +159,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         var tableObje = {};
         for (var index = 0; index < num; index++)
         {
-            var name = $scope.selectColumns.table.physicalname;
+            var name = $scope.selectColumns[index].table.physicalname;
             if (!tableObje.hasOwnProperty(name))
             {
                 tableObje[name] = $scope.selectColumns.table.logicalname;
