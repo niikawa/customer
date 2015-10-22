@@ -662,13 +662,20 @@ function pushCalendarItem(calendar, target, docsObject)
                 && moment(moment(target.expiration_end_date)).isAfter(keyDay) );
 
             //以下の条件に合わないものは不正データのため破棄
-            if (2 === doc.interval)
+            if (1 === doc.interval)
             {
+                //毎日
+                isAdd = true;
+            }
+            else if (2 === doc.interval)
+            {
+                //週指定
                 var minDay = model.momoent(key).format("dd");
                 isAdd = isPeriod && doc.weekCondition[minDay];
             }
             else if (3 === doc.interval)
             {
+                //月指定
                 var dayIndex = Number(model.momoent(key).format("D")) - 1;
                 isAdd = isPeriod && doc.daysCondition[dayIndex].check;
                 
