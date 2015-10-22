@@ -329,6 +329,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         
         console.log('ぷっしゅ前：' +$scope.showConditions.length);
         console.log($scope.showConditions);
+        console.log(target);
         
         $scope.showConditions.push(pIndex, 0, target);
         console.log('ぷっしゅ後：' +$scope.showConditions.length);
