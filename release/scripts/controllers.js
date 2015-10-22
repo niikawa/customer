@@ -755,9 +755,10 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
         $scope.columnList = [];
         $scope.columnNum = 0;
         var selectTableName = $scope.tableList[table].logicalname;
-        //すでに選択しているテーブルとの関連が無い場合
+        //選択するテーブルの関連をチェックする
         var num = $scope.selectColumns.length;
         var tableObje = {};
+        //選択しているテーブルを保持させる
         tableObje[table] = selectTableName;
         for (var index = 0; index < num; index++)
         {
@@ -768,26 +769,39 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
             }
         }
         var hasRelation = (void 0 !== $scope.tableList[table].relation);
-        var tableNum = Object.keys(tableObje).length;
+        var checkTableList = Object.keys(tableObje);
+        var tableNum = checkTableList.length;
         if (hasRelation)
         {
             var relationList = $scope.tableList[table].relation.split(" ");
             var relationListNum = relationList.length;
-            for (var relationIndex = 0; relationIndex < relationListNum; relationIndex++)
+            var isRelation = false;
+            //選択しているテーブルが押下したテーブルのリレーションに含まれているかをチェック
+            for (var tableIndex = 0; tableIndex < tableNum; tableIndex++)
             {
-                //リレーション関係にあるテーブル以外が選択されていないかチェック
-                if (!tableObje.hasOwnProperty(relationList[relationIndex]))
+                isRelation = false;
+                var checkTableName = checkTableList[tableIndex];
+                for (var relationIndex = 0; relationIndex < relationListNum; relationIndex++)
                 {
-                    Utility.warning(selectTableName+"は既に選択しているテーブルと関連がありません");
+                    //リレーション関係にあるテーブル以外が選択されていないかチェック
+                    if (relationList[relationIndex] === checkTableName)
+                    {
+                        isRelation = true;
+                        break;
+                    }
+                }
+                if (!isRelation)
+                {
+                    Utility.warning(selectTableName+"は選択済みテーブルと関連がありません");
                     break;
                 }
             }
         }
-        else if (1 !== tableNum || !tableObje.hasOwnProperty(table))
+        else if (1 !== tableNum && !hasRelation)
         {
             //リレーションを持たないテーブルの場合、結合不可のため選択しているテーブルが
             //自分で無い場合は選択不可とする。
-            Utility.warning(selectTableName+"は既に選択しているテーブルと関連がありません");
+            Utility.warning(selectTableName+"は選択済みテーブルと関連がありません");
         }
         else
         {
