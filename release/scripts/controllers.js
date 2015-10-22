@@ -1678,25 +1678,29 @@ function ($scope, $routeParams, Modal, Shared, Segment, Query, Utility, Location
     
     $scope.save = function()
     {
-        var doc = Segment.createDocData($scope.conditions);
-        var docdata = {
-            segment_name: $scope.segment.segment_name, 
-            segment_document_id: $scope.segment.segment_document_id,
-            whereList: doc.whereList, 
-            qIds: doc.qIds
-        };
-        
-        Segment.resource.saveDoc({data: docdata}).$promise.then(function(response)
+        var data = Segment.createExecuteInfo($scope.conditions);
+        Segment.resource.executeQuery(data).$promise.then(function(response, err)
         {
-            var data = {
-                segment_id: $scope.segment.segment_id, 
-                segment_name: response.data.segment_name, 
-                segment_document_id:response.data.id
+            var doc = Segment.createDocData($scope.conditions);
+            var docdata = {
+                segment_name: $scope.segment.segment_name, 
+                segment_document_id: $scope.segment.segment_document_id,
+                whereList: doc.whereList, 
+                qIds: doc.qIds
             };
-            Segment.resource.save({data: data}).$promise.then(function(response)
+            
+            Segment.resource.saveDoc({data: docdata}).$promise.then(function(response)
             {
-                Utility.info('セグメントを保存しました');
-                Location.segment();
+                var data = {
+                    segment_id: $scope.segment.segment_id, 
+                    segment_name: response.data.segment_name, 
+                    segment_document_id:response.data.id
+                };
+                Segment.resource.save({data: data}).$promise.then(function(response)
+                {
+                    Utility.info('セグメントを保存しました');
+                    Location.segment();
+                });
             });
         });
     };
