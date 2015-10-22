@@ -751,12 +751,11 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
     $scope.showColumns = function(table)
     {
         selectTable = table;
-        console.log($scope.tableList);
-        $scope.columnList = $scope.tableList[table].column;
-        $scope.columnNum = $scope.columnList.length;
+        var selectTableName = $scope.tableList[table].logicalname;
         //すでに選択しているテーブルとの関連が無い場合
         var num = $scope.selectColumns.length;
         var tableObje = {};
+        tableObje[table] = selectTableName;
         for (var index = 0; index < num; index++)
         {
             var name = $scope.selectColumns[index].table.physicalname;
@@ -766,22 +765,30 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
             }
         }
         var hasRelation = (void 0 !== $scope.tableList[table].relation);
-        if (0 < num && !hasRelation)
-        {
-            Utility.warning(table+"は既に選択しているテーブルと関連がありません");
-        }
-        else if (0 < num && hasRelation)
+        if (hasRelation)
         {
             var relationList = $scope.tableList[table].relation.split(" ");
             var relationListNum = relationList.length;
             for (var relationIndex = 0; relationIndex < relationListNum; relationIndex++)
             {
+                //リレーション関係にあるテーブル以外が選択されていないかチェック
                 if (!tableObje.hasOwnProperty(relationList[relationIndex]))
                 {
-                    Utility.warning(table+"は既に選択しているテーブルと関連がありません");
+                    Utility.warning(selectTableName+"は既に選択しているテーブルと関連がありません");
                     break;
                 }
             }
+        }
+        else if (1 !== num || !tableObje.hasOwnProperty(table))
+        {
+            //リレーションを持たないテーブルの場合、結合不可のため選択しているテーブルが
+            //自分で無い場合は選択不可とする。
+            Utility.warning(selectTableName+"は既に選択しているテーブルと関連がありません");
+        }
+        else
+        {
+            $scope.columnList = $scope.tableList[table].column;
+            $scope.columnNum = $scope.columnList.length;
         }
     };
     
