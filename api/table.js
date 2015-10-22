@@ -66,6 +66,7 @@ Table.prototype.getTablesList = function(callback)
                     column: {}
                 };
             }
+            console.log(tableInfo);
             //カラムを取得する
             model.execute(columnSql, request, function(err, columnList)
             {
@@ -95,6 +96,7 @@ Table.prototype.getTablesList = function(callback)
                             colArray.push(colObject);
                         }
                     }
+                    console.log(table.table_name);
                     tableInfo[table.table_name].column = colArray;
                     next();
                 }
