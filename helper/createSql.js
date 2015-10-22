@@ -163,7 +163,8 @@ function getColType(type)
         case 'smalldatetime':
             return db.SmallDateTime;
         case 'time':
-            return db.Time(7);
+            return db.NVarChar;
+            //return db.Time(7);
         default:
             return db.NVarChar;
     }
