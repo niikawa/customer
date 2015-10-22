@@ -29,7 +29,7 @@ util.inherits(Table, Core);
 Table.prototype.getTablesList = function(callback)
 {
     //表示対象のテーブル一覧を取得するSQL
-    var tableSql = "SELECT t.name table_name, cast(ep.value as nvarchar) comment " +
+    var tableSql = "SELECT t.name table_name, cast(ep.value as nvarchar(max)) comment " +
                     "FROM sys.tables t , sys.extended_properties ep " +
                     "WHERE t.name like 'R_%' AND t.object_id = ep.major_id AND ep.minor_id = 0";
                     
