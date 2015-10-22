@@ -784,7 +784,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
                 for (var relationIndex = 0; relationIndex < relationListNum; relationIndex++)
                 {
                     //リレーション関係にあるテーブル以外が選択されていないかチェック
-                    if (relationList[relationIndex] === checkTableName && selectTable !== checkTableName)
+                    if (relationList[relationIndex] === checkTableName || selectTable === checkTableName)
                     {
                         isRelation = true;
                         break;
