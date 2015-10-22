@@ -166,6 +166,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
             }
         }
         var hasRelation = (void 0 !== $scope.tableList[table].relation);
+        var tableNum = Object.keys(tableObje).length;
         if (hasRelation)
         {
             var relationList = $scope.tableList[table].relation.split(" ");
@@ -180,7 +181,7 @@ function ($scope, $routeParams, Shared, Query, Location, Utility)
                 }
             }
         }
-        else if (1 !== num || !tableObje.hasOwnProperty(table))
+        else if (1 !== tableNum || !tableObje.hasOwnProperty(table))
         {
             //リレーションを持たないテーブルの場合、結合不可のため選択しているテーブルが
             //自分で無い場合は選択不可とする。
