@@ -82,6 +82,10 @@ Scenario.prototype = {
                 }
             }
         }
+        else
+        {
+            callback('コレクションを作るためのデータが足りません', null);
+        }
 
         self.client.createDocument(self.collection._self, doc, function (err, doc) 
         {
@@ -117,21 +121,23 @@ Scenario.prototype = {
                 else if (data.hasOwnProperty('interval'))
                 {
                     doc.interval = data.interval;
-                    
-                    if (data.hasOwnProperty('daysCondition'))
+                    if (1 != data.interval)
                     {
-                        doc.daysCondition = data.daysCondition;
-                        delete doc.weekCondition;
-                    }
-                    else if (data.hasOwnProperty('weekCondition'))
-                    {
-                        doc.weekCondition = data.weekCondition;
-                        delete doc.daysCondition;
-                    }
-                    else
-                    {
-                        callback('コレクションを作るためのデータが足りません', null);
-                        return;
+                        if (data.hasOwnProperty('daysCondition'))
+                        {
+                            doc.daysCondition = data.daysCondition;
+                            delete doc.weekCondition;
+                        }
+                        else if (data.hasOwnProperty('weekCondition'))
+                        {
+                            doc.weekCondition = data.weekCondition;
+                            delete doc.daysCondition;
+                        }
+                        else
+                        {
+                            callback('コレクションを作るためのデータが足りません', null);
+                            return;
+                        }
                     }
                 }
 
