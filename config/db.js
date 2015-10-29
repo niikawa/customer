@@ -15,6 +15,7 @@ module.exports = function()
                 min: 1,
                 idleTimeoutMillis: 50000
             },
+            connectionTimeout: 30000,
             requestTimeout: 30000
         };
     }
@@ -33,6 +34,7 @@ module.exports = function()
                 min: 1,
                 idleTimeoutMillis: 50000
             },
+            connectionTimeout: 30000,
             requestTimeout: 30000
         };
     }
@@ -80,6 +82,7 @@ module.exports = function()
                 min: 1,
                 idleTimeoutMillis: 50000
             },
+            connectionTimeout: 30000,
             requestTimeout: 30000
         };
     }
