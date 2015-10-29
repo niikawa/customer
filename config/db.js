@@ -8,7 +8,7 @@ module.exports = function()
             server: 'oufq8kwys5.database.windows.net',
             database: 'CustomerReport',
             stream: true, 
-            options: { encrypt: true },
+            options: { encrypt: true, connectTimeout: 30000, requestTimeout: 30000},
             pool:
             {
                 max: 10,
@@ -27,7 +27,7 @@ module.exports = function()
             server: 'oufq8kwys5.database.windows.net',
             database: 'CustomerReport',
             stream: true, 
-            options: { encrypt: true },
+            options: { encrypt: true, connectTimeout: 30000, requestTimeout: 30000},
             pool:
             {
                 max: 10,
