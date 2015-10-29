@@ -3,35 +3,37 @@ module.exports = function()
     if ('develop' === process.env.ENVIRONMENT)
     {
         return {
-          user: 'vxc-databese-master',
-          password: 'VirtUaleX001',
-          server: 'oufq8kwys5.database.windows.net',
-          database: 'CustomerReport',
-          stream: true, 
-          options: { encrypt: true },
-          pool:
-          {
+            user: 'vxc-databese-master',
+            password: 'VirtUaleX001',
+            server: 'oufq8kwys5.database.windows.net',
+            database: 'CustomerReport',
+            stream: true, 
+            options: { encrypt: true },
+            pool:
+            {
                 max: 10,
                 min: 1,
                 idleTimeoutMillis: 50000
-            }  
+            },
+            requestTimeout: 30000
         };
     }
     if ('stage' === process.env.ENVIRONMENT)
     {
         return {
-          user: 'vxc-databese-master',
-          password: 'VirtUaleX001',
-          server: 'oufq8kwys5.database.windows.net',
-          database: 'CustomerReport',
-          stream: true, 
-          options: { encrypt: true },
-          pool:
-          {
+            user: 'vxc-databese-master',
+            password: 'VirtUaleX001',
+            server: 'oufq8kwys5.database.windows.net',
+            database: 'CustomerReport',
+            stream: true, 
+            options: { encrypt: true },
+            pool:
+            {
                 max: 10,
                 min: 1,
                 idleTimeoutMillis: 50000
-            }  
+            },
+            requestTimeout: 30000
         };
     }
     else if ('production' === process.env.ENVIRONMENT)
@@ -66,18 +68,19 @@ module.exports = function()
     {
         //デフォルト
         return {
-          user: 'vxc-databese-master',
-          password: 'VirtUaleX001',
-          server: 'oufq8kwys5.database.windows.net',
-          database: 'CustomerReport',
-          stream: true, 
-          options: { encrypt: true },
-          pool:
-          {
+            user: 'vxc-databese-master',
+            password: 'VirtUaleX001',
+            server: 'oufq8kwys5.database.windows.net',
+            database: 'CustomerReport',
+            stream: true, 
+            options: { encrypt: true },
+            pool:
+            {
                 max: 10,
                 min: 1,
                 idleTimeoutMillis: 50000
-            }  
+            },
+            requestTimeout: 30000
         };
     }
 };
