@@ -1,5 +1,24 @@
 module.exports = function()
 {
+    if ('demo' === process.env.ENVIRONMENT)
+    {
+        return {
+            user: 'vxc-databese-master',
+            password: 'VirtUaleX001',
+            server: 'oufq8kwys5.database.windows.net',
+            database: 'CustomerReport',
+            stream: true, 
+            options: { encrypt: true, connectTimeout: 30000, requestTimeout: 30000},
+            pool:
+            {
+                max: 10,
+                min: 1,
+                idleTimeoutMillis: 50000
+            },
+            connectionTimeout: 30000,
+            requestTimeout: 30000
+        };
+    }
     if ('develop' === process.env.ENVIRONMENT)
     {
         return {
