@@ -377,8 +377,6 @@ exports.getScenarioCount = function(req, res)
             
             model.select(qObj, qObj.request, callback);
         },
-        //有効なシナリオ
-        
     },
     function complete(err, items)
     {
@@ -389,54 +387,61 @@ exports.getScenarioCount = function(req, res)
             res.status(511).send(Message.COMMON.E_102.replace("$1", RESPONSE_MESSAGE_BIND_STRING));
             return;
         }
-        
-        
-        
+
         //取得した情報から、各シナリオの登録数と登録最大数のリストを作成する
-        var list = [];
+        // var list = [];
         var envInfo = items.env[0];
-        //シナリオが登録されていない場合
-        if (0 === items.count.length)
-        {
-            list.push({scenario_type_key: 'schedule', scenario_type_name:'スケジュール型シナリオ', regist_num: 0, regist_max: envInfo.schedule_scenario_max});
-            list.push({scenario_type_key: 'trigger', scenario_type_name:'トリガー型シナリオ', regist_num: 0, regist_max: envInfo.trigger_scenario_max});
-        }
-        //どちらかのみ登録されている場合
-        else if (1 === items.count.length)
-        {
+        // list.max = envInfo.schedule_scenario_max;
+        // list.regist_num = items.count;
+        res.json({data: {
+                            max: envInfo.schedule_scenario_max, 
+                            regist_num:items.count[0].regist_num
+                        }
+        });
+        
+        
+        // //シナリオが登録されていない場合
+        // if (0 === items.count.length)
+        // {
+        //     list.push({scenario_type_key: 'schedule', scenario_type_name:'スケジュール型シナリオ', regist_num: 0, regist_max: envInfo.schedule_scenario_max});
+        //     list.push({scenario_type_key: 'trigger', scenario_type_name:'トリガー型シナリオ', regist_num: 0, regist_max: envInfo.trigger_scenario_max});
+        // }
+        // //どちらかのみ登録されている場合
+        // else if (1 === items.count.length)
+        // {
             
-            var isSchedule = (1 === items.count[0].scenario_type) ? true : false;
-            if (isSchedule)
-            {
-                items.count[0].regist_max = envInfo.schedule_scenario_max;
-                list.push(items.count[0]);
-                list.push({scenario_type_key: 'trigger', scenario_type_name:'トリガー型シナリオ', regist_num: 0, regist_max: envInfo.trigger_scenario_max});
-            }
-            else
-            {
-                list.push({scenario_type_key: 'schedule', scenario_type_name:'スケジュール型シナリオ', regist_num: 0, regist_max: envInfo.schedule_scenario_max});
-                items.count[0].regist_max = envInfo.trigger_scenario_max;
-                list.push(items.count[0]);
-            }
-        }
-        //両方登録されている場合
-        else
-        {
-            var num = items.count.length;
-            for(var index = 0; index < num; index++)
-            {
-                if (1 === items.count[index].scenario_type)
-                {
-                    items.count[index].regist_max = envInfo.schedule_scenario_max;
-                }
-                else if (2 === items.count[index].scenario_type)
-                {
-                    items.count[index].regist_max = envInfo.trigger_scenario_max;
-                }
-            }
-            list = items.count;
-        }
-        res.json({data: list});
+        //     var isSchedule = (1 === items.count[0].scenario_type) ? true : false;
+        //     if (isSchedule)
+        //     {
+        //         items.count[0].regist_max = envInfo.schedule_scenario_max;
+        //         list.push(items.count[0]);
+        //         list.push({scenario_type_key: 'trigger', scenario_type_name:'トリガー型シナリオ', regist_num: 0, regist_max: envInfo.trigger_scenario_max});
+        //     }
+        //     else
+        //     {
+        //         list.push({scenario_type_key: 'schedule', scenario_type_name:'スケジュール型シナリオ', regist_num: 0, regist_max: envInfo.schedule_scenario_max});
+        //         items.count[0].regist_max = envInfo.trigger_scenario_max;
+        //         list.push(items.count[0]);
+        //     }
+        // }
+        // //両方登録されている場合
+        // else
+        // {
+        //     var num = items.count.length;
+        //     for(var index = 0; index < num; index++)
+        //     {
+        //         if (1 === items.count[index].scenario_type)
+        //         {
+        //             items.count[index].regist_max = envInfo.schedule_scenario_max;
+        //         }
+        //         else if (2 === items.count[index].scenario_type)
+        //         {
+        //             items.count[index].regist_max = envInfo.trigger_scenario_max;
+        //         }
+        //     }
+        //     list = items.count;
+        // }
+        // res.json({data: list});
     });
 };
 
