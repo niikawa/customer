@@ -1032,7 +1032,8 @@ function ($scope, $routeParams, Shared, Utility, Scenario)
      */
     function setInitializeScope()
     {
-        $scope.addPageTitle = Scenario.getPageProp($routeParams.scenario).title;
+        $scope.addPageTitle = "シナリオ";
+        // $scope.addPageTitle = Scenario.getPageProp($routeParams.scenario).title;
         $scope.type = $routeParams.scenario;
         
         $scope.scenarioList = [];
