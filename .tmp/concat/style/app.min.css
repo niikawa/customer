@@ -1175,10 +1175,10 @@ div .two-row {
   margin: 0;
 }
 .panel-heading .title {
-  font-size: 2em;
+  font-size: 1.3em;
 }
 .panel-heading .num {
-  font-size: 2em;
+  font-size: 5em;
 }
 /**
  * ngView
