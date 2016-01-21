@@ -1176,8 +1176,9 @@ div .two-row {
 }
 .panel-heading .title {
   text-align: center;
-  font-size: 1.3em;
+  font-size: 1.2em;
 }
 .panel-footer .num {
+  text-align: center;
   font-size: 5em;
 }
