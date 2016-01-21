@@ -36,12 +36,11 @@
                             <th>登録上限数</th>
                         </tr>
                     </thead>
-                      ここデータでとるところ 
                     <tbody>
                         <tr ng-repeat="item in scenarioList">
-                            <td ng-if="item.scenario_type_key == 'trigger'" data-th="タイプ"><a ng-href='/#/scenario/{{item.scenario_type_key}}'>{{item.scenario_type_name}}</a></td>
-                            <td ng-if="item.scenario_type_key == 'trigger'" data-th="数">{{item.regist_num}}</td>
-                            <td ng-if="item.scenario_type_key == 'trigger'" data-th="上限">{{item.regist_max}}</td>
+                            <td ng-if="item.scenario_type_key == 'schedule'" data-th="タイプ"><a ng-href='/#/scenario/{{item.scenario_type_key}}'>{{item.scenario_type_name}}</a></td>
+                            <td ng-if="item.scenario_type_key == 'schedule'" data-th="数">{{item.regist_num}}</td>
+                            <td ng-if="item.scenario_type_key == 'schedule'" data-th="上限">{{item.regist_max}}</td>
                         </tr>
                     </tbody>
                 </table>
