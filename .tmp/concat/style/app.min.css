@@ -1175,9 +1175,10 @@ div .two-row {
   margin: 0;
 }
 .panel-heading .title {
+  text-align: center;
   font-size: 1.3em;
 }
-.panel-heading .num {
+.panel-footer .num {
   font-size: 5em;
 }
 /**
