@@ -1174,6 +1174,12 @@ div .two-row {
   padding: 0;
   margin: 0;
 }
+.panel-heading .title {
+  font-size: 2em;
+}
+.panel-heading .num {
+  font-size: 2em;
+}
 /**
  * ngView
  */

@@ -13,12 +13,10 @@ function ($scope, Shared, Scenario, Utility, Modal)
         Scenario.resource.typeCount().$promise.then(function(response)
         {
             $scope.scenarioInfo = response.data;
-            console.log($scope.scenarioInfo);
             Scenario.resource.executeplan().$promise.then(function(response)
             {
                 $scope.isShowExecutePlanScenario = (response.data.length > 0);
                 $scope.executePlanNum = response.data.length;
-                console.log($scope.executePlanNum);
                 $scope.executePlanScenario = response.data;
             });
         });
