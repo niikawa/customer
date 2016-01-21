@@ -1098,6 +1098,7 @@ function ($scope, $routeParams, Modal, Shared, Utility, Location, Scenario)
         $scope.isShowExtraction = false; //抽出条件表示制御
 
         $scope.pageTitle = "シナリオ"+pageProp.addTitle;
+
         // $scope.pageTitle = pageProp.title+pageProp.addTitle;
         
         $scope.scenario = {};
