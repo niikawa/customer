@@ -384,7 +384,8 @@ core.prototype.commitOrRollback = function(transaction, req, err, callback)
             {
                 logger.error("ロールバックに失敗しました", req, err);
             }
-            callback(err);
+            var errInfo = (void 0 === err) ? null : err;
+            callback(errInfo);
         });
     }
     else
@@ -395,7 +396,8 @@ core.prototype.commitOrRollback = function(transaction, req, err, callback)
             {
                 logger.error("コミットに失敗しました", req, err);
             }
-            callback(err);
+            var errInfo = (void 0 === err) ? null : err;
+            callback(errInfo);
         });
     }
 };
