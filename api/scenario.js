@@ -365,15 +365,20 @@ exports.getScenarioCount = function(req, res)
         //件数
         count: function(callback)
         {
-            var col = "scenario_type, count(1) as regist_num, "+
-                "CASE scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key, " +
-                "CASE scenario_type WHEN 1 THEN N'スケジュール型シナリオ' WHEN 2 THEN N'トリガー型シナリオ' ELSE N'未設定' END AS scenario_type_name";
-            var where = "delete_flag = 0";
+            // var col = "scenario_type, count(1) as regist_num, "+
+            //     "CASE scenario_type WHEN 1 THEN 'schedule' WHEN 2 THEN 'trigger' ELSE N'未設定' END AS scenario_type_key, " +
+            //     "CASE scenario_type WHEN 1 THEN N'スケジュール型シナリオ' WHEN 2 THEN N'トリガー型シナリオ' ELSE N'未設定' END AS scenario_type_name";
+            // var where = "delete_flag = 0";
+            
+            var col = "count(1) as regist_num";
+            var where = "scenario_type = 1 AND delete_flag = 0";
             var grop = "scenario_type";
             var qObj = model.getQueryObject(col, TABLE_NAME, where, grop, '');
             
             model.select(qObj, qObj.request, callback);
         },
+        //有効なシナリオ
+        
     },
     function complete(err, items)
     {
@@ -384,6 +389,9 @@ exports.getScenarioCount = function(req, res)
             res.status(511).send(Message.COMMON.E_102.replace("$1", RESPONSE_MESSAGE_BIND_STRING));
             return;
         }
+        
+        
+        
         //取得した情報から、各シナリオの登録数と登録最大数のリストを作成する
         var list = [];
         var envInfo = items.env[0];
