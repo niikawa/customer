@@ -1494,6 +1494,8 @@ exports.remove = function(req, res)
                     
                     model.commitOrRollback(transaction, req, err, function(err)
                     {
+                        console.log("model.commitOrRollback");
+                        console.log(err);
                         if (null !== err)
                         {
                             model.insertLog(req.session.userId, FUNCTION_NUMBER, Message.COMMON.E_003, typeData[0].scenario_name);
