@@ -412,6 +412,7 @@ function ($scope, Shared, Scenario, Utility, Modal)
             {
                 $scope.isShowExecutePlanScenario = (response.data.length > 0);
                 $scope.executePlanNum = response.data.length;
+                $scope.exemptPlanNum = $scope.scenarioInfo.regist_num - $scope.executePlanNum;
                 $scope.executePlanScenario = response.data;
             });
         });
