@@ -6,7 +6,7 @@ function ($rootScope, $scope, $sce, Upload, Shared, Bug, Modal, Utility)
     
     function setInitializeScope()
     {
-        $scope.bug = {resolve: 0, type: null};
+        $scope.bug = {resolve: 0, type: 1};
     }
     
     function getInitializeData()

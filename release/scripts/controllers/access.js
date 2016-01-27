@@ -10,10 +10,12 @@ function ($scope, $sce, $routeParams, Shared, Access, Utility)
 
     this.initialize = function()
     {
+        
         $scope._construct();
 
-        Shared.destloy('serchDay');
+        Shared.destloyByName('serchDay');
         Shared.setRoot('accsess');
+        
         var today = Utility.today('YYYY-MM-DD');
         $scope.$emit('requestStart');
         Access.resource.day({day: today}).$promise.then(function(response)

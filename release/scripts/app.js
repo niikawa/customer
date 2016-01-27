@@ -60,7 +60,6 @@ angular
     var isPageAuth = function($http, $q, $window, Shared)
     {
         var deferred = $q.defer();
-        console.log("isPageAuth" + ":" +Shared.get("role"));
         if (1 == Shared.get("role"))
         {
             deferred.resolve(true);
