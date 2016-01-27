@@ -20,7 +20,7 @@ var model = new bug();
 exports.getByConditon = function(req, res)
 {
     var request = model.getRequest();
-    var col = "T1.id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, T1.vote, T1.attach_name_key, T2.name";
+    var col = "T1.id, FORMAT(T1.create_date, 'yyyy-MM-dd HH:mm:ss') as create_date, T1.resolve, T1.type, T1.category, T1.title, T1.contents, T1.vote, T1.attach_name_key, T2.name";
     col += ", count(T3.demand_bug_comment_id) as comment_count";
     col += ", count(T3.attach_name_key) as attach_count";
     var tableName = "T_DEMAND_BUG T1 LEFT JOIN M_USER T2 ON T1.create_by = T2.user_id LEFT JOIN T_DEMAND_BUG_COMMENT T3 ON T1.id = T3.demand_bug_id";
@@ -70,7 +70,7 @@ exports.getByConditon = function(req, res)
 
 exports.getComment = function(req, res)
 {
-    var col = "T1.demand_bug_comment_id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as create_date, T1.comment, T2.name, T1.attach_name_key";
+    var col = "T1.demand_bug_comment_id, FORMAT(T1.create_date, 'yyyy-MM-dd HH:mm:ss') as create_date, T1.comment, T2.name, T1.attach_name_key";
     var tableName = "T_DEMAND_BUG_COMMENT T1 LEFT JOIN M_USER T2 ON T1.create_by = T2.user_id";
     var where = 'T1.demand_bug_id = @demand_bug_id';
     var order = "T1.demand_bug_comment_id";

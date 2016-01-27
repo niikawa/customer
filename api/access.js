@@ -110,7 +110,7 @@ var model = new Log();
  * 以下のプロパティを持つobjectの配列をjsonとして返却する
  *     <ul>
  *     <li>log_id: PK</li>
- *     <li>date: 操作日(yyyy-MM-dd hh:mm:ss)</li>
+ *     <li>date: 操作日(yyyy-MM-dd HH:mm:ss)</li>
  *     <li>user_id: ユーザーID</li>
  *     <li>detail: 内容</li>
  *     <li>name: ユーザー名</li>
@@ -127,7 +127,7 @@ exports.getDayAll = function(req, res)
         return;
     }
     
-    var col = "T1.log_id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as date, T1.user_id, T1.detail, T2.name";
+    var col = "T1.log_id, FORMAT(T1.create_date, 'yyyy-MM-dd HH:mm:ss') as date, T1.user_id, T1.detail, T2.name";
     var table = "T_LOG T1 INNER JOIN M_USER T2 ON T1.user_id = T2.user_id";
     var where = "T1.create_date BETWEEN @start AND @end AND T1.delete_flag = 0";
     var order = "T1.log_id DESC";
@@ -179,7 +179,7 @@ exports.getDayAllByUserId = function(req, res)
         res.status(510).send(Message.COMMON.E_101);
         return;
     }
-    var col = "T1.log_id, FORMAT(T1.create_date, 'yyyy-MM-dd hh:mm:ss') as date, T1.user_id, T1.detail, T2.name";
+    var col = "T1.log_id, FORMAT(T1.create_date, 'yyyy-MM-dd HH:mm:ss') as date, T1.user_id, T1.detail, T2.name";
     var table = "T_LOG T1 INNER JOIN M_USER T2 ON T1.user_id = T2.user_id";
     var where = "T1.create_date BETWEEN @start AND @end AND T1.user_id = @userId AND T1.delete_flag = 0";
     var order = "T1.log_id ASC";
