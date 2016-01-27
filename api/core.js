@@ -1,4 +1,4 @@
-var moment = require('moment-timezone');
+var moment = require('moment');
 var logInfo = require('../config/controlLog');
 var logger = require("../helper/logger");
 
@@ -21,7 +21,7 @@ core.prototype.getPk = function()
     return this.pk;
 };
 
-core.prototype.momoent = require('moment-timezone');
+core.prototype.momoent = require('moment');
 
 core.prototype.async = require('async');
 
@@ -84,7 +84,7 @@ core.prototype.tranBegin = function(callback)
 
 core.prototype.getInsCommonColumns = function(userId)
 {
-    var date =  moment().tz("Asia/Tokyo").format("YYYY/MM/DD HH:mm:ss");
+    var date =  moment().format("YYYY/MM/DD HH:mm:ss");
     return {
         delete_flag: 0, create_by: userId, create_date: date, update_by: userId, update_date: date
     };
@@ -92,7 +92,7 @@ core.prototype.getInsCommonColumns = function(userId)
 
 core.prototype.getUpdCommonColumns = function(userId)
 {
-    var date =  moment().tz("Asia/Tokyo").format("YYYY/MM/DD HH:mm:ss");
+    var date =  moment().format("YYYY/MM/DD HH:mm:ss");
     return {update_by: userId, update_date: date};
 };
 
@@ -430,9 +430,9 @@ core.prototype.insertLog = function(userId, controlType, appendString, replace, 
     var request = this.getRequest();
     request.input('delete_flag', this.db.SmallInt, 0);
     request.input('create_by', this.db.Int, userId);
-    request.input('create_date', this.db.NVarChar, moment().tz("Asia/Tokyo").format('YYYY/MM/DD hh:mm:ss'));
+    request.input('create_date', this.db.NVarChar, moment().format('YYYY/MM/DD HH:mm:ss'));
     request.input('update_by', this.db.Int, userId);
-    request.input('update_date', this.db.NVarChar, moment().tz("Asia/Tokyo").format('YYYY/MM/DD hh:mm:ss'));
+    request.input('update_date', this.db.NVarChar, moment().format('YYYY/MM/DD HH:mm:ss'));
     request.input('user_id', this.db.Int, userId);
     request.input('show_flag', this.db.Int, logData.show_flag);
     request.input('control_type', this.db.Int, controlType);
