@@ -4,39 +4,10 @@ var azureStorage = require('azure-storage');
 var TableUtilities = azureStorage.TableUtilities;
 var eg = TableUtilities.entityGenerator;
 
-var tableName = 'applog';
+var tableName = 'query';
 var tableService = azureStorage.createTableService();
 
-exports.debug = function(message, req)
-{
-    if (2 > conf.LEVEL)
-    {
-        write("DEBUG", message, req);
-    }
-};
-
-exports.warn = function(message, req)
-{
-    if (3 > conf.LEVEL)
-    {
-        write("WARN", message, req);
-    }
-};
-
-exports.info = function(message, req)
-{
-    if (4 > conf.LEVEL)
-    {
-        write("INFO", message, req);
-    }
-};
-
-exports.error = function(message, req, err)
-{
-    write("ERROR", message, req, err);
-};
-
-function write(level, message, req, err)
+exports.write = function(req)
 {
     var request = "";
     if (req.hasOwnProperty("body"))
@@ -47,18 +18,14 @@ function write(level, message, req, err)
     {
         request = req.params;
     }
-
-    var errInfo = void 0 === err ? "" : err;
+    
     var entity = 
     {
-        PartitionKey: eg.String(momoent().format("YYYYMMDD")),
+        PartitionKey: eg.String(request.queryName),
         RowKey: eg.String(momoent().format("YYYYMMDDhhmmss")+req.session.userId),
-        level: eg.String(level),
-        userId: eg.String(req.session.userId),
-        userName: eg.String(req.session.userName),
-        message: eg.String(message),
-        params: eg.String(JSON.stringify(request)),
-        error: eg.String(JSON.stringify(errInfo)),
+        where: eg.String(request.query),
+        bindInfo: eg.String(JSON.stringify(request.bindInfo)),
+        uiInfo: eg.String("")
     };
 
     tableService.createTableIfNotExists(tableName, function(error, result, response)
